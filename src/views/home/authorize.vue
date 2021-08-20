@@ -31,12 +31,7 @@
         <div>
           <el-radio v-model="radio" label="2">按次数</el-radio>
           <div class="num-input">
-            <el-input-number
-              v-model="num"
-              @change="handleChange"
-              :min="1"
-              size="small"
-            >
+            <el-input-number v-model="num" :min="1" size="small">
             </el-input-number>
           </div>
         </div>
@@ -73,9 +68,9 @@ export default class LoginIndex extends Vue {
   private value1 = ''
   private value2 = ''
   private num = 1
-  private handleChange(currentValue: number, oldValue: number) {
-    console.log(currentValue, oldValue)
-  }
+  // private handleChange(currentValue: number, oldValue: number) {
+  //   console.log(currentValue, oldValue)
+  // }
   private handleAuthorize() {
     // 发生授权请求
     this.$router.push('/user/data')
