@@ -1929,7 +1929,7 @@ async-limiter@^1.0.0, async-limiter@~1.0.0:
 
 async-validator@~1.8.1:
   version "1.8.5"
-  resolved "https://registry.npm.taobao.org/async-validator/download/async-validator-1.8.5.tgz#dc3e08ec1fd0dddb67e60842f02c0cd1cec6d7f0"
+  resolved "https://registry.nlark.com/async-validator/download/async-validator-1.8.5.tgz?cache=0&sync_timestamp=1629167656437&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fasync-validator%2Fdownload%2Fasync-validator-1.8.5.tgz#dc3e08ec1fd0dddb67e60842f02c0cd1cec6d7f0"
   integrity sha1-3D4I7B/Q3dtn5ghC8CwM0c7G1/A=
   dependencies:
     babel-runtime "6.x"
@@ -1997,7 +1997,7 @@ babel-core@^7.0.0-bridge.0:
 
 babel-helper-vue-jsx-merge-props@^2.0.0:
   version "2.0.3"
-  resolved "https://registry.npm.taobao.org/babel-helper-vue-jsx-merge-props/download/babel-helper-vue-jsx-merge-props-2.0.3.tgz#22aebd3b33902328e513293a8e4992b384f9f1b6"
+  resolved "https://registry.nlark.com/babel-helper-vue-jsx-merge-props/download/babel-helper-vue-jsx-merge-props-2.0.3.tgz#22aebd3b33902328e513293a8e4992b384f9f1b6"
   integrity sha1-Iq69OzOQIyjlEyk6jkmSs4T58bY=
 
 babel-jest@^24.9.0:
@@ -3738,10 +3738,10 @@ element-theme-chalk@^2.13.0:
   resolved "https://registry.npm.taobao.org/element-theme-chalk/download/element-theme-chalk-2.13.0.tgz#2ee1aea38c31a37df55886001021a054b076b356"
   integrity sha1-LuGuo4wxo331WIYAECGgVLB2s1Y=
 
-element-ui@^2.13.1:
-  version "2.13.1"
-  resolved "https://registry.npm.taobao.org/element-ui/download/element-ui-2.13.1.tgz?cache=0&sync_timestamp=1586760994944&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Felement-ui%2Fdownload%2Felement-ui-2.13.1.tgz#0cb1a45cf27aa61c601defbe192740ac5cb9df7c"
-  integrity sha1-DLGkXPJ6phxgHe++GSdArFy533w=
+element-ui@^2.15.5:
+  version "2.15.5"
+  resolved "https://registry.nlark.com/element-ui/download/element-ui-2.15.5.tgz#dfb376dc5cd60adab21c991bd4fac3e67e5300f4"
+  integrity sha1-37N23FzWCtqyHJkb1PrD5n5TAPQ=
   dependencies:
     async-validator "~1.8.1"
     babel-helper-vue-jsx-merge-props "^2.0.0"
@@ -6982,7 +6982,7 @@ normalize-url@^3.0.0:
 
 normalize-wheel@^1.0.1:
   version "1.0.1"
-  resolved "https://registry.npm.taobao.org/normalize-wheel/download/normalize-wheel-1.0.1.tgz#aec886affdb045070d856447df62ecf86146ec45"
+  resolved "https://registry.nlark.com/normalize-wheel/download/normalize-wheel-1.0.1.tgz#aec886affdb045070d856447df62ecf86146ec45"
   integrity sha1-rsiGr/2wRQcNhWRH32Ls+GFG7EU=
 
 npm-bundled@^1.0.1:
@@ -8443,7 +8443,7 @@ reselect@^3.0.1:
 
 resize-observer-polyfill@^1.5.0:
   version "1.5.1"
-  resolved "https://registry.npm.taobao.org/resize-observer-polyfill/download/resize-observer-polyfill-1.5.1.tgz#0e9020dd3d21024458d4ebd27e23e40269810464"
+  resolved "https://registry.nlark.com/resize-observer-polyfill/download/resize-observer-polyfill-1.5.1.tgz#0e9020dd3d21024458d4ebd27e23e40269810464"
   integrity sha1-DpAg3T0hAkRY1OvSfiPkAmmBBGQ=
 
 resolve-cwd@^2.0.0:
@@ -9444,7 +9444,7 @@ throat@^4.0.0:
 
 throttle-debounce@^1.0.1:
   version "1.1.0"
-  resolved "https://registry.npm.taobao.org/throttle-debounce/download/throttle-debounce-1.1.0.tgz#51853da37be68a155cb6e827b3514a3c422e89cd"
+  resolved "https://registry.nlark.com/throttle-debounce/download/throttle-debounce-1.1.0.tgz#51853da37be68a155cb6e827b3514a3c422e89cd"
   integrity sha1-UYU9o3vmihVctugns1FKPEIuic0=
 
 through2@^2.0.0:
@@ -9958,6 +9958,11 @@ vue-hot-reload-api@^2.3.0:
   version "2.3.4"
   resolved "https://registry.npm.taobao.org/vue-hot-reload-api/download/vue-hot-reload-api-2.3.4.tgz#532955cc1eb208a3d990b3a9f9a70574657e08f2"
   integrity sha1-UylVzB6yCKPZkLOp+acFdGV+CPI=
+
+vue-i18n@^8.25.0:
+  version "8.25.0"
+  resolved "https://registry.nlark.com/vue-i18n/download/vue-i18n-8.25.0.tgz?cache=0&sync_timestamp=1628556914163&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fvue-i18n%2Fdownload%2Fvue-i18n-8.25.0.tgz#1037d9295fa2845a230b771de473481edb2cfc4c"
+  integrity sha1-EDfZKV+ihFojC3cd5HNIHtss/Ew=
 
 vue-jest@^3.0.5:
   version "3.0.5"

@@ -41,11 +41,11 @@
           type="jz-button--primary"
           align="left"
           :height="48"
-          @click.native="handleAuthorize"
+          @click="handleAuthorize"
         >
           申请
         </jz-button>
-        <jz-button @click.native="handlecancel" :height="48" align="left">
+        <jz-button @click="handlecancel" :height="48" align="left">
           取消
         </jz-button>
       </div>

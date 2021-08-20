@@ -38,3 +38,8 @@ export function setUserId(userId: any) {
 export function removeUserId() {
   return Cookies.remove(UserKey)
 }
+
+const languageKey = 'language'
+export const getLanguage = () => Cookies.get(languageKey)
+export const setLanguage = (language: string) =>
+  Cookies.set(languageKey, language)

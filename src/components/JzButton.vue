@@ -1,5 +1,9 @@
 <template>
-  <div :class="[type, align]" :style="`widht:${width}px;height:${height}px`">
+  <div
+    :class="[type, align]"
+    :style="`widht:${width}px;height:${height}px`"
+    @click="handleClick"
+  >
     <slot></slot>
   </div>
 </template>
@@ -14,6 +18,9 @@ export default class LoginIndex extends Vue {
   @Prop({ default: 'center' }) private align!: string
   @Prop({ default: 100 }) private width!: number
   @Prop({ default: 34 }) private height!: number
+  handleClick(evt: any) {
+    this.$emit('click', evt)
+  }
 }
 </script>
 

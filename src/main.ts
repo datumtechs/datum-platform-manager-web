@@ -8,6 +8,7 @@ import store from './store'
 import Vuex from 'vuex'
 import '@/permission'
 import * as directives from '@/directives'
+import i18n from './lang'
 
 Vue.config.productionTip = false
 Vue.use(ElementUI)
@@ -17,6 +18,7 @@ Object.keys(directives).forEach((key) => {
   Vue.directive(key, (directives as { [key: string]: DirectiveOptions })[key])
 })
 new Vue({
+  i18n,
   router,
   store,
   render: (h) => h(App),

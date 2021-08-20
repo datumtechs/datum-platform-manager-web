@@ -4,7 +4,7 @@
       <jz-button
         type="jz-button--primary"
         class="authorize"
-        @click.native="handleAuthorize"
+        @click="handleAuthorize"
         :height="42"
       >
         申请授权

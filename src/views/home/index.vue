@@ -23,10 +23,10 @@
         <div class="item-title">{{ item.title }}</div>
         <div class="item-describe">{{ item.describe }}</div>
         <div class="item-button">
-          <jz-button @click.native="handleDetail(item.id)">查看</jz-button>
+          <jz-button @click="handleDetail(item.id)">查看</jz-button>
           <jz-button
             type="jz-button--primary"
-            @click.native="handleAuthorize(item.id)"
+            @click="handleAuthorize(item.id)"
           >
             申请授权
           </jz-button>
