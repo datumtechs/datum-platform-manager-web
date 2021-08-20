@@ -23,12 +23,13 @@
         <div class="item-title">{{ item.title }}</div>
         <div class="item-describe">{{ item.describe }}</div>
         <div class="item-button">
-          <div class="jz-el-button" @click="handleDetail(item.id)">
-            查看
-          </div>
-          <div class="jz-el-button--primary">
+          <jz-button @click.native="handleDetail(item.id)">查看</jz-button>
+          <jz-button
+            type="jz-button--primary"
+            @click.native="handleAuthorize(item.id)"
+          >
             申请授权
-          </div>
+          </jz-button>
         </div>
       </div>
     </div>
@@ -36,8 +37,12 @@
 </template>
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator'
+import JzButton from '@/components/JzButton.vue'
 @Component({
   name: 'Home',
+  components: {
+    JzButton,
+  },
 })
 export default class HomeIndex extends Vue {
   private input = ''
@@ -85,6 +90,9 @@ export default class HomeIndex extends Vue {
   ]
   private handleDetail(id: string | number) {
     this.$router.push(`/home/detail/${id}`)
+  }
+  private handleAuthorize(id: string | number) {
+    this.$router.push(`/home/${id}/authorize`)
   }
 }
 </script>

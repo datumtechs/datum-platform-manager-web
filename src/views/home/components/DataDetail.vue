@@ -1,81 +1,14 @@
 <template>
   <div class="data-detail">
-    <div class="detail-item">
-      <div class="title">简介</div>
-      <div class="item-info">××××××××××××</div>
-    </div>
-    <div class="detail-item">
-      <div class="title">基本信息</div>
-      <div class="item-info">
-        <div>
-          <div class="lable">数据名称：</div>
-          <div class="info">贷款逾期数据</div>
-        </div>
-        <div>
-          <div class="lable">机构：</div>
-          <div class="info">银行A</div>
-        </div>
-        <div>
-          <div class="lable">数据节点：</div>
-          <div class="info">××××××××××××</div>
+    <div class="detail-item" v-for="(item, index) in dataDesc" :key="index">
+      <div class="title">{{ item.title }}</div>
+      <div class="item-info" v-if="item.describes && item.describes.length > 0">
+        <div v-for="(desc, i) in item.describes" :key="i">
+          <div class="lable">{{ desc.lable }}</div>
+          <div class="info">{{ desc.value }}</div>
         </div>
       </div>
-      <div class="item-info">
-        <div>
-          <div class="lable">数据类别：</div>
-          <div class="info">表格数据</div>
-        </div>
-        <div>
-          <div class="lable">所属行业：</div>
-          <div class="info">金融</div>
-        </div>
-      </div>
-    </div>
-    <div class="detail-item">
-      <div class="title">规格</div>
-      <div class="item-info">
-        <div>
-          <div class="lable">存储格式：</div>
-          <div class="info">CSV</div>
-        </div>
-        <div>
-          <div class="lable">大小：</div>
-          <div class="info">1.05MB</div>
-        </div>
-        <div>
-          <div class="lable">数据条数：</div>
-          <div class="info">3,000</div>
-        </div>
-      </div>
-      <div class="item-info">
-        <div>
-          <div class="lable">发布时间：</div>
-          <div class="info">2021-06-24 17:06:00</div>
-        </div>
-        <div>
-          <div class="lable">更新时间：</div>
-          <div class="info">2021-06-24 17:06:00</div>
-        </div>
-      </div>
-      <div class="item-info">
-        <div>
-          <div class="lable">更新频率：</div>
-          <div class="info">1月</div>
-        </div>
-        <div>
-          <div class="lable">更新方式：</div>
-          <div class="info">增量更新</div>
-        </div>
-      </div>
-    </div>
-    <div class="detail-item">
-      <div class="title">交易</div>
-      <div class="item-info">
-        <div>
-          <div class="lable">支持授权方式：</div>
-          <div class="info">按次数/按时间</div>
-        </div>
-      </div>
+      <div class="item-info" v-else>{{ item.describe }}</div>
     </div>
   </div>
 </template>
@@ -85,7 +18,73 @@ import { Vue, Component, Watch } from 'vue-property-decorator'
 @Component({
   name: 'DataDetail',
 })
-export default class LoginIndex extends Vue {}
+export default class LoginIndex extends Vue {
+  private dataDesc = [
+    {
+      title: '简介',
+      describe: '××××××',
+    },
+    {
+      title: '基本信息',
+      describes: [
+        {
+          lable: '数据名称：',
+          value: '贷款逾期数据',
+        },
+        {
+          lable: '数据名称：',
+          value: '贷款逾期数据',
+        },
+        {
+          lable: '数据名称：',
+          value: '贷款逾期数据',
+        },
+        {
+          lable: '数据名称：',
+          value: '贷款逾期数据',
+        },
+        {
+          lable: '数据名称：',
+          value: '贷款逾期数据',
+        },
+      ],
+    },
+    {
+      title: '规格',
+      describes: [
+        {
+          lable: '数据名称：',
+          value: '贷款逾期数据',
+        },
+        {
+          lable: '数据名称：',
+          value: '贷款逾期数据',
+        },
+        {
+          lable: '数据名称：',
+          value: '贷款逾期数据',
+        },
+        {
+          lable: '数据名称：',
+          value: '贷款逾期数据',
+        },
+        {
+          lable: '数据名称：',
+          value: '贷款逾期数据',
+        },
+      ],
+    },
+    {
+      title: '交易',
+      describes: [
+        {
+          lable: '支持授权方式：',
+          value: '按次数/按时间',
+        },
+      ],
+    },
+  ]
+}
 </script>
 
 <style scoped lang="stylus">
@@ -101,9 +100,12 @@ export default class LoginIndex extends Vue {}
     .item-info
       display flex
       margin-bottom 10px
+      max-width: 1000px;
+      flex-flow: row wrap;
       div
         display flex
         font-size 14px
+        margin-bottom: 4px;
         .lable
           width 130px
         .info

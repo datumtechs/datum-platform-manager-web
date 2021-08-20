@@ -43,11 +43,19 @@ export default class extends Vue {
     let matched = this.$route.matched.filter(
       (item) => item.meta && item.meta.title,
     )
-    console.log(this.$route.matched, 'matched', this.$route)
     // const first = matched[0]
     // if (!this.isDashboard(first)) {
     //   matched = [{ path: '/home', meta: { title: '市场' } } as RouteRecord].concat(matched)
     // }
+    // 判断申请授权页面，添加父级标签
+    const last = matched[matched.length - 1]
+    if (this.isAuthorize(last)) {
+      const id = this.$route.params.id
+      matched.splice(1, 0, {
+        path: `/home/detail/${id}`,
+        meta: { title: '查看详情' },
+      } as RouteRecord)
+    }
     this.breadcrumbs = matched.filter((item) => {
       return item.meta && item.meta.title && item.meta.breadcrumb !== false
     })
@@ -59,6 +67,13 @@ export default class extends Vue {
       return false
     }
     return name.trim().toLocaleLowerCase() === 'home'.toLocaleLowerCase()
+  }
+  private isAuthorize(route: RouteRecord) {
+    const name = route && route.name
+    if (!name) {
+      return false
+    }
+    return name.trim().toLocaleLowerCase() === 'Authorize'.toLocaleLowerCase()
   }
 
   private pathCompile(path: string) {

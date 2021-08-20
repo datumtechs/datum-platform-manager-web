@@ -1,9 +1,14 @@
 <template>
   <div class="detail">
     <div>
-      <div class="jz-el-button--primary authorize">
+      <jz-button
+        type="jz-button--primary"
+        class="authorize"
+        @click.native="handleAuthorize"
+        :height="42"
+      >
         申请授权
-      </div>
+      </jz-button>
       <div class="detail-block">
         <div class="nav-muen">
           <div
@@ -28,11 +33,13 @@
 import { Vue, Component, Watch } from 'vue-property-decorator'
 import DataDetail from './components/DataDetail.vue'
 import MetaData from './components/MetaData.vue'
+import JzButton from '@/components/JzButton.vue'
 @Component({
   name: 'detail',
   components: {
     DataDetail,
     MetaData,
+    JzButton,
   },
 })
 export default class LoginIndex extends Vue {
@@ -40,6 +47,10 @@ export default class LoginIndex extends Vue {
   private tabIndex = 0
   private handleTable(index: number) {
     this.tabIndex = index
+  }
+  private handleAuthorize() {
+    const id = this.$route.params.id
+    this.$router.push(`/home/${id}/authorize`)
   }
 }
 </script>

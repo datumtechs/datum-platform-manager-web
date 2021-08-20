@@ -41,6 +41,32 @@ export const constantRoutes: RouteConfig[] = [
           icon: 'detail',
           activeMenu: '/home',
         },
+        children: [
+          {
+            path: 'authorize',
+            component: () =>
+              import(
+                /* webpackChunkName: "authorize" */ '@/views/home/authorize.vue'
+              ),
+            name: 'Authorize',
+            meta: {
+              title: '申请授权',
+              activeMenu: '/home',
+            },
+          },
+        ],
+      },
+      {
+        path: 'home/:id/authorize',
+        component: () =>
+          import(
+            /* webpackChunkName: "authorize" */ '@/views/home/authorize.vue'
+          ),
+        name: 'Authorize',
+        meta: {
+          title: '申请授权',
+          activeMenu: '/home',
+        },
       },
     ],
   },
