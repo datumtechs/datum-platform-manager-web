@@ -1,8 +1,50 @@
 export default {
+  route: {
+    market: '市场',
+    case: '案例',
+    project: '项目',
+    all: '所有项目',
+    detail: '查看详情',
+    application: '申请授权',
+  },
+  nav: {
+    market: '市场',
+    case: '案例',
+    project: '项目',
+    all: '所有项目',
+  },
+  allProject: {
+    1: '选项1',
+    2: '选项2',
+    3: '选项3',
+  },
   home: {
-    button: {
-      authorize: '申请',
-      detail: '查看',
-    },
+    authorize: '申请',
+    cancel: '取消',
+    detail: '查看',
+    data: '数据',
+    algorithm: '算法',
+    service: '服务',
+    nickname: '修改昵称',
+    mechanism: '绑定机构',
+    signout: '退出',
+    resources: '我的资源',
+    account: '我的账户',
+    search: '搜索服务',
+  },
+  apply: {
+    title: '申请授权',
+    authorize: '申请',
+    cancel: '取消',
+  },
+  detail: {
+    apply: '申请授权',
+    description: '数据描述',
+    metadata: '元数据',
+  },
+  case: {
+    title: '案例',
+    project: '创建项目',
+    guidance: '案例说明',
   },
 }

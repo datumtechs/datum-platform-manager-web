@@ -7,9 +7,12 @@
             item.redirect === 'noredirect' || index === breadcrumbs.length - 1
           "
           class="no-redirect"
-          >{{ item.meta.title }}</span
         >
-        <a v-else @click.prevent="handleLink(item)">{{ item.meta.title }}</a>
+          {{ $t('route.' + item.meta.title) }}
+        </span>
+        <a v-else @click.prevent="handleLink(item)">{{
+          $t('route.' + item.meta.title)
+        }}</a>
       </el-breadcrumb-item>
     </transition-group>
   </el-breadcrumb>
@@ -53,7 +56,7 @@ export default class extends Vue {
       const id = this.$route.params.id
       matched.splice(1, 0, {
         path: `/home/detail/${id}`,
-        meta: { title: '查看详情' },
+        meta: { title: 'detail' },
       } as RouteRecord)
     }
     this.breadcrumbs = matched.filter((item) => {

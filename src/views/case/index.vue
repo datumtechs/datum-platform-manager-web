@@ -1,7 +1,7 @@
 <template>
   <div class="case-warp">
     <div class="case-title">
-      <span>案例</span>
+      <span> {{ $t('case.title') }} </span>
     </div>
     <div class="block-wrap">
       <div
@@ -14,12 +14,14 @@
           <div class="item-title">{{ item.title }}</div>
           <div class="item-describe">{{ item.describe }}</div>
           <div class="item-button">
-            <jz-button @click="handleDetail(item.id)">查看</jz-button>
+            <jz-button @click="handleDetail(item.id)">
+              {{ $t('case.project') }}
+            </jz-button>
             <jz-button
               type="jz-button--primary"
-              @click="handleAuthorize(item.id)"
+              @click="handleDescription(item.id)"
             >
-              申请授权
+              {{ $t('case.guidance') }}
             </jz-button>
           </div>
         </div>
@@ -57,6 +59,11 @@ export default class LoginIndex extends Vue {
       describe: '银行A的贷款逾期数据',
     },
   ]
+  private handleDescription(id: string | number) {
+    console.log('/case/description/' + id)
+    // this.$router.push('/case/description/' + id)
+    window.open('/case/description/' + id, '_blank')
+  }
 }
 </script>
 
@@ -102,7 +109,7 @@ export default class LoginIndex extends Vue {
           color: #8C8C8C;
           padding-bottom 10px
         .item-describe
-          padding-bottom 35px
+          height 53px
           font-weight: 400;
           font-style: normal;
           font-size: 14px;
@@ -111,4 +118,5 @@ export default class LoginIndex extends Vue {
         .item-button
           display flex
           justify-content space-between
+          padding-bottom 10px
 </style>

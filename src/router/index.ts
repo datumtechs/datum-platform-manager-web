@@ -22,7 +22,7 @@ export const constantRoutes: RouteConfig[] = [
     component: Layout,
     redirect: '/home',
     meta: {
-      title: '市场',
+      title: 'market',
     },
     children: [
       {
@@ -37,7 +37,7 @@ export const constantRoutes: RouteConfig[] = [
           import(/* webpackChunkName: "home" */ '@/views/home/detail.vue'),
         name: 'detail',
         meta: {
-          title: '查看详情',
+          title: 'detail',
           icon: 'detail',
           activeMenu: '/home',
         },
@@ -50,7 +50,7 @@ export const constantRoutes: RouteConfig[] = [
               ),
             name: 'Authorize',
             meta: {
-              title: '申请授权',
+              title: 'application',
               activeMenu: '/home',
             },
           },
@@ -64,7 +64,7 @@ export const constantRoutes: RouteConfig[] = [
           ),
         name: 'Authorize',
         meta: {
-          title: '申请授权',
+          title: 'application',
           activeMenu: '/home',
         },
       },
@@ -74,7 +74,7 @@ export const constantRoutes: RouteConfig[] = [
     path: '/case',
     redirect: '/case/index',
     meta: {
-      title: '案例',
+      title: 'case',
     },
     component: Layout,
     children: [
@@ -84,22 +84,28 @@ export const constantRoutes: RouteConfig[] = [
         component: () =>
           import(/* webpackChunkName: "case" */ '@/views/case/index.vue'),
       },
+      {
+        path: 'description/:id',
+        name: 'description',
+        meta: {
+          activeMenu: '/case/index',
+        },
+        component: () =>
+          import(/* webpackChunkName: "case" */ '@/views/case/description.vue'),
+      },
     ],
   },
   {
     path: '/project',
+    redirect: '/project/all',
     component: Layout,
     meta: {
-      title: '项目',
+      title: 'project',
     },
     children: [
       {
         path: 'all',
         name: 'projectAll',
-        meta: {
-          title: 'projectAll',
-          icon: 'projectAll',
-        },
         component: () =>
           import(
             /* webpackChunkName: "projectAll" */ '@/views/project/all.vue'

@@ -7,7 +7,7 @@
         @click="handleAuthorize"
         :height="42"
       >
-        申请授权
+        {{ $t('detail.apply') }}
       </jz-button>
       <div class="detail-block">
         <div class="nav-muen">
@@ -17,7 +17,7 @@
             :key="index"
             @click="handleTable(index)"
           >
-            {{ item }}
+            {{ $t('detail.' + item) }}
           </div>
         </div>
         <template>
@@ -43,7 +43,7 @@ import JzButton from '@/components/JzButton.vue'
   },
 })
 export default class LoginIndex extends Vue {
-  private tabs: string[] = ['数据描述', '元数据']
+  private tabs: string[] = ['description', 'metadata']
   private tabIndex = 0
   private handleTable(index: number) {
     this.tabIndex = index

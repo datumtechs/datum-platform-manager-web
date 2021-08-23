@@ -18,13 +18,24 @@
             <el-menu-item>RosettaFlow</el-menu-item>
             <el-menu-item>RosettaMAS</el-menu-item>
           </el-submenu>
-          <el-menu-item index="/home">市场</el-menu-item>
-          <el-menu-item index="/case/index">案例</el-menu-item>
+          <el-menu-item index="/home">{{ $t('nav.market') }}</el-menu-item>
+          <el-menu-item index="/case/index">
+            {{ $t('nav.case') }}
+          </el-menu-item>
           <el-submenu index="project">
-            <template slot="title">项目</template>
-            <el-menu-item index="/project/all">所有项目</el-menu-item>
-            <el-menu-item index="/project/1">选项1</el-menu-item>
-            <el-menu-item index="/project/2">选项2</el-menu-item>
+            <template slot="title">
+              {{ $t('nav.project') }}
+            </template>
+            <el-menu-item index="/project/all">
+              {{ $t('nav.all') }}
+            </el-menu-item>
+            <el-menu-item
+              :index="item.index"
+              v-for="(item, index) in allProject"
+              :key="index"
+            >
+              {{ $t(`allProject.${index + 1}`) }}
+            </el-menu-item>
           </el-submenu>
         </el-menu>
       </el-col>
@@ -74,6 +85,9 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
 import { UserModule } from '@/store/modules/user'
+import { AppModule } from '@/store/modules/app'
+import { getLocale } from '@/lang'
+
 import RightDrawer from './Drawer.vue'
 @Component({
   components: {
@@ -87,6 +101,17 @@ export default class HeaderComponent extends Vue {
   public isLoggedData: boolean = false
   public historyIndex: number[] = []
 
+  public allProject = [
+    {
+      index: '/project/1',
+    },
+    {
+      value: '/project/2',
+    },
+    {
+      value: '/project/3',
+    },
+  ]
   get activeMenu() {
     const route = this.$route
     const { meta, path } = route
@@ -125,9 +150,14 @@ export default class HeaderComponent extends Vue {
   }
   public changeLanguage() {
     this.isEnglish = !this.isEnglish
+    const lang = this.isEnglish ? 'en' : 'zh'
+    AppModule.SetLanguage(lang)
+    this.$i18n.locale = lang
   }
-  public mounted() {
+  public created() {
     console.log(UserModule.token)
+    const lang = getLocale()
+    this.isEnglish = lang === 'en'
   }
 }
 </script>

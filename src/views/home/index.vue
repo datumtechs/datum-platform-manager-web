@@ -7,12 +7,12 @@
         :key="index"
         @click="handleTable(index)"
       >
-        {{ item }}
+        {{ $t(`home.${item}`) }}
       </div>
     </div>
     <div class="search-wrap">
       <i class="search-icon el-icon-search"></i>
-      <el-input v-model="input" placeholder="搜索服务"></el-input>
+      <el-input v-model="input" :placeholder="$t('home.search')"></el-input>
     </div>
     <div class="block-wrap">
       <div
@@ -23,12 +23,14 @@
         <div class="item-title">{{ item.title }}</div>
         <div class="item-describe">{{ item.describe }}</div>
         <div class="item-button">
-          <jz-button @click="handleDetail(item.id)">查看</jz-button>
+          <jz-button @click="handleDetail(item.id)">
+            {{ $t('home.detail') }}
+          </jz-button>
           <jz-button
             type="jz-button--primary"
             @click="handleAuthorize(item.id)"
           >
-            申请授权
+            {{ $t('home.authorize') }}
           </jz-button>
         </div>
       </div>
@@ -38,6 +40,8 @@
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator'
 import JzButton from '@/components/JzButton.vue'
+import { AppModule } from '@/store/modules/app'
+
 @Component({
   name: 'Home',
   components: {
@@ -46,7 +50,7 @@ import JzButton from '@/components/JzButton.vue'
 })
 export default class HomeIndex extends Vue {
   private input = ''
-  private tabs: string[] = ['数据', '算法', '服务']
+  private tabs: string[] = ['data', 'algorithm', 'service']
   private tabIndex = 0
   private handleTable(index: number) {
     this.tabIndex = index

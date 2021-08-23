@@ -1,10 +1,12 @@
 <template>
   <div class="drawer-wrap">
-    <h3>{{ configs.title }}</h3>
+    <h3>{{ $t('home.' + configs.title) }}</h3>
     <div class="line"></div>
     <ul>
       <li v-for="(item, index) in configs.list" :key="index">
-        <router-link :to="item.to" tag="span">{{ item.lable }}</router-link>
+        <router-link :to="item.to" tag="span">{{
+          $t('home.' + item.lable)
+        }}</router-link>
       </li>
     </ul>
   </div>
@@ -21,36 +23,32 @@ export default class LayoutIndex extends Vue {
   historyIndex?: any
   public configList = [
     {
-      title: '我的资源',
+      title: 'resources',
       list: [
         {
           to: '/index',
-          lable: '数据',
+          lable: 'data',
         },
         {
           to: '/index',
-          lable: '算法',
+          lable: 'algorithm',
         },
         {
           to: '/index',
-          lable: '服务',
+          lable: 'service',
         },
       ],
     },
     {
-      title: '我的账号',
+      title: 'account',
       list: [
         {
           to: '/index',
-          lable: '修改昵称',
+          lable: 'nickname',
         },
         {
           to: '/index',
-          lable: '绑定机构',
-        },
-        {
-          to: '/index',
-          lable: '退出',
+          lable: 'signout',
         },
       ],
     },

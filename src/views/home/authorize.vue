@@ -1,6 +1,6 @@
 <template>
   <div class="authorize">
-    <h3>申请授权</h3>
+    <h3>{{ $t('apply.title') }}</h3>
     <div class="authorize-block">
       <div class="block-info">
         <div class="row-lable">数据名称：</div>
@@ -43,10 +43,10 @@
           :height="48"
           @click="handleAuthorize"
         >
-          申请
+          {{ $t('apply.authorize') }}
         </jz-button>
         <jz-button @click="handlecancel" :height="48" align="left">
-          取消
+          {{ $t('apply.cancel') }}
         </jz-button>
       </div>
     </div>
