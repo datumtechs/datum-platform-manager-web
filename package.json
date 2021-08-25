@@ -26,7 +26,7 @@
     "vue": "^2.6.11",
     "vue-class-component": "^7.0.2",
     "vue-cookies": "^1.7.4",
-    "vue-i18n": "^8.25.0",
+    "vue-i18n": "^8.24.2",
     "vue-monaco-editor": "^0.0.19",
     "vue-property-decorator": "^8.3.0",
     "vue-router": "3.0.0",

@@ -18,7 +18,7 @@ import { Vue, Component, Watch } from 'vue-property-decorator'
 @Component({
   name: 'DataDetail',
 })
-export default class LoginIndex extends Vue {
+export default class DataDetail extends Vue {
   private dataDesc = [
     {
       title: '简介',

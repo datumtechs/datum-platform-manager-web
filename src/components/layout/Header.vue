@@ -106,10 +106,10 @@ export default class HeaderComponent extends Vue {
       index: '/project/1',
     },
     {
-      value: '/project/2',
+      index: '/project/2',
     },
     {
-      value: '/project/3',
+      index: '/project/3',
     },
   ]
   get activeMenu() {
@@ -146,7 +146,7 @@ export default class HeaderComponent extends Vue {
     }
   }
   public handleSelect(key: string, keyPath: string) {
-    console.log(key, keyPath)
+    // console.log(key, keyPath)
   }
   public changeLanguage() {
     this.isEnglish = !this.isEnglish
@@ -155,7 +155,6 @@ export default class HeaderComponent extends Vue {
     this.$i18n.locale = lang
   }
   public created() {
-    console.log(UserModule.token)
     const lang = getLocale()
     this.isEnglish = lang === 'en'
   }

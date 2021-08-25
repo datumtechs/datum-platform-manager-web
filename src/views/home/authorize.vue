@@ -63,7 +63,7 @@ import JzButton from '@/components/JzButton.vue'
     JzButton,
   },
 })
-export default class LoginIndex extends Vue {
+export default class Authorize extends Vue {
   private radio = '1'
   private value1 = ''
   private value2 = ''

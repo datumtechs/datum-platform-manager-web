@@ -100,9 +100,19 @@ export const constantRoutes: RouteConfig[] = [
     redirect: '/project/all',
     component: Layout,
     meta: {
-      title: 'project',
+      title: 'projectAll',
     },
     children: [
+      {
+        path: 'create',
+        name: 'create',
+        meta: {
+          title: 'create',
+          activeMenu: '/project/all',
+        },
+        component: () =>
+          import(/* webpackChunkName: "create" */ '@/views/project/create.vue'),
+      },
       {
         path: 'all',
         name: 'projectAll',
@@ -112,16 +122,76 @@ export const constantRoutes: RouteConfig[] = [
           ),
       },
       {
-        path: ':id(\\d+)',
+        path: ':id',
+        redirect: '/project/:id/work',
         component: () =>
-          import(
-            /* webpackChunkName: "example-edit" */ '@/views/project/index.vue'
-          ),
+          import(/* webpackChunkName: "project" */ '@/views/project/index.vue'),
         name: 'project',
         meta: {
           title: 'project',
-          noCache: true,
-          hidden: true,
+          activeMenu: '/project/all',
+        },
+        children: [
+          {
+            path: 'work',
+            name: 'work',
+            meta: {
+              title: 'work',
+              activeMenu: '/project/all',
+            },
+            component: () =>
+              import(
+                /* webpackChunkName: "projectWork" */ '@/views/project/work.vue'
+              ),
+          },
+          {
+            path: 'jobs',
+            name: 'jobs',
+            meta: {
+              title: 'jobs',
+              activeMenu: '/project/all',
+            },
+            component: () =>
+              import(
+                /* webpackChunkName: "projectJobs */ '@/views/project/work.vue'
+              ),
+          },
+          {
+            path: 'workflow/:workflow',
+            name: 'workflow',
+            meta: {
+              title: 'workflow',
+              activeMenu: '/project/all',
+            },
+            component: () =>
+              import(
+                /* webpackChunkName: "projectWork" */ '@/views/project/workflow.vue'
+              ),
+          },
+        ],
+      },
+      {
+        path: 'edit/:id',
+        component: () =>
+          import(
+            /* webpackChunkName: "projectEdit" */ '@/views/project/setup.vue'
+          ),
+        name: 'edit',
+        meta: {
+          title: 'projectEdit',
+          activeMenu: '/project/all',
+        },
+      },
+      {
+        path: 'manage/:id',
+        component: () =>
+          import(
+            /* webpackChunkName: "projectManage" */ '@/views/project/setup.vue'
+          ),
+        name: 'manage',
+        meta: {
+          title: 'projectManage',
+          activeMenu: '/project/all',
         },
       },
     ],

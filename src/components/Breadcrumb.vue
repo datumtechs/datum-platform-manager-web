@@ -59,6 +59,13 @@ export default class extends Vue {
         meta: { title: 'detail' },
       } as RouteRecord)
     }
+    if (this.isWorkflow(last)) {
+      const id = this.$route.params.id
+      matched.splice(2, 0, {
+        path: `/project/${id}/work`,
+        meta: { title: 'work' },
+      } as RouteRecord)
+    }
     this.breadcrumbs = matched.filter((item) => {
       return item.meta && item.meta.title && item.meta.breadcrumb !== false
     })
@@ -78,6 +85,13 @@ export default class extends Vue {
     }
     return name.trim().toLocaleLowerCase() === 'Authorize'.toLocaleLowerCase()
   }
+  private isWorkflow(route: RouteRecord) {
+    const name = route && route.name
+    if (!name) {
+      return false
+    }
+    return name.trim().toLocaleLowerCase() === 'workflow'.toLocaleLowerCase()
+  }
 
   private pathCompile(path: string) {
     // To solve this problem https://github.com/PanJiaChen/vue-element-admin/issues/561
@@ -90,17 +104,34 @@ export default class extends Vue {
     const { redirect, path } = item
     if (redirect) {
       try {
-        this.$router.push(redirect)
+        // :id => 1
+        const res = this.handlePath(redirect)
+        this.$router.push(res)
       } catch (error) {
         console.warn(error)
       }
       return
     }
     try {
-      this.$router.push(this.pathCompile(path))
+      // :workflows => 1
+      const res = this.handlePath(path)
+      this.$router.push(this.pathCompile(res))
     } catch (error) {
       console.warn(error)
     }
+  }
+  // 处理动态路径
+  private handlePath(path: string) {
+    let res: string = path
+    if (res.indexOf(':id') > -1) {
+      const id = this.$route.params.id
+      res = res.replace(/:id/g, id)
+    }
+    if (res.indexOf(':workflow') > -1) {
+      const workflow = this.$route.params.workflow
+      res = res.replace(/:workflow/g, workflow)
+    }
+    return res
   }
 }
 </script>

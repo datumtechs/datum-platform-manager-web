@@ -40,7 +40,7 @@ import JzButton from '@/components/JzButton.vue'
     JzButton,
   },
 })
-export default class LoginIndex extends Vue {
+export default class CaseIndex extends Vue {
   private marketList = [
     {
       id: 1,
@@ -49,12 +49,12 @@ export default class LoginIndex extends Vue {
         '基于隐私求交(PSI)技术，在不泄露各方隐私数据情况下查询黑名单交集',
     },
     {
-      id: 1,
+      id: 2,
       title: '贷款逾期数据',
       describe: '银行A的贷款逾期数据',
     },
     {
-      id: 1,
+      id: 3,
       title: '贷款逾期数据',
       describe: '银行A的贷款逾期数据',
     },
@@ -63,6 +63,9 @@ export default class LoginIndex extends Vue {
     console.log('/case/description/' + id)
     // this.$router.push('/case/description/' + id)
     window.open('/case/description/' + id, '_blank')
+  }
+  private handleDetail(id: string | number) {
+    this.$router.push('/project/' + id + '/work')
   }
 }
 </script>

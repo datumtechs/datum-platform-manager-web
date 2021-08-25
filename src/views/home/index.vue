@@ -1,15 +1,11 @@
 <template>
   <div class="content-container">
-    <div class="nav-muen">
-      <div
-        :class="[tabIndex === index ? 'active' : '', 'nav-muen-item']"
-        v-for="(item, index) in tabs"
-        :key="index"
-        @click="handleTable(index)"
-      >
-        {{ $t(`home.${item}`) }}
-      </div>
-    </div>
+    <jz-nav
+      type="home"
+      :tabs="tabs"
+      @clickTable="handleTable"
+      :tabIndex="tabIndex"
+    ></jz-nav>
     <div class="search-wrap">
       <i class="search-icon el-icon-search"></i>
       <el-input v-model="input" :placeholder="$t('home.search')"></el-input>
@@ -40,12 +36,14 @@
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator'
 import JzButton from '@/components/JzButton.vue'
+import JzNav from '@/components/JzNav.vue'
 import { AppModule } from '@/store/modules/app'
 
 @Component({
   name: 'Home',
   components: {
     JzButton,
+    JzNav,
   },
 })
 export default class HomeIndex extends Vue {

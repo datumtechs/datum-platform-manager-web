@@ -1,6 +1,6 @@
 <template>
   <div class="meta-data">
-    <el-table :data="list" border style="width: 100%">
+    <el-table :data="list" border style="width: 100%;min-height: 450px;">
       <el-table-column prop="number" label="序号"></el-table-column>
       <el-table-column prop="field" label="字段"> </el-table-column>
       <el-table-column prop="type" label="数据类型"> </el-table-column>
@@ -33,7 +33,7 @@ interface MetaDataType {
     Pagination,
   },
 })
-export default class LoginIndex extends Vue {
+export default class MetaData extends Vue {
   private list: MetaDataType[] = []
   private total = 4
   private listLoading = true

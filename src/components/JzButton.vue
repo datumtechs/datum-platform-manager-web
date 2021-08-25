@@ -1,7 +1,7 @@
 <template>
   <div
     :class="[type, align]"
-    :style="`widht:${width}px;height:${height}px`"
+    :style="`width:${width}px;height:${height}px;line-height:${height}px`"
     @click="handleClick"
   >
     <slot></slot>
@@ -13,7 +13,7 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 @Component({
   name: 'JzButton',
 })
-export default class LoginIndex extends Vue {
+export default class JzButton extends Vue {
   @Prop({ default: 'jz-button' }) private type!: string
   @Prop({ default: 'center' }) private align!: string
   @Prop({ default: 100 }) private width!: number
@@ -26,7 +26,7 @@ export default class LoginIndex extends Vue {
 
 <style scoped lang="stylus">
 .jz-button,.jz-button--primary
-  width 100px
+  width 120px
   height 34px
   line-height 32px
   box-sizing: border-box;

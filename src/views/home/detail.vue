@@ -10,16 +10,12 @@
         {{ $t('detail.apply') }}
       </jz-button>
       <div class="detail-block">
-        <div class="nav-muen">
-          <div
-            :class="[tabIndex === index ? 'active' : '', 'nav-muen-item']"
-            v-for="(item, index) in tabs"
-            :key="index"
-            @click="handleTable(index)"
-          >
-            {{ $t('detail.' + item) }}
-          </div>
-        </div>
+        <jz-nav
+          type="detail"
+          :tabs="tabs"
+          @clickTable="handleTable"
+          :tabIndex="tabIndex"
+        ></jz-nav>
         <template>
           <MetaData v-if="tabIndex"></MetaData>
           <DataDetail v-else></DataDetail>
@@ -34,15 +30,18 @@ import { Vue, Component, Watch } from 'vue-property-decorator'
 import DataDetail from './components/DataDetail.vue'
 import MetaData from './components/MetaData.vue'
 import JzButton from '@/components/JzButton.vue'
+import JzNav from '@/components/JzNav.vue'
+
 @Component({
   name: 'detail',
   components: {
     DataDetail,
     MetaData,
     JzButton,
+    JzNav,
   },
 })
-export default class LoginIndex extends Vue {
+export default class Detail extends Vue {
   private tabs: string[] = ['description', 'metadata']
   private tabIndex = 0
   private handleTable(index: number) {
