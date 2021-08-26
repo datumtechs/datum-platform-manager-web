@@ -17,8 +17,12 @@
           :tabIndex="tabIndex"
         ></jz-nav>
         <template>
-          <MetaData v-if="tabIndex"></MetaData>
-          <DataDetail v-else></DataDetail>
+          <MetaData
+            v-if="tabIndex"
+            :data="describe.metaDataColumnsVoList"
+            @changeList="changeList"
+          ></MetaData>
+          <DataDetail v-else :data="describe"></DataDetail>
         </template>
       </div>
     </div>
@@ -31,6 +35,7 @@ import DataDetail from './components/DataDetail.vue'
 import MetaData from './components/MetaData.vue'
 import JzButton from '@/components/JzButton.vue'
 import JzNav from '@/components/JzNav.vue'
+import { getDataDetail } from '@/api/home'
 
 @Component({
   name: 'detail',
@@ -42,6 +47,7 @@ import JzNav from '@/components/JzNav.vue'
   },
 })
 export default class Detail extends Vue {
+  private describe = {}
   private tabs: string[] = ['description', 'metadata']
   private tabIndex = 0
   private handleTable(index: number) {
@@ -50,6 +56,19 @@ export default class Detail extends Vue {
   private handleAuthorize() {
     const id = this.$route.params.id
     this.$router.push(`/home/${id}/authorize`)
+  }
+  // 元数据列表分页
+  changeList(parmams: any) {
+    console.log(parmams)
+  }
+  private async init() {
+    const id = this.$route.params.id
+    const { data } = await getDataDetail(id)
+    // this.market = data.items
+    this.describe = data
+  }
+  created() {
+    this.init()
   }
 }
 </script>

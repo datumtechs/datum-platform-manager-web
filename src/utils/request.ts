@@ -2,11 +2,11 @@ import Vue from 'vue'
 import axios from 'axios'
 import qs from 'qs'
 import { message } from '@/plugins/message.ts'
-import { config } from '@/config'
-import { getToken, removeToken } from '@/utils/auth'
+import { getToken, removeToken, getLanguage } from '@/utils/auth'
 /* 创建axios实例 */
 const service = axios.create({
-  baseURL: `${config.BASE_URL}/api/`,
+  baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
+  timeout: 5000,
   headers: {
     'content-type': 'application/x-www-form-urlencoded', // 转换为key=value的格式必须增加content-type
   },
@@ -15,16 +15,16 @@ const service = axios.create({
       return qs.stringify(data)
     },
   ],
-  timeout: 10000, // 请求超时时间
 })
 /* request拦截器 */
 service.interceptors.request.use(
   (config: any) => {
-    // 统一修改请求头
     if (config.url !== '/login') {
       const token: string = getToken()
+      const language: string = getLanguage()
       if (token) {
-        config.headers.common.Authorization = `Bearer ${token}`
+        config.headers.common['Access-Token'] = token
+        config.headers.common['Accept-Language'] = language
       }
     }
     return config
@@ -39,13 +39,10 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   (response: any) => {
     const res = response.data
-    if (res.code !== 200) {
+    if (res.code !== 10000) {
       message.error(res.msg)
       if (res.code === 4008) {
         removeToken()
-        let jumpUrl = window.location.href.split('?')[0]
-        window.location.href = `${config.CAS_FRONTEND_URL}/login?url=${jumpUrl}&isLogout=1`
-        // window.location.href = `${config.CAS_FRONTEND_URL}/login`
       }
       if (res.code === 4018) {
         window.location.href = '/403'

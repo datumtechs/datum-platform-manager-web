@@ -13,6 +13,7 @@ export default {
     projectEdit: '编辑信息',
     projectManage: '管理成员',
     workflow: '工作流1',
+    subjob: '作业1',
   },
   nav: {
     market: '市场',
@@ -37,7 +38,9 @@ export default {
     signout: '退出',
     resources: '我的资源',
     account: '我的账户',
-    search: '搜索服务',
+    searchdata: '搜索数据',
+    searchalgorithm: '搜索算法',
+    searchservice: '搜索服务',
   },
   apply: {
     title: '申请授权',
@@ -75,11 +78,14 @@ export default {
   worke: {
     edit: '编辑',
     duplicate: '复制',
+    editWork: '编辑工作流',
+    duplicateWork: '复制工作流',
   },
   jobs: {
     edit: '编辑',
     pause: '暂停',
     restart: '重启',
+    serach: '搜索子作业',
   },
   create: {
     blank: '空白',

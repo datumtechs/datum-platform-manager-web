@@ -62,6 +62,7 @@
               v-for="(item, index) in btnList"
               @click="handleBtn(index, scope.row)"
               :key="index"
+              :disabled="item.disabled"
             >
               {{ $t(item.lable) }}
             </el-button>

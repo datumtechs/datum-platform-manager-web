@@ -7,6 +7,17 @@ module.exports = {
   outputDir: 'dist',
   assetsDir: '',
   productionSourceMap: false,
+  devServer: {
+    host: '0.0.0.0',
+    port: 8080,
+    proxy: {
+      '/rosettaflow/': {
+        target: 'http://10.10.8.182:8234',
+        changeOrigin: true,
+        pathRewrite: { '^/rosettaflow/': '/rosettaflow/' },
+      },
+    },
+  },
   configureWebpack: (config) => {
     config.externals = {
       // vue: 'Vue',

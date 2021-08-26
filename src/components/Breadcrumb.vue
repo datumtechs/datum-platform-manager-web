@@ -46,10 +46,7 @@ export default class extends Vue {
     let matched = this.$route.matched.filter(
       (item) => item.meta && item.meta.title,
     )
-    // const first = matched[0]
-    // if (!this.isDashboard(first)) {
-    //   matched = [{ path: '/home', meta: { title: '市场' } } as RouteRecord].concat(matched)
-    // }
+
     // 判断申请授权页面，添加父级标签
     const last = matched[matched.length - 1]
     if (this.isAuthorize(last)) {
@@ -66,18 +63,18 @@ export default class extends Vue {
         meta: { title: 'work' },
       } as RouteRecord)
     }
+    if (this.isSubjob(last)) {
+      const id = this.$route.params.id
+      matched.splice(2, 0, {
+        path: `/project/${id}/jobs`,
+        meta: { title: 'jobs' },
+      } as RouteRecord)
+    }
     this.breadcrumbs = matched.filter((item) => {
       return item.meta && item.meta.title && item.meta.breadcrumb !== false
     })
   }
 
-  private isDashboard(route: RouteRecord) {
-    const name = route && route.name
-    if (!name) {
-      return false
-    }
-    return name.trim().toLocaleLowerCase() === 'home'.toLocaleLowerCase()
-  }
   private isAuthorize(route: RouteRecord) {
     const name = route && route.name
     if (!name) {
@@ -92,6 +89,13 @@ export default class extends Vue {
     }
     return name.trim().toLocaleLowerCase() === 'workflow'.toLocaleLowerCase()
   }
+  private isSubjob(route: RouteRecord) {
+    const name = route && route.name
+    if (!name) {
+      return false
+    }
+    return name.trim().toLocaleLowerCase() === 'subjob'.toLocaleLowerCase()
+  }
 
   private pathCompile(path: string) {
     // To solve this problem https://github.com/PanJiaChen/vue-element-admin/issues/561
@@ -104,7 +108,7 @@ export default class extends Vue {
     const { redirect, path } = item
     if (redirect) {
       try {
-        // :id => 1
+        // :id,:workflows,:subjob 转换为id
         const res = this.handlePath(redirect)
         this.$router.push(res)
       } catch (error) {
@@ -113,7 +117,6 @@ export default class extends Vue {
       return
     }
     try {
-      // :workflows => 1
       const res = this.handlePath(path)
       this.$router.push(this.pathCompile(res))
     } catch (error) {
@@ -130,6 +133,10 @@ export default class extends Vue {
     if (res.indexOf(':workflow') > -1) {
       const workflow = this.$route.params.workflow
       res = res.replace(/:workflow/g, workflow)
+    }
+    if (res.indexOf(':subjob') > -1) {
+      const subjob = this.$route.params.subjob
+      res = res.replace(/:subjob/g, subjob)
     }
     return res
   }

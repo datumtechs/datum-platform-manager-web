@@ -7,9 +7,11 @@
       :tabIndex="tabIndex"
     ></jz-nav>
     <div class="wrap">
+      <!-- 编辑 -->
       <template v-if="!tabIndex">
         <Edit> </Edit>
       </template>
+      <!-- 管理成员 -->
       <template v-else>
         <Table
           @clickBtn="handleBtn"

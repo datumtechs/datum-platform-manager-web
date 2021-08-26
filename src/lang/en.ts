@@ -35,7 +35,9 @@ export default {
     signout: 'Log Out',
     resources: 'My Resources',
     account: 'My Account',
-    search: 'Search data',
+    searchdata: 'Search data',
+    searchalgorithm: 'Search Algorithm',
+    searchservice: 'Search Service',
   },
   apply: {
     title: 'Apply',
@@ -73,11 +75,14 @@ export default {
   worke: {
     edit: 'Edit',
     duplicate: 'Duplicate',
+    editWork: 'Edit WorkFlows',
+    duplicateWork: 'Duplicate WorkFlows',
   },
   jobs: {
     edit: 'Edit',
     pause: 'Pause',
     restart: 'Restart',
+    serach: 'Search Sub-jobs',
   },
   create: {
     blank: 'Blank',

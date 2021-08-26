@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-export default class App extends Vue {}
+export default class AppIndex extends Vue {}
 </script>
 
 <style lang="stylus">

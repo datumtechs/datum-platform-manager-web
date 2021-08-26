@@ -5,47 +5,46 @@
       <div class="item-info" v-if="item.describes && item.describes.length > 0">
         <div v-for="(desc, i) in item.describes" :key="i">
           <div class="lable">{{ desc.lable }}</div>
-          <div class="info">{{ desc.value }}</div>
+          <div class="info">{{ data[desc.value] }}</div>
         </div>
       </div>
-      <div class="item-info" v-else>{{ item.describe }}</div>
+      <div class="item-info" v-else>{{ data[item.describe] }}</div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Vue, Component, Watch } from 'vue-property-decorator'
+import { Vue, Component, Prop } from 'vue-property-decorator'
+
 @Component({
   name: 'DataDetail',
 })
 export default class DataDetail extends Vue {
+  @Prop() private data!: any
+
   private dataDesc = [
     {
       title: '简介',
-      describe: '××××××',
+      describe: 'dataDesc',
     },
     {
       title: '基本信息',
       describes: [
         {
           lable: '数据名称：',
-          value: '贷款逾期数据',
+          value: 'dataName',
         },
         {
-          lable: '数据名称：',
-          value: '贷款逾期数据',
+          lable: '机构：',
+          value: 'identityName',
         },
         {
-          lable: '数据名称：',
-          value: '贷款逾期数据',
+          lable: '数据节点：',
+          value: 'identityId',
         },
         {
-          lable: '数据名称：',
-          value: '贷款逾期数据',
-        },
-        {
-          lable: '数据名称：',
-          value: '贷款逾期数据',
+          lable: '所属行业：',
+          value: 'industry',
         },
       ],
     },
@@ -53,23 +52,31 @@ export default class DataDetail extends Vue {
       title: '规格',
       describes: [
         {
-          lable: '数据名称：',
+          lable: '存储格式：',
+          value: 'fileType',
+        },
+        {
+          lable: '大小：',
+          value: 'size',
+        },
+        {
+          lable: '数据条数：',
+          value: 'rows',
+        },
+        {
+          lable: '发布时间：',
+          value: 'createTime',
+        },
+        {
+          lable: '更新时间：',
+          value: 'updateTime',
+        },
+        {
+          lable: '更新频率：',
           value: '贷款逾期数据',
         },
         {
-          lable: '数据名称：',
-          value: '贷款逾期数据',
-        },
-        {
-          lable: '数据名称：',
-          value: '贷款逾期数据',
-        },
-        {
-          lable: '数据名称：',
-          value: '贷款逾期数据',
-        },
-        {
-          lable: '数据名称：',
+          lable: '更新方式：',
           value: '贷款逾期数据',
         },
       ],

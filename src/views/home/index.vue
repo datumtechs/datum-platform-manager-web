@@ -8,7 +8,10 @@
     ></jz-nav>
     <div class="search-wrap">
       <i class="search-icon el-icon-search"></i>
-      <el-input v-model="input" :placeholder="$t('home.search')"></el-input>
+      <el-input
+        v-model="input"
+        :placeholder="$t('home.search' + placeholder)"
+      ></el-input>
     </div>
     <div class="block-wrap">
       <div
@@ -16,8 +19,8 @@
         v-for="(item, index) in marketList"
         :key="index"
       >
-        <div class="item-title">{{ item.title }}</div>
-        <div class="item-describe">{{ item.describe }}</div>
+        <div class="item-title">{{ item.dataName }}</div>
+        <div class="item-describe">{{ item.dataDesc }}</div>
         <div class="item-button">
           <jz-button @click="handleDetail(item.id)">
             {{ $t('home.detail') }}
@@ -37,7 +40,8 @@
 import { Component, Vue, Watch } from 'vue-property-decorator'
 import JzButton from '@/components/JzButton.vue'
 import JzNav from '@/components/JzNav.vue'
-import { AppModule } from '@/store/modules/app'
+// import { AppModule } from '@/store/modules/app'
+import { getDataList } from '@/api/home'
 
 @Component({
   name: 'Home',
@@ -50,51 +54,26 @@ export default class HomeIndex extends Vue {
   private input = ''
   private tabs: string[] = ['data', 'algorithm', 'service']
   private tabIndex = 0
+  get placeholder() {
+    const info = this.tabs[this.tabIndex]
+    return info
+  }
   private handleTable(index: number) {
     this.tabIndex = index
   }
-  private marketList = [
-    {
-      id: 1,
-      title: '贷款逾期数据',
-      describe: '银行A的贷款逾期数据',
-    },
-    {
-      id: 1,
-      title: '贷款逾期数据',
-      describe: '银行A的贷款逾期数据',
-    },
-    {
-      id: 1,
-      title: '贷款逾期数据',
-      describe: '银行A的贷款逾期数据',
-    },
-    // {
-    //   id: 1,
-    //   title: '贷款逾期数据',
-    //   describe: '银行A的贷款逾期数据',
-    // },
-    // {
-    //   id: 1,
-    //   title: '贷款逾期数据',
-    //   describe: '银行A的贷款逾期数据',
-    // },
-    // {
-    //   id: 1,
-    //   title: '贷款逾期数据',
-    //   describe: '银行A的贷款逾期数据',
-    // },
-    // {
-    //   id: 1,
-    //   title: '贷款逾期数据',
-    //   describe: '银行A的贷款逾期数据',
-    // },
-  ]
+  private marketList = []
   private handleDetail(id: string | number) {
     this.$router.push(`/home/detail/${id}`)
   }
   private handleAuthorize(id: string | number) {
     this.$router.push(`/home/${id}/authorize`)
+  }
+  private async init() {
+    const { data } = await getDataList()
+    this.marketList = data.items
+  }
+  created() {
+    this.init()
   }
 }
 </script>

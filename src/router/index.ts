@@ -118,7 +118,7 @@ export const constantRoutes: RouteConfig[] = [
         name: 'projectAll',
         component: () =>
           import(
-            /* webpackChunkName: "projectAll" */ '@/views/project/all.vue'
+            /* webpackChunkName: "project-all" */ '@/views/project/all.vue'
           ),
       },
       {
@@ -141,7 +141,7 @@ export const constantRoutes: RouteConfig[] = [
             },
             component: () =>
               import(
-                /* webpackChunkName: "projectWork" */ '@/views/project/work.vue'
+                /* webpackChunkName: "project-work" */ '@/views/project/work.vue'
               ),
           },
           {
@@ -153,7 +153,7 @@ export const constantRoutes: RouteConfig[] = [
             },
             component: () =>
               import(
-                /* webpackChunkName: "projectJobs */ '@/views/project/work.vue'
+                /* webpackChunkName: "project-work" */ '@/views/project/work.vue'
               ),
           },
           {
@@ -165,7 +165,19 @@ export const constantRoutes: RouteConfig[] = [
             },
             component: () =>
               import(
-                /* webpackChunkName: "projectWork" */ '@/views/project/workflow.vue'
+                /* webpackChunkName: "project-workflow" */ '@/views/project/workflow.vue'
+              ),
+          },
+          {
+            path: 'subjob/:subjob',
+            name: 'subjob',
+            meta: {
+              title: 'subjob',
+              activeMenu: '/project/all',
+            },
+            component: () =>
+              import(
+                /* webpackChunkName: "project-subjob" */ '@/views/project/subjob.vue'
               ),
           },
         ],
@@ -174,7 +186,7 @@ export const constantRoutes: RouteConfig[] = [
         path: 'edit/:id',
         component: () =>
           import(
-            /* webpackChunkName: "projectEdit" */ '@/views/project/setup.vue'
+            /* webpackChunkName: "project-edit" */ '@/views/project/setup.vue'
           ),
         name: 'edit',
         meta: {
@@ -186,7 +198,7 @@ export const constantRoutes: RouteConfig[] = [
         path: 'manage/:id',
         component: () =>
           import(
-            /* webpackChunkName: "projectManage" */ '@/views/project/setup.vue'
+            /* webpackChunkName: "project-manage" */ '@/views/project/setup.vue'
           ),
         name: 'manage',
         meta: {
