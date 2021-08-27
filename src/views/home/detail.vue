@@ -1,11 +1,12 @@
 <template>
   <div class="detail">
-    <div>
+    <div :class="[isHomeDetail ? '' : 'margin']">
       <jz-button
         type="jz-button--primary"
         class="authorize"
         @click="handleAuthorize"
         :height="42"
+        v-if="isHomeDetail"
       >
         {{ $t('detail.apply') }}
       </jz-button>
@@ -19,8 +20,9 @@
         <template>
           <MetaData
             v-if="tabIndex"
-            :data="describe.metaDataColumnsVoList"
+            :list="list"
             @changeList="changeList"
+            :total="total"
           ></MetaData>
           <DataDetail v-else :data="describe"></DataDetail>
         </template>
@@ -47,9 +49,19 @@ import { getDataDetail } from '@/api/home'
   },
 })
 export default class Detail extends Vue {
+  private total = 0
+  private listQuery = {
+    current: 1,
+    size: 20,
+  }
   private describe = {}
+  private list = []
   private tabs: string[] = ['description', 'metadata']
   private tabIndex = 0
+  get isHomeDetail() {
+    return this.$route.name === 'detail'
+  }
+
   private handleTable(index: number) {
     this.tabIndex = index
   }
@@ -60,15 +72,20 @@ export default class Detail extends Vue {
   // 元数据列表分页
   changeList(parmams: any) {
     console.log(parmams)
+    this.listQuery = parmams
+    this.getList()
   }
-  private async init() {
+  private async getList() {
     const id = this.$route.params.id
-    const { data } = await getDataDetail(id)
+    const { current, size } = this.listQuery
+    const { data } = await getDataDetail({ id, current, size })
     // this.market = data.items
     this.describe = data
+    this.list = data.metaDataColumnsVoPageVo.items
+    this.total = data.metaDataColumnsVoPageVo.total
   }
   created() {
-    this.init()
+    this.getList()
   }
 }
 </script>
@@ -87,4 +104,6 @@ export default class Detail extends Vue {
     background: inherit;
     background-color: rgba(224, 224, 224, 1);
     box-sizing: border-box;
+  .margin
+    margin-top 20px
 </style>

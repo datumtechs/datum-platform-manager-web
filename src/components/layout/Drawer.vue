@@ -4,46 +4,45 @@
     <div class="line"></div>
     <ul>
       <li v-for="(item, index) in configs.list" :key="index">
-        <router-link :to="item.to" tag="span">{{
-          $t('home.' + item.lable)
-        }}</router-link>
+        <span @click="handleItem(item.to)">
+          {{ $t('home.' + item.lable) }}
+        </span>
       </li>
     </ul>
   </div>
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator'
+import { Vue, Component, Prop, Emit } from 'vue-property-decorator'
 
 @Component({
   name: 'RightDrawer',
 })
 export default class LayoutIndex extends Vue {
-  @Prop()
-  historyIndex?: any
+  @Prop() historyIndex?: any
   public configList = [
     {
       title: 'resources',
       list: [
         {
-          to: '/index',
+          to: '/resources/data',
           lable: 'data',
         },
-        {
-          to: '/index',
-          lable: 'algorithm',
-        },
-        {
-          to: '/index',
-          lable: 'service',
-        },
+        // {
+        //   to: '/index',
+        //   lable: 'algorithm',
+        // },
+        // {
+        //   to: '/index',
+        //   lable: 'service',
+        // },
       ],
     },
     {
       title: 'account',
       list: [
         {
-          to: '/index',
+          to: '/account/nickname',
           lable: 'nickname',
         },
         {
@@ -56,6 +55,10 @@ export default class LayoutIndex extends Vue {
   get configs() {
     const { historyIndex } = this
     return this.configList[historyIndex[historyIndex.length - 1]]
+  }
+  @Emit('clickItem')
+  private handleItem(path: string) {
+    this.$router.push(path)
   }
 }
 </script>

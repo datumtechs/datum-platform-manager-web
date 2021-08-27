@@ -6,6 +6,6 @@ export const getDataList = (params?: any) => {
 }
 
 // 数据详情
-export const getDataDetail = (id: number | string) => {
-  return get(`/data/detail/${id}`)
+export const getDataDetail = (params?: any) => {
+  return get('/data/detail', params)
 }

@@ -209,6 +209,51 @@ export const constantRoutes: RouteConfig[] = [
     ],
   },
   {
+    path: '/resources',
+    redirect: '/resources/data',
+    component: Layout,
+    meta: {
+      title: 'resources',
+    },
+    children: [
+      {
+        path: 'data',
+        name: 'data',
+        component: () =>
+          import(/* webpackChunkName: "data" */ '@/views/resources/index.vue'),
+      },
+      {
+        path: 'detail/:id',
+        name: 'resourcesData',
+        meta: {
+          title: 'detail',
+        },
+        component: () =>
+          import(
+            /* webpackChunkName: "resources-data" */ '@/views/home/detail.vue'
+          ),
+      },
+    ],
+  },
+  {
+    path: '/account',
+    redirect: '/account/nickname',
+    component: Layout,
+    meta: {
+      title: 'account',
+    },
+    children: [
+      {
+        path: 'nickname',
+        name: 'nickname',
+        component: () =>
+          import(
+            /* webpackChunkName: "nickname" */ '@/views/account/nickname.vue'
+          ),
+      },
+    ],
+  },
+  {
     path: '/market',
     redirect: '/market/index',
     component: Layout,

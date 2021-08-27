@@ -49,11 +49,18 @@ export default class extends Vue {
 
     // 判断申请授权页面，添加父级标签
     const last = matched[matched.length - 1]
-    if (this.isAuthorize(last)) {
+    if (this.isAuthorize(last) || this.isDetail(last)) {
       const id = this.$route.params.id
       matched.splice(1, 0, {
         path: `/home/detail/${id}`,
         meta: { title: 'detail' },
+      } as RouteRecord)
+    }
+    if (this.isResourcesData(last)) {
+      const id = this.$route.params.id
+      matched.splice(1, 0, {
+        path: '/resources/data',
+        meta: { title: 'data' },
       } as RouteRecord)
     }
     if (this.isWorkflow(last)) {
@@ -81,6 +88,22 @@ export default class extends Vue {
       return false
     }
     return name.trim().toLocaleLowerCase() === 'Authorize'.toLocaleLowerCase()
+  }
+  private isDetail(route: RouteRecord) {
+    const name = route && route.name
+    if (!name) {
+      return false
+    }
+    return name.trim().toLocaleLowerCase() === 'detail'.toLocaleLowerCase()
+  }
+  private isResourcesData(route: RouteRecord) {
+    const name = route && route.name
+    if (!name) {
+      return false
+    }
+    return (
+      name.trim().toLocaleLowerCase() === 'resourcesData'.toLocaleLowerCase()
+    )
   }
   private isWorkflow(route: RouteRecord) {
     const name = route && route.name
@@ -147,8 +170,10 @@ export default class extends Vue {
 .el-breadcrumb__inner,
 .el-breadcrumb__inner a {
   font-weight: 400 !important;
+  color #0F62FE;
 }
-
+.el-breadcrumb__inner a:hover
+  text-decoration: underline
 .app-breadcrumb.el-breadcrumb {
   display: inline-block;
   font-size: 14px;
@@ -156,7 +181,7 @@ export default class extends Vue {
   margin-left: 8px;
 
   .no-redirect {
-    color: #97a8be;
+    color: #161616;
     cursor: text;
   }
 }

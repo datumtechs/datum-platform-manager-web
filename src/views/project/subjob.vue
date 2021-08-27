@@ -21,19 +21,19 @@ import JzButton from '@/components/JzButton.vue'
   components: {
     Table,
     JzButton,
-  }
+  },
 })
 export default class subjobIndex extends Vue {
-    private btnList = [
-      {
-        lable: 'jobs.pause',
-      },
-      {
-        lable: 'jobs.restart',
-        disabled: true,
-      },
-    ]
-    private list = [
+  private btnList = [
+    {
+      lable: 'jobs.pause',
+    },
+    {
+      lable: 'jobs.restart',
+      disabled: true,
+    },
+  ]
+  private list = [
     {
       number: 1,
       field: '2016-05-02',
@@ -63,12 +63,8 @@ export default class subjobIndex extends Vue {
     return this.list.length
   }
 
-  private handleBtn() {
-
-  }
-
+  private handleBtn() {}
 }
-
 </script>
 
 <style scoped lang="stylus">

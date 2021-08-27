@@ -138,16 +138,17 @@ export default class WorkIndex extends Vue {
       const type = index + 1
       ;(this.$refs.workDialog as any).handleOpen(type, row)
     }
-    if(this.pageType === 'jobs'){
-      if(!index){
+    if (this.pageType === 'jobs') {
+      if (!index) {
         // 编辑
+        ;(this.$refs.subjobDialog as any).handleOpen(1)
         console.log('编辑')
       }
-      if(index === 1){
+      if (index === 1) {
         // 暂停
         console.log('暂停')
       }
-      if(index === 2){
+      if (index === 2) {
         // 重启
         console.log('重启')
       }

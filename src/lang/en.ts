@@ -13,6 +13,9 @@ export default {
     projectEdit: 'Edit',
     projectManage: 'Participants',
     workflow: 'Workflows1',
+    resources: 'Authorized Resources',
+    data: 'Data',
+    account: 'Account',
   },
   nav: {
     market: 'Marketplace',
@@ -83,6 +86,12 @@ export default {
     pause: 'Pause',
     restart: 'Restart',
     serach: 'Search Sub-jobs',
+    relatedWorkflow: 'RelatedWorkflow',
+    baseInfor: 'BaseInfor',
+    dispatch: 'Dispatch',
+    previous: 'Previous',
+    next: 'Next',
+    create: 'Create',
   },
   create: {
     blank: 'Blank',
@@ -90,5 +99,13 @@ export default {
     qualified: 'Qualified Investor Certification',
     collaborative: 'Collaborative Marketing',
     scorecard: 'Collaborative Scorecard',
+  },
+  account: {
+    nickname: 'Nickname',
+    address: 'Wallet address',
+    name: 'Nickname',
+    scan: 'Scan',
+    submit: 'Submit',
+    cancel: 'Cancel',
   },
 }

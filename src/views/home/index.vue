@@ -7,10 +7,11 @@
       :tabIndex="tabIndex"
     ></jz-nav>
     <div class="search-wrap">
-      <i class="search-icon el-icon-search"></i>
+      <i class="search-icon el-icon-search" @click="getList"></i>
       <el-input
-        v-model="input"
+        v-model="inputInfo"
         :placeholder="$t('home.search' + placeholder)"
+        @keyup.enter.native="getList"
       ></el-input>
     </div>
     <div class="block-wrap">
@@ -42,7 +43,9 @@ import JzButton from '@/components/JzButton.vue'
 import JzNav from '@/components/JzNav.vue'
 // import { AppModule } from '@/store/modules/app'
 import { getDataList } from '@/api/home'
-
+interface parmamsType {
+  dataName?: string
+}
 @Component({
   name: 'Home',
   components: {
@@ -51,7 +54,7 @@ import { getDataList } from '@/api/home'
   },
 })
 export default class HomeIndex extends Vue {
-  private input = ''
+  private inputInfo = ''
   private tabs: string[] = ['data', 'algorithm', 'service']
   private tabIndex = 0
   get placeholder() {
@@ -68,12 +71,20 @@ export default class HomeIndex extends Vue {
   private handleAuthorize(id: string | number) {
     this.$router.push(`/home/${id}/authorize`)
   }
-  private async init() {
-    const { data } = await getDataList()
-    this.marketList = data.items
+  private async getList() {
+    // 过滤空格
+    const inputInfo = this.inputInfo.replace(/\s+/g, '')
+    const parmams: parmamsType = {}
+    if (inputInfo.length) {
+      parmams['dataName'] = inputInfo
+    }
+    if (!this.tabIndex) {
+      const { data } = await getDataList({ ...parmams })
+      this.marketList = data.items
+    }
   }
   created() {
-    this.init()
+    this.getList()
   }
 }
 </script>
@@ -93,6 +104,8 @@ export default class HomeIndex extends Vue {
       z-index 10
       font-size 18px
       font-weight: 700;
+      display inline-block
+      cursor pointer
     >>> .el-input__inner
       border: 0!important;
       border-radius: 0!important;

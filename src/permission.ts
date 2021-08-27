@@ -7,12 +7,12 @@ import { PermissionModule } from '@/store/modules/permission'
 const whiteList = ['/login', '/home', '/case/index']
 // router.beforeEach(async (to: Route, _: Route, next: any) => {
 //   if (UserModule.token) {
-//     // Check whether the user has obtained his permission roles
+//      Check whether the user has obtained his permission roles
 //     if (to.path === '/login') {
-//       // If is logged in, redirect to the home page
+//        If is logged in, redirect to the home page
 //       next({ path: '/home' })
 //     } else {
-//       // if (UserModule.roles.length === 0) {
+//        if (UserModule.roles.length === 0) {
 //       //   try {
 //       //     await UserModule.GetUserInfo()
 //       //     const roles = UserModule.roles

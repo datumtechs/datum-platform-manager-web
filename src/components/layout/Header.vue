@@ -44,6 +44,7 @@
           <span class="language" @click="changeLanguage">{{
             isEnglish ? 'EN' : '中文'
           }}</span>
+          <!-- 我的资源 -->
           <span @click="handleLoggedData" class="logged-data-item">
             <img
               v-show="!isLoggedData"
@@ -56,6 +57,7 @@
               src="@/assets/images/icons/close.svg"
             />
           </span>
+          <!-- 我的账户 -->
           <span class="user" @click="handleUser">{{ userName }}</span>
           <span @click="handleUser" class="user-item">
             <img
@@ -76,6 +78,7 @@
       <RightDrawer
         v-if="isUserShow || isLoggedData"
         :historyIndex="historyIndex"
+        @clickItem="handeleClose"
         ref="RightDrawer"
       ></RightDrawer>
     </transition>
@@ -134,6 +137,7 @@ export default class HeaderComponent extends Vue {
       )
     }
   }
+  // 点击切换资源
   public handleLoggedData() {
     this.isLoggedData = !this.isLoggedData
     if (this.isLoggedData) {
@@ -147,6 +151,12 @@ export default class HeaderComponent extends Vue {
   }
   public handleSelect(key: string, keyPath: string) {
     // console.log(key, keyPath)
+  }
+
+  private handeleClose() {
+    this.isUserShow = false
+    this.isLoggedData = false
+    this.historyIndex = []
   }
   public changeLanguage() {
     this.isEnglish = !this.isEnglish

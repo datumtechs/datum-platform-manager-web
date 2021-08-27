@@ -23,7 +23,7 @@
         >
           <div slot="search-button">
             <JzButton type="jz-button--primary" :width="120" :height="48">
-              {{ $t('project.createWork') }}
+              {{ $t('project.participant') }}
             </JzButton>
           </div>
         </Table>
