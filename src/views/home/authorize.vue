@@ -4,22 +4,23 @@
     <div class="authorize-block">
       <div class="block-info">
         <div class="row-lable">数据名称：</div>
-        <div class="row-value">贷款逾期数据</div>
+        <div class="row-value">{{ dataInfo.dataName }}</div>
         <div class="row-lable">数据方：</div>
-        <div class="row-value">银行A</div>
+        <div class="row-value">{{ dataInfo.identityName }}</div>
         <div class="row-lable">数据大小：</div>
-        <div class="row-value">1.06MB</div>
+        <div class="row-value">{{ dataInfo.size }}</div>
         <div class="row-lable">数据条数：</div>
-        <div class="row-value">2000</div>
-        <div class="row-lable">字段：</div>
-        <div class="row-value">20</div>
+        <div class="row-value">{{ dataInfo.rows }}</div>
+        <!-- <div class="row-lable">字段：</div>
+        <div class="row-value">{{dataInfo.size}}</div> -->
       </div>
       <div class="block-input">
         <div>
-          <el-radio v-model="radio" label="1">按时间</el-radio>
+          <el-radio v-model="authType" label="1">按时间</el-radio>
           <div class="time-input">
             <el-date-picker
-              v-model="value1"
+              :disabled="authType != '1'"
+              v-model="dateTime"
               type="datetimerange"
               range-separator="至"
               start-placeholder="开始日期"
@@ -29,9 +30,14 @@
           </div>
         </div>
         <div>
-          <el-radio v-model="radio" label="2">按次数</el-radio>
+          <el-radio v-model="authType" label="2">按次数</el-radio>
           <div class="num-input">
-            <el-input-number v-model="num" :min="1" size="small">
+            <el-input-number
+              v-model="authValue"
+              :min="0"
+              size="small"
+              :disabled="authType != '2'"
+            >
             </el-input-number>
           </div>
         </div>
@@ -56,7 +62,9 @@
 <script lang="ts">
 import { Vue, Component, Watch } from 'vue-property-decorator'
 import JzButton from '@/components/JzButton.vue'
-
+import { getDataDetail } from '@/api/home'
+import { getDataAuth } from '@/api/authorize'
+import { getSign } from '@/utils/auth'
 @Component({
   name: 'Authorize',
   components: {
@@ -64,19 +72,70 @@ import JzButton from '@/components/JzButton.vue'
   },
 })
 export default class Authorize extends Vue {
-  private radio = '1'
-  private value1 = ''
-  private value2 = ''
-  private num = 1
+  private dataInfo = {}
+  private authType = '1'
+  private dateTime = []
+  private authValue = 1
+  private detailId = ''
   // private handleChange(currentValue: number, oldValue: number) {
   //   console.log(currentValue, oldValue)
   // }
-  private handleAuthorize() {
-    // 发生授权请求
-    this.$router.push('/user/data')
+  private async handleAuthorize() {
+    const { authType, detailId } = this
+    // 校验
+    const checks: any = {
+      '1': () => {
+        if (!this.dateTime.length) {
+          this.$message.error('请输入时间')
+          return true
+        }
+      },
+      '2': () => {
+        if (!this.authValue) {
+          this.$message.error('请输入次数')
+          return true
+        }
+      },
+    }
+    const ischecks = checks[authType]()
+
+    if (!ischecks) {
+      // 发送授权请求
+      const params = {
+        authBeginTime: '',
+        authEndTime: '',
+        authType: authType,
+        authValue: 1,
+        id: Number(detailId),
+        sign: getSign(),
+      }
+      if (authType == '1') {
+        params.authBeginTime = this.dateTime[0]
+        params.authEndTime = this.dateTime[1]
+      }
+      if (authType == '2') {
+        params.authValue = this.authValue
+      }
+      const { code } = await getDataAuth({ ...params })
+      if (code === 10000) {
+        this.$message.success('授权成功')
+        setTimeout(() => {
+          this.$router.push('/resources/data')
+        }, 2000)
+      }
+    }
   }
   private handlecancel() {
     this.$router.go(-1)
+  }
+
+  private async getList() {
+    this.detailId = this.$route.params.id
+    const { data } = await getDataDetail(this.detailId)
+    this.dataInfo = data
+  }
+  created() {
+    this.getList()
   }
 }
 </script>

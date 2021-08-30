@@ -10,6 +10,7 @@
           <slot name="search-button"></slot>
         </div>
       </template>
+      <!-- 数据选中展示  -->
       <div class="select-block" v-else>
         <span>选中 {{ multipleSelection.length }} 条</span>
         <div class="select-btn">
@@ -39,23 +40,47 @@
         @selection-change="handleSelectionChange"
         :default-sort="{ prop: 'date', order: 'descending' }"
       >
+        <!-- 选择框 -->
         <el-table-column type="selection" width="50"></el-table-column>
-        <el-table-column sortable prop="type" label="名称">
-          <template slot-scope="scope">
-            <span
-              class="table-first"
-              v-if="pathName"
-              @click="handleNext(scope.row.number)"
-            >
-              {{ scope.row.type }}
-            </span>
-            <span v-else>{{ scope.row.type }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column sortable prop="type" label="创建者"> </el-table-column>
-        <el-table-column sortable prop="field" label="创建时间">
-        </el-table-column>
-        <el-table-column label="操作">
+        <!-- 组件依赖keyList -->
+        <template v-for="(item, index) in keyList">
+          <el-table-column
+            v-if="!index"
+            :prop="item.prop"
+            :label="item.label"
+            :key="index"
+          >
+            <template slot-scope="scope">
+              <span
+                class="table-first"
+                v-if="pathName"
+                @click="handleNext(scope.row.id)"
+              >
+                {{ scope.row[item.prop] }}
+              </span>
+              <span v-else>
+                {{ scope.row[item.prop] }}
+                <tempalte v-if="isReapply(scope.row[item.prop])">
+                  <el-button
+                    type="text"
+                    @click="handleReapply(index, scope.row)"
+                  >
+                    重新申请
+                  </el-button>
+                </tempalte>
+              </span>
+            </template>
+          </el-table-column>
+          <el-table-column
+            v-else
+            sortable
+            :prop="item.prop"
+            :label="item.label"
+            :key="index"
+          ></el-table-column>
+        </template>
+        <!-- 操作 -->
+        <el-table-column label="操作" v-if="isOperate">
           <template slot-scope="scope">
             <el-button
               type="text"
@@ -69,6 +94,7 @@
           </template>
         </el-table-column>
       </el-table>
+      <!-- 分页 -->
       <pagination
         v-show="total > 0"
         :total="total"
@@ -97,9 +123,12 @@ import JzButton from '@/components/JzButton.vue'
 export default class Tables extends Vue {
   @Prop({ required: true, default: 20 }) private total!: number
   @Prop({ required: true, default: '' }) private placeholder!: string
+  @Prop({ default: true }) private keyList!: any
   @Prop({ required: true, default: [] }) private list!: any
   @Prop({ required: true, default: [] }) private btnList!: any
   @Prop({ default: true }) private pathName!: boolean
+  @Prop({ default: true }) private isOperate!: boolean
+
   private listQuery = {
     page: 1,
     limit: 20,
@@ -107,9 +136,14 @@ export default class Tables extends Vue {
   private input = ''
   // 选择表格项
   private multipleSelection = []
-  @Emit('getList')
-  private getList() {
-    return ''
+
+  private isReapply(val: string) {
+    return this.$route.name === 'resources' && val === '已解决'
+  }
+
+  @Emit('changeList')
+  getList() {
+    return this.listQuery
   }
   // 删除选中
   @Emit('selectDelete')
@@ -139,6 +173,10 @@ export default class Tables extends Vue {
       index,
       row,
     }
+  }
+  // 个人资源 handleReapply
+  handleReapply() {
+    console.log('重新申请')
   }
 }
 </script>

@@ -4,6 +4,7 @@ const Cookies: any = VueCookies
 const TokenKey = 'Token'
 const UserKey = 'User'
 const languageKey = 'language'
+const sign = 'sign'
 
 export function getCookie(key: string) {
   return Cookies.get(key)
@@ -45,4 +46,10 @@ export function getLanguage() {
 }
 export function setLanguage(language: string) {
   return Cookies.set(languageKey, language)
+}
+export function getSign() {
+  return Cookies.get(sign)
+}
+export function setSign(val: string) {
+  return Cookies.set(sign, val)
 }

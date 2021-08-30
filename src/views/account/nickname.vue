@@ -40,7 +40,7 @@ import { Vue, Component, Watch } from 'vue-property-decorator'
 import Table from '../project/components/Table.vue'
 import JzButton from '@/components/JzButton.vue'
 import JzNav from '@/components/JzNav.vue'
-
+import { setNickName } from '@/api/user'
 @Component({
   name: 'resourcesData',
   components: {
@@ -53,8 +53,13 @@ export default class resourcesData extends Vue {
   private nickname = ''
   private tabs: string[] = ['nickname']
   private tabIndex = 0
-  private handleSubmit() {
-    this.$router.go(-1)
+  private async handleSubmit() {
+    const params = {
+      address: '501eb3eeb2a40e6f2ff6f481302435e6e8af3666',
+      nickName: this.nickname,
+    }
+    await setNickName({ ...params })
+    //this.$router.go(-1)
   }
   private handleCancel() {
     this.$router.go(-1)

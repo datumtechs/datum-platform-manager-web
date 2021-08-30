@@ -15,13 +15,12 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-
+import { getDataDetail } from '@/api/home'
 @Component({
   name: 'DataDetail',
 })
 export default class DataDetail extends Vue {
-  @Prop() private data!: any
-
+  private data = {}
   private dataDesc = [
     {
       title: '简介',
@@ -91,6 +90,14 @@ export default class DataDetail extends Vue {
       ],
     },
   ]
+
+  private async getList() {
+    const { data } = await getDataDetail(this.$route.params.id)
+    this.data = data
+  }
+  created() {
+    this.getList()
+  }
 }
 </script>
 

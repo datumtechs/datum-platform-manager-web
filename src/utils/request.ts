@@ -8,13 +8,8 @@ const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
   timeout: 5000,
   headers: {
-    'content-type': 'application/x-www-form-urlencoded', // 转换为key=value的格式必须增加content-type
+    ContentType: 'application/json',
   },
-  transformRequest: [
-    (data, headers) => {
-      return qs.stringify(data)
-    },
-  ],
 })
 /* request拦截器 */
 service.interceptors.request.use(

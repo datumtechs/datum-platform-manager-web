@@ -3,3 +3,8 @@ import request from '@/utils/request'
 export const getUserInfo = () => {
   return request.get('/user/permission/')
 }
+
+// 修改昵称
+export const setNickName = (params: any) => {
+  return request.post('/user/updateNickName', params)
+}

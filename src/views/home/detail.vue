@@ -18,13 +18,8 @@
           :tabIndex="tabIndex"
         ></jz-nav>
         <template>
-          <MetaData
-            v-if="tabIndex"
-            :list="list"
-            @changeList="changeList"
-            :total="total"
-          ></MetaData>
-          <DataDetail v-else :data="describe"></DataDetail>
+          <MetaData v-if="tabIndex"></MetaData>
+          <DataDetail v-else></DataDetail>
         </template>
       </div>
     </div>
@@ -37,7 +32,6 @@ import DataDetail from './components/DataDetail.vue'
 import MetaData from './components/MetaData.vue'
 import JzButton from '@/components/JzButton.vue'
 import JzNav from '@/components/JzNav.vue'
-import { getDataDetail } from '@/api/home'
 
 @Component({
   name: 'detail',
@@ -54,7 +48,6 @@ export default class Detail extends Vue {
     current: 1,
     size: 20,
   }
-  private describe = {}
   private list = []
   private tabs: string[] = ['description', 'metadata']
   private tabIndex = 0
@@ -66,26 +59,9 @@ export default class Detail extends Vue {
     this.tabIndex = index
   }
   private handleAuthorize() {
+    // TODO 判断用户登录
     const id = this.$route.params.id
     this.$router.push(`/home/${id}/authorize`)
-  }
-  // 元数据列表分页
-  changeList(parmams: any) {
-    console.log(parmams)
-    this.listQuery = parmams
-    this.getList()
-  }
-  private async getList() {
-    const id = this.$route.params.id
-    const { current, size } = this.listQuery
-    const { data } = await getDataDetail({ id, current, size })
-    // this.market = data.items
-    this.describe = data
-    this.list = data.metaDataColumnsVoPageVo.items
-    this.total = data.metaDataColumnsVoPageVo.total
-  }
-  created() {
-    this.getList()
   }
 }
 </script>

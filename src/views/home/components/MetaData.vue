@@ -25,9 +25,9 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Emit, Prop } from 'vue-property-decorator'
+import { Vue, Component } from 'vue-property-decorator'
 import Pagination from '@/components/Pagination/index.vue'
-
+import { getColumnList } from '@/api/home'
 @Component({
   name: 'MetaData',
   components: {
@@ -35,16 +35,21 @@ import Pagination from '@/components/Pagination/index.vue'
   },
 })
 export default class MetaData extends Vue {
-  @Prop() private list!: any
-  @Prop({ default: 0 }) private total!: number
-
+  private list = []
+  private total = 0
   private listQuery = {
     current: 1,
     size: 20,
   }
-  @Emit('changeList')
-  getList() {
-    return this.listQuery
+  private async getList() {
+    const id = this.$route.params.id
+    const { current, size } = this.listQuery
+    const { data } = await getColumnList({ id, current, size })
+    this.list = data.items
+    this.total = data.total
+  }
+  created() {
+    this.getList()
   }
 }
 </script>
