@@ -116,8 +116,8 @@ export default class Authorize extends Vue {
       if (authType == '2') {
         params.authValue = this.authValue
       }
-      const { code } = await getDataAuth({ ...params })
-      if (code === 10000) {
+      const data: any = await getDataAuth({ ...params })
+      if (data.code === 10000) {
         this.$message.success('授权成功')
         setTimeout(() => {
           this.$router.push('/resources/data')

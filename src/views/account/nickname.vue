@@ -58,8 +58,13 @@ export default class resourcesData extends Vue {
       address: '501eb3eeb2a40e6f2ff6f481302435e6e8af3666',
       nickName: this.nickname,
     }
-    await setNickName({ ...params })
-    //this.$router.go(-1)
+    const data: any = await setNickName({ ...params })
+    if (data.code === 10000) {
+      this.$message.success('修改昵称成功')
+      setTimeout(() => {
+        this.$router.go(-1)
+      }, 2000)
+    }
   }
   private handleCancel() {
     this.$router.go(-1)

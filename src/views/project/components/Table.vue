@@ -59,15 +59,7 @@
                 {{ scope.row[item.prop] }}
               </span>
               <span v-else>
-                {{ scope.row[item.prop] }}
-                <tempalte v-if="isReapply(scope.row[item.prop])">
-                  <el-button
-                    type="text"
-                    @click="handleReapply(index, scope.row)"
-                  >
-                    重新申请
-                  </el-button>
-                </tempalte>
+               {{ scope.row[item.prop] }}
               </span>
             </template>
           </el-table-column>
@@ -77,7 +69,22 @@
             :prop="item.prop"
             :label="item.label"
             :key="index"
-          ></el-table-column>
+          >
+          <template slot-scope="scope">
+            <span>
+               {{ scope.row[item.prop] }}
+               <tempalte v-if="isReapply(scope.row[item.prop]) && index === keyList.length-1">
+                  &nbsp;&nbsp;&nbsp;&nbsp;
+                  <el-button
+                    type="text"
+                    @click="handleReapply(index, scope.row)"
+                  >
+                    重新申请
+                  </el-button>
+                </tempalte>
+            </span>
+          </template>
+          </el-table-column>
         </template>
         <!-- 操作 -->
         <el-table-column label="操作" v-if="isOperate">
@@ -138,7 +145,8 @@ export default class Tables extends Vue {
   private multipleSelection = []
 
   private isReapply(val: string) {
-    return this.$route.name === 'resources' && val === '已解决'
+    console.log(this.$route.name)
+    return this.$route.name === 'data' && val === '已拒绝'
   }
 
   @Emit('changeList')
@@ -177,6 +185,9 @@ export default class Tables extends Vue {
   // 个人资源 handleReapply
   handleReapply() {
     console.log('重新申请')
+  }
+  created() {
+    console.log(this.$route.name)
   }
 }
 </script>
