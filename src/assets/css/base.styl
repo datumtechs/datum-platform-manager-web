@@ -3,6 +3,11 @@ html, body
   min-width 1440px
   margin 0
   padding 0
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB,Microsoft YaHei, Arial, sans-serif;
+  font-family: "PingFangSC-Regular";
 ol,ul
   list-style none
 h1, h2, h3, h4, h5, h6, p, ul
@@ -78,7 +83,6 @@ img
     height: 56px
     line-height: 24px
     font-size: 16px
-    font-family: PingFangSC-Medium, PingFang SC
     font-weight: 500
     padding: 16px 32px
     color: rgba(0, 0, 0, 0.85)
@@ -90,7 +94,6 @@ img
     margin: 0;
   .el-tabs__item
     font-size: 14px;
-    font-family: PingFangSC-Regular, PingFang SC;
     font-weight: 400;
     color: rgba(0, 0, 0, 0.65);
   .el-tabs__item.is-active

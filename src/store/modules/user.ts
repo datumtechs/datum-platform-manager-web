@@ -8,9 +8,9 @@ import {
 import store from '@/store'
 import router, { resetRouter } from '@/router'
 import {
-  setUserId,
+  // setUserId,
   setToken,
-  removeUserId,
+  // removeUserId,
   getToken,
   removeToken,
 } from '@/utils/auth'
@@ -49,7 +49,7 @@ class User extends VuexModule implements IUserState {
   @Action
   public ResetToken() {
     removeToken()
-    removeUserId()
+    // removeUserId()
     this.SET_TOKEN('')
     this.SET_ROLES([])
     this.SET_USER({})
@@ -66,7 +66,7 @@ class User extends VuexModule implements IUserState {
       if (!permissions || permissions.length <= 0) {
         throw Error('登录异常，请重新登录')
       }
-      setUserId(uid)
+      // setUserId(uid)
       this.SET_ROLES(permissions)
       this.SET_USER({ uid, user_cell, user_name })
     } catch (e) {

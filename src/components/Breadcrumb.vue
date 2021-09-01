@@ -170,7 +170,7 @@ export default class extends Vue {
 .el-breadcrumb__inner,
 .el-breadcrumb__inner a {
   font-weight: 400 !important;
-  color #0F62FE;
+  color #5f4ffb;
 }
 .el-breadcrumb__inner a:hover
   text-decoration: underline

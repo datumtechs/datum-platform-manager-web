@@ -105,7 +105,6 @@ export default class CaseIndex extends Vue {
       .item-info
         padding 10px 25px
         .item-title
-          font-family: 'PingFangSC-Semibold', 'PingFang SC Semibold', 'PingFang SC', sans-serif;
           font-weight: 650;
           font-style: normal;
           font-size: 20px;

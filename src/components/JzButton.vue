@@ -1,7 +1,7 @@
 <template>
   <div
     :class="[type, align]"
-    :style="`width:${width}px;height:${height}px;line-height:${height}px`"
+    :style="`width:${width}px;height:${height}px;line-height:${height - 2}px`"
     @click="handleClick"
   >
     <slot></slot>
@@ -16,8 +16,8 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 export default class JzButton extends Vue {
   @Prop({ default: 'jz-button' }) private type!: string
   @Prop({ default: 'center' }) private align!: string
-  @Prop({ default: 100 }) private width!: number
-  @Prop({ default: 34 }) private height!: number
+  @Prop({ default: 80 }) private width!: number
+  @Prop({ default: 30 }) private height!: number
   handleClick(evt: any) {
     this.$emit('click', evt)
   }
@@ -26,16 +26,18 @@ export default class JzButton extends Vue {
 
 <style scoped lang="stylus">
 .jz-button,.jz-button--primary
-  width 120px
-  height 34px
-  line-height 32px
+  width 80px
+  height 30px
+  line-height 28px
   box-sizing: border-box;
   border-radius: 0px;
   font-size 14px
-  border 1px solid rgba(15, 98, 254, 1)
-  color rgba(15, 98, 254, 1)
+  border: 1px solid rgba(95,79,251, .6);
+  border-radius: 4px;
+  color rgba(106,118,149,1)
   cursor pointer
   transform 0.6s
+  border-radius: 4px;
 .center
   text-align center
 .left
@@ -43,13 +45,13 @@ export default class JzButton extends Vue {
   text-indent: 20px;
 .right
   text-align right
-.jz-button:hover
-  color #fff
-  background rgba(15, 98, 254, 1)
+// .jz-button:hover
+//   color #fff
+//   background #5F4FFB;
 .jz-button--primary
   color #fff
-  background rgba(15, 98, 254, 1)
-  border-radius: 0px;
-.jz-button--primary:hover
-  background rgba(3, 83, 233, 1)
+  border: 1px solid #5F4FFB;
+  background: #5F4FFB;
+// .jz-button--primary:hover
+//   background rgba(3, 83, 233, 1)
 </style>

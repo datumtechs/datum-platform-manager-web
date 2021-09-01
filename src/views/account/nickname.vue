@@ -5,31 +5,38 @@
     </div>
     <div class="block">
       <jz-nav :tabs="tabs" :tabIndex="tabIndex" type="account"></jz-nav>
-      <div class="address">
-        {{ $t('account.address') }}：
-        <span>0xfdfdkfjdkfjdjfwe50</span>
-        <i></i>
-        <span class="scan" @click="handleScan">
-          {{ $t('account.scan') }}
-        </span>
-      </div>
-      <div class="nickname">
-        <div>{{ $t('account.name') }}</div>
-        <el-input type="input" v-model="nickname"> </el-input>
-      </div>
-      <div class="button-item">
-        <jz-button
-          type="jz-button--primary"
-          align="left"
-          :height="48"
-          @click="handleSubmit"
-          class="submit"
-        >
-          {{ $t('account.submit') }}
-        </jz-button>
-        <jz-button @click="handleCancel" :height="48" align="left">
-          {{ $t('account.cancel') }}
-        </jz-button>
+      <div class="block-info">
+        <div class="address">
+          {{ $t('account.address') }}：
+          <span>0xfdfdkfjdkfjdjfwe50</span>
+          <i></i>
+          <span class="scan" @click="handleScan">
+            {{ $t('account.scan') }}
+          </span>
+        </div>
+        <div class="nickname">
+          <!-- <div>{{ $t('account.name') }}</div> -->
+          <el-input type="input" v-model="nickname" class="nickname-input">
+          </el-input>
+        </div>
+        <div class="button-item">
+          <jz-button
+            @click="handleCancel"
+            :height="41"
+            :width="116"
+            class="submit"
+          >
+            {{ $t('account.cancel') }}
+          </jz-button>
+          <jz-button
+            type="jz-button--primary"
+            :width="116"
+            :height="41"
+            @click="handleSubmit"
+          >
+            {{ $t('account.submit') }}
+          </jz-button>
+        </div>
       </div>
     </div>
   </div>
@@ -77,9 +84,11 @@ export default class resourcesData extends Vue {
 
 <style scoped lang="stylus">
 .nickname-wrap
-  margin: 20px 0 0 65px;
+  width 1164px
+  margin 20px auto
   .title
-    margin-bottom 50px
+    margin-top 10px
+    margin-bottom 40px
     font-weight: 400;
     font-style: normal;
     font-size: 24px;
@@ -90,20 +99,38 @@ export default class resourcesData extends Vue {
     letter-spacing: 0.16px;
     color: #161616;
     text-align: left;
+    .block-info
+      height: 654px;
+      background #fff
+      box-shadow: 0px 20px 40px 0px rgba(209,209,209,0.18);
+      padding 30px
+      box-sizing border-box
     .address
-      margin 20px 0
+      margin-bottom 40px
+      color: rgba(0,0,0,0.5);
+      font-size 16px
       .scan
         color #0F62FE
         cursor pointer
+        margin-left 20px
+        font-size 16px
       .scan:hover
         text-decoration: underline
     .nickname
       width 300px
-      margin 10px 0
+      margin 10px 0 30px 0
+      color: rgba(0,0,0,0.5);
+      font-size 16px
+      .nickname-input
+        height 40px
+        >>> .el-input__inner
+          height 40px!important
+          line-height 40px!important
       div
         padding-bottom 10px
     .button-item
       padding 10px 0
+      display flex
       .submit
         margin-right 60px
 </style>

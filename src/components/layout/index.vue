@@ -42,6 +42,7 @@ export default class LayoutIndex extends Vue {
   .el-main
     padding 0
     color #333
+    background rgba(209,209,209,0.18)
   .header
     box-shadow 0px 1px 4px 0px rgba(0,21,41,0.12)
 </style>

@@ -46,7 +46,8 @@ export default class CommonComponent extends Vue {
   .content-title
     height 54px
     line-height 54px
-    background rgba(255,255,255,1)
     overflow hidden
-    padding 0 24px
+    margin 0 auto
+    margin-top: 4px;
+    width 1164px
 </style>

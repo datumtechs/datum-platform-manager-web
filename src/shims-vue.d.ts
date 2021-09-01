@@ -5,6 +5,7 @@ declare module '*.vue' {
 
 declare module '*.ts'
 declare module 'element-ui'
+declare module 'vue-svgicon'
 declare module 'element-ui/lib/locale/lang/*' {
   export const elementLocale: any
 }

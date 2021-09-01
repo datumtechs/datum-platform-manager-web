@@ -20,16 +20,42 @@ export const constantRoutes: RouteConfig[] = [
   {
     path: '/',
     component: Layout,
-    redirect: '/home',
+    redirect: '/home/data',
     meta: {
       title: 'market',
     },
     children: [
       {
         path: 'home',
+        name: 'Home',
         component: () =>
           import(/* webpackChunkName: "home" */ '@/views/home/index.vue'),
-        name: 'Home',
+        children: [
+          {
+            path: 'data',
+            name: 'homeData',
+            component: () =>
+              import(
+                /* webpackChunkName: "homeData" */ '@/views/home/list.vue'
+              ),
+          },
+          {
+            path: 'algorithm',
+            name: 'homeAlgorithm',
+            component: () =>
+              import(
+                /* webpackChunkName: "homeAlgorithm" */ '@/views/home/list.vue'
+              ),
+          },
+          {
+            path: 'service',
+            name: 'homeService',
+            component: () =>
+              import(
+                /* webpackChunkName: "homeService" */ '@/views/home/list.vue'
+              ),
+          },
+        ],
       },
       {
         path: 'home/detail/:id',
@@ -39,7 +65,7 @@ export const constantRoutes: RouteConfig[] = [
         meta: {
           title: 'detail',
           icon: 'detail',
-          activeMenu: '/home',
+          activeMenu: '/home/data',
         },
         children: [
           {
@@ -65,7 +91,7 @@ export const constantRoutes: RouteConfig[] = [
         name: 'Authorize',
         meta: {
           title: 'application',
-          activeMenu: '/home',
+          activeMenu: '/home/data',
         },
       },
     ],

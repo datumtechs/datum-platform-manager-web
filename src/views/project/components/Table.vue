@@ -59,7 +59,7 @@
                 {{ scope.row[item.prop] }}
               </span>
               <span v-else>
-               {{ scope.row[item.prop] }}
+                {{ scope.row[item.prop] }}
               </span>
             </template>
           </el-table-column>
@@ -70,20 +70,25 @@
             :label="item.label"
             :key="index"
           >
-          <template slot-scope="scope">
-            <span>
-               {{ scope.row[item.prop] }}
-               <tempalte v-if="isReapply(scope.row[item.prop]) && index === keyList.length-1">
-                  &nbsp;&nbsp;&nbsp;&nbsp;
+            <template slot-scope="scope">
+              <span>
+                {{ scope.row[item.prop] }}
+                <tempalte
+                  v-if="
+                    isReapply(scope.row[item.prop]) &&
+                      index === keyList.length - 1
+                  "
+                >
                   <el-button
                     type="text"
                     @click="handleReapply(index, scope.row)"
+                    style="margin-left:10px"
                   >
                     重新申请
                   </el-button>
                 </tempalte>
-            </span>
-          </template>
+              </span>
+            </template>
           </el-table-column>
         </template>
         <!-- 操作 -->

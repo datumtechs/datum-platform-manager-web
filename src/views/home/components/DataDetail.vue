@@ -103,16 +103,17 @@ export default class DataDetail extends Vue {
 
 <style scoped lang="stylus">
 .data-detail
-  padding 30px 20px
+  padding 30px
   line-height 28px
   .detail-item
     margin-top 20px
     .title
-      font-weight: 650;
-      font-size 14px
+      font-weight: 500;
+      font-size 18px
       margin-bottom 10px
     .item-info
       display flex
+      flex-flow: column !important;
       margin-bottom 10px
       max-width: 1000px;
       flex-flow: row wrap;
@@ -122,8 +123,10 @@ export default class DataDetail extends Vue {
         margin-bottom: 4px;
         .lable
           width 130px
+          color rgba(0,0,0,0.50)
         .info
           width 200px
+          color #000
   .detail-item:first-child
     margin-top 0
 </style>

@@ -1,22 +1,27 @@
 <template>
   <div class="detail">
-    <div :class="[isHomeDetail ? '' : 'margin']">
-      <jz-button
-        type="jz-button--primary"
-        class="authorize"
-        @click="handleAuthorize"
-        :height="42"
-        v-if="isHomeDetail"
-      >
-        {{ $t('detail.apply') }}
-      </jz-button>
-      <div class="detail-block">
-        <jz-nav
-          type="detail"
-          :tabs="tabs"
-          @clickTable="handleTable"
-          :tabIndex="tabIndex"
-        ></jz-nav>
+    <div :class="[isHomeDetail ? '' : 'margin']" class="detail-wrap">
+      <div class="wrap-title">
+        <div class="detail-block">
+          <jz-nav
+            type="detail"
+            :tabs="tabs"
+            @clickTable="handleTable"
+            :tabIndex="tabIndex"
+          ></jz-nav>
+        </div>
+        <jz-button
+          type="jz-button--primary"
+          class="authorize"
+          @click="handleAuthorize"
+          :height="42"
+          :width="116"
+          v-if="isHomeDetail"
+        >
+          {{ $t('detail.apply') }}
+        </jz-button>
+      </div>
+      <div class="wrap-info">
         <template>
           <MetaData v-if="tabIndex"></MetaData>
           <DataDetail v-else></DataDetail>
@@ -68,18 +73,28 @@ export default class Detail extends Vue {
 
 <style scoped lang="stylus">
 .detail
-  padding 20px 28px
-  .authorize
-    width 160px
-    line-height 40px
-    height 42px
-    font-size 16px
-  .detail-block
-    width: 95%;
-    height: 646px;
-    background: inherit;
-    background-color: rgba(224, 224, 224, 1);
-    box-sizing: border-box;
-  .margin
-    margin-top 20px
+  width 1200px
+  margin 20px auto
+  .detail-wrap
+    padding 0px 28px
+    .wrap-title
+      display flex
+      justify-content space-between
+      .authorize
+        width 160px
+        line-height 40px
+        height 42px
+        font-size 16px
+      .detail-block
+        // width: 95%;
+        // height: 646px;
+        // background: inherit;
+        // background-color: rgba(224, 224, 224, 1);
+        // box-sizing: border-box;
+      .margin
+        margin-top 20px
+    .wrap-info
+      box-shadow: 0px 20px 40px 0px rgba(209,209,209,0.18);
+      min-height 712px
+      background: #fff;
 </style>

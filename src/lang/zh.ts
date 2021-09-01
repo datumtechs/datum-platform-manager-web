@@ -30,7 +30,7 @@ export default {
     3: '选项3',
   },
   home: {
-    authorize: '申请',
+    authorize: '申请授权',
     cancel: '取消',
     detail: '查看',
     data: '数据',

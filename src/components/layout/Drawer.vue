@@ -1,10 +1,14 @@
 <template>
   <div class="drawer-wrap">
     <h3>{{ $t('home.' + configs.title) }}</h3>
-    <div class="line"></div>
     <ul>
-      <li v-for="(item, index) in configs.list" :key="index">
-        <span @click="handleItem(item.to)">
+      <li
+        v-for="(item, index) in configs.list"
+        :key="index"
+        @click="handleItem(item.to)"
+      >
+        <svg-icon :name="item.lable" class="item-icon" width="15" height="15" />
+        <span>
           {{ $t('home.' + item.lable) }}
         </span>
       </li>
@@ -29,11 +33,11 @@ export default class LayoutIndex extends Vue {
           lable: 'data',
         },
         // {
-        //   to: '/index',
+        //   to: '',
         //   lable: 'algorithm',
         // },
         // {
-        //   to: '/index',
+        //   to: '',
         //   lable: 'service',
         // },
       ],
@@ -58,46 +62,57 @@ export default class LayoutIndex extends Vue {
   }
   @Emit('clickItem')
   private handleItem(path: string) {
-    this.$router.push(path)
+    if (path.length) {
+      this.$router.push(path)
+    }
   }
 }
 </script>
 <style scoped lang="stylus">
 .drawer-wrap{
-  width 300px
+  width 271px
   height calc(100vh - 60px);
-  background #000
+  background: #FFFFFF;
+  box-shadow: 0px 20px 40px 0px rgba(209,209,209,0.18);
   box-sizing border-box
   position fixed
-  top 60px
+  top 62px
   right 0px
   z-index 99
   color #c6c6c6
-  font-family: 'PingFangSC-Semibold', 'PingFang SC Semibold', 'PingFang SC', sans-serif;
-  font-size: 14px;
+
+  padding-left 28px
   h3{
-    margin: 10px 16px
-    font-weight: 650;
+    margin 15px 0 10px 0
     font-style: normal;
-    color: #C6C6C6;
-  }
-  .line{
-    width 90%;
-    height 1px
-    margin: 7px 16px
-    background #444
+    font-size: 18px;
+    color: #000000;
+    letter-spacing: 0;
+    font-weight: 500;
+    font-family: PingFangSC-Medium;
   }
   ul li{
     align-self: center;
-    padding: 7px 16px 7px 16px;
+    padding: 10px 16px 10px 0px;
     box-sizing: border-box;
     cursor pointer
+    color #000
+    .item-icon{
+      margin-right 10px
+      vertical-align: -2px;
+    }
     span{
-      display block
+      font-size: 15px
     }
   }
-  ul li:hover{
-    background #545c64
+  ul li:hover .item-icon {
+    >>> path {
+      stroke: #5F4FFB;
+      fill: #5F4FFB;
+   }
+  }
+  ul li:hover span{
+    color: #5F4FFB
   }
 }
 </style>

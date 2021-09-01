@@ -7,18 +7,39 @@
           class="el-menu-demo"
           mode="horizontal"
           @select="handleSelect"
-          background-color="#000"
-          text-color="#C6C6C6"
-          active-text-color="#ffd04b"
+          background-color="#fff"
+          text-color="#000"
+          active-text-color="#5F4FFB"
           :router="true"
         >
-          <el-submenu index="RosettaFlow">
-            <template slot="title">RosettaFlow</template>
+          <el-submenu index="/" class="logo-wrap">
+            <template slot="title">
+              <svg-icon
+                name="logo"
+                width="100"
+                height="35"
+                class="logo-svg"
+                color="#5F4FFB"
+              />
+            </template>
             <el-menu-item>RosettaNet</el-menu-item>
             <el-menu-item>RosettaFlow</el-menu-item>
             <el-menu-item>RosettaMAS</el-menu-item>
           </el-submenu>
-          <el-menu-item index="/home">{{ $t('nav.market') }}</el-menu-item>
+          <el-submenu index="home">
+            <template slot="title">
+              {{ $t('nav.market') }}
+            </template>
+            <el-menu-item index="/home/data" class="">
+              {{ $t('home.data') }}
+            </el-menu-item>
+            <el-menu-item index="/home/algorithm">
+              {{ $t('home.algorithm') }}
+            </el-menu-item>
+            <el-menu-item index="/home/service">
+              {{ $t('home.service') }}
+            </el-menu-item>
+          </el-submenu>
           <el-menu-item index="/case/index">
             {{ $t('nav.case') }}
           </el-menu-item>
@@ -41,34 +62,61 @@
       </el-col>
       <el-col :span="6">
         <div class="right right-layout">
-          <span class="language" @click="changeLanguage">{{
-            isEnglish ? 'EN' : '中文'
-          }}</span>
+          <span class="language" @click="changeLanguage">
+            <svg-icon
+              :name="isEnglish ? 'language-en' : 'language-zh'"
+              class="logged-data"
+              color="#000"
+              width="18"
+              height="18"
+            />
+          </span>
           <!-- 我的资源 -->
           <span @click="handleLoggedData" class="logged-data-item">
-            <img
+            <svg-icon
+              v-show="!isLoggedData"
+              name="my-resources"
+              class="logged-data"
+              width="18"
+              height="18"
+            />
+            <svg-icon
+              v-show="isLoggedData"
+              name="close"
+              class="icon-close"
+              color="#000"
+              width="14"
+              height="14"
+            />
+            <!-- <img
               v-show="!isLoggedData"
               class="logged-data"
               src="@/assets/images/icons/logged-data.svg"
-            />
-            <img
+            /> -->
+            <!-- <img
               v-show="isLoggedData"
               class="icon-close"
               src="@/assets/images/icons/close.svg"
-            />
+            /> -->
           </span>
           <!-- 我的账户 -->
           <span class="user" @click="handleUser">{{ userName }}</span>
           <span @click="handleUser" class="user-item">
-            <img
+            <svg-icon
               v-show="!isUserShow"
+              name="user"
               class="icon-user"
-              src="@/assets/images/icons/user.svg"
+              color="#000"
+              width="18"
+              height="18"
             />
-            <img
+            <svg-icon
               v-show="isUserShow"
+              name="close"
               class="icon-close"
-              src="@/assets/images/icons/close.svg"
+              color="#000"
+              width="14"
+              height="14"
             />
           </span>
         </div>
@@ -174,7 +222,7 @@ export default class HeaderComponent extends Vue {
 <style scoped lang="stylus">
 .header {
   padding: 0px 24px;
-  background #000
+  background #fff
   position relative
   .header-layout {
     font-size: 18px;
@@ -183,14 +231,26 @@ export default class HeaderComponent extends Vue {
   }
 
   .left-loyout {
+    .logo-wrap{
+      margin-right 180px
+      .logo-svg{
+        vertical-align: -8px;
+      }
+    }
+    .el-menu-item {
+      font-size 16px
+    }
+    >>> .el-submenu__title {
+        font-size 16px
+      }
     .el-menu-item:hover{
-      outline: 0 !important;
-      color: #fff !important;
-      background #545c64 !important;
+      // outline: 0 !important;
+      color: #5F4FFB !important;
+      background #fff !important;
     }
     >>> .el-submenu:not(.is-active):hover .el-submenu__title{
-      background: #545c64 !important;
-      color: #fff !important;
+      background: #fff !important;
+      color: #5F4FFB !important;
     }
     .el-menu.el-menu--horizontal {
         border-bottom: none;
@@ -203,6 +263,7 @@ export default class HeaderComponent extends Vue {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    color #000
     span {
       padding 0 18px
       display inline-block
@@ -223,9 +284,9 @@ export default class HeaderComponent extends Vue {
       width 56px
       box-sizing: border-box;
     }
-    span:not(.user,.language):hover {
-      background: #545c64
-    }
+    // span:not(.user,.language):hover {
+    //   background: #545c64
+    // }
   }
   .drawer-fade-enter-active {
     transition: all .5s ease;
@@ -239,6 +300,7 @@ export default class HeaderComponent extends Vue {
   }
 }
 .el-menu--horizontal .el-menu--popup .el-menu-item:hover{
-  background: #545c64 !important;
+  background: #fff !important;
+  color: #5F4FFB !important;
 }
 </style>

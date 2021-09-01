@@ -32,21 +32,21 @@ export default class JzNav extends Vue {
 .nav-muen
   display flex
   .nav-muen-item
-    width 180px
-    margin-right 4px
-    padding: 12px 68px 10px 18px;
+    width: 136px;
+    height: 54px;
+    font-size: 18px;
+    text-align center
+    line-height 54px
     box-sizing: border-box;
-    border-bottom 2px solid rgba(224, 224, 224, 1)
+    border-top 2px solid rgba(224, 224, 224, 1)
+    background #fff
     cursor pointer
-    font-size: 14px;
     letter-spacing: 0.16px;
-    color: #393939;
+    color: #000;
     transform 0.4s
-  .nav-muen-item:hover
-    border-bottom 2px solid rgba(111, 111, 111, 1)
+    font-weight: 500;
   .nav-muen-item.active
-    border-bottom 2px solid rgba(15, 98, 254, 1)
-    color #393939
-    font-weight: 650;
-    font-style: normal;
+    border-top 2px solid rgba(15, 98, 254, 1)
+    color #5F4FFB
+    background: rgba(95,79,251,0.05);
 </style>

@@ -3222,7 +3222,7 @@
   .el-pagination.is-background .el-pager li:not(.disabled):hover {
     color: #1890ff; }
   .el-pagination.is-background .el-pager li:not(.disabled).active {
-    background-color: #1890ff;
+    background-color: #5f4ffb;
     color: #ffffff; }
   .el-pagination.is-background.el-pagination--small .btn-prev,
   .el-pagination.is-background.el-pagination--small .btn-next,

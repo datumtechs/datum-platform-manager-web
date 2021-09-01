@@ -1,6 +1,11 @@
 <template>
   <div class="meta-data">
-    <el-table :data="list" border style="width: 100%;min-height: 450px;">
+    <el-table
+      :data="list"
+      border
+      style="width: 100%;min-height: 450px;color:#000"
+      :header-cell-style="{ background: '#FAFAFA', color: '#000' }"
+    >
       <el-table-column prop="id" label="序号">
         <template slot-scope="scope">
           <span>
@@ -39,7 +44,7 @@ export default class MetaData extends Vue {
   private total = 0
   private listQuery = {
     current: 1,
-    size: 20,
+    size: 10,
   }
   private async getList() {
     const id = this.$route.params.id

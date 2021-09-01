@@ -1,6 +1,6 @@
 import router from './router'
 import { config } from '@/config/index.ts'
-import { setToken, setUserId } from '@/utils/auth'
+import { setToken } from '@/utils/auth' // setUserId
 import { Route } from 'vue-router'
 import { UserModule } from '@/store/modules/user'
 import { PermissionModule } from '@/store/modules/permission'
