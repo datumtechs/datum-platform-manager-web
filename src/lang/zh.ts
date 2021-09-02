@@ -77,6 +77,11 @@ export default {
     cancel: '取消',
     delete: '删除',
     participant: '添加成员',
+    selectTemple: '选择案例模板',
+    name: '名称',
+    description: '描述',
+    nameP: '请输入项目名称',
+    descriptionP: '请输入项目描述',
   },
   worke: {
     edit: '编辑',

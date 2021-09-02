@@ -3,7 +3,7 @@
     <el-table
       :data="list"
       border
-      style="width: 100%;min-height: 450px;color:#000"
+      style="width: 100%;min-height: 540px;color:#000"
       :header-cell-style="{ background: '#FAFAFA', color: '#000' }"
     >
       <el-table-column prop="id" label="序号">
@@ -61,7 +61,7 @@ export default class MetaData extends Vue {
 
 <style scoped lang="stylus">
 .meta-data
-  padding 30px 20px
+  padding 30px
   line-height 28px
   .pagination
     >>> .el-pagination

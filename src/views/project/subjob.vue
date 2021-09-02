@@ -69,5 +69,7 @@ export default class subjobIndex extends Vue {
 
 <style scoped lang="stylus">
 .subjob
-  margin 20px 60px
+  padding 30px
+  background #fff
+  box-shadow: 0px 20px 40px 0px rgba(209,209,209,0.18);
 </style>

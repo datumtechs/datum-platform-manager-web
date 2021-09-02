@@ -1,27 +1,33 @@
 <template>
   <div class="projectAll">
-    <div class="title">
-      {{ $t('project.title') }}
-    </div>
-    <div class="blick">
-      <Table
-        @clickName="handleName"
-        @clickBtn="handleBtn"
-        :list="list"
-        :total="total"
-        :btnList="btnList"
-        :placeholder="$t('project.searchProject')"
-      >
-        <div slot="search-button">
+    <div class="project-wrap">
+      <div class="title">
+        <div class="title-info">
+          {{ $t('project.title') }}
+        </div>
+        <div class="search-button">
           <JzButton
             type="jz-button--primary"
-            :height="48"
+            :width="116"
+            :height="41"
             @click="createProject"
           >
             {{ $t('project.createProject') }}
           </JzButton>
         </div>
-      </Table>
+      </div>
+      <div class="block">
+        <Table
+          @clickName="handleName"
+          @clickBtn="handleBtn"
+          :list="list"
+          :total="total"
+          :btnList="btnList"
+          :keyList="keyList"
+          :placeholder="$t('project.searchProject')"
+        >
+        </Table>
+      </div>
     </div>
   </div>
 </template>
@@ -39,29 +45,43 @@ import JzButton from '@/components/JzButton.vue'
   },
 })
 export default class AllIndex extends Vue {
+  private keyList = [
+    {
+      label: '名称',
+      prop: 'projectName',
+    },
+    {
+      label: '创建者',
+      prop: 'userName',
+    },
+    {
+      label: '创建时间',
+      prop: 'createTime',
+    },
+  ]
   private list = [
     {
-      number: 1,
-      field: '2016-05-02',
-      type: '王小虎',
+      id: 1,
+      createTime: '2016-05-02',
+      projectName: '王小虎',
       describe: '上海市普陀区金沙江路 1518 弄',
     },
     {
-      number: 2,
-      field: '2016-05-02',
-      type: '王小虎',
+      id: 2,
+      createTime: '2016-05-02',
+      projectName: '王小虎',
       describe: '上海市普陀区金沙江路 1518 弄',
     },
     {
-      number: 3,
-      field: '2016-05-02',
-      type: '王小虎',
+      id: 3,
+      createTime: '2016-05-02',
+      projectName: '王小虎',
       describe: '上海市普陀区金沙江路 1518 弄',
     },
     {
-      number: 4,
-      field: '2016-05-02',
-      type: '王小虎',
+      id: 4,
+      createTime: '2016-05-02',
+      projectName: '王小虎',
       describe: '上海市普陀区金沙江路 1518 弄',
     },
   ]
@@ -94,10 +114,23 @@ export default class AllIndex extends Vue {
 
 <style scoped lang="stylus">
 .projectAll
-  margin: 20px 0 0 65px;
-  .title
-    margin-bottom 50px
-    font-weight: 400;
-    font-style: normal;
-    font-size: 24px;
+  margin: 20px auto
+  width 1200px
+  .project-wrap
+    padding 0 30px
+    .title
+      .title-info
+        margin-top 35px
+        margin-bottom 5px
+        font-weight: 400;
+        font-style: normal;
+        font-size: 24px;
+      .search-button
+        display flex
+        justify-content: flex-end;
+        margin-bottom 20px
+    .block
+      background #fff
+      box-shadow: 0px 20px 40px 0px rgba(209,209,209,0.18);
+      padding 30px
 </style>

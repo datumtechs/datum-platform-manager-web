@@ -1,35 +1,34 @@
 <template>
   <div class="edit">
     <div class="edit-item">
-      <span>名称</span>
+      <span class="edit-item-text">{{ $t('project.name') }}</span>
       <div class="edit-input">
-        <el-input v-model="input" placeholder="请输入内容"></el-input>
+        <el-input v-model="input" :placeholder="$t('project.nameP')"></el-input>
       </div>
     </div>
     <div class="edit-item">
-      <span>描述</span>
+      <span class="edit-item-text">{{ $t('project.description') }}</span>
       <div class="edit-input">
         <el-input
           type="textarea"
-          :rows="3"
-          placeholder="请输入内容"
+          :rows="4"
+          :placeholder="$t('project.descriptionP')"
           v-model="textarea"
         >
         </el-input>
       </div>
     </div>
-    <div class="edit-item">
+    <div class="edit-item edit-btn">
+      <jz-button class="cancel" @click="handlecancel" :height="41" :width="116">
+        {{ $t('project.cancel') }}
+      </jz-button>
       <jz-button
         type="jz-button--primary"
-        align="left"
-        :height="48"
+        :height="41"
+        :width="116"
         @click="handleSubmit"
-        class="submit"
       >
         {{ $t('project.submit') }}
-      </jz-button>
-      <jz-button @click="handlecancel" :height="48" align="left">
-        {{ $t('project.cancel') }}
       </jz-button>
     </div>
   </div>
@@ -83,14 +82,27 @@ export default class editIndex extends Vue {
 <style scoped lang="stylus">
 .edit
   .edit-item
-    width 680px
-    padding 10px 0 30px 0
+    width 700px
+    padding-top 10px
+    margin-bottom 40px
     span
       display block
       letter-spacing: 0.32px;
-      color: #393939;
+      color: #000;
       line-height 24px
-      padding-bottom 10px
-    .submit
+      padding-bottom 8px
+      margin-bottom 10px
+    .edit-input
+      >>> .el-input__inner
+        height 40px!important
+        line-height 40px!important
+        border-radius 0!important
+      >>> .el-textarea__inner
+        resize: none;
+        height 91px
+        border-radius 0!important
+    .cancel
       margin-right 60px
+  .edit-btn
+    display flex
 </style>

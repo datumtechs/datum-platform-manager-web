@@ -74,6 +74,11 @@ export default {
     cancel: 'Cancel',
     delete: 'Delete',
     participant: 'Add Participant',
+    selectTemple: 'Select template',
+    name: 'Name',
+    description: 'Description',
+    nameP: 'Please enter a project name',
+    descriptionP: 'Please enter a project description',
   },
   worke: {
     edit: 'Edit',

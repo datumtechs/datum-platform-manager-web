@@ -1,37 +1,38 @@
 <template>
   <div class="work">
+    <div class="search-button">
+      <!-- 工作流 -->
+      <template v-if="pageType === 'work'">
+        <JzButton
+          type="jz-button--primary"
+          :width="120"
+          :height="48"
+          @click="createWork"
+        >
+          {{ $t('project.createWork') }}
+        </JzButton>
+      </template>
+      <!-- 作业 -->
+      <template v-if="pageType === 'jobs'">
+        <JzButton
+          type="jz-button--primary"
+          :width="120"
+          :height="48"
+          @click="createJobs"
+        >
+          {{ $t('project.createJobs') }}
+        </JzButton>
+      </template>
+    </div>
     <Table
       @clickName="handleName"
       @clickBtn="handleBtn"
       :list="list"
       :total="total"
+      :keyList="keyList[pageType]"
       :btnList="btnList[pageType]"
       :placeholder="$t(placeholder)"
     >
-      <div slot="search-button">
-        <!-- 工作流 -->
-        <template v-if="pageType === 'work'">
-          <JzButton
-            type="jz-button--primary"
-            :width="120"
-            :height="48"
-            @click="createWork"
-          >
-            {{ $t('project.createWork') }}
-          </JzButton>
-        </template>
-        <!-- 作业 -->
-        <template v-if="pageType === 'jobs'">
-          <JzButton
-            type="jz-button--primary"
-            :width="120"
-            :height="48"
-            @click="createJobs"
-          >
-            {{ $t('project.createJobs') }}
-          </JzButton>
-        </template>
-      </div>
     </Table>
     <work-dialog ref="workDialog"></work-dialog>
     <subjob-dialog ref="subjobDialog"></subjob-dialog>
@@ -59,29 +60,67 @@ interface PlaceholderType {
 })
 export default class WorkIndex extends Vue {
   private workDialog: boolean = false
+  private keyList = {
+    work: [
+      {
+        label: '名称',
+        prop: 'workflowName',
+      },
+      {
+        label: '创造者',
+        prop: 'userName',
+      },
+      {
+        label: '数据协同方',
+        prop: 'authValue', // TODO 没有字段
+      },
+      {
+        label: '创建时间',
+        prop: 'createTime',
+      },
+    ],
+    jobs: [
+      {
+        label: '名称',
+        prop: 'name',
+      },
+      {
+        label: '关联工作流',
+        prop: 'workflowId', // 工作流ID
+      },
+      {
+        label: '创建时间',
+        prop: 'beginTime',
+      },
+    ],
+  }
   private list = [
     {
       number: 1,
       field: '2016-05-02',
-      type: '王小虎',
+      workflowName: '王小虎',
+      name: '王小虎',
       describe: '上海市普陀区金沙江路 1518 弄',
     },
     {
       number: 2,
       field: '2016-05-02',
-      type: '王小虎',
+      workflowName: '王小虎',
+      name: '王小虎',
       describe: '上海市普陀区金沙江路 1518 弄',
     },
     {
       number: 3,
       field: '2016-05-02',
-      type: '王小虎',
+      workflowName: '王小虎',
+      name: '王小虎',
       describe: '上海市普陀区金沙江路 1518 弄',
     },
     {
       number: 4,
       field: '2016-05-02',
-      type: '王小虎',
+      workflowName: '王小虎',
+      name: '王小虎',
       describe: '上海市普陀区金沙江路 1518 弄',
     },
   ]
@@ -167,5 +206,13 @@ export default class WorkIndex extends Vue {
 
 <style scoped lang="stylus">
 .work
-  margin 20px 60px
+  width: 1164px;
+  padding 30px
+  background #fff
+  box-shadow: 0px 20px 40px 0px rgba(209,209,209,0.18);
+  position relative
+  .search-button
+    position absolute
+    top -57px
+    right 0
 </style>

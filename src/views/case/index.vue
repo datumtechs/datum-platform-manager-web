@@ -14,12 +14,17 @@
           <div class="item-title">{{ item.title }}</div>
           <div class="item-describe">{{ item.describe }}</div>
           <div class="item-button">
-            <jz-button @click="handleDetail(item.id)">
+            <jz-button
+              @click="handleDetail(item.id)"
+              type="jz-button--primary"
+              class="btn"
+            >
               {{ $t('case.project') }}
             </jz-button>
             <jz-button
               type="jz-button--primary"
               @click="handleDescription(item.id)"
+              class="btn"
             >
               {{ $t('case.guidance') }}
             </jz-button>
@@ -75,50 +80,45 @@ export default class CaseIndex extends Vue {
   width 100%
   .case-title
     display block
-    max-width 1000px
-    margin 70px auto
+    max-width 1150px
+    margin 40px auto 30px
     span
       font-weight: 400;
       font-style: normal;
       font-size: 24px;
   .block-wrap
-    transform: translatex(115px);
+    transform: translatex(50px);
     max-width 1260px
     margin 0 auto
     display flex
     flex-flow: row wrap;
     .block-wrap-item
-      width: 289px;
-      margin 0 95px 60px 0
-      background: inherit;
-      background-color: rgba(255, 255, 255, 0);
+      width: 368px;
+      margin 0 48px 48px 0
       box-sizing: border-box;
-      border:1px solid rgba(215, 215, 215, 1);
-      border-radius: 5px;
-      -moz-box-shadow: none;
-      -webkit-box-shadow: none;
-      box-shadow: none;
+      background: #FFFFFF;
+      box-shadow: 0px 20px 40px 0px rgba(205,205,205,0.18);
       .item-img
         width: 100%;
-        height: 170px;
+        height: 200px;
         background #eee
       .item-info
-        padding 10px 25px
+        padding 20px 25px
         .item-title
-          font-weight: 650;
-          font-style: normal;
-          font-size: 20px;
-          color: #8C8C8C;
+          font-size: 18px;
+          color: #000000;
+          font-weight: 500;
           padding-bottom 10px
         .item-describe
           height 53px
-          font-weight: 400;
-          font-style: normal;
           font-size: 14px;
-          color: #8C8C8C;
+          color: rgba(0,0,0,0.60);
+          font-weight: 400;
           line-height: 18px;
         .item-button
           display flex
-          justify-content space-between
           padding-bottom 10px
+          .btn
+            border-radius 0
+            margin-right 25px
 </style>

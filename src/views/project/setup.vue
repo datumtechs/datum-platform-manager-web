@@ -1,33 +1,36 @@
 <template>
   <div class="setup">
-    <jz-nav
-      type="project"
-      :tabs="tabs"
-      @clickTable="handleTable"
-      :tabIndex="tabIndex"
-    ></jz-nav>
-    <div class="wrap">
-      <!-- 编辑 -->
-      <template v-if="!tabIndex">
-        <Edit> </Edit>
-      </template>
-      <!-- 管理成员 -->
-      <template v-else>
-        <Table
-          @clickBtn="handleBtn"
-          :list="list"
-          :total="total"
-          :btnList="btnList"
-          :placeholder="$t('project.searchCollaborators')"
-          :pathName="false"
-        >
-          <div slot="search-button">
-            <JzButton type="jz-button--primary" :width="120" :height="48">
-              {{ $t('project.participant') }}
-            </JzButton>
-          </div>
-        </Table>
-      </template>
+    <div class="setup-wrap">
+      <jz-nav
+        type="project"
+        :tabs="tabs"
+        @clickTable="handleTable"
+        :tabIndex="tabIndex"
+      ></jz-nav>
+      <div class="wrap">
+        <!-- 编辑 -->
+        <template v-if="!tabIndex">
+          <Edit> </Edit>
+        </template>
+        <!-- 管理成员 -->
+        <template v-else>
+          <Table
+            @clickBtn="handleBtn"
+            :list="list"
+            :total="total"
+            :btnList="btnList"
+            :placeholder="$t('project.searchCollaborators')"
+            :pathName="false"
+            :keyList="keyList"
+          >
+            <div slot="search-button">
+              <JzButton type="jz-button--primary" :width="120" :height="48">
+                {{ $t('project.participant') }}
+              </JzButton>
+            </div>
+          </Table>
+        </template>
+      </div>
     </div>
   </div>
 </template>
@@ -49,29 +52,43 @@ import JzButton from '@/components/JzButton.vue'
   },
 })
 export default class SetupIndex extends Vue {
+  private keyList = [
+    {
+      label: '昵称',
+      prop: 'userName',
+    },
+    {
+      label: '角色',
+      prop: 'role',
+    },
+    {
+      label: '创建时间',
+      prop: 'createTime',
+    },
+  ]
   private list = [
     {
       number: 1,
       field: '2016-05-02',
-      type: '王小虎',
+      userName: '王小虎',
       describe: '上海市普陀区金沙江路 1518 弄',
     },
     {
       number: 2,
       field: '2016-05-02',
-      type: '王小虎',
+      userName: '王小虎',
       describe: '上海市普陀区金沙江路 1518 弄',
     },
     {
       number: 3,
       field: '2016-05-02',
-      type: '王小虎',
+      userName: '王小虎',
       describe: '上海市普陀区金沙江路 1518 弄',
     },
     {
       number: 4,
       field: '2016-05-02',
-      type: '王小虎',
+      userName: '王小虎',
       describe: '上海市普陀区金沙江路 1518 弄',
     },
   ]
@@ -104,6 +121,15 @@ export default class SetupIndex extends Vue {
 </script>
 
 <style scoped lang="stylus">
-.wrap
-  margin 20px 60px
+.setup
+  width 1200px
+  margin 0 auto
+  .setup-wrap
+    padding 30px
+    .wrap
+      padding 30px
+      background #fff
+      box-shadow: 0px 20px 40px 0px rgba(209,209,209,0.18);
+      min-height 700px
+      box-sizing border-box
 </style>

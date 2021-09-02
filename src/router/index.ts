@@ -27,6 +27,7 @@ export const constantRoutes: RouteConfig[] = [
     children: [
       {
         path: 'home',
+        redirect: '/home/data',
         name: 'Home',
         component: () =>
           import(/* webpackChunkName: "home" */ '@/views/home/index.vue'),

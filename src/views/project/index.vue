@@ -1,13 +1,15 @@
 <template>
   <div class="project">
-    <jz-nav
-      v-if="isNav"
-      type="project"
-      :tabs="tabs"
-      @clickTable="handleTable"
-      :tabIndex="tabIndex"
-    ></jz-nav>
-    <router-view></router-view>
+    <div class="project-wrap">
+      <jz-nav
+        v-if="isNav"
+        type="project"
+        :tabs="tabs"
+        @clickTable="handleTable"
+        :tabIndex="tabIndex"
+      ></jz-nav>
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
@@ -48,4 +50,11 @@ export default class ProjectIndex extends Vue {
 }
 </script>
 
-<style scoped lang="stylus"></style>
+<style scoped lang="stylus">
+.project
+  width 1200px
+  margin 20px auto
+  .project-wrap
+    padding 30px
+    padding-top 0
+</style>

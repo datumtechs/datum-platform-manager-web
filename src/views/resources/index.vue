@@ -1,22 +1,26 @@
 <template>
-  <div class="data-wrap">
-    <div class="title">
-      {{ $t('route.resources') }}
-    </div>
-    <div class="blick">
-      <jz-nav :tabs="tabs" :tabIndex="tabIndex"></jz-nav>
-      <Table
-        @clickName="handleName"
-        @clickBtn="handleBtn"
-        :keyList="keyList"
-        :list="list"
-        :total="total"
-        :btnList="btnList"
-        :isOperate="false"
-        :placeholder="$t('home.searchdata')"
-        @changeList="changeList"
-      >
-      </Table>
+  <div class="data">
+    <div class="data-wrap">
+      <div class="title">
+        {{ $t('route.resources') }}
+      </div>
+      <div class="block">
+        <jz-nav :tabs="tabs" :tabIndex="tabIndex"></jz-nav>
+        <div class="block-table">
+          <Table
+            @clickName="handleName"
+            @clickBtn="handleBtn"
+            :keyList="keyList"
+            :list="list"
+            :total="total"
+            :btnList="btnList"
+            :isOperate="false"
+            :placeholder="$t('home.searchdata')"
+            @changeList="changeList"
+          >
+          </Table>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -115,11 +119,21 @@ export default class resourcesData extends Vue {
 </script>
 
 <style scoped lang="stylus">
-.data-wrap
-  margin: 20px 0 0 65px;
-  .title
-    margin-bottom 50px
-    font-weight: 400;
-    font-style: normal;
-    font-size: 24px;
+.data
+  margin: 20px auto;
+  width 1200px
+  .data-wrap
+    padding 30px
+    padding-top 0px
+    .title
+      margin-top 10px
+      margin-bottom 40px
+      font-weight: 400;
+      font-style: normal;
+      font-size: 24px;
+    .block
+      .block-table
+        padding 30px
+        background #fff
+        box-shadow: 0px 20px 40px 0px rgba(209,209,209,0.18);
 </style>

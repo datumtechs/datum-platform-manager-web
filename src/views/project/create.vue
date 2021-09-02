@@ -3,57 +3,66 @@
     <div class="create-title">
       {{ $t('route.create') }}
     </div>
-    <div class="create-item">
-      <span>选择案例模板</span>
-      <div class="template">
-        <div
-          :class="[
-            'template-item',
-            isEnglish ? 'isEnglish' : '',
-            templateIndex === index ? 'active' : '',
-          ]"
-          v-for="(item, index) in templates"
-          :key="index"
-          @click="handleSelect(index)"
-        >
-          <span>
-            {{ $t(item.lable) }}
-          </span>
-          <i class="el-icon-success select-icon"></i>
+    <div class="create-wrap">
+      <div class="create-item">
+        <span>{{ $t('project.selectTemple') }}</span>
+        <div class="template">
+          <div
+            :class="[
+              'template-item',
+              isEnglish ? 'isEnglish' : '',
+              templateIndex === index ? 'active' : '',
+            ]"
+            v-for="(item, index) in templates"
+            :key="index"
+            @click="handleSelect(index)"
+          >
+            <span class="template-item-text">
+              {{ $t(item.lable) }}
+            </span>
+            <i class="el-icon-success select-icon"></i>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="create-item">
-      <span>名称</span>
-      <div class="edit-input">
-        <el-input v-model="input" placeholder="请输入项目名称"></el-input>
+      <div class="create-item">
+        <span>{{ $t('project.name') }}</span>
+        <div class="edit-input">
+          <el-input
+            v-model="input"
+            :placeholder="$t('project.nameP')"
+          ></el-input>
+        </div>
       </div>
-    </div>
-    <div class="create-item">
-      <span>描述</span>
-      <div class="create-input">
-        <el-input
-          type="textarea"
-          :rows="3"
-          placeholder="请输入项目描述"
-          v-model="textarea"
+      <div class="create-item">
+        <span>{{ $t('project.description') }}</span>
+        <div class="create-input">
+          <el-input
+            type="textarea"
+            :rows="4"
+            :placeholder="$t('project.descriptionP')"
+            v-model="textarea"
+          >
+          </el-input>
+        </div>
+      </div>
+      <div class="create-item create-btn">
+        <jz-button
+          @click="handlecancel"
+          :height="41"
+          :width="116"
+          class="cancel"
         >
-        </el-input>
+          {{ $t('project.cancel') }}
+        </jz-button>
+        <jz-button
+          type="jz-button--primary"
+          :width="116"
+          :height="41"
+          @click="handleSubmit"
+        >
+          {{ $t('project.submit') }}
+        </jz-button>
       </div>
-    </div>
-    <div class="create-item">
-      <jz-button
-        type="jz-button--primary"
-        align="left"
-        :height="48"
-        @click="handleSubmit"
-        class="submit"
-      >
-        {{ $t('project.submit') }}
-      </jz-button>
-      <jz-button @click="handlecancel" :height="48" align="left">
-        {{ $t('project.cancel') }}
-      </jz-button>
     </div>
   </div>
 </template>
@@ -136,54 +145,81 @@ export default class createIndex extends Vue {
 
 <style scoped lang="stylus">
 .create
-  padding 20px 0 0 60px
+  margin 20px auto
+  width: 1150px;
   .create-title
-    font-weight: 650;
+    font-weight: 500;
     font-style: normal;
     font-size: 24px;
-    margin-bottom 20px
-  .create-item
-    width 700px
-    padding 10px 0 20px 0
-    span
-      display block
-      letter-spacing: 0.32px;
-      color: #393939;
-      line-height 24px
-      padding-bottom 8px
-    .submit
-      margin-right 60px
-    .template
-      display flex
-      width 1000px
-      .template-item
-        width: 132px;
-        height: 64px;
-        background-color: #f4f4f4;
-        margin-right 10px
-        line-height 64px;
-        text-align center
-        cursor pointer
-        position relative
-        span
+    margin-bottom 24px
+  .create-wrap
+    height: 732px;
+    box-sizing border-box
+    padding 30px
+    background #fff
+    box-shadow: 0px 20px 40px 0px rgba(209,209,209,0.18);
+    .create-item
+      width 700px
+      padding-top 10px
+      margin-bottom 40px
+      span
+        display block
+        letter-spacing: 0.32px;
+        color: #000;
+        line-height 24px
+        padding-bottom 8px
+      span:first-child
+        margin-bottom 10px
+      .edit-input
+        >>> .el-input__inner
+          height 40px!important
+          line-height 40px!important
+          border-radius 0!important
+      .create-input
+        >>> .el-textarea__inner
+          resize: none;
+          height 91px
+          border-radius 0!important
+      .cancel
+        margin-right 60px
+      .template
+        display flex
+        width 1000px
+        .template-item
+          width: 136px;
+          height: 64px;
+          background-color: #F6F6F6;
+          margin-right 10px
           line-height 64px;
-          font-size 14px
-        .select-icon
-          position absolute
-          right 8px
-          top 8px
-          display none
-      .isEnglish
-        span
-          font-size 14px
-          line-height 20px
-          vertical-align:middle;
-          display: inline-block;
-      .template-item:hover
-        background-color: #e4e1e1;
-      .active
-        border 1px solid #333
-        background-color: #e4e1e1;
-        .select-icon
-          display block
+          text-align center
+          cursor pointer
+          position relative
+          .template-item-text
+            color rgba(0,0,0,0.49)
+          span
+            line-height 64px;
+            font-size 14px
+          .select-icon
+            position absolute
+            right 8px
+            top 8px
+            display none
+        .isEnglish
+          span
+            font-size 14px
+            line-height 20px
+            vertical-align:middle;
+            display: inline-block;
+        .template-item:hover
+          background-color: rgba(95,79,251,0.03);
+        .active
+          border 1px solid #5F4FFB
+          background-color: rgba(95,79,251,0.03);
+          span
+            color #5F4FFB
+          .select-icon
+            display block
+            color #5F4FFB
+    .create-btn
+      display flex
 </style>

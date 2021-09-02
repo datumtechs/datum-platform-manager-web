@@ -3,8 +3,12 @@
     <div class="search-wrap">
       <template v-if="!multipleSelection.length">
         <div class="search-block">
-          <i class="search-icon el-icon-search"></i>
-          <el-input v-model="input" :placeholder="placeholder"></el-input>
+          <i class="search-icon el-icon-search" @click="getList"></i>
+          <el-input
+            v-model="input"
+            :placeholder="placeholder"
+            @keyup.enter.native="getList"
+          ></el-input>
         </div>
         <div>
           <slot name="search-button"></slot>
@@ -16,14 +20,17 @@
         <div class="select-btn">
           <JzButton
             type="jz-button--primary"
-            :height="48"
+            :height="40"
+            :width="100"
             @click="SelectDelete"
+            class="select-btn-item"
           >
             {{ $t('project.delete') }}
           </JzButton>
           <JzButton
             type="jz-button--primary"
-            :height="48"
+            :height="40"
+            :width="100"
             @click="toggleSelection"
           >
             {{ $t('project.cancel') }}
@@ -34,8 +41,9 @@
     <div class="table-block">
       <el-table
         :data="list"
-        style="width: 100%;min-height: 450px;"
-        :header-cell-style="{ background: '#eee', color: '#333' }"
+        class="table-wrap"
+        :header-cell-style="{ background: '#FAFAFA', color: '#000' }"
+        :cell-style="{ padding: '6px 0' }"
         ref="multipleTable"
         @selection-change="handleSelectionChange"
         :default-sort="{ prop: 'date', order: 'descending' }"
@@ -198,6 +206,8 @@ export default class Tables extends Vue {
 </script>
 
 <style scoped lang="stylus">
+.search-wrap
+  margin-bottom 15px
 .table-first
   width: 100%;
   color #0F62FE
@@ -219,8 +229,9 @@ export default class Tables extends Vue {
         left 12px
         z-index 10
         font-size 16px
+        cursor pointer
       >>> .el-input__inner
-        border: 0!important;
+        // border: 1px solid #!important;
         border-radius: 0!important;
         padding: 3px 3px 3px 40px;
         height 48px!important;
@@ -235,13 +246,22 @@ export default class Tables extends Vue {
     box-sizing border-box
     padding-left 20px
     line-height 48px
-    color #fff
-    background rgba(15, 98, 254, 1)
     display flex
     justify-content space-between
+    span
+      color #5F4FFB
+      font-size: 18px;
+      font-weight: 600;
     .select-btn
       display flex
+      .select-btn-item
+        margin-right 20px
   .table-block
+    .table-wrap
+      width: 100%;
+      min-height: 450px;
+      border: 1px solid #EBEEF5;
+      border-bottom 0
     >>> .el-table__header-wrapper
           .el-checkbox__inner
             margin-left 5px
