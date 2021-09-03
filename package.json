@@ -31,7 +31,8 @@
     "vue-router": "3.0.0",
     "vuex": "^3.5.1",
     "vuex-class": "^0.3.2",
-    "vuex-module-decorators": "^1.0.1"
+    "vuex-module-decorators": "^1.0.1",
+    "web3": "github:PlatONnetwork/client-sdk-js#master"
   },
   "devDependencies": {
     "@types/jest": "^24.0.11",
