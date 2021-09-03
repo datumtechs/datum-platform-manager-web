@@ -88,6 +88,15 @@ export default {
     duplicate: '复制',
     editWork: '编辑工作流',
     duplicateWork: '复制工作流',
+    createMember: '添加成员',
+    editMember: '编辑成员角色',
+    select: '选择用户',
+    role: '设置角色',
+  },
+  role: {
+    viewer: '查看者',
+    editor: '编辑者',
+    manager: '管理员',
   },
   jobs: {
     edit: '编辑',

@@ -66,11 +66,7 @@ import JzButton from '@/components/JzButton.vue'
 import Pagination from '@/components/Pagination/index.vue'
 // import { AppModule } from '@/store/modules/app'
 import { getDataList } from '@/api/home'
-interface parmamsType {
-  dataName?: string
-  current: number
-  size: number
-}
+import { ParamsType } from '@/api/types'
 @Component({
   name: 'HomeList',
   components: {
@@ -104,18 +100,18 @@ export default class HomeList extends Vue {
   private async getList() {
     // 过滤空格
     const inputInfo = this.inputInfo.replace(/\s+/g, '')
-    const parmams: parmamsType = {
+    const params: ParamsType = {
       current: 1,
       size: 6,
     }
     const { current, size } = this.listQuery
-    parmams.current = current
-    parmams.size = size
+    params.current = current
+    params.size = size
     if (inputInfo.length) {
-      parmams['dataName'] = inputInfo
+      params['dataName'] = inputInfo
     }
     if (!this.tabIndex) {
-      const { data } = await getDataList({ ...parmams })
+      const { data } = await getDataList({ ...params })
       this.marketList = data.items
       this.total = data.total
     }

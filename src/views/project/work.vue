@@ -43,8 +43,8 @@
 import { Vue, Component } from 'vue-property-decorator'
 import Table from './components/Table.vue'
 import JzButton from '@/components/JzButton.vue'
-import WorkDialog from './components/work-dialog.vue'
-import SubjobDialog from './components/subjob-dialog.vue'
+import WorkDialog from './components/WorkeDialog.vue'
+import SubjobDialog from './components/SubjobsDialog.vue'
 interface PlaceholderType {
   work: string
   jobs: string

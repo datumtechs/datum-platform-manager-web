@@ -20,11 +20,14 @@
         <Table
           @clickName="handleName"
           @clickBtn="handleBtn"
+          @clickDelete="handleDelete"
+          @selectDelete="selectDelete"
           :list="list"
           :total="total"
           :btnList="btnList"
           :keyList="keyList"
           :placeholder="$t('project.searchProject')"
+          @changeList="changeList"
         >
         </Table>
       </div>
@@ -36,7 +39,8 @@
 import { Vue, Component } from 'vue-property-decorator'
 import Table from './components/Table.vue'
 import JzButton from '@/components/JzButton.vue'
-
+import { getProject, delProject, delProjects } from '@/api/project'
+import { ParamsType, TableParams, QueryType } from '@/api/types'
 @Component({
   name: 'projectAll',
   components: {
@@ -45,6 +49,7 @@ import JzButton from '@/components/JzButton.vue'
   },
 })
 export default class AllIndex extends Vue {
+  private projectName = ''
   private keyList = [
     {
       label: '名称',
@@ -59,32 +64,7 @@ export default class AllIndex extends Vue {
       prop: 'createTime',
     },
   ]
-  private list = [
-    {
-      id: 1,
-      createTime: '2016-05-02',
-      projectName: '王小虎',
-      describe: '上海市普陀区金沙江路 1518 弄',
-    },
-    {
-      id: 2,
-      createTime: '2016-05-02',
-      projectName: '王小虎',
-      describe: '上海市普陀区金沙江路 1518 弄',
-    },
-    {
-      id: 3,
-      createTime: '2016-05-02',
-      projectName: '王小虎',
-      describe: '上海市普陀区金沙江路 1518 弄',
-    },
-    {
-      id: 4,
-      createTime: '2016-05-02',
-      projectName: '王小虎',
-      describe: '上海市普陀区金沙江路 1518 弄',
-    },
-  ]
+  private list = []
   private btnList = [
     {
       lable: 'project.edit',
@@ -95,19 +75,59 @@ export default class AllIndex extends Vue {
       path: '/project/manage/',
     },
   ]
-  get total() {
-    return this.list.length
+  private listQuery: QueryType = {
+    current: 1,
+    size: 10,
   }
+  private total = 0
   private handleName(number: number) {
     this.$router.push('/project/' + number)
   }
   private handleBtn(data: any) {
     const { index, row } = data
-    const path: string = this.btnList[index]['path'] + row['number']
+    const path: string = this.btnList[index]['path'] + row['id']
     this.$router.push(path)
   }
   private createProject() {
     this.$router.push('/project/create')
+  }
+  private changeList(data: TableParams) {
+    this.projectName = data.input
+    this.listQuery = data.list
+    this.getList()
+  }
+  private async handleDelete(id: number) {
+    const { msg } = await delProject({ id })
+    this.$message.success(msg)
+    this.getList()
+  }
+  private async selectDelete(ids: number[]) {
+    if (!ids.length) return
+    const params = ids.join(',')
+    console.log(params)
+    const { msg } = await delProjects({ ids: params })
+    this.$message.success(msg)
+    this.getList()
+  }
+  private async getList() {
+    // 过滤空格
+    const projectName = this.projectName.replace(/\s+/g, '')
+    const params: ParamsType = {
+      current: 1,
+      size: 6,
+    }
+    const { current, size } = this.listQuery
+    params.current = current
+    params.size = size
+    if (projectName.length) {
+      params['projectName'] = projectName
+    }
+    const { data } = await getProject({ ...params })
+    this.list = data.items
+    this.total = data.total
+  }
+  created() {
+    this.getList()
   }
 }
 </script>

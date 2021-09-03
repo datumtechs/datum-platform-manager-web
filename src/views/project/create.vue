@@ -70,9 +70,8 @@
 <script lang="ts">
 import { Vue, Component, Watch } from 'vue-property-decorator'
 import JzButton from '@/components/JzButton.vue'
-import { getLanguage } from '@/utils/auth'
 import { AppModule } from '@/store/modules/app'
-
+import { addProject } from '@/api/project'
 @Component({
   name: 'create',
   components: {
@@ -119,13 +118,16 @@ export default class createIndex extends Vue {
     this.textarea = textarea
     this.$router.push('/project/all')
   }
-  private handleSubmit() {
+  private async handleSubmit() {
     const { input, textarea } = this
     // post api
-    const data = { input, textarea }
-
+    const data = { projectName: input, projectDesc: textarea }
+    const res: any = await addProject(data)
+    if (res.code === 10000) {
+      this.$router.push('/project/all')
+    }
     // code 200 ok
-    this.$router.push('/project/all')
+    // this.$router.push('/project/all')
   }
   get isEnglish() {
     return AppModule.language === 'en'
@@ -133,12 +135,9 @@ export default class createIndex extends Vue {
   created() {
     // api
     const data = {
-      input: '',
-      textarea: '',
+      projectName: this.input,
+      projectDesc: this.textarea,
     }
-    this.data = data
-    this.input = data.input
-    this.textarea = data.textarea
   }
 }
 </script>

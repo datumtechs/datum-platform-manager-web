@@ -37,6 +37,7 @@
 <script lang="ts">
 import { Vue, Component, Watch } from 'vue-property-decorator'
 import JzButton from '@/components/JzButton.vue'
+import { getProjectDetail, setProject } from '@/api/project'
 
 @Component({
   name: 'edit',
@@ -45,36 +46,29 @@ import JzButton from '@/components/JzButton.vue'
   },
 })
 export default class editIndex extends Vue {
+  private id = ''
   private input = ''
   private textarea = ''
-  private data = {
-    input: '',
-    textarea: '',
-  }
   // 取消
   private handlecancel() {
-    const { input, textarea } = this.data
-    this.input = input
-    this.textarea = textarea
     this.$router.push('/project/all')
   }
-  private handleSubmit() {
-    const { input, textarea } = this
-    // post api
-    const data = { input, textarea }
-
-    // code 200 ok
-    this.$router.push('/project/all')
+  private async handleSubmit() {
+    const { input, textarea, id } = this
+    const data = { projectName: input, projectDesc: textarea, id }
+    const { code } = await setProject(data)
+    if (code === 10000) {
+      this.$router.push('/project/all')
+    }
+  }
+  private async getDetail() {
+    const { data } = await getProjectDetail(this.id)
+    this.input = data.projectName
+    this.textarea = data.projectDesc
   }
   created() {
-    // api
-    const data = {
-      input: '黑名单',
-      textarea: '黑名单描述',
-    }
-    this.data = data
-    this.input = data.input
-    this.textarea = data.textarea
+    this.id = this.$route.params.id
+    this.getDetail()
   }
 }
 </script>

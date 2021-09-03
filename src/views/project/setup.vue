@@ -7,6 +7,16 @@
         @clickTable="handleTable"
         :tabIndex="tabIndex"
       ></jz-nav>
+      <div class="search-button" v-if="tabIndex">
+        <JzButton
+          type="jz-button--primary"
+          :width="120"
+          :height="48"
+          @click="addMember"
+        >
+          {{ $t('project.participant') }}
+        </JzButton>
+      </div>
       <div class="wrap">
         <!-- 编辑 -->
         <template v-if="!tabIndex">
@@ -16,19 +26,22 @@
         <template v-else>
           <Table
             @clickBtn="handleBtn"
+            @clickDelete="handleDelete"
+            @selectDelete="selectDelete"
             :list="list"
             :total="total"
             :btnList="btnList"
             :placeholder="$t('project.searchCollaborators')"
             :pathName="false"
             :keyList="keyList"
+            @changeList="changeList"
+            tableId="memberId"
           >
-            <div slot="search-button">
-              <JzButton type="jz-button--primary" :width="120" :height="48">
-                {{ $t('project.participant') }}
-              </JzButton>
-            </div>
           </Table>
+          <MemberDialog
+            ref="MemberDialog"
+            @clickSubmit="clickSubmit"
+          ></MemberDialog>
         </template>
       </div>
     </div>
@@ -41,6 +54,9 @@ import JzNav from '@/components/JzNav.vue'
 import Edit from './components/Edit.vue'
 import Table from './components/Table.vue'
 import JzButton from '@/components/JzButton.vue'
+import MemberDialog from './components/MemberDialog.vue'
+import { getMember, delProjMember, delProjMembers } from '@/api/project'
+import { ParamsType, TableParams, QueryType } from '@/api/types'
 
 @Component({
   name: 'projectSetup',
@@ -49,9 +65,16 @@ import JzButton from '@/components/JzButton.vue'
     Edit,
     Table,
     JzButton,
+    MemberDialog,
   },
 })
 export default class SetupIndex extends Vue {
+  private userName = ''
+  private listQuery: QueryType = {
+    current: 1,
+    size: 10,
+  }
+  private total = 0
   private keyList = [
     {
       label: '昵称',
@@ -66,40 +89,12 @@ export default class SetupIndex extends Vue {
       prop: 'createTime',
     },
   ]
-  private list = [
-    {
-      number: 1,
-      field: '2016-05-02',
-      userName: '王小虎',
-      describe: '上海市普陀区金沙江路 1518 弄',
-    },
-    {
-      number: 2,
-      field: '2016-05-02',
-      userName: '王小虎',
-      describe: '上海市普陀区金沙江路 1518 弄',
-    },
-    {
-      number: 3,
-      field: '2016-05-02',
-      userName: '王小虎',
-      describe: '上海市普陀区金沙江路 1518 弄',
-    },
-    {
-      number: 4,
-      field: '2016-05-02',
-      userName: '王小虎',
-      describe: '上海市普陀区金沙江路 1518 弄',
-    },
-  ]
+  private list = []
   private btnList = [
     {
-      lable: '编辑',
+      lable: 'worke.edit',
     },
   ]
-  get total() {
-    return this.list.length
-  }
   get queryId() {
     return Number(this.$route.params.id)
   }
@@ -114,8 +109,54 @@ export default class SetupIndex extends Vue {
     }
   }
   private handleBtn(data: any) {}
+  private clickSubmit(state: boolean) {
+    console.log(state)
+    if (state) {
+      this.getList()
+    }
+  }
+  private addMember() {
+    console.log('addMember ')
+    ;(this.$refs.MemberDialog as any).handleOpen(0)
+  }
+  private async handleDelete(id: number) {
+    const { msg } = await delProjMember({ projMemberId: id })
+    this.$message.success(msg)
+    this.getList()
+  }
+  private async selectDelete(ids: number[]) {
+    if (!ids.length) return
+    const params = ids.join(',')
+    console.log(params)
+    const { msg } = await delProjMembers({ projMemberIds: params })
+    this.$message.success(msg)
+    this.getList()
+  }
+  private changeList(data: TableParams) {
+    this.userName = data.input
+    this.listQuery = data.list
+    this.getList()
+  }
+  private async getList() {
+    const userName = this.userName.replace(/\s+/g, '')
+    const params: ParamsType = {
+      current: 1,
+      size: 10,
+      projectId: this.queryId,
+    }
+    const { current, size } = this.listQuery
+    params.current = current
+    params.size = size
+    if (userName.length) {
+      params['userName'] = userName
+    }
+    const { data } = await getMember({ ...params })
+    this.list = data.items
+    this.total = data.total
+  }
   created() {
     this.tabIndex = this.$route.name === 'manage' ? 1 : 0
+    this.getList()
   }
 }
 </script>
@@ -126,6 +167,11 @@ export default class SetupIndex extends Vue {
   margin 0 auto
   .setup-wrap
     padding 30px
+    position relative
+    .search-button
+      position absolute
+      right 30px
+      top 30px
     .wrap
       padding 30px
       background #fff

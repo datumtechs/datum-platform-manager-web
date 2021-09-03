@@ -14,18 +14,15 @@ const service = axios.create({
 /* request拦截器 */
 service.interceptors.request.use(
   (config: any) => {
-    if (config.url !== '/login') {
-      const token: string = getToken()
-      const language: string = getLanguage()
-      if (token) {
-        config.headers.common['Access-Token'] = token
-        config.headers.common['Accept-Language'] = language
-      }
+    const token: string = getToken()
+    const language: string = getLanguage()
+    if (token) {
+      config.headers.common['Access-Token'] = token
+      config.headers.common['Accept-Language'] = language
     }
     return config
   },
   (error: any) => {
-    message.error('请求超时')
     Promise.reject(error)
   },
 )

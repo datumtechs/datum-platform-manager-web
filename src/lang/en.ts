@@ -85,6 +85,15 @@ export default {
     duplicate: 'Duplicate',
     editWork: 'Edit WorkFlows',
     duplicateWork: 'Duplicate WorkFlows',
+    createMember: 'Add Participant',
+    editMember: 'Edit',
+    select: 'Select',
+    role: 'Role',
+  },
+  role: {
+    viewer: 'Viewer',
+    editor: 'Editor',
+    manager: 'Manager',
   },
   jobs: {
     edit: 'Edit',

@@ -113,13 +113,35 @@
             </el-button>
           </template>
         </el-table-column>
+        <el-table-column width="50" class="column-more">
+          <template slot-scope="scope">
+            <el-popover
+              placement="bottom"
+              width="60"
+              :ref="`popover-${scope.$index}`"
+            >
+              <p class="more-warp">
+                <el-button
+                  type="text"
+                  class="delete"
+                  @click="handleDelete(scope.row[tableId])"
+                >
+                  删除
+                </el-button>
+              </p>
+              <div slot="reference">
+                <i class="el-icon-more icon-more"></i>
+              </div>
+            </el-popover>
+          </template>
+        </el-table-column>
       </el-table>
       <!-- 分页 -->
       <pagination
         v-show="total > 0"
         :total="total"
-        :page.sync="listQuery.page"
-        :limit.sync="listQuery.limit"
+        :page.sync="listQuery.current"
+        :limit.sync="listQuery.size"
         @pagination="getList"
         layout="sizes, total, jumper, next, pager, prev"
         class="pagination"
@@ -132,7 +154,7 @@
 import { Vue, Component, Emit, Prop } from 'vue-property-decorator'
 import Pagination from '@/components/Pagination/index.vue'
 import JzButton from '@/components/JzButton.vue'
-
+import { QueryType } from '@/api/types'
 @Component({
   name: 'tables',
   components: {
@@ -148,31 +170,32 @@ export default class Tables extends Vue {
   @Prop({ required: true, default: [] }) private btnList!: any
   @Prop({ default: true }) private pathName!: boolean
   @Prop({ default: true }) private isOperate!: boolean
-
-  private listQuery = {
-    page: 1,
-    limit: 20,
+  // 删除字段的key
+  @Prop({ default: 'id' }) private tableId!: string
+  private listQuery: QueryType = {
+    current: 1,
+    size: 10,
   }
   private input = ''
   // 选择表格项
   private multipleSelection = []
 
   private isReapply(val: string) {
-    console.log(this.$route.name)
     return this.$route.name === 'data' && val === '已拒绝'
   }
 
   @Emit('changeList')
   getList() {
-    return this.listQuery
+    return {
+      list: this.listQuery,
+      input: this.input,
+    }
   }
   // 删除选中
   @Emit('selectDelete')
   private SelectDelete() {
-    const selectId = this.multipleSelection.map((item: any) => {
-      return item.number
-    })
-    console.log('multipleSelection', selectId)
+    const id = this.tableId
+    const selectId = this.multipleSelection.map((item: any) => item[id])
     return selectId
   }
   // 取消选择
@@ -195,6 +218,20 @@ export default class Tables extends Vue {
       row,
     }
   }
+  @Emit('clickDelete')
+  private handleDelete(id: number) {
+    // 解决多个popover无法关闭问题
+    for (const key in this.$refs) {
+      if (key.indexOf('popover-') !== -1) {
+        try {
+          ;(this.$refs[key] as any).doClose()
+        } catch (error) {
+          console.log('popoverError==>', error)
+        }
+      }
+    }
+    return id
+  }
   // 个人资源 handleReapply
   handleReapply() {
     console.log('重新申请')
@@ -210,7 +247,7 @@ export default class Tables extends Vue {
   margin-bottom 15px
 .table-first
   width: 100%;
-  color #0F62FE
+  color #5f4ffb
   cursor pointer
   display inline-block
 
@@ -262,6 +299,10 @@ export default class Tables extends Vue {
       min-height: 450px;
       border: 1px solid #EBEEF5;
       border-bottom 0
+      .icon-more
+        transform:rotate(90deg)
+        color rgba(0,0,0,0.30);
+        cursor pointer
     >>> .el-table__header-wrapper
           .el-checkbox__inner
             margin-left 5px
@@ -271,4 +312,22 @@ export default class Tables extends Vue {
           float right
         .btn-next
           margin-right 40px
+.more-warp
+  width 70px
+  height 70px
+  .delete
+    margin-top: -10px;
+    margin-left: 5px;
+  div
+    height 34px
+    line-height 34px
+    width 100%
+</style>
+<style>
+.el-popover {
+  min-width: 70px;
+}
+.el-button--text {
+  color: #5f4ffb;
+}
 </style>

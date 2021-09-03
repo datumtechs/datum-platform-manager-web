@@ -8,3 +8,8 @@ export const getUserInfo = () => {
 export const setNickName = (params: any) => {
   return request.post('/user/updateNickName', params)
 }
+
+// 用户列表
+export const userList = () => {
+  return request.get('/user/queryAllUserNickname')
+}
