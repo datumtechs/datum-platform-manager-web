@@ -100,7 +100,12 @@
             /> -->
           </span>
           <!-- 我的账户 -->
-          <span class="user" @click="handleUser">{{ userName }}</span>
+          <span class="user" @click="handleUser" v-if="isLogin">{{
+            userName
+          }}</span>
+          <span class="user" @click="connectWallet" v-else>{{
+            $t('home.connectWallet')
+          }}</span>
           <span @click="handleUser" class="user-item">
             <svg-icon
               v-show="!isUserShow"
@@ -130,6 +135,7 @@
         ref="RightDrawer"
       ></RightDrawer>
     </transition>
+    <Dialog :visible.sync="visible"></Dialog>
   </div>
 </template>
 
@@ -138,21 +144,25 @@ import { Vue, Component } from 'vue-property-decorator'
 import { UserModule } from '@/store/modules/user'
 import { AppModule } from '@/store/modules/app'
 import { getLocale } from '@/lang'
-
+import Dialog from '@/components/Dialog/index.vue'
 import RightDrawer from './Drawer.vue'
+import { getSubStr } from '@/utils/format'
+
 @Component({
   components: {
     RightDrawer,
+    Dialog,
   },
 })
 export default class HeaderComponent extends Vue {
-  public isEnglish: boolean = false
-  public userName = UserModule.user_info.user_name
-  public isUserShow: boolean = false
-  public isLoggedData: boolean = false
-  public historyIndex: number[] = []
-
-  public allProject = [
+  private isEnglish: boolean = false
+  // private userName = UserModule.user_info.address
+  private isUserShow: boolean = false
+  private isLoggedData: boolean = false
+  private historyIndex: number[] = []
+  // private isLogin: boolean = false
+  private visible: boolean = false
+  private allProject = [
     {
       index: '/project/1',
     },
@@ -172,8 +182,13 @@ export default class HeaderComponent extends Vue {
     }
     return path
   }
-
-  public handleUser() {
+  get isLogin() {
+    return !!UserModule.user_info.address.length
+  }
+  get userName() {
+    return getSubStr(UserModule.user_info.address)
+  }
+  private handleUser() {
     this.isUserShow = !this.isUserShow
     if (this.isUserShow) {
       this.historyIndex.push(1)
@@ -186,7 +201,7 @@ export default class HeaderComponent extends Vue {
     }
   }
   // 点击切换资源
-  public handleLoggedData() {
+  private handleLoggedData() {
     this.isLoggedData = !this.isLoggedData
     if (this.isLoggedData) {
       this.historyIndex.push(0)
@@ -197,22 +212,31 @@ export default class HeaderComponent extends Vue {
       )
     }
   }
-  public handleSelect(key: string, keyPath: string) {
+  private handleSelect(key: string, keyPath: string) {
     // console.log(key, keyPath)
   }
-
+  // 关闭右侧窗口
   private handeleClose() {
     this.isUserShow = false
     this.isLoggedData = false
     this.historyIndex = []
   }
-  public changeLanguage() {
+  private changeLanguage() {
     this.isEnglish = !this.isEnglish
     const lang = this.isEnglish ? 'en' : 'zh'
     AppModule.SetLanguage(lang)
     this.$i18n.locale = lang
   }
-  public created() {
+  private connectWallet() {
+    console.log('connectWallet')
+    // if (!UserModule.user_info.address.length) {
+    //   this.visible = true
+    // } else {
+    //   this.isLogin = true
+    // }
+    this.visible = true
+  }
+  private created() {
     const lang = getLocale()
     this.isEnglish = lang === 'en'
   }

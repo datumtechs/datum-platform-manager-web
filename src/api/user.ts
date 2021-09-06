@@ -13,3 +13,12 @@ export const setNickName = (params: any) => {
 export const userList = () => {
   return request.get('/user/queryAllUserNickname')
 }
+
+// uuid
+export const getLoginNonce = (address: string) => {
+  return request.get('/user/getLoginNonce/' + address)
+}
+// 登录
+export const getLogin = (params: any) => {
+  return request.post('/user/login', params)
+}

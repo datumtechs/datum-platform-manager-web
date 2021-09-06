@@ -108,7 +108,9 @@ export default class SetupIndex extends Vue {
       this.$router.push(`/project/${type}/${this.queryId}`)
     }
   }
-  private handleBtn(data: any) {}
+  private handleBtn(data: any) {
+    ;(this.$refs.MemberDialog as any).handleOpen(1, data.row)
+  }
   private clickSubmit(state: boolean) {
     console.log(state)
     if (state) {

@@ -13,19 +13,12 @@ export const bdDecrypt = (bd_lng: any, bd_lat: any) => {
   }
 }
 
-//高德坐标转百度（传入经度、纬度）
-export const bdDncrypt = (gg_lng: any, gg_lat: any) => {
-  let X_PI = (Math.PI * 3000.0) / 180.0
-  let x = gg_lng
-  let y = gg_lat
-  let z = Math.sqrt(x * x + y * y) + 0.00002 * Math.sin(y * X_PI)
-  let theta = Math.atan2(y, x) + 0.000003 * Math.cos(x * X_PI)
-  let bd_lng = z * Math.cos(theta) + 0.0065
-  let bd_lat = z * Math.sin(theta) + 0.006
-  return {
-    lng: bd_lng,
-    lat: bd_lat,
-  }
+export const getSubStr = (str: string, m = 6, n = 4, symbol = '...') => {
+  if (!str) return ''
+  var subStr1 = str.substr(0, m)
+  var subStr2 = str.substr(str.length - n, n)
+  var subStr = subStr1 + symbol + subStr2
+  return subStr
 }
 // 时间格式转化
 export const formatDate = (num: number | Date, format: string) => {

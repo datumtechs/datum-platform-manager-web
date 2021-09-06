@@ -29,6 +29,7 @@ export default {
     3: 'project3',
   },
   home: {
+    connectWallet: 'ConnectWallet',
     authorize: 'Apply',
     detail: 'Details',
     data: 'Data',

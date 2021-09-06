@@ -88,8 +88,7 @@ export default class MemberDialog extends Vue {
   private handleOpen(type: number, row?: any) {
     this.type = type
     if (type > 0) {
-      console.log(row)
-      this.user = row.memberId
+      this.user = row.userId
       this.role = row.role
     }
     this.visible = true
@@ -115,7 +114,6 @@ export default class MemberDialog extends Vue {
     } else {
       res = await addProjMember(data)
     }
-    console.log(code, 'code')
     code = res.code
     if (code === 10000) {
       this.handleClose()

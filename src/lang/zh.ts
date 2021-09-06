@@ -30,6 +30,7 @@ export default {
     3: '选项3',
   },
   home: {
+    connectWallet: '连接钱包',
     authorize: '申请授权',
     cancel: '取消',
     detail: '查看',
