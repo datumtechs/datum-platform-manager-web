@@ -30,7 +30,7 @@
             <template slot="title">
               {{ $t('nav.market') }}
             </template>
-            <el-menu-item index="/home/data" class="">
+            <el-menu-item index="/home/data">
               {{ $t('home.data') }}
             </el-menu-item>
             <el-menu-item index="/home/algorithm">
@@ -43,7 +43,10 @@
           <el-menu-item index="/case/index">
             {{ $t('nav.case') }}
           </el-menu-item>
-          <el-submenu index="project">
+          <el-menu-item index="/project/all" v-if="isLogin">
+            {{ $t('nav.project') }}
+          </el-menu-item>
+          <!-- <el-submenu index="project">
             <template slot="title">
               {{ $t('nav.project') }}
             </template>
@@ -57,7 +60,7 @@
             >
               {{ $t(`allProject.${index + 1}`) }}
             </el-menu-item>
-          </el-submenu>
+          </el-submenu> -->
         </el-menu>
       </el-col>
       <el-col :span="6">
@@ -72,7 +75,11 @@
             />
           </span>
           <!-- 我的资源 -->
-          <span @click="handleLoggedData" class="logged-data-item">
+          <span
+            @click="handleLoggedData"
+            class="logged-data-item"
+            v-if="isLogin"
+          >
             <svg-icon
               v-show="!isLoggedData"
               name="my-resources"
@@ -88,16 +95,6 @@
               width="14"
               height="14"
             />
-            <!-- <img
-              v-show="!isLoggedData"
-              class="logged-data"
-              src="@/assets/images/icons/logged-data.svg"
-            /> -->
-            <!-- <img
-              v-show="isLoggedData"
-              class="icon-close"
-              src="@/assets/images/icons/close.svg"
-            /> -->
           </span>
           <!-- 我的账户 -->
           <span class="user" @click="handleUser" v-if="isLogin">{{
@@ -135,7 +132,7 @@
         ref="RightDrawer"
       ></RightDrawer>
     </transition>
-    <Dialog :visible.sync="visible"></Dialog>
+    <DialogView :visible.sync="visible"></DialogView>
   </div>
 </template>
 
@@ -144,23 +141,21 @@ import { Vue, Component } from 'vue-property-decorator'
 import { UserModule } from '@/store/modules/user'
 import { AppModule } from '@/store/modules/app'
 import { getLocale } from '@/lang'
-import Dialog from '@/components/Dialog/index.vue'
+import DialogView from '@/components/Dialog/index.vue'
 import RightDrawer from './Drawer.vue'
 import { getSubStr } from '@/utils/format'
 
 @Component({
   components: {
     RightDrawer,
-    Dialog,
+    DialogView,
   },
 })
 export default class HeaderComponent extends Vue {
   private isEnglish: boolean = false
-  // private userName = UserModule.user_info.address
   private isUserShow: boolean = false
   private isLoggedData: boolean = false
   private historyIndex: number[] = []
-  // private isLogin: boolean = false
   private visible: boolean = false
   private allProject = [
     {
@@ -183,10 +178,10 @@ export default class HeaderComponent extends Vue {
     return path
   }
   get isLogin() {
-    return !!UserModule.user_info.address.length
+    return !!UserModule.token
   }
   get userName() {
-    return getSubStr(UserModule.user_info.address)
+    return getSubStr(UserModule.user_info.userName)
   }
   private handleUser() {
     this.isUserShow = !this.isUserShow
@@ -228,12 +223,6 @@ export default class HeaderComponent extends Vue {
     this.$i18n.locale = lang
   }
   private connectWallet() {
-    console.log('connectWallet')
-    // if (!UserModule.user_info.address.length) {
-    //   this.visible = true
-    // } else {
-    //   this.isLogin = true
-    // }
     this.visible = true
   }
   private created() {

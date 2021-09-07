@@ -22,3 +22,8 @@ export const getLoginNonce = (address: string) => {
 export const getLogin = (params: any) => {
   return request.post('/user/login', params)
 }
+
+// 退出
+export const getLogOut = (params: any) => {
+  return request.post('/user/logout', params)
+}

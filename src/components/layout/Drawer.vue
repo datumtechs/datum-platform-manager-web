@@ -18,6 +18,7 @@
 
 <script lang="ts">
 import { Vue, Component, Prop, Emit } from 'vue-property-decorator'
+import { UserModule } from '@/store/modules/user'
 
 @Component({
   name: 'RightDrawer',
@@ -50,7 +51,7 @@ export default class LayoutIndex extends Vue {
           lable: 'nickname',
         },
         {
-          to: '/index',
+          to: '/',
           lable: 'signout',
         },
       ],
@@ -61,8 +62,15 @@ export default class LayoutIndex extends Vue {
     return this.configList[historyIndex[historyIndex.length - 1]]
   }
   @Emit('clickItem')
-  private handleItem(path: string) {
+  private async handleItem(path: string) {
+    if (!UserModule.token) {
+      this.$message.error('Please login!')
+      return false
+    }
     if (path.length) {
+      if (path === '/') {
+        await UserModule.LogOut()
+      }
       this.$router.push(path)
     }
   }

@@ -8,7 +8,7 @@
       <div class="block-info">
         <div class="address">
           {{ $t('account.address') }}：
-          <span>0xfdfdkfjdkfjdjfwe50</span>
+          <span>{{ adders }}</span>
           <i></i>
           <span class="scan" @click="handleScan">
             {{ $t('account.scan') }}
@@ -48,6 +48,8 @@ import Table from '../project/components/Table.vue'
 import JzButton from '@/components/JzButton.vue'
 import JzNav from '@/components/JzNav.vue'
 import { setNickName } from '@/api/user'
+import { UserModule } from '@/store/modules/user'
+
 @Component({
   name: 'resourcesData',
   components: {
@@ -60,6 +62,9 @@ export default class resourcesData extends Vue {
   private nickname = ''
   private tabs: string[] = ['nickname']
   private tabIndex = 0
+  get adders() {
+    return UserModule.user_info.address
+  }
   private async handleSubmit() {
     const params = {
       address: '501eb3eeb2a40e6f2ff6f481302435e6e8af3666',

@@ -6,7 +6,7 @@ import { getToken, removeToken, getLanguage } from '@/utils/auth'
 /* 创建axios实例 */
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
-  timeout: 5000,
+  timeout: 10000,
   headers: {
     ContentType: 'application/json',
   },

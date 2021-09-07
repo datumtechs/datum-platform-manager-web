@@ -1,5 +1,5 @@
 <template>
-  <div class="dialog">
+  <div class="dialog-view">
     <el-dialog
       :visible.sync="walletVisible"
       width="20%"
@@ -41,7 +41,7 @@ import alayaService from '@/services/alayaService'
 import { UserModule } from '@/store/modules/user'
 
 @Component({
-  name: 'dialog',
+  name: 'dialogView',
 })
 export default class DialogIndex extends Vue {
   @Prop({ default: false }) private visible!: boolean
@@ -59,7 +59,6 @@ export default class DialogIndex extends Vue {
   private handleClose() {
     return false
   }
-  // 连接钱包
   private async handleLogin() {
     this.handleClose()
     // 连接钱包
@@ -68,13 +67,10 @@ export default class DialogIndex extends Vue {
     await UserModule.GetLoginNonce()
     // alaya签名
     const res: any = await alayaService.signAlaya()
-    console.log('sig res', res)
     if (res.length) {
       // 登录
-      const params: any = (alayaService as any).loginParams()
-      console.log('login params', params)
-      const data = await UserModule.GetLogin(params)
-      console.log('login ok', data)
+      const params = (alayaService as any).loginParams()
+      await UserModule.GetLogin(params)
     }
   }
   // 安装钱包插件
@@ -94,7 +90,7 @@ export default class DialogIndex extends Vue {
 </script>
 
 <style scoped lang="stylus">
-.dialog
+.dialog-view
   .walle-wrap
     padding 20px
     padding-top 5px

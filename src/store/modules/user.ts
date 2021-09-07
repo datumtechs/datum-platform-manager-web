@@ -6,22 +6,22 @@ import {
   getModule,
 } from 'vuex-module-decorators'
 // import alayaService from '@/services/alayaService'
-import { decodeBech32Address } from 'web3/packages/web3-utils'
-import { getLoginNonce, getLogin } from '@/api/user'
+import { getLoginNonce, getLogin, getLogOut } from '@/api/user'
 import store from '@/store'
 import router, { resetRouter } from '@/router'
 import {
-  // setUserId,
   setToken,
-  // removeUserId,
   getToken,
   removeToken,
+  setSign,
+  removeSign,
+  setUserName,
+  getUserName,
+  removeUserName,
 } from '@/utils/auth'
-import { getUserInfo } from '@/api/user'
 export interface UserInfo {
-  user_cell: string | null
-  user_name: string | null
-  // 钱包地址
+  userType: number | null
+  userName: string | null
   address: string
   sign: string
 }
@@ -38,8 +38,8 @@ class User extends VuexModule implements IUserState {
   // 钱包插件：true 已安装  false 未安装
   public isInitWallet: boolean = true
   public user_info = {
-    user_cell: null,
-    user_name: null,
+    userType: 0,
+    userName: getUserName() || '',
     address: '',
     sign: '',
     uuid: '',
@@ -59,6 +59,7 @@ class User extends VuexModule implements IUserState {
   @Mutation
   public SET_SIGN(val: string) {
     this.user_info.sign = val
+    setSign(val)
   }
   @Mutation
   public SET_UUID(val: string) {
@@ -70,43 +71,32 @@ class User extends VuexModule implements IUserState {
     setToken(token)
   }
   @Mutation
-  private SET_ROLES(roles: number[]) {
-    this.roles = roles
+  private SET_USER(data: any) {
+    this.user_info.userType = data.userType
+    this.user_info.userName = data.userName
+    setUserName(data.userName)
   }
   @Mutation
-  private SET_USER(data: any) {
-    this.user_info = data
+  private RESET_USER() {
+    this.user_info = {
+      userType: 0,
+      userName: '',
+      address: '',
+      sign: '',
+      uuid: '',
+    }
   }
   @Action
   public ResetToken() {
     removeToken()
-    // removeUserId()
+    removeSign()
+    removeUserName()
     this.SET_TOKEN('')
-    this.SET_ROLES([])
-    this.SET_USER({})
+    this.RESET_USER()
   }
 
-  // @Action
-  // public async GetUserInfo() {
-  //   if (this.token === '') {
-  //     throw Error('GetUserInfo: token is undefined!')
-  //   }
-  //   try {
-  //     const { data } = await getUserInfo()
-  //     const { permissions, uid, user_cell, user_name } = data
-  //     if (!permissions || permissions.length <= 0) {
-  //       throw Error('登录异常，请重新登录')
-  //     }
-  //     // setUserId(uid)
-  //     this.SET_ROLES(permissions)
-  //     this.SET_USER({ uid, user_cell, user_name })
-  //   } catch (e) {
-  //     throw Error('登录异常，请重新登录')
-  //   }
-  // }
   @Action
   public async ConnectWallet(data: string[]) {
-    // const address = decodeBech32Address(data[0])
     const address = data[0]
     this.SET_ADDRESS(address)
   }
@@ -124,22 +114,21 @@ class User extends VuexModule implements IUserState {
   public async GetLogin(params: any) {
     try {
       const { data } = await getLogin(params)
-      // this.SET_UUID(data.nonce)
-      console.log(data)
+      this.SET_USER(data)
+      this.SET_TOKEN(data.token)
     } catch (error) {
       console.log(error)
     }
   }
   @Action
   public async LogOut() {
-    if (this.token === '') {
-      throw Error('LogOut: token is undefined!')
+    const address = this.user_info.address
+    console.log(address)
+    const { data, code } = await getLogOut({ address })
+    if (code === 10000) {
+      resetRouter()
+      this.ResetToken()
     }
-    removeToken()
-    resetRouter()
-    this.SET_TOKEN('')
-    this.SET_ROLES([])
-    this.SET_USER({})
   }
 }
 export const UserModule = getModule(User)

@@ -116,7 +116,7 @@ class alayaService {
           if (result.error) return reject(result)
           const singn = result.result
           console.log('TYPED SIGNED:', singn)
-          UserModule.SET_SIGN(singn)
+          await UserModule.SET_SIGN(singn)
           resolve(singn)
         },
       )
