@@ -23,7 +23,7 @@ class alayaService {
     } else {
       this.web3 = new Web3(alaya)
       // 切换用户
-      platon.on('accountsChanged', (account: string[]) => {
+      alaya.on('accountsChanged', (account: string[]) => {
         if (account.length === 0) {
           UserModule.SET_ADDRESS('')
         } else if (account.length > 0) {
@@ -33,8 +33,11 @@ class alayaService {
         }
       })
       // 切换网络
-      platon.on('chainChanged', () => {
-        UserModule.SET_ADDRESS(platon.selectedAddress)
+      alaya.on('chainChanged', (chainId: string) => {
+        console.log('chainChanged', platon.selectedAddress)
+        setTimeout(() => {
+          UserModule.SET_ADDRESS(platon.selectedAddress)
+        }, 0)
       })
     }
   }

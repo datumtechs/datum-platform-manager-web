@@ -54,3 +54,18 @@ export const addProjMember = (params?: any) => {
 export const setProjMember = (params?: any) => {
   return post('/project/updateProjMember', params)
 }
+
+// 工作流列表
+export const getWorkflows = (params?: any) => {
+  return get('/workflow/list', params)
+}
+
+// 新增工作流
+export const addWorkflow = (params?: any) => {
+  return post('/workflow/add', params)
+}
+
+// 编辑工作流
+export const setWorkflow = (params?: any) => {
+  return post('/workflow/edit', params)
+}
