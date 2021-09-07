@@ -4,6 +4,7 @@ class alayaService {
   private web3: any = null
   private win: any = window
   private alaya: any = this.win.alaya
+  private platon: any = this.win.platon
   constructor() {
     this.web3 = null //web3对象
     try {
@@ -13,7 +14,7 @@ class alayaService {
     }
   }
   initAlaya() {
-    const { alaya } = this
+    const { alaya, platon } = this
     //判断是否存在alaya
     if (typeof alaya === 'undefined') {
       console.log('No alaya, You should consider trying MetaMask!')
@@ -21,7 +22,8 @@ class alayaService {
       UserModule.IS_INIT_WALLET(false)
     } else {
       this.web3 = new Web3(alaya)
-      alaya.on('accountsChanged', (account: string[]) => {
+      // 切换用户
+      platon.on('accountsChanged', (account: string[]) => {
         if (account.length === 0) {
           UserModule.SET_ADDRESS('')
         } else if (account.length > 0) {
@@ -29,6 +31,10 @@ class alayaService {
         } else {
           console.log('Alaya account changed but same address')
         }
+      })
+      // 切换网络
+      platon.on('chainChanged', () => {
+        UserModule.SET_ADDRESS(platon.selectedAddress)
       })
     }
   }

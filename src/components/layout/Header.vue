@@ -46,21 +46,6 @@
           <el-menu-item index="/project/all" v-if="isLogin">
             {{ $t('nav.project') }}
           </el-menu-item>
-          <!-- <el-submenu index="project">
-            <template slot="title">
-              {{ $t('nav.project') }}
-            </template>
-            <el-menu-item index="/project/all">
-              {{ $t('nav.all') }}
-            </el-menu-item>
-            <el-menu-item
-              :index="item.index"
-              v-for="(item, index) in allProject"
-              :key="index"
-            >
-              {{ $t(`allProject.${index + 1}`) }}
-            </el-menu-item>
-          </el-submenu> -->
         </el-menu>
       </el-col>
       <el-col :span="6">
@@ -228,6 +213,9 @@ export default class HeaderComponent extends Vue {
   private created() {
     const lang = getLocale()
     this.isEnglish = lang === 'en'
+    ;(this as any).$bus.$on('connectWallet', () => {
+      this.connectWallet()
+    })
   }
 }
 </script>

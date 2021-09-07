@@ -35,15 +35,6 @@ export function getLanguage() {
 export function setLanguage(language: string) {
   return Cookies.set(languageKey, language)
 }
-export function getSign() {
-  return Cookies.get(signKey)
-}
-export function setSign(val: string) {
-  return Cookies.set(signKey, val)
-}
-export function removeSign() {
-  return Cookies.remove(signKey)
-}
 
 export function getUserName() {
   return Cookies.get(nameKey)

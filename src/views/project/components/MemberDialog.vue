@@ -53,6 +53,7 @@ import { Vue, Component, Emit } from 'vue-property-decorator'
 import JzButton from '@/components/JzButton.vue'
 import { userList } from '@/api/user'
 import { addProjMember, setProjMember } from '@/api/project'
+import { roleOptions } from '@/status'
 @Component({
   name: 'MemberDialog',
   components: {
@@ -70,21 +71,9 @@ export default class MemberDialog extends Vue {
   private user = ''
   private userOptions = []
   private role = ''
-  private roleOptions = [
-    {
-      value: 1,
-      label: '管理员',
-    },
-    {
-      value: 2,
-      label: '编辑者',
-    },
-    {
-      value: 3,
-      label: '查看者',
-    },
-  ]
-
+  get roleOptions() {
+    return roleOptions
+  }
   private handleOpen(type: number, row?: any) {
     this.type = type
     if (type > 0) {

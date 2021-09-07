@@ -41,6 +41,8 @@ import Table from './components/Table.vue'
 import JzButton from '@/components/JzButton.vue'
 import { getProject, delProject, delProjects } from '@/api/project'
 import { ParamsType, TableParams, QueryType } from '@/api/types'
+import { formatDate } from '@/utils/format'
+
 @Component({
   name: 'projectAll',
   components: {
@@ -61,7 +63,7 @@ export default class AllIndex extends Vue {
     },
     {
       label: '创建时间',
-      prop: 'createTime',
+      prop: 'time',
     },
   ]
   private list = []
@@ -123,6 +125,9 @@ export default class AllIndex extends Vue {
       params['projectName'] = projectName
     }
     const { data } = await getProject({ ...params })
+    data.items.map((item: any) => {
+      item.time = formatDate(new Date(item.createTime), 'Y-M-D h:m:s')
+    })
     this.list = data.items
     this.total = data.total
   }

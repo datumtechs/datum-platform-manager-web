@@ -9,7 +9,7 @@
         <div class="address">
           {{ $t('account.address') }}：
           <span>{{ adders }}</span>
-          <i></i>
+          <svg-icon name="record" width="24" height="24" color="#515151" />
           <span class="scan" @click="handleScan">
             {{ $t('account.scan') }}
           </span>
@@ -114,10 +114,12 @@ export default class resourcesData extends Vue {
       margin-bottom 40px
       color: rgba(0,0,0,0.5);
       font-size 16px
+      margin-left 10px
+      display inline-block
       .scan
         color #0F62FE
         cursor pointer
-        margin-left 20px
+        margin-left 10px
         font-size 16px
       .scan:hover
         text-decoration: underline

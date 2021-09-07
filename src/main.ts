@@ -28,6 +28,7 @@ Vue.prototype.$message = message
 Object.keys(directives).forEach((key) => {
   Vue.directive(key, (directives as { [key: string]: DirectiveOptions })[key])
 })
+Vue.prototype.$bus = new Vue()
 const win: any = window
 win.vm = new Vue({
   router,

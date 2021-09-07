@@ -13,8 +13,6 @@ import {
   setToken,
   getToken,
   removeToken,
-  setSign,
-  removeSign,
   setUserName,
   getUserName,
   removeUserName,
@@ -59,7 +57,6 @@ class User extends VuexModule implements IUserState {
   @Mutation
   public SET_SIGN(val: string) {
     this.user_info.sign = val
-    setSign(val)
   }
   @Mutation
   public SET_UUID(val: string) {
@@ -89,7 +86,6 @@ class User extends VuexModule implements IUserState {
   @Action
   public ResetToken() {
     removeToken()
-    removeSign()
     removeUserName()
     this.SET_TOKEN('')
     this.RESET_USER()

@@ -23,11 +23,6 @@ export default {
     project: 'Projects',
     all: 'All Projects',
   },
-  allProject: {
-    1: 'project1',
-    2: 'project2',
-    3: 'project3',
-  },
   home: {
     connectWallet: 'ConnectWallet',
     authorize: 'Apply',

@@ -24,11 +24,6 @@ export default {
     project: '项目',
     all: '所有项目',
   },
-  allProject: {
-    1: '选项1',
-    2: '选项2',
-    3: '选项3',
-  },
   home: {
     connectWallet: '连接钱包',
     authorize: '申请授权',

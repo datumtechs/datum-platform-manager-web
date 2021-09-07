@@ -64,7 +64,7 @@
 import { Component, Vue, Watch } from 'vue-property-decorator'
 import JzButton from '@/components/JzButton.vue'
 import Pagination from '@/components/Pagination/index.vue'
-// import { AppModule } from '@/store/modules/app'
+import { UserModule } from '@/store/modules/user'
 import { getDataList } from '@/api/home'
 import { ParamsType } from '@/api/types'
 @Component({
@@ -83,6 +83,9 @@ export default class HomeList extends Vue {
   private inputInfo = ''
   private tabs: string[] = ['data', 'algorithm', 'service']
   private tabIndex = 0
+  get isLogin() {
+    return !!UserModule.token
+  }
   get placeholder() {
     const info = this.tabs[this.tabIndex]
     return info
@@ -95,7 +98,11 @@ export default class HomeList extends Vue {
     this.$router.push(`/home/detail/${id}`)
   }
   private handleAuthorize(id: string | number) {
-    this.$router.push(`/home/${id}/authorize`)
+    if (!this.isLogin) {
+      ;(this as any).$bus.$emit('connectWallet')
+    } else {
+      this.$router.push(`/home/${id}/authorize`)
+    }
   }
   private async getList() {
     // 过滤空格

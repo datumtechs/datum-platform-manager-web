@@ -57,6 +57,8 @@ import JzButton from '@/components/JzButton.vue'
 import MemberDialog from './components/MemberDialog.vue'
 import { getMember, delProjMember, delProjMembers } from '@/api/project'
 import { ParamsType, TableParams, QueryType } from '@/api/types'
+import { formatDate } from '@/utils/format'
+import { roleOptionMap } from '@/status'
 
 @Component({
   name: 'projectSetup',
@@ -82,11 +84,11 @@ export default class SetupIndex extends Vue {
     },
     {
       label: '角色',
-      prop: 'role',
+      prop: 'roleName',
     },
     {
       label: '创建时间',
-      prop: 'createTime',
+      prop: 'time',
     },
   ]
   private list = []
@@ -118,7 +120,6 @@ export default class SetupIndex extends Vue {
     }
   }
   private addMember() {
-    console.log('addMember ')
     ;(this.$refs.MemberDialog as any).handleOpen(0)
   }
   private async handleDelete(id: number) {
@@ -153,6 +154,10 @@ export default class SetupIndex extends Vue {
       params['userName'] = userName
     }
     const { data } = await getMember({ ...params })
+    data.items.map((item: any) => {
+      item.time = formatDate(new Date(item.createTime), 'Y-M-D h:m:s')
+      item.roleName = roleOptionMap[item.role]
+    })
     this.list = data.items
     this.total = data.total
   }

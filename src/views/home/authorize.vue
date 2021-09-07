@@ -67,7 +67,7 @@
               <el-time-picker
                 :disabled="authType != '1'"
                 class="input-date"
-                v-model="endtTime"
+                v-model="endTime"
                 :picker-options="{
                   selectableRange: '0:0:00 - 23:59:00',
                 }"
@@ -113,7 +113,8 @@ import { Vue, Component, Watch } from 'vue-property-decorator'
 import JzButton from '@/components/JzButton.vue'
 import { getDataDetail } from '@/api/home'
 import { getDataAuth } from '@/api/authorize'
-import { getSign } from '@/utils/auth'
+import alayaService from '@/services/alayaService'
+import { UserModule } from '@/store/modules/user'
 @Component({
   name: 'Authorize',
   components: {
@@ -133,6 +134,11 @@ export default class Authorize extends Vue {
   // private handleChange(currentValue: number, oldValue: number) {
   //   console.log(currentValue, oldValue)
   // }
+  private async getSign() {
+    await UserModule.GetLoginNonce()
+    const sign = await alayaService.signAlaya()
+    return sign
+  }
   private async handleAuthorize() {
     const { authType, detailId } = this
     // 校验
@@ -153,6 +159,7 @@ export default class Authorize extends Vue {
     const ischecks = checks[authType]()
 
     if (!ischecks) {
+      const sign = await this.getSign()
       // 发送授权请求
       const params = {
         authBeginTime: '',
@@ -160,7 +167,7 @@ export default class Authorize extends Vue {
         authType: authType,
         authValue: 1,
         id: Number(detailId),
-        sign: getSign(),
+        sign,
       }
 
       if (authType == '1') {
