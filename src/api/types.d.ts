@@ -2,6 +2,7 @@ export interface ParamsType {
   dataName?: string
   projectName?: string
   userName?: string
+  workflowName?: string
   projectId?: string | number
   current: number
   size: number

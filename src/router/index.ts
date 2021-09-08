@@ -192,7 +192,7 @@ export const constantRoutes: RouteConfig[] = [
             },
             component: () =>
               import(
-                /* webpackChunkName: "project-workflow" */ '@/views/project/workflow.vue'
+                /* webpackChunkName: "project-workflow" */ '@/views/project/workflow/index.vue'
               ),
           },
           {

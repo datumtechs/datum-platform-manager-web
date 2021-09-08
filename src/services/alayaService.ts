@@ -33,8 +33,7 @@ class alayaService {
         }
       })
       // 切换网络
-      alaya.on('chainChanged', (chainId: string) => {
-        console.log('chainChanged', platon.selectedAddress)
+      alaya.on('chainChanged', () => {
         setTimeout(() => {
           UserModule.SET_ADDRESS(platon.selectedAddress)
         }, 0)
@@ -132,7 +131,10 @@ class alayaService {
     })
     return signPromise
   }
-  // loginParams
+  /**
+   * 登录参数
+   * @returns  登录参数
+   */
   private loginParams() {
     const userType = this.handleUserType()
     return {

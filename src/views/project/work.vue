@@ -32,9 +32,11 @@
       :keyList="keyList[pageType]"
       :btnList="btnList[pageType]"
       :placeholder="$t(placeholder)"
+      @changeList="changeList"
+      @clickDelete="handleDelete"
     >
     </Table>
-    <work-dialog ref="workDialog"></work-dialog>
+    <work-dialog ref="workDialog" @submit="handleSubmit"></work-dialog>
     <subjob-dialog ref="subjobDialog"></subjob-dialog>
   </div>
 </template>
@@ -45,6 +47,15 @@ import Table from './components/Table.vue'
 import JzButton from '@/components/JzButton.vue'
 import WorkDialog from './components/WorkeDialog.vue'
 import SubjobDialog from './components/SubjobsDialog.vue'
+import { ParamsType, TableParams, QueryType } from '@/api/types'
+import {
+  getWorkflows,
+  addWorkflow,
+  setWorkflow,
+  delWorkflow,
+  copyWorkflow,
+} from '@/api/project'
+
 interface PlaceholderType {
   work: string
   jobs: string
@@ -59,7 +70,13 @@ interface PlaceholderType {
   },
 })
 export default class WorkIndex extends Vue {
+  private projectName = ''
   private workDialog: boolean = false
+  private listQuery: QueryType = {
+    current: 1,
+    size: 10,
+  }
+  private total = 0
   private keyList = {
     work: [
       {
@@ -94,36 +111,7 @@ export default class WorkIndex extends Vue {
       },
     ],
   }
-  private list = [
-    {
-      number: 1,
-      field: '2016-05-02',
-      workflowName: '王小虎',
-      name: '王小虎',
-      describe: '上海市普陀区金沙江路 1518 弄',
-    },
-    {
-      number: 2,
-      field: '2016-05-02',
-      workflowName: '王小虎',
-      name: '王小虎',
-      describe: '上海市普陀区金沙江路 1518 弄',
-    },
-    {
-      number: 3,
-      field: '2016-05-02',
-      workflowName: '王小虎',
-      name: '王小虎',
-      describe: '上海市普陀区金沙江路 1518 弄',
-    },
-    {
-      number: 4,
-      field: '2016-05-02',
-      workflowName: '王小虎',
-      name: '王小虎',
-      describe: '上海市普陀区金沙江路 1518 弄',
-    },
-  ]
+  private list = []
   private btnList = {
     work: [
       {
@@ -157,9 +145,6 @@ export default class WorkIndex extends Vue {
     const pageType: any = this.pageType
     return this.placeholderList[pageType]
   }
-  get total() {
-    return this.list.length
-  }
   private handleName(number: number) {
     if (this.pageType === 'work') {
       const id = this.$route.params.id
@@ -172,7 +157,6 @@ export default class WorkIndex extends Vue {
   }
   private handleBtn(data: any) {
     const { index, row } = data
-    console.log(data)
     if (this.pageType === 'work') {
       const type = index + 1
       ;(this.$refs.workDialog as any).handleOpen(type, row)
@@ -200,6 +184,54 @@ export default class WorkIndex extends Vue {
   }
   private createJobs() {
     ;(this.$refs.subjobDialog as any).handleOpen(0)
+  }
+  private changeList(data: TableParams) {
+    this.projectName = data.input
+    this.listQuery = data.list
+    this.getList()
+  }
+  private async getList() {
+    // 过滤空格
+    const projectName = this.projectName.replace(/\s+/g, '')
+    const params: ParamsType = {
+      current: 1,
+      size: 6,
+    }
+    const { current, size } = this.listQuery
+    params.current = current
+    params.size = size
+    params.projectId = this.$route.params.id
+    if (projectName.length) {
+      params['workflowName'] = projectName
+    }
+    const { data } = await getWorkflows({ ...params })
+    // data.items.map((item: any) => {
+    //   item.time = formatDate(new Date(item.createTime), 'Y-M-D h:m:s')
+    // })
+    this.list = data.items
+    this.total = data.total
+  }
+  created() {
+    this.getList()
+  }
+  private async handleSubmit(params: any) {
+    const { type, data } = params
+    console.log(type, data)
+    if (type === 0) {
+      const { msg } = await addWorkflow(data)
+      this.$message.success(msg)
+    } else if (type === 1) {
+      const { msg } = await setWorkflow(data)
+      this.$message.success(msg)
+    } else if (type === 2) {
+      const { msg } = await copyWorkflow(data)
+      this.$message.success(msg)
+    }
+    this.getList()
+  }
+  private async handleDelete(id: number) {
+    await delWorkflow(id)
+    this.getList()
   }
 }
 </script>

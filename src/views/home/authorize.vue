@@ -115,6 +115,8 @@ import { getDataDetail } from '@/api/home'
 import { getDataAuth } from '@/api/authorize'
 import alayaService from '@/services/alayaService'
 import { UserModule } from '@/store/modules/user'
+import { formatDate } from '@/utils/format'
+
 @Component({
   name: 'Authorize',
   components: {
@@ -144,7 +146,12 @@ export default class Authorize extends Vue {
     // 校验
     const checks: any = {
       '1': () => {
-        if (!this.dateTime.length) {
+        if (
+          !this.startDate ||
+          !this.startTime ||
+          !this.endDate ||
+          !this.endTime
+        ) {
           this.$message.error('请输入时间')
           return true
         }
@@ -171,8 +178,14 @@ export default class Authorize extends Vue {
       }
 
       if (authType == '1') {
-        params.authBeginTime = this.startDate + '/' + this.startTime
-        params.authEndTime = this.endDate + '/' + this.endTime
+        params.authBeginTime =
+          formatDate(new Date(this.startDate), 'Y-M-D ') +
+          '' +
+          formatDate(new Date(this.startTime), 'h:m:s')
+        params.authEndTime =
+          formatDate(new Date(this.endDate), 'Y-M-D ') +
+          '' +
+          formatDate(new Date(this.endTime), 'h:m:s')
       }
       if (authType == '2') {
         params.authValue = this.authValue

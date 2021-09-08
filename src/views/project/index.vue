@@ -1,5 +1,5 @@
 <template>
-  <div class="project">
+  <div class="project" :class="isWorkeFlow ? 'project-workflow' : ''">
     <div class="project-wrap">
       <jz-nav
         v-if="isNav"
@@ -24,6 +24,7 @@ import JzNav from '@/components/JzNav.vue'
   },
 })
 export default class ProjectIndex extends Vue {
+  private isWorkeFlow: boolean = false
   private isNav: boolean = true
   get queryId() {
     return Number(this.$route.params.id)
@@ -45,6 +46,7 @@ export default class ProjectIndex extends Vue {
   changeRoute() {
     const name: string = this.$route.name || ''
     this.tabIndex = name === 'jobs' ? 1 : 0
+    this.isWorkeFlow = name === 'workflow'
     this.isNav = this.tabs.indexOf(name) > -1 ? true : false
   }
 }
@@ -57,4 +59,9 @@ export default class ProjectIndex extends Vue {
   .project-wrap
     padding 30px
     padding-top 0
+.project-workflow
+  width 100%
+  margin 0px auto
+  .project-wrap
+    padding 0
 </style>

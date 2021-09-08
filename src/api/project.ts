@@ -69,3 +69,12 @@ export const addWorkflow = (params?: any) => {
 export const setWorkflow = (params?: any) => {
   return post('/workflow/edit', params)
 }
+// 复制工作流
+export const copyWorkflow = (params?: any) => {
+  return post('/workflow/copy', params)
+}
+
+// 删除工作流
+export const delWorkflow = (id?: number) => {
+  return post(`/workflow/delete/${id}`, {})
+}

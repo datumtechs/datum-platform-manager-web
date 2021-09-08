@@ -37,9 +37,8 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Watch } from 'vue-property-decorator'
+import { Vue, Component, Emit } from 'vue-property-decorator'
 import JzButton from '@/components/JzButton.vue'
-
 @Component({
   name: 'WorkDialog',
   components: {
@@ -48,6 +47,7 @@ import JzButton from '@/components/JzButton.vue'
 })
 export default class WorkDialog extends Vue {
   // 0. 创建 1.编辑 2复制
+  private id = ''
   private type = 0
   private name = ''
   private describe = ''
@@ -64,8 +64,9 @@ export default class WorkDialog extends Vue {
     this.type = type
     if (type > 0) {
       console.log(row)
-      this.name = row.type
-      this.describe = row.describe
+      this.name = row.workflowName
+      this.describe = ''
+      this.id = row.id || ''
     }
     this.workVisible = true
   }
@@ -75,13 +76,28 @@ export default class WorkDialog extends Vue {
     this.describe = ''
   }
   // 提交
-  private handleSubmit() {
-    const { name, describe } = this
-    const data = {
-      name,
-      describe,
+  @Emit('submit')
+  private async handleSubmit() {
+    const { name, describe, type } = this
+    const projectId = this.$route.params.id
+    const data: any = {
+      projectId,
+      workflowDesc: describe,
+      workflowName: name,
+    }
+    // 编辑
+    if (type === 1) {
+      data.id = this.id
+    }
+    // 复制
+    if (type === 2) {
+      data.originId = this.id
     }
     this.handleClose()
+    return {
+      data,
+      type,
+    }
   }
 }
 </script>

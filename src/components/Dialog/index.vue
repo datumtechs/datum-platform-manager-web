@@ -33,15 +33,33 @@
         <div class="title">Samurai扩展</div>
         <div class="init-info">
           <div>
-            <svg-icon name="samurai-1" width="20" height="20" class="init-icon" color="#606266" />
+            <svg-icon
+              name="samurai-1"
+              width="20"
+              height="20"
+              class="init-icon"
+              color="#606266"
+            />
             一键连接区块链应用
           </div>
           <div>
-            <svg-icon name="samurai-2" width="18" height="18" class="init-icon" color="#606266" />
+            <svg-icon
+              name="samurai-2"
+              width="18"
+              height="18"
+              class="init-icon"
+              color="#606266"
+            />
             账户隐私保留在本地
           </div>
           <div>
-            <svg-icon name="samurai-3" width="20" height="20" class="init-icon" color="#606266" />
+            <svg-icon
+              name="samurai-3"
+              width="20"
+              height="20"
+              class="init-icon"
+              color="#606266"
+            />
             无缝适配PlatON网络
           </div>
           <el-button type="primary" @click="handleSamurai">安装</el-button>
