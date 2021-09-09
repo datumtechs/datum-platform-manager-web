@@ -24,7 +24,7 @@
               :index="`${index + 1}-${i + 1} `"
               v-for="(node, i) in item.child"
               :key="`${index}-${i}`"
-              @click="startDrag(item.algorithmId)"
+              @click="startDrag(node)"
             >
               <!-- @mousedown.native="startDrag('Rect', $event, node.label)" -->
               <i class="el-icon-menu"></i>
@@ -41,15 +41,16 @@
 
 <script lang="ts">
 import { Vue, Component, Prop, Emit } from 'vue-property-decorator'
+import { AlgorithmType } from '@/api/types'
 @Component({
   name: 'TreeDrawer',
 })
 export default class extends Vue {
   @Prop({ required: true, default: [] }) private menus!: any
   @Emit('clickItem')
-  private startDrag(id: number) {
-    console.log(id)
-    return id
+  private startDrag(item: AlgorithmType) {
+    console.log(item)
+    return item
   }
 
   // startDrag(type,e,title){

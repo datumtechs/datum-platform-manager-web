@@ -86,6 +86,16 @@ export default {
     select: 'Select',
     role: 'Role',
   },
+  workflow: {
+    overview: 'Overview',
+    input: 'Input',
+    output: 'Output',
+    code: 'Code',
+    enviroment: 'Enviroment',
+    save: 'Save',
+    empty: 'Empty',
+    cancel: 'Cancel',
+  },
   role: {
     viewer: 'Viewer',
     editor: 'Editor',

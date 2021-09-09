@@ -9,9 +9,10 @@ import SvgIcon from 'vue-svgicon'
 import { message } from '@/plugins/message.ts'
 import store from './store'
 import Vuex from 'vuex'
+import contentmenu from 'v-contextmenu'
+import 'v-contextmenu/dist/index.css'
 import '@/permission'
 import '@/icons/components'
-
 import * as directives from '@/directives'
 
 Vue.config.productionTip = false
@@ -24,6 +25,7 @@ Vue.use(SvgIcon, {
   defaultHeight: '1em',
 })
 Vue.use(Vuex)
+Vue.use(contentmenu)
 Vue.prototype.$message = message
 Object.keys(directives).forEach((key) => {
   Vue.directive(key, (directives as { [key: string]: DirectiveOptions })[key])

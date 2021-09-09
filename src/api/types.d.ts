@@ -23,7 +23,10 @@ export interface ResponseType {
   msg?: string
   data?: any
 }
-
+export interface AlgorithmType {
+  algorithmName: string
+  algorithmId: number
+}
 export interface ITransactionData {
   orderId: string
   timestamp: string | number

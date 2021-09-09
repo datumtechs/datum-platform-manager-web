@@ -34,7 +34,7 @@ export const constantRoutes: RouteConfig[] = [
         children: [
           {
             path: 'data',
-            name: 'homeData',
+            name: 'data',
             component: () =>
               import(
                 /* webpackChunkName: "homeData" */ '@/views/home/list.vue'
@@ -42,7 +42,7 @@ export const constantRoutes: RouteConfig[] = [
           },
           {
             path: 'algorithm',
-            name: 'homeAlgorithm',
+            name: 'algorithm',
             component: () =>
               import(
                 /* webpackChunkName: "homeAlgorithm" */ '@/views/home/list.vue'
@@ -50,7 +50,7 @@ export const constantRoutes: RouteConfig[] = [
           },
           {
             path: 'service',
-            name: 'homeService',
+            name: 'service',
             component: () =>
               import(
                 /* webpackChunkName: "homeService" */ '@/views/home/list.vue'

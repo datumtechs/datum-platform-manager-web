@@ -1,12 +1,5 @@
 <template>
   <div class="content-container">
-    <!-- <jz-nav
-      type="home"
-      :tabs="tabs"
-      @clickTable="handleTable"
-      :tabIndex="tabIndex"
-    ></jz-nav> -->
-
     <div class="search-wrap">
       <el-button
         @click="getList"
@@ -66,6 +59,8 @@ import JzButton from '@/components/JzButton.vue'
 import Pagination from '@/components/Pagination/index.vue'
 import { UserModule } from '@/store/modules/user'
 import { getDataList } from '@/api/home'
+import { geAlgorithms } from '@/api/algorithm'
+
 import { ParamsType } from '@/api/types'
 @Component({
   name: 'HomeList',
@@ -76,22 +71,28 @@ import { ParamsType } from '@/api/types'
 })
 export default class HomeList extends Vue {
   private total = 0
+  private tabIndex = 0
   private listQuery = {
     current: 1,
     size: 6,
   }
   private inputInfo = ''
   private tabs: string[] = ['data', 'algorithm', 'service']
-  private tabIndex = 0
+  private handleTabIndex() {
+    const name: string = this.$route.name || ''
+    this.tabIndex = this.tabs.indexOf(name)
+    this.getList()
+  }
+  @Watch('$route', { deep: true })
+  changeRoute() {
+    this.handleTabIndex()
+  }
   get isLogin() {
     return !!UserModule.token
   }
   get placeholder() {
     const info = this.tabs[this.tabIndex]
     return info
-  }
-  private handleTable(index: number) {
-    this.tabIndex = index
   }
   private marketList = []
   private handleDetail(id: string | number) {
@@ -122,9 +123,20 @@ export default class HomeList extends Vue {
       this.marketList = data.items
       this.total = data.total
     }
+    if (this.tabIndex === 1) {
+      // TODO 接口 缺少total
+      const { data } = await geAlgorithms({ ...params })
+      data.map((item: any) => {
+        item.id = item.algorithmId
+        item.dataName = item.algorithmName
+        item.dataDesc = item.algorithmDesc
+      })
+      this.marketList = data
+      this.total = data.length
+    }
   }
   created() {
-    this.getList()
+    this.handleTabIndex()
   }
 }
 </script>

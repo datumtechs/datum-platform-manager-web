@@ -2,7 +2,7 @@ import { get, post, put, del } from './index'
 
 // 项目列表
 export const getProject = (params?: any) => {
-  return get('/project/queryProjectList', params)
+  return get('/project/queryProjectPageList', params)
 }
 
 // 项目详情
@@ -32,7 +32,7 @@ export const setProject = (params?: any) => {
 
 // 成员列表
 export const getMember = (params?: any) => {
-  return get('/project/queryProjMemberList', params)
+  return get('/project/queryProjMemberPageList', params)
 }
 
 // 删除成员

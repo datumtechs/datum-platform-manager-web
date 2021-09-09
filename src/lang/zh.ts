@@ -89,6 +89,16 @@ export default {
     select: '选择用户',
     role: '设置角色',
   },
+  workflow: {
+    overview: '概述',
+    input: '输入',
+    output: '输出',
+    code: '代码',
+    enviroment: '环境',
+    save: '保存',
+    empty: '清空',
+    cancel: '取消',
+  },
   role: {
     viewer: '查看者',
     editor: '编辑者',
