@@ -8,7 +8,7 @@
       <div class="block-info">
         <div class="address">
           {{ $t('account.address') }}：
-          <span>{{ adders }}</span>
+          <span>{{ address }}</span>
           <svg-icon name="record" width="24" height="24" color="#515151" />
           <span class="scan" @click="handleScan">
             {{ $t('account.scan') }}
@@ -49,7 +49,7 @@ import JzButton from '@/components/JzButton.vue'
 import JzNav from '@/components/JzNav.vue'
 import { setNickName } from '@/api/user'
 import { UserModule } from '@/store/modules/user'
-
+import { strlen } from '@/utils/validateRules'
 @Component({
   name: 'resourcesData',
   components: {
@@ -62,13 +62,22 @@ export default class resourcesData extends Vue {
   private nickname = ''
   private tabs: string[] = ['nickname']
   private tabIndex = 0
-  get adders() {
+  get address() {
     return UserModule.user_info.address
   }
   private async handleSubmit() {
+    const { nickname, address } = this
+    if (strlen(nickname) > 40) {
+      this.$message.error('昵称最大支持20个汉字！')
+      return
+    }
+    if (nickname === '') {
+      this.$message.error('昵称不能为空！')
+      return
+    }
     const params = {
-      address: '501eb3eeb2a40e6f2ff6f481302435e6e8af3666',
-      nickName: this.nickname,
+      address,
+      nickName: nickname,
     }
     const data: any = await setNickName({ ...params })
     if (data.code === 10000) {
