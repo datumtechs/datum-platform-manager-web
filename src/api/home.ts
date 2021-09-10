@@ -2,7 +2,7 @@ import { get, post, put, del } from './index'
 
 // 数据列表
 export const getDataList = (params?: any) => {
-  return get('/data/list', params)
+  return get('/data/pageList', params)
 }
 
 // 数据详情

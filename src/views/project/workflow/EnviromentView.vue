@@ -130,7 +130,9 @@ export default class EnviromentView extends Vue {
     const { msg } = await saveNodeResource(params)
     this.$message.success(msg)
   }
-  private handleCancel() {}
+  private handleCancel() {
+    console.log('取消')
+  }
 }
 </script>
 
