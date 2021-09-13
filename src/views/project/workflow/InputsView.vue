@@ -85,56 +85,54 @@ export default class InputViewIndex extends Vue {
   private surfaceOptions = {}
   private fieldOptions = {}
   private inputValue = ''
-  private inputProps: object = {
-    // label: 'area_name',
-    // value: 'code',
-    lazy: true,
-    lazyLoad: this.inputLazyLoad,
-  }
-  private async inputLazyLoad(node: any, resolve: any) {
-    let { level } = node
-    try {
-      if (level === 0) {
-        const { data } = await getOrganization()
-        // this.areaData.province = data
-        let nodes = data.map((item: any) => ({
-          code: item.code,
-          area_name: item.area_name,
-          leaf: level >= 2,
-          center: item.center,
-          zoom: item.zoom,
-        }))
-        // this.areaList.push(...nodes)
-        resolve(nodes)
-      } else if (level === 1) {
-        const { data } = await getTables({ code: node.data.code })
-        // this.areaData.city = data
-        let nodes = data.map((item: any) => ({
-          code: item.code,
-          area_name: item.area_name,
-          leaf: level >= 2,
-          center: item.center,
-          zoom: item.zoom,
-        }))
-        // this.areaList.push(...nodes)
-        resolve(nodes)
-      } else if (level === 2) {
-        const { data } = await getArea({ code: node.data.code })
-        // this.areaData.district = data
-        let nodes = data.map((item: any) => ({
-          code: item.code,
-          area_name: item.area_name,
-          leaf: level >= 2,
-          center: item.center,
-          zoom: item.zoom,
-        }))
-        // this.areaList.push(...nodes)
-        resolve(nodes)
-      }
-    } catch (e) {
-      console.log(e)
-    }
-  }
+  // private inputProps: object = {
+  //   // label: 'area_name',
+  //   // value: 'code',
+  //   lazy: true,
+  //   lazyLoad: this.inputLazyLoad,
+  // }
+  // private async inputLazyLoad(node: any, resolve: any) {
+  //   let { level } = node
+  //   try {
+  //     if (level === 0) {
+  //       const { data } = await getOrganization()
+  //       // this.areaData.province = data
+  //       let nodes = data.map((item: any) => ({
+  //         code: item.code,
+  //         area_name: item.area_name,
+  //         leaf: level >= 2,
+  //       }))
+  //       // this.areaList.push(...nodes)
+  //       resolve(nodes)
+  //     } else if (level === 1) {
+  //       const { data } = await getTables({ identityId: node.data.code })
+  //       // this.areaData.city = data
+  //       let nodes = data.map((item: any) => ({
+  //         code: item.code,
+  //         area_name: item.area_name,
+  //         leaf: level >= 2,
+  //         center: item.center,
+  //         zoom: item.zoom,
+  //       }))
+  //       // this.areaList.push(...nodes)
+  //       resolve(nodes)
+  //     } else if (level === 2) {
+  //       const { data } = await getArea({ code: node.data.code })
+  //       // this.areaData.district = data
+  //       let nodes = data.map((item: any) => ({
+  //         code: item.code,
+  //         area_name: item.area_name,
+  //         leaf: level >= 2,
+  //         center: item.center,
+  //         zoom: item.zoom,
+  //       }))
+  //       // this.areaList.push(...nodes)
+  //       resolve(nodes)
+  //     }
+  //   } catch (e) {
+  //     console.log(e)
+  //   }
+  // }
   private async handleSave() {
     const list = this.selectLayout
     const { nodeId } = this

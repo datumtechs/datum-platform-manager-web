@@ -26,7 +26,10 @@
         <div class="item-title">{{ item.dataName }}</div>
         <div class="item-describe">{{ item.dataDesc }}</div>
         <div class="item-button">
-          <jz-button @click="handleDetail(item.id)" class="button">
+          <jz-button
+            @click="handleDetail(item.id, item.metaDataId)"
+            class="button"
+          >
             {{ $t('home.detail') }}
           </jz-button>
           <jz-button
@@ -95,8 +98,8 @@ export default class HomeList extends Vue {
     return info
   }
   private marketList = []
-  private handleDetail(id: string | number) {
-    this.$router.push(`/home/detail/${id}`)
+  private handleDetail(id: string | number, metaid: string) {
+    this.$router.push(`/home/detail/${id}/${metaid}`)
   }
   private handleAuthorize(id: string | number) {
     if (!this.isLogin) {

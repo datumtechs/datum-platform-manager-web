@@ -59,7 +59,7 @@ export const constantRoutes: RouteConfig[] = [
         ],
       },
       {
-        path: 'home/detail/:id',
+        path: 'home/detail/:id/:metaid',
         component: () =>
           import(/* webpackChunkName: "home" */ '@/views/home/detail.vue'),
         name: 'detail',
