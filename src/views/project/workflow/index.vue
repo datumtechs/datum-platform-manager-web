@@ -6,25 +6,31 @@
       class="tree-menus"
     ></TreeDrawer>
     <div class="canvas">
-      <div class="flow-node" v-if="isNode">
-        <div class="block" @click="handleNode" v-contextmenu:contextmenu>
-          <span v-if="!isResetName">{{ nodeName }}</span>
-          <input
-            v-else
-            type="text"
-            @blur="isResetName = false"
-            ref="ResetInput"
-            v-model="nodeName"
-            class="reset-name"
-          />
+      <template v-if="isNode">
+        <div class="flow-node" v-for="(item, index) in nodeList" :key="index">
+          <div
+            class="block"
+            @click="handleNode(item)"
+            v-contextmenu:contextmenu
+          >
+            <span v-if="!isResetName">{{ item.nodeName }}</span>
+            <input
+              v-else
+              type="text"
+              @blur="isResetName = false"
+              ref="ResetInput"
+              v-model="item.nodeName"
+              class="reset-name"
+            />
+          </div>
+          <ul class="state">
+            <li>未开始</li>
+            <li>成功</li>
+            <li>运行中</li>
+            <li>失败</li>
+          </ul>
         </div>
-        <ul class="state">
-          <li>未开始</li>
-          <li>成功</li>
-          <li>运行中</li>
-          <li>失败</li>
-        </ul>
-      </div>
+      </template>
     </div>
     <div class="instruct">
       <span @click="handleSave"> 保存 </span>
@@ -47,9 +53,9 @@ import { Vue, Component, Watch } from 'vue-property-decorator'
 import NodeDrawer from './NodeDrawer.vue'
 import TreeDrawer from './TreeDrawer.vue'
 import { geAlgorithmTree } from '@/api/algorithm'
-import { addWorkflowNode } from '@/api/wrorkflow'
+import { addWorkflowNode } from '@/api/workflow'
 import { AlgorithmType } from '@/api/types'
-import { saveNode, clearNode } from '@/api/wrorkflow'
+import { saveNode, clearNode, getNodes } from '@/api/workflow'
 
 @Component({
   name: 'workflow',
@@ -59,36 +65,32 @@ import { saveNode, clearNode } from '@/api/wrorkflow'
   },
 })
 export default class workflowIndex extends Vue {
-  private isNode = false
   private isDrawer = false
   private isResetName = false
-  private nodeName = ''
-  private algorithmId = ''
   private workflowId = ''
   private workflowNodeId = ''
+  private nodeList: any = []
   private menus = []
+
+  get isNode() {
+    return !!this.nodeList.length
+  }
   private async getAlaor() {
     const { data } = await geAlgorithmTree()
     this.menus = data
   }
 
   // 创建节点
-  private handleItem(data: AlgorithmType) {
-    console.log('handleItem', data)
+  private async handleItem(item: AlgorithmType) {
     if (this.isNode) {
       this.$message.warning('最多创建一个工作流，请删除当前工作流！')
       return
     }
-    this.isNode = true
-    this.nodeName = data.algorithmName
-    this.handWorkNodeAdd()
-  }
-  // 发送新增工作流api
-  private async handWorkNodeAdd() {
-    const { algorithmId, workflowId, nodeName } = this
+    this.nodeList.push(item)
+    const { workflowId } = this
     const params = {
-      algorithmId,
-      nodeName,
+      algorithmId: item.algorithmId,
+      nodeName: item.nodeName,
       workflowId,
     }
     const { data } = await addWorkflowNode(params)
@@ -101,8 +103,8 @@ export default class workflowIndex extends Vue {
     }, 200)
   }
   private async handleSave() {
-    const { workflowId, nodeName, workflowNodeId } = this
-
+    const { workflowId, workflowNodeId } = this
+    const nodeName: string = this.nodeList[0].nodeName
     const params = {
       workflowId,
       workflowNodeReqList: [
@@ -120,17 +122,26 @@ export default class workflowIndex extends Vue {
     const { workflowId } = this
     const { msg } = await clearNode({ workflowId })
     this.$message.success(msg)
-    this.isNode = false
+    this.nodeList = []
   }
   // 点击节点，展开信息
-  private handleNode() {
+  private handleNode(item: any) {
     this.isDrawer = true
+    console.log(item)
+    this.workflowNodeId = item.id
+  }
+  private async getNodeList() {
+    const id = this.workflowId
+    const { data } = await getNodes(id)
+    if (data.workflowNodeVoList.length) {
+      this.nodeList = data.workflowNodeVoList
+    }
   }
   created() {
     this.getAlaor()
     const { params } = this.$route
-    this.algorithmId = params.id
     this.workflowId = params.workflow
+    this.getNodeList()
   }
 }
 </script>

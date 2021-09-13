@@ -50,6 +50,7 @@ export default class extends Vue {
   @Emit('clickItem')
   private startDrag(item: AlgorithmType) {
     console.log(item)
+    item.nodeName = item.algorithmName
     return item
   }
 

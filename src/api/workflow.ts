@@ -33,3 +33,26 @@ export const clearNode = (params?: any) => {
 export const saveNode = (params?: any) => {
   return post('/workflowNode/save', params)
 }
+
+// 查询工作流列表
+export const getNodes = (id?: any) => {
+  return get(`/workflowNode/queryNodeDetailsList/${id}`)
+}
+
+// 输入工作流
+export const addNodeInput = (params?: any) => {
+  return post('/workflowNode/addNodeInput', params)
+}
+
+// 查询组织选项
+export const getOrganization = () => {
+  return get('/data/getAllAuthOrganization/')
+}
+// 查询表选项
+export const getTables = () => {
+  return get('/data/getAllAuthTables')
+}
+// 查询字段选项
+export const getColumns = (id: string | number) => {
+  return get(`data/getAllAuthColumns/${id}`)
+}

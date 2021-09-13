@@ -136,31 +136,13 @@ class alayaService {
    * @returns  登录参数
    */
   private loginParams() {
-    const userType = this.handleUserType()
+    const userType = UserModule.userType
     return {
       address: UserModule.user_info.address,
       sign: UserModule.user_info.sign,
       signMessage: this.msgParams(),
       userType,
     }
-  }
-  private handleUserType() {
-    const address = UserModule.user_info.address
-    //0x : 以太坊，atp，atx: alaya lat,lax:platon
-    const typeList: any = {
-      '0x': 1,
-      atp: 2,
-      atx: 2,
-      lat: 3,
-      lax: 3,
-    }
-    let type = 0
-    for (let key in typeList) {
-      if (address.startsWith(key)) {
-        type = typeList[key]
-      }
-    }
-    return type
   }
 }
 

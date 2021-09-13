@@ -18,7 +18,6 @@ import {
   removeUserName,
 } from '@/utils/auth'
 export interface UserInfo {
-  userType: number | null
   userName: string | null
   address: string
   sign: string
@@ -36,7 +35,6 @@ class User extends VuexModule implements IUserState {
   // 钱包插件：true 已安装  false 未安装
   public isInitWallet: boolean = true
   public user_info = {
-    userType: 0,
     userName: getUserName() || '',
     address: '',
     sign: '',
@@ -69,14 +67,12 @@ class User extends VuexModule implements IUserState {
   }
   @Mutation
   private SET_USER(data: any) {
-    this.user_info.userType = data.userType
     this.user_info.userName = data.userName
     setUserName(data.userName)
   }
   @Mutation
   private RESET_USER() {
     this.user_info = {
-      userType: 0,
       userName: '',
       address: '',
       sign: '',
@@ -125,6 +121,24 @@ class User extends VuexModule implements IUserState {
       resetRouter()
       this.ResetToken()
     }
+  }
+  get userType() {
+    const address = this.user_info.address
+    //0x : 以太坊，atp，atx: alaya lat,lax:platon
+    const typeList: any = {
+      '0x': 1,
+      atp: 2,
+      atx: 2,
+      lat: 3,
+      lax: 3,
+    }
+    let type = 0
+    for (let key in typeList) {
+      if (address.startsWith(key)) {
+        type = typeList[key]
+      }
+    }
+    return type
   }
 }
 export const UserModule = getModule(User)

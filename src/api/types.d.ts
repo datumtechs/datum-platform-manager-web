@@ -26,6 +26,7 @@ export interface ResponseType {
 export interface AlgorithmType {
   algorithmName: string
   algorithmId: number
+  nodeName?: string
 }
 export interface ITransactionData {
   orderId: string

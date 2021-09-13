@@ -36,7 +36,7 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import { addNodeOutput } from '@/api/wrorkflow'
+import { addNodeOutput } from '@/api/workflow'
 
 @Component({
   name: 'OutputView',

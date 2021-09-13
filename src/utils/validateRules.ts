@@ -14,10 +14,7 @@ export const strlen = (str: string) => {
 }
 
 // 昵称
-export const validateNickName = (
-  value: string,
-  callback: any,
-): void => {
+export const validateNickName = (value: string, callback: any): void => {
   if (value === '' || value === undefined) {
     callback(new Error('昵称不能为空'))
   } else {

@@ -27,10 +27,10 @@
           </div>
           <el-select v-model="role" :placeholder="$t('worke.role')">
             <el-option
-              v-for="item in roleOptions"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
+              v-for="(item, key, i) in roleOptionMap"
+              :key="i"
+              :label="item"
+              :value="key"
             >
             </el-option>
           </el-select>
@@ -53,7 +53,7 @@ import { Vue, Component, Emit } from 'vue-property-decorator'
 import JzButton from '@/components/JzButton.vue'
 import { userList } from '@/api/user'
 import { addProjMember, setProjMember } from '@/api/project'
-import { roleOptions } from '@/status'
+import { roleOptionMap } from '@/status'
 @Component({
   name: 'MemberDialog',
   components: {
@@ -71,8 +71,8 @@ export default class MemberDialog extends Vue {
   private user = ''
   private userOptions = []
   private role = ''
-  get roleOptions() {
-    return roleOptions
+  get roleOptionMap() {
+    return roleOptionMap
   }
   private handleOpen(type: number, row?: any) {
     this.type = type

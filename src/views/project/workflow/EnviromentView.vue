@@ -89,7 +89,7 @@ import {
   broadbandOptions,
 } from '@/status'
 import JzButton from '@/components/JzButton.vue'
-import { saveNodeResource } from '@/api/wrorkflow'
+import { saveNodeResource } from '@/api/workflow'
 
 @Component({
   name: 'EnviromentView',
@@ -150,7 +150,7 @@ export default class EnviromentView extends Vue {
     position relative
     top: -50px;
     display flex
-    justify-content end
+    justify-content flex-end
     .save
       margin-right 15px
   .block

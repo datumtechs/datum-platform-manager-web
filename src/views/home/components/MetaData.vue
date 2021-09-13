@@ -49,7 +49,7 @@ export default class MetaData extends Vue {
   private async getList() {
     const id = this.$route.params.id
     const { current, size } = this.listQuery
-    const { data } = await getColumnList({ id, current, size })
+    const { data } = await getColumnList({ metaDataId: id, current, size })
     this.list = data.items
     this.total = data.total
   }

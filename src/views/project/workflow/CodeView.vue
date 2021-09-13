@@ -20,7 +20,7 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import JzButton from '@/components/JzButton.vue'
-import { saveNodeCode } from '@/api/wrorkflow'
+import { saveNodeCode } from '@/api/workflow'
 @Component({
   name: 'market',
   components: {
@@ -58,7 +58,7 @@ export default class CodeIndex extends Vue {
     margin-bottom 30px
   .button-bolck
     display flex
-    justify-content end
+    justify-content flex-end
     .save
       margin-right 15px
   .code-input
