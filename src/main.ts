@@ -15,6 +15,7 @@ import '@/permission'
 import '@/icons/components'
 import * as directives from '@/directives'
 
+Vue.config.devtools = true
 Vue.config.productionTip = false
 Vue.use(ElementUI, {
   i18n: (key: string, value: string) => i18n.t(key, value),

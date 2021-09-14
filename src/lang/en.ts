@@ -128,4 +128,7 @@ export default {
     submit: 'Submit',
     cancel: 'Cancel',
   },
+  algorithm: {
+    algorithmName: 'algorithm name',
+  },
 }

@@ -22,7 +22,10 @@
         </jz-button>
       </div>
       <div class="wrap-info">
-        <template>
+        <template v-if="isAlgo">
+          <AlgorithmDetail></AlgorithmDetail>
+        </template>
+        <template v-else>
           <MetaData v-if="tabIndex"></MetaData>
           <DataDetail v-else></DataDetail>
         </template>
@@ -35,6 +38,7 @@
 import { Vue, Component, Watch } from 'vue-property-decorator'
 import DataDetail from './components/DataDetail.vue'
 import MetaData from './components/MetaData.vue'
+import AlgorithmDetail from './components/AlgorithmDetail.vue'
 import JzButton from '@/components/JzButton.vue'
 import JzNav from '@/components/JzNav.vue'
 
@@ -43,6 +47,7 @@ import JzNav from '@/components/JzNav.vue'
   components: {
     DataDetail,
     MetaData,
+    AlgorithmDetail,
     JzButton,
     JzNav,
   },
@@ -56,6 +61,7 @@ export default class Detail extends Vue {
   private list = []
   private tabs: string[] = ['description', 'metadata']
   private tabIndex = 0
+  private isAlgo = false
   get isHomeDetail() {
     return this.$route.name === 'detail'
   }
@@ -67,6 +73,14 @@ export default class Detail extends Vue {
     // TODO 判断用户登录
     const id = this.$route.params.id
     this.$router.push(`/home/${id}/authorize`)
+  }
+  private checkIsAlgo() {
+    if('undefined'==this.$route.params.metaid){
+       this.isAlgo =true
+    }
+  }
+  created() {
+    this.checkIsAlgo()
   }
 }
 </script>

@@ -59,7 +59,7 @@ import { strlen } from '@/utils/validateRules'
   },
 })
 export default class resourcesData extends Vue {
-  private nickname = ''
+  private nickname = UserModule.user_info.userName
   private tabs: string[] = ['nickname']
   private tabIndex = 0
   get address() {
@@ -82,6 +82,7 @@ export default class resourcesData extends Vue {
     const data: any = await setNickName({ ...params })
     if (data.code === 10000) {
       this.$message.success('修改昵称成功')
+      this.nickname = params.nickName
       setTimeout(() => {
         this.$router.go(-1)
       }, 2000)

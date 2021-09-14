@@ -9,3 +9,8 @@ export const geAlgorithmTree = () => {
 export const geAlgorithms = (params?: any) => {
   return get('/algorithm/list', params)
 }
+
+// 算法详情
+export const getAlgorithmsDetail = (id: string | number) => {
+  return get('/algorithm/details/' + id)
+}
