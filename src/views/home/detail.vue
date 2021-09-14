@@ -75,8 +75,8 @@ export default class Detail extends Vue {
     this.$router.push(`/home/${id}/authorize`)
   }
   private checkIsAlgo() {
-    if('undefined'==this.$route.params.metaid){
-       this.isAlgo =true
+    if ('undefined' == this.$route.params.metaid) {
+      this.isAlgo = true
     }
   }
   created() {

@@ -24,6 +24,6 @@ export const getLogin = (params: any) => {
 }
 
 // 退出
-export const getLogOut = (params: any) => {
-  return request.post('/user/logout', params)
+export const getLogOut = () => {
+  return request.post('/user/logout')
 }

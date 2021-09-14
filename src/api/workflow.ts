@@ -49,8 +49,8 @@ export const getOrganization = () => {
   return get('/data/getAllAuthOrganization/')
 }
 // 查询表选项
-export const getTables = () => {
-  return get('/data/getAllAuthTables')
+export const getTables = (parmas: any) => {
+  return get('/data/getAllAuthTables', parmas)
 }
 // 查询字段选项
 export const getColumns = (id: string | number) => {

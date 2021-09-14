@@ -10,7 +10,7 @@
         <div class="flow-node" v-for="(item, index) in nodeList" :key="index">
           <div
             class="block"
-            @click="handleNode(item)"
+            @click="handleNode(item, index)"
             v-contextmenu:contextmenu
           >
             <span v-if="!isResetName">{{ item.nodeName }}</span>
@@ -56,6 +56,7 @@ import { geAlgorithmTree } from '@/api/algorithm'
 import { addWorkflowNode } from '@/api/workflow'
 import { AlgorithmType } from '@/api/types'
 import { saveNode, clearNode, getNodes } from '@/api/workflow'
+import { WorkflowModule } from '@/store/modules/workflow'
 
 @Component({
   name: 'workflow',
@@ -75,6 +76,7 @@ export default class workflowIndex extends Vue {
   get isNode() {
     return !!this.nodeList.length
   }
+  // 算法列表
   private async getAlaor() {
     const { data } = await geAlgorithmTree()
     this.menus = data
@@ -95,12 +97,15 @@ export default class workflowIndex extends Vue {
     }
     const { data } = await addWorkflowNode(params)
     this.workflowNodeId = data.workflowNodeId
+    WorkflowModule.SET_ALGOR(data)
   }
   private handleResetName() {
     this.isResetName = true
     setTimeout(() => {
-      ;(this.$refs as any).ResetInput.focus()
-    }, 200)
+      if ((this.$refs as any).ResetInput) {
+        ;(this.$refs as any).ResetInput[0].focus()
+      }
+    }, 500)
   }
   private async handleSave() {
     const { workflowId, workflowNodeId } = this
@@ -116,6 +121,7 @@ export default class workflowIndex extends Vue {
       ],
     }
     await saveNode(params)
+    this.getNodeList()
   }
   // 删除该节点
   private async handleDelete() {
@@ -125,15 +131,21 @@ export default class workflowIndex extends Vue {
     this.nodeList = []
   }
   // 点击节点，展开信息
-  private handleNode(item: any) {
+  private handleNode(item: any, index: number) {
     this.isDrawer = true
-    console.log(item)
-    this.workflowNodeId = item.id
+    if (item && item.id) {
+      this.workflowNodeId = item.id
+    }
+    const parmas = {
+      data: this.nodeList,
+      index,
+    }
+    WorkflowModule.SET_DATA(parmas)
   }
   private async getNodeList() {
     const id = this.workflowId
     const { data } = await getNodes(id)
-    if (data.workflowNodeVoList.length) {
+    if (data.workflowNodeVoList && data.workflowNodeVoList.length) {
       this.nodeList = data.workflowNodeVoList
     }
   }

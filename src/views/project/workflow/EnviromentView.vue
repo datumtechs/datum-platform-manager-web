@@ -32,10 +32,10 @@
         <div class="text">CPU</div>
         <el-select v-model="cpuValue" placeholder="请选择">
           <el-option
-            v-for="item in cpuOptions"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
+            v-for="(item, key, index) in cpuOptions"
+            :key="index"
+            :label="item"
+            :value="key"
           >
           </el-option>
         </el-select>
@@ -44,10 +44,10 @@
         <div class="text">内存</div>
         <el-select v-model="memoryValue" placeholder="请选择">
           <el-option
-            v-for="item in memoryOptions"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
+            v-for="(item, key, index) in memoryOptions"
+            :key="index"
+            :label="item"
+            :value="key"
           >
           </el-option>
         </el-select>
@@ -56,10 +56,10 @@
         <div class="text">GPU</div>
         <el-select v-model="gpuValue" placeholder="请选择">
           <el-option
-            v-for="item in gpuOptions"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
+            v-for="(item, key, index) in gpuOptions"
+            :key="index"
+            :label="item"
+            :value="key"
           >
           </el-option>
         </el-select>
@@ -68,10 +68,10 @@
         <div class="text">宽带</div>
         <el-select v-model="broadband" placeholder="请选择">
           <el-option
-            v-for="item in broadbandOptions"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
+            v-for="(item, key, index) in broadbandOptions"
+            :key="index"
+            :label="item"
+            :value="key"
           >
           </el-option>
         </el-select>
@@ -90,6 +90,7 @@ import {
 } from '@/status'
 import JzButton from '@/components/JzButton.vue'
 import { saveNodeResource } from '@/api/workflow'
+import { WorkflowModule } from '@/store/modules/workflow'
 
 @Component({
   name: 'EnviromentView',
@@ -101,10 +102,10 @@ export default class EnviromentView extends Vue {
   @Prop({ required: true }) private nodeId!: number
 
   private fileList = []
-  private cpuValue = 1
-  private memoryValue = 1
-  private gpuValue = 1
-  private broadband = 1
+  private cpuValue = '1'
+  private memoryValue = '1'
+  private gpuValue = '1'
+  private broadband = '1'
   get cpuOptions() {
     return cpuOptions
   }
@@ -132,6 +133,13 @@ export default class EnviromentView extends Vue {
   }
   private handleCancel() {
     console.log('取消')
+  }
+  created() {
+    const info: any = WorkflowModule.algorithms
+    this.cpuValue = String(info.costCpu)
+    this.memoryValue = String(info.costMem)
+    this.gpuValue = String(info.costGpu)
+    this.broadband = String(info.costBandwidth)
   }
 }
 </script>

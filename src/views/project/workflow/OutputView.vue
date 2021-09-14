@@ -17,7 +17,7 @@
         </el-switch>
         <span class="switch-text"> {{ isSelect ? '是' : '否' }} </span>
       </div>
-      <div class="select-value" v-if="isSelect">
+      <div class="select-value">
         <el-checkbox-group v-model="checkList">
           <div v-for="(item, key, index) in checkOptions" :key="index">
             <el-checkbox :label="key">{{ item }} </el-checkbox>
@@ -37,6 +37,7 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { addNodeOutput } from '@/api/workflow'
+import { WorkflowModule } from '@/store/modules/workflow'
 
 @Component({
   name: 'OutputView',
@@ -44,18 +45,16 @@ import { addNodeOutput } from '@/api/workflow'
 export default class extends Vue {
   @Prop({ required: true }) private nodeId!: number
   private isSelect = false
-  private checkList = []
-  private checkOptions: any = {
-    1: '银行A',
-    2: '证券A',
-    3: '证券B',
+  private checkList: string[] = []
+  get checkOptions() {
+    return WorkflowModule.orgOptions
   }
   private async handleChange(state: boolean) {
     if (!state) return
     if (!this.checkList.length) return
     const { nodeId } = this
-    const handleItem = (id: string | number) => {
-      const name = this.checkOptions[id]
+    const handleItem = (id: string) => {
+      const name = (this.checkOptions as any)[id]
       return {
         identityId: id,
         identityName: name,
@@ -74,6 +73,20 @@ export default class extends Vue {
     }
     const { msg } = await addNodeOutput(parasm)
     this.$message.success(msg)
+  }
+  created() {
+    const { outputVoList, inputVoList } = WorkflowModule
+    if (
+      outputVoList &&
+      outputVoList.length &&
+      inputVoList &&
+      inputVoList.length
+    ) {
+      WorkflowModule.SET_ORG_OPTIONS()
+      outputVoList.map((item: any) => {
+        this.checkList.push(item.identityId)
+      })
+    }
   }
 }
 </script>

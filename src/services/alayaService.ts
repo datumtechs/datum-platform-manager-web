@@ -45,6 +45,7 @@ class alayaService {
    * @returns  返回一个钱包地址的数组
    */
   async connectWallet() {
+    console.log('connectWallet')
     UserModule.SET_LOADING(true)
     const { alaya } = this
     if (typeof alaya == 'undefined') {

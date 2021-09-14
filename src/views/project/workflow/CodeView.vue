@@ -21,6 +21,8 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import JzButton from '@/components/JzButton.vue'
 import { saveNodeCode } from '@/api/workflow'
+import { WorkflowModule } from '@/store/modules/workflow'
+
 @Component({
   name: 'market',
   components: {
@@ -42,6 +44,9 @@ export default class CodeIndex extends Vue {
     }
     const { msg } = await saveNodeCode(params)
     this.$message.success(msg)
+  }
+  created() {
+    this.textarea = WorkflowModule.algorithms.calculateContractCode
   }
 }
 </script>

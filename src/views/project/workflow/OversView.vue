@@ -3,10 +3,10 @@
     <!-- 概述 -->
     <div class="view-block">
       <div class="title">
-        隐私求交
+        {{ dataInfo.algorithmName }}
       </div>
       <div class="describe info">
-        用于跨组织的数据交集查询
+        {{ dataInfo.algorithmDesc }}
       </div>
     </div>
     <div class="view-block">
@@ -14,29 +14,22 @@
         作者
       </div>
       <div class="info">
-        Rosetta
+        {{ dataInfo.author }}
       </div>
     </div>
     <div class="view-block">
       <div class="text">
         支持协同方数量
       </div>
-      <div class="info">
-        >=2
-      </div>
-      <div class="info">
-        &lt;=2
-      </div>
+      <div class="info">>= {{ dataInfo.maxNumbers }}</div>
+      <div class="info">&lt;= {{ dataInfo.minNumbers }}</div>
     </div>
     <div class="view-block">
       <div class="text">
         支持语言
       </div>
-      <div class="info">
-        SQL
-      </div>
-      <div class="info">
-        Python
+      <div class="info" v-for="(item, index) in supportLanguage" :key="index">
+        {{ item }}
       </div>
     </div>
   </div>
@@ -44,10 +37,23 @@
 
 <script lang="ts">
 import { Vue, Component, Watch } from 'vue-property-decorator'
+import { WorkflowModule } from '@/store/modules/workflow'
+
 @Component({
   name: 'OverView',
 })
-export default class OverViewIndex extends Vue {}
+export default class OverViewIndex extends Vue {
+  get dataInfo() {
+    return WorkflowModule.algorithms
+  }
+  get supportLanguage() {
+    const res = (WorkflowModule.algorithms as any).supportLanguage.replace(
+      /"/g,
+      '',
+    )
+    return res.split(',')
+  }
+}
 </script>
 
 <style scoped lang="stylus">
