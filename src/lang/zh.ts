@@ -4,7 +4,8 @@ export default {
     case: '案例',
     projectAll: '项目',
     all: '所有项目',
-    detail: '查看详情1',
+    dataDetail: '数据',
+    algorithmDetail: '算法',
     application: '申请授权',
     project: '黑名单查询1',
     work: '工作流',
@@ -48,7 +49,8 @@ export default {
   },
   detail: {
     apply: '申请授权',
-    description: '数据描述',
+    dataDesc: '数据描述',
+    algorithmDesc: '算法描述',
     metadata: '元数据',
   },
   case: {

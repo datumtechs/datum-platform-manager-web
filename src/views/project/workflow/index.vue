@@ -24,10 +24,13 @@
             />
           </div>
           <ul class="state">
-            <li>未开始</li>
-            <li>成功</li>
-            <li>运行中</li>
-            <li>失败</li>
+            <li
+              v-for="(info, index) in stateList"
+              :key="index"
+              :class="item.runStatus === index ? 'active' : ''"
+            >
+              {{ info }}
+            </li>
           </ul>
         </div>
       </template>
@@ -72,7 +75,7 @@ export default class workflowIndex extends Vue {
   private workflowNodeId = ''
   private nodeList: any = []
   private menus = []
-
+  private stateList = ['未开始', '成功', '运行中', '失败']
   get isNode() {
     return !!this.nodeList.length
   }
@@ -213,4 +216,7 @@ export default class workflowIndex extends Vue {
           box-sizing border-box
           padding-top 5px
           border-top 2px solid #ccc
+        .active
+          border-top 2px solid #0f62fe
+          color #0f62fe
 </style>

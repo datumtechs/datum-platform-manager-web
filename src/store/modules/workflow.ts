@@ -100,13 +100,5 @@ class Workflow extends VuexModule implements WFlowState {
     }
     this.SET_ORG(data)
   }
-  // 输入保存的组织选项
-  // public get orgOptions() {
-  //   const list = this.organizationList
-  //   const ids = this.organizationsId
-  //   return list.filter((v) => {
-  //     return ids.indexOf(v['identityId']) !== -1
-  //   })
-  // }
 }
 export const WorkflowModule = getModule(Workflow)

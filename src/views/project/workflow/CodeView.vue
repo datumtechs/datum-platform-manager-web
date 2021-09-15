@@ -46,7 +46,7 @@ export default class CodeIndex extends Vue {
     this.$message.success(msg)
   }
   created() {
-    this.textarea = WorkflowModule.algorithms.calculateContractCode
+    this.textarea = (WorkflowModule.algorithms as any).calculateContractCode
   }
 }
 </script>

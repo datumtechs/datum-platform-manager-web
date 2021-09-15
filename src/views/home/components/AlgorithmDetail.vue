@@ -16,6 +16,8 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { getAlgorithmsDetail } from '@/api/algorithm'
+import { BreadcrumbModule } from '@/store/modules/breadcrumb'
+
 @Component({
   name: 'AlgorithmDetail',
 })
@@ -64,6 +66,7 @@ export default class AlgorithmDetail extends Vue {
   private async getList() {
     const { data } = await getAlgorithmsDetail(this.$route.params.id)
     this.data = data
+    BreadcrumbModule.SET_ALGOR(data.algorithmName)
   }
   created() {
     this.getList()

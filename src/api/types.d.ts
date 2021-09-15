@@ -28,12 +28,9 @@ export interface AlgorithmType {
   algorithmId: number
   nodeName?: string
 }
-export interface ITransactionData {
-  orderId: string
-  timestamp: string | number
-  username: string
-  price: number
-  status: string
+export interface TableNameType {
+  id: string | number
+  name: string
 }
 
 export interface IUserData {

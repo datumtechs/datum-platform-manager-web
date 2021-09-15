@@ -42,7 +42,7 @@ import JzButton from '@/components/JzButton.vue'
 import { getProject, delProject, delProjects } from '@/api/project'
 import { ParamsType, TableParams, QueryType } from '@/api/types'
 import { formatDate } from '@/utils/format'
-
+import { TableNameType } from '@/api/types'
 @Component({
   name: 'projectAll',
   components: {
@@ -82,8 +82,13 @@ export default class AllIndex extends Vue {
     size: 10,
   }
   private total = 0
-  private handleName(number: number) {
-    this.$router.push('/project/' + number)
+  private handleName(data: TableNameType) {
+    const { id, name } = data
+    console.log(id, name)
+    this.$router.push({
+      path: '/project/' + id,
+      // query: { name },
+    })
   }
   private handleBtn(data: any) {
     const { index, row } = data

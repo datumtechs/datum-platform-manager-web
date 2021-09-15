@@ -4,7 +4,8 @@ export default {
     case: 'Cases',
     projectAll: 'Projects',
     all: 'All Projects',
-    detail: 'Details',
+    dataDetail: 'Data',
+    algorithmDetail: 'Algorithm',
     application: 'Data Application',
     project: 'Blacklist Query1',
     work: 'Workflow',
@@ -45,7 +46,8 @@ export default {
   },
   detail: {
     apply: 'Apply',
-    description: 'Description',
+    dataDesc: 'Description',
+    algorithmDesc: 'Description',
     metadata: 'Metadata',
   },
   case: {

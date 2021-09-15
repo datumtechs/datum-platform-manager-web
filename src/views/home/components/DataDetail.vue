@@ -16,11 +16,12 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { getDataDetail } from '@/api/home'
+import { BreadcrumbModule } from '@/store/modules/breadcrumb'
 @Component({
   name: 'DataDetail',
 })
 export default class DataDetail extends Vue {
-  private data = {}
+  private data: any = {}
   private dataDesc = [
     {
       title: '简介',
@@ -94,6 +95,8 @@ export default class DataDetail extends Vue {
   private async getList() {
     const { data } = await getDataDetail(this.$route.params.id)
     this.data = data
+    this.data.fileType = this.data.fileType ? 'csv' : '未知'
+    BreadcrumbModule.SET_DATA(data.dataName)
   }
   created() {
     this.getList()

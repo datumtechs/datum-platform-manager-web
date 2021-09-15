@@ -116,6 +116,7 @@ import { getDataAuth } from '@/api/authorize'
 import alayaService from '@/services/alayaService'
 import { UserModule } from '@/store/modules/user'
 import { formatDate } from '@/utils/format'
+import { BreadcrumbModule } from '@/store/modules/breadcrumb'
 
 @Component({
   name: 'Authorize',
@@ -208,6 +209,7 @@ export default class Authorize extends Vue {
     this.detailId = this.$route.params.id
     const { data } = await getDataDetail(this.detailId)
     this.dataInfo = data
+    BreadcrumbModule.SET_DATA(data.dataName)
   }
   created() {
     this.getList()

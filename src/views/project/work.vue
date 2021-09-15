@@ -55,6 +55,7 @@ import {
   delWorkflow,
   copyWorkflow,
 } from '@/api/project'
+import { TableNameType } from '@/api/types'
 
 interface PlaceholderType {
   work: string
@@ -145,14 +146,14 @@ export default class WorkIndex extends Vue {
     const pageType: any = this.pageType
     return this.placeholderList[pageType]
   }
-  private handleName(number: number) {
+  private handleName(data: TableNameType) {
+    const { id, name } = data
+    const project = this.$route.params.id
     if (this.pageType === 'work') {
-      const id = this.$route.params.id
-      this.$router.push('/project/' + id + '/workflow/' + number)
+      this.$router.push('/project/' + project + '/workflow/' + id)
     }
     if (this.pageType === 'jobs') {
-      const id = this.$route.params.id
-      this.$router.push('/project/' + id + '/subjob/' + number)
+      this.$router.push('/project/' + project + '/subjob/' + id)
     }
   }
   private handleBtn(data: any) {

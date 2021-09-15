@@ -31,6 +31,8 @@ import Table from '../project/components/Table.vue'
 import JzButton from '@/components/JzButton.vue'
 import JzNav from '@/components/JzNav.vue'
 import { getListByOwner } from '@/api/resources'
+import { TableNameType } from '@/api/types'
+
 @Component({
   name: 'resourcesData',
   components: {
@@ -79,7 +81,8 @@ export default class resourcesData extends Vue {
       lable: 'worke.edit',
     },
   ]
-  private handleName(id: number) {
+  private handleName(data: TableNameType) {
+    const { id, name } = data
     this.$router.push('/resources/detail/' + id)
   }
   private handleBtn() {}

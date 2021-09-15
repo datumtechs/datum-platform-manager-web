@@ -59,11 +59,16 @@ export default class Detail extends Vue {
     size: 20,
   }
   private list = []
-  private tabs: string[] = ['description', 'metadata']
   private tabIndex = 0
-  private isAlgo = false
+  get tabs() {
+    if (this.isAlgo) {
+      return ['algorithmDesc']
+    } else {
+      return ['dataDesc', 'metadata']
+    }
+  }
   get isHomeDetail() {
-    return this.$route.name === 'detail'
+    return this.$route.name === 'dataDetail'
   }
 
   private handleTable(index: number) {
@@ -72,15 +77,10 @@ export default class Detail extends Vue {
   private handleAuthorize() {
     // TODO 判断用户登录
     const id = this.$route.params.id
-    this.$router.push(`/home/${id}/authorize`)
+    this.$router.push(`/data/${id}/authorize`)
   }
-  private checkIsAlgo() {
-    if ('undefined' == this.$route.params.metaid) {
-      this.isAlgo = true
-    }
-  }
-  created() {
-    this.checkIsAlgo()
+  get isAlgo() {
+    return this.$route.name === 'algorithmDetail'
   }
 }
 </script>

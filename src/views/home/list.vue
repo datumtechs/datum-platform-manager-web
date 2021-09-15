@@ -33,6 +33,7 @@
             {{ $t('home.detail') }}
           </jz-button>
           <jz-button
+            v-if="!tabIndex"
             type="jz-button--primary"
             @click="handleAuthorize(item.id)"
             class="button"
@@ -99,13 +100,18 @@ export default class HomeList extends Vue {
   }
   private marketList = []
   private handleDetail(id: string | number, metaid: string) {
-    this.$router.push(`/home/detail/${id}/${metaid}`)
+    if (!this.tabIndex) {
+      this.$router.push(`/data/detail/${id}/${metaid}`)
+    }
+    if (this.tabIndex === 1) {
+      this.$router.push(`/algorithm/detail/${id}`)
+    }
   }
   private handleAuthorize(id: string | number) {
     if (!this.isLogin) {
       ;(this as any).$bus.$emit('connectWallet')
     } else {
-      this.$router.push(`/home/${id}/authorize`)
+      this.$router.push(`/data/${id}/authorize`)
     }
   }
   private async getList() {

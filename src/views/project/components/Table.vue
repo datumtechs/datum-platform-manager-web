@@ -62,7 +62,7 @@
               <span
                 class="table-first"
                 v-if="pathName"
-                @click="handleNext(scope.row.id)"
+                @click="handleNext(scope.row.id, scope.row[item.prop])"
               >
                 {{ scope.row[item.prop] }}
               </span>
@@ -207,8 +207,8 @@ export default class Tables extends Vue {
   }
   // 名称跳转
   @Emit('clickName')
-  private handleNext(val: number) {
-    return val
+  private handleNext(id: number, name: string) {
+    return { id, name }
   }
   // 点击操作按钮
   @Emit('clickBtn')

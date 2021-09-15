@@ -8,11 +8,19 @@
           "
           class="no-redirect"
         >
-          {{ $t('route.' + item.meta.title) }}
+          {{
+            item.meta.dynamic
+              ? BreadcrumbModule[item.meta.title]
+              : $t('route.' + item.meta.title)
+          }}
         </span>
-        <a v-else @click.prevent="handleLink(item)">{{
-          $t('route.' + item.meta.title)
-        }}</a>
+        <a v-else @click.prevent="handleLink(item)">
+          {{
+            item.meta.dynamic
+              ? BreadcrumbModule[item.meta.title]
+              : $t('route.' + item.meta.title)
+          }}
+        </a>
       </el-breadcrumb-item>
     </transition-group>
   </el-breadcrumb>
@@ -22,13 +30,16 @@
 import { compile } from 'path-to-regexp'
 import { Component, Vue, Watch } from 'vue-property-decorator'
 import { RouteRecord, Route } from 'vue-router'
+import { BreadcrumbModule } from '@/store/modules/breadcrumb'
 
 @Component({
   name: 'Breadcrumb',
 })
 export default class extends Vue {
   private breadcrumbs: RouteRecord[] = []
-
+  get BreadcrumbModule() {
+    return BreadcrumbModule
+  }
   @Watch('$route')
   private onRouteChange(route: Route) {
     // if you go to the redirect page, do not update the breadcrumbs
@@ -49,11 +60,18 @@ export default class extends Vue {
 
     // 判断申请授权页面，添加父级标签
     const last = matched[matched.length - 1]
-    if (this.isAuthorize(last) || this.isDetail(last)) {
+    if (this.isAuthorize(last) || this.isDataDetail(last)) {
       const id = this.$route.params.id
       matched.splice(1, 0, {
-        path: `/home/detail/${id}`,
-        meta: { title: 'detail' },
+        path: '/home/data',
+        meta: { title: 'dataDetail' },
+      } as RouteRecord)
+    }
+    if (this.isAlgorithmDetail(last)) {
+      const id = this.$route.params.id
+      matched.splice(1, 0, {
+        path: '/home/data',
+        meta: { title: 'algorithmDetail' },
       } as RouteRecord)
     }
     if (this.isResourcesData(last)) {
@@ -89,12 +107,21 @@ export default class extends Vue {
     }
     return name.trim().toLocaleLowerCase() === 'Authorize'.toLocaleLowerCase()
   }
-  private isDetail(route: RouteRecord) {
+  private isDataDetail(route: RouteRecord) {
     const name = route && route.name
     if (!name) {
       return false
     }
-    return name.trim().toLocaleLowerCase() === 'detail'.toLocaleLowerCase()
+    return name.trim().toLocaleLowerCase() === 'dataDetail'.toLocaleLowerCase()
+  }
+  private isAlgorithmDetail(route: RouteRecord) {
+    const name = route && route.name
+    if (!name) {
+      return false
+    }
+    return (
+      name.trim().toLocaleLowerCase() === 'algorithmDetail'.toLocaleLowerCase()
+    )
   }
   private isResourcesData(route: RouteRecord) {
     const name = route && route.name

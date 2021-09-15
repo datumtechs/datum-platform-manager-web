@@ -59,14 +59,14 @@ export const constantRoutes: RouteConfig[] = [
         ],
       },
       {
-        path: 'home/detail/:id/:metaid',
+        path: 'data/detail/:id/:metaid',
         component: () =>
           import(/* webpackChunkName: "home" */ '@/views/home/detail.vue'),
-        name: 'detail',
+        name: 'dataDetail',
         meta: {
-          title: 'detail',
-          icon: 'detail',
+          title: 'dataDetail',
           activeMenu: '/home/data',
+          dynamic: true, // breadcrumb dynamic name
         },
         children: [
           {
@@ -84,7 +84,7 @@ export const constantRoutes: RouteConfig[] = [
         ],
       },
       {
-        path: 'home/:id/authorize',
+        path: 'data/:id/authorize',
         component: () =>
           import(
             /* webpackChunkName: "authorize" */ '@/views/home/authorize.vue'
@@ -93,6 +93,17 @@ export const constantRoutes: RouteConfig[] = [
         meta: {
           title: 'application',
           activeMenu: '/home/data',
+        },
+      },
+      {
+        path: 'algorithm/detail/:id',
+        component: () =>
+          import(/* webpackChunkName: "home" */ '@/views/home/detail.vue'),
+        name: 'algorithmDetail',
+        meta: {
+          title: 'algorithmDetail',
+          activeMenu: '/home/data',
+          dynamic: true,
         },
       },
     ],
