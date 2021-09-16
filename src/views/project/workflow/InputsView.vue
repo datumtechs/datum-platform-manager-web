@@ -13,13 +13,20 @@
     </div>
     <div class="block">
       <div class="text">数据协同方</div>
-      <div class="block-row" v-for="(row, index) in selectLayout" :key="index">
-        <el-cascader
-          :span="12"
-          :props="inputProps"
-          v-model="inputValue[index]"
-        ></el-cascader>
-      </div>
+      <template v-if="isCreated">
+        <div
+          class="block-row"
+          v-for="(row, index) in selectLayout"
+          :key="index"
+        >
+          <el-cascader
+            :span="12"
+            :props="inputProps"
+            v-model="inputValue[index]"
+            :key="initKey"
+          ></el-cascader>
+        </div>
+      </template>
     </div>
     <div class="block">
       <span class="add-button" @click="addSelect"
@@ -30,7 +37,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator'
+import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import JzButton from '@/components/JzButton.vue'
 import { addNodeInput, getTables, getColumns } from '@/api/workflow'
 import { WorkflowModule } from '@/store/modules/workflow'
@@ -42,6 +49,7 @@ import { WorkflowModule } from '@/store/modules/workflow'
 })
 export default class InputViewIndex extends Vue {
   @Prop({ required: true }) private nodeId!: number
+  private initKey = 0
   private selectLayout = [{}, {}]
   private inputValue: any = []
   private inputProps: object = {
@@ -54,21 +62,27 @@ export default class InputViewIndex extends Vue {
   get organizations() {
     return WorkflowModule.organizationList
   }
+  get isCreated() {
+    return WorkflowModule.organizationList.length
+  }
   // 动态加载选项
   private async inputLazyLoad(node: any, resolve: any) {
     let { level } = node
     try {
       if (level === 0) {
-        await WorkflowModule.getOrganizations()
-        const data = this.organizations
-        let nodes = data.map((item: any) => ({
-          code: item.identityId,
-          name: item.identityName,
-          leaf: level >= 2,
-        }))
-        resolve(nodes)
+        console.log('level', level, node)
+        setTimeout(() => {
+          const data = this.organizations
+          let nodes = data.map((item: any) => ({
+            code: item.identityId,
+            name: item.identityName,
+            leaf: level >= 2,
+            disabled: item.disabled,
+          }))
+          console.log('node', node)
+          resolve(nodes)
+        }, 13)
       } else if (level === 1) {
-        console.log(node.data)
         const params: any = { identityId: node.data.code }
         const { data } = await getTables(params)
         let nodes = data.map((item: any) => ({
@@ -76,6 +90,8 @@ export default class InputViewIndex extends Vue {
           name: item.dataName,
           leaf: level >= 2,
         }))
+        console.log('level', level, nodes)
+
         resolve(nodes)
       } else if (level === 2) {
         const { data } = await getColumns(node.data.code)
@@ -120,15 +136,17 @@ export default class InputViewIndex extends Vue {
     await WorkflowModule.setOrganizationId(organizationId)
     WorkflowModule.SAVE_ORG_OPTIONS()
   }
-  private handleCancel() {
+  private async handleCancel() {
     this.selectLayout = [{}, {}]
     this.inputValue = []
+    await WorkflowModule.getOrganizations()
   }
   private addSelect() {
     if (this.selectLayout.length >= 5) return
     this.selectLayout.push({})
   }
-  mounted() {
+  // 回显选择状态
+  handleInputValue() {
     const { inputVoList } = WorkflowModule
     const res: any = []
     if (inputVoList && inputVoList.length) {
@@ -144,6 +162,24 @@ export default class InputViewIndex extends Vue {
       })
     }
     this.inputValue = res
+  }
+  async created() {
+    await WorkflowModule.getOrganizations()
+    this.handleInputValue()
+  }
+  @Watch('inputValue', { deep: true })
+  changeCreated(value: any) {
+    console.log('input', value)
+    if (value.length) {
+      const res = value.map((item: string[]) => {
+        if (item && item[0]) {
+          return item[0]
+        }
+      })
+      WorkflowModule.SET_ORG_DISABLED(res)
+      // 更新下拉框重新加载选项
+      this.initKey++
+    }
   }
 }
 </script>

@@ -87,7 +87,7 @@ export default class AllIndex extends Vue {
     console.log(id, name)
     this.$router.push({
       path: '/project/' + id,
-      // query: { name },
+      query: { name },
     })
   }
   private handleBtn(data: any) {
@@ -104,16 +104,19 @@ export default class AllIndex extends Vue {
     this.getList()
   }
   private async handleDelete(id: number) {
-    const { msg } = await delProject({ id })
-    this.$message.success(msg)
+    const { msg, code } = await delProject({ id })
+    if (code === 10000) {
+      this.$message.success(msg)
+    }
     this.getList()
   }
   private async selectDelete(ids: number[]) {
     if (!ids.length) return
     const params = ids.join(',')
-    console.log(params)
-    const { msg } = await delProjects({ ids: params })
-    this.$message.success(msg)
+    const { msg, code } = await delProjects({ ids: params })
+    if (code === 10000) {
+      this.$message.success(msg)
+    }
     this.getList()
   }
   private async getList() {

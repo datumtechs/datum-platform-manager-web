@@ -120,8 +120,8 @@ export default class DialogIndex extends Vue {
     )
   }
   @Watch('address', { deep: true })
-  routerChange(val: any): void {
-    if (val.length > 0) {
+  addressChange(val: any): void {
+    if (val && val.length > 0) {
       this.handleClose()
     }
   }

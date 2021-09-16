@@ -78,10 +78,8 @@ export default class extends Vue {
     // 数据回显
     const { outputVoList, inputVoList } = WorkflowModule
     if (
-      outputVoList &&
-      outputVoList.length &&
-      inputVoList &&
-      inputVoList.length
+      (outputVoList && outputVoList.length) ||
+      (inputVoList && inputVoList.length)
     ) {
       WorkflowModule.SET_ORG_OPTIONS()
       outputVoList.map((item: any) => {

@@ -9,16 +9,18 @@ import store from '@/store'
 export interface BreadcrumbState {
   dataDetail: string
   algorithmDetail: string
-  projectName: string
+  project: string
+  workflow: string
 }
 @Module({ dynamic: true, store, name: 'breadcrumb' })
 class Breadcrumb extends VuexModule implements BreadcrumbState {
   public dataDetail = ''
   public algorithmDetail = ''
-  public projectName = ''
+  public project = ''
+  public workflow = ''
 
   @Mutation
-  public SET_DATA(state: string) {
+  public SET_DATADETAIL(state: string) {
     this.dataDetail = state
   }
   @Mutation
@@ -27,7 +29,11 @@ class Breadcrumb extends VuexModule implements BreadcrumbState {
   }
   @Mutation
   public SET_PROJECT(state: string) {
-    this.projectName = state
+    this.project = state
+  }
+  @Mutation
+  public SET_WORKFLOW(state: string) {
+    this.workflow = state
   }
 }
 export const BreadcrumbModule = getModule(Breadcrumb)

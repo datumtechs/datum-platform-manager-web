@@ -241,6 +241,12 @@ export default class HeaderComponent extends Vue {
     .el-menu-item {
       font-size 16px
     }
+    >>> .el-submenu .el-submenu__title:hover{
+        background-color: #E2EFF9 !important;
+        i {
+            color: #5F4FFB;
+        }
+    }
     >>> .el-submenu__title {
         font-size 16px
       }

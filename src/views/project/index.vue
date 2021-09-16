@@ -16,6 +16,7 @@
 <script lang="ts">
 import { Vue, Component, Watch } from 'vue-property-decorator'
 import JzNav from '@/components/JzNav.vue'
+import { BreadcrumbModule } from '@/store/modules/breadcrumb'
 
 @Component({
   name: 'projectItem',
@@ -26,6 +27,7 @@ import JzNav from '@/components/JzNav.vue'
 export default class ProjectIndex extends Vue {
   private isWorkeFlow: boolean = false
   private isNav: boolean = true
+  private projectName: string = ''
   get queryId() {
     return Number(this.$route.params.id)
   }
@@ -36,10 +38,16 @@ export default class ProjectIndex extends Vue {
     if (this.tabIndex !== index) {
       this.tabIndex = index
       const type = this.tabIndex ? 'jobs' : 'work'
-      this.$router.push(`/project/${this.queryId}/${type}`)
+      const { projectName } = this
+      this.$router.push({
+        path: `/project/${this.queryId}/${type}`,
+        query: { name: projectName },
+      })
     }
   }
   created() {
+    this.projectName = this.$route.query.name
+    BreadcrumbModule.SET_PROJECT(this.projectName)
     this.changeRoute()
   }
   @Watch('$route', { deep: true })

@@ -63,17 +63,14 @@ export default class WorkDialog extends Vue {
   private handleOpen(type: number, row?: any) {
     this.type = type
     if (type > 0) {
-      console.log(row)
       this.name = row.workflowName
-      this.describe = ''
+      this.describe = row.workflowDesc
       this.id = row.id || ''
     }
     this.workVisible = true
   }
   private handleClose() {
     this.workVisible = false
-    this.name = ''
-    this.describe = ''
   }
   // 提交
   @Emit('submit')

@@ -57,6 +57,16 @@ class Workflow extends VuexModule implements WFlowState {
     this.organizationList = state
   }
   @Mutation
+  public SET_ORG_DISABLED(state: any) {
+    this.organizationList.map((item: any) => {
+      if (state.indexOf(item['identityId']) !== -1) {
+        item.disabled = true
+      } else {
+        item.disabled = false
+      }
+    })
+  }
+  @Mutation
   public SAVE_ORG_OPTIONS() {
     // 过滤选择的组织
     const list = this.organizationList
@@ -91,13 +101,15 @@ class Workflow extends VuexModule implements WFlowState {
 
   @Action
   public async getOrganizations() {
-    let data: any = []
-    if (!this.organizationList.length) {
-      const res = await getOrganization()
-      data = res.data
-    } else {
-      data = this.organizationList
-    }
+    // let data: any = []
+    // if (!this.organizationList.length) {
+    //   const res = await getOrganization()
+    //   data = res.data
+    // } else {
+    //   data = this.organizationList
+    // }
+    // this.SET_ORG(data)
+    const { data } = await getOrganization()
     this.SET_ORG(data)
   }
 }

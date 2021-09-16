@@ -22,7 +22,7 @@ import { BreadcrumbModule } from '@/store/modules/breadcrumb'
   name: 'AlgorithmDetail',
 })
 export default class AlgorithmDetail extends Vue {
-  private data = {}
+  private data: any = {}
   private dataDesc = [
     {
       title: '简介',
@@ -66,6 +66,8 @@ export default class AlgorithmDetail extends Vue {
   private async getList() {
     const { data } = await getAlgorithmsDetail(this.$route.params.id)
     this.data = data
+    this.data.supportLanguage = this.data.supportLanguage.replace(/"/g, '')
+    this.data.supportOsSystem = this.data.supportOsSystem.replace(/"/g, '')
     BreadcrumbModule.SET_ALGOR(data.algorithmName)
   }
   created() {
@@ -95,7 +97,7 @@ export default class AlgorithmDetail extends Vue {
         font-size 14px
         margin-bottom: 4px;
         .lable
-          width 130px
+          width 145px
           color rgba(0,0,0,0.50)
         .info
           width 200px

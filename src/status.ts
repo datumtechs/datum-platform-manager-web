@@ -16,6 +16,7 @@ export const roleOptionMap: any = {
  *
  */
 export const cpuOptions = {
+  2: '2核',
   4: '4核',
   8: '8核',
   16: '16核',
@@ -26,6 +27,7 @@ export const cpuOptions = {
  *
  */
 export const memoryOptions = {
+  2: '2核',
   4: '4核',
   8: '8核',
   16: '16核',
@@ -35,6 +37,7 @@ export const memoryOptions = {
  *
  */
 export const gpuOptions = {
+  2: '2核',
   4: '4核',
   8: '8核',
   16: '16核',

@@ -168,12 +168,14 @@ export const constantRoutes: RouteConfig[] = [
         meta: {
           title: 'project',
           activeMenu: '/project/all',
+          dynamic: true,
         },
         children: [
           {
             path: 'work',
             name: 'work',
             meta: {
+              // dynamic: true,
               title: 'work',
               activeMenu: '/project/all',
             },
@@ -200,6 +202,7 @@ export const constantRoutes: RouteConfig[] = [
             meta: {
               title: 'workflow',
               activeMenu: '/project/all',
+              dynamic: true,
             },
             component: () =>
               import(

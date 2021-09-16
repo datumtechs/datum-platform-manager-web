@@ -43,7 +43,7 @@
     </div>
     <v-contextmenu ref="contextmenu">
       <v-contextmenu-item @click="handleResetName">重命名</v-contextmenu-item>
-      <v-contextmenu-item>复制</v-contextmenu-item>
+      <v-contextmenu-item @click="handleCopy">复制</v-contextmenu-item>
       <v-contextmenu-item @click="handleDelete">删除</v-contextmenu-item>
       <v-contextmenu-item>查看运行结果</v-contextmenu-item>
     </v-contextmenu>
@@ -60,6 +60,7 @@ import { addWorkflowNode } from '@/api/workflow'
 import { AlgorithmType } from '@/api/types'
 import { saveNode, clearNode, getNodes } from '@/api/workflow'
 import { WorkflowModule } from '@/store/modules/workflow'
+import { BreadcrumbModule } from '@/store/modules/breadcrumb'
 
 @Component({
   name: 'workflow',
@@ -76,6 +77,7 @@ export default class workflowIndex extends Vue {
   private nodeList: any = []
   private menus = []
   private stateList = ['未开始', '成功', '运行中', '失败']
+  private currentIndex: number = 0
   get isNode() {
     return !!this.nodeList.length
   }
@@ -110,6 +112,12 @@ export default class workflowIndex extends Vue {
       }
     }, 500)
   }
+  private async handleCopy() {
+    // handleCopy()
+    const node = this.nodeList[this.currentIndex]
+    const { algorithmId, nodeName, workflowId } = node
+    await addWorkflowNode({ algorithmId, nodeName, workflowId })
+  }
   private async handleSave() {
     const { workflowId, workflowNodeId } = this
     const nodeName: string = this.nodeList[0].nodeName
@@ -123,7 +131,10 @@ export default class workflowIndex extends Vue {
         },
       ],
     }
-    await saveNode(params)
+    const { msg, code } = await saveNode(params)
+    if (code === 10000) {
+      this.$message.success(msg)
+    }
     this.getNodeList()
   }
   // 删除该节点
@@ -136,6 +147,7 @@ export default class workflowIndex extends Vue {
   // 点击节点，展开信息
   private handleNode(item: any, index: number) {
     this.isDrawer = true
+    this.currentIndex = index
     if (item && item.id) {
       this.workflowNodeId = item.id
     }
@@ -157,6 +169,8 @@ export default class workflowIndex extends Vue {
     const { params } = this.$route
     this.workflowId = params.workflow
     this.getNodeList()
+    const name = this.$route.query.workflow
+    BreadcrumbModule.SET_WORKFLOW(name)
   }
 }
 </script>

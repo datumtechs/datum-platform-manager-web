@@ -12,7 +12,7 @@
       </jz-button>
     </div>
     <div class="block">
-      <div class="text">依赖</div>
+      <!-- <div class="text">依赖</div>
       <el-upload
         class="upload-demo"
         action="https://jsonplaceholder.typicode.com/posts/"
@@ -24,7 +24,7 @@
           ><i class="el-icon-upload el-icon--right"></i> 点击上传</el-button
         >
         <div slot="tip" class="el-upload__tip">仅支持txt文件，多个依赖换行</div>
-      </el-upload>
+      </el-upload> -->
       <div class="block-title">
         计算资源（最低要求）
       </div>
@@ -173,7 +173,7 @@ export default class EnviromentView extends Vue {
       background #fff
       border 0
   .block-title
-    margin 25px 0 15px 0
+    // margin 25px 0 15px 0
   .select
     margin-top 15px
     .text

@@ -68,7 +68,7 @@ export default class MemberDialog extends Vue {
     const titles = ['worke.createMember', 'worke.editMember']
     return titles[this.type]
   }
-  private user = ''
+  private user: number | string = ''
   private userOptions = []
   private role = ''
   get roleOptionMap() {
@@ -77,8 +77,8 @@ export default class MemberDialog extends Vue {
   private handleOpen(type: number, row?: any) {
     this.type = type
     if (type > 0) {
-      this.user = row.userId
-      this.role = row.role
+      this.user = Number(row.userId)
+      this.role = String(row.role)
     }
     this.visible = true
   }

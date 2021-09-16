@@ -48,6 +48,7 @@ import JzButton from '@/components/JzButton.vue'
 import WorkDialog from './components/WorkeDialog.vue'
 import SubjobDialog from './components/SubjobsDialog.vue'
 import { ParamsType, TableParams, QueryType } from '@/api/types'
+
 import {
   getWorkflows,
   addWorkflow,
@@ -88,10 +89,10 @@ export default class WorkIndex extends Vue {
         label: '创造者',
         prop: 'userName',
       },
-      {
-        label: '数据协同方',
-        prop: 'authValue', // TODO 没有字段
-      },
+      // {
+      //   label: '数据协同方',
+      //   prop: 'authValue', // TODO 没有字段
+      // },
       {
         label: '创建时间',
         prop: 'createTime',
@@ -149,11 +150,18 @@ export default class WorkIndex extends Vue {
   private handleName(data: TableNameType) {
     const { id, name } = data
     const project = this.$route.params.id
+    const projectName = this.$route.query.name
     if (this.pageType === 'work') {
-      this.$router.push('/project/' + project + '/workflow/' + id)
+      this.$router.push({
+        path: `/project/${project}/workflow/${id}`,
+        query: { workflow: name, name: projectName },
+      })
     }
     if (this.pageType === 'jobs') {
-      this.$router.push('/project/' + project + '/subjob/' + id)
+      this.$router.push({
+        path: `/project/${project}/subjob/${id}`,
+        query: { workflow: name, name: projectName },
+      })
     }
   }
   private handleBtn(data: any) {
@@ -217,16 +225,16 @@ export default class WorkIndex extends Vue {
   }
   private async handleSubmit(params: any) {
     const { type, data } = params
-    console.log(type, data)
+    let res
     if (type === 0) {
-      const { msg } = await addWorkflow(data)
-      this.$message.success(msg)
+      res = await addWorkflow(data)
     } else if (type === 1) {
-      const { msg } = await setWorkflow(data)
-      this.$message.success(msg)
+      res = await setWorkflow(data)
     } else if (type === 2) {
-      const { msg } = await copyWorkflow(data)
-      this.$message.success(msg)
+      res = await copyWorkflow(data)
+    }
+    if (res.code === 10000) {
+      this.$message.success(res.msg)
     }
     this.getList()
   }

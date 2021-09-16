@@ -71,14 +71,14 @@ export default class DataDetail extends Vue {
           lable: '更新时间：',
           value: 'updateTime',
         },
-        {
-          lable: '更新频率：',
-          value: '贷款逾期数据',
-        },
-        {
-          lable: '更新方式：',
-          value: '贷款逾期数据',
-        },
+        // {
+        //   lable: '更新频率：',
+        //   value: '贷款逾期数据',
+        // },
+        // {
+        //   lable: '更新方式：',
+        //   value: '贷款逾期数据',
+        // },
       ],
     },
     {
@@ -86,7 +86,7 @@ export default class DataDetail extends Vue {
       describes: [
         {
           lable: '支持授权方式：',
-          value: '按次数/按时间',
+          value: 'authType',
         },
       ],
     },
@@ -96,7 +96,8 @@ export default class DataDetail extends Vue {
     const { data } = await getDataDetail(this.$route.params.id)
     this.data = data
     this.data.fileType = this.data.fileType ? 'csv' : '未知'
-    BreadcrumbModule.SET_DATA(data.dataName)
+    this.data.authType = '按次数/按时间'
+    BreadcrumbModule.SET_DATADETAIL(data.dataName)
   }
   created() {
     this.getList()
