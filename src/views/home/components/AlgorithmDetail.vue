@@ -57,7 +57,7 @@ export default class AlgorithmDetail extends Vue {
         },
         {
           lable: '算法所属大类：',
-          value: 'algorithmType',
+          value: 'algorithmTypeDesc',
         },
       ],
     },
@@ -97,7 +97,11 @@ export default class AlgorithmDetail extends Vue {
         font-size 14px
         margin-bottom: 4px;
         .lable
+<<<<<<< HEAD
           width 145px
+=======
+          width 160px
+>>>>>>> e12739139b18859955c8636ae400580f9a82daf2
           color rgba(0,0,0,0.50)
         .info
           width 200px

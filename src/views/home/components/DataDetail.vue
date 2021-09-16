@@ -60,6 +60,10 @@ export default class DataDetail extends Vue {
           value: 'size',
         },
         {
+          lable: '算法所属大类：',
+          value: 'algorithmTypeDesc',
+        },
+        {
           lable: '数据条数：',
           value: 'rows',
         },
@@ -71,6 +75,7 @@ export default class DataDetail extends Vue {
           lable: '更新时间：',
           value: 'updateTime',
         },
+
         // {
         //   lable: '更新频率：',
         //   value: '贷款逾期数据',
@@ -96,6 +101,7 @@ export default class DataDetail extends Vue {
     const { data } = await getDataDetail(this.$route.params.id)
     this.data = data
     this.data.fileType = this.data.fileType ? 'csv' : '未知'
+    this.data.size = this.data.size +' byte'
     this.data.authType = '按次数/按时间'
     BreadcrumbModule.SET_DATADETAIL(data.dataName)
   }
@@ -126,7 +132,7 @@ export default class DataDetail extends Vue {
         font-size 14px
         margin-bottom: 4px;
         .lable
-          width 130px
+          width 160px
           color rgba(0,0,0,0.50)
         .info
           width 200px
