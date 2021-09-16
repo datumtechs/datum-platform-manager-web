@@ -37,13 +37,13 @@
     </div>
     <div class="instruct">
       <span @click="handleSave"> 保存 </span>
-      <span> 启动/终止 </span>
+      <span @click="handleStartWorkflow"> 启动/终止 </span>
       <span @click="handleDelete"> 清空 </span>
       <span> 创建作业 </span>
     </div>
     <v-contextmenu ref="contextmenu">
       <v-contextmenu-item @click="handleResetName">重命名</v-contextmenu-item>
-      <v-contextmenu-item @click="handleCopy">复制</v-contextmenu-item>
+      <!-- <v-contextmenu-item @click="handleCopy">复制</v-contextmenu-item> -->
       <v-contextmenu-item @click="handleDelete">删除</v-contextmenu-item>
       <v-contextmenu-item>查看运行结果</v-contextmenu-item>
     </v-contextmenu>
@@ -58,9 +58,11 @@ import TreeDrawer from './TreeDrawer.vue'
 import { geAlgorithmTree } from '@/api/algorithm'
 import { addWorkflowNode } from '@/api/workflow'
 import { AlgorithmType } from '@/api/types'
-import { saveNode, clearNode, getNodes } from '@/api/workflow'
+import { saveNode, clearNode, getNodes, startWorkflow } from '@/api/workflow'
 import { WorkflowModule } from '@/store/modules/workflow'
 import { BreadcrumbModule } from '@/store/modules/breadcrumb'
+import { UserModule } from '@/store/modules/user'
+import alayaService from '@/services/alayaService'
 
 @Component({
   name: 'workflow',
@@ -105,6 +107,23 @@ export default class workflowIndex extends Vue {
     this.nodeList.push(data)
     WorkflowModule.SET_ALGOR(data)
   }
+  // 启动工作流
+  private async handleStartWorkflow() {
+    if (!this.nodeList.length) {
+      this.$message.error('暂无节点')
+      return
+    }
+    const sign = await this.getSign()
+    const { workflowId, nodeList, workflowNodeId } = this
+    const params = {
+      address: UserModule.user_info.address,
+      sign,
+      startNode: workflowNodeId,
+      endNode: workflowNodeId,
+      workflowId,
+    }
+    await startWorkflow(params)
+  }
   private handleResetName() {
     this.isResetName = true
     setTimeout(() => {
@@ -141,13 +160,14 @@ export default class workflowIndex extends Vue {
   }
   // 删除该节点
   private async handleDelete() {
-    const { workflowId } = this
-    const { msg } = await clearNode({ workflowId })
-    this.$message.success(msg)
+    // const { workflowId } = this
+    // const { msg } = await clearNode({ workflowId })
+    // this.$message.success(msg)
     this.nodeList = []
   }
   // 点击节点，展开信息
   private handleNode(item: any, index: number) {
+    if (this.isResetName) return
     this.isDrawer = true
     this.currentIndex = index
     if (item && item.id) {
@@ -173,6 +193,11 @@ export default class workflowIndex extends Vue {
     this.getNodeList()
     const name = this.$route.query.workflow
     BreadcrumbModule.SET_WORKFLOW(name)
+  }
+  private async getSign() {
+    await UserModule.GetLoginNonce()
+    const sign = await alayaService.signAlaya()
+    return sign
   }
 }
 </script>

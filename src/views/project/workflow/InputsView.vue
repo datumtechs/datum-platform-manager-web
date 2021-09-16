@@ -145,8 +145,12 @@ export default class InputViewIndex extends Vue {
     this.handleCascaderKey()
   }
   private addSelect() {
-    if (this.selectLayout.length >= 5) return
+    const max = Number(WorkflowModule.algorithms.maxNumbers)
+    if (this.selectLayout.length > max) return
     this.selectLayout.push({})
+    let len = this.cascaderKey.length
+    this.cascaderKey.push((len + 1) * 1000)
+    console.log('cascaderKey', this.cascaderKey)
   }
   // 回显选择状态
   handleInputValue() {
@@ -170,7 +174,7 @@ export default class InputViewIndex extends Vue {
   private handleCascaderKey() {
     this.cascaderKey = []
     this.selectLayout.map((item: any, index: number) => {
-      this.cascaderKey[index] = index
+      this.cascaderKey[index] = (index + 1) * 1000
     })
     console.log('初始化cascaderKey', this.cascaderKey)
   }
@@ -181,11 +185,11 @@ export default class InputViewIndex extends Vue {
   }
   private changeInputValue(e: any, index: number) {
     if (e) {
-      WorkflowModule.SET_ORG_DISABLED(e)
+      const val: string[] = this.getListFirst(this.inputValue)
+      WorkflowModule.SET_ORG_DISABLED(val || [])
       // 更新key，渲染el-cascader组件，使用options最新的值
       const cascaderKey = JSON.parse(JSON.stringify(this.cascaderKey))
       cascaderKey.map((i: number) => {
-        console.log(i !== index)
         if (i !== index) {
           this.cascaderKey[i]++
         }
@@ -222,14 +226,14 @@ export default class InputViewIndex extends Vue {
   //     }
   //   }
   // }
-  // private getListFirst(list: any) {
-  //   if (!list) return []
-  //   return list.map((item: string[]) => {
-  //     if (item && item.length && item[0]) {
-  //       return item[0]
-  //     }
-  //   })
-  // }
+  private getListFirst(list: any) {
+    if (!list) return []
+    return list.map((item: string[]) => {
+      if (item && item.length && item[0]) {
+        return item[0]
+      }
+    })
+  }
 }
 </script>
 

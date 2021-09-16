@@ -54,5 +54,10 @@ export const getTables = (parmas: any) => {
 }
 // 查询字段选项
 export const getColumns = (id: string | number) => {
-  return get(`data/getAllAuthColumns/${id}`)
+  return get(`/data/getAllAuthColumns/${id}`)
+}
+
+// 启动工作流
+export const startWorkflow = (parmas: any) => {
+  return post('/workflow/start', parmas)
 }

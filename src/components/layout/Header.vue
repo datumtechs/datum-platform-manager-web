@@ -88,7 +88,7 @@
           <span class="user" @click="connectWallet" v-else>{{
             $t('home.connectWallet')
           }}</span>
-          <span @click="handleUser" class="user-item">
+          <span @click="handleUser" class="user-item" v-if="isLogin">
             <svg-icon
               v-show="!isUserShow"
               name="user"
