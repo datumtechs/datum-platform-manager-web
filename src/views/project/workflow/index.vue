@@ -47,7 +47,9 @@
       <v-contextmenu-item @click="handleDelete">删除</v-contextmenu-item>
       <v-contextmenu-item>查看运行结果</v-contextmenu-item>
     </v-contextmenu>
-    <NodeDrawer :nodeId="workflowNodeId" :isDrawer.sync="isDrawer" />
+    <template v-if="isNodeDrawer">
+      <NodeDrawer :nodeId="workflowNodeId" :isDrawer.sync="isDrawer" />
+    </template>
   </div>
 </template>
 
@@ -72,6 +74,7 @@ import alayaService from '@/services/alayaService'
   },
 })
 export default class workflowIndex extends Vue {
+  private isNodeDrawer = true
   private isDrawer = false
   private isResetName = false
   private workflowId = ''
@@ -174,17 +177,21 @@ export default class workflowIndex extends Vue {
   private async handleDelete() {
     this.nodeList = []
   }
-  // 清空该节点
+  // 清空节点
   private async handleEmpty() {
     const { workflowId } = this
     const { msg } = await clearNode({ workflowId })
     this.$message.success(msg)
     this.nodeList = []
+    WorkflowModule.INIT_DATA()
+    this.isNodeDrawer = false
   }
   // 点击节点，展开信息
   private handleNode(item: any, index: number) {
     if (this.isResetName) return
-    this.isDrawer = true
+    if (!this.isNodeDrawer) {
+      this.isNodeDrawer = true
+    }
     this.currentIndex = index
     if (item && item.id) {
       this.workflowNodeId = item.id
@@ -194,6 +201,9 @@ export default class workflowIndex extends Vue {
       index,
     }
     WorkflowModule.SET_DATA(parmas)
+    setTimeout(() => {
+      this.isDrawer = true
+    }, 13)
   }
   private async getNodeList() {
     const id = this.workflowId

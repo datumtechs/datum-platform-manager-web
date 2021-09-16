@@ -14,7 +14,7 @@
             v-for="(item, index) in navs"
             :key="index"
             :class="index === navIndex ? 'active' : ''"
-            @click="navIndex = index"
+            @click="handleTableIndex(index)"
           >
             {{ $t(item.lable) }}
           </div>
@@ -41,6 +41,7 @@ import OutputView from './OutputView.vue'
 import InputView from './InputsView.vue'
 import CodeView from './CodeView.vue'
 import EnviromentView from './EnviromentView.vue'
+import { WorkflowModule } from '@/store/modules/workflow'
 @Component({
   name: 'NodeDrawer',
   components: {
@@ -73,7 +74,10 @@ export default class NodeDrawerIndex extends Vue {
       lable: 'workflow.enviroment',
     },
   ]
-
+  private handleTableIndex(index: number) {
+    this.navIndex = index
+    WorkflowModule.SET_NAVINDEX(index)
+  }
   @Emit('update:isDrawer')
   private handleClose() {
     return false
