@@ -23,7 +23,12 @@
             :span="12"
             :props="inputProps"
             v-model="inputValue[index]"
-            :key="initKey"
+            :key="cascaderKey[index]"
+            @change="
+              (e) => {
+                changeInputValue(e, index)
+              }
+            "
           ></el-cascader>
         </div>
       </template>
@@ -49,7 +54,7 @@ import { WorkflowModule } from '@/store/modules/workflow'
 })
 export default class InputViewIndex extends Vue {
   @Prop({ required: true }) private nodeId!: number
-  private initKey = 0
+  private cascaderKey: number[] = []
   private selectLayout = [{}, {}]
   private inputValue: any = []
   private inputProps: object = {
@@ -70,7 +75,6 @@ export default class InputViewIndex extends Vue {
     let { level } = node
     try {
       if (level === 0) {
-        console.log('level', level, node)
         setTimeout(() => {
           const data = this.organizations
           let nodes = data.map((item: any) => ({
@@ -79,7 +83,6 @@ export default class InputViewIndex extends Vue {
             leaf: level >= 2,
             disabled: item.disabled,
           }))
-          console.log('node', node)
           resolve(nodes)
         }, 13)
       } else if (level === 1) {
@@ -90,8 +93,6 @@ export default class InputViewIndex extends Vue {
           name: item.dataName,
           leaf: level >= 2,
         }))
-        console.log('level', level, nodes)
-
         resolve(nodes)
       } else if (level === 2) {
         const { data } = await getColumns(node.data.code)
@@ -140,6 +141,8 @@ export default class InputViewIndex extends Vue {
     this.selectLayout = [{}, {}]
     this.inputValue = []
     await WorkflowModule.getOrganizations()
+    WorkflowModule.SET_ORG_INIT()
+    this.handleCascaderKey()
   }
   private addSelect() {
     if (this.selectLayout.length >= 5) return
@@ -163,24 +166,70 @@ export default class InputViewIndex extends Vue {
     }
     this.inputValue = res
   }
+  // 初始化cascaderKey
+  private handleCascaderKey() {
+    this.cascaderKey = []
+    this.selectLayout.map((item: any, index: number) => {
+      this.cascaderKey[index] = index
+    })
+    console.log('初始化cascaderKey', this.cascaderKey)
+  }
   async created() {
     await WorkflowModule.getOrganizations()
     this.handleInputValue()
+    this.handleCascaderKey()
   }
-  @Watch('inputValue', { deep: true })
-  changeCreated(value: any) {
-    console.log('input', value)
-    if (value.length) {
-      const res = value.map((item: string[]) => {
-        if (item && item[0]) {
-          return item[0]
+  private changeInputValue(e: any, index: number) {
+    if (e) {
+      WorkflowModule.SET_ORG_DISABLED(e)
+      // 更新key，渲染el-cascader组件，使用options最新的值
+      const cascaderKey = JSON.parse(JSON.stringify(this.cascaderKey))
+      cascaderKey.map((i: number) => {
+        console.log(i !== index)
+        if (i !== index) {
+          this.cascaderKey[i]++
         }
       })
-      WorkflowModule.SET_ORG_DISABLED(res)
-      // 更新下拉框重新加载选项
-      this.initKey++
     }
   }
+  // @Watch('inputValue', { deep: true, immediate: true })
+  // changeCreated(value: any, oldValue: any) {
+  //   const val = this.getListFirst(value)
+  //   const old = this.getListFirst(oldValue)
+  //   WorkflowModule.SET_ORG_DISABLED(val)
+  //   const index = this.checkListIndex(val, old)
+  //   console.log('value:', value, val)
+  //   console.log('oldValue:', oldValue, old)
+  //   console.log('reurn index:', index)
+  //     // 更新下拉框重新加载选项
+  //     // this.initKey[index] ++
+  // }
+  /**
+   * 检测变化的下拉框
+   *
+   *  @params  newlist oldlist
+   *  @return  返回更新项的index
+   */
+  // private checkListIndex(newlist: any, oldlist: any) {
+  //   console.log(newlist, oldlist)
+  //   const val: string[] = this.getListFirst(newlist) || []
+  //   const old: string[] = this.getListFirst(oldlist) || []
+  //   const len = Math.min(val.length, old.length)
+  //   let index = len
+  //   for (let i = 0; i < len; i++) {
+  //     if (val[i] !== old[i]) {
+  //       index = i
+  //     }
+  //   }
+  // }
+  // private getListFirst(list: any) {
+  //   if (!list) return []
+  //   return list.map((item: string[]) => {
+  //     if (item && item.length && item[0]) {
+  //       return item[0]
+  //     }
+  //   })
+  // }
 }
 </script>
 

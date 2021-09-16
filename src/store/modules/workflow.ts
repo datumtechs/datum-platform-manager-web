@@ -65,6 +65,13 @@ class Workflow extends VuexModule implements WFlowState {
         item.disabled = false
       }
     })
+    console.log(this.organizationList)
+  }
+  @Mutation
+  public SET_ORG_INIT() {
+    this.organizationList.map((item: any) => {
+      item.disabled = false
+    })
   }
   @Mutation
   public SAVE_ORG_OPTIONS() {

@@ -93,7 +93,6 @@ export default class workflowIndex extends Vue {
       this.$message.warning('最多创建一个工作流，请删除当前工作流！')
       return
     }
-    this.nodeList.push(item)
     const { workflowId } = this
     const params = {
       algorithmId: item.algorithmId,
@@ -102,6 +101,8 @@ export default class workflowIndex extends Vue {
     }
     const { data } = await addWorkflowNode(params)
     this.workflowNodeId = data.workflowNodeId
+    data.nodeName = data.algorithmName
+    this.nodeList.push(data)
     WorkflowModule.SET_ALGOR(data)
   }
   private handleResetName() {
@@ -115,7 +116,8 @@ export default class workflowIndex extends Vue {
   private async handleCopy() {
     // handleCopy()
     const node = this.nodeList[this.currentIndex]
-    const { algorithmId, nodeName, workflowId } = node
+    const { algorithmId, nodeName } = node
+    const { workflowId } = this
     await addWorkflowNode({ algorithmId, nodeName, workflowId })
   }
   private async handleSave() {
