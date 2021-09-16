@@ -78,7 +78,7 @@ export default class workflowIndex extends Vue {
   private workflowNodeId = ''
   private nodeList: any = []
   private menus = []
-  private stateList = ['未开始', '成功', '运行中', '失败']
+  private stateList = ['未开始', '运行中', '成功', '失败']
   private currentIndex: number = 0
   get isNode() {
     return !!this.nodeList.length
