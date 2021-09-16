@@ -38,7 +38,7 @@
     <div class="instruct">
       <span @click="handleSave"> 保存 </span>
       <span @click="handleStartWorkflow"> 启动/终止 </span>
-      <span @click="handleDelete"> 清空 </span>
+      <span @click="handleEmpty"> 清空 </span>
       <span> 创建作业 </span>
     </div>
     <v-contextmenu ref="contextmenu">
@@ -104,6 +104,7 @@ export default class workflowIndex extends Vue {
     const { data } = await addWorkflowNode(params)
     this.workflowNodeId = data.workflowNodeId
     data.nodeName = data.algorithmName
+    data.id = data.workflowNodeId
     this.nodeList.push(data)
     WorkflowModule.SET_ALGOR(data)
   }
@@ -115,12 +116,23 @@ export default class workflowIndex extends Vue {
     }
     const sign = await this.getSign()
     const { workflowId, nodeList, workflowNodeId } = this
+    console.log('node', nodeList)
+    const workflowNodeReqList = nodeList.map((item: any, index: number) => {
+      return {
+        id: item.id,
+        nameNode: item.nodeName,
+        nodeStep: index + 1,
+      }
+    })
+    console.log('workflowNodeReqList', workflowNodeReqList)
+
     const params = {
       address: UserModule.user_info.address,
       sign,
-      startNode: workflowNodeId,
-      endNode: workflowNodeId,
+      startNode: 1,
+      endNode: nodeList.length,
       workflowId,
+      workflowNodeReqList,
     }
     await startWorkflow(params)
   }
@@ -140,17 +152,17 @@ export default class workflowIndex extends Vue {
     await addWorkflowNode({ algorithmId, nodeName, workflowId })
   }
   private async handleSave() {
-    const { workflowId, workflowNodeId } = this
-    const nodeName: string = this.nodeList[0].nodeName
+    const { workflowId, nodeList } = this
+    const workflowNodeReqList = nodeList.map((item: any, index: number) => {
+      return {
+        id: item.id,
+        nameNode: item.nodeName,
+        nodeStep: index + 1,
+      }
+    })
     const params = {
       workflowId,
-      workflowNodeReqList: [
-        {
-          id: workflowNodeId,
-          nodeName,
-          nodeStep: 1, // TODO 暂无数据来源
-        },
-      ],
+      workflowNodeReqList,
     }
     const { msg, code } = await saveNode(params)
     if (code === 10000) {
@@ -160,9 +172,13 @@ export default class workflowIndex extends Vue {
   }
   // 删除该节点
   private async handleDelete() {
-    // const { workflowId } = this
-    // const { msg } = await clearNode({ workflowId })
-    // this.$message.success(msg)
+    this.nodeList = []
+  }
+  // 清空该节点
+  private async handleEmpty() {
+    const { workflowId } = this
+    const { msg } = await clearNode({ workflowId })
+    this.$message.success(msg)
     this.nodeList = []
   }
   // 点击节点，展开信息

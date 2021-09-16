@@ -55,7 +55,7 @@ import { WorkflowModule } from '@/store/modules/workflow'
 export default class InputViewIndex extends Vue {
   @Prop({ required: true }) private nodeId!: number
   private cascaderKey: number[] = []
-  private selectLayout = [{}, {}]
+  private selectLayout = Array(this.minLen).fill({})
   private inputValue: any = []
   private inputProps: object = {
     // checkStrictly: true,
@@ -63,6 +63,12 @@ export default class InputViewIndex extends Vue {
     value: 'code',
     lazy: true,
     lazyLoad: this.inputLazyLoad,
+  }
+  get maxLen() {
+    return Number(WorkflowModule.algorithms.maxNumbers)
+  }
+  get minLen() {
+    return Number(WorkflowModule.algorithms.minNumbers)
   }
   get organizations() {
     return WorkflowModule.organizationList
@@ -138,15 +144,19 @@ export default class InputViewIndex extends Vue {
     WorkflowModule.SAVE_ORG_OPTIONS()
   }
   private async handleCancel() {
-    this.selectLayout = [{}, {}]
+    const { minLen } = this
+    this.selectLayout = Array(minLen).fill({})
     this.inputValue = []
     await WorkflowModule.getOrganizations()
     WorkflowModule.SET_ORG_INIT()
     this.handleCascaderKey()
   }
   private addSelect() {
-    const max = Number(WorkflowModule.algorithms.maxNumbers)
-    if (this.selectLayout.length > max) return
+    const { maxLen } = this
+    if (this.selectLayout.length >= maxLen) {
+      this.$message.warning(`最多支持${maxLen}个协同方`)
+      return
+    }
     this.selectLayout.push({})
     let len = this.cascaderKey.length
     this.cascaderKey.push((len + 1) * 1000)
