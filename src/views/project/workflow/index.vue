@@ -51,14 +51,15 @@
     <template v-if="isNodeDrawer">
       <NodeDrawer :nodeId="workflowNodeId" :isDrawer.sync="isDrawer" />
     </template>
-    <!-- <div class="log-wrap">
+    <div class="log-wrap">
       <div class="log-title">运行日志</div>
       <div class="list">
         <div class="item" v-for="(item, index) in logList" :key="index">
-          {{item.name}} {{item.type}}
+          {{item.name}} {{item.createAt}} {{item.content}}
+           <!-- {{item.type}} -->
         </div>
       </div>
-    </div> -->
+    </div>
   </div>
 </template>
 
@@ -273,6 +274,7 @@ export default class workflowIndex extends Vue {
 <style scoped lang="stylus">
 .workflow
   width 100%
+  height: calc(100vh - 120px)
   position relative
   .tree-menus
     position absolute
@@ -295,7 +297,7 @@ export default class workflowIndex extends Vue {
     position absolute
     z-index 1
     width 100%
-    height: calc(100vh - 150px)
+    height: 100%
     .flow-node
       width 500px
       margin 0px auto
@@ -331,10 +333,16 @@ export default class workflowIndex extends Vue {
   .log-wrap
     position absolute
     z-index 99
-    width: calc(100vw - 420px)
-    height 300px
+    width: calc(100vw - 300px)
+    height 200px
     bottom 0
-    left 320px
+    left 300px
     background #ccc
     color #333
+    padding 20px
+    .log-title
+      margin-bottom 20px
+      .list 
+        .item
+          padding 10px 0
 </style>
