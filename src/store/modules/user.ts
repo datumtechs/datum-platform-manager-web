@@ -96,7 +96,10 @@ class User extends VuexModule implements IUserState {
   public async GetLoginNonce() {
     try {
       const address = this.user_info.address
-      const { data } = await getLoginNonce(address)
+      const { data, code } = await getLoginNonce(address)
+      if (code !== 10000) {
+        throw new Error('钱包地址异常，重新连接钱包')
+      }
       this.SET_UUID(data.nonce)
     } catch (error) {
       console.log(error)

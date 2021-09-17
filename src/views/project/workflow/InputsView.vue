@@ -111,6 +111,10 @@ export default class InputViewIndex extends Vue {
     }
   }
   private async handleSave() {
+    console.log('this.loady', this.inputValue)
+    if (this.inputValue.length < this.minLen) {
+      return this.$message.warning(`至少输入${this.minLen}个数据协同方`)
+    }
     const { nodeId } = this
     const saveNodeInputReqList: any = []
     this.inputValue.map((item: any) => {
@@ -139,6 +143,7 @@ export default class InputViewIndex extends Vue {
     })
     await WorkflowModule.setOrganizationId(organizationId)
     WorkflowModule.SAVE_ORG_OPTIONS()
+    WorkflowModule.SET_INPUT_LEN(this.inputValue.length)
   }
   private async handleCancel() {
     const { minLen } = this
@@ -151,12 +156,14 @@ export default class InputViewIndex extends Vue {
   private addSelect() {
     const { maxLen } = this
     if (this.selectLayout.length >= maxLen) {
-      this.$message.warning(`最多支持${maxLen}个协同方`)
+      this.$message.warning(`最多支持${maxLen}个数据协同方`)
       return
     }
     this.selectLayout.push({})
     let item = String(this.selectLayout.length)
+    console.log('item push', item)
     this.cascaderKey.push(item)
+    console.log('cascaderKey push', this.cascaderKey)
   }
   // 回显选择状态
   handleInputValue() {
@@ -175,6 +182,7 @@ export default class InputViewIndex extends Vue {
       })
     }
     this.inputValue = res
+    WorkflowModule.SET_INPUT_LEN(this.inputValue.length)
   }
   // 初始化cascaderKey
   private handleCascaderKey() {
@@ -275,6 +283,7 @@ export default class InputViewIndex extends Vue {
     .row-item:last-child
       margin-right 0
     >>> .el-cascader
+          width 80%
           .el-cascader-menu
             min-width: 150px!important;
 </style>

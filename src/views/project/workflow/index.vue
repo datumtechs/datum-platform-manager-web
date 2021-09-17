@@ -55,8 +55,7 @@
       <div class="log-title">运行日志</div>
       <div class="list">
         <div class="item" v-for="(item, index) in logList" :key="index">
-          {{item.name}} {{item.createAt}} {{item.content}}
-           <!-- {{item.type}} -->
+          {{ item.name }} {{ item.createAt }} {{ item.content }}
         </div>
       </div>
     </div>
@@ -137,6 +136,12 @@ export default class workflowIndex extends Vue {
     if (!this.nodeList.length) {
       this.$message.error('暂无节点')
       return
+    }
+    const min = Number(WorkflowModule.algorithms.minNumbers)
+    const inputValue = WorkflowModule.valueListNumber
+    console.log(inputValue, min)
+    if (inputValue < min) {
+      return this.$message.warning(`至少输入${min}个数据协同方`)
     }
     const sign = await this.getSign()
     const { workflowId, nodeList, workflowNodeId } = this
@@ -250,6 +255,7 @@ export default class workflowIndex extends Vue {
   }
   private async getLogList() {
     const { nodeList, currentIndex } = this
+    console.log(nodeList, currentIndex)
     const { taskId } = nodeList[currentIndex]
     console.log(taskId)
     const { data } = await getWorkflwLog(taskId)
@@ -264,9 +270,13 @@ export default class workflowIndex extends Vue {
     BreadcrumbModule.SET_WORKFLOW(name)
   }
   private async getSign() {
-    await UserModule.GetLoginNonce()
-    const sign = await alayaService.signAlaya()
-    return sign
+    const checkAddress = alayaService.checkAddress()
+    if (checkAddress) {
+      const sign = await alayaService.signAlaya()
+      return sign
+    } else {
+      this.$message.error('钱包地址异常，请重新连接钱包')
+    }
   }
 }
 </script>
@@ -333,7 +343,7 @@ export default class workflowIndex extends Vue {
   .log-wrap
     position absolute
     z-index 99
-    width: calc(100vw - 300px)
+    width: calc(100vw - 340px)
     height 200px
     bottom 0
     left 300px
@@ -342,7 +352,7 @@ export default class workflowIndex extends Vue {
     padding 20px
     .log-title
       margin-bottom 20px
-      .list 
+      .list
         .item
           padding 10px 0
 </style>

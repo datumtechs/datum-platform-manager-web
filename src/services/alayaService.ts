@@ -100,16 +100,49 @@ class alayaService {
       },
     })
   }
+  private singParams() {
+    const address = UserModule.user_info.address
+    return JSON.stringify({
+      domain: {
+        name: 'Moirae',
+      },
+      message: {
+        address,
+      },
+      primaryType: 'sign',
+      types: {
+        EIP712Domain: [
+          {
+            name: 'name',
+            type: 'string',
+          },
+        ],
+        sign: [
+          {
+            name: 'address',
+            type: 'string',
+          },
+        ],
+      },
+    })
+  }
   /**
    * 签名方法
    * @returns  签名结果
    */
-  signAlaya() {
+  signAlaya(type: string = '') {
     const that = this
-    const msgParams = this.msgParams()
     var from = UserModule.user_info.address
+    // login： this.msgParams()
+    // workflow：  this.singParams()
+    const msgParams = type === 'login' ? this.msgParams() : this.singParams()
     var params = [from, msgParams]
     var method = 'platon_signTypedData_v4'
+    console.log({
+      method,
+      params,
+      from,
+    },)
     const signPromise = new Promise((resolve, reject) => {
       this.web3.currentProvider.sendAsync(
         {
@@ -144,6 +177,22 @@ class alayaService {
       sign: UserModule.user_info.sign,
       signMessage: this.msgParams(),
       userType,
+    }
+  }
+  /**
+   * 检测Address
+   * vuex 查看
+   * window 查看
+   * @returns  false
+   */
+  public checkAddress() {
+    if (UserModule.user_info.address.length) return true
+    const address = this.platon.selectedAddress
+    if (address.length) {
+      UserModule.SET_ADDRESS(address)
+      return true
+    } else {
+      return false
     }
   }
 }

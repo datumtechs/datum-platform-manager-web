@@ -109,6 +109,6 @@ export default class NodeDrawerIndex extends Vue {
     padding 10px 30px
 >>> .el-drawer
       top: 165px!important
-      width: 450px!important
+      width: 500px!important
       padding: 0!important
 </style>

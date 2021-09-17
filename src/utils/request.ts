@@ -3,6 +3,7 @@ import axios from 'axios'
 import qs from 'qs'
 import { message } from '@/plugins/message.ts'
 import { getToken, removeToken, getLanguage } from '@/utils/auth'
+import { UserModule } from '@/store/modules/user'
 /* 创建axios实例 */
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
@@ -33,8 +34,9 @@ service.interceptors.response.use(
     const res = response.data
     if (res.code !== 10000) {
       message.error(res.msg)
-      if (res.code === 4008) {
+      if (res.code === 20007) {
         removeToken()
+        UserModule.ResetToken()
       }
       if (res.code === 4018) {
         window.location.href = '/403'
@@ -63,12 +65,6 @@ service.interceptors.response.use(
       type: 'error',
       duration: 3 * 1000,
     })
-    if (code === 401) {
-      removeToken()
-      // let jumpUrl = window.location.href
-      // window.location.href = `${config.CAS_FRONTEND_URL}/login?url=${jumpUrl}&isLogout=1`
-      window.location.replace('/login')
-    }
     throw new Error(error.message || '网络异常，请重试')
   },
 )

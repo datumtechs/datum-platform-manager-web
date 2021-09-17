@@ -138,9 +138,14 @@ export default class Authorize extends Vue {
   //   console.log(currentValue, oldValue)
   // }
   private async getSign() {
-    await UserModule.GetLoginNonce()
-    const sign = await alayaService.signAlaya()
-    return sign
+    const checkAddress = alayaService.checkAddress()
+    if (checkAddress) {
+      await UserModule.GetLoginNonce()
+      const sign = await alayaService.signAlaya()
+      return sign
+    } else {
+      this.$message.error('钱包地址异常，请重新连接钱包')
+    }
   }
   private async handleAuthorize() {
     const { authType, detailId } = this

@@ -14,9 +14,11 @@ export interface WFlowState {
   organizationsId: any
   organizationList: any
   orgOptions: any
+  valueListNumber: number
 }
 @Module({ dynamic: true, store, name: 'workflow' })
 class Workflow extends VuexModule implements WFlowState {
+  public valueListNumber = 0
   // 概述
   public algorithms = {
     algorithmName: '',
@@ -34,6 +36,10 @@ class Workflow extends VuexModule implements WFlowState {
   public organizationsId = []
   public organizationList = []
   public orgOptions = {}
+  @Mutation
+  public SET_INPUT_LEN(state: number) {
+    this.valueListNumber = state
+  }
   @Mutation
   public SET_DATA(state: any) {
     const { data, index } = state

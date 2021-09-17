@@ -105,7 +105,7 @@ export default class DialogIndex extends Vue {
     // 获取uuid
     await UserModule.GetLoginNonce()
     // alaya签名
-    const res: any = await alayaService.signAlaya()
+    const res: any = await alayaService.signAlaya('login')
     if (res.length) {
       // 登录
       const params = (alayaService as any).loginParams()
