@@ -46,11 +46,12 @@
       <v-contextmenu-item @click="handleResetName">重命名</v-contextmenu-item>
       <!-- <v-contextmenu-item @click="handleCopy">复制</v-contextmenu-item> -->
       <v-contextmenu-item @click="handleDelete">删除</v-contextmenu-item>
-      <v-contextmenu-item>查看运行结果</v-contextmenu-item>
+      <v-contextmenu-item @click="viewResults">查看运行结果</v-contextmenu-item>
     </v-contextmenu>
     <template v-if="isNodeDrawer">
       <NodeDrawer :nodeId="workflowNodeId" :isDrawer.sync="isDrawer" />
     </template>
+    <ViewRun ref="ViewRun" :nodeName="nodeName" :taskId="taskId" :resultsVisible.sync="resultsVisible"></ViewRun>
     <div class="log-wrap">
       <div class="log-title">运行日志</div>
       <div class="list">
@@ -66,6 +67,7 @@
 import { Vue, Component, Watch } from 'vue-property-decorator'
 import NodeDrawer from './NodeDrawer.vue'
 import TreeDrawer from './TreeDrawer.vue'
+import ViewRun from './ViewRun.vue'
 import { geAlgorithmTree } from '@/api/algorithm'
 import { AlgorithmType } from '@/api/types'
 import {
@@ -87,6 +89,7 @@ import alayaService from '@/services/alayaService'
   components: {
     NodeDrawer,
     TreeDrawer,
+    ViewRun,
   },
 })
 export default class workflowIndex extends Vue {
@@ -100,6 +103,9 @@ export default class workflowIndex extends Vue {
   private stateList = ['未开始', '运行中', '成功', '失败']
   private currentIndex: number = 0
   private logList = []
+  private resultsVisible = false
+  private nodeName = ''
+  private taskId = ''
   get startShow() {
     return this.$route.query.run === '1'
   }
@@ -255,9 +261,7 @@ export default class workflowIndex extends Vue {
   }
   private async getLogList() {
     const { nodeList, currentIndex } = this
-    console.log(nodeList, currentIndex)
     const { taskId } = nodeList[currentIndex]
-    console.log(taskId)
     const { data } = await getWorkflwLog(taskId)
     this.logList = data
   }
@@ -277,6 +281,12 @@ export default class workflowIndex extends Vue {
     } else {
       this.$message.error('钱包地址异常，请重新连接钱包')
     }
+  }
+  private viewResults() {
+    this.nodeName = this.nodeList[this.currentIndex].nodeName
+    const taskId = this.nodeList[this.currentIndex].taskId
+    this.resultsVisible = true
+    ;(this.$refs['ViewRun'] as any).getResultsList(taskId)
   }
 }
 </script>

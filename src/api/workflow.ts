@@ -71,3 +71,8 @@ export const endWorkflow = (parmas: any) => {
 export const getWorkflwLog = (id: string | number) => {
   return post(`/workflow/getLog/${id}`, {})
 }
+
+// 查看节点运行结果
+export const getTaskResult = (id: string | number) => {
+  return get(`/workflowNode/getTaskResult/${id}`)
+}
