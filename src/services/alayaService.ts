@@ -60,6 +60,7 @@ class alayaService {
         const data = await alaya.request({
           method: 'platon_requestAccounts',
         })
+        console.log('adder', data)
         UserModule.ConnectWallet(data)
         UserModule.SET_LOADING(false)
       } catch (error) {

@@ -61,3 +61,13 @@ export const getColumns = (id: string | number) => {
 export const startWorkflow = (parmas: any) => {
   return post('/workflow/start', parmas)
 }
+
+// 终止工作流
+export const endWorkflow = (parmas: any) => {
+  return post('/workflow/terminate', parmas)
+}
+
+// 获取运行日志
+export const getWorkflwLog = (id: string | number) => {
+  return post(`/workflow/getLog/${id}`, {})
+}

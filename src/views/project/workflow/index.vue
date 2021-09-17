@@ -37,7 +37,8 @@
     </div>
     <div class="instruct">
       <span @click="handleSave"> 保存 </span>
-      <span @click="handleStartWorkflow"> 启动/终止 </span>
+      <span @click="handleStartWorkflow" v-if="!startShow"> 启动 </span>
+      <span @click="handleEndWorkflow" v-else> 终止 </span>
       <span @click="handleEmpty"> 清空 </span>
       <span> 创建作业 </span>
     </div>
@@ -50,6 +51,14 @@
     <template v-if="isNodeDrawer">
       <NodeDrawer :nodeId="workflowNodeId" :isDrawer.sync="isDrawer" />
     </template>
+    <!-- <div class="log-wrap">
+      <div class="log-title">运行日志</div>
+      <div class="list">
+        <div class="item" v-for="(item, index) in logList" :key="index">
+          {{item.name}} {{item.type}}
+        </div>
+      </div>
+    </div> -->
   </div>
 </template>
 
@@ -58,9 +67,16 @@ import { Vue, Component, Watch } from 'vue-property-decorator'
 import NodeDrawer from './NodeDrawer.vue'
 import TreeDrawer from './TreeDrawer.vue'
 import { geAlgorithmTree } from '@/api/algorithm'
-import { addWorkflowNode } from '@/api/workflow'
 import { AlgorithmType } from '@/api/types'
-import { saveNode, clearNode, getNodes, startWorkflow } from '@/api/workflow'
+import {
+  saveNode,
+  addWorkflowNode,
+  clearNode,
+  getNodes,
+  startWorkflow,
+  endWorkflow,
+  getWorkflwLog,
+} from '@/api/workflow'
 import { WorkflowModule } from '@/store/modules/workflow'
 import { BreadcrumbModule } from '@/store/modules/breadcrumb'
 import { UserModule } from '@/store/modules/user'
@@ -83,6 +99,10 @@ export default class workflowIndex extends Vue {
   private menus = []
   private stateList = ['未开始', '运行中', '成功', '失败']
   private currentIndex: number = 0
+  private logList = []
+  get startShow() {
+    return this.$route.query.run === '1'
+  }
   get isNode() {
     return !!this.nodeList.length
   }
@@ -119,7 +139,6 @@ export default class workflowIndex extends Vue {
     }
     const sign = await this.getSign()
     const { workflowId, nodeList, workflowNodeId } = this
-    console.log('node', nodeList)
     const workflowNodeReqList = nodeList.map((item: any, index: number) => {
       return {
         id: item.id,
@@ -127,8 +146,6 @@ export default class workflowIndex extends Vue {
         nodeStep: index + 1,
       }
     })
-    console.log('workflowNodeReqList', workflowNodeReqList)
-
     const params = {
       address: UserModule.user_info.address,
       sign,
@@ -137,7 +154,18 @@ export default class workflowIndex extends Vue {
       workflowId,
       workflowNodeReqList,
     }
-    await startWorkflow(params)
+    const { code, msg } = await startWorkflow(params)
+    if (code === 10000) {
+      this.$message.success(msg)
+    }
+  }
+  // 终止工作流
+  private async handleEndWorkflow() {
+    const { workflowId } = this
+    const { code, msg } = await endWorkflow({ workflowId })
+    if (code === 10000) {
+      this.$message.success(msg)
+    }
   }
   private handleResetName() {
     this.isResetName = true
@@ -155,6 +183,10 @@ export default class workflowIndex extends Vue {
     await addWorkflowNode({ algorithmId, nodeName, workflowId })
   }
   private async handleSave() {
+    if (!this.nodeList.length) {
+      this.$message.error('暂无节点')
+      return
+    }
     const { workflowId, nodeList } = this
     const workflowNodeReqList = nodeList.map((item: any, index: number) => {
       return {
@@ -175,6 +207,7 @@ export default class workflowIndex extends Vue {
   }
   // 删除该节点
   private async handleDelete() {
+    this.isNodeDrawer = false
     this.nodeList = []
   }
   // 清空节点
@@ -184,6 +217,7 @@ export default class workflowIndex extends Vue {
     this.$message.success(msg)
     this.nodeList = []
     WorkflowModule.INIT_DATA()
+    // 移除弹窗，下次打开重新加载created
     this.isNodeDrawer = false
   }
   // 点击节点，展开信息
@@ -210,12 +244,20 @@ export default class workflowIndex extends Vue {
     const { data } = await getNodes(id)
     if (data.workflowNodeVoList && data.workflowNodeVoList.length) {
       this.nodeList = data.workflowNodeVoList
+      this.getLogList()
     }
   }
+  private async getLogList() {
+    const { nodeList, currentIndex } = this
+    const { taskId } = nodeList[currentIndex]
+    console.log(taskId)
+    const { data } = await getWorkflwLog(taskId)
+    this.logList = data
+  }
   created() {
-    this.getAlaor()
     const { params } = this.$route
     this.workflowId = params.workflow
+    this.getAlaor()
     this.getNodeList()
     const name = this.$route.query.workflow
     BreadcrumbModule.SET_WORKFLOW(name)
@@ -253,7 +295,7 @@ export default class workflowIndex extends Vue {
     position absolute
     z-index 1
     width 100%
-    height 800px
+    height: calc(100vh - 150px)
     .flow-node
       width 500px
       margin 0px auto
@@ -286,4 +328,13 @@ export default class workflowIndex extends Vue {
         .active
           border-top 2px solid #0f62fe
           color #0f62fe
+  .log-wrap
+    position absolute
+    z-index 99
+    width: calc(100vw - 420px)
+    height 300px
+    bottom 0
+    left 320px
+    background #ccc
+    color #333
 </style>

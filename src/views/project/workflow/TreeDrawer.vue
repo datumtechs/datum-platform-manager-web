@@ -63,7 +63,7 @@ export default class extends Vue {
 <style lang="stylus" scoped>
 .tac
   width: 300px;
-  height 800px
+  height: calc(100vh - 120px)
   background #ccc
   .tac-title
     text-indent 25px

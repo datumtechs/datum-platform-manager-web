@@ -76,7 +76,6 @@ export default class NodeDrawerIndex extends Vue {
   ]
   private handleTableIndex(index: number) {
     this.navIndex = index
-    WorkflowModule.SET_NAVINDEX(index)
   }
   @Emit('update:isDrawer')
   private handleClose() {

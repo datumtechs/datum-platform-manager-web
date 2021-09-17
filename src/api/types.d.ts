@@ -31,6 +31,7 @@ export interface AlgorithmType {
 export interface TableNameType {
   id: string | number
   name: string
+  runStatus?: number | string
 }
 
 export interface IUserData {

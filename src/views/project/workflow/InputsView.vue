@@ -13,7 +13,7 @@
     </div>
     <div class="block">
       <div class="text">数据协同方</div>
-      <template v-if="isCreated">
+      <template>
         <div
           class="block-row"
           v-for="(row, index) in selectLayout"
@@ -54,7 +54,7 @@ import { WorkflowModule } from '@/store/modules/workflow'
 })
 export default class InputViewIndex extends Vue {
   @Prop({ required: true }) private nodeId!: number
-  private cascaderKey: number[] = []
+  private cascaderKey: string[] = []
   private selectLayout = Array(this.minLen).fill({})
   private inputValue: any = []
   private inputProps: object = {
@@ -72,9 +72,6 @@ export default class InputViewIndex extends Vue {
   }
   get organizations() {
     return WorkflowModule.organizationList
-  }
-  get isCreated() {
-    return WorkflowModule.organizationList.length
   }
   // 动态加载选项
   private async inputLazyLoad(node: any, resolve: any) {
@@ -158,9 +155,8 @@ export default class InputViewIndex extends Vue {
       return
     }
     this.selectLayout.push({})
-    let len = this.cascaderKey.length
-    this.cascaderKey.push((len + 1) * 1000)
-    console.log('cascaderKey', this.cascaderKey)
+    let item = String(this.selectLayout.length)
+    this.cascaderKey.push(item)
   }
   // 回显选择状态
   handleInputValue() {
@@ -184,7 +180,7 @@ export default class InputViewIndex extends Vue {
   private handleCascaderKey() {
     this.cascaderKey = []
     this.selectLayout.map((item: any, index: number) => {
-      this.cascaderKey[index] = (index + 1) * 1000
+      this.cascaderKey[index] = String(index)
     })
     console.log('初始化cascaderKey', this.cascaderKey)
   }
@@ -201,7 +197,7 @@ export default class InputViewIndex extends Vue {
       const cascaderKey = JSON.parse(JSON.stringify(this.cascaderKey))
       cascaderKey.map((i: number) => {
         if (i !== index) {
-          this.cascaderKey[i]++
+          this.cascaderKey[i] = this.cascaderKey[i] + 1
         }
       })
     }

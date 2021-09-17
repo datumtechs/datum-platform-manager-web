@@ -8,7 +8,6 @@ import {
 import store from '@/store'
 import { getOrganization } from '@/api/workflow'
 export interface WFlowState {
-  navIndex: number
   algorithms: any
   inputVoList: any
   outputVoList: any
@@ -18,7 +17,6 @@ export interface WFlowState {
 }
 @Module({ dynamic: true, store, name: 'workflow' })
 class Workflow extends VuexModule implements WFlowState {
-  public navIndex = 0
   // 概述
   public algorithms = {
     algorithmName: '',
@@ -36,10 +34,6 @@ class Workflow extends VuexModule implements WFlowState {
   public organizationsId = []
   public organizationList = []
   public orgOptions = {}
-  @Mutation
-  public SET_NAVINDEX(state: number) {
-    this.navIndex = state
-  }
   @Mutation
   public SET_DATA(state: any) {
     const { data, index } = state
@@ -108,7 +102,6 @@ class Workflow extends VuexModule implements WFlowState {
   }
   @Mutation
   public INIT_DATA() {
-    this.navIndex = 0
     this.algorithms = {
       algorithmName: '',
       algorithmDesc: '',
