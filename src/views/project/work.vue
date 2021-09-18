@@ -148,7 +148,6 @@ export default class WorkIndex extends Vue {
     return this.placeholderList[pageType]
   }
   private handleName(data: TableNameType) {
-    console.log('data====', data)
     const { id, name, runStatus } = data
     const project = this.$route.params.id
     const projectName = this.$route.query.name

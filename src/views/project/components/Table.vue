@@ -56,6 +56,7 @@
             v-if="!index"
             :prop="item.prop"
             :label="item.label"
+            sortable
             :key="index"
           >
             <template slot-scope="scope">
@@ -240,9 +241,6 @@ export default class Tables extends Vue {
   // 个人资源 handleReapply
   handleReapply() {
     console.log('重新申请')
-  }
-  created() {
-    console.log(this.$route.name)
   }
 }
 </script>

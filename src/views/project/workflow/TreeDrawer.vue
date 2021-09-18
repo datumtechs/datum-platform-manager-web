@@ -49,7 +49,6 @@ export default class extends Vue {
   @Prop({ required: true, default: [] }) private menus!: any
   @Emit('clickItem')
   private startDrag(item: AlgorithmType) {
-    console.log(item)
     item.nodeName = item.algorithmName
     return item
   }

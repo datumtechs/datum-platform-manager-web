@@ -14,6 +14,7 @@
               : $t('route.' + item.meta.title)
           }}
         </span>
+        <!-- 点击跳转 -->
         <a v-else @click.prevent="handleLink(item)">
           {{
             item.meta.dynamic
@@ -84,7 +85,7 @@ export default class extends Vue {
     if (this.isWorkflow(last)) {
       const id = this.$route.params.id
       matched.splice(2, 0, {
-        path: `/project/${id}/work`,
+        path: `/project/${id}`,
         meta: { title: 'work' },
       } as RouteRecord)
     }
@@ -98,6 +99,7 @@ export default class extends Vue {
     this.breadcrumbs = matched.filter((item) => {
       return item.meta && item.meta.title && item.meta.breadcrumb !== false
     })
+    console.log('breadcrumbs', this.breadcrumbs)
   }
 
   private isAuthorize(route: RouteRecord) {
@@ -155,11 +157,22 @@ export default class extends Vue {
   }
 
   private handleLink(item: any) {
+    console.log('item', item)
     const { redirect, path } = item
+
     if (redirect) {
       try {
         // :id,:workflows,:subjob 转换为id
-        const res = this.handlePath(redirect)
+        let redirects = ''
+        if (item.meta.title === 'project') {
+          const name = this.$route.query.name
+          redirects = redirect + '?name=' + name
+          console.log('paths', redirects)
+        } else {
+          redirects = path
+          console.log('paths', redirects)
+        }
+        const res = this.handlePath(redirects)
         this.$router.push(res)
       } catch (error) {
         console.warn(error)

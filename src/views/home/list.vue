@@ -128,12 +128,14 @@ export default class HomeList extends Vue {
       params['dataName'] = inputInfo
     }
     if (!this.tabIndex) {
+      params['dataName'] = inputInfo
       const { data } = await getDataList({ ...params })
       this.marketList = data.items
       this.total = data.total
     }
     if (this.tabIndex === 1) {
       // TODO 接口 缺少total
+      params['algorithmName'] = inputInfo
       const { data } = await geAlgorithms({ ...params })
       data.map((item: any) => {
         item.id = item.algorithmId
