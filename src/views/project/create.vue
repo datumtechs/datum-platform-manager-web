@@ -18,7 +18,7 @@
             @click="handleSelect(index)"
           >
             <span class="template-item-text">
-              {{ $t(item.lable) }}
+              {{ $t(item.projectName) }}
             </span>
             <i class="el-icon-success select-icon"></i>
           </div>
@@ -47,7 +47,7 @@
       </div>
       <div class="create-item create-btn">
         <jz-button
-          @click="handlecancel"
+          @click="handleCancel"
           :height="41"
           :width="116"
           class="cancel"
@@ -68,11 +68,12 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Watch } from 'vue-property-decorator'
-import JzButton from '@/components/JzButton.vue'
-import { AppModule } from '@/store/modules/app'
-import { addProject } from '@/api/project'
-@Component({
+  import {Component, Vue} from 'vue-property-decorator'
+  import JzButton from '@/components/JzButton.vue'
+  import {AppModule} from '@/store/modules/app'
+  import {addProject, getProjectTemplate} from '@/api/project'
+
+  @Component({
   name: 'create',
   components: {
     JzButton,
@@ -81,63 +82,79 @@ import { addProject } from '@/api/project'
 export default class createIndex extends Vue {
   private templateIndex = 0
   private templates = [
-    {
-      id: 1,
-      lable: 'create.blank',
-    },
-    {
-      id: 2,
-      lable: 'create.blacklist',
-    },
-    {
-      id: 3,
-      lable: 'create.qualified',
-    },
-    {
-      id: 4,
-      lable: 'create.collaborative',
-    },
-    {
-      id: 5,
-      lable: 'create.scorecard',
-    },
+    // {
+    //   id: 1,
+    //   lable: 'create.blank',
+    // },
+    // {
+    //   id: 2,
+    //   lable: 'create.blacklist',
+    // },
+    // {
+    //   id: 3,
+    //   lable: 'create.qualified',
+    // },
+    // {
+    //   id: 4,
+    //   lable: 'create.collaborative',
+    // },
+    // {
+    //   id: 5,
+    //   lable: 'create.scorecard',
+    // },
   ]
   private input = ''
   private textarea = ''
+  private projectTempId = ''
   private data = {
     input: '',
     textarea: '',
+    projectTempId: '',
   }
   private handleSelect(index: number) {
     this.templateIndex = index
+    const { projectName, projectDesc, id } = this.templates[index]
+    if (this.templateIndex == 0) {
+      this.input = ''
+      this.textarea = ''
+    } else {
+      this.input = projectName
+      this.textarea = projectDesc
+      this.projectTempId = id
+    }
   }
   // 取消
-  private handlecancel() {
+  private handleCancel() {
     const { input, textarea } = this.data
     this.input = input
     this.textarea = textarea
     this.$router.push('/project/all')
   }
   private async handleSubmit() {
-    const { input, textarea } = this
-    // post api
-    const data = { projectName: input, projectDesc: textarea }
+    const { input, textarea, projectTempId } = this
+    const data = { projectName: input, projectDesc: textarea, projectTempId: projectTempId }
+    const { projectName } = this.templates[this.templateIndex]
+    if (input == projectName) {
+      this.$message.error('项目名称必须修改')
+      return
+    }
     const res: any = await addProject(data)
     if (res.code === 10000) {
       this.$router.push('/project/all')
+    } else {
+      this.$message.error(res.msg)
     }
-    // code 200 ok
-    // this.$router.push('/project/all')
   }
+  private async getProjectTemplateList() {
+    const { data } = await getProjectTemplate()
+    this.templates = data
+  }
+
   get isEnglish() {
     return AppModule.language === 'en'
   }
   created() {
-    // api
-    const data = {
-      projectName: this.input,
-      projectDesc: this.textarea,
-    }
+    this.getProjectTemplateList()
   }
 }
 </script>
