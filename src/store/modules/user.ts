@@ -9,14 +9,7 @@ import {
 import { getLoginNonce, getLogin, getLogOut } from '@/api/user'
 import store from '@/store'
 import router, { resetRouter } from '@/router'
-import {
-  setToken,
-  getToken,
-  removeToken,
-  setUserName,
-  getUserName,
-  removeUserName,
-} from '@/utils/auth'
+import { setToken, getToken, removeToken } from '@/utils/auth'
 export interface UserInfo {
   userName: string | null
   address: string
@@ -35,7 +28,7 @@ class User extends VuexModule implements IUserState {
   // 钱包插件：true 已安装  false 未安装
   public isInitWallet: boolean = true
   public user_info = {
-    userName: getUserName() || '',
+    userName: '',
     address: '',
     sign: '',
     uuid: '',
@@ -68,7 +61,6 @@ class User extends VuexModule implements IUserState {
   @Mutation
   public SET_USER(data: any) {
     this.user_info.userName = data.userName
-    setUserName(data.userName)
   }
   @Mutation
   private RESET_USER() {
@@ -82,7 +74,6 @@ class User extends VuexModule implements IUserState {
   @Action
   public ResetToken() {
     removeToken()
-    removeUserName()
     this.SET_TOKEN('')
     this.RESET_USER()
   }

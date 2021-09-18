@@ -1,8 +1,8 @@
 import request from '@/utils/request'
-// 账号权限
-export const getUserInfo = () => {
-  return request.get('/user/permission/')
-}
+// // 账号权限
+// export const getUserInfo = () => {
+//   return request.get('/user/permission/')
+// }
 
 // 修改昵称
 export const setNickName = (params: any) => {
@@ -26,4 +26,8 @@ export const getLogin = (params: any) => {
 // 退出
 export const getLogOut = () => {
   return request.post('/user/logout')
+}
+// 查询用户信息
+export const getUserInfo = (params: any) => {
+  return request.post('/user/queryUserDetails', params)
 }

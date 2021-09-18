@@ -68,12 +68,12 @@
 </template>
 
 <script lang="ts">
-  import {Component, Vue} from 'vue-property-decorator'
-  import JzButton from '@/components/JzButton.vue'
-  import {AppModule} from '@/store/modules/app'
-  import {addProject, getProjectTemplate} from '@/api/project'
+import { Component, Vue } from 'vue-property-decorator'
+import JzButton from '@/components/JzButton.vue'
+import { AppModule } from '@/store/modules/app'
+import { addProject, getProjectTemplate } from '@/api/project'
 
-  @Component({
+@Component({
   name: 'create',
   components: {
     JzButton,
@@ -132,7 +132,11 @@ export default class createIndex extends Vue {
   }
   private async handleSubmit() {
     const { input, textarea, projectTempId } = this
-    const data = { projectName: input, projectDesc: textarea, projectTempId: projectTempId }
+    const data = {
+      projectName: input,
+      projectDesc: textarea,
+      projectTempId: projectTempId,
+    }
     const { projectName } = this.templates[this.templateIndex]
     if (input == projectName) {
       this.$message.error('项目名称必须修改')

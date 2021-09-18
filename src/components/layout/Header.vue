@@ -130,6 +130,8 @@ import DialogView from '@/components/Dialog/index.vue'
 import RightDrawer from './Drawer.vue'
 import { getSubStr } from '@/utils/format'
 import alayaService from '@/services/alayaService'
+import { getUserName } from '@/utils/auth'
+import { getUserInfo } from '@/api/user'
 @Component({
   components: {
     RightDrawer,
@@ -142,7 +144,7 @@ export default class HeaderComponent extends Vue {
   private isLoggedData: boolean = false
   private historyIndex: number[] = []
   private visible: boolean = false
-  
+
   get activeMenu() {
     const route = this.$route
     const { meta, path } = route
@@ -199,6 +201,20 @@ export default class HeaderComponent extends Vue {
   }
   private connectWallet() {
     this.visible = true
+  }
+  private async handleName() {
+    const checkName = !!UserModule.user_info.userName
+    const checkAddress = alayaService.checkAddress()
+    if (!checkName && checkAddress) {
+      const address = UserModule.user_info.address
+      const { data } = await getUserInfo({ address })
+      UserModule.SET_USER(data)
+    }
+  }
+  private mounted() {
+    setTimeout(() => {
+      this.handleName()
+    }, 13)
   }
   private created() {
     const lang = getLocale()
