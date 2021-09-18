@@ -113,9 +113,15 @@ export default class createIndex extends Vue {
   }
   private handleSelect(index: number) {
     this.templateIndex = index
-    const { projectName, projectDesc } = this.templates[index]
-    this.input = projectName
-    this.textarea = projectDesc
+    const { projectName, projectDesc, id } = this.templates[index]
+    if (this.templateIndex == 0) {
+      this.input = ''
+      this.textarea = ''
+    } else {
+      this.input = projectName
+      this.textarea = projectDesc
+      this.projectTempId = id
+    }
   }
   // 取消
   private handleCancel() {
@@ -126,7 +132,6 @@ export default class createIndex extends Vue {
   }
   private async handleSubmit() {
     const { input, textarea, projectTempId } = this
-    // post api
     const data = { projectName: input, projectDesc: textarea, projectTempId: projectTempId }
     const { projectName } = this.templates[this.templateIndex]
     if (input == projectName) {
@@ -136,9 +141,9 @@ export default class createIndex extends Vue {
     const res: any = await addProject(data)
     if (res.code === 10000) {
       this.$router.push('/project/all')
+    } else {
+      this.$message.error(res.msg)
     }
-    // code 200 ok
-    // this.$router.push('/project/all')
   }
   private async getProjectTemplateList() {
     const { data } = await getProjectTemplate()
@@ -149,12 +154,7 @@ export default class createIndex extends Vue {
     return AppModule.language === 'en'
   }
   created() {
-    // api
     this.getProjectTemplateList()
-    const data = {
-      projectName: this.input,
-      projectDesc: this.textarea,
-    }
   }
 }
 </script>
