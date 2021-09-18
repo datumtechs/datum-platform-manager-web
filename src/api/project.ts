@@ -10,6 +10,11 @@ export const getProjectDetail = (id: string | number) => {
   return get('/project/queryProjectDetails', { id })
 }
 
+// 项目模板列表
+export const getProjectTemplate = (params?: any) => {
+  return get('/projectTemplate/list', params)
+}
+
 // 新增项目
 export const addProject = (params?: any) => {
   return post('/project/addProject', params)
