@@ -83,7 +83,7 @@ export default class resourcesData extends Vue {
     if (data.code === 10000) {
       this.$message.success('修改昵称成功')
       this.nickname = params.nickName
-      UserModule.SET_USER({ data: this.nickname })
+      UserModule.SET_USER({ userName: this.nickname })
       setTimeout(() => {
         this.$router.go(-1)
       }, 1000)

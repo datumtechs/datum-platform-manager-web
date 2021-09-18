@@ -129,7 +129,7 @@ import { getLocale } from '@/lang'
 import DialogView from '@/components/Dialog/index.vue'
 import RightDrawer from './Drawer.vue'
 import { getSubStr } from '@/utils/format'
-
+import alayaService from '@/services/alayaService'
 @Component({
   components: {
     RightDrawer,
@@ -142,17 +142,7 @@ export default class HeaderComponent extends Vue {
   private isLoggedData: boolean = false
   private historyIndex: number[] = []
   private visible: boolean = false
-  private allProject = [
-    {
-      index: '/project/1',
-    },
-    {
-      index: '/project/2',
-    },
-    {
-      index: '/project/3',
-    },
-  ]
+  
   get activeMenu() {
     const route = this.$route
     const { meta, path } = route
@@ -163,7 +153,7 @@ export default class HeaderComponent extends Vue {
     return path
   }
   get isLogin() {
-    return !!UserModule.token
+    return !!UserModule.token && alayaService.checkAddress()
   }
   get userName() {
     return getSubStr(UserModule.user_info.userName)

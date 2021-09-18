@@ -13,7 +13,13 @@ export const bdDecrypt = (bd_lng: any, bd_lat: any) => {
   }
 }
 
-export const getSubStr = (str: string, m = 6, n = 4, symbol = '...',min=20) => {
+export const getSubStr = (
+  str: string,
+  m = 6,
+  n = 4,
+  symbol = '...',
+  min = 20,
+) => {
   if (!str) return ''
   if (str.length <= 20) return str
   var subStr1 = str.substr(0, m)

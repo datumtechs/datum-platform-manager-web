@@ -189,6 +189,7 @@ class alayaService {
     if (UserModule.user_info.address && UserModule.user_info.address.length)
       return true
     const address = this.platon.selectedAddress
+    console.log('get add', address)
     if (address && address.length) {
       UserModule.SET_ADDRESS(address)
       return true
