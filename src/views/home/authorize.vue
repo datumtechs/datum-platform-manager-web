@@ -145,6 +145,8 @@ export default class Authorize extends Vue {
       return sign
     } else {
       this.$message.error('钱包地址异常，请重新连接钱包')
+      UserModule.ResetToken()
+      throw new Error('钱包地址异常，请重新连接钱包')
     }
   }
   private async handleAuthorize() {

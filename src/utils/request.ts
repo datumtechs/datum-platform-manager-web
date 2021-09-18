@@ -4,6 +4,8 @@ import qs from 'qs'
 import { message } from '@/plugins/message.ts'
 import { getToken, removeToken, getLanguage } from '@/utils/auth'
 import { UserModule } from '@/store/modules/user'
+import router from '@/router'
+
 /* 创建axios实例 */
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
@@ -34,9 +36,10 @@ service.interceptors.response.use(
     const res = response.data
     if (res.code !== 10000) {
       message.error(res.msg)
-      if (res.code === 20007) {
+      if (res.code === 20007 || res.code === 20006) {
         removeToken()
         UserModule.ResetToken()
+        router.replace('/')
       }
       if (res.code === 4018) {
         window.location.href = '/403'

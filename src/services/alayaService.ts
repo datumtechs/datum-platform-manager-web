@@ -142,7 +142,7 @@ class alayaService {
       method,
       params,
       from,
-    },)
+    })
     const signPromise = new Promise((resolve, reject) => {
       this.web3.currentProvider.sendAsync(
         {
@@ -186,9 +186,10 @@ class alayaService {
    * @returns  false
    */
   public checkAddress() {
-    if (UserModule.user_info.address.length) return true
+    if (UserModule.user_info.address && UserModule.user_info.address.length)
+      return true
     const address = this.platon.selectedAddress
-    if (address.length) {
+    if (address && address.length) {
       UserModule.SET_ADDRESS(address)
       return true
     } else {

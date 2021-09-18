@@ -51,7 +51,12 @@
     <template v-if="isNodeDrawer">
       <NodeDrawer :nodeId="workflowNodeId" :isDrawer.sync="isDrawer" />
     </template>
-    <ViewRun ref="ViewRun" :nodeName="nodeName" :taskId="taskId" :resultsVisible.sync="resultsVisible"></ViewRun>
+    <ViewRun
+      ref="ViewRun"
+      :nodeName="nodeName"
+      :taskId="taskId"
+      :resultsVisible.sync="resultsVisible"
+    ></ViewRun>
     <div class="log-wrap">
       <div class="log-title">运行日志</div>
       <div class="list">
@@ -280,6 +285,8 @@ export default class workflowIndex extends Vue {
       return sign
     } else {
       this.$message.error('钱包地址异常，请重新连接钱包')
+      UserModule.ResetToken()
+      throw new Error('钱包地址异常，请重新连接钱包')
     }
   }
   private viewResults() {

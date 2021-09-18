@@ -66,7 +66,7 @@ class User extends VuexModule implements IUserState {
     setToken(token)
   }
   @Mutation
-  private SET_USER(data: any) {
+  public SET_USER(data: any) {
     this.user_info.userName = data.userName
     setUserName(data.userName)
   }

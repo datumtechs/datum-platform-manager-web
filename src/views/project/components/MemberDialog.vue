@@ -108,6 +108,9 @@ export default class MemberDialog extends Vue {
       this.handleClose()
       this.visible = false
       return true
+    } else {
+      this.visible = false
+      return false
     }
   }
   async created() {

@@ -1,12 +1,18 @@
 <template>
   <div class="results">
-    <el-dialog title="运行结果预览" :visible.sync="resultsVisible" :before-close="handleClose">
+    <el-dialog
+      title="运行结果预览"
+      :visible.sync="resultsVisible"
+      :before-close="handleClose"
+    >
       <div class="wrap">
-        <div class="name"> {{nodeName}} </div>
-        <el-table :data="gridData"  class="results-tabel">
-          <el-table-column property="date" label="日期" width="150"></el-table-column>
-          <el-table-column property="name" label="姓名" width="200"></el-table-column>
-          <el-table-column property="address" label="地址"></el-table-column>
+        <div class="name">{{ nodeName }}</div>
+        <el-table :data="gridData" class="results-tabel">
+          <el-table-column
+            property="date"
+            label="ID"
+            width="150"
+          ></el-table-column>
         </el-table>
       </div>
     </el-dialog>

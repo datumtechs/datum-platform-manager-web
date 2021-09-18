@@ -26,7 +26,11 @@
             :class="['radio', isRadio ? 'active' : '']"
             @click="handleRadio"
           ></span>
-          <span>阅读并同意<i>用户协议</i>和<i>隐私声明</i></span>
+          <span
+            ><span @click="handleRadio">阅读并同意</span><i>用户协议</i>和<i
+              >隐私声明</i
+            ></span
+          >
         </div>
       </div>
       <div class="walle-wrap walle-init" v-else>
