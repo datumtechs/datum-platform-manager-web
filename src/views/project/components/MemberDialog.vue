@@ -70,15 +70,18 @@ export default class MemberDialog extends Vue {
   }
   private user: number | string = ''
   private userOptions = []
-  private role = ''
+  private role: number |string = ''
+  private memberId = ''
   get roleOptionMap() {
     return roleOptionMap
   }
   private handleOpen(type: number, row?: any) {
+    console.log('row',type,row)
     this.type = type
     if (type > 0) {
       this.user = Number(row.userId)
       this.role = String(row.role)
+      this.memberId = row.memberId
     }
     this.visible = true
   }
@@ -91,11 +94,23 @@ export default class MemberDialog extends Vue {
   // 提交
   @Emit('clickSubmit')
   private async handleSubmit() {
-    const { user, role } = this
-    const data = {
+    const { user, role, memberId } = this
+    if( user === '') {
+      this.$message.error('请选中用户')
+      return
+    }
+    if( role === '') {
+      this.$message.error('请设置角色')
+      return
+    }
+    const data: any = {
       userId: user,
-      role,
-      projectId: Number(this.$route.params.id),
+      role: Number(role),
+    }
+    if(this.type) {
+      data.id = this.memberId
+    }else{
+      data.projectId= Number(this.$route.params.id)
     }
     let code, res
     if (this.type) {

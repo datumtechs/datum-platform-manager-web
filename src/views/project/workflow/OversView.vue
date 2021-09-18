@@ -19,10 +19,9 @@
     </div>
     <div class="view-block">
       <div class="text">
-        支持协同方数量
+        支持数据协同方数量
       </div>
       <div class="info">>= {{ dataInfo.minNumbers }}</div>
-      <div class="info">&lt;= {{ dataInfo.maxNumbers }}</div>
     </div>
     <div class="view-block">
       <div class="text">

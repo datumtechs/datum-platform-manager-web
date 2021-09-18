@@ -17,7 +17,7 @@
         </el-switch>
         <span class="switch-text"> {{ isSelect ? '是' : '否' }} </span>
       </div>
-      <div class="select-value">
+      <div class="select-value" v-if="isSelect">
         <el-checkbox-group v-model="checkList">
           <div v-for="(item, key, index) in checkOptions" :key="index">
             <el-checkbox :label="key">{{ item }} </el-checkbox>
