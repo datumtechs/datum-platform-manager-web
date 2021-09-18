@@ -166,7 +166,7 @@ export default class HeaderComponent extends Vue {
     return !!UserModule.token
   }
   get userName() {
-    return UserModule.user_info.userName
+    return getSubStr(UserModule.user_info.userName)
   }
   private handleUser() {
     this.isUserShow = !this.isUserShow
