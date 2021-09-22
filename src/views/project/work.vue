@@ -34,6 +34,7 @@
       :placeholder="$t(placeholder)"
       @changeList="changeList"
       @clickDelete="handleDelete"
+      @selectDelete="selectDelete"
     >
     </Table>
     <work-dialog ref="workDialog" @submit="handleSubmit"></work-dialog>
@@ -150,16 +151,17 @@ export default class WorkIndex extends Vue {
   private handleName(data: TableNameType) {
     const { id, name, runStatus } = data
     const project = this.$route.params.id
+    const role = this.$route.params.role
     const projectName = this.$route.query.name
     if (this.pageType === 'work') {
       this.$router.push({
-        path: `/project/${project}/workflow/${id}`,
+        path: `/project/${project}/${role}/workflow/${id}`,
         query: { workflow: name, name: projectName, run: String(runStatus) },
       })
     }
     if (this.pageType === 'jobs') {
       this.$router.push({
-        path: `/project/${project}/subjob/${id}`,
+        path: `/project/${project}/${role}/subjob/${id}`,
         query: { workflow: name, name: projectName },
       })
     }
@@ -186,12 +188,22 @@ export default class WorkIndex extends Vue {
       }
     }
   }
-
+  private selectDelete(id: number[]) {
+    // console.log(id)
+  }
   private createWork() {
+    if (Number(this.$route.params.role) === 3) {
+      this.$message.warning('您是项目查看者，暂无创建工作流权限')
+      return true
+    }
     // this.workDialog = true
     ;(this.$refs.workDialog as any).handleOpen(0)
   }
   private createJobs() {
+    if (Number(this.$route.params.role) === 3) {
+      this.$message.warning('您是项目查看者，暂无创建作业权限')
+      return true
+    }
     ;(this.$refs.subjobDialog as any).handleOpen(0)
   }
   private changeList(data: TableParams) {

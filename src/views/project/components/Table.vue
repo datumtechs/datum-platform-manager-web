@@ -108,7 +108,7 @@
               v-for="(item, index) in btnList"
               @click="handleBtn(index, scope.row)"
               :key="index"
-              :disabled="item.disabled"
+              :disabled="item.disabled || isAuth(scope.row)"
             >
               {{ $t(item.lable) }}
             </el-button>
@@ -126,6 +126,7 @@
                   type="text"
                   class="delete"
                   @click="handleDelete(scope.row[tableId])"
+                  :disabled="isAuth(scope.row)"
                 >
                   删除
                 </el-button>
@@ -177,6 +178,23 @@ export default class Tables extends Vue {
     current: 1,
     size: 10,
   }
+  get isProject() {
+    return this.$route.name === 'projectAll'
+  }
+  get isWork() {
+    return this.$route.name === 'work'
+  }
+  get isJobs() {
+    return this.$route.name === 'jobs'
+  }
+  private isViewer() {
+    if (Number(this.$route.params.role) === 3) {
+      this.$message.warning('您是项目查看者，暂无编辑权限')
+      return true
+    } else {
+      return false
+    }
+  }
   private input = ''
   // 选择表格项
   private multipleSelection = []
@@ -195,8 +213,10 @@ export default class Tables extends Vue {
   // 删除选中
   @Emit('selectDelete')
   private SelectDelete() {
+    // if (this.isViewer()) return
     const id = this.tableId
     const selectId = this.multipleSelection.map((item: any) => item[id])
+    console.log('dele----', selectId)
     return selectId
   }
   // 取消选择
@@ -211,10 +231,14 @@ export default class Tables extends Vue {
   private handleNext(name: string, row: any) {
     const { id } = row
     let runStatus = ''
+    let role = ''
     if (typeof row.runStatus !== 'undefined') {
       runStatus = row.runStatus
     }
-    return { id, name, runStatus }
+    if (typeof row.role !== 'undefined') {
+      role = row.role
+    }
+    return { id, name, runStatus, role }
   }
   // 点击操作按钮
   @Emit('clickBtn')
@@ -241,6 +265,16 @@ export default class Tables extends Vue {
   // 个人资源 handleReapply
   handleReapply() {
     console.log('重新申请')
+  }
+  isAuth(row?: any) {
+    if (this.isProject) {
+      return row.role > 1
+    } else if (this.isWork || this.isJobs) {
+      const role = Number(this.$route.params.role)
+      return role > 2
+    } else {
+      return false
+    }
   }
 }
 </script>

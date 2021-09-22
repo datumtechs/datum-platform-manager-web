@@ -24,6 +24,7 @@
             :props="inputProps"
             v-model="inputValue[index]"
             :key="cascaderKey[index]"
+            :disabled="isAuth"
             @change="
               (e) => {
                 changeInputValue(e, index)
@@ -73,6 +74,19 @@ export default class InputViewIndex extends Vue {
   get organizations() {
     return WorkflowModule.organizationList
   }
+  // 查看者权限
+  get isAuth() {
+    const role = Number(this.$route.params.role)
+    return role === 3
+  }
+  private handleisAuth() {
+    if (this.isAuth) {
+      this.$message.warning('您是项目查看者，暂无编辑权限')
+      return true
+    } else {
+      return false
+    }
+  }
   // 动态加载选项
   private async inputLazyLoad(node: any, resolve: any) {
     let { level } = node
@@ -112,6 +126,7 @@ export default class InputViewIndex extends Vue {
   }
   private async handleSave() {
     console.log('this.loady', this.inputValue)
+    if (this.handleisAuth()) return
     if (this.inputValue.length < this.minLen) {
       return this.$message.warning(`至少输入${this.minLen}个数据协同方`)
     }
@@ -146,6 +161,7 @@ export default class InputViewIndex extends Vue {
     WorkflowModule.SET_INPUT_LEN(this.inputValue.length)
   }
   private async handleCancel() {
+    if (this.handleisAuth()) return
     const { minLen } = this
     this.selectLayout = Array(minLen).fill({})
     this.inputValue = []
@@ -154,6 +170,7 @@ export default class InputViewIndex extends Vue {
     this.handleCascaderKey()
   }
   private addSelect() {
+    if (this.handleisAuth()) return
     const { maxLen } = this
     if (this.selectLayout.length >= maxLen) {
       this.$message.warning(`最多支持${maxLen}个数据协同方`)

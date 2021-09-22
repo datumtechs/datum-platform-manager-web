@@ -162,7 +162,6 @@ export default class extends Vue {
 
     if (redirect) {
       try {
-        // :id,:workflows,:subjob 转换为id
         let redirects = ''
         if (item.meta.title === 'project') {
           const name = this.$route.query.name
@@ -172,6 +171,7 @@ export default class extends Vue {
           redirects = path
           console.log('paths', redirects)
         }
+        // :id,:workflows,:subjob 转换为id
         const res = this.handlePath(redirects)
         this.$router.push(res)
       } catch (error) {
@@ -200,6 +200,10 @@ export default class extends Vue {
     if (res.indexOf(':subjob') > -1) {
       const subjob = this.$route.params.subjob
       res = res.replace(/:subjob/g, subjob)
+    }
+    if (res.indexOf(':role') > -1) {
+      const role = this.$route.params.role
+      res = res.replace(/:role/g, role)
     }
     return res
   }

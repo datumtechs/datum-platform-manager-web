@@ -12,7 +12,11 @@
       </jz-button>
     </div>
     <div class="code-input">
-      <el-input type="textarea" v-model="textarea"> </el-input>
+      <el-input
+        type="textarea"
+        v-model="textarea"
+        :disabled="isAuth"
+      ></el-input>
     </div>
   </div>
 </template>
@@ -34,9 +38,24 @@ export default class CodeIndex extends Vue {
 
   private textarea = ''
   private handleEmpty() {
+    if (this.handleisAuth()) return
     this.textarea = ''
   }
+  // 查看者权限
+  get isAuth() {
+    const role = Number(this.$route.params.role)
+    return role === 3
+  }
+  private handleisAuth() {
+    if (this.isAuth) {
+      this.$message.warning('您是项目查看者，暂无编辑权限')
+      return true
+    } else {
+      return false
+    }
+  }
   private async handleSave() {
+    if (this.handleisAuth()) return
     const params = {
       calculateContractCode: this.textarea,
       workflowNodeId: this.nodeId,

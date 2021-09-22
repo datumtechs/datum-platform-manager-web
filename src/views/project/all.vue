@@ -83,16 +83,16 @@ export default class AllIndex extends Vue {
   }
   private total = 0
   private handleName(data: TableNameType) {
-    const { id, name } = data
-    console.log(id, name)
+    const { id, name, role } = data
     this.$router.push({
-      path: '/project/' + id,
+      path: `/project/${id}/${role}`,
       query: { name },
     })
   }
   private handleBtn(data: any) {
     const { index, row } = data
-    const path: string = this.btnList[index]['path'] + row['id']
+    const path: string =
+      this.btnList[index]['path'] + row['id'] + '/' + row['role']
     this.$router.push(path)
   }
   private createProject() {

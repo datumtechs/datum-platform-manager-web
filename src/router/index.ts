@@ -160,8 +160,8 @@ export const constantRoutes: RouteConfig[] = [
           ),
       },
       {
-        path: ':id',
-        redirect: '/project/:id/work',
+        path: ':id/:role',
+        redirect: '/project/:id/:role/work',
         component: () =>
           import(/* webpackChunkName: "project" */ '@/views/project/index.vue'),
         name: 'project',
@@ -224,7 +224,7 @@ export const constantRoutes: RouteConfig[] = [
         ],
       },
       {
-        path: 'edit/:id',
+        path: 'edit/:id/:role',
         component: () =>
           import(
             /* webpackChunkName: "project-edit" */ '@/views/project/setup.vue'
@@ -236,7 +236,7 @@ export const constantRoutes: RouteConfig[] = [
         },
       },
       {
-        path: 'manage/:id',
+        path: 'manage/:id/:role',
         component: () =>
           import(
             /* webpackChunkName: "project-manage" */ '@/views/project/setup.vue'

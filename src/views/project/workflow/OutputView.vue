@@ -13,12 +13,13 @@
           active-color="#13ce66"
           inactive-color="#8d8d8d"
           @change="handleChange"
+          :disabled="isAuth"
         >
         </el-switch>
         <span class="switch-text"> {{ isSelect ? '是' : '否' }} </span>
       </div>
       <div class="select-value" v-if="isSelect">
-        <el-checkbox-group v-model="checkList">
+        <el-checkbox-group v-model="checkList" :disabled="isAuth">
           <div v-for="(item, key, index) in checkOptions" :key="index">
             <el-checkbox :label="key">{{ item }} </el-checkbox>
           </div>
@@ -48,6 +49,19 @@ export default class extends Vue {
   private checkList: string[] = []
   get checkOptions() {
     return WorkflowModule.orgOptions
+  }
+  // 查看者权限
+  get isAuth() {
+    const role = Number(this.$route.params.role)
+    return role === 3
+  }
+  private handleisAuth() {
+    if (this.isAuth) {
+      this.$message.warning('您是项目查看者，暂无编辑权限')
+      return true
+    } else {
+      return false
+    }
   }
   private async handleChange(state: boolean) {
     if (!state) return

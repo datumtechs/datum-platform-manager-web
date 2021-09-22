@@ -21,13 +21,16 @@ class alayaService {
       UserModule.SET_ADDRESS('')
       UserModule.IS_INIT_WALLET(false)
     } else {
+      console.log('on accountsChanged')
       this.web3 = new Web3(alaya)
       // 切换用户
       alaya.on('accountsChanged', (account: string[]) => {
         if (account.length === 0) {
+          console.log('account =0', account)
           UserModule.SET_ADDRESS('')
         } else if (account.length > 0) {
           UserModule.SET_ADDRESS(account[0])
+          console.log('account >0', account)
         } else {
           console.log('Alaya account changed but same address')
         }

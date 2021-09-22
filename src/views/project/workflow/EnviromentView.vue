@@ -30,7 +30,7 @@
       </div>
       <div class="block select">
         <div class="text">CPU</div>
-        <el-select v-model="cpuValue" placeholder="请选择">
+        <el-select v-model="cpuValue" placeholder="请选择" :disabled="isAuth">
           <el-option
             v-for="(item, key, index) in cpuOptions"
             :key="index"
@@ -42,7 +42,11 @@
       </div>
       <div class="block select">
         <div class="text">内存</div>
-        <el-select v-model="memoryValue" placeholder="请选择">
+        <el-select
+          v-model="memoryValue"
+          placeholder="请选择"
+          :disabled="isAuth"
+        >
           <el-option
             v-for="(item, key, index) in memoryOptions"
             :key="index"
@@ -54,7 +58,7 @@
       </div>
       <div class="block select">
         <div class="text">GPU</div>
-        <el-select v-model="gpuValue" placeholder="请选择">
+        <el-select v-model="gpuValue" placeholder="请选择" :disabled="isAuth">
           <el-option
             v-for="(item, key, index) in gpuOptions"
             :key="index"
@@ -66,7 +70,7 @@
       </div>
       <div class="block select">
         <div class="text">宽带</div>
-        <el-select v-model="broadband" placeholder="请选择">
+        <el-select v-model="broadband" placeholder="请选择" :disabled="isAuth">
           <el-option
             v-for="(item, key, index) in broadbandOptions"
             :key="index"
@@ -118,8 +122,21 @@ export default class EnviromentView extends Vue {
   get broadbandOptions() {
     return broadbandOptions
   }
-
+  // 查看者权限
+  get isAuth() {
+    const role = Number(this.$route.params.role)
+    return role === 3
+  }
+  private handleisAuth() {
+    if (this.isAuth) {
+      this.$message.warning('您是项目查看者，暂无编辑权限')
+      return true
+    } else {
+      return false
+    }
+  }
   private async handleSave() {
+    if (this.handleisAuth()) return
     const { nodeId, cpuValue, memoryValue, gpuValue, broadband } = this
     const params = {
       costBandwidth: broadband,
@@ -132,6 +149,7 @@ export default class EnviromentView extends Vue {
     this.$message.success(msg)
   }
   private handleCancel() {
+    if (this.handleisAuth()) return
     console.log('取消')
   }
   created() {

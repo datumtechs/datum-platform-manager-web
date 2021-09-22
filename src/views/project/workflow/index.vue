@@ -117,6 +117,19 @@ export default class workflowIndex extends Vue {
   get isNode() {
     return !!this.nodeList.length
   }
+  // 查看者权限
+  get isAuth() {
+    const role = Number(this.$route.params.role)
+    return role === 3
+  }
+  private handleisAuth() {
+    if (this.isAuth) {
+      this.$message.warning('您是项目查看者，暂无编辑权限')
+      return true
+    } else {
+      return false
+    }
+  }
   // 算法列表
   private async getAlaor() {
     const { data } = await geAlgorithmTree()
@@ -144,6 +157,7 @@ export default class workflowIndex extends Vue {
   }
   // 启动工作流
   private async handleStartWorkflow() {
+    if (this.handleisAuth()) return
     if (!this.nodeList.length) {
       this.$message.error('暂无节点')
       return
@@ -178,6 +192,7 @@ export default class workflowIndex extends Vue {
   }
   // 终止工作流
   private async handleEndWorkflow() {
+    if (this.handleisAuth()) return
     const { workflowId } = this
     const { code, msg } = await endWorkflow({ workflowId })
     if (code === 10000) {
@@ -185,6 +200,7 @@ export default class workflowIndex extends Vue {
     }
   }
   private handleResetName() {
+    if (this.handleisAuth()) return
     this.isResetName = true
     setTimeout(() => {
       if ((this.$refs as any).ResetInput) {
@@ -193,6 +209,7 @@ export default class workflowIndex extends Vue {
     }, 500)
   }
   private async handleCopy() {
+    if (this.handleisAuth()) return
     // handleCopy()
     const node = this.nodeList[this.currentIndex]
     const { algorithmId, nodeName } = node
@@ -200,6 +217,7 @@ export default class workflowIndex extends Vue {
     await addWorkflowNode({ algorithmId, nodeName, workflowId })
   }
   private async handleSave() {
+    if (this.handleisAuth()) return
     if (!this.nodeList.length) {
       this.$message.error('暂无节点')
       return
@@ -224,11 +242,13 @@ export default class workflowIndex extends Vue {
   }
   // 删除该节点
   private async handleDelete() {
+    if (this.handleisAuth()) return
     this.isNodeDrawer = false
     this.nodeList = []
   }
   // 清空节点
   private async handleEmpty() {
+    if (this.handleisAuth()) return
     const { workflowId } = this
     const { msg } = await clearNode({ workflowId })
     this.$message.success(msg)
