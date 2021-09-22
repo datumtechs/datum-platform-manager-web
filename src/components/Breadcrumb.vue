@@ -84,8 +84,10 @@ export default class extends Vue {
     }
     if (this.isWorkflow(last)) {
       const id = this.$route.params.id
+      const role = this.$route.params.role
+      const query = this.$route.query
       matched.splice(2, 0, {
-        path: `/project/${id}`,
+        path: `/project/${id}/${role}`,
         meta: { title: 'work' },
       } as RouteRecord)
     }

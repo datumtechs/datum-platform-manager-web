@@ -104,10 +104,12 @@ export default class SetupIndex extends Vue {
   private tabIndex = 0
   // 点击tab 跳转对应页面
   private handleTable(index: number) {
+    const id = Number(this.$route.params.id)
+    const role = Number(this.$route.params.role)
     if (this.tabIndex !== index) {
       this.tabIndex = index
       const type = this.tabIndex ? 'manage' : 'edit'
-      this.$router.push(`/project/${type}/${this.queryId}`)
+      this.$router.push(`/project/${type}/${id}/${role}`)
     }
   }
   private handleBtn(data: any) {
