@@ -22,7 +22,7 @@ import { BreadcrumbModule } from '@/store/modules/breadcrumb'
 })
 export default class DataDetail extends Vue {
   private data: any = {}
-  private authTypeList:string[] = ['按次数/按时间', '按时间', '按次数']
+  private authTypeList: string[] = ['按次数/按时间', '按时间', '按次数']
   private dataDesc = [
     {
       title: '简介',

@@ -37,7 +37,7 @@ export const setProject = (params?: any) => {
 
 // 成员列表
 export const getMember = (params?: any) => {
-  return get('/project/queryProjMemberPageList', params)
+  return get('/project/queryProjMember', params)
 }
 
 // 删除成员
@@ -82,4 +82,9 @@ export const copyWorkflow = (params?: any) => {
 // 删除工作流
 export const delWorkflow = (id?: number) => {
   return post(`/workflow/delete/${id}`, {})
+}
+
+// 批量删除工作流
+export const deleteBatch = (params: any) => {
+  return post('/workflow/deleteBatch', params)
 }

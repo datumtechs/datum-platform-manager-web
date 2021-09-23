@@ -44,12 +44,12 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
-import Table from './components/Table.vue'
+import Table from '@/components/JzTable.vue'
 import JzButton from '@/components/JzButton.vue'
 import WorkDialog from './components/WorkeDialog.vue'
 import SubjobDialog from './components/SubjobsDialog.vue'
 import { ParamsType, TableParams, QueryType } from '@/api/types'
-
+import { deleteBatch } from '@/api/project'
 import {
   getWorkflows,
   addWorkflow,
@@ -188,8 +188,14 @@ export default class WorkIndex extends Vue {
       }
     }
   }
-  private selectDelete(id: number[]) {
-    // console.log(id)
+  private async selectDelete(id: number[]) {
+    console.log(id)
+    const ids = id.join()
+    const { msg, code } = await deleteBatch({ ids })
+    if (code === 10000) {
+      this.$message.success(msg)
+      this.getList()
+    }
   }
   private createWork() {
     if (Number(this.$route.params.role) === 3) {

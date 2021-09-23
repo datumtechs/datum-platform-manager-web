@@ -37,7 +37,7 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
-import Table from './components/Table.vue'
+import Table from '@/components/JzTable.vue'
 import JzButton from '@/components/JzButton.vue'
 import { getProject, delProject, delProjects } from '@/api/project'
 import { ParamsType, TableParams, QueryType } from '@/api/types'

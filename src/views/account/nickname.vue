@@ -44,7 +44,7 @@
 
 <script lang="ts">
 import { Vue, Component, Watch } from 'vue-property-decorator'
-import Table from '../project/components/Table.vue'
+import Table from '@/components/JzTable.vue'
 import JzButton from '@/components/JzButton.vue'
 import JzNav from '@/components/JzNav.vue'
 import { setNickName } from '@/api/user'

@@ -7,7 +7,7 @@
       <div class="block">
         <jz-nav :tabs="tabs" :tabIndex="tabIndex"></jz-nav>
         <div class="block-table">
-          <Table
+          <JzTable
             @clickName="handleName"
             @clickBtn="handleBtn"
             :keyList="keyList"
@@ -18,7 +18,7 @@
             :placeholder="$t('home.searchdata')"
             @changeList="changeList"
           >
-          </Table>
+          </JzTable>
         </div>
       </div>
     </div>
@@ -27,7 +27,7 @@
 
 <script lang="ts">
 import { Vue, Component, Watch } from 'vue-property-decorator'
-import Table from '../project/components/Table.vue'
+import JzTable from '@/components/JzTable.vue'
 import JzNav from '@/components/JzNav.vue'
 import { getListByOwner } from '@/api/resources'
 import { TableNameType } from '@/api/types'
@@ -35,8 +35,8 @@ import { BreadcrumbModule } from '@/store/modules/breadcrumb'
 @Component({
   name: 'resourcesData',
   components: {
-    Table,
     JzNav,
+    JzTable,
   },
 })
 export default class resourcesData extends Vue {
@@ -87,7 +87,6 @@ export default class resourcesData extends Vue {
   private handleBtn() {}
   private async getList() {
     const { data } = await getListByOwner()
-    console.log(data)
     this.list = this.formatData(data.items)
     this.total = data.total
   }
@@ -114,7 +113,6 @@ export default class resourcesData extends Vue {
       item.authStatus = authStatusList[item.authStatus]
       item.authType = authTypeList[item.authType]
     })
-    console.log(list)
     return list
   }
 }

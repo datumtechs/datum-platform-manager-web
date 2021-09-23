@@ -52,7 +52,7 @@
 import { Vue, Component, Watch } from 'vue-property-decorator'
 import JzNav from '@/components/JzNav.vue'
 import Edit from './components/Edit.vue'
-import Table from './components/Table.vue'
+import Table from '@/components/JzTable.vue'
 import JzButton from '@/components/JzButton.vue'
 import MemberDialog from './components/MemberDialog.vue'
 import { getMember, delProjMember, delProjMembers } from '@/api/project'

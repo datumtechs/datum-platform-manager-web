@@ -18,7 +18,7 @@
       <div class="select-block" v-else>
         <span>选中 {{ multipleSelection.length }} 条</span>
         <div class="select-btn">
-          <JzButton
+          <jz-button
             type="jz-button--primary"
             :height="40"
             :width="100"
@@ -26,15 +26,15 @@
             class="select-btn-item"
           >
             {{ $t('project.delete') }}
-          </JzButton>
-          <JzButton
+          </jz-button>
+          <jz-button
             type="jz-button--primary"
             :height="40"
             :width="100"
             @click="toggleSelection"
           >
             {{ $t('project.cancel') }}
-          </JzButton>
+          </jz-button>
         </div>
       </div>
     </div>
@@ -82,7 +82,7 @@
             <template slot-scope="scope">
               <span>
                 {{ scope.row[item.prop] }}
-                <tempalte
+                <template
                   v-if="
                     isReapply(scope.row[item.prop]) &&
                       index === keyList.length - 1
@@ -95,7 +95,7 @@
                   >
                     重新申请
                   </el-button>
-                </tempalte>
+                </template>
               </span>
             </template>
           </el-table-column>
@@ -158,13 +158,13 @@ import Pagination from '@/components/Pagination/index.vue'
 import JzButton from '@/components/JzButton.vue'
 import { QueryType } from '@/api/types'
 @Component({
-  name: 'tables',
+  name: 'tableIndex',
   components: {
     Pagination,
     JzButton,
   },
 })
-export default class Tables extends Vue {
+export default class TableIndex extends Vue {
   @Prop({ required: true, default: 20 }) private total!: number
   @Prop({ required: true, default: '' }) private placeholder!: string
   @Prop({ default: true }) private keyList!: any
@@ -344,6 +344,9 @@ export default class Tables extends Vue {
         transform:rotate(90deg)
         color rgba(0,0,0,0.30);
         cursor pointer
+    >>> .cell
+          height: 40px;
+          line-height: 40px;
     >>> .el-table__header-wrapper
           .el-checkbox__inner
             margin-left 5px
