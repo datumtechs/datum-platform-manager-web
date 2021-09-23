@@ -264,10 +264,11 @@ export const constantRoutes: RouteConfig[] = [
           import(/* webpackChunkName: "data" */ '@/views/resources/index.vue'),
       },
       {
-        path: 'detail/:id',
+        path: 'detail/:id/:metaid',
         name: 'resourcesData',
         meta: {
-          title: 'detail',
+          title: 'resourcesData',
+          dynamic: true,
         },
         component: () =>
           import(

@@ -33,32 +33,7 @@ export default class subjobIndex extends Vue {
       disabled: true,
     },
   ]
-  private list = [
-    {
-      number: 1,
-      field: '2016-05-02',
-      type: '王小虎',
-      describe: '上海市普陀区金沙江路 1518 弄',
-    },
-    {
-      number: 2,
-      field: '2016-05-02',
-      type: '王小虎',
-      describe: '上海市普陀区金沙江路 1518 弄',
-    },
-    {
-      number: 3,
-      field: '2016-05-02',
-      type: '王小虎',
-      describe: '上海市普陀区金沙江路 1518 弄',
-    },
-    {
-      number: 4,
-      field: '2016-05-02',
-      type: '王小虎',
-      describe: '上海市普陀区金沙江路 1518 弄',
-    },
-  ]
+  private list = []
   get total() {
     return this.list.length
   }

@@ -34,6 +34,7 @@ export interface TableNameType {
   name: string
   runStatus?: number | string
   role?: number | string
+  metaDataId: string
 }
 
 export interface IUserData {

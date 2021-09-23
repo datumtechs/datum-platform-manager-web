@@ -28,15 +28,13 @@
 <script lang="ts">
 import { Vue, Component, Watch } from 'vue-property-decorator'
 import Table from '../project/components/Table.vue'
-import JzButton from '@/components/JzButton.vue'
 import JzNav from '@/components/JzNav.vue'
 import { getListByOwner } from '@/api/resources'
 import { TableNameType } from '@/api/types'
-
+import { BreadcrumbModule } from '@/store/modules/breadcrumb'
 @Component({
   name: 'resourcesData',
   components: {
-    JzButton,
     Table,
     JzNav,
   },
@@ -82,8 +80,9 @@ export default class resourcesData extends Vue {
     },
   ]
   private handleName(data: TableNameType) {
-    const { id, name } = data
-    this.$router.push('/resources/detail/' + id)
+    const { id, metaDataId, name } = data
+    BreadcrumbModule.SET_RESOUR(name)
+    this.$router.push(`/resources/detail/${id}/${metaDataId}`)
   }
   private handleBtn() {}
   private async getList() {

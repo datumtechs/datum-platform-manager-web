@@ -232,13 +232,17 @@ export default class Tables extends Vue {
     const { id } = row
     let runStatus = ''
     let role = ''
+    let metaDataId = ''
     if (typeof row.runStatus !== 'undefined') {
       runStatus = row.runStatus
     }
     if (typeof row.role !== 'undefined') {
       role = row.role
     }
-    return { id, name, runStatus, role }
+    if (typeof row.metaDataId !== 'undefined') {
+      metaDataId = row.metaDataId
+    }
+    return { id, name, runStatus, role, metaDataId }
   }
   // 点击操作按钮
   @Emit('clickBtn')
