@@ -6,7 +6,7 @@ const productionGzipExtensions = /\.(js|css|json|txt|html|ico|svg)(\?.*)?$/i
 module.exports = {
   publicPath: './',
   outputDir: 'dist',
-  assetsDir: '',
+  assetsDir: 'moirae',
   productionSourceMap: false,
   devServer: {
     host: '0.0.0.0',
@@ -14,8 +14,6 @@ module.exports = {
     proxy: {
       '/rosettaflow/': {
         target: 'http://10.10.8.182:8234',
-        // target: 'http://10.11.48.47:8234',
-        // target: 'http://10.11.55.71:8234',
         changeOrigin: true,
         pathRewrite: { '^/rosettaflow/': '/rosettaflow/' },
       },
