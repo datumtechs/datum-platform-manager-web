@@ -101,7 +101,6 @@ export default class extends Vue {
     this.breadcrumbs = matched.filter((item) => {
       return item.meta && item.meta.title && item.meta.breadcrumb !== false
     })
-    console.log('breadcrumbs', this.breadcrumbs)
   }
 
   private isAuthorize(route: RouteRecord) {
@@ -159,7 +158,6 @@ export default class extends Vue {
   }
 
   private handleLink(item: any) {
-    console.log('item', item)
     const { redirect, path } = item
 
     if (redirect) {
@@ -168,10 +166,8 @@ export default class extends Vue {
         if (item.meta.title === 'project') {
           const name = this.$route.query.name
           redirects = redirect + '?name=' + name
-          console.log('paths', redirects)
         } else {
           redirects = path
-          console.log('paths', redirects)
         }
         // :id,:workflows,:subjob 转换为id
         const res = this.handlePath(redirects)
@@ -182,8 +178,16 @@ export default class extends Vue {
       return
     }
     try {
-      const res = this.handlePath(path)
-      this.$router.push(this.pathCompile(res))
+      let redirects = ''
+      if (item.meta.title === 'work') {
+        const name = this.$route.query.name
+        redirects = path + '/work?name=' + name
+      } else {
+        redirects = path
+      }
+      const res = this.handlePath(redirects)
+      // console.log('pathCompile', this.pathCompile(res));
+      this.$router.push(res)
     } catch (error) {
       console.warn(error)
     }

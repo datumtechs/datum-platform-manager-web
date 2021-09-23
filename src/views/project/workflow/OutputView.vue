@@ -4,7 +4,10 @@
       {{ $t('workflow.output') }}
     </div>
     <div class="text">
-      保存至数据协同方
+      保存至数据响应方
+    </div>
+    <div class="info">
+      说明：已默认保存至数据发起方
     </div>
     <div class="select">
       <div class="select-switch">
@@ -117,6 +120,7 @@ export default class extends Vue {
   .text
     margin-bottom 20px
   .select
+    margin-top 20px
     margin-bottom 20px
     .select-value
       margin  20px 0

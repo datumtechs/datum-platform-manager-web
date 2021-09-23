@@ -12,13 +12,15 @@
       </jz-button>
     </div>
     <div class="block">
-      <div class="text">数据协同方</div>
       <template>
         <div
           class="block-row"
           v-for="(row, index) in selectLayout"
           :key="index"
         >
+          <div class="text" v-if="index < 2">
+            {{ index ? '数据响应方' : '数据发起方' }}
+          </div>
           <el-cascader
             :span="12"
             :props="inputProps"
@@ -93,6 +95,7 @@ export default class InputViewIndex extends Vue {
     try {
       if (level === 0) {
         setTimeout(() => {
+          console.log('node', node)
           const data = this.organizations
           let nodes = data.map((item: any) => ({
             code: item.identityId,
@@ -171,16 +174,10 @@ export default class InputViewIndex extends Vue {
   }
   private addSelect() {
     if (this.handleisAuth()) return
-    const { maxLen } = this
-    if (this.selectLayout.length >= maxLen) {
-      this.$message.warning(`最多支持${maxLen}个数据协同方`)
-      return
-    }
     this.selectLayout.push({})
     let item = String(this.selectLayout.length)
     console.log('item push', item)
     this.cascaderKey.push(item)
-    console.log('cascaderKey push', this.cascaderKey)
   }
   // 回显选择状态
   handleInputValue() {
@@ -200,6 +197,13 @@ export default class InputViewIndex extends Vue {
     }
     this.inputValue = res
     WorkflowModule.SET_INPUT_LEN(this.inputValue.length)
+    // setTimeout(() => {
+    //   console.log('strat set');
+    //   // this.cascaderKey.map((item:string)=>{
+    //   //   item = item + 1
+    //   // })
+    //   console.log('strat end', this.cascaderKey);
+    // },500)
   }
   // 初始化cascaderKey
   private handleCascaderKey() {
@@ -219,11 +223,14 @@ export default class InputViewIndex extends Vue {
       const val: string[] = this.getListFirst(this.inputValue)
       WorkflowModule.SET_ORG_DISABLED(val || [])
       // 更新key，渲染el-cascader组件，使用options最新的值
-      const cascaderKey = JSON.parse(JSON.stringify(this.cascaderKey))
-      cascaderKey.map((i: number) => {
-        if (i !== index) {
-          this.cascaderKey[i] = this.cascaderKey[i] + 1
+      let upList: any = []
+      this.cascaderKey.map((item: string, i: number) => {
+        if (index !== i) {
+          upList.push(i)
         }
+      })
+      upList.map((i: any) => {
+        this.cascaderKey[i] = this.cascaderKey[i] + 1
       })
     }
   }
