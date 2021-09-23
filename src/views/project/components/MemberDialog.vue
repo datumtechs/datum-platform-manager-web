@@ -51,8 +51,8 @@
 <script lang="ts">
 import { Vue, Component, Emit } from 'vue-property-decorator'
 import JzButton from '@/components/JzButton.vue'
-import { userList } from '@/api/user'
-import { addProjMember, setProjMember } from '@/api/project'
+// import { userList } from '@/api/user'
+import { addProjMember, setProjMember, userList } from '@/api/project'
 import { roleOptionMap } from '@/status'
 @Component({
   name: 'MemberDialog',
@@ -128,7 +128,7 @@ export default class MemberDialog extends Vue {
     }
   }
   async created() {
-    const { data } = await userList()
+    const { data } = await userList(Number(this.$route.params.id))
     this.userOptions = data
   }
 }
