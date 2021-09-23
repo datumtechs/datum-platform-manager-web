@@ -22,6 +22,7 @@ import { BreadcrumbModule } from '@/store/modules/breadcrumb'
 })
 export default class DataDetail extends Vue {
   private data: any = {}
+  private authTypeList:string[] = ['按次数/按时间', '按时间', '按次数']
   private dataDesc = [
     {
       title: '简介',
@@ -61,7 +62,7 @@ export default class DataDetail extends Vue {
         },
         {
           lable: '算法所属大类：',
-          value: 'algorithmTypeDesc',
+          value: 'industry',
         },
         {
           lable: '数据条数：',
@@ -100,9 +101,9 @@ export default class DataDetail extends Vue {
   private async getList() {
     const { data } = await getDataDetail(this.$route.params.id)
     this.data = data
-    this.data.fileType = this.data.fileType ? 'csv' : '未知'
-    this.data.size = this.data.size + ' byte'
-    this.data.authType = '按次数/按时间'
+    this.data.fileType = data.fileType ? 'csv' : '未知'
+    this.data.size = data.size + ' byte'
+    this.data.authType = this.authTypeList[data.authType]
     BreadcrumbModule.SET_DATADETAIL(data.dataName)
   }
   created() {
