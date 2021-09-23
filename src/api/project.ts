@@ -1,4 +1,5 @@
 import { get, post, put, del } from './index'
+import request from '@/utils/request'
 
 // 项目列表
 export const getProject = (params?: any) => {
@@ -33,6 +34,11 @@ export const delProjects = (params?: any) => {
 // 编辑项目
 export const setProject = (params?: any) => {
   return post('/project/updateProject', params)
+}
+
+// 用户列表
+export const userList = (projectId: string | number) => {
+  return request.get('/project/queryAllUserNickname/' + projectId)
 }
 
 // 成员列表
