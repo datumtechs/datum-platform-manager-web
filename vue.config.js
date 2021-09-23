@@ -4,7 +4,7 @@ const CompressionWebpackPlugin = require('compression-webpack-plugin')
 const productionGzipExtensions = /\.(js|css|json|txt|html|ico|svg)(\?.*)?$/i
 
 module.exports = {
-  publicPath: '/moirae',
+  publicPath: './',
   outputDir: 'dist',
   assetsDir: '',
   productionSourceMap: false,
