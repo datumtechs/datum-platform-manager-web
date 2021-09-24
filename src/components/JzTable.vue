@@ -42,7 +42,7 @@
       <el-table
         :data="list"
         class="table-wrap"
-        :header-cell-style="{ background: '#FAFAFA', color: '#000' }"
+        :header-cell-style="{ background: '#FAFAFA', color: '#000'}"
         :cell-style="{ padding: '6px 0' }"
         ref="multipleTable"
         @selection-change="handleSelectionChange"
@@ -340,6 +340,8 @@ export default class TableIndex extends Vue {
       min-height: 450px;
       border: 1px solid #EBEEF5;
       border-bottom 0
+      .tabelTitle
+        
       .icon-more
         transform:rotate(90deg)
         color rgba(0,0,0,0.30);

@@ -43,13 +43,14 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component, Watch } from 'vue-property-decorator'
 import Table from '@/components/JzTable.vue'
 import JzButton from '@/components/JzButton.vue'
 import WorkDialog from './components/WorkeDialog.vue'
 import SubjobDialog from './components/SubjobsDialog.vue'
 import { ParamsType, TableParams, QueryType } from '@/api/types'
 import { deleteBatch } from '@/api/project'
+import { jobList } from '@/api/jobs'
 import {
   getWorkflows,
   addWorkflow,
@@ -106,11 +107,11 @@ export default class WorkIndex extends Vue {
       },
       {
         label: '关联工作流',
-        prop: 'workflowId', // 工作流ID
+        prop: 'workflowName', // 工作流ID
       },
       {
         label: '创建时间',
-        prop: 'beginTime',
+        prop: 'createTime',
       },
     ],
   }
@@ -189,7 +190,6 @@ export default class WorkIndex extends Vue {
     }
   }
   private async selectDelete(id: number[]) {
-    console.log(id)
     const ids = id.join()
     const { msg, code } = await deleteBatch({ ids })
     if (code === 10000) {
@@ -228,15 +228,25 @@ export default class WorkIndex extends Vue {
     params.current = current
     params.size = size
     params.projectId = this.$route.params.id
-    if (projectName.length) {
-      params['workflowName'] = projectName
+    if (this.pageType === 'work') {
+      if (projectName.length) {
+        params['workflowName'] = projectName
+      }
+      const { data } = await getWorkflows({ ...params })
+      this.list = data.items
+      this.total = data.total
     }
-    const { data } = await getWorkflows({ ...params })
+    if (this.pageType === 'jobs') {
+      if (projectName.length) {
+        params['jobName'] = projectName
+      }
+      const { data } = await jobList({ ...params })
+      this.list = data.items
+      this.total = data.total
+    }
     // data.items.map((item: any) => {
     //   item.time = formatDate(new Date(item.createTime), 'Y-M-D h:m:s')
     // })
-    this.list = data.items
-    this.total = data.total
   }
   created() {
     this.getList()
@@ -258,6 +268,11 @@ export default class WorkIndex extends Vue {
   }
   private async handleDelete(id: number) {
     await delWorkflow(id)
+    this.getList()
+  }
+  @Watch('$route')
+  private onRouteChange(route: any) {
+    console.log('route', route)
     this.getList()
   }
 }

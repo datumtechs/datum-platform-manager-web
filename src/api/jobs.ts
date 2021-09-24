@@ -1,8 +1,8 @@
 import request from '@/utils/request'
 
 // 作业列表
-export const jobList = () => {
-  return request.get('/job/list')
+export const jobList = (params: any) => {
+  return request.post('/job/list', params)
 }
 // 添加作业
 export const addJob = (params: any) => {
