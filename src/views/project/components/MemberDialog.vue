@@ -17,6 +17,7 @@
               :key="item.id"
               :label="item.userName"
               :value="item.id"
+              :disabled="item.disabled"
             >
             </el-option>
           </el-select>
@@ -51,8 +52,8 @@
 <script lang="ts">
 import { Vue, Component, Emit } from 'vue-property-decorator'
 import JzButton from '@/components/JzButton.vue'
-// import { userList } from '@/api/user'
-import { addProjMember, setProjMember, userList } from '@/api/project'
+import { userList } from '@/api/user'
+import { addProjMember, setProjMember } from '@/api/project'
 import { roleOptionMap } from '@/status'
 @Component({
   name: 'MemberDialog',
@@ -75,7 +76,22 @@ export default class MemberDialog extends Vue {
   get roleOptionMap() {
     return roleOptionMap
   }
-  private handleOpen(type: number, row?: any) {
+  /**
+   * 打开成员弹窗
+   * @parmams
+   * type 0 新增  1编辑
+   * list: number[] 成员列表的用户id
+   * row  选中当前成员的信息
+   */
+  private handleOpen(type: number, list: number[], row?: any) {
+    // 过滤添加过的成员列表
+    this.userOptions.map((item: any) => {
+      if (list.includes(item.id)) {
+        item.disabled = true
+      } else {
+        item.disabled = false
+      }
+    })
     this.type = type
     if (type > 0) {
       this.user = Number(row.userId)
@@ -127,9 +143,12 @@ export default class MemberDialog extends Vue {
       return false
     }
   }
-  async created() {
-    const { data } = await userList(Number(this.$route.params.id))
+  async getUserList() {
+    const { data } = await userList()
     this.userOptions = data
+  }
+  created() {
+    this.getUserList()
   }
 }
 </script>

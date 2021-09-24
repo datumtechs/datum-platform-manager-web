@@ -113,16 +113,17 @@ export default class SetupIndex extends Vue {
     }
   }
   private handleBtn(data: any) {
-    ;(this.$refs.MemberDialog as any).handleOpen(1, data.row)
+    const list: number[] = this.list.map((item: any) => item.userId)
+    ;(this.$refs.MemberDialog as any).handleOpen(1, list, data.row)
   }
   private clickSubmit(state: boolean) {
-    console.log(state)
     if (state) {
       this.getList()
     }
   }
   private addMember() {
-    ;(this.$refs.MemberDialog as any).handleOpen(0)
+    const list: number[] = this.list.map((item: any) => item.userId)
+    ;(this.$refs.MemberDialog as any).handleOpen(0, list)
   }
   private async handleDelete(id: number) {
     const { msg } = await delProjMember({ projMemberId: id })
