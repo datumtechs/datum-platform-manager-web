@@ -4,7 +4,7 @@ export interface ParamsType {
   algorithmName?: string
   userName?: string
   workflowName?: string
-  jobName? :string
+  jobName?: string
   projectId?: string | number
   current: number
   size: number

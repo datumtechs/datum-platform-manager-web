@@ -181,7 +181,7 @@ export default class HomeList extends Vue {
   .block-wrap
     transform: translatex(50px);
     max-width 1260px
-    height 876px
+    min-height 876px
     overflow hidden
     margin 0 auto
     margin-top 70px

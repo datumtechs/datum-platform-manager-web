@@ -138,6 +138,7 @@ export default class workflowIndex extends Vue {
 
   // 创建节点
   private async handleItem(item: AlgorithmType) {
+    if (this.handleisAuth()) return
     if (this.isNode) {
       this.$message.warning('最多创建一个工作流，请删除当前工作流！')
       return

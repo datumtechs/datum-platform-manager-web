@@ -7,9 +7,9 @@
       <jz-button @click="handleSave" type="jz-button--primary" class="save">
         {{ $t('workflow.save') }}
       </jz-button>
-      <jz-button @click="handleCancel">
+      <!-- <jz-button @click="handleCancel">
         {{ $t('workflow.cancel') }}
-      </jz-button>
+      </jz-button> -->
     </div>
     <div class="block">
       <!-- <div class="text">依赖</div>
@@ -148,10 +148,6 @@ export default class EnviromentView extends Vue {
     const { msg } = await saveNodeResource(params)
     this.$message.success(msg)
   }
-  private handleCancel() {
-    if (this.handleisAuth()) return
-    console.log('取消')
-  }
   created() {
     const info: any = WorkflowModule.algorithms
     this.cpuValue = String(info.costCpu)
@@ -174,7 +170,7 @@ export default class EnviromentView extends Vue {
     margin-bottom 20px
   .button-bolck
     position relative
-    top: -50px;
+    top: -40px;
     display flex
     justify-content flex-end
     .save

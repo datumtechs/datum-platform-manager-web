@@ -7,9 +7,9 @@
       <jz-button @click="handleSave" type="jz-button--primary" class="save">
         {{ $t('workflow.save') }}
       </jz-button>
-      <jz-button @click="handleCancel">
+      <!-- <jz-button @click="handleCancel">
         {{ $t('workflow.cancel') }}
-      </jz-button>
+      </jz-button> -->
     </div>
     <div class="block">
       <template>
@@ -33,6 +33,13 @@
               }
             "
           ></el-cascader>
+          <div
+            class="input-delete"
+            v-if="index > minLen"
+            @click="inputDelete(index)"
+          >
+            <i class="el-icon-delete icon"></i>
+          </div>
         </div>
       </template>
     </div>
@@ -66,9 +73,6 @@ export default class InputViewIndex extends Vue {
     value: 'code',
     lazy: true,
     lazyLoad: this.inputLazyLoad,
-  }
-  get maxLen() {
-    return Number(WorkflowModule.algorithms.maxNumbers)
   }
   get minLen() {
     return Number(WorkflowModule.algorithms.minNumbers)
@@ -151,7 +155,10 @@ export default class InputViewIndex extends Vue {
       workflowNodeId: nodeId,
     }
     // 提交输入数据
-    await addNodeInput(params)
+    const { code, msg } = await addNodeInput(params)
+    if (code === 10000) {
+      this.$message.success(msg)
+    }
     // 缓存选中的选项
     const organizationId: string[] = []
     // 过滤空值
@@ -163,15 +170,20 @@ export default class InputViewIndex extends Vue {
     WorkflowModule.SAVE_ORG_OPTIONS()
     WorkflowModule.SET_INPUT_LEN(this.inputValue.length)
   }
-  private async handleCancel() {
-    if (this.handleisAuth()) return
-    const { minLen } = this
-    this.selectLayout = Array(minLen).fill({})
-    this.inputValue = []
-    await WorkflowModule.getOrganizations()
-    WorkflowModule.SET_ORG_INIT()
-    this.handleCascaderKey()
+  private inputDelete(index: number) {
+    this.cascaderKey.splice(index, 1)
+    this.selectLayout.splice(index, 1)
+    this.inputValue.splice(index, 1)
   }
+  // private async handleCancel() {
+  //   if (this.handleisAuth()) return
+  //   const { minLen } = this
+  //   this.selectLayout = Array(minLen).fill({})
+  //   this.inputValue = []
+  //   await WorkflowModule.getOrganizations()
+  //   WorkflowModule.SET_ORG_INIT()
+  //   this.handleCascaderKey()
+  // }
   private addSelect() {
     if (this.handleisAuth()) return
     this.selectLayout.push({})
@@ -287,7 +299,7 @@ export default class InputViewIndex extends Vue {
     margin-bottom 20px
   .button-bolck
     position relative
-    top: -50px;
+    top: -40px;
     display flex
     justify-content flex-end
     .save
@@ -301,6 +313,16 @@ export default class InputViewIndex extends Vue {
       color #999999
   .block-row
     margin-bottom 20px
+    .input-delete
+      margin-left 10px
+      display inline-block
+      cursor pointer
+      color #777
+      .icon
+        vertical-align -2px
+        font-size 18px
+    .input-delete:hover
+      color #5f4ffb
     .row-item
       width 90px
       margin-right 15px

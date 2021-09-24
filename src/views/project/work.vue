@@ -163,7 +163,7 @@ export default class WorkIndex extends Vue {
     if (this.pageType === 'jobs') {
       this.$router.push({
         path: `/project/${project}/${role}/subjob/${id}`,
-        query: { workflow: name, name: projectName },
+        query: { task: name, name: projectName },
       })
     }
   }
