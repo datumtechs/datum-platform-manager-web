@@ -108,18 +108,20 @@ export default class extends Vue {
       (outputVoList && outputVoList.length) ||
       (inputVoList && inputVoList.length)
     ) {
+      this.isSelect = true
       WorkflowModule.SET_ORG_OPTIONS()
       outputVoList.map((item: any) => {
         this.checkList.push(item.identityId)
       })
     }
   }
-  // 默认勾线第一个数据方
+  // 默认勾选第一个数据方
   @Watch('checkOptions', { deep: true })
   handleCheckOptions(val: any): void {
     const checkOptions = Object.keys(val)
     if (checkOptions && checkOptions.length > 0) {
       this.checkList[0] = checkOptions[0]
+      this.isSelect = true
     }
   }
 }
