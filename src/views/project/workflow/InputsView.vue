@@ -35,7 +35,6 @@
             v-model="inputValue[index]"
             :key="cascaderKey[index]"
             :disabled="isAuth"
-            @visible-change="visibleChange"
             @change="
               (e) => {
                 changeInputValue(e, index)
@@ -246,6 +245,7 @@ export default class InputViewIndex extends Vue {
     }
     this.inputValue = res
     WorkflowModule.SET_INPUT_LEN(this.inputValue.length)
+    this.upCascaderKey()
   }
   // 初始化cascaderKey
   private handleCascaderKey() {
@@ -255,13 +255,17 @@ export default class InputViewIndex extends Vue {
     })
     console.log('初始化cascaderKey', this.cascaderKey)
   }
+  // Cascader回显更新key
+  private upCascaderKey() {
+    this.changeInputValue(true, -1)
+    console.log('更新 cascaderKey', this.cascaderKey)
+  }
   async created() {
     await WorkflowModule.getOrganizations()
+    // 回显
     this.handleInputValue()
+    // 初始key，更新视图
     this.handleCascaderKey()
-  }
-  private visibleChange() {
-    console.log('vissssssssss')
   }
   private changeInputValue(e: any, index: number) {
     if (e) {
