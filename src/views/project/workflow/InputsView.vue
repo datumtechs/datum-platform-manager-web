@@ -23,10 +23,19 @@
           </div>
           <el-cascader
             :span="12"
-            :props="inputProps"
+            :props="{
+              // checkStrictly: true,
+              label: 'name',
+              value: 'code',
+              lazy: true,
+              lazyLoad: (node, resolve) => {
+                inputLazyLoad(node, resolve, index)
+              },
+            }"
             v-model="inputValue[index]"
             :key="cascaderKey[index]"
             :disabled="isAuth"
+            @visible-change="visibleChange"
             @change="
               (e) => {
                 changeInputValue(e, index)
@@ -67,12 +76,22 @@ export default class InputViewIndex extends Vue {
   private cascaderKey: string[] = []
   private selectLayout = Array(this.minLen).fill({})
   private inputValue: any = []
-  private inputProps: object = {
-    // checkStrictly: true,
-    label: 'name',
-    value: 'code',
-    lazy: true,
-    lazyLoad: this.inputLazyLoad,
+  // private inputProps (i: number) {
+  //   return {
+  //     // checkStrictly: true,
+  //     label: 'name',
+  //     value: 'code',
+  //     lazy: true,
+  //     lazyLoad: (node: any, resolve: any) => {
+  //       this.inputLazyLoad(node, resolve, i)
+  //     },
+  //   }
+  // }
+  // 选中的组织
+  get inputValueOrg() {
+    return this.inputValue.map((item: any) => {
+      return item[0]
+    })
   }
   get minLen() {
     return Number(WorkflowModule.algorithms.minNumbers)
@@ -94,19 +113,38 @@ export default class InputViewIndex extends Vue {
     }
   }
   // 动态加载选项
-  private async inputLazyLoad(node: any, resolve: any) {
+  private async inputLazyLoad(node: any, resolve: any, inputIndex: number) {
     let { level } = node
     try {
       if (level === 0) {
         setTimeout(() => {
-          console.log('node', node)
+          const { inputValue, inputValueOrg } = this
+          let nodes = null
           const data = this.organizations
-          let nodes = data.map((item: any) => ({
-            code: item.identityId,
-            name: item.identityName,
-            leaf: level >= 2,
-            disabled: item.disabled,
-          }))
+          console.log('data', data)
+          // 判断列表中，如果选中值被禁用，仍可以选择
+          if (inputValue.length) {
+            const isDisabled = (item: any) => {
+              if (inputValueOrg[inputIndex] === item.identityId) {
+                return false
+              } else {
+                return item.disabled
+              }
+            }
+            nodes = data.map((item: any) => ({
+              code: item.identityId,
+              name: item.identityName,
+              leaf: level >= 2,
+              disabled: isDisabled(item),
+            }))
+          } else {
+            nodes = data.map((item: any) => ({
+              code: item.identityId,
+              name: item.identityName,
+              leaf: level >= 2,
+              disabled: item.disabled,
+            }))
+          }
           resolve(nodes)
         }, 13)
       } else if (level === 1) {
@@ -229,6 +267,9 @@ export default class InputViewIndex extends Vue {
     await WorkflowModule.getOrganizations()
     this.handleInputValue()
     this.handleCascaderKey()
+  }
+  private visibleChange() {
+    console.log('vissssssssss')
   }
   private changeInputValue(e: any, index: number) {
     if (e) {

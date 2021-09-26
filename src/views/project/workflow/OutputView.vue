@@ -3,6 +3,11 @@
     <div class="title">
       {{ $t('workflow.output') }}
     </div>
+    <div class="button-bolck">
+      <jz-button @click="handleSave" type="jz-button--primary" class="save">
+        {{ $t('workflow.save') }}
+      </jz-button>
+    </div>
     <div class="text">
       保存至数据响应方
     </div>
@@ -42,9 +47,13 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { addNodeOutput } from '@/api/workflow'
 import { WorkflowModule } from '@/store/modules/workflow'
+import JzButton from '@/components/JzButton.vue'
 
 @Component({
   name: 'OutputView',
+  components: {
+    JzButton,
+  },
 })
 export default class extends Vue {
   @Prop({ required: true }) private nodeId!: number
@@ -66,8 +75,7 @@ export default class extends Vue {
       return false
     }
   }
-  private async handleChange(state: boolean) {
-    if (!state) return
+  private async handleSave() {
     if (!this.checkList.length) return
     const { nodeId } = this
     const handleItem = (id: string) => {
@@ -90,6 +98,9 @@ export default class extends Vue {
     }
     const { msg } = await addNodeOutput(parasm)
     this.$message.success(msg)
+  }
+  private async handleChange(state: boolean) {
+    console.log(state)
   }
   created() {
     // 数据回显
@@ -117,6 +128,13 @@ export default class extends Vue {
     font-weight: 650;
     line-height 30px
     margin-bottom 30px
+  .button-bolck
+    position relative
+    top: -40px;
+    display flex
+    justify-content flex-end
+    .save
+      margin-right 15px
   .text
     margin-bottom 20px
   .select

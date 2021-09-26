@@ -288,8 +288,10 @@ export default class workflowIndex extends Vue {
   private async getLogList() {
     const { nodeList, currentIndex } = this
     const { taskId } = nodeList[currentIndex]
-    const { data } = await getWorkflwLog(taskId)
-    this.logList = data
+    if (taskId) {
+      const { data } = await getWorkflwLog(taskId)
+      this.logList = data
+    }
   }
   created() {
     const { params } = this.$route
