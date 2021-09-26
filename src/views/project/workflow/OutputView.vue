@@ -94,6 +94,13 @@ export default class extends Vue {
     this.checkList.forEach((item, index) => {
       res.push(handleItem(item, index))
     })
+    let saveNodeOutputReqList = []
+    // 未保存响应方，默认保存发起方
+    if (!this.isSelect) {
+      saveNodeOutputReqList = res[0]
+    } else {
+      saveNodeOutputReqList = res
+    }
     const parasm = {
       saveNodeOutputReqList: res,
       workflowNodeId: nodeId,
