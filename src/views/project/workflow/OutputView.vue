@@ -20,7 +20,6 @@
           v-model="isSelect"
           active-color="#13ce66"
           inactive-color="#8d8d8d"
-          @change="handleChange"
           :disabled="isAuth"
         >
         </el-switch>
@@ -81,19 +80,19 @@ export default class extends Vue {
     if (!this.checkList.length) return
     if (!this.isSelect) return
     const { nodeId } = this
-    const handleItem = (id: string) => {
+    const handleItem = (id: string, index: number) => {
       const name = (this.checkOptions as any)[id]
       return {
         identityId: id,
         identityName: name,
-        savePartnerFlag: 0,
+        senderFlag: !index ? 1 : 0,
         storePattern: 1,
         workflowNodeId: nodeId,
       }
     }
     let res: any = []
-    this.checkList.forEach((item) => {
-      res.push(handleItem(item))
+    this.checkList.forEach((item, index) => {
+      res.push(handleItem(item, index))
     })
     const parasm = {
       saveNodeOutputReqList: res,
@@ -101,9 +100,6 @@ export default class extends Vue {
     }
     const { msg } = await addNodeOutput(parasm)
     this.$message.success(msg)
-  }
-  private async handleChange(state: boolean) {
-    console.log(state)
   }
   created() {
     // 数据回显

@@ -175,13 +175,15 @@ export default class InputViewIndex extends Vue {
     }
     const { nodeId } = this
     const saveNodeInputReqList: any = []
-    this.inputValue.map((item: any) => {
+    this.inputValue.map((item: any, index: number) => {
       if (item && item.length) {
         saveNodeInputReqList.push({
           dataColumnIds: item[2],
           dataTableId: item[1],
           dataType: 0,
           identityId: item[0],
+          // 是否发起方: 0-否, 1-是
+          senderFlag: !index ? 1 : 0,
           workflowNodeId: nodeId,
         })
       }
