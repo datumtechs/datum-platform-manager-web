@@ -101,7 +101,7 @@ export default class extends Vue {
       saveNodeOutputReqList = res
     }
     const parasm = {
-      saveNodeOutputReqList: res,
+      saveNodeOutputReqList: saveNodeOutputReqList,
       workflowNodeId: nodeId,
     }
     const { msg } = await addNodeOutput(parasm)
