@@ -29,7 +29,9 @@
       <div class="select-value" v-if="isSelect">
         <el-checkbox-group v-model="checkList" :disabled="isAuth">
           <div v-for="(item, key, index) in checkOptions" :key="index">
-            <el-checkbox :label="key">{{ item }} </el-checkbox>
+            <el-checkbox :label="key" :disabled="!index"
+              >{{ item }}
+            </el-checkbox>
           </div>
         </el-checkbox-group>
       </div>
@@ -44,7 +46,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator'
+import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import { addNodeOutput } from '@/api/workflow'
 import { WorkflowModule } from '@/store/modules/workflow'
 import JzButton from '@/components/JzButton.vue'
@@ -116,6 +118,14 @@ export default class extends Vue {
       })
     }
   }
+  // 默认勾线第一个数据方
+  @Watch('checkOptions', { deep: true })
+  handleCheckOptions(val: any): void {
+    const checkOptions = Object.keys(val)
+    if (checkOptions && checkOptions.length > 0) {
+      this.checkList[0] = checkOptions[0]
+    }
+  }
 }
 </script>
 
@@ -145,6 +155,8 @@ export default class extends Vue {
       margin  20px 0
       div
         padding 5px 0
+      >>> .el-checkbox__input.is-disabled+span.el-checkbox__label
+        color #333
     .switch-text
       padding-left 20px
       vertical-align -1px

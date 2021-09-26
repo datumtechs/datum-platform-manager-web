@@ -71,7 +71,6 @@ class Workflow extends VuexModule implements WFlowState {
         item.disabled = false
       }
     })
-    console.log(this.organizationList)
   }
   @Mutation
   public SET_ORG_INIT() {
