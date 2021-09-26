@@ -77,6 +77,7 @@ export default class extends Vue {
   }
   private async handleSave() {
     if (!this.checkList.length) return
+    if (!this.isSelect) return
     const { nodeId } = this
     const handleItem = (id: string) => {
       const name = (this.checkOptions as any)[id]

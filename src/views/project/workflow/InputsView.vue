@@ -121,7 +121,6 @@ export default class InputViewIndex extends Vue {
           const { inputValue, inputValueOrg } = this
           let nodes = null
           const data = this.organizations
-          console.log('data', data)
           // 判断列表中，如果选中值被禁用，仍可以选择
           if (inputValue.length) {
             const isDisabled = (item: any) => {
@@ -247,13 +246,6 @@ export default class InputViewIndex extends Vue {
     }
     this.inputValue = res
     WorkflowModule.SET_INPUT_LEN(this.inputValue.length)
-    // setTimeout(() => {
-    //   console.log('strat set');
-    //   // this.cascaderKey.map((item:string)=>{
-    //   //   item = item + 1
-    //   // })
-    //   console.log('strat end', this.cascaderKey);
-    // },500)
   }
   // 初始化cascaderKey
   private handleCascaderKey() {
