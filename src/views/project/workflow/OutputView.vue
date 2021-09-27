@@ -4,7 +4,12 @@
       {{ $t('workflow.output') }}
     </div>
     <div class="button-bolck">
-      <jz-button @click="handleSave" type="jz-button--primary" class="save">
+      <jz-button
+        @click="handleSave"
+        type="jz-button--primary"
+        class="save"
+        v-if="isSelect"
+      >
         {{ $t('workflow.save') }}
       </jz-button>
     </div>
@@ -93,15 +98,8 @@ export default class extends Vue {
     this.checkList.forEach((item, index) => {
       res.push(handleItem(item, index))
     })
-    let saveNodeOutputReqList = []
-    // 未保存响应方，默认保存发起方
-    if (!this.isSelect) {
-      saveNodeOutputReqList = res[0]
-    } else {
-      saveNodeOutputReqList = res
-    }
     const parasm = {
-      saveNodeOutputReqList: saveNodeOutputReqList,
+      saveNodeOutputReqList: res,
       workflowNodeId: nodeId,
     }
     const { msg } = await addNodeOutput(parasm)

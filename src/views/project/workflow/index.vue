@@ -42,8 +42,8 @@
             :name="saveState ? 'w-loading' : 'w-save'"
             :class="['icon-button ', saveState ? 'w-loading' : '']"
             color="#5F4FFB"
-            width="34"
-            height="34"
+            width="28"
+            height="28"
           />
           <span>
             保存
@@ -168,14 +168,13 @@ export default class workflowIndex extends Vue {
   private resultsVisible = false
   private nodeName = ''
   private taskId = ''
+  private startShow = false
   private saveState = false
   private startState = false
   private endState = false
   private deleteState = false
   private createState = false
-  get startShow() {
-    return this.$route.query.run === '1'
-  }
+
   get isNode() {
     return !!this.nodeList.length
   }
@@ -253,10 +252,13 @@ export default class workflowIndex extends Vue {
       const { code, msg } = await startWorkflow(params)
       if (code === 10000) {
         this.$message.success(msg)
+        this.getNodeList()
+        this.startShow = false
       }
       this.startState = false
     } catch (error) {
       this.startState = false
+      this.startShow = false
     }
   }
   // 终止工作流
@@ -271,8 +273,10 @@ export default class workflowIndex extends Vue {
         this.$message.success(msg)
       }
       this.endState = false
+      this.startShow = true
     } catch (error) {
       this.endState = false
+      this.startShow = true
     }
   }
   private handleResetName() {
@@ -343,6 +347,7 @@ export default class workflowIndex extends Vue {
       // 移除弹窗，下次打开重新加载created
       this.isNodeDrawer = false
       this.deleteState = false
+      this.getLogList()
     } catch (error) {
       this.deleteState = false
     }
@@ -383,7 +388,8 @@ export default class workflowIndex extends Vue {
     }
   }
   created() {
-    const { params } = this.$route
+    const { params, query } = this.$route
+    this.startShow = query.run === '1'
     this.workflowId = params.workflow
     this.getAlaor()
     this.getNodeList()

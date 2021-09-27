@@ -230,7 +230,7 @@ export default class InputViewIndex extends Vue {
     this.cascaderKey.push(item)
   }
   // 回显选择状态
-  handleInputValue() {
+  private async handleInputValue() {
     const { inputVoList } = WorkflowModule
     const res: any = []
     if (inputVoList && inputVoList.length) {
@@ -248,6 +248,9 @@ export default class InputViewIndex extends Vue {
     this.inputValue = res
     WorkflowModule.SET_INPUT_LEN(this.inputValue.length)
     this.upCascaderKey()
+    const val: string[] = this.getListFirst(this.inputValue)
+    await WorkflowModule.setOrganizationId(val)
+    WorkflowModule.SAVE_ORG_OPTIONS()
   }
   // 初始化cascaderKey
   private handleCascaderKey() {
