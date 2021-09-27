@@ -62,8 +62,10 @@ export default class OverViewIndex extends Vue {
     margin-bottom 30px
     line-height 22px
     .title
-      font-weight: 650;
+      font-weight: 500;
+      font-size: 20px;
       line-height 30px
+      margin 10px 0
     .text
       font-size 14px
     .info

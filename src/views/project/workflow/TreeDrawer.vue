@@ -7,16 +7,18 @@
       <el-menu
         default-active="1"
         class="el-menu-vertical-demo"
-        background-color="#ccc"
         active-text-color="#000"
+        background-color="#fff"
       >
+        <!-- background-color="#ccc"
+        active-text-color="#000" -->
         <el-submenu
           :index="(index + 1).toString()"
           v-for="(item, index) in menus"
           :key="index"
         >
           <template slot="title">
-            <i class="el-icon-menu"></i>
+            <!-- <i class="el-icon-menu"></i> -->
             <span>{{ item.algorithmName }}</span>
           </template>
           <template v-if="item.child && item.child.length">
@@ -27,7 +29,7 @@
               @click="startDrag(node)"
             >
               <!-- @mousedown.native="startDrag('Rect', $event, node.label)" -->
-              <i class="el-icon-menu"></i>
+              <!-- <i class="el-icon-menu"></i> -->
               <span>
                 {{ node.algorithmName }}
               </span>
@@ -63,12 +65,17 @@ export default class extends Vue {
 .tac
   width: 300px;
   height: calc(100vh - 120px)
-  background #ccc
+  // background #ccc
+  // box-shadow: 0px 1px 4px 0px #d3d5d4;
+  border 1px solid #e8ebea
+  box-sizing border-box
   .tac-title
     text-indent 25px
-    height: 50px;
-    line-height: 50px;
-    font-weight 600
+    height: 60px;
+    line-height: 60px;
+    font-size 20px
+    font-weight 500
+    border-bottom 1px solid #f0f5f2;
   .el-menu
     border-right: 0;
 </style>

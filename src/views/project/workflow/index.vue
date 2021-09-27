@@ -36,11 +36,68 @@
       </template>
     </div>
     <div class="instruct">
-      <span @click="handleSave"> 保存 </span>
-      <span @click="handleStartWorkflow" v-if="!startShow"> 启动 </span>
-      <span @click="handleEndWorkflow" v-else> 终止 </span>
-      <span @click="handleEmpty"> 清空 </span>
-      <span> 创建作业 </span>
+      <div class="instruct-wrap">
+        <div @click="handleSave">
+          <svg-icon
+            :name="saveState ? 'w-loading' : 'w-save'"
+            :class="['icon-button ', saveState ? 'w-loading' : '']"
+            color="#5F4FFB"
+            width="34"
+            height="34"
+          />
+          <span>
+            保存
+          </span>
+        </div>
+        <div @click="handleStartWorkflow" v-if="!startShow">
+          <svg-icon
+            :name="startState ? 'w-loading' : 'w-start'"
+            :class="['icon-button ', startState ? 'w-loading' : '']"
+            color="#5F4FFB"
+            width="30"
+            height="30"
+          />
+          <span>
+            启动
+          </span>
+        </div>
+        <div @click="handleEndWorkflow" v-else>
+          <svg-icon
+            :name="endState ? 'w-loading' : 'w-end'"
+            :class="['icon-button ', endState ? 'w-loading' : '']"
+            color="#5F4FFB"
+            width="34"
+            height="34"
+          />
+          <span>
+            终止
+          </span>
+        </div>
+        <div @click="handleEmpty">
+          <svg-icon
+            :name="deleteState ? 'w-loading' : 'w-delete'"
+            :class="['icon-button ', deleteState ? 'w-loading' : '']"
+            color="#5F4FFB"
+            width="27"
+            height="25"
+          />
+          <span>
+            清空
+          </span>
+        </div>
+        <div>
+          <svg-icon
+            name="w-create"
+            class="icon-button"
+            color="#5F4FFB"
+            width="50"
+            height="28"
+          />
+          <span>
+            创建作业
+          </span>
+        </div>
+      </div>
     </div>
     <v-contextmenu ref="contextmenu">
       <v-contextmenu-item @click="handleResetName">重命名</v-contextmenu-item>
@@ -111,6 +168,11 @@ export default class workflowIndex extends Vue {
   private resultsVisible = false
   private nodeName = ''
   private taskId = ''
+  private saveState = false
+  private startState = false
+  private endState = false
+  private deleteState = false
+  private createState = false
   get startShow() {
     return this.$route.query.run === '1'
   }
@@ -158,6 +220,7 @@ export default class workflowIndex extends Vue {
   }
   // 启动工作流
   private async handleStartWorkflow() {
+    if (this.startState) return
     if (this.handleisAuth()) return
     if (!this.nodeList.length) {
       this.$message.error('暂无节点')
@@ -165,7 +228,6 @@ export default class workflowIndex extends Vue {
     }
     const min = Number(WorkflowModule.algorithms.minNumbers)
     const inputValue = WorkflowModule.valueListNumber
-    console.log(inputValue, min)
     if (inputValue < min) {
       return this.$message.warning(`至少输入${min}个数据协同方`)
     }
@@ -186,18 +248,31 @@ export default class workflowIndex extends Vue {
       workflowId,
       workflowNodeReqList,
     }
-    const { code, msg } = await startWorkflow(params)
-    if (code === 10000) {
-      this.$message.success(msg)
+    this.startState = true
+    try {
+      const { code, msg } = await startWorkflow(params)
+      if (code === 10000) {
+        this.$message.success(msg)
+      }
+      this.startState = false
+    } catch (error) {
+      this.startState = false
     }
   }
   // 终止工作流
   private async handleEndWorkflow() {
+    if (this.endState) return
     if (this.handleisAuth()) return
     const { workflowId } = this
-    const { code, msg } = await endWorkflow({ workflowId })
-    if (code === 10000) {
-      this.$message.success(msg)
+    this.endState = true
+    try {
+      const { code, msg } = await endWorkflow({ workflowId })
+      if (code === 10000) {
+        this.$message.success(msg)
+      }
+      this.endState = false
+    } catch (error) {
+      this.endState = false
     }
   }
   private handleResetName() {
@@ -218,6 +293,7 @@ export default class workflowIndex extends Vue {
     await addWorkflowNode({ algorithmId, nodeName, workflowId })
   }
   private async handleSave() {
+    if (this.saveState) return
     if (this.handleisAuth()) return
     if (!this.nodeList.length) {
       this.$message.error('暂无节点')
@@ -235,11 +311,17 @@ export default class workflowIndex extends Vue {
       workflowId,
       workflowNodeReqList,
     }
-    const { msg, code } = await saveNode(params)
-    if (code === 10000) {
-      this.$message.success(msg)
+    this.saveState = true
+    try {
+      const { msg, code } = await saveNode(params)
+      if (code === 10000) {
+        this.$message.success(msg)
+        this.getNodeList()
+        this.saveState = false
+      }
+    } catch (error) {
+      this.saveState = false
     }
-    this.getNodeList()
   }
   // 删除该节点
   private async handleDelete() {
@@ -249,14 +331,21 @@ export default class workflowIndex extends Vue {
   }
   // 清空节点
   private async handleEmpty() {
+    if (this.deleteState) return
     if (this.handleisAuth()) return
     const { workflowId } = this
-    const { msg } = await clearNode({ workflowId })
-    this.$message.success(msg)
-    this.nodeList = []
-    WorkflowModule.INIT_DATA()
-    // 移除弹窗，下次打开重新加载created
-    this.isNodeDrawer = false
+    this.deleteState = true
+    try {
+      const { msg } = await clearNode({ workflowId })
+      this.$message.success(msg)
+      this.nodeList = []
+      WorkflowModule.INIT_DATA()
+      // 移除弹窗，下次打开重新加载created
+      this.isNodeDrawer = false
+      this.deleteState = false
+    } catch (error) {
+      this.deleteState = false
+    }
   }
   // 点击节点，展开信息
   private handleNode(item: any, index: number) {
@@ -335,14 +424,25 @@ export default class workflowIndex extends Vue {
     right 20px
     top 0
     color #000
-    span
+    .instruct-wrap
       padding 5px
       display inline-block
       margin-right 15px
       font-size 14px
       cursor pointer
-    span:hover
-      background #ccc
+      display: flex;
+      div
+        display flex
+        flex-direction column
+        padding 0 15px
+        align-self flex-end
+        .w-loading
+          animation:turn 1s linear infinite;
+        .icon-button
+          margin-bottom 6px
+       div:hover
+        span
+          color #5F4FFB
   .canvas
     position absolute
     z-index 1
@@ -387,7 +487,10 @@ export default class workflowIndex extends Vue {
     height 200px
     bottom 0
     left 300px
-    background #ccc
+    // background #ccc
+    // box-shadow  0 -2px 4px #d3d5d4
+    border-top 1px solid #e8ebea
+    box-sizing border-box
     color #333
     padding 20px
     .log-title
@@ -395,4 +498,11 @@ export default class workflowIndex extends Vue {
       .list
         .item
           padding 10px 0
+   @keyframes turn{
+      0%{-webkit-transform:rotate(0deg);}
+      25%{-webkit-transform:rotate(90deg);}
+      50%{-webkit-transform:rotate(180deg);}
+      75%{-webkit-transform:rotate(270deg);}
+      100%{-webkit-transform:rotate(360deg);}
+    }
 </style>

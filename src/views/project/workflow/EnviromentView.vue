@@ -164,13 +164,14 @@ export default class EnviromentView extends Vue {
   font-size 14px
   .title
     color #333
-    font-size 16px
-    font-weight: 650;
+    font-weight: 500;
+    font-size: 20px;
     line-height 30px
+    margin-top 10px
     margin-bottom 20px
   .button-bolck
     position relative
-    top: -40px;
+    top: -50px;
     display flex
     justify-content flex-end
     .save

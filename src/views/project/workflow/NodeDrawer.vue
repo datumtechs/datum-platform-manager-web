@@ -89,24 +89,26 @@ export default class NodeDrawerIndex extends Vue {
   display flex
   height: 100%;
   .nav
-    width 100px
+    width 140px
     height 100%
     text-align center
     .nav-item
       font-size 14px
       line-height 35px
       height 35px
-      border-left 2px solid #ccc
+      border-left 1px solid #d3d5d4
       cursor pointer
+      color #606266
     .active
-      background #ccc
-      font-weight 550
-      border-left 3px solid #0f62fe
+      background rgba(95,79,251,0.1)
+      border-left 2px solid #0f62fe
+      color #000
   .view
     width 100%
     box-sizing border-box
-    background #ccc
-    padding 10px 30px
+    background #fff
+    padding 20px 30px
+    box-shadow 0px 1px 4px 0px #d3d5d4
 >>> .el-drawer
       top: 165px!important
       width: 500px!important
