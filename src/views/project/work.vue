@@ -150,14 +150,14 @@ export default class WorkIndex extends Vue {
     return this.placeholderList[pageType]
   }
   private handleName(data: TableNameType) {
-    const { id, name, runStatus } = data
+    const { id, name } = data
     const project = this.$route.params.id
     const role = this.$route.params.role
     const projectName = this.$route.query.name
     if (this.pageType === 'work') {
       this.$router.push({
         path: `/project/${project}/${role}/workflow/${id}`,
-        query: { workflow: name, name: projectName, run: String(runStatus) },
+        query: { workflow: name, name: projectName },
       })
     }
     if (this.pageType === 'jobs') {

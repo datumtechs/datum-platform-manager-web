@@ -71,6 +71,8 @@ export default class WorkDialog extends Vue {
   }
   private handleClose() {
     this.workVisible = false
+    this.name = ''
+    this.describe = ''
   }
   // 提交
   @Emit('submit')

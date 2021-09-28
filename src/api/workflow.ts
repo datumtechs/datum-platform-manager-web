@@ -76,3 +76,8 @@ export const getWorkflwLog = (id: string | number) => {
 export const getTaskResult = (id: string | number) => {
   return get(`/workflowNode/getTaskResult/${id}`)
 }
+
+// 查看工作流状态
+export const getWorkflowStatus = (parmas: any) => {
+  return get('/workflow/getWorkflowStatus', parmas)
+}

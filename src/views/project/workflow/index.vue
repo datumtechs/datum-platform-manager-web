@@ -49,19 +49,7 @@
             保存
           </span>
         </div>
-        <div @click="handleStartWorkflow" v-if="!startShow">
-          <svg-icon
-            :name="startState ? 'w-loading' : 'w-start'"
-            :class="['icon-button ', startState ? 'w-loading' : '']"
-            color="#5F4FFB"
-            width="30"
-            height="30"
-          />
-          <span>
-            启动
-          </span>
-        </div>
-        <div @click="handleEndWorkflow" v-else>
+        <div @click="handleEndWorkflow" v-if="startShow === 1">
           <svg-icon
             :name="endState ? 'w-loading' : 'w-end'"
             :class="['icon-button ', endState ? 'w-loading' : '']"
@@ -71,6 +59,18 @@
           />
           <span>
             终止
+          </span>
+        </div>
+        <div @click="handleStartWorkflow" v-else>
+          <svg-icon
+            :name="startState ? 'w-loading' : 'w-start'"
+            :class="['icon-button ', startState ? 'w-loading' : '']"
+            color="#5F4FFB"
+            width="30"
+            height="30"
+          />
+          <span>
+            启动
           </span>
         </div>
         <div @click="handleEmpty">
@@ -131,6 +131,7 @@ import NodeDrawer from './NodeDrawer.vue'
 import TreeDrawer from './TreeDrawer.vue'
 import ViewRun from './ViewRun.vue'
 import { geAlgorithmTree } from '@/api/algorithm'
+import { getWorkflowStatus } from '@/api/workflow'
 import { AlgorithmType } from '@/api/types'
 import {
   saveNode,
@@ -168,7 +169,7 @@ export default class workflowIndex extends Vue {
   private resultsVisible = false
   private nodeName = ''
   private taskId = ''
-  private startShow = false
+  private startShow = 0
   private saveState = false
   private startState = false
   private endState = false
@@ -252,13 +253,12 @@ export default class workflowIndex extends Vue {
       const { code, msg } = await startWorkflow(params)
       if (code === 10000) {
         this.$message.success(msg)
-        this.getNodeList()
-        this.startShow = false
+        this.getWorkState()
+        this.getLogList()
       }
       this.startState = false
     } catch (error) {
       this.startState = false
-      this.startShow = false
     }
   }
   // 终止工作流
@@ -271,12 +271,11 @@ export default class workflowIndex extends Vue {
       const { code, msg } = await endWorkflow({ workflowId })
       if (code === 10000) {
         this.$message.success(msg)
+        this.getWorkState()
       }
       this.endState = false
-      this.startShow = true
     } catch (error) {
       this.endState = false
-      this.startShow = true
     }
   }
   private handleResetName() {
@@ -347,7 +346,7 @@ export default class workflowIndex extends Vue {
       // 移除弹窗，下次打开重新加载created
       this.isNodeDrawer = false
       this.deleteState = false
-      this.getLogList()
+      // this.getLogList()
     } catch (error) {
       this.deleteState = false
     }
@@ -387,14 +386,22 @@ export default class workflowIndex extends Vue {
       this.logList = data
     }
   }
+  private async getWorkState() {
+    const id = this.workflowId
+    const { data } = await getWorkflowStatus({ id })
+    this.startShow = data.runStatus
+    this.nodeList.map((item: any, index: number) => {
+      item.runStatus = data.getNodeStatusVoList[index]['runStatus']
+    })
+  }
   created() {
     const { params, query } = this.$route
-    this.startShow = query.run === '1'
     this.workflowId = params.workflow
     this.getAlaor()
     this.getNodeList()
     const name = this.$route.query.workflow
     BreadcrumbModule.SET_WORKFLOW(name)
+    this.getWorkState()
   }
   private async getSign() {
     const checkAddress = alayaService.checkAddress()

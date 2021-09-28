@@ -230,19 +230,15 @@ export default class TableIndex extends Vue {
   @Emit('clickName')
   private handleNext(name: string, row: any) {
     const { id } = row
-    let runStatus = ''
     let role = ''
     let metaDataId = ''
-    if (typeof row.runStatus !== 'undefined') {
-      runStatus = row.runStatus
-    }
     if (typeof row.role !== 'undefined') {
       role = row.role
     }
     if (typeof row.metaDataId !== 'undefined') {
       metaDataId = row.metaDataId
     }
-    return { id, name, runStatus, role, metaDataId }
+    return { id, name, role, metaDataId }
   }
   // 点击操作按钮
   @Emit('clickBtn')
