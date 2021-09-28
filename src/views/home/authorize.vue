@@ -184,6 +184,7 @@ export default class Authorize extends Vue {
         id: Number(detailId),
         sign,
         userType: UserModule.userType,
+        address: UserModule.user_info.address,
       }
 
       if (authType == '1') {
