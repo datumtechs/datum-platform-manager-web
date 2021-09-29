@@ -21,3 +21,8 @@ export const queryWorkflow = (params: any) => {
 export const actionJob = (params: any) => {
   return post('/job/action', params)
 }
+
+// 查询子作业
+export const subJoblist = (params: any) => {
+  return post('/subJob/list', params)
+}

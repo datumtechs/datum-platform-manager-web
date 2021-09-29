@@ -71,7 +71,7 @@
       <div class="block select">
         <div class="text">最长运行时长</div>
         <div class="num-input">
-          <el-input-number v-model="gpuValue" :min="1"></el-input-number>
+          <el-input-number v-model="runTime" :min="1"></el-input-number>
           <span class="unit">小时</span>
         </div>
       </div>
@@ -103,7 +103,7 @@ export default class EnviromentView extends Vue {
   private fileList = []
   private cpuValue = '1'
   private memoryValue = '1'
-  private gpuValue = '1'
+  private runTime = '1'
   private broadband = '1'
   get cpuOptions() {
     return cpuOptions
@@ -132,11 +132,11 @@ export default class EnviromentView extends Vue {
   }
   private async handleSave() {
     if (this.handleisAuth()) return
-    const { nodeId, cpuValue, memoryValue, gpuValue, broadband } = this
+    const { nodeId, cpuValue, memoryValue, runTime, broadband } = this
     const params = {
       costBandwidth: broadband,
       costCpu: cpuValue,
-      costGpu: gpuValue,
+      runTime: runTime,
       costMem: memoryValue,
       workflowNodeId: nodeId,
     }
@@ -147,7 +147,7 @@ export default class EnviromentView extends Vue {
     const info: any = WorkflowModule.algorithms
     this.cpuValue = String(info.costCpu)
     this.memoryValue = String(info.costMem)
-    this.gpuValue = String(info.costGpu)
+    this.runTime = String(info.runTime)
     this.broadband = String(info.costBandwidth)
   }
 }

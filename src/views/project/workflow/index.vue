@@ -343,10 +343,12 @@ export default class workflowIndex extends Vue {
     const { workflowId } = this
     this.deleteState = true
     try {
-      const { msg } = await clearNode({ workflowId })
-      this.$message.success(msg)
-      this.nodeList = []
-      WorkflowModule.INIT_DATA()
+      const { code, msg } = await clearNode({ workflowId })
+      if (code === 10000) {
+        this.$message.success(msg)
+        this.nodeList = []
+        WorkflowModule.INIT_DATA()
+      }
       // 移除弹窗，下次打开重新加载created
       this.isNodeDrawer = false
       this.deleteState = false
