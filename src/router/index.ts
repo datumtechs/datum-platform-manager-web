@@ -215,6 +215,7 @@ export const constantRoutes: RouteConfig[] = [
             meta: {
               title: 'subjob',
               activeMenu: '/project/all',
+              dynamic: true,
             },
             component: () =>
               import(

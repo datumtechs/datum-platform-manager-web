@@ -8,6 +8,8 @@ export interface ParamsType {
   projectId?: string | number
   current: number
   size: number
+  jobId?: string | number
+  subJobId?: string | number
 }
 
 export interface TableParams {
