@@ -57,18 +57,6 @@
         </el-select>
       </div>
       <div class="block select">
-        <div class="text">最长运行时长</div>
-        <el-select v-model="gpuValue" placeholder="请选择" :disabled="isAuth">
-          <el-option
-            v-for="(item, key, index) in gpuOptions"
-            :key="index"
-            :label="item"
-            :value="key"
-          >
-          </el-option>
-        </el-select>
-      </div>
-      <div class="block select">
         <div class="text">宽带</div>
         <el-select v-model="broadband" placeholder="请选择" :disabled="isAuth">
           <el-option
@@ -79,6 +67,13 @@
           >
           </el-option>
         </el-select>
+      </div>
+      <div class="block select">
+        <div class="text">最长运行时长</div>
+        <div class="num-input">
+          <el-input-number v-model="gpuValue" :min="1"></el-input-number>
+          <span class="unit">小时</span>
+        </div>
       </div>
     </div>
   </div>
@@ -191,6 +186,11 @@ export default class EnviromentView extends Vue {
     // margin 25px 0 15px 0
   .select
     margin-top 15px
+    .num-input
+      >>> .el-input-number
+        width 160px!important
+      .unit
+        margin-left 25px
     .text
       font-size 12px
       padding-left 4px
