@@ -38,7 +38,7 @@
     >
     </Table>
     <work-dialog ref="workDialog" @submit="handleSubmit"></work-dialog>
-    <subjob-dialog ref="subjobDialog"></subjob-dialog>
+    <subjob-dialog ref="subjobDialog" @createJob="handleSubjob"></subjob-dialog>
   </div>
 </template>
 
@@ -176,7 +176,7 @@ export default class WorkIndex extends Vue {
     if (this.pageType === 'jobs') {
       if (!index) {
         // 编辑
-        ;(this.$refs.subjobDialog as any).handleOpen(1)
+        ;(this.$refs.subjobDialog as any).handleOpen(1, row)
         console.log('编辑')
       }
       if (index === 1) {
@@ -215,6 +215,9 @@ export default class WorkIndex extends Vue {
   private changeList(data: TableParams) {
     this.projectName = data.input
     this.listQuery = data.list
+    this.getList()
+  }
+  private handleSubjob() {
     this.getList()
   }
   private async getList() {

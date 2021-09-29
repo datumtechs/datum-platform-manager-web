@@ -228,8 +228,12 @@ export default class workflowIndex extends Vue {
     }
     const min = Number(WorkflowModule.algorithms.minNumbers)
     const inputValue = WorkflowModule.valueListNumber
+    console.log(inputValue, min)
     if (inputValue < min) {
       return this.$message.warning(`至少输入${min}个数据协同方`)
+    }
+    if (!inputValue && !min) {
+      return this.$message.warning('未输入数据协同方')
     }
     const sign = await this.getSign()
     const { workflowId, nodeList, workflowNodeId } = this

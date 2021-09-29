@@ -33,14 +33,14 @@ export const memoryOptions = {
   16: '16核',
 }
 /**
- * CPU选项
+ * 最长运行时长
  *
  */
 export const gpuOptions = {
-  2: '2核',
-  4: '4核',
-  8: '8核',
-  16: '16核',
+  2: '2ms',
+  4: '4ms',
+  8: '8ms',
+  16: '16ms',
 }
 /**
  * 宽带选项

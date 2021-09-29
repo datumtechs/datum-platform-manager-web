@@ -57,7 +57,7 @@
         </el-select>
       </div>
       <div class="block select">
-        <div class="text">GPU</div>
+        <div class="text">最长运行时长</div>
         <el-select v-model="gpuValue" placeholder="请选择" :disabled="isAuth">
           <el-option
             v-for="(item, key, index) in gpuOptions"

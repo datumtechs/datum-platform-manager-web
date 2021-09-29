@@ -26,15 +26,15 @@
             <div class="workflow">
               <span class="lable">选择工作流</span>
               <el-select
-                v-model="workflowInfo"
+                v-model="workflowId"
                 placeholder="请选择"
                 class="workflowInfo"
               >
                 <el-option
                   v-for="item in workflowOptions"
                   :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
+                  :label="item.workflowName"
+                  :value="item.id"
                 >
                 </el-option>
               </el-select>
@@ -55,16 +55,13 @@
           <template v-if="tabsIndex === 1">
             <div class="baseInfor">
               <span class="lable">名称</span>
-              <el-input
-                v-model="nameInfo"
-                placeholder="请输入项目名称"
-              ></el-input>
+              <el-input v-model="name" placeholder="请输入项目名称"></el-input>
               <span class="lable">描述（选填）</span>
               <el-input
                 type="textarea"
                 :rows="3"
                 placeholder="请输入项目描述"
-                v-model="projectTextarea"
+                v-model="desc"
               >
               </el-input>
               <div class="baseInfor-btn">
@@ -89,10 +86,12 @@
               </div>
             </div>
           </template>
-          <template v-if="tabsIndex === 2">
+          <template>
             <Dispatch
+              v-show="tabsIndex === 2"
               @create="handleCreate"
               @previous="handlePrevious"
+              ref="Dispatch"
             ></Dispatch>
           </template>
         </div>
@@ -102,10 +101,10 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Watch } from 'vue-property-decorator'
+import { Vue, Component, Emit } from 'vue-property-decorator'
 import JzButton from '@/components/JzButton.vue'
 import Dispatch from './Dispatch.vue'
-
+import { addJob, queryWorkflow } from '@/api/jobs'
 @Component({
   name: 'SubjobDialog',
   components: {
@@ -121,32 +120,72 @@ export default class WorkDialog extends Vue {
   private tabsIndex = 0
 
   // 关联工作流
-  private workflowOptions = [
-    {
-      value: '选项1',
-      label: '黄金糕',
-    },
-    {
-      value: '选项2',
-      label: '双皮奶',
-    },
-    {
-      value: '选项3',
-      label: '蚵仔煎',
-    },
-  ]
-  private workflowInfo = ''
-  private nameInfo = ''
-  private projectTextarea = ''
+  private workflowOptions = []
+  private workflowId = ''
+  private name = ''
+  private desc = ''
 
   private handleTable(index: number) {
+    if (!this.tabsIndex) {
+      if (!this.workflowId) {
+        this.$message.warning('请选择工作流')
+        return false
+      }
+    }
+    if (this.tabsIndex === 1) {
+      if (!this.name) {
+        this.$message.warning('请输入项目名称')
+        return false
+      }
+    }
     this.tabsIndex = index
   }
   private handleOpen(type: number, row?: any) {
-    this.subjobVisible = true
+    // 创建
+    if (!type) {
+      this.name = ''
+      this.desc = ''
+      this.workflowId = ''
+      this.subjobVisible = true
+      setTimeout(() => {
+        const dom = this.$refs as any
+        if (dom && dom.Dispatch && dom.Dispatch.resetTime) {
+          dom.Dispatch.resetTime()
+        }
+      }, 13)
+    } else {
+      // 编辑
+      this.name = row.name
+      this.desc = row.desc || '描述'
+      this.workflowId = row.workflowId
+      this.subjobVisible = true
+      setTimeout(() => {
+        const dom = this.$refs as any
+        if (dom && dom.Dispatch && dom.Dispatch.handleEcho) {
+          //  dom.Dispatch.handleEcho(row)
+          dom.Dispatch.handleEcho({
+            beginTime: '2021-10-04 06:33:13',
+            endTime: '2021-09-29 12:33:13',
+            repeatInterval: '5',
+          })
+        }
+      }, 13)
+    }
   }
   // 下一步
   private handleNext() {
+    if (!this.tabsIndex) {
+      if (!this.workflowId) {
+        this.$message.warning('请选择工作流')
+        return false
+      }
+    }
+    if (this.tabsIndex === 1) {
+      if (!this.name) {
+        this.$message.warning('请输入项目名称')
+        return false
+      }
+    }
     this.tabsIndex++
   }
   private handlePrevious() {
@@ -155,10 +194,55 @@ export default class WorkDialog extends Vue {
   private handleClose() {
     this.subjobVisible = false
     this.tabsIndex = 0
+    const dom = this.$refs as any
+    if (dom && dom.Dispatch && dom.Dispatch.resetTime) {
+      dom.Dispatch.resetTime()
+    }
   }
-
-  private handleCreate() {
+  // 创建作业
+  @Emit('createJob')
+  private async handleCreate(data: any) {
+    if (!data) return
+    const { beginTime, endTime, repeatInterval, repeatFlag } = data
+    const { name, desc, workflowId } = this
+    if (!workflowId) {
+      this.$message.warning('请选择工作流')
+      return false
+    }
+    if (!name) {
+      this.$message.warning('请选择名称')
+      return false
+    }
+    const parmams: any = {
+      beginTime,
+      name,
+      desc,
+      workflowId,
+      repeatFlag,
+    }
+    if (repeatFlag) {
+      parmams['repeatInterval'] = repeatInterval
+      parmams['endTime'] = endTime
+    }
+    const { code, msg } = await addJob({ ...parmams })
+    if (code === 10000) {
+      this.$message.success(msg)
+      this.subjobVisible = false
+      return true
+    }
     this.subjobVisible = false
+  }
+  // 工作流列表
+  private async getWorkflow() {
+    const id = this.$route.params.id
+    const params = {
+      projectId: id,
+    }
+    const { data } = await queryWorkflow(params)
+    this.workflowOptions = data
+  }
+  created() {
+    this.getWorkflow()
   }
 }
 </script>

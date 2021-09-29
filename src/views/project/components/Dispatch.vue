@@ -2,44 +2,49 @@
   <div class="dispatch">
     <div class="block-input">
       <div>
-        <el-radio v-model="radio" label="1">开始时间</el-radio>
+        <el-checkbox v-model="startRadio" class="checkbox"
+          >开始时间</el-checkbox
+        >
         <div class="num-input">
           <el-date-picker
             class="input-date"
             v-model="startDate"
             type="date"
             placeholder="开始日期"
+            :picker-options="startPickerOptions"
           >
           </el-date-picker>
           <el-time-picker
             class="input-date"
             v-model="startTime"
+            format="HH:mm:A"
             :picker-options="{
               selectableRange: '0:0:00 - 23:59:00',
             }"
-            format="HH:mm:A"
-            placeholder="开时间"
+            placeholder="开始时间"
           >
           </el-time-picker>
         </div>
       </div>
-      <div>
-        <el-radio v-model="radio" label="2"
-          >重复 <span class="num-lable"></span> 每</el-radio
+      <div v-show="startRadio">
+        <el-checkbox v-model="repeatRadio" class="checkbox"
+          >重复 <span class="num-lable"></span> 每</el-checkbox
         >
         <div class="num-input">
-          <el-input-number v-model="num" :min="1" size="small">
+          <el-input-number v-model="repeatInterval" :min="1" size="small">
           </el-input-number>
+          <span class="unit">分钟</span>
         </div>
       </div>
-      <div>
-        <el-radio v-model="radio" label="3">结束时间</el-radio>
+      <div v-show="repeatRadio">
+        <el-checkbox v-model="endRadio" class="checkbox">结束时间</el-checkbox>
         <div class="num-input">
           <el-date-picker
             class="input-date"
             v-model="endDate"
             type="date"
             placeholder="结束日期"
+            :picker-options="endPickerOptions"
           >
           </el-date-picker>
           <el-time-picker
@@ -75,6 +80,7 @@
 <script lang="ts">
 import { Vue, Component, Emit } from 'vue-property-decorator'
 import JzButton from '@/components/JzButton.vue'
+import { formatDate } from '@/utils/format'
 
 @Component({
   name: 'dispatch',
@@ -84,26 +90,108 @@ import JzButton from '@/components/JzButton.vue'
 })
 export default class DispatchIndex extends Vue {
   private radio = '1'
-  private startDate = ''
-  private startTime = ''
+  private startDate: any = ''
+  private startTime: any = ''
   private endDate = ''
-  private endTime = ''
-  private num = 1
+  private endTime: any = ''
+  private repeatInterval = 1
+  private startRadio = false
+  private repeatRadio = false
+  private endRadio = false
+  private startPickerOptions: any = {
+    disabledDate(time: any) {
+      return time.getTime() < Date.now() - 8.64e7
+    },
+  }
+  private endPickerOptions: any = {
+    disabledDate: this.disabledEndDate,
+  }
+  private disabledEndDate(time: any) {
+    let res: any = ''
+    if (this.startDate.length) {
+      res = this.startTime.getTime()
+    } else {
+      res = Date.now() - 8.64e7
+    }
+    return time.getTime() < res
+  }
+  // 创建
   @Emit('create')
   private handleCreate() {
-    const { radio, startDate, startTime, endDate, endTime, num } = this
-    return {
+    if (!this.startDate || !this.startTime) {
+      this.$message.warning('请输入开始时间')
+      return false
+    }
+    const beginTime =
+      formatDate(new Date(this.startDate), 'Y-M-D ') +
+      '' +
+      formatDate(new Date(this.startTime), 'h:m:s')
+    const endTime =
+      formatDate(new Date(this.endDate), 'Y-M-D ') +
+      '' +
+      formatDate(new Date(this.endTime), 'h:m:s')
+    const {
       radio,
       startDate,
       startTime,
       endDate,
+      repeatInterval,
+      repeatRadio,
+    } = this
+    if (repeatRadio) {
+      if (!this.endDate) {
+        this.$message.warning('请输入结束时间')
+        return false
+      }
+      const stampStart = new Date(beginTime).getTime()
+      const stampEnd = new Date(endTime).getTime()
+      if (stampStart > stampEnd) {
+        this.$message.warning('结束时间必须大于开始时间')
+        return false
+      }
+    }
+    return {
+      radio,
+      beginTime,
       endTime,
-      num,
+      repeatInterval,
+      repeatFlag: repeatRadio,
     }
   }
   @Emit('previous')
   private handlePrevious() {
     return
+  }
+  // 编辑回显
+  public handleEcho(row: any) {
+    console.log(row, 'row')
+    const { beginTime, endTime, repeatInterval } = row
+    this.repeatInterval = repeatInterval
+    const start = beginTime.split(' ')
+    const end = endTime.split(' ')
+    this.startDate = start[0]
+    this.startTime = new Date(start)
+    this.endDate = end[0]
+    this.endTime = new Date(end)
+    if (beginTime.length) {
+      this.startRadio = true
+    }
+    if (repeatInterval) {
+      this.repeatRadio = true
+    }
+    if (endTime.length) {
+      this.endRadio = true
+    }
+  }
+  private resetTime() {
+    this.startDate = ''
+    this.startTime = ''
+    this.endDate = ''
+    this.endTime = ''
+    this.repeatInterval = 1
+    this.startRadio = false
+    this.repeatRadio = false
+    this.endRadio = false
   }
 }
 </script>
@@ -117,10 +205,14 @@ export default class DispatchIndex extends Vue {
     .num-lable
       display inline-block
       width 6px
+    .checkbox
+      margin-right 32px
     .num-input
       display inline-block
       margin-left -10px
       position relative
+      .unit
+        margin-left 20px
       .input-date
         width 140px
         display: inline-block;
@@ -130,8 +222,6 @@ export default class DispatchIndex extends Vue {
         top 0
         right 0
         z-index 99
-      >>> .el-radio
-            margin-right 15px!important
       >>> .el-icon-plus:before
             vertical-align: -2px;
             content: "\e78f"
