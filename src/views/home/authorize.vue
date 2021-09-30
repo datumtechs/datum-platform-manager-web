@@ -217,7 +217,7 @@ export default class Authorize extends Vue {
     this.detailId = this.$route.params.id
     const { data } = await getDataDetail(this.detailId)
     this.dataInfo = data
-    this.dataInfo.size = this.dataInfo.size + ' Mb'
+    this.dataInfo.size = this.dataInfo.size / 1024 + ' Mb'
     BreadcrumbModule.SET_DATADETAIL(data.dataName)
   }
   created() {
