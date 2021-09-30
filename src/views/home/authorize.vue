@@ -217,7 +217,7 @@ export default class Authorize extends Vue {
     this.detailId = this.$route.params.id
     const { data } = await getDataDetail(this.detailId)
     this.dataInfo = data
-    this.dataInfo.size = this.dataInfo.size / 1024 + ' Mb'
+    this.dataInfo.size = this.dataInfo.size / 1024 / 1024 + ' Mb'
     BreadcrumbModule.SET_DATADETAIL(data.dataName)
   }
   created() {
@@ -260,7 +260,7 @@ export default class Authorize extends Vue {
           width 130px
           color rgba(0,0,0,0.50)
         .row-value
-          width 180px
+          width 220px
           color #000
       .block-input
         .time-input,.num-input
