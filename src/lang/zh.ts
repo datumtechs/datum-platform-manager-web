@@ -28,6 +28,7 @@ export default {
   home: {
     connectWallet: '连接钱包',
     authorize: '申请授权',
+    authorizePassed: '已授权',
     cancel: '取消',
     detail: '查看',
     data: '数据',

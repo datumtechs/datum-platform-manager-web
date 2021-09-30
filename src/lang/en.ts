@@ -27,6 +27,7 @@ export default {
   home: {
     connectWallet: 'ConnectWallet',
     authorize: 'Apply',
+    authorizePassed: 'Apply Passed',
     detail: 'Details',
     data: 'Data',
     algorithm: 'Algorithms',
