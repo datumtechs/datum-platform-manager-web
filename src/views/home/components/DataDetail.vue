@@ -17,6 +17,7 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { getDataDetail } from '@/api/home'
 import { BreadcrumbModule } from '@/store/modules/breadcrumb'
+import { formatBytes } from '@/utils/format'
 @Component({
   name: 'DataDetail',
 })
@@ -102,7 +103,7 @@ export default class DataDetail extends Vue {
     const { data } = await getDataDetail(this.$route.params.id)
     this.data = data
     this.data.fileType = data.fileType ? 'csv' : '未知'
-    this.data.size = data.size / 1024 / 1024 + ' Mb'
+    this.data.size = formatBytes(data.size)
     this.data.authType = this.authTypeList[data.authType]
     BreadcrumbModule.SET_DATADETAIL(data.dataName)
   }

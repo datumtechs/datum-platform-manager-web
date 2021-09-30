@@ -1,16 +1,17 @@
-//百度坐标转高德（传入经度、纬度）
-export const bdDecrypt = (bd_lng: any, bd_lat: any) => {
-  let X_PI = (Math.PI * 3000.0) / 180.0
-  let x = bd_lng - 0.0065
-  let y = bd_lat - 0.006
-  let z = Math.sqrt(x * x + y * y) - 0.00002 * Math.sin(y * X_PI)
-  let theta = Math.atan2(y, x) - 0.000003 * Math.cos(x * X_PI)
-  let gg_lng = z * Math.cos(theta)
-  let gg_lat = z * Math.sin(theta)
-  return {
-    lng: gg_lng,
-    lat: gg_lat,
+// byte 转换 mb
+export const formatBytes = (value: number) => {
+  var res = ''
+  if (value >= 1073741824) {
+    res = Math.round((value / 1073741824) * 100) / 100 + ' GB'
+  } else if (value >= 1048576) {
+    res = Math.round((value / 1048576) * 100) / 100 + ' MB'
+  } else if (value >= 1024) {
+    res = Math.round((value / 1024) * 100) / 100 + ' KB'
+  } else {
+    res = res + 'Bytes'
   }
+
+  return res
 }
 
 export const getSubStr = (

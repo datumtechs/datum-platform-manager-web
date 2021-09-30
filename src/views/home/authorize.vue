@@ -117,7 +117,7 @@ import alayaService from '@/services/alayaService'
 import { UserModule } from '@/store/modules/user'
 import { formatDate } from '@/utils/format'
 import { BreadcrumbModule } from '@/store/modules/breadcrumb'
-
+import { formatBytes } from '@/utils/format'
 @Component({
   name: 'Authorize',
   components: {
@@ -217,7 +217,7 @@ export default class Authorize extends Vue {
     this.detailId = this.$route.params.id
     const { data } = await getDataDetail(this.detailId)
     this.dataInfo = data
-    this.dataInfo.size = this.dataInfo.size / 1024 / 1024 + ' Mb'
+    this.dataInfo.size = formatBytes(data.size)
     BreadcrumbModule.SET_DATADETAIL(data.dataName)
   }
   created() {
