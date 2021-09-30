@@ -2,13 +2,13 @@
 export const formatBytes = (value: number) => {
   var res = ''
   if (value >= 1073741824) {
-    res = Math.round((value / 1073741824) * 100) / 100 + ' GB'
+    res = Math.round((value / 1024 / 1024 / 1024) * 100) / 100 + ' Gb'
   } else if (value >= 1048576) {
-    res = Math.round((value / 1048576) * 100) / 100 + ' MB'
+    res = Math.round((value / 1024 / 1024) * 100) / 100 + ' Mb'
   } else if (value >= 1024) {
-    res = Math.round((value / 1024) * 100) / 100 + ' KB'
+    res = Math.round((value / 1024) * 100) / 100 + ' Kb'
   } else {
-    res = res + 'Bytes'
+    res = value + ' byte'
   }
 
   return res
