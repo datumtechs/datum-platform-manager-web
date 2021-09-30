@@ -102,7 +102,7 @@ export default class DataDetail extends Vue {
     const { data } = await getDataDetail(this.$route.params.id)
     this.data = data
     this.data.fileType = data.fileType ? 'csv' : '未知'
-    this.data.size = data.size + ' byte'
+    this.data.size = data.size + ' Mb'
     this.data.authType = this.authTypeList[data.authType]
     BreadcrumbModule.SET_DATADETAIL(data.dataName)
   }

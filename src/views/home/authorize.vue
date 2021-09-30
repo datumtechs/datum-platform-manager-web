@@ -125,7 +125,7 @@ import { BreadcrumbModule } from '@/store/modules/breadcrumb'
   },
 })
 export default class Authorize extends Vue {
-  private dataInfo = {}
+  private dataInfo: any = {}
   private authType = '1'
   private dateTime = []
   private startDate = ''
@@ -217,6 +217,7 @@ export default class Authorize extends Vue {
     this.detailId = this.$route.params.id
     const { data } = await getDataDetail(this.detailId)
     this.dataInfo = data
+    this.dataInfo.size = this.dataInfo.size + ' Mb'
     BreadcrumbModule.SET_DATADETAIL(data.dataName)
   }
   created() {
