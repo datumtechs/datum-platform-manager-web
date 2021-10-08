@@ -26,3 +26,8 @@ export const actionJob = (params: any) => {
 export const subJoblist = (params: any) => {
   return post('/subJob/list', params)
 }
+
+// 操作子作业
+export const subJobaction = (params: any) => {
+  return post('/subJob/action', params)
+}

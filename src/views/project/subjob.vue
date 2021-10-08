@@ -19,7 +19,7 @@ import { Vue, Component, Watch } from 'vue-property-decorator'
 import Table from '@/components/JzTable.vue'
 import JzButton from '@/components/JzButton.vue'
 import { ParamsType, TableParams, QueryType } from '@/api/types'
-import { subJoblist } from '@/api/jobs'
+import { subJoblist, subJobaction } from '@/api/jobs'
 import { BreadcrumbModule } from '@/store/modules/breadcrumb'
 @Component({
   name: 'subjob',
@@ -32,10 +32,11 @@ export default class subjobIndex extends Vue {
   private btnList = [
     {
       lable: 'jobs.pause',
+      disabled: 'pause',
     },
     {
       lable: 'jobs.restart',
-      disabled: true,
+      disabled: 'restart',
     },
   ]
   private stateList = ['未开始', '运行中', '运行成功', '运行失败']
@@ -86,6 +87,7 @@ export default class subjobIndex extends Vue {
     const { data } = await subJoblist({ ...params })
     data.items.map((item: any) => {
       item.state = this.stateList[item.subJobStatus]
+      item.btnStatus = item.subJobStatus
     })
     this.list = data.items
     this.total = data.total
@@ -95,7 +97,17 @@ export default class subjobIndex extends Vue {
     this.listQuery = data.list
     this.getList()
   }
-  private handleBtn() {}
+  private async handleBtn(data: any) {
+    const { index, row } = data
+    // 1 暂停 2 重启
+    const actionType = index ? '2' : '1'
+    const id = row.id
+    await subJobaction({
+      actionType,
+      id,
+    })
+    this.getList()
+  }
   created() {
     this.getList()
     const name = this.$route.query.task

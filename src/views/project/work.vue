@@ -50,7 +50,7 @@ import WorkDialog from './components/WorkeDialog.vue'
 import SubjobDialog from './components/SubjobsDialog.vue'
 import { ParamsType, TableParams, QueryType } from '@/api/types'
 import { deleteBatch } from '@/api/project'
-import { jobList } from '@/api/jobs'
+import { jobList, actionJob } from '@/api/jobs'
 import {
   getWorkflows,
   addWorkflow,
@@ -131,10 +131,11 @@ export default class WorkIndex extends Vue {
       },
       {
         lable: 'jobs.pause',
+        disabled: 'pause',
       },
       {
         lable: 'jobs.restart',
-        disabled: true,
+        disabled: 'restart',
       },
     ],
   }
@@ -167,7 +168,7 @@ export default class WorkIndex extends Vue {
       })
     }
   }
-  private handleBtn(data: any) {
+  private async handleBtn(data: any) {
     const { index, row } = data
     if (this.pageType === 'work') {
       const type = index + 1
@@ -177,15 +178,30 @@ export default class WorkIndex extends Vue {
       if (!index) {
         // 编辑
         ;(this.$refs.subjobDialog as any).handleOpen(1, row)
-        console.log('编辑')
       }
       if (index === 1) {
         // 暂停
-        console.log('暂停')
+        const id = row.id
+        const { code, msg } = await actionJob({
+          actionType: '1',
+          id,
+        })
+        if (code === 10000) {
+          this.$message.success(msg)
+        }
+        this.getList()
       }
       if (index === 2) {
         // 重启
-        console.log('重启')
+        const id = row.id
+        const { code, msg } = await actionJob({
+          actionType: '2',
+          id,
+        })
+        if (code === 10000) {
+          this.$message.success(msg)
+        }
+        this.getList()
       }
     }
   }
@@ -244,6 +260,9 @@ export default class WorkIndex extends Vue {
         params['jobName'] = projectName
       }
       const { data } = await jobList({ ...params })
+      data.items.map((item: any) => {
+        item.btnStatus = item.jobStatus
+      })
       this.list = data.items
       this.total = data.total
     }
@@ -270,8 +289,15 @@ export default class WorkIndex extends Vue {
     this.getList()
   }
   private async handleDelete(id: number) {
-    await delWorkflow(id)
-    this.getList()
+    if (this.pageType === 'work') {
+      await delWorkflow(id)
+      this.getList()
+    }
+    if (this.pageType === 'jobs') {
+      console.log('del jobs')
+      // await delWorkflow(id)
+      // this.getList()
+    }
   }
   @Watch('$route')
   private onRouteChange(route: any) {

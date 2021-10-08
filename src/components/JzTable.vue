@@ -103,15 +103,37 @@
         <!-- 操作 -->
         <el-table-column label="操作" v-if="isOperate">
           <template slot-scope="scope">
-            <el-button
-              type="text"
-              v-for="(item, index) in btnList"
-              @click="handleBtn(index, scope.row)"
-              :key="index"
-              :disabled="item.disabled || isAuth(scope.row)"
-            >
-              {{ $t(item.lable) }}
-            </el-button>
+            <template v-for="(item, index) in btnList">
+              <!-- 暂停 -->
+              <el-button
+                v-if="item.disabled === 'pause'"
+                type="text"
+                @click="handleBtn(index, scope.row)"
+                :key="index"
+                :disabled="scope.row.btnStatus !== 1 || isAuth(scope.row)"
+              >
+                {{ $t(item.lable) }}
+              </el-button>
+              <!-- 重启 -->
+              <el-button
+                v-else-if="item.disabled === 'restart'"
+                type="text"
+                @click="handleBtn(index, scope.row)"
+                :key="index"
+                :disabled="scope.row.btnStatus === 1 || isAuth(scope.row)"
+              >
+                {{ $t(item.lable) }}
+              </el-button>
+              <el-button
+                type="text"
+                v-else
+                @click="handleBtn(index, scope.row)"
+                :key="index"
+                :disabled="isAuth(scope.row)"
+              >
+                {{ $t(item.lable) }}
+              </el-button>
+            </template>
           </template>
         </el-table-column>
         <el-table-column width="50" class="column-more">

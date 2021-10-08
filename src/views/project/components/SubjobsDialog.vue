@@ -104,7 +104,7 @@
 import { Vue, Component, Emit } from 'vue-property-decorator'
 import JzButton from '@/components/JzButton.vue'
 import Dispatch from './Dispatch.vue'
-import { addJob, queryWorkflow } from '@/api/jobs'
+import { addJob, setJob, queryWorkflow } from '@/api/jobs'
 @Component({
   name: 'SubjobDialog',
   components: {
@@ -124,6 +124,7 @@ export default class WorkDialog extends Vue {
   private workflowId = ''
   private name = ''
   private desc = ''
+  private jobId = ''
 
   private handleTable(index: number) {
     if (!this.tabsIndex) {
@@ -141,6 +142,7 @@ export default class WorkDialog extends Vue {
     this.tabsIndex = index
   }
   private handleOpen(type: number, row?: any) {
+    this.type = type
     // 创建
     if (!type) {
       this.name = ''
@@ -156,18 +158,14 @@ export default class WorkDialog extends Vue {
     } else {
       // 编辑
       this.name = row.name
-      this.desc = row.desc || '描述'
+      this.desc = row.desc
       this.workflowId = row.workflowId
+      this.jobId = row.id
       this.subjobVisible = true
       setTimeout(() => {
         const dom = this.$refs as any
         if (dom && dom.Dispatch && dom.Dispatch.handleEcho) {
-          //  dom.Dispatch.handleEcho(row)
-          dom.Dispatch.handleEcho({
-            beginTime: '2021-10-04 06:33:13',
-            endTime: '2021-09-29 12:33:13',
-            repeatInterval: '5',
-          })
+          dom.Dispatch.handleEcho(row)
         }
       }, 13)
     }
@@ -218,19 +216,31 @@ export default class WorkDialog extends Vue {
       name,
       desc,
       workflowId,
-      repeatFlag,
+      repeatFlag: repeatFlag ? 1 : 0,
     }
     if (repeatFlag) {
       parmams['repeatInterval'] = repeatInterval
       parmams['endTime'] = endTime
     }
-    const { code, msg } = await addJob({ ...parmams })
+    if (this.type) {
+      parmams['id'] = this.jobId
+    }
+    const { code, msg } = await this.postApi(parmams)
     if (code === 10000) {
       this.$message.success(msg)
       this.subjobVisible = false
       return true
     }
     this.subjobVisible = false
+  }
+  private async postApi(parmams: any) {
+    if (this.type) {
+      const { code, msg } = await setJob({ ...parmams })
+      return { code, msg }
+    } else {
+      const { code, msg } = await addJob({ ...parmams })
+      return { code, msg }
+    }
   }
   // 工作流列表
   private async getWorkflow() {
