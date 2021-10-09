@@ -34,7 +34,7 @@
           </jz-button>
           <template v-if="!tabIndex">
             <jz-button
-              v-if="item.authStatus === 1"
+              v-if="item.authStatus === 1 && isLogin"
               type="jz-button--primary"
               class="button passed"
             >
@@ -135,8 +135,12 @@ export default class HomeList extends Vue {
       this.$message.warning('等待审核中')
       return
     }
-    if (authMetadataState === 0 || authMetadataState === 1) {
+    if (authMetadataState === 0) {
       this.$message.error('数据授权未知错误')
+      return
+    }
+    if (authMetadataState === 1) {
+      this.$message.error('还未发布的数据授权')
       return
     }
     this.$router.push(`/data/${id}/authorize`)
