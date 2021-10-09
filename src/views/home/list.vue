@@ -135,12 +135,8 @@ export default class HomeList extends Vue {
       this.$message.warning('等待审核中')
       return
     }
-    if (authMetadataState === 0) {
+    if (authMetadataState === 0 && authStatus !== -1) {
       this.$message.error('数据授权未知错误')
-      return
-    }
-    if (authMetadataState === 1) {
-      this.$message.error('还未发布的数据授权')
       return
     }
     this.$router.push(`/data/${id}/authorize`)
