@@ -41,7 +41,6 @@ import OutputView from './OutputView.vue'
 import InputView from './InputsView.vue'
 import CodeView from './CodeView.vue'
 import EnviromentView from './EnviromentView.vue'
-import { WorkflowModule } from '@/store/modules/workflow'
 @Component({
   name: 'NodeDrawer',
   components: {

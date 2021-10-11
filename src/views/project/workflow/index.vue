@@ -5,7 +5,8 @@
       @clickItem="handleItem"
       class="tree-menus"
     ></TreeDrawer>
-    <div class="canvas">
+    <!-- 节点画布 -->
+    <div class="x6-graph-box">
       <template v-if="isNode">
         <div class="flow-node" v-for="(item, index) in nodeList" :key="index">
           <div
@@ -35,85 +36,32 @@
         </div>
       </template>
     </div>
-    <div class="instruct">
-      <div class="instruct-wrap">
-        <div @click="handleSave">
-          <svg-icon
-            :name="saveState ? 'w-loading' : 'w-save'"
-            :class="['icon-button ', saveState ? 'w-loading' : '']"
-            color="#5F4FFB"
-            width="28"
-            height="28"
-          />
-          <span>
-            保存
-          </span>
-        </div>
-        <div @click="handleEndWorkflow" v-if="startShow === 1">
-          <svg-icon
-            :name="endState ? 'w-loading' : 'w-end'"
-            :class="['icon-button ', endState ? 'w-loading' : '']"
-            color="#5F4FFB"
-            width="34"
-            height="34"
-          />
-          <span>
-            终止
-          </span>
-        </div>
-        <div @click="handleStartWorkflow" v-else>
-          <svg-icon
-            :name="startState ? 'w-loading' : 'w-start'"
-            :class="['icon-button ', startState ? 'w-loading' : '']"
-            color="#5F4FFB"
-            width="30"
-            height="30"
-          />
-          <span>
-            启动
-          </span>
-        </div>
-        <div @click="handleEmpty">
-          <svg-icon
-            :name="deleteState ? 'w-loading' : 'w-delete'"
-            :class="['icon-button ', deleteState ? 'w-loading' : '']"
-            color="#5F4FFB"
-            width="27"
-            height="25"
-          />
-          <span>
-            清空
-          </span>
-        </div>
-        <div>
-          <svg-icon
-            name="w-create"
-            class="icon-button"
-            color="#5F4FFB"
-            width="50"
-            height="28"
-          />
-          <span>
-            创建作业
-          </span>
-        </div>
-      </div>
-    </div>
+    <ToolBar
+      :toolStateList="toolStateList"
+      @handleSave="handleSave"
+      @handleEndWorkflow="handleEndWorkflow"
+      @handleStartWorkflow="handleStartWorkflow"
+      @handleEmpty="handleEmpty"
+    ></ToolBar>
+    <!-- 记得右键菜单 -->
     <v-contextmenu ref="contextmenu">
       <v-contextmenu-item @click="handleResetName">重命名</v-contextmenu-item>
       <!-- <v-contextmenu-item @click="handleCopy">复制</v-contextmenu-item> -->
       <v-contextmenu-item @click="handleDelete">删除</v-contextmenu-item>
       <v-contextmenu-item @click="viewResults">查看运行结果</v-contextmenu-item>
     </v-contextmenu>
+    <!-- 右侧节点弹窗 -->
     <template v-if="isNodeDrawer">
       <NodeDrawer :nodeId="workflowNodeId" :isDrawer.sync="isDrawer" />
     </template>
+    <!-- 运行结果弹窗 -->
     <ViewRun
       ref="ViewRun"
       :nodeName="nodeName"
       :taskId="taskId"
       :resultsVisible.sync="resultsVisible"
     ></ViewRun>
+    <!-- 运行日志 -->
     <div class="log-wrap">
       <div class="log-title">运行日志</div>
       <div class="list">
@@ -127,9 +75,10 @@
 
 <script lang="ts">
 import { Vue, Component, Watch } from 'vue-property-decorator'
-import NodeDrawer from './NodeDrawer.vue'
+import NodeDrawer from './NodeDrawer/index.vue'
 import TreeDrawer from './TreeDrawer.vue'
 import ViewRun from './ViewRun.vue'
+import ToolBar from './ToolBar.vue'
 import { geAlgorithmTree } from '@/api/algorithm'
 import { getWorkflowStatus } from '@/api/workflow'
 import { AlgorithmType } from '@/api/types'
@@ -153,6 +102,7 @@ import alayaService from '@/services/alayaService'
     NodeDrawer,
     TreeDrawer,
     ViewRun,
+    ToolBar,
   },
 })
 export default class workflowIndex extends Vue {
@@ -170,12 +120,26 @@ export default class workflowIndex extends Vue {
   private nodeName = ''
   private taskId = ''
   private startShow = 0
+  // ToolBar state
   private saveState = false
   private startState = false
   private endState = false
   private deleteState = false
   private createState = false
-
+  get toolStateList() {
+    const {
+      saveState,
+      startState,
+      endState,
+      deleteState,
+    } = this
+    return [
+      saveState,
+      startState,
+      endState,
+      deleteState,
+    ]
+  }
   get isNode() {
     return !!this.nodeList.length
   }
@@ -228,7 +192,6 @@ export default class workflowIndex extends Vue {
     }
     const min = Number(WorkflowModule.algorithms.minNumbers)
     const inputValue = WorkflowModule.valueListNumber
-    console.log(inputValue, min)
     if (inputValue < min) {
       return this.$message.warning(`至少输入${min}个数据协同方`)
     }
@@ -437,32 +400,7 @@ export default class workflowIndex extends Vue {
   .tree-menus
     position absolute
     z-index 99
-  .instruct
-    position absolute
-    z-index 1
-    right 20px
-    top 0
-    color #000
-    .instruct-wrap
-      padding 5px
-      display inline-block
-      margin-right 15px
-      font-size 14px
-      cursor pointer
-      display: flex;
-      div
-        display flex
-        flex-direction column
-        padding 0 15px
-        align-self flex-end
-        .w-loading
-          animation:turn 1s linear infinite;
-        .icon-button
-          margin-bottom 6px
-       div:hover
-        span
-          color #5F4FFB
-  .canvas
+  .x6-graph-box
     position absolute
     z-index 1
     width 100%
