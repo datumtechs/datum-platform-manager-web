@@ -189,7 +189,7 @@ export default class workflowIndex extends Vue {
     const workflowNodeReqList = nodeList.map((item: any, index: number) => {
       return {
         id: item.id,
-        nameNode: item.nodeName,
+        nodeName: item.nodeName,
         nodeStep: index + 1,
       }
     })
@@ -261,7 +261,7 @@ export default class workflowIndex extends Vue {
     const workflowNodeReqList = nodeList.map((item: any, index: number) => {
       return {
         algorithmId: item.algorithmId,
-        nameNode: item.nodeName,
+        nodeName: item.nodeName,
         nodeStep: index + 1,
         workflowId,
         workflowNodeCodeReq: {
@@ -326,6 +326,11 @@ export default class workflowIndex extends Vue {
   // 点击节点，展开信息
   private handleNode(item: any, index: number) {
     if (this.isResetName) return
+    console.log('isNodeDrawer', this.isNodeDrawer)
+    if(this.currentIndex !== index){
+      this.isNodeDrawer = false
+      console.log('index change', this.currentIndex)
+    }
     if (!this.isNodeDrawer) {
       this.isNodeDrawer = true
     }
