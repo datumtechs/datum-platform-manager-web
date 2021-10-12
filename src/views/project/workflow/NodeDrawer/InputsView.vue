@@ -199,13 +199,13 @@ export default class InputViewIndex extends Vue {
   }
   // 回显选择状态
   private async handleInputValue() {
-    const { inputVoList } = WorkflowModule
+    const { workflowNodeInputVoList } = WorkflowModule
     const res: any = []
-    if (inputVoList && inputVoList.length) {
-      if (inputVoList.length > 2) {
-        this.selectLayout = inputVoList
+    if (workflowNodeInputVoList && workflowNodeInputVoList.length) {
+      if (workflowNodeInputVoList.length > 2) {
+        this.selectLayout = workflowNodeInputVoList
       }
-      inputVoList.map((item: any, index: number) => {
+      workflowNodeInputVoList.map((item: any, index: number) => {
         res[index] = [
           item.identityId,
           item.dataTableId,

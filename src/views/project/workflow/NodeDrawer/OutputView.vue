@@ -98,14 +98,14 @@ export default class extends Vue {
   }
   created() {
     // 数据回显
-    const { outputVoList, inputVoList } = WorkflowModule
+    const { workflowNodeOutputVoList, workflowNodeInputVoList } = WorkflowModule
     if (
-      (outputVoList && outputVoList.length) ||
-      (inputVoList && inputVoList.length)
+      (workflowNodeOutputVoList && workflowNodeOutputVoList.length) ||
+      (workflowNodeInputVoList && workflowNodeInputVoList.length)
     ) {
       this.isSelect = true
       WorkflowModule.SET_ORG_OPTIONS()
-      outputVoList.map((item: any) => {
+      workflowNodeOutputVoList.map((item: any) => {
         this.checkList.push(item.identityId)
       })
     }

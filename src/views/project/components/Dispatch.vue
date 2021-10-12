@@ -137,6 +137,7 @@ export default class DispatchIndex extends Vue {
       endDate,
       repeatInterval,
       repeatRadio,
+      endRadio,
     } = this
     if (repeatRadio) {
       if (!this.endDate) {
@@ -156,6 +157,7 @@ export default class DispatchIndex extends Vue {
       endTime,
       repeatInterval,
       repeatFlag: repeatRadio,
+      endRadio,
     }
   }
   @Emit('previous')

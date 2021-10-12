@@ -9,8 +9,8 @@ import store from '@/store'
 import { getOrganization, getNodes } from '@/api/workflow'
 export interface WFlowState {
   algorithms: any
-  inputVoList: any
-  outputVoList: any
+  workflowNodeInputVoList: any
+  workflowNodeOutputVoList: any
   organizationsId: any
   organizationList: any
   orgOptions: any
@@ -35,9 +35,9 @@ class Workflow extends VuexModule implements WFlowState {
     supportLanguage: '',
   }
   // 输入
-  public inputVoList = []
+  public workflowNodeInputVoList = []
   // 输出
-  public outputVoList = []
+  public workflowNodeOutputVoList = []
   // 输入数据方id
   public organizationsId = []
   public organizationList = []
@@ -52,8 +52,8 @@ class Workflow extends VuexModule implements WFlowState {
     if (data[index] && data[index]['nodeAlgorithmVo']) {
       this.algorithms = data[index]['nodeAlgorithmVo']
     }
-    this.inputVoList = data[index]['workflowNodeInputVoList']
-    this.outputVoList = data[index]['workflowNodeOutputVoList']
+    this.workflowNodeInputVoList = data[index]['workflowNodeInputVoList']
+    this.workflowNodeOutputVoList = data[index]['workflowNodeOutputVoList']
   }
   @Mutation
   public SET_ORG_ID(state: any) {
@@ -100,7 +100,7 @@ class Workflow extends VuexModule implements WFlowState {
   @Mutation
   public SET_ORG_OPTIONS() {
     const res: any = {}
-    this.outputVoList.map((item: any) => {
+    this.workflowNodeOutputVoList.map((item: any) => {
       const key = item['identityId']
       const val = item['identityName']
       res[key] = val
@@ -117,8 +117,8 @@ class Workflow extends VuexModule implements WFlowState {
       minNumbers: '',
       supportLanguage: '',
     }
-    this.inputVoList = []
-    this.outputVoList = []
+    this.workflowNodeInputVoList = []
+    this.workflowNodeOutputVoList = []
     this.organizationsId = []
     this.organizationList = []
     this.orgOptions = {}
@@ -134,12 +134,12 @@ class Workflow extends VuexModule implements WFlowState {
   @Mutation
   public SET_INPUT_LIST(state: any) {
     const index = this.currentIndex
-    ;(this.nodeList[index] as any)['inputVoList'] = state
+    ;(this.nodeList[index] as any)['workflowNodeInputVoList'] = state
   }
   @Mutation
   public SET_NODES_OUTPUT(state: any) {
     const index = this.currentIndex
-    ;(this.nodeList[index] as any)['outputVoList'] = state
+    ;(this.nodeList[index] as any)['workflowNodeOutputVoList'] = state
   }
   @Mutation
   public SET_NODES_CODE(state: any) {

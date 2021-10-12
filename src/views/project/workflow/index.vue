@@ -269,8 +269,8 @@ export default class workflowIndex extends Vue {
           dataSplitContractCode: '',
           editType: 1, //1-sql, 2-noteBook
         },
-        workflowNodeInputReqList: item.inputVoList,
-        workflowNodeOutputReqList: item.outputVoList,
+        workflowNodeInputReqList: item.workflowNodeInputVoList,
+        workflowNodeOutputReqList: item.workflowNodeOutputVoList,
         workflowNodeResourceReq: {
           costBandwidth: Number(item.nodeAlgorithmVo.costBandwidth),
           costCpu: Number(item.nodeAlgorithmVo.costCpu),
@@ -327,7 +327,7 @@ export default class workflowIndex extends Vue {
   private handleNode(item: any, index: number) {
     if (this.isResetName) return
     console.log('isNodeDrawer', this.isNodeDrawer)
-    if(this.currentIndex !== index){
+    if (this.currentIndex !== index) {
       this.isNodeDrawer = false
       console.log('index change', this.currentIndex)
     }
