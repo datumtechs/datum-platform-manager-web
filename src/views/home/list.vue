@@ -106,6 +106,10 @@ export default class HomeList extends Vue {
   changeRoute() {
     this.handleTabIndex()
   }
+  @Watch('isLogin', { deep: true })
+  changeisLogin() {
+    this.getList()
+  }
   get isLogin() {
     return !!UserModule.token && alayaService.checkAddress()
   }
