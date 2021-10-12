@@ -43,7 +43,7 @@
           ></el-cascader>
           <div
             class="input-delete"
-            v-if="index > minLen"
+            v-if="index > minLen - 1"
             @click="inputDelete(index)"
           >
             <i class="el-icon-delete icon"></i>
