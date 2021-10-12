@@ -201,7 +201,7 @@ export default class WorkDialog extends Vue {
   @Emit('createJob')
   private async handleCreate(data: any) {
     if (!data) return
-    const { beginTime, endTime, repeatInterval, repeatFlag } = data
+    const { beginTime, endTime, repeatInterval, repeatFlag, endRadio } = data
     const { name, desc, workflowId } = this
     if (!workflowId) {
       this.$message.warning('请选择工作流')
@@ -220,7 +220,12 @@ export default class WorkDialog extends Vue {
     }
     if (repeatFlag) {
       parmams['repeatInterval'] = repeatInterval
+    }
+    // 勾选结束时间
+    if (endRadio) {
       parmams['endTime'] = endTime
+    } else {
+      parmams['endTime'] = '2025-12-29 11:59:59'
     }
     if (this.type) {
       parmams['id'] = this.jobId
