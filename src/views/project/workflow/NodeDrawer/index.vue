@@ -21,13 +21,10 @@
         </div>
         <div class="view">
           <OverView v-show="navIndex === 0"></OverView>
-          <InputView :nodeId="nodeId" v-show="navIndex === 1"></InputView>
-          <OutputView :nodeId="nodeId" v-show="navIndex === 2"></OutputView>
-          <CodeView :nodeId="nodeId" v-show="navIndex === 3"></CodeView>
-          <EnviromentView
-            :nodeId="nodeId"
-            v-show="navIndex === 4"
-          ></EnviromentView>
+          <InputView v-show="navIndex === 1"></InputView>
+          <OutputView v-show="navIndex === 2"></OutputView>
+          <CodeView v-show="navIndex === 3"></CodeView>
+          <EnviromentView v-show="navIndex === 4"></EnviromentView>
         </div>
       </div>
     </el-drawer>
@@ -53,8 +50,6 @@ import EnviromentView from './EnviromentView.vue'
 })
 export default class NodeDrawerIndex extends Vue {
   @Prop({ required: true, default: false }) private isDrawer!: boolean
-  @Prop({ required: true }) private nodeId!: number
-
   private navIndex = 0
   private navs = [
     {

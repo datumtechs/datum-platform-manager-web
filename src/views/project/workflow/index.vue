@@ -14,7 +14,9 @@
             @click="handleNode(item, index)"
             v-contextmenu:contextmenu
           >
-            <span v-if="!isResetName">{{ item.nodeName }}</span>
+            <span v-if="!isResetName">{{
+              item.nodeAlgorithmVo.algorithmName
+            }}</span>
             <input
               v-else
               type="text"
@@ -38,6 +40,7 @@
     </div>
     <ToolBar
       :toolStateList="toolStateList"
+      :startShow="startShow"
       @handleSave="handleSave"
       @handleEndWorkflow="handleEndWorkflow"
       @handleStartWorkflow="handleStartWorkflow"
@@ -127,18 +130,8 @@ export default class workflowIndex extends Vue {
   private deleteState = false
   private createState = false
   get toolStateList() {
-    const {
-      saveState,
-      startState,
-      endState,
-      deleteState,
-    } = this
-    return [
-      saveState,
-      startState,
-      endState,
-      deleteState,
-    ]
+    const { saveState, startState, endState, deleteState } = this
+    return [saveState, startState, endState, deleteState]
   }
   get isNode() {
     return !!this.nodeList.length
@@ -159,28 +152,21 @@ export default class workflowIndex extends Vue {
   // 算法列表
   private async getAlaor() {
     const { data } = await geAlgorithmTree()
-    this.menus = data
+    this.menus = data.algTreeVoList
   }
 
   // 创建节点
   private async handleItem(item: AlgorithmType) {
     if (this.handleisAuth()) return
-    if (this.isNode) {
-      this.$message.warning('最多创建一个工作流，请删除当前工作流！')
-      return
-    }
     const { workflowId } = this
     const params = {
       algorithmId: item.algorithmId,
       nodeName: item.nodeName,
+      nodeAlgorithmVo: item.algDetailsVo,
       workflowId,
     }
-    const { data } = await addWorkflowNode(params)
-    this.workflowNodeId = data.workflowNodeId
-    data.nodeName = data.algorithmName
-    data.id = data.workflowNodeId
-    this.nodeList.push(data)
-    WorkflowModule.SET_ALGOR(data)
+    this.nodeList.push(params)
+    WorkflowModule.SET_DATA(this.nodeList)
   }
   // 启动工作流
   private async handleStartWorkflow() {
@@ -269,12 +255,29 @@ export default class workflowIndex extends Vue {
       this.$message.error('暂无节点')
       return
     }
+    this.nodeList = WorkflowModule.nodeList
     const { workflowId, nodeList } = this
+    console.log('node==>', nodeList)
     const workflowNodeReqList = nodeList.map((item: any, index: number) => {
       return {
-        id: item.id,
+        algorithmId: item.algorithmId,
         nameNode: item.nodeName,
         nodeStep: index + 1,
+        workflowId,
+        workflowNodeCodeReq: {
+          calculateContractCode: item.nodeAlgorithmVo.calculateContractCode,
+          dataSplitContractCode: '',
+          editType: 1, //1-sql, 2-noteBook
+        },
+        workflowNodeInputReqList: item.inputVoList,
+        workflowNodeOutputReqList: item.outputVoList,
+        workflowNodeResourceReq: {
+          costBandwidth: Number(item.nodeAlgorithmVo.costBandwidth),
+          costCpu: Number(item.nodeAlgorithmVo.costCpu),
+          costGpu: item.nodeAlgorithmVo.costGpu,
+          runTime: item.nodeAlgorithmVo.runTime,
+          costMem: Number(item.nodeAlgorithmVo.costMem),
+        },
       }
     })
     const params = {
@@ -287,8 +290,8 @@ export default class workflowIndex extends Vue {
       if (code === 10000) {
         this.$message.success(msg)
         this.getNodeList()
-        this.saveState = false
       }
+      this.saveState = false
     } catch (error) {
       this.saveState = false
     }
@@ -327,28 +330,25 @@ export default class workflowIndex extends Vue {
       this.isNodeDrawer = true
     }
     this.currentIndex = index
+    WorkflowModule.SET_NODES_INDEX(index)
     if (item && item.id) {
       this.workflowNodeId = item.id
     }
-    const parmas = {
-      data: this.nodeList,
-      index,
-    }
-    WorkflowModule.SET_DATA(parmas)
+    WorkflowModule.SET_DATA(this.nodeList)
     setTimeout(() => {
       this.isDrawer = true
     }, 13)
   }
   private async getNodeList() {
     const id = this.workflowId
-    const { data } = await getNodes(id)
-    if (data.workflowNodeVoList && data.workflowNodeVoList.length) {
-      this.nodeList = data.workflowNodeVoList
-      this.getLogList()
-    }
+    await WorkflowModule.getNodeList(id)
+    this.nodeList = WorkflowModule.nodeList
+    this.getLogList()
   }
   private async getLogList() {
     const { nodeList, currentIndex } = this
+    console.log(nodeList, currentIndex)
+    if (!nodeList.lenght) return
     const { taskId } = nodeList[currentIndex]
     if (taskId) {
       const { data } = await getWorkflwLog(taskId)
@@ -444,7 +444,7 @@ export default class workflowIndex extends Vue {
     height 200px
     bottom 0
     left 300px
-    // background #ccc
+    background: #fff;
     // box-shadow  0 -2px 4px #d3d5d4
     border-top 1px solid #e8ebea
     box-sizing border-box
@@ -455,11 +455,4 @@ export default class workflowIndex extends Vue {
       .list
         .item
           padding 10px 0
-   @keyframes turn{
-      0%{-webkit-transform:rotate(0deg);}
-      25%{-webkit-transform:rotate(90deg);}
-      50%{-webkit-transform:rotate(180deg);}
-      75%{-webkit-transform:rotate(270deg);}
-      100%{-webkit-transform:rotate(360deg);}
-    }
 </style>

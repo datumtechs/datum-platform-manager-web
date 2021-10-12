@@ -7,9 +7,6 @@
       <jz-button @click="handleSave" type="jz-button--primary" class="save">
         {{ $t('workflow.save') }}
       </jz-button>
-      <!-- <jz-button @click="handleCancel">
-        {{ $t('workflow.cancel') }}
-      </jz-button> -->
     </div>
     <div class="block">
       <template>
@@ -71,21 +68,9 @@ import { WorkflowModule } from '@/store/modules/workflow'
   },
 })
 export default class InputViewIndex extends Vue {
-  @Prop({ required: true }) private nodeId!: number
   private cascaderKey: string[] = []
   private selectLayout = Array(this.minLen).fill({})
   private inputValue: any = []
-  // private inputProps (i: number) {
-  //   return {
-  //     // checkStrictly: true,
-  //     label: 'name',
-  //     value: 'code',
-  //     lazy: true,
-  //     lazyLoad: (node: any, resolve: any) => {
-  //       this.inputLazyLoad(node, resolve, i)
-  //     },
-  //   }
-  // }
   // 选中的组织
   get inputValueOrg() {
     return this.inputValue.map((item: any) => {
@@ -173,30 +158,21 @@ export default class InputViewIndex extends Vue {
     if (this.inputValue.length < this.minLen) {
       return this.$message.warning(`至少输入${this.minLen}个数据协同方`)
     }
-    const { nodeId } = this
-    const saveNodeInputReqList: any = []
+    const inputVoList: any = []
     this.inputValue.map((item: any, index: number) => {
       if (item && item.length) {
-        saveNodeInputReqList.push({
+        inputVoList.push({
           dataColumnIds: item[2],
           dataTableId: item[1],
-          dataType: 0,
           identityId: item[0],
           // 是否发起方: 0-否, 1-是
           senderFlag: !index ? 1 : 0,
-          workflowNodeId: nodeId,
         })
       }
     })
-    const params = {
-      saveNodeInputReqList,
-      workflowNodeId: nodeId,
-    }
     // 提交输入数据
-    const { code, msg } = await addNodeInput(params)
-    if (code === 10000) {
-      this.$message.success(msg)
-    }
+    WorkflowModule.SET_INPUT_LIST(inputVoList)
+    this.$message.success('保存成功')
     // 缓存选中的选项
     const organizationId: string[] = []
     // 过滤空值
@@ -204,6 +180,7 @@ export default class InputViewIndex extends Vue {
     this.inputValue.map((item: string[]) => {
       organizationId.push(item[0])
     })
+    // 输出提供List
     await WorkflowModule.setOrganizationId(organizationId)
     WorkflowModule.SAVE_ORG_OPTIONS()
     WorkflowModule.SET_INPUT_LEN(this.inputValue.length)
@@ -213,15 +190,6 @@ export default class InputViewIndex extends Vue {
     this.selectLayout.splice(index, 1)
     this.inputValue.splice(index, 1)
   }
-  // private async handleCancel() {
-  //   if (this.handleisAuth()) return
-  //   const { minLen } = this
-  //   this.selectLayout = Array(minLen).fill({})
-  //   this.inputValue = []
-  //   await WorkflowModule.getOrganizations()
-  //   WorkflowModule.SET_ORG_INIT()
-  //   this.handleCascaderKey()
-  // }
   private addSelect() {
     if (this.handleisAuth()) return
     this.selectLayout.push({})
@@ -288,36 +256,6 @@ export default class InputViewIndex extends Vue {
       })
     }
   }
-  // @Watch('inputValue', { deep: true, immediate: true })
-  // changeCreated(value: any, oldValue: any) {
-  //   const val = this.getListFirst(value)
-  //   const old = this.getListFirst(oldValue)
-  //   WorkflowModule.SET_ORG_DISABLED(val)
-  //   const index = this.checkListIndex(val, old)
-  //   console.log('value:', value, val)
-  //   console.log('oldValue:', oldValue, old)
-  //   console.log('reurn index:', index)
-  //     // 更新下拉框重新加载选项
-  //     // this.initKey[index] ++
-  // }
-  /**
-   * 检测变化的下拉框
-   *
-   *  @params  newlist oldlist
-   *  @return  返回更新项的index
-   */
-  // private checkListIndex(newlist: any, oldlist: any) {
-  //   console.log(newlist, oldlist)
-  //   const val: string[] = this.getListFirst(newlist) || []
-  //   const old: string[] = this.getListFirst(oldlist) || []
-  //   const len = Math.min(val.length, old.length)
-  //   let index = len
-  //   for (let i = 0; i < len; i++) {
-  //     if (val[i] !== old[i]) {
-  //       index = i
-  //     }
-  //   }
-  // }
   private getListFirst(list: any) {
     if (!list) return []
     return list.map((item: string[]) => {

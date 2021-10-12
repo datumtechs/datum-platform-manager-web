@@ -3,7 +3,7 @@
     <div class="tool-bar-wrap">
       <div @click="handleSave">
         <svg-icon
-          :name="saveState ? 'w-loading' : 'w-save'"
+          :name="toolStateList[0] ? 'w-loading' : 'w-save'"
           :class="['icon-button ', toolStateList[0] ? 'w-loading' : '']"
           color="#5F4FFB"
           width="28"
@@ -15,7 +15,7 @@
       </div>
       <div @click="handleEndWorkflow" v-if="startShow === 1">
         <svg-icon
-          :name="endState ? 'w-loading' : 'w-end'"
+          :name="toolStateList[0] ? 'w-loading' : 'w-end'"
           :class="['icon-button ', toolStateList[1] ? 'w-loading' : '']"
           color="#5F4FFB"
           width="34"
@@ -27,7 +27,7 @@
       </div>
       <div @click="handleStartWorkflow" v-else>
         <svg-icon
-          :name="startState ? 'w-loading' : 'w-start'"
+          :name="toolStateList[2] ? 'w-loading' : 'w-start'"
           :class="['icon-button ', toolStateList[2] ? 'w-loading' : '']"
           color="#5F4FFB"
           width="30"
@@ -39,7 +39,7 @@
       </div>
       <div @click="handleEmpty">
         <svg-icon
-          :name="deleteState ? 'w-loading' : 'w-delete'"
+          :name="toolStateList[3] ? 'w-loading' : 'w-delete'"
           :class="['icon-button ', toolStateList[3] ? 'w-loading' : '']"
           color="#5F4FFB"
           width="27"
@@ -72,6 +72,7 @@ import { Vue, Component, Prop, Emit } from 'vue-property-decorator'
 })
 export default class ToolBarIndex extends Vue {
   @Prop({ required: true, default: [] }) private toolStateList!: any
+  @Prop({ required: true, default: 0 }) private startShow!: number
   @Emit('handleSave')
   private handleSave() {
     return true
@@ -117,4 +118,11 @@ export default class ToolBarIndex extends Vue {
       div:hover
       span
         color #5F4FFB
+      @keyframes turn{
+      0%{-webkit-transform:rotate(0deg);}
+      25%{-webkit-transform:rotate(90deg);}
+      50%{-webkit-transform:rotate(180deg);}
+      75%{-webkit-transform:rotate(270deg);}
+      100%{-webkit-transform:rotate(360deg);}
+    }
 </style>

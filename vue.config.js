@@ -14,7 +14,8 @@ module.exports = {
     proxy: {
       '/rosettaflow/': {
         // target: 'http://10.10.8.182:8234',
-        target: 'http://192.168.1.24:8234',
+        // target: 'http://192.168.1.24:8234',
+        target: 'http://10.10.8.175:8234',
         changeOrigin: true,
         pathRewrite: { '^/rosettaflow/': '/rosettaflow/' },
       },

@@ -31,6 +31,7 @@ export interface AlgorithmType {
   algorithmName: string
   algorithmId: number
   nodeName?: string
+  algDetailsVo: any
 }
 export interface TableNameType {
   id: string | number

@@ -24,7 +24,6 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import JzButton from '@/components/JzButton.vue'
-import { saveNodeCode } from '@/api/workflow'
 import { WorkflowModule } from '@/store/modules/workflow'
 
 @Component({
@@ -34,8 +33,6 @@ import { WorkflowModule } from '@/store/modules/workflow'
   },
 })
 export default class CodeIndex extends Vue {
-  @Prop({ required: true }) private nodeId!: number
-
   private textarea = ''
   private handleEmpty() {
     if (this.handleisAuth()) return
@@ -56,13 +53,8 @@ export default class CodeIndex extends Vue {
   }
   private async handleSave() {
     if (this.handleisAuth()) return
-    const params = {
-      calculateContractCode: this.textarea,
-      workflowNodeId: this.nodeId,
-      editType: 1, // TODO 编辑器类型
-    }
-    const { msg } = await saveNodeCode(params)
-    this.$message.success(msg)
+    WorkflowModule.SET_NODES_CODE(this.textarea)
+    this.$message.success('保存成功')
   }
   created() {
     this.textarea = (WorkflowModule.algorithms as any).calculateContractCode
