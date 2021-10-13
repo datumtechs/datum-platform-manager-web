@@ -112,19 +112,29 @@ export default class extends Vue {
       (outputVoList && outputVoList.length) ||
       (inputVoList && inputVoList.length)
     ) {
-      this.isSelect = true
       WorkflowModule.SET_ORG_OPTIONS()
-      outputVoList.map((item: any) => {
-        this.checkList.push(item.identityId)
-      })
+      this.isSelect = true
+      const list = outputVoList.map((item: any) => item.identityId)
+      this.checkList = Array.from(new Set(list))
     }
   }
+  // 数组对象去重
+  repeatArr(list: any) {
+    let map = new Map()
+    for (let item of list) {
+      if (!map.has(item.identityId)) {
+        map.set(item.identityId, item)
+      }
+    }
+    return [...map.values()]
+  }
+
   // 默认勾选第一个数据方
   @Watch('checkOptions', { deep: true })
   handleCheckOptions(val: any): void {
     const checkOptions = Object.keys(val)
     if (checkOptions && checkOptions.length > 0) {
-      this.checkList[0] = checkOptions[0]
+      this.checkList = checkOptions
       this.isSelect = true
     }
   }

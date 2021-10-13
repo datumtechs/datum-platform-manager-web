@@ -212,6 +212,7 @@ export default class InputViewIndex extends Vue {
     this.cascaderKey.splice(index, 1)
     this.selectLayout.splice(index, 1)
     this.inputValue.splice(index, 1)
+    this.upCascaderKey()
   }
   // private async handleCancel() {
   //   if (this.handleisAuth()) return
@@ -228,15 +229,14 @@ export default class InputViewIndex extends Vue {
     let item = String(this.selectLayout.length)
     console.log('item push', item)
     this.cascaderKey.push(item)
+    // this.upCascaderKey()
   }
   // 回显选择状态
   private async handleInputValue() {
     const { inputVoList } = WorkflowModule
     const res: any = []
     if (inputVoList && inputVoList.length) {
-      if (inputVoList.length > 2) {
-        this.selectLayout = inputVoList
-      }
+      this.selectLayout = inputVoList
       inputVoList.map((item: any, index: number) => {
         res[index] = [
           item.identityId,
@@ -258,12 +258,10 @@ export default class InputViewIndex extends Vue {
     this.selectLayout.map((item: any, index: number) => {
       this.cascaderKey[index] = String(index)
     })
-    console.log('初始化cascaderKey', this.cascaderKey)
   }
   // Cascader回显更新key
   private upCascaderKey() {
     this.changeInputValue(true, -1)
-    console.log('更新 cascaderKey', this.cascaderKey)
   }
   async created() {
     await WorkflowModule.getOrganizations()
@@ -288,36 +286,6 @@ export default class InputViewIndex extends Vue {
       })
     }
   }
-  // @Watch('inputValue', { deep: true, immediate: true })
-  // changeCreated(value: any, oldValue: any) {
-  //   const val = this.getListFirst(value)
-  //   const old = this.getListFirst(oldValue)
-  //   WorkflowModule.SET_ORG_DISABLED(val)
-  //   const index = this.checkListIndex(val, old)
-  //   console.log('value:', value, val)
-  //   console.log('oldValue:', oldValue, old)
-  //   console.log('reurn index:', index)
-  //     // 更新下拉框重新加载选项
-  //     // this.initKey[index] ++
-  // }
-  /**
-   * 检测变化的下拉框
-   *
-   *  @params  newlist oldlist
-   *  @return  返回更新项的index
-   */
-  // private checkListIndex(newlist: any, oldlist: any) {
-  //   console.log(newlist, oldlist)
-  //   const val: string[] = this.getListFirst(newlist) || []
-  //   const old: string[] = this.getListFirst(oldlist) || []
-  //   const len = Math.min(val.length, old.length)
-  //   let index = len
-  //   for (let i = 0; i < len; i++) {
-  //     if (val[i] !== old[i]) {
-  //       index = i
-  //     }
-  //   }
-  // }
   private getListFirst(list: any) {
     if (!list) return []
     return list.map((item: string[]) => {
