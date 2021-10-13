@@ -123,6 +123,8 @@ export default class workflowIndex extends Vue {
   private nodeName = ''
   private taskId = ''
   private startShow = 0
+  // 记录节点数据
+  private copySaveParams = ''
   // ToolBar state
   private saveState = false
   private startState = false
@@ -185,19 +187,17 @@ export default class workflowIndex extends Vue {
       return this.$message.warning('未输入数据协同方')
     }
     const sign = await this.getSign()
-    const { workflowId, nodeList, workflowNodeId } = this
-    const workflowNodeReqList = nodeList.map((item: any, index: number) => {
-      return {
-        id: item.id,
-        nodeName: item.nodeName,
-        nodeStep: index + 1,
-      }
-    })
+    this.nodeList = WorkflowModule.nodeList
+    const { workflowId, nodeList } = this
+    const workflowNodeReqList = this.getSaveParams().workflowNodeReqList
+    const saveFlag =
+      this.copySaveParams === JSON.stringify(workflowNodeReqList) ? 0 : 1
     const params = {
       address: UserModule.user_info.address,
+      endNode: nodeList.length,
+      saveFlag, // 0：不需要，1：需要
       sign,
       startNode: 1,
-      endNode: nodeList.length,
       workflowId,
       workflowNodeReqList,
     }
@@ -210,6 +210,7 @@ export default class workflowIndex extends Vue {
         this.getLogList()
       }
       this.startState = false
+      this.copySaveParams = JSON.stringify(workflowNodeReqList)
     } catch (error) {
       this.startState = false
     }
@@ -255,9 +256,24 @@ export default class workflowIndex extends Vue {
       this.$message.error('暂无节点')
       return
     }
+    const params = this.getSaveParams()
+    this.saveState = true
+    try {
+      const { msg, code } = await saveNode(params)
+      if (code === 10000) {
+        this.$message.success(msg)
+        this.getNodeList()
+        // 保存后，更新保存的节点数据
+        this.copySaveParams = JSON.stringify(params.workflowNodeReqList)
+      }
+      this.saveState = false
+    } catch (error) {
+      this.saveState = false
+    }
+  }
+  private getSaveParams() {
     this.nodeList = WorkflowModule.nodeList
     const { workflowId, nodeList } = this
-    console.log('node==>', nodeList)
     const workflowNodeReqList = nodeList.map((item: any, index: number) => {
       return {
         algorithmId: item.algorithmId,
@@ -280,20 +296,9 @@ export default class workflowIndex extends Vue {
         },
       }
     })
-    const params = {
+    return {
       workflowId,
       workflowNodeReqList,
-    }
-    this.saveState = true
-    try {
-      const { msg, code } = await saveNode(params)
-      if (code === 10000) {
-        this.$message.success(msg)
-        this.getNodeList()
-      }
-      this.saveState = false
-    } catch (error) {
-      this.saveState = false
     }
   }
   // 删除该节点
@@ -326,10 +331,8 @@ export default class workflowIndex extends Vue {
   // 点击节点，展开信息
   private handleNode(item: any, index: number) {
     if (this.isResetName) return
-    console.log('isNodeDrawer', this.isNodeDrawer)
     if (this.currentIndex !== index) {
       this.isNodeDrawer = false
-      console.log('index change', this.currentIndex)
     }
     if (!this.isNodeDrawer) {
       this.isNodeDrawer = true
@@ -349,10 +352,12 @@ export default class workflowIndex extends Vue {
     await WorkflowModule.getNodeList(id)
     this.nodeList = WorkflowModule.nodeList
     this.getLogList()
+    this.copySaveParams = JSON.stringify(
+      this.getSaveParams().workflowNodeReqList,
+    )
   }
   private async getLogList() {
     const { nodeList, currentIndex } = this
-    console.log(nodeList, currentIndex)
     if (!nodeList.lenght) return
     const { taskId } = nodeList[currentIndex]
     if (taskId) {

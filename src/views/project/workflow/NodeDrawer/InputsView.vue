@@ -189,22 +189,21 @@ export default class InputViewIndex extends Vue {
     this.cascaderKey.splice(index, 1)
     this.selectLayout.splice(index, 1)
     this.inputValue.splice(index, 1)
+    this.upCascaderKey()
   }
   private addSelect() {
     if (this.handleisAuth()) return
     this.selectLayout.push({})
     let item = String(this.selectLayout.length)
-    console.log('item push', item)
     this.cascaderKey.push(item)
+    // this.upCascaderKey()
   }
   // 回显选择状态
   private async handleInputValue() {
     const { workflowNodeInputVoList } = WorkflowModule
     const res: any = []
     if (workflowNodeInputVoList && workflowNodeInputVoList.length) {
-      if (workflowNodeInputVoList.length > 2) {
-        this.selectLayout = workflowNodeInputVoList
-      }
+      this.selectLayout = workflowNodeInputVoList
       workflowNodeInputVoList.map((item: any, index: number) => {
         res[index] = [
           item.identityId,
@@ -226,12 +225,10 @@ export default class InputViewIndex extends Vue {
     this.selectLayout.map((item: any, index: number) => {
       this.cascaderKey[index] = String(index)
     })
-    console.log('初始化cascaderKey', this.cascaderKey)
   }
   // Cascader回显更新key
   private upCascaderKey() {
     this.changeInputValue(true, -1)
-    console.log('更新 cascaderKey', this.cascaderKey)
   }
   async created() {
     await WorkflowModule.getOrganizations()
