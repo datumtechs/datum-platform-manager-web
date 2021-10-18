@@ -120,7 +120,11 @@
                 type="text"
                 @click="handleBtn(index, scope.row)"
                 :key="index"
-                :disabled="scope.row.btnStatus === 1 || isAuth(scope.row)"
+                :disabled="
+                  scope.row.btnStatus === 1 ||
+                    scope.row.btnStatus === 3 ||
+                    isAuth(scope.row)
+                "
               >
                 {{ $t(item.lable) }}
               </el-button>
@@ -324,7 +328,7 @@ export default class TableIndex extends Vue {
         top 21px
         left 12px
         z-index 10
-        font-size 16px
+        font-size 14px
         cursor pointer
       >>> .el-input__inner
         // border: 1px solid #!important;
