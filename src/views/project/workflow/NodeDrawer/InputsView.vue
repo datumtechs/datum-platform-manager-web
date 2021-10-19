@@ -7,9 +7,6 @@
       <jz-button @click="handleSave" type="jz-button--primary" class="save">
         {{ $t('workflow.save') }}
       </jz-button>
-      <!-- <jz-button @click="handleCancel">
-        {{ $t('workflow.cancel') }}
-      </jz-button> -->
     </div>
     <div class="block">
       <template>
@@ -48,6 +45,7 @@
           >
             <i class="el-icon-delete icon"></i>
           </div>
+          <Transfer></Transfer>
         </div>
       </template>
     </div>
@@ -62,30 +60,20 @@
 <script lang="ts">
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import JzButton from '@/components/JzButton.vue'
-import { addNodeInput, getTables, getColumns } from '@/api/workflow'
+import Transfer from './Transfer.vue'
+import { getTables, getColumns } from '@/api/workflow'
 import { WorkflowModule } from '@/store/modules/workflow'
 @Component({
   name: 'InputView',
   components: {
     JzButton,
+    Transfer,
   },
 })
 export default class InputViewIndex extends Vue {
-  @Prop({ required: true }) private nodeId!: number
   private cascaderKey: string[] = []
   private selectLayout = Array(this.minLen).fill({})
   private inputValue: any = []
-  // private inputProps (i: number) {
-  //   return {
-  //     // checkStrictly: true,
-  //     label: 'name',
-  //     value: 'code',
-  //     lazy: true,
-  //     lazyLoad: (node: any, resolve: any) => {
-  //       this.inputLazyLoad(node, resolve, i)
-  //     },
-  //   }
-  // }
   // 选中的组织
   get inputValueOrg() {
     return this.inputValue.map((item: any) => {
@@ -151,18 +139,21 @@ export default class InputViewIndex extends Vue {
         let nodes = data.map((item: any) => ({
           code: item.metaDataId,
           name: item.dataName,
-          leaf: level >= 2,
-        }))
-        resolve(nodes)
-      } else if (level === 2) {
-        const { data } = await getColumns(node.data.code)
-        let nodes = data.map((item: any) => ({
-          code: item.columnIndex,
-          name: item.columnName,
-          leaf: level >= 2,
+          leaf: level >= 1, //  >=2： 展示3级 >= 1： 展示3级
         }))
         resolve(nodes)
       }
+      // 使用穿梭框，不用3级下拉
+      // else if (level === 2) {
+      //   const { data } = await getColumns(node.data.code)
+      //   console.log('最后的', data)
+      //   let nodes = data.map((item: any) => ({
+      //     code: item.columnIndex,
+      //     name: item.columnName,
+      //     leaf: level >= 2,
+      //   }))
+      //   resolve(nodes)
+      // }
     } catch (e) {
       console.log(e)
     }
@@ -173,30 +164,22 @@ export default class InputViewIndex extends Vue {
     if (this.inputValue.length < this.minLen) {
       return this.$message.warning(`至少输入${this.minLen}个数据协同方`)
     }
-    const { nodeId } = this
-    const saveNodeInputReqList: any = []
+    const inputVoList: any = []
     this.inputValue.map((item: any, index: number) => {
       if (item && item.length) {
-        saveNodeInputReqList.push({
-          dataColumnIds: item[2],
+        inputVoList.push({
+          //  TODO  列 穿梭框
+          // dataColumnIds: item[2],
           dataTableId: item[1],
-          dataType: 0,
           identityId: item[0],
           // 是否发起方: 0-否, 1-是
           senderFlag: !index ? 1 : 0,
-          workflowNodeId: nodeId,
         })
       }
     })
-    const params = {
-      saveNodeInputReqList,
-      workflowNodeId: nodeId,
-    }
     // 提交输入数据
-    const { code, msg } = await addNodeInput(params)
-    if (code === 10000) {
-      this.$message.success(msg)
-    }
+    WorkflowModule.SET_INPUT_LIST(inputVoList)
+    this.$message.success('保存成功')
     // 缓存选中的选项
     const organizationId: string[] = []
     // 过滤空值
@@ -204,6 +187,7 @@ export default class InputViewIndex extends Vue {
     this.inputValue.map((item: string[]) => {
       organizationId.push(item[0])
     })
+    // 输出提供List
     await WorkflowModule.setOrganizationId(organizationId)
     WorkflowModule.SAVE_ORG_OPTIONS()
     WorkflowModule.SET_INPUT_LEN(this.inputValue.length)
@@ -214,34 +198,25 @@ export default class InputViewIndex extends Vue {
     this.inputValue.splice(index, 1)
     this.upCascaderKey()
   }
-  // private async handleCancel() {
-  //   if (this.handleisAuth()) return
-  //   const { minLen } = this
-  //   this.selectLayout = Array(minLen).fill({})
-  //   this.inputValue = []
-  //   await WorkflowModule.getOrganizations()
-  //   WorkflowModule.SET_ORG_INIT()
-  //   this.handleCascaderKey()
-  // }
   private addSelect() {
     if (this.handleisAuth()) return
     this.selectLayout.push({})
     let item = String(this.selectLayout.length)
-    console.log('item push', item)
     this.cascaderKey.push(item)
     // this.upCascaderKey()
   }
   // 回显选择状态
   private async handleInputValue() {
-    const { inputVoList } = WorkflowModule
+    const { workflowNodeInputVoList } = WorkflowModule
     const res: any = []
-    if (inputVoList && inputVoList.length) {
-      this.selectLayout = inputVoList
-      inputVoList.map((item: any, index: number) => {
+    if (workflowNodeInputVoList && workflowNodeInputVoList.length) {
+      this.selectLayout = workflowNodeInputVoList
+      workflowNodeInputVoList.map((item: any, index: number) => {
         res[index] = [
           item.identityId,
           item.dataTableId,
-          Number(item.dataColumnIds),
+          //  TODO  列 穿梭框
+          // Number(item.dataColumnIds),
         ]
       })
     }
@@ -263,15 +238,20 @@ export default class InputViewIndex extends Vue {
   private upCascaderKey() {
     this.changeInputValue(true, -1)
   }
-  async created() {
+  created() {
+    this.init()
+  }
+  private async init() {
+    console.log(' 输入 init')
     await WorkflowModule.getOrganizations()
     // 回显
     this.handleInputValue()
     // 初始key，更新视图
     this.handleCascaderKey()
   }
-  private changeInputValue(e: any, index: number) {
+  private async changeInputValue(e: any, index: number) {
     if (e) {
+      console.log('e====> ', e)
       const val: string[] = this.getListFirst(this.inputValue)
       WorkflowModule.SET_ORG_DISABLED(val || [])
       // 更新key，渲染el-cascader组件，使用options最新的值
@@ -284,6 +264,13 @@ export default class InputViewIndex extends Vue {
       upList.map((i: any) => {
         this.cascaderKey[i] = this.cascaderKey[i] + 1
       })
+      // 获取列的数据
+      if (e && e.length == 2) {
+        const dataColumnIds = e[e.length - 1]
+        console.log(dataColumnIds)
+        const { data } = await getColumns(dataColumnIds)
+        console.log('data=>', data)
+      }
     }
   }
   private getListFirst(list: any) {
@@ -301,6 +288,9 @@ export default class InputViewIndex extends Vue {
 .input-view
   height 100%
   font-size 14px
+  box-sizing: border-box;
+  padding-bottom: 30px;
+  overflow-y: auto;
   .title
     color #333
     font-weight: 500;

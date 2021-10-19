@@ -51,7 +51,6 @@
 
 <script lang="ts">
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
-import { addNodeOutput } from '@/api/workflow'
 import { WorkflowModule } from '@/store/modules/workflow'
 import JzButton from '@/components/JzButton.vue'
 
@@ -62,7 +61,6 @@ import JzButton from '@/components/JzButton.vue'
   },
 })
 export default class extends Vue {
-  @Prop({ required: true }) private nodeId!: number
   private isSelect = false
   private checkList: string[] = []
   get checkOptions() {
@@ -83,38 +81,31 @@ export default class extends Vue {
   }
   private async handleSave() {
     if (!this.checkList.length) return
-    const { nodeId } = this
     const handleItem = (id: string, index: number) => {
       const name = (this.checkOptions as any)[id]
       return {
         identityId: id,
         identityName: name,
         senderFlag: !index ? 1 : 0,
-        storePattern: 1,
-        workflowNodeId: nodeId,
       }
     }
     let res: any = []
     this.checkList.forEach((item, index) => {
       res.push(handleItem(item, index))
     })
-    const parasm = {
-      saveNodeOutputReqList: res,
-      workflowNodeId: nodeId,
-    }
-    const { msg } = await addNodeOutput(parasm)
-    this.$message.success(msg)
+    WorkflowModule.SET_NODES_OUTPUT(res)
+    this.$message.success('保存成功')
   }
   created() {
     // 数据回显
-    const { outputVoList, inputVoList } = WorkflowModule
+    const { workflowNodeOutputVoList, workflowNodeInputVoList } = WorkflowModule
     if (
-      (outputVoList && outputVoList.length) ||
-      (inputVoList && inputVoList.length)
+      (workflowNodeOutputVoList && workflowNodeOutputVoList.length) ||
+      (workflowNodeInputVoList && workflowNodeInputVoList.length)
     ) {
       WorkflowModule.SET_ORG_OPTIONS()
       this.isSelect = true
-      const list = outputVoList.map((item: any) => item.identityId)
+      const list = workflowNodeOutputVoList.map((item: any) => item.identityId)
       this.checkList = Array.from(new Set(list))
     }
   }

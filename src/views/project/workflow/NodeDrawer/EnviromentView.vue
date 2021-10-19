@@ -88,7 +88,6 @@ import {
   broadbandOptions,
 } from '@/status'
 import JzButton from '@/components/JzButton.vue'
-import { saveNodeResource } from '@/api/workflow'
 import { WorkflowModule } from '@/store/modules/workflow'
 
 @Component({
@@ -98,8 +97,6 @@ import { WorkflowModule } from '@/store/modules/workflow'
   },
 })
 export default class EnviromentView extends Vue {
-  @Prop({ required: true }) private nodeId!: number
-
   private fileList = []
   private cpuValue = '1'
   private memoryValue = '1'
@@ -132,16 +129,15 @@ export default class EnviromentView extends Vue {
   }
   private async handleSave() {
     if (this.handleisAuth()) return
-    const { nodeId, cpuValue, memoryValue, runTime, broadband } = this
+    const { cpuValue, memoryValue, runTime, broadband } = this
     const params = {
       costBandwidth: broadband,
       costCpu: cpuValue,
       runTime: runTime,
       costMem: memoryValue,
-      workflowNodeId: nodeId,
     }
-    const { msg } = await saveNodeResource(params)
-    this.$message.success(msg)
+    WorkflowModule.SET_NODES_RESOURCE(params)
+    this.$message.success('保存成功')
   }
   created() {
     const info: any = WorkflowModule.algorithms

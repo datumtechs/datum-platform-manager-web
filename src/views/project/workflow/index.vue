@@ -5,15 +5,19 @@
       @clickItem="handleItem"
       class="tree-menus"
     ></TreeDrawer>
-    <div class="canvas">
+    <!-- 节点画布 -->
+    <div class="x6-graph-box">
       <template v-if="isNode">
         <div class="flow-node" v-for="(item, index) in nodeList" :key="index">
           <div
             class="block"
             @click="handleNode(item, index)"
             v-contextmenu:contextmenu
+            @contextmenu.prevent.stop="handleContextmenu(index)"
           >
-            <span v-if="!isResetName">{{ item.nodeName }}</span>
+            <span v-if="!isResetName">{{
+              item.nodeAlgorithmVo.algorithmName
+            }}</span>
             <input
               v-else
               type="text"
@@ -32,88 +36,40 @@
               {{ info }}
             </li>
           </ul>
+          <div class="arrow" v-if="index > 0">
+            <div class="line"></div>
+            <i class="el-icon-arrow-down"></i>
+          </div>
         </div>
       </template>
     </div>
-    <div class="instruct">
-      <div class="instruct-wrap">
-        <div @click="handleSave">
-          <svg-icon
-            :name="saveState ? 'w-loading' : 'w-save'"
-            :class="['icon-button ', saveState ? 'w-loading' : '']"
-            color="#5F4FFB"
-            width="28"
-            height="28"
-          />
-          <span>
-            保存
-          </span>
-        </div>
-        <div @click="handleEndWorkflow" v-if="startShow === 1">
-          <svg-icon
-            :name="endState ? 'w-loading' : 'w-end'"
-            :class="['icon-button ', endState ? 'w-loading' : '']"
-            color="#5F4FFB"
-            width="34"
-            height="34"
-          />
-          <span>
-            终止
-          </span>
-        </div>
-        <div @click="handleStartWorkflow" v-else>
-          <svg-icon
-            :name="startState ? 'w-loading' : 'w-start'"
-            :class="['icon-button ', startState ? 'w-loading' : '']"
-            color="#5F4FFB"
-            width="30"
-            height="30"
-          />
-          <span>
-            启动
-          </span>
-        </div>
-        <div @click="handleEmpty">
-          <svg-icon
-            :name="deleteState ? 'w-loading' : 'w-delete'"
-            :class="['icon-button ', deleteState ? 'w-loading' : '']"
-            color="#5F4FFB"
-            width="27"
-            height="25"
-          />
-          <span>
-            清空
-          </span>
-        </div>
-        <div>
-          <svg-icon
-            name="w-create"
-            class="icon-button"
-            color="#5F4FFB"
-            width="50"
-            height="28"
-          />
-          <span>
-            创建作业
-          </span>
-        </div>
-      </div>
-    </div>
+    <ToolBar
+      :toolStateList="toolStateList"
+      :startShow="startShow"
+      @handleSave="handleSave"
+      @handleEndWorkflow="handleEndWorkflow"
+      @handleStartWorkflow="handleStartWorkflow"
+      @handleEmpty="handleEmpty"
+    ></ToolBar>
+    <!-- 记得右键菜单 -->
     <v-contextmenu ref="contextmenu">
       <v-contextmenu-item @click="handleResetName">重命名</v-contextmenu-item>
       <!-- <v-contextmenu-item @click="handleCopy">复制</v-contextmenu-item> -->
       <v-contextmenu-item @click="handleDelete">删除</v-contextmenu-item>
       <v-contextmenu-item @click="viewResults">查看运行结果</v-contextmenu-item>
     </v-contextmenu>
+    <!-- 右侧节点弹窗 -->
     <template v-if="isNodeDrawer">
       <NodeDrawer :nodeId="workflowNodeId" :isDrawer.sync="isDrawer" />
     </template>
+    <!-- 运行结果弹窗 -->
     <ViewRun
       ref="ViewRun"
       :nodeName="nodeName"
       :taskId="taskId"
       :resultsVisible.sync="resultsVisible"
     ></ViewRun>
+    <!-- 运行日志 -->
     <div class="log-wrap">
       <div class="log-title">运行日志</div>
       <div class="list">
@@ -127,9 +83,10 @@
 
 <script lang="ts">
 import { Vue, Component, Watch } from 'vue-property-decorator'
-import NodeDrawer from './NodeDrawer.vue'
+import NodeDrawer from './NodeDrawer/index.vue'
 import TreeDrawer from './TreeDrawer.vue'
 import ViewRun from './ViewRun.vue'
+import ToolBar from './ToolBar.vue'
 import { geAlgorithmTree } from '@/api/algorithm'
 import { getWorkflowStatus } from '@/api/workflow'
 import { AlgorithmType } from '@/api/types'
@@ -153,6 +110,7 @@ import alayaService from '@/services/alayaService'
     NodeDrawer,
     TreeDrawer,
     ViewRun,
+    ToolBar,
   },
 })
 export default class workflowIndex extends Vue {
@@ -170,12 +128,18 @@ export default class workflowIndex extends Vue {
   private nodeName = ''
   private taskId = ''
   private startShow = 0
+  // 记录节点数据
+  private copySaveParams = ''
+  // ToolBar state
   private saveState = false
   private startState = false
   private endState = false
   private deleteState = false
   private createState = false
-
+  get toolStateList() {
+    const { saveState, startState, endState, deleteState } = this
+    return [saveState, startState, endState, deleteState]
+  }
   get isNode() {
     return !!this.nodeList.length
   }
@@ -195,28 +159,30 @@ export default class workflowIndex extends Vue {
   // 算法列表
   private async getAlaor() {
     const { data } = await geAlgorithmTree()
-    this.menus = data
+    this.menus = data.algTreeVoList
   }
 
   // 创建节点
-  private async handleItem(item: AlgorithmType) {
+  private async handleItem(data: AlgorithmType) {
     if (this.handleisAuth()) return
-    if (this.isNode) {
-      this.$message.warning('最多创建一个工作流，请删除当前工作流！')
-      return
+    if (this.nodeList.length >= 3) {
+      return this.$message.warning('最多添加3个节点')
     }
+    const algorithmId = data.algorithmId
+    const algorithmIds = this.nodeList.map((item: any) => item.algorithmId)
+    if (algorithmIds.includes(algorithmId)) {
+      return this.$message.warning('请不要重复添加算法')
+    }
+    const item = JSON.parse(JSON.stringify(data))
     const { workflowId } = this
     const params = {
       algorithmId: item.algorithmId,
       nodeName: item.nodeName,
+      nodeAlgorithmVo: item.algDetailsVo,
       workflowId,
     }
-    const { data } = await addWorkflowNode(params)
-    this.workflowNodeId = data.workflowNodeId
-    data.nodeName = data.algorithmName
-    data.id = data.workflowNodeId
-    this.nodeList.push(data)
-    WorkflowModule.SET_ALGOR(data)
+    this.nodeList.push(params)
+    WorkflowModule.SET_DATA(this.nodeList)
   }
   // 启动工作流
   private async handleStartWorkflow() {
@@ -228,7 +194,6 @@ export default class workflowIndex extends Vue {
     }
     const min = Number(WorkflowModule.algorithms.minNumbers)
     const inputValue = WorkflowModule.valueListNumber
-    console.log(inputValue, min)
     if (inputValue < min) {
       return this.$message.warning(`至少输入${min}个数据协同方`)
     }
@@ -236,19 +201,17 @@ export default class workflowIndex extends Vue {
       return this.$message.warning('未输入数据协同方')
     }
     const sign = await this.getSign()
-    const { workflowId, nodeList, workflowNodeId } = this
-    const workflowNodeReqList = nodeList.map((item: any, index: number) => {
-      return {
-        id: item.id,
-        nameNode: item.nodeName,
-        nodeStep: index + 1,
-      }
-    })
+    this.nodeList = WorkflowModule.nodeList
+    const { workflowId, nodeList } = this
+    const workflowNodeReqList = this.getSaveParams().workflowNodeReqList
+    const saveFlag =
+      this.copySaveParams === JSON.stringify(workflowNodeReqList) ? 0 : 1
     const params = {
       address: UserModule.user_info.address,
+      endNode: nodeList.length,
+      saveFlag, // 0：不需要，1：需要
       sign,
       startNode: 1,
-      endNode: nodeList.length,
       workflowId,
       workflowNodeReqList,
     }
@@ -261,6 +224,7 @@ export default class workflowIndex extends Vue {
         this.getLogList()
       }
       this.startState = false
+      this.copySaveParams = JSON.stringify(workflowNodeReqList)
     } catch (error) {
       this.startState = false
     }
@@ -306,35 +270,64 @@ export default class workflowIndex extends Vue {
       this.$message.error('暂无节点')
       return
     }
-    const { workflowId, nodeList } = this
-    const workflowNodeReqList = nodeList.map((item: any, index: number) => {
-      return {
-        id: item.id,
-        nameNode: item.nodeName,
-        nodeStep: index + 1,
-      }
-    })
-    const params = {
-      workflowId,
-      workflowNodeReqList,
-    }
+    const params = this.getSaveParams()
     this.saveState = true
     try {
       const { msg, code } = await saveNode(params)
       if (code === 10000) {
         this.$message.success(msg)
         this.getNodeList()
-        this.saveState = false
+        // 保存后，更新保存的节点数据
+        this.copySaveParams = JSON.stringify(params.workflowNodeReqList)
       }
+      this.saveState = false
     } catch (error) {
       this.saveState = false
     }
   }
+  private getSaveParams() {
+    this.nodeList = WorkflowModule.nodeList
+    const { workflowId, nodeList } = this
+    const workflowNodeReqList = nodeList.map((item: any, index: number) => {
+      return {
+        algorithmId: item.algorithmId,
+        nodeName: item.nodeName,
+        nodeStep: index + 1,
+        workflowId,
+        workflowNodeCodeReq: {
+          calculateContractCode: item.nodeAlgorithmVo.calculateContractCode,
+          dataSplitContractCode: '',
+          editType: 1, //1-sql, 2-noteBook
+        },
+        workflowNodeInputReqList: item.workflowNodeInputVoList,
+        workflowNodeOutputReqList: item.workflowNodeOutputVoList,
+        workflowNodeResourceReq: {
+          costBandwidth: Number(item.nodeAlgorithmVo.costBandwidth),
+          costCpu: Number(item.nodeAlgorithmVo.costCpu),
+          costGpu: item.nodeAlgorithmVo.costGpu,
+          runTime: item.nodeAlgorithmVo.runTime,
+          costMem: Number(item.nodeAlgorithmVo.costMem),
+        },
+      }
+    })
+    return {
+      workflowId,
+      workflowNodeReqList,
+    }
+  }
+  private handleContextmenu(index: number) {
+    this.currentIndex = index
+    WorkflowModule.SET_NODES_INDEX(index)
+  }
   // 删除该节点
   private async handleDelete() {
     if (this.handleisAuth()) return
+    console.log('index', this.currentIndex)
+    const index = this.currentIndex
+    this.nodeList.splice(index, 1)
     this.isNodeDrawer = false
-    this.nodeList = []
+    // this.nodeList = []
+    WorkflowModule.DEL_DATA(index)
   }
   // 清空节点
   private async handleEmpty() {
@@ -360,32 +353,34 @@ export default class workflowIndex extends Vue {
   // 点击节点，展开信息
   private handleNode(item: any, index: number) {
     if (this.isResetName) return
+    if (this.currentIndex !== index) {
+      this.isNodeDrawer = false
+    }
     if (!this.isNodeDrawer) {
       this.isNodeDrawer = true
     }
     this.currentIndex = index
+    WorkflowModule.SET_NODES_INDEX(index)
     if (item && item.id) {
       this.workflowNodeId = item.id
     }
-    const parmas = {
-      data: this.nodeList,
-      index,
-    }
-    WorkflowModule.SET_DATA(parmas)
+    WorkflowModule.SET_DATA(this.nodeList)
     setTimeout(() => {
       this.isDrawer = true
     }, 13)
   }
   private async getNodeList() {
     const id = this.workflowId
-    const { data } = await getNodes(id)
-    if (data.workflowNodeVoList && data.workflowNodeVoList.length) {
-      this.nodeList = data.workflowNodeVoList
-      this.getLogList()
-    }
+    await WorkflowModule.getNodeList(id)
+    this.nodeList = WorkflowModule.nodeList
+    this.getLogList()
+    this.copySaveParams = JSON.stringify(
+      this.getSaveParams().workflowNodeReqList,
+    )
   }
   private async getLogList() {
     const { nodeList, currentIndex } = this
+    if (!nodeList.lenght) return
     const { taskId } = nodeList[currentIndex]
     if (taskId) {
       const { data } = await getWorkflwLog(taskId)
@@ -437,32 +432,7 @@ export default class workflowIndex extends Vue {
   .tree-menus
     position absolute
     z-index 99
-  .instruct
-    position absolute
-    z-index 1
-    right 20px
-    top 0
-    color #000
-    .instruct-wrap
-      padding 5px
-      display inline-block
-      margin-right 15px
-      font-size 14px
-      cursor pointer
-      display: flex;
-      div
-        display flex
-        flex-direction column
-        padding 0 15px
-        align-self flex-end
-        .w-loading
-          animation:turn 1s linear infinite;
-        .icon-button
-          margin-bottom 6px
-       div:hover
-        span
-          color #5F4FFB
-  .canvas
+  .x6-graph-box
     position absolute
     z-index 1
     width 100%
@@ -470,7 +440,20 @@ export default class workflowIndex extends Vue {
     .flow-node
       width 500px
       margin 0px auto
-      margin-top 200px
+      margin-top 130px
+      position relative
+      .arrow
+        position: absolute;
+        left: 54%;
+        top: -130px;
+        .line
+          width: 1px;
+          height: 100px;
+          background: #7e7d7dd4;
+          transform: translate(9px, 10px);
+        i
+          font-size: 19px
+          color: #292020
       .block
         margin-left 230px
         width 105px
@@ -490,6 +473,7 @@ export default class workflowIndex extends Vue {
         color #fff
       .state
         display flex
+        text-align: center
         li
           font-size 14px
           width 130px
@@ -506,7 +490,7 @@ export default class workflowIndex extends Vue {
     height 200px
     bottom 0
     left 300px
-    // background #ccc
+    background: #fff;
     // box-shadow  0 -2px 4px #d3d5d4
     border-top 1px solid #e8ebea
     box-sizing border-box
@@ -517,11 +501,4 @@ export default class workflowIndex extends Vue {
       .list
         .item
           padding 10px 0
-   @keyframes turn{
-      0%{-webkit-transform:rotate(0deg);}
-      25%{-webkit-transform:rotate(90deg);}
-      50%{-webkit-transform:rotate(180deg);}
-      75%{-webkit-transform:rotate(270deg);}
-      100%{-webkit-transform:rotate(360deg);}
-    }
 </style>

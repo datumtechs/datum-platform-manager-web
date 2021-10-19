@@ -108,11 +108,9 @@ class User extends VuexModule implements IUserState {
   }
   @Action
   public async LogOut() {
-    const { code } = await getLogOut()
-    if (code === 10000) {
-      resetRouter()
-      this.ResetToken()
-    }
+    await getLogOut()
+    resetRouter()
+    this.ResetToken()
   }
   get userType() {
     const address = this.user_info.address

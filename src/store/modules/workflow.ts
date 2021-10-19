@@ -6,18 +6,24 @@ import {
   getModule,
 } from 'vuex-module-decorators'
 import store from '@/store'
-import { getOrganization } from '@/api/workflow'
+import { getOrganization, getNodes } from '@/api/workflow'
 export interface WFlowState {
   algorithms: any
-  inputVoList: any
-  outputVoList: any
+  workflowNodeInputVoList: any
+  workflowNodeOutputVoList: any
   organizationsId: any
   organizationList: any
   orgOptions: any
   valueListNumber: number
+  nodeList: any
+  currentIndex: number
 }
 @Module({ dynamic: true, store, name: 'workflow' })
 class Workflow extends VuexModule implements WFlowState {
+  // 节点数据结构
+  public nodeList = []
+  // 当前节点
+  public currentIndex = 0
   public valueListNumber = 0
   // 概述
   public algorithms = {
@@ -29,9 +35,9 @@ class Workflow extends VuexModule implements WFlowState {
     supportLanguage: '',
   }
   // 输入
-  public inputVoList = []
+  public workflowNodeInputVoList = []
   // 输出
-  public outputVoList = []
+  public workflowNodeOutputVoList = []
   // 输入数据方id
   public organizationsId = []
   public organizationList = []
@@ -41,17 +47,17 @@ class Workflow extends VuexModule implements WFlowState {
     this.valueListNumber = state
   }
   @Mutation
-  public SET_DATA(state: any) {
-    const { data, index } = state
+  public SET_DATA(data: any) {
+    const index = this.currentIndex
     if (data[index] && data[index]['nodeAlgorithmVo']) {
       this.algorithms = data[index]['nodeAlgorithmVo']
     }
-    this.inputVoList = data[index]['workflowNodeInputVoList']
-    this.outputVoList = data[index]['workflowNodeOutputVoList']
+    this.workflowNodeInputVoList = data[index]['workflowNodeInputVoList'] || []
+    this.workflowNodeOutputVoList = data[index]['workflowNodeOutputVoList']
   }
   @Mutation
-  public SET_ALGOR(state: any) {
-    this.algorithms = state
+  public DEL_DATA(index: number) {
+    this.nodeList.splice(index, 1)
   }
   @Mutation
   public SET_ORG_ID(state: any) {
@@ -98,7 +104,7 @@ class Workflow extends VuexModule implements WFlowState {
   @Mutation
   public SET_ORG_OPTIONS() {
     const res: any = {}
-    this.outputVoList.map((item: any) => {
+    this.workflowNodeOutputVoList.map((item: any) => {
       const key = item['identityId']
       const val = item['identityName']
       res[key] = val
@@ -115,13 +121,49 @@ class Workflow extends VuexModule implements WFlowState {
       minNumbers: '',
       supportLanguage: '',
     }
-    this.inputVoList = []
-    this.outputVoList = []
+    this.workflowNodeInputVoList = []
+    this.workflowNodeOutputVoList = []
     this.organizationsId = []
     this.organizationList = []
     this.orgOptions = {}
+    this.nodeList = []
   }
-
+  @Mutation
+  public SET_NODES(data: any) {
+    this.nodeList = data
+  }
+  @Mutation
+  public SET_NODES_INDEX(index: number) {
+    this.currentIndex = index
+  }
+  @Mutation
+  public SET_INPUT_LIST(state: any) {
+    const index = this.currentIndex
+    ;(this.nodeList[index] as any)['workflowNodeInputVoList'] = state
+  }
+  @Mutation
+  public SET_NODES_OUTPUT(state: any) {
+    const index = this.currentIndex
+    ;(this.nodeList[index] as any)['workflowNodeOutputVoList'] = state
+  }
+  @Mutation
+  public SET_NODES_CODE(state: any) {
+    const index = this.currentIndex
+    ;(this.nodeList[index] as any)['nodeAlgorithmVo'][
+      'calculateContractCode'
+    ] = state
+  }
+  @Mutation
+  public SET_NODES_RESOURCE(state: any) {
+    const { costBandwidth, costCpu, runTime, costMem } = state
+    const index = this.currentIndex
+    ;(this.nodeList[index] as any)['nodeAlgorithmVo'][
+      'costBandwidth'
+    ] = costBandwidth
+    ;(this.nodeList[index] as any)['nodeAlgorithmVo']['costCpu'] = costCpu
+    ;(this.nodeList[index] as any)['nodeAlgorithmVo']['runTime'] = runTime
+    ;(this.nodeList[index] as any)['nodeAlgorithmVo']['costMem'] = costMem
+  }
   @Action
   public async setOrganizationId(data: any) {
     this.SET_ORG_ID(data)
@@ -129,16 +171,14 @@ class Workflow extends VuexModule implements WFlowState {
 
   @Action
   public async getOrganizations() {
-    // let data: any = []
-    // if (!this.organizationList.length) {
-    //   const res = await getOrganization()
-    //   data = res.data
-    // } else {
-    //   data = this.organizationList
-    // }
-    // this.SET_ORG(data)
     const { data } = await getOrganization()
     this.SET_ORG(data)
+  }
+
+  @Action
+  public async getNodeList(id: string) {
+    const { data } = await getNodes(id)
+    this.SET_NODES(data.workflowNodeVoList || [])
   }
 }
 export const WorkflowModule = getModule(Workflow)
