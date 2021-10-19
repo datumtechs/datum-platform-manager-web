@@ -19,7 +19,7 @@
             {{ $t(item.lable) }}
           </div>
         </div>
-        <div class="view">
+        <div class="view" :key="viewKey">
           <OverView v-show="navIndex === 0"></OverView>
           <InputView v-show="navIndex === 1"></InputView>
           <OutputView v-show="navIndex === 2"></OutputView>
@@ -32,12 +32,14 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop, Emit } from 'vue-property-decorator'
+import { Vue, Component, Prop, Emit, Watch } from 'vue-property-decorator'
 import OverView from './OversView.vue'
 import OutputView from './OutputView.vue'
 import InputView from './InputsView.vue'
 import CodeView from './CodeView.vue'
 import EnviromentView from './EnviromentView.vue'
+import { WorkflowModule } from '@/store/modules/workflow'
+
 @Component({
   name: 'NodeDrawer',
   components: {
@@ -51,6 +53,7 @@ import EnviromentView from './EnviromentView.vue'
 export default class NodeDrawerIndex extends Vue {
   @Prop({ required: true, default: false }) private isDrawer!: boolean
   private navIndex = 0
+  private viewKey = 0
   private navs = [
     {
       lable: 'workflow.overview',
@@ -68,12 +71,22 @@ export default class NodeDrawerIndex extends Vue {
       lable: 'workflow.enviroment',
     },
   ]
+  get currentIndex() {
+    return WorkflowModule.currentIndex
+  }
   private handleTableIndex(index: number) {
     this.navIndex = index
   }
   @Emit('update:isDrawer')
   private handleClose() {
     return false
+  }
+  // 切换节点，弹窗视图更新
+  @Watch('currentIndex')
+  private changeCurrentIndex() {
+    console.log('切换节点，弹窗视图更新')
+    this.viewKey++
+    this.navIndex = 0
   }
 }
 </script>
@@ -99,6 +112,7 @@ export default class NodeDrawerIndex extends Vue {
       color #000
   .view
     width 100%
+    height: 800px
     box-sizing border-box
     background #fff
     padding 20px 30px

@@ -52,8 +52,12 @@ class Workflow extends VuexModule implements WFlowState {
     if (data[index] && data[index]['nodeAlgorithmVo']) {
       this.algorithms = data[index]['nodeAlgorithmVo']
     }
-    this.workflowNodeInputVoList = data[index]['workflowNodeInputVoList']
+    this.workflowNodeInputVoList = data[index]['workflowNodeInputVoList'] || []
     this.workflowNodeOutputVoList = data[index]['workflowNodeOutputVoList']
+  }
+  @Mutation
+  public DEL_DATA(index: number) {
+    this.nodeList.splice(index, 1)
   }
   @Mutation
   public SET_ORG_ID(state: any) {
@@ -122,6 +126,7 @@ class Workflow extends VuexModule implements WFlowState {
     this.organizationsId = []
     this.organizationList = []
     this.orgOptions = {}
+    this.nodeList = []
   }
   @Mutation
   public SET_NODES(data: any) {

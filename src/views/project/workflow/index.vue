@@ -13,6 +13,7 @@
             class="block"
             @click="handleNode(item, index)"
             v-contextmenu:contextmenu
+            @contextmenu.prevent.stop="handleContextmenu(index)"
           >
             <span v-if="!isResetName">{{
               item.nodeAlgorithmVo.algorithmName
@@ -35,6 +36,10 @@
               {{ info }}
             </li>
           </ul>
+          <div class="arrow" v-if="index > 0">
+            <div class="line"></div>
+            <i class="el-icon-arrow-down"></i>
+          </div>
         </div>
       </template>
     </div>
@@ -158,8 +163,17 @@ export default class workflowIndex extends Vue {
   }
 
   // 创建节点
-  private async handleItem(item: AlgorithmType) {
+  private async handleItem(data: AlgorithmType) {
     if (this.handleisAuth()) return
+    if (this.nodeList.length >= 3) {
+      return this.$message.warning('最多添加3个节点')
+    }
+    const algorithmId = data.algorithmId
+    const algorithmIds = this.nodeList.map((item: any) => item.algorithmId)
+    if (algorithmIds.includes(algorithmId)) {
+      return this.$message.warning('请不要重复添加算法')
+    }
+    const item = JSON.parse(JSON.stringify(data))
     const { workflowId } = this
     const params = {
       algorithmId: item.algorithmId,
@@ -301,11 +315,19 @@ export default class workflowIndex extends Vue {
       workflowNodeReqList,
     }
   }
+  private handleContextmenu(index: number) {
+    this.currentIndex = index
+    WorkflowModule.SET_NODES_INDEX(index)
+  }
   // 删除该节点
   private async handleDelete() {
     if (this.handleisAuth()) return
+    console.log('index', this.currentIndex)
+    const index = this.currentIndex
+    this.nodeList.splice(index, 1)
     this.isNodeDrawer = false
-    this.nodeList = []
+    // this.nodeList = []
+    WorkflowModule.DEL_DATA(index)
   }
   // 清空节点
   private async handleEmpty() {
@@ -418,7 +440,20 @@ export default class workflowIndex extends Vue {
     .flow-node
       width 500px
       margin 0px auto
-      margin-top 200px
+      margin-top 130px
+      position relative
+      .arrow
+        position: absolute;
+        left: 54%;
+        top: -130px;
+        .line
+          width: 1px;
+          height: 100px;
+          background: #7e7d7dd4;
+          transform: translate(9px, 10px);
+        i
+          font-size: 19px
+          color: #292020
       .block
         margin-left 230px
         width 105px
@@ -438,6 +473,7 @@ export default class workflowIndex extends Vue {
         color #fff
       .state
         display flex
+        text-align: center
         li
           font-size 14px
           width 130px
