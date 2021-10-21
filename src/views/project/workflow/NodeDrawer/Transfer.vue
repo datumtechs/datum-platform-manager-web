@@ -20,7 +20,11 @@
           height="28"
         />
       </div>
-      <div class="arrow-icon" @click="handleTransfer(1, lables.length)"  v-if="isLables">
+      <div
+        class="arrow-icon"
+        @click="handleTransfer(1, lables.length)"
+        v-if="isLables"
+      >
         <svg-icon
           :name="lables.length ? 'left-arrow' : 'right-arrow'"
           color="#84878d"
@@ -28,10 +32,18 @@
           height="28"
         />
       </div>
-      <div class="arrow-icon" :class="isLables ? '':'arrow-icon-auto1'" @click="handleTransfer(2)">
+      <div
+        class="arrow-icon"
+        :class="isLables ? '' : 'arrow-icon-auto1'"
+        @click="handleTransfer(2)"
+      >
         <svg-icon name="right-arrow" color="#84878d" width="58" height="28" />
       </div>
-      <div class="arrow-icon" :class="isLables ? '':'arrow-icon-auto2'" @click="handleTransfer(3, 1)">
+      <div
+        class="arrow-icon"
+        :class="isLables ? '' : 'arrow-icon-auto2'"
+        @click="handleTransfer(3, 1)"
+      >
         <svg-icon name="left-arrow" color="#84878d" width="58" height="28" />
       </div>
     </div>
@@ -44,11 +56,14 @@
         <div>因变量（标签)</div>
         <div class="item">{{ lables.length ? lables[0].columnName : '' }}</div>
       </div>
-      <div class="feature" >
+      <div class="feature">
         <div>自变量（特征)</div>
-        <div class="features" :class="isLables ? '':'features-auto'">
+        <div class="features" :class="isLables ? '' : 'features-auto'">
           <div
-            :class="['features-item',featureIndex === index ? 'features-item-active' : '']"
+            :class="[
+              'features-item',
+              featureIndex === index ? 'features-item-active' : '',
+            ]"
             v-for="(item, index) in features"
             :key="index"
             @click="handleFeature(index)"
@@ -167,7 +182,6 @@ export default class TransferIndex extends Vue {
   public handleEcho(params: any) {
     const { keyColumn, dependentVariable, dataColumnIds } = params
     this.$nextTick(() => {
-      console.log('nextTick ', params, this.list)
       if (keyColumn) {
         const item: any = this.removeList(keyColumn)
         this.ids = item
@@ -190,12 +204,9 @@ export default class TransferIndex extends Vue {
   private removeList(id: number) {
     // 查询对应的元素
     const item = this.list.filter((item: any) => item.id === id)
-    console.log('item=>', item, id);
     let ids = this.list.map((item: any) => item.id)
-    console.log('ids=>', ids);
     // 查询对象的下标
     let index = ids.indexOf(id)
-    console.log('index=>', index)
     this.list.splice(index, 1)
     return item
   }

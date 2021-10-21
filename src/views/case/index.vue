@@ -11,8 +11,8 @@
       >
         <div class="item-img"></div>
         <div class="item-info">
-          <div class="item-title">{{ item.title }}</div>
-          <div class="item-describe">{{ item.describe }}</div>
+          <div class="item-title">{{ item.projectName }}</div>
+          <div class="item-describe">{{ item.projectDesc }}</div>
           <div class="item-button">
             <jz-button
               @click="handleDetail(item.id)"
@@ -38,6 +38,8 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
 import JzButton from '@/components/JzButton.vue'
+import { addProject, getProjectTemplate } from '@/api/project'
+
 
 @Component({
   name: 'case',
@@ -46,24 +48,7 @@ import JzButton from '@/components/JzButton.vue'
   },
 })
 export default class CaseIndex extends Vue {
-  private marketList = [
-    {
-      id: 1,
-      title: '黑名单查询',
-      describe:
-        '基于隐私求交(PSI)技术，在不泄露各方隐私数据情况下查询黑名单交集',
-    },
-    {
-      id: 2,
-      title: '贷款逾期数据',
-      describe: '银行A的贷款逾期数据',
-    },
-    {
-      id: 3,
-      title: '贷款逾期数据',
-      describe: '银行A的贷款逾期数据',
-    },
-  ]
+  private marketList = []
   private handleDescription(id: string | number) {
     console.log('/case/description/' + id)
     // this.$router.push('/case/description/' + id)
@@ -71,6 +56,14 @@ export default class CaseIndex extends Vue {
   }
   private handleDetail(id: string | number) {
     this.$router.push('/project/' + id + '/work')
+  }
+  private async getList() {
+    const { data } = await getProjectTemplate()
+    console.log('data==>', data)
+    this.marketList = data.filter((item: any) => item.id > 0)
+  }
+  created() {
+    this.getList()
   }
 }
 </script>
