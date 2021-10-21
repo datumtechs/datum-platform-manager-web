@@ -183,6 +183,7 @@ export default class workflowIndex extends Vue {
     }
     this.nodeList.push(params)
     WorkflowModule.SET_DATA(this.nodeList)
+    WorkflowModule.SET_NODES(this.nodeList)
   }
   // 启动工作流
   private async handleStartWorkflow() {
@@ -274,6 +275,8 @@ export default class workflowIndex extends Vue {
     this.saveState = true
     try {
       const { msg, code } = await saveNode(params)
+      // eslint-disable-next-line no-debugger
+      // debugger
       if (code === 10000) {
         this.$message.success(msg)
         this.getNodeList()

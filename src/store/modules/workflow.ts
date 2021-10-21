@@ -48,6 +48,8 @@ class Workflow extends VuexModule implements WFlowState {
   }
   @Mutation
   public SET_DATA(data: any) {
+    // eslint-disable-next-line no-debugger
+    // debugger
     const index = this.currentIndex
     if (data[index] && data[index]['nodeAlgorithmVo']) {
       this.algorithms = data[index]['nodeAlgorithmVo']
