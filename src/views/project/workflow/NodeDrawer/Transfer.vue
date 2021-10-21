@@ -219,23 +219,22 @@ export default class TransferIndex extends Vue {
 
 <style scoped lang="stylus">
 .transfer
-  width: 267px
   height: 200px
   margin 10px 0
   display: flex
   font-size: 12px;
   .columns
     height: 100%
-    width: 100px
+    width: 130px
     border 1px solid #DCDFE6
     border-radius: 4px
     overflow-y: auto;
     .columns-item
       cursor pointer
       padding: 4px
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+      // overflow: hidden;
+      // text-overflow: ellipsis;
+      // white-space: nowrap;
     .columns-item:hover
       background: #DCDFE6
       overflow: visible;
@@ -262,40 +261,42 @@ export default class TransferIndex extends Vue {
             fill: #333;
   .result
     height: 100%
-    width: 100px
+    width: 130px
     .item
       margin 4px 0
       padding: 4px
       border 1px solid #DCDFE6
       border-radius: 4px
       min-height: 20px
+      overflow-x: auto
     .features
       border 1px solid #DCDFE6
       border-radius: 4px
       overflow-y: auto;
       margin-top 4px
-      height: 75px
+      height: 73px
     .features-auto
       height: 125px
     .features-item
       cursor pointer
       padding: 4px
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+      // overflow: hidden;
+      // text-overflow: ellipsis;
+      // white-space: nowrap;
     .features-item:hover
       background: #DCDFE6
-      overflow: visible;
+      // overflow: visible;
     .features-item-active
       background: #DCDFE6
 ::-webkit-scrollbar-track
-  box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, .1);
   background-color: transparent
+  cursor pointer
 ::-webkit-scrollbar
-  width: 4px;
-  height: 4px;
+  width: 6px;
+  height: 6px;
   background-color: transparent
 ::-webkit-scrollbar-thumb
   background-color: transparent;
-  border: 4px solid #888
+  border: 4px solid #ccc
 </style>

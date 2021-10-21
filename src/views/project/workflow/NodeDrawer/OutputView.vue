@@ -5,7 +5,7 @@
     </div>
     <div class="button-bolck">
       <jz-button
-        @click="handleSave"
+        @click="handleSave(false)"
         type="jz-button--primary"
         class="save"
         v-if="isSelect"
@@ -79,7 +79,7 @@ export default class extends Vue {
       return false
     }
   }
-  private async handleSave() {
+  private async handleSave(state: boolean) {
     if (!this.checkList.length) return
     const handleItem = (id: string, index: number) => {
       const name = (this.checkOptions as any)[id]
@@ -94,7 +94,9 @@ export default class extends Vue {
       res.push(handleItem(item, index))
     })
     WorkflowModule.SET_NODES_OUTPUT(res)
-    this.$message.success('保存成功')
+    if(!state){
+      this.$message.success('保存成功')
+    }
   }
   created() {
     // 数据回显
@@ -125,7 +127,8 @@ export default class extends Vue {
   handleCheckOptions(val: any): void {
     const checkOptions = Object.keys(val)
     if (checkOptions && checkOptions.length > 0) {
-      this.checkList = checkOptions
+      this.checkList[0] = checkOptions[0]
+      this.handleSave(true)
       this.isSelect = true
     }
   }

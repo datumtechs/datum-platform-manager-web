@@ -16,7 +16,7 @@
             @contextmenu.prevent.stop="handleContextmenu(index)"
           >
             <span v-if="!isResetName">{{
-              item.nodeAlgorithmVo.algorithmName
+              item.nodeName
             }}</span>
             <input
               v-else
