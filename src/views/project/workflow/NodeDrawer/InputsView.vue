@@ -163,6 +163,7 @@ export default class InputViewIndex extends Vue {
       console.log(e)
     }
   }
+  // 获取穿梭框的数据
   private handleColumnList() {
     let res: any = []
     this.inputValue.forEach((item: any, index: number) => {
@@ -176,10 +177,13 @@ export default class InputViewIndex extends Vue {
     if (this.inputValue.length < this.minLen) {
       return this.$message.warning(`至少输入${this.minLen}个数据协同方`)
     }
+    if (!this.inputValue[0]) {
+      return this.$message.warning('请输入数据发起方')
+    }
     const columnLists = this.handleColumnList()
     const inputVoList: any = []
     this.inputValue.map((item: any, index: number) => {
-      if (item && item.length) {
+      if (item && item.length && columnLists[index]) {
         const params: any = {
           keyColumn: Number(columnLists[index].keyColumn),
           dataColumnIds: columnLists[index].dataColumnIds,

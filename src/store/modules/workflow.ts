@@ -139,15 +139,7 @@ class Workflow extends VuexModule implements WFlowState {
   @Mutation
   public SET_INPUT_LIST(state: any) {
     const index = this.currentIndex
-    console.log('state',state)
-
-    console.log('index',index)
-    console.log('nodeList',this.nodeList)
-    console.log('nodeListItem',this.nodeList[index])
-    console.log('workflowNodeInputVoList',this.nodeList[index]['workflowNodeInputVoList'])
     ;(this.nodeList[index] as any)['workflowNodeInputVoList'] = state
-    console.log('state11',(this.nodeList[index] as any)['workflowNodeInputVoList'])
-
   }
   @Mutation
   public SET_NODES_OUTPUT(state: any) {
