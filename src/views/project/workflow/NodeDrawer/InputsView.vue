@@ -45,7 +45,7 @@
           >
             <i class="el-icon-delete icon"></i>
           </div>
-          <Transfer></Transfer>
+          <Transfer :data="columnsList[index]" :ref="`Columns${index}`" :index="index"></Transfer>
         </div>
       </template>
     </div>
@@ -74,6 +74,7 @@ export default class InputViewIndex extends Vue {
   private cascaderKey: string[] = []
   private selectLayout = Array(this.minLen).fill({})
   private inputValue: any = []
+  private columnsList: any = []
   // 选中的组织
   get inputValueOrg() {
     return this.inputValue.map((item: any) => {
@@ -158,23 +159,38 @@ export default class InputViewIndex extends Vue {
       console.log(e)
     }
   }
+  private handleColumnList() {
+    let res: any = []
+    this.inputValue.forEach((item: any, index: number) => {
+      console.log((this.$refs as any)['Columns' + index])
+      console.log((this.$refs as any)['Columns' + index][0])
+      let data = (this.$refs as any)['Columns' + index][0].getList()
+      res.push(data)
+    })
+    return res
+  }
   private async handleSave() {
-    console.log('this.loady', this.inputValue)
     if (this.handleisAuth()) return
     if (this.inputValue.length < this.minLen) {
       return this.$message.warning(`至少输入${this.minLen}个数据协同方`)
     }
+    const columnLists = this.handleColumnList()
     const inputVoList: any = []
     this.inputValue.map((item: any, index: number) => {
       if (item && item.length) {
-        inputVoList.push({
-          //  TODO  列 穿梭框
-          // dataColumnIds: item[2],
+        const params: any = {
+          keyColumn: Number(columnLists[index].keyColumn),
+          dataColumnIds: columnLists[index].dataColumnIds,
           dataTableId: item[1],
           identityId: item[0],
           // 是否发起方: 0-否, 1-是
           senderFlag: !index ? 1 : 0,
-        })
+        }
+        // 只有发起方有因变量
+        if (index === 0) {
+          params.dependentVariable = Number(columnLists[index].dependentVariable)
+        }
+        inputVoList.push(params)
       }
     })
     // 提交输入数据
@@ -215,9 +231,14 @@ export default class InputViewIndex extends Vue {
         res[index] = [
           item.identityId,
           item.dataTableId,
-          //  TODO  列 穿梭框
-          // Number(item.dataColumnIds),
+          // item.dataColumnIds
         ]
+        // 回显穿梭框
+        this.getColumnList(item.dataTableId, index, {
+          keyColumn: item.keyColumn,
+          dependentVariable: item.dependentVariable,
+          dataColumnIds: item.dataColumnIds,
+        })
       })
     }
     this.inputValue = res
@@ -226,6 +247,7 @@ export default class InputViewIndex extends Vue {
     const val: string[] = this.getListFirst(this.inputValue)
     await WorkflowModule.setOrganizationId(val)
     WorkflowModule.SAVE_ORG_OPTIONS()
+
   }
   // 初始化cascaderKey
   private handleCascaderKey() {
@@ -242,7 +264,6 @@ export default class InputViewIndex extends Vue {
     this.init()
   }
   private async init() {
-    console.log(' 输入 init')
     await WorkflowModule.getOrganizations()
     // 回显
     this.handleInputValue()
@@ -250,8 +271,8 @@ export default class InputViewIndex extends Vue {
     this.handleCascaderKey()
   }
   private async changeInputValue(e: any, index: number) {
+    const that = this
     if (e) {
-      console.log('e====> ', e)
       const val: string[] = this.getListFirst(this.inputValue)
       WorkflowModule.SET_ORG_DISABLED(val || [])
       // 更新key，渲染el-cascader组件，使用options最新的值
@@ -266,11 +287,16 @@ export default class InputViewIndex extends Vue {
       })
       // 获取列的数据
       if (e && e.length == 2) {
-        const dataColumnIds = e[e.length - 1]
-        console.log(dataColumnIds)
-        const { data } = await getColumns(dataColumnIds)
-        console.log('data=>', data)
+        this.getColumnList(e[e.length - 1], index)
       }
+    }
+  }
+  private async getColumnList(id: string | number, index: number,  params?: any) {
+    const { data } = await getColumns(id)
+    this.columnsList[index] = data
+    this.$forceUpdate()
+     if (params) {
+      ;(this.$refs[`Columns${index}`] as any)[0].handleEcho(params)
     }
   }
   private getListFirst(list: any) {

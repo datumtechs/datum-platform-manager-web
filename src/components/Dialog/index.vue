@@ -2,7 +2,7 @@
   <div class="dialog-view">
     <el-dialog
       :visible.sync="walletVisible"
-      width="28%"
+      width="538px"
       class="dialog"
       :before-close="handleClose"
     >
