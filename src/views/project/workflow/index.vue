@@ -44,6 +44,7 @@
     <ToolBar
       :toolStateList="toolStateList"
       :startShow="startShow"
+      :isRun="isRun"
       @handleSave="handleSave"
       @handleEndWorkflow="handleEndWorkflow"
       @handleStartWorkflow="handleStartWorkflow"

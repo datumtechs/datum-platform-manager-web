@@ -16,8 +16,8 @@ class alayaService {
   initAlaya() {
     const { alaya, platon } = this
     //判断是否存在alaya
-    if (typeof alaya === 'undefined') {
-      console.log('No alaya, You should consider trying MetaMask!')
+    if (typeof alaya === 'undefined' || typeof platon === 'undefined') {
+      console.log('No alaya, You should consider trying Samurai!')
       UserModule.SET_ADDRESS('')
       UserModule.IS_INIT_WALLET(false)
     } else {
@@ -189,10 +189,14 @@ class alayaService {
   public checkAddress() {
     if (UserModule.user_info.address && UserModule.user_info.address.length)
       return true
-    const address = this.platon.selectedAddress
-    if (address && address.length) {
-      UserModule.SET_ADDRESS(address)
-      return true
+    if (this.platon && this.platon.selectedAddress) {
+      const address = this.platon.selectedAddress
+      if (address && address.length) {
+        UserModule.SET_ADDRESS(address)
+        return true
+      } else {
+        return false
+      }
     } else {
       return false
     }

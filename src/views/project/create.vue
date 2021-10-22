@@ -142,11 +142,12 @@ export default class createIndex extends Vue {
       this.$message.error('项目名称必须修改')
       return
     }
-    const res: any = await addProject(data)
-    if (res.code === 10000) {
+    const { code, msg } = await addProject(data)
+    if (code === 10000) {
+      this.$message.success(msg)
       this.$router.push('/project/all')
     } else {
-      this.$message.error(res.msg)
+      this.$message.error(msg)
     }
   }
   private async getProjectTemplateList() {

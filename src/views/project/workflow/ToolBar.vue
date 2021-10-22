@@ -53,6 +53,7 @@
         <svg-icon
           name="w-create"
           class="icon-button"
+          :class="!isRun ? 'disable-icon' : ''"
           color="#5F4FFB"
           width="50"
           height="28"
@@ -73,6 +74,7 @@ import { Vue, Component, Prop, Emit } from 'vue-property-decorator'
 export default class ToolBarIndex extends Vue {
   @Prop({ required: true, default: [] }) private toolStateList!: any
   @Prop({ required: true, default: 0 }) private startShow!: number
+  @Prop({ required: true, default: false }) private isRun!: boolean
   @Emit('handleSave')
   private handleSave() {
     return true
@@ -115,6 +117,8 @@ export default class ToolBarIndex extends Vue {
         animation:turn 1s linear infinite;
       .icon-button
         margin-bottom 6px
+      .disable-icon
+        // cursor: 
       div:hover
       span
         color #5F4FFB
