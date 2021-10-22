@@ -94,7 +94,7 @@ export default class extends Vue {
       res.push(handleItem(item, index))
     })
     WorkflowModule.SET_NODES_OUTPUT(res)
-    if(!state){
+    if (!state) {
       this.$message.success('保存成功')
     }
   }

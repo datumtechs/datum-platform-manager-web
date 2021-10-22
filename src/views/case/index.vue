@@ -40,7 +40,6 @@ import { Vue, Component } from 'vue-property-decorator'
 import JzButton from '@/components/JzButton.vue'
 import { addProject, getProjectTemplate } from '@/api/project'
 
-
 @Component({
   name: 'case',
   components: {

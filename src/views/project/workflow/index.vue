@@ -15,9 +15,7 @@
             v-contextmenu:contextmenu
             @contextmenu.prevent.stop="handleContextmenu(index)"
           >
-            <span v-if="!isResetName">{{
-              item.nodeName
-            }}</span>
+            <span v-if="!isResetName">{{ item.nodeName }}</span>
             <input
               v-else
               type="text"
@@ -142,6 +140,15 @@ export default class workflowIndex extends Vue {
   }
   get isNode() {
     return !!this.nodeList.length
+  }
+  get isRun() {
+    let state = false
+    this.nodeList.forEach((item: any) => {
+      if (item.runStatus === 1) {
+        state = true
+      }
+    })
+    return state
   }
   // 查看者权限
   get isAuth() {
@@ -336,6 +343,9 @@ export default class workflowIndex extends Vue {
   private async handleEmpty() {
     if (this.deleteState) return
     if (this.handleisAuth()) return
+    if (this.isRun) {
+      return this.$message.warning('该算法启动中，请勿清空节点')
+    }
     const { workflowId } = this
     this.deleteState = true
     try {
@@ -438,12 +448,18 @@ export default class workflowIndex extends Vue {
   .x6-graph-box
     position absolute
     z-index 1
-    width 100%
-    height: 100%
+    width calc(100vw - 300px)
+    height calc(100vh - 360px)
+    left 300px
+    bottom 200px
+    padding: 30px
+    box-sizing border-box
+    overflow auto
     .flow-node
       width 500px
       margin 0px auto
-      margin-top 130px
+      margin-top 115px
+      transform: translateX(-150px)
       position relative
       .arrow
         position: absolute;
@@ -489,7 +505,7 @@ export default class workflowIndex extends Vue {
   .log-wrap
     position absolute
     z-index 99
-    width: calc(100vw - 340px)
+    width: calc(100vw - 300px)
     height 200px
     bottom 0
     left 300px
