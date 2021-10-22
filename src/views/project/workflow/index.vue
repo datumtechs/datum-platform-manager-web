@@ -44,7 +44,7 @@
     <ToolBar
       :toolStateList="toolStateList"
       :startShow="startShow"
-      :isRun="isRun"
+      :isSuccess="isSuccess"
       @handleSave="handleSave"
       @handleEndWorkflow="handleEndWorkflow"
       @handleStartWorkflow="handleStartWorkflow"
@@ -146,6 +146,15 @@ export default class workflowIndex extends Vue {
     let state = false
     this.nodeList.forEach((item: any) => {
       if (item.runStatus === 1) {
+        state = true
+      }
+    })
+    return state
+  }
+  get isSuccess() {
+    let state = false
+    this.nodeList.forEach((item: any) => {
+      if (item.runStatus === 2) {
         state = true
       }
     })

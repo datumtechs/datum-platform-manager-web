@@ -301,7 +301,6 @@ export default class WorkIndex extends Vue {
   }
   @Watch('$route')
   private onRouteChange(route: any) {
-    console.log('route', route)
     this.getList()
   }
 }

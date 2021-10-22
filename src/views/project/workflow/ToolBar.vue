@@ -49,12 +49,11 @@
           清空
         </span>
       </div>
-      <div>
+      <div :class="!isSuccess ? 'disable-icon' : ''">
         <svg-icon
           name="w-create"
           class="icon-button"
-          :class="!isRun ? 'disable-icon' : ''"
-          color="#5F4FFB"
+          :color="!isSuccess ? '#666' : '#5F4FFB'"
           width="50"
           height="28"
         />
@@ -74,7 +73,7 @@ import { Vue, Component, Prop, Emit } from 'vue-property-decorator'
 export default class ToolBarIndex extends Vue {
   @Prop({ required: true, default: [] }) private toolStateList!: any
   @Prop({ required: true, default: 0 }) private startShow!: number
-  @Prop({ required: true, default: false }) private isRun!: boolean
+  @Prop({ required: true, default: false }) private isSuccess!: boolean
   @Emit('handleSave')
   private handleSave() {
     return true
@@ -117,16 +116,18 @@ export default class ToolBarIndex extends Vue {
         animation:turn 1s linear infinite;
       .icon-button
         margin-bottom 6px
-      .disable-icon
-        // cursor: 
       div:hover
       span
         color #5F4FFB
       @keyframes turn{
-      0%{-webkit-transform:rotate(0deg);}
-      25%{-webkit-transform:rotate(90deg);}
-      50%{-webkit-transform:rotate(180deg);}
-      75%{-webkit-transform:rotate(270deg);}
-      100%{-webkit-transform:rotate(360deg);}
-    }
+        0%{-webkit-transform:rotate(0deg);}
+        25%{-webkit-transform:rotate(90deg);}
+        50%{-webkit-transform:rotate(180deg);}
+        75%{-webkit-transform:rotate(270deg);}
+        100%{-webkit-transform:rotate(360deg);}
+      }
+    .disable-icon
+      cursor:not-allowed
+      span
+        color #666
 </style>

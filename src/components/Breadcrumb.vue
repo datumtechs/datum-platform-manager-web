@@ -93,8 +93,9 @@ export default class extends Vue {
     }
     if (this.isSubjob(last)) {
       const id = this.$route.params.id
+      const name = this.$route.query.name
       matched.splice(2, 0, {
-        path: `/project/${id}/jobs`,
+        path: `/project/${id}/jobs/jobs?name=${name}`,
         meta: { title: 'jobs' },
       } as RouteRecord)
     }

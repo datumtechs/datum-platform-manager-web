@@ -17,7 +17,6 @@
           <el-time-picker
             class="input-date"
             v-model="startTime"
-            format="HH:mm:A"
             :picker-options="{
               selectableRange: '0:0:00 - 23:59:00',
             }"
@@ -53,7 +52,6 @@
             :picker-options="{
               selectableRange: '0:0:00 - 23:59:00',
             }"
-            format="HH:mm:A"
             placeholder="结束时间"
           >
           </el-time-picker>
