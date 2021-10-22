@@ -397,18 +397,15 @@ export default class workflowIndex extends Vue {
     await WorkflowModule.getNodeList(id)
     this.nodeList = WorkflowModule.nodeList
     this.getLogList()
+    console.log('getLogList ');
     this.copySaveParams = JSON.stringify(
       this.getSaveParams().workflowNodeReqList,
     )
   }
   private async getLogList() {
-    const { nodeList, currentIndex } = this
-    if (!nodeList.lenght) return
-    const { taskId } = nodeList[currentIndex]
-    if (taskId) {
-      const { data } = await getWorkflwLog(taskId)
-      this.logList = data
-    }
+    const { nodeList, workflowId } = this
+    const { data } = await getWorkflwLog(workflowId)
+    this.logList = data
   }
   private async getWorkState() {
     const id = this.workflowId
