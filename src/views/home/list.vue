@@ -17,6 +17,7 @@
     <div class="block-wrap">
       <div
         class="block-wrap-item"
+        :class="(index+1)%3 === 0 ? 'item-right':''"
         v-for="(item, index) in marketList"
         :key="index"
       >
@@ -158,12 +159,14 @@ export default class HomeList extends Vue {
     if (inputInfo.length) {
       params['dataName'] = inputInfo
     }
+    // 数据列表
     if (!this.tabIndex) {
       params['dataName'] = inputInfo
       const { data } = await getDataList({ ...params })
       this.marketList = data.items
       this.total = data.total
     }
+    // 算法列表
     if (this.tabIndex === 1) {
       // TODO 接口 缺少total
       params['algorithmName'] = inputInfo
@@ -218,12 +221,12 @@ export default class HomeList extends Vue {
     margin-top 70px
     display flex
     flex-wrap: wrap;
-    justify-content: space-between;
     .block-wrap-item
       width: 368px;
       height: 414px;
       box-sizing border-box
       margin-bottom: 48px
+      margin-right: 48px
       background: #fff;
       box-sizing: border-box;
       background: #FFFFFF;
@@ -272,6 +275,8 @@ export default class HomeList extends Vue {
         .passed
           background #1CC037
           border: 1px solid #1cc037;
+    .item-right
+      margin-right 0
   .pagination-wrap
     max-width 1200px
     margin 20px auto
