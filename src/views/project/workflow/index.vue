@@ -364,6 +364,7 @@ export default class workflowIndex extends Vue {
         this.$message.success(msg)
         this.nodeList = []
         WorkflowModule.INIT_DATA()
+        this.getLogList()
       }
       // 移除弹窗，下次打开重新加载created
       this.isNodeDrawer = false
@@ -397,7 +398,6 @@ export default class workflowIndex extends Vue {
     await WorkflowModule.getNodeList(id)
     this.nodeList = WorkflowModule.nodeList
     this.getLogList()
-    console.log('getLogList ');
     this.copySaveParams = JSON.stringify(
       this.getSaveParams().workflowNodeReqList,
     )

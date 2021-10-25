@@ -3,20 +3,16 @@
     <div class="title">
       {{ $t('workflow.code') }}
     </div>
-    <div class="button-bolck">
+    <!-- <div class="button-bolck">
       <jz-button @click="handleSave" type="jz-button--primary" class="save">
         {{ $t('workflow.save') }}
       </jz-button>
       <jz-button @click="handleEmpty">
         {{ $t('workflow.empty') }}
       </jz-button>
-    </div>
+    </div> -->
     <div class="code-input">
-      <el-input
-        type="textarea"
-        v-model="textarea"
-        :disabled="isAuth"
-      ></el-input>
+      <el-input type="textarea" v-model="textarea" :disabled="true"></el-input>
     </div>
   </div>
 </template>
@@ -85,4 +81,9 @@ export default class CodeIndex extends Vue {
           resize: none;
           height 600px
           border-radius 0!important
+    >>> .el-textarea.is-disabled .el-textarea__inner {
+            background-color #fff
+            color: #000;
+            cursor: not-allowed;
+        }
 </style>

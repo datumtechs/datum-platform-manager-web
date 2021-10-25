@@ -185,6 +185,7 @@ export default class HomeList extends Vue {
 <style lang="stylus" scoped>
 .content-container
   width 100%
+  overflow hidden
   .search-wrap
     width: 991px;
     height: 60px;
@@ -210,19 +211,19 @@ export default class HomeList extends Vue {
     >>> .el-input__inner:focus
       border: 2px solid #5F4FFB!important;
   .block-wrap
-    transform: translatex(50px);
-    max-width 1260px
+    width 1200px
     min-height 876px
     overflow hidden
     margin 0 auto
     margin-top 70px
     display flex
-    flex-flow: row wrap;
+    flex-wrap: wrap;
+    justify-content: space-between;
     .block-wrap-item
       width: 368px;
       height: 414px;
       box-sizing border-box
-      margin 0 48px 48px 0
+      margin-bottom: 48px
       background: #fff;
       box-sizing: border-box;
       background: #FFFFFF;

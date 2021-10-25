@@ -50,7 +50,7 @@ import WorkDialog from './components/WorkeDialog.vue'
 import SubjobDialog from './components/SubjobsDialog.vue'
 import { ParamsType, TableParams, QueryType } from '@/api/types'
 import { deleteBatch } from '@/api/project'
-import { jobList, actionJob } from '@/api/jobs'
+import { jobList, actionJob, deleteJobBatch } from '@/api/jobs'
 import {
   getWorkflows,
   addWorkflow,
@@ -207,10 +207,19 @@ export default class WorkIndex extends Vue {
   }
   private async selectDelete(id: number[]) {
     const ids = id.join()
-    const { msg, code } = await deleteBatch({ ids })
-    if (code === 10000) {
-      this.$message.success(msg)
-      this.getList()
+    if (this.pageType === 'jobs') {
+      const { msg, code } = await deleteJobBatch({ jobIds: id })
+      if (code === 10000) {
+        this.$message.success(msg)
+        this.getList()
+      }
+    }
+    if (this.pageType === 'work') {
+      const { msg, code } = await deleteBatch({ ids })
+      if (code === 10000) {
+        this.$message.success(msg)
+        this.getList()
+      }
     }
   }
   private createWork() {
@@ -293,10 +302,10 @@ export default class WorkIndex extends Vue {
       await delWorkflow(id)
       this.getList()
     }
+    // 删除作业
     if (this.pageType === 'jobs') {
-      console.log('del jobs')
-      // await delWorkflow(id)
-      // this.getList()
+      await deleteJobBatch({ jobIds: [id] })
+      this.getList()
     }
   }
   @Watch('$route')
@@ -310,6 +319,7 @@ export default class WorkIndex extends Vue {
 .work
   width: 1164px;
   padding 30px
+  box-sizing: border-box
   background #fff
   box-shadow: 0px 20px 40px 0px rgba(209,209,209,0.18);
   position relative

@@ -28,6 +28,7 @@
               <el-select
                 v-model="workflowId"
                 placeholder="请选择"
+                :disabled="type === 1"
                 class="workflowInfo"
               >
                 <el-option
@@ -91,6 +92,7 @@
               v-show="tabsIndex === 2"
               @create="handleCreate"
               @previous="handlePrevious"
+              :type="type"
               ref="Dispatch"
             ></Dispatch>
           </template>
@@ -104,7 +106,7 @@
 import { Vue, Component, Emit } from 'vue-property-decorator'
 import JzButton from '@/components/JzButton.vue'
 import Dispatch from './Dispatch.vue'
-import { addJob, setJob, queryWorkflow } from '@/api/jobs'
+import { addJob, setJobBase, queryWorkflow } from '@/api/jobs'
 @Component({
   name: 'SubjobDialog',
   components: {
@@ -240,7 +242,12 @@ export default class WorkDialog extends Vue {
   }
   private async postApi(parmams: any) {
     if (this.type) {
-      const { code, msg } = await setJob({ ...parmams })
+      const data = {
+        id: parmams.id,
+        name: parmams.name,
+        desc: parmams.desc,
+      }
+      const { code, msg } = await setJobBase(data)
       return { code, msg }
     } else {
       const { code, msg } = await addJob({ ...parmams })

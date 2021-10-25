@@ -2,7 +2,10 @@
   <div class="dispatch">
     <div class="block-input">
       <div>
-        <el-checkbox v-model="startRadio" class="checkbox"
+        <el-checkbox
+          v-model="startRadio"
+          class="checkbox"
+          :disabled="type === 1"
           >开始时间</el-checkbox
         >
         <div class="num-input">
@@ -12,11 +15,13 @@
             type="date"
             placeholder="开始日期"
             :picker-options="startPickerOptions"
+            :disabled="type === 1"
           >
           </el-date-picker>
           <el-time-picker
             class="input-date"
             v-model="startTime"
+            :disabled="type === 1"
             :picker-options="{
               selectableRange: '0:0:00 - 23:59:00',
             }"
@@ -26,20 +31,31 @@
         </div>
       </div>
       <div v-show="startRadio">
-        <el-checkbox v-model="repeatRadio" class="checkbox"
+        <el-checkbox
+          v-model="repeatRadio"
+          :disabled="type === 1"
+          class="checkbox"
           >重复 <span class="num-lable"></span> 每</el-checkbox
         >
         <div class="num-input">
-          <el-input-number v-model="repeatInterval" :min="1" size="small">
+          <el-input-number
+            v-model="repeatInterval"
+            :disabled="type === 1"
+            :min="1"
+            size="small"
+          >
           </el-input-number>
           <span class="unit">分钟</span>
         </div>
       </div>
       <div v-show="repeatRadio">
-        <el-checkbox v-model="endRadio" class="checkbox">结束时间</el-checkbox>
+        <el-checkbox v-model="endRadio" :disabled="type === 1" class="checkbox"
+          >结束时间</el-checkbox
+        >
         <div class="num-input">
           <el-date-picker
             class="input-date"
+            :disabled="type === 1"
             v-model="endDate"
             type="date"
             placeholder="结束日期"
@@ -49,6 +65,7 @@
           <el-time-picker
             class="input-date"
             v-model="endTime"
+            :disabled="type === 1"
             :picker-options="{
               selectableRange: '0:0:00 - 23:59:00',
             }"
@@ -66,7 +83,7 @@
         @click="handleCreate"
         class="create"
       >
-        {{ $t('jobs.create') }}
+        {{ type ? $t('workflow.save') : $t('jobs.create') }}
       </jz-button>
       <jz-button @click="handlePrevious" :height="40" align="left">
         {{ $t('jobs.previous') }}
@@ -76,7 +93,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Emit } from 'vue-property-decorator'
+import { Vue, Component, Emit, Prop } from 'vue-property-decorator'
 import JzButton from '@/components/JzButton.vue'
 import { formatDate } from '@/utils/format'
 
@@ -87,6 +104,7 @@ import { formatDate } from '@/utils/format'
   },
 })
 export default class DispatchIndex extends Vue {
+  @Prop({ default: false }) private type!: number
   private radio = '1'
   private startDate: any = ''
   private startTime: any = ''
@@ -137,7 +155,7 @@ export default class DispatchIndex extends Vue {
       repeatRadio,
       endRadio,
     } = this
-    if (repeatRadio) {
+    if (endRadio) {
       if (!this.endDate) {
         this.$message.warning('请输入结束时间')
         return false

@@ -8,6 +8,8 @@
       :btnList="btnList"
       :keyList="subjobKey"
       @changeList="changeList"
+      @clickDelete="handleDelete"
+      @selectDelete="selectDelete"
       :placeholder="$t('jobs.serach')"
     >
     </Table>
@@ -19,7 +21,7 @@ import { Vue, Component, Watch } from 'vue-property-decorator'
 import Table from '@/components/JzTable.vue'
 import JzButton from '@/components/JzButton.vue'
 import { ParamsType, TableParams, QueryType } from '@/api/types'
-import { subJoblist, subJobaction } from '@/api/jobs'
+import { subJoblist, subJobaction, deleteBatch } from '@/api/jobs'
 import { BreadcrumbModule } from '@/store/modules/breadcrumb'
 @Component({
   name: 'subjob',
@@ -107,6 +109,25 @@ export default class subjobIndex extends Vue {
       id,
     })
     this.getList()
+  }
+  // 删除子作业
+  private async handleDelete(id: number) {
+    const data = {
+      jobIds: [id],
+    }
+    console.log('data===', data)
+    const { code, msg } = await deleteBatch(data)
+    if (code === 10000) {
+      this.$message.success(msg)
+      this.getList()
+    }
+  }
+  private async selectDelete(id: number[]) {
+    const { code, msg } = await deleteBatch({ jobIds: id })
+    if (code === 10000) {
+      this.$message.success(msg)
+      this.getList()
+    }
   }
   created() {
     this.getList()
