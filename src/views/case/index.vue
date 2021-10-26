@@ -64,7 +64,6 @@ export default class CaseIndex extends Vue {
   }
   private async getList() {
     const { data } = await getProjectTemplate()
-    console.log('data==>', data)
     this.marketList = data.filter((item: any) => item.id > 0)
   }
   created() {

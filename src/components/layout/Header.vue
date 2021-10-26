@@ -233,6 +233,8 @@ export default class HeaderComponent extends Vue {
   padding: 0px 24px;
   background #fff
   position relative
+  min-width 1210px
+  box-sizing: border-box
   .header-layout {
     font-size: 18px;
     color: #fff;
