@@ -356,14 +356,14 @@ export default class workflowIndex extends Vue {
     if (this.isRun) {
       return this.$message.warning('该算法启动中，请勿清空节点')
     }
+    this.nodeList = []
+    WorkflowModule.INIT_DATA()
     const { workflowId } = this
     this.deleteState = true
     try {
       const { code, msg } = await clearNode({ workflowId })
       if (code === 10000) {
         this.$message.success(msg)
-        this.nodeList = []
-        WorkflowModule.INIT_DATA()
         this.getLogList()
       }
       // 移除弹窗，下次打开重新加载created
