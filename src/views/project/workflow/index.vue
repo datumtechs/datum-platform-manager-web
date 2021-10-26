@@ -449,6 +449,7 @@ export default class workflowIndex extends Vue {
     const name = this.$route.query.workflow
     BreadcrumbModule.SET_WORKFLOW(name)
     this.checkWorkState()
+    this.getWorkState()
   }
   private async getSign() {
     const checkAddress = alayaService.checkAddress()

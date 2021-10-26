@@ -72,7 +72,7 @@
         <div class="text">最长运行时长</div>
         <div class="num-input">
           <el-input-number v-model="runTime" :min="1"></el-input-number>
-          <span class="unit">小时</span>
+          <span class="unit">分钟</span>
         </div>
       </div>
     </div>
@@ -153,6 +153,8 @@ export default class EnviromentView extends Vue {
 .enviroment
   height 100%
   font-size 14px
+  padding-bottom: 80px;
+  overflow-y: auto;
   .title
     color #333
     font-weight: 500;

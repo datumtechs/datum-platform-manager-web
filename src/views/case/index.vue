@@ -39,6 +39,8 @@
 import { Vue, Component } from 'vue-property-decorator'
 import JzButton from '@/components/JzButton.vue'
 import { addProject, getProjectTemplate } from '@/api/project'
+import { UserModule } from '@/store/modules/user'
+import alayaService from '@/services/alayaService'
 
 @Component({
   name: 'case',
@@ -47,6 +49,9 @@ import { addProject, getProjectTemplate } from '@/api/project'
   },
 })
 export default class CaseIndex extends Vue {
+  get isLogin() {
+    return !!UserModule.token && alayaService.checkAddress()
+  }
   private marketList = []
   // 案例说明
   private handleDescription(id: string | number) {
@@ -56,6 +61,9 @@ export default class CaseIndex extends Vue {
   }
   // 创建项目
   private handleDetail(id: string | number) {
+    if (!this.isLogin) {
+      this.$message.warning('请连接钱包')
+    }
     const caseId = String(id)
     this.$router.push({
       path: '/project/create',
