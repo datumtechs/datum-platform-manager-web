@@ -48,13 +48,19 @@ import { addProject, getProjectTemplate } from '@/api/project'
 })
 export default class CaseIndex extends Vue {
   private marketList = []
+  // 案例说明
   private handleDescription(id: string | number) {
     console.log('/case/description/' + id)
     // this.$router.push('/case/description/' + id)
-    window.open('/case/description/' + id, '_blank')
+    // window.open('/case/description/' + id, '_blank')
   }
+  // 创建项目
   private handleDetail(id: string | number) {
-    this.$router.push('/project/' + id + '/work')
+    const caseId = String(id)
+    this.$router.push({
+      path: '/project/create',
+      query: { id: caseId },
+    })
   }
   private async getList() {
     const { data } = await getProjectTemplate()

@@ -153,6 +153,12 @@ export default class createIndex extends Vue {
   private async getProjectTemplateList() {
     const { data } = await getProjectTemplate()
     this.templates = data
+    // 案例来源，自动勾选模板
+    const id = this.$route.query.id
+    if (id) {
+      this.templateIndex = Number(id)
+      this.handleSelect(this.templateIndex)
+    }
   }
 
   get isEnglish() {
