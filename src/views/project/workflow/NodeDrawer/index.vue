@@ -84,7 +84,6 @@ export default class NodeDrawerIndex extends Vue {
   // 切换节点，弹窗视图更新
   @Watch('currentIndex')
   private changeCurrentIndex() {
-    console.log('切换节点，弹窗视图更新')
     this.viewKey++
     this.navIndex = 0
   }

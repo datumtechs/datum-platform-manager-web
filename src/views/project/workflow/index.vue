@@ -241,7 +241,6 @@ export default class workflowIndex extends Vue {
       if (code === 10000) {
         this.$message.success(msg)
         this.checkWorkState()
-        this.getLogList()
       }
       this.startState = false
       this.copySaveParams = JSON.stringify(workflowNodeReqList)
@@ -440,6 +439,7 @@ export default class workflowIndex extends Vue {
     this.nodeList.map((item: any, index: number) => {
       item.runStatus = data.getNodeStatusVoList[index]['runStatus']
     })
+    this.getLogList()
   }
   created() {
     const { params, query } = this.$route
