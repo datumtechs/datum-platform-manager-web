@@ -63,6 +63,7 @@ export default class CaseIndex extends Vue {
   private handleDetail(id: string | number) {
     if (!this.isLogin) {
       this.$message.warning('请连接钱包')
+      return
     }
     const caseId = String(id)
     this.$router.push({
