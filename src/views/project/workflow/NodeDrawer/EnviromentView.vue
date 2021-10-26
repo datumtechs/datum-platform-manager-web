@@ -153,7 +153,8 @@ export default class EnviromentView extends Vue {
 .enviroment
   height 100%
   font-size 14px
-  padding-bottom: 80px;
+  box-sizing: border-box;
+  padding-bottom: 60px;
   overflow-y: auto;
   .title
     color #333

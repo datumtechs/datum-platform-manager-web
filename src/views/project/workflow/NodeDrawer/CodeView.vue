@@ -62,6 +62,9 @@ export default class CodeIndex extends Vue {
 .code-wrap
   height 100%
   font-size 14px
+  box-sizing: border-box;
+  padding-bottom: 60px;
+  overflow-y: auto;
   .title
     color #333
     font-weight: 500;

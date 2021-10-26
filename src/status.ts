@@ -27,10 +27,10 @@ export const cpuOptions = {
  *
  */
 export const memoryOptions = {
-  2: '2核',
-  4: '4核',
-  8: '8核',
-  16: '16核',
+  2: '2G',
+  4: '4G',
+  8: '8G',
+  16: '16G',
 }
 /**
  * 最长运行时长

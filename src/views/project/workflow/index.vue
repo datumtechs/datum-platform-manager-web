@@ -402,6 +402,7 @@ export default class workflowIndex extends Vue {
     this.copySaveParams = JSON.stringify(
       this.getSaveParams().workflowNodeReqList,
     )
+    this.checkWorkState()
   }
   private async getLogList() {
     const { nodeList, workflowId } = this
@@ -411,9 +412,11 @@ export default class workflowIndex extends Vue {
   // 检查工作流状态
   private async checkWorkState() {
     let isRun = false
+    console.log('item.runStatus', this.nodeList)
     // 判断节点是否运作中
     this.nodeList.map((item: any) => {
-      if (item && item.runStatus && item.runStatus === 1) {
+      console.log('item.runStatus', item.runStatus)
+      if (item && item.runStatus && item.runStatus > 0) {
         isRun = true
       }
     })
@@ -422,7 +425,7 @@ export default class workflowIndex extends Vue {
         clearTimeout(this.workStateTimer)
         this.workStateTimer = null
       }
-      this.workStateTimer = setTimeout(() => {
+      this.workStateTimer = setInterval(() => {
         this.getWorkState()
       }, 5000)
     } else {
@@ -448,7 +451,6 @@ export default class workflowIndex extends Vue {
     this.getNodeList()
     const name = this.$route.query.workflow
     BreadcrumbModule.SET_WORKFLOW(name)
-    this.checkWorkState()
     this.getWorkState()
   }
   private async getSign() {
