@@ -112,7 +112,6 @@ export default class NodeDrawerIndex extends Vue {
       color #000
   .view
     width 100%
-    height: 800px
     box-sizing border-box
     background #fff
     padding 20px 30px
