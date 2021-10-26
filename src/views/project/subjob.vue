@@ -112,18 +112,14 @@ export default class subjobIndex extends Vue {
   }
   // 删除子作业
   private async handleDelete(id: number) {
-    const data = {
-      jobIds: [id],
-    }
-    console.log('data===', data)
-    const { code, msg } = await subDeleteBatch(data)
+    const { code, msg } = await subDeleteBatch({ subJobIds: id })
     if (code === 10000) {
       this.$message.success(msg)
       this.getList()
     }
   }
   private async selectDelete(id: number[]) {
-    const { code, msg } = await subDeleteBatch({ jobIds: id })
+    const { code, msg } = await subDeleteBatch({ subJobIds: id })
     if (code === 10000) {
       this.$message.success(msg)
       this.getList()

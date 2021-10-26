@@ -79,8 +79,7 @@ export default class CaseIndex extends Vue {
       font-style: normal;
       font-size: 24px;
   .block-wrap
-    transform: translatex(50px);
-    max-width 1260px
+    max-width 1200px
     margin 0 auto
     display flex
     flex-flow: row wrap;

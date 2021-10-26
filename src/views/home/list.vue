@@ -17,7 +17,7 @@
     <div class="block-wrap">
       <div
         class="block-wrap-item"
-        :class="(index+1)%3 === 0 ? 'item-right':''"
+        :class="(index + 1) % 3 === 0 ? 'item-right' : ''"
         v-for="(item, index) in marketList"
         :key="index"
       >
