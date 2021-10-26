@@ -49,7 +49,7 @@
           清空
         </span>
       </div>
-      <div :class="!isSuccess ? 'disable-icon' : ''">
+      <div :class="!isSuccess ? 'disable-icon' : ''" @click="openJob">
         <svg-icon
           name="w-create"
           class="icon-button"
@@ -62,13 +62,18 @@
         </span>
       </div>
     </div>
+    <subjobs-dialog ref="createJobDialog" :modalState="false"></subjobs-dialog>
   </div>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop, Emit } from 'vue-property-decorator'
+import SubjobsDialog from '../components/SubjobsDialog.vue'
 @Component({
   name: 'ToolBar',
+  components: {
+    SubjobsDialog,
+  },
 })
 export default class ToolBarIndex extends Vue {
   @Prop({ required: true, default: [] }) private toolStateList!: any
@@ -89,6 +94,11 @@ export default class ToolBarIndex extends Vue {
   @Emit('handleEmpty')
   private handleEmpty() {
     return true
+  }
+  private openJob() {
+    if (this.isSuccess) {
+      ;(this.$refs.createJobDialog as any).handleOpen(0)
+    }
   }
 }
 </script>

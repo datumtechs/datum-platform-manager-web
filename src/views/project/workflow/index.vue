@@ -451,7 +451,8 @@ export default class workflowIndex extends Vue {
   position relative
   .tree-menus
     position absolute
-    z-index 99
+    z-index 1
+    background: #fff
   .x6-graph-box
     position absolute
     z-index 1

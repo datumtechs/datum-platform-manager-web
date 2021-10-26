@@ -5,6 +5,7 @@
       width="30%"
       :before-close="handleClose"
       class="dialog"
+      :modal="modalState"
     >
       <div class="wrap">
         <div class="wrap-tab">
@@ -103,7 +104,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Emit } from 'vue-property-decorator'
+import { Vue, Component, Emit, Prop } from 'vue-property-decorator'
 import JzButton from '@/components/JzButton.vue'
 import Dispatch from './Dispatch.vue'
 import { addJob, setJobBase, queryWorkflow } from '@/api/jobs'
@@ -115,6 +116,9 @@ import { addJob, setJobBase, queryWorkflow } from '@/api/jobs'
   },
 })
 export default class WorkDialog extends Vue {
+  // 是否遮罩层
+  @Prop({ default: true }) private modalState!: boolean
+
   // 0. 创建 1.编辑
   private type = 0
   private subjobVisible = false
