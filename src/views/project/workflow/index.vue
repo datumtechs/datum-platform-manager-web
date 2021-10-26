@@ -135,6 +135,8 @@ export default class workflowIndex extends Vue {
   private endState = false
   private deleteState = false
   private createState = false
+  // 轮询工作流
+  private workStateTimer: any = null
   get toolStateList() {
     const { saveState, startState, endState, deleteState } = this
     return [saveState, startState, endState, deleteState]
@@ -238,7 +240,7 @@ export default class workflowIndex extends Vue {
       const { code, msg } = await startWorkflow(params)
       if (code === 10000) {
         this.$message.success(msg)
-        this.getWorkState()
+        this.checkWorkState()
         this.getLogList()
       }
       this.startState = false
@@ -257,7 +259,7 @@ export default class workflowIndex extends Vue {
       const { code, msg } = await endWorkflow({ workflowId })
       if (code === 10000) {
         this.$message.success(msg)
-        this.getWorkState()
+        this.checkWorkState()
       }
       this.endState = false
     } catch (error) {
@@ -407,6 +409,30 @@ export default class workflowIndex extends Vue {
     const { data } = await getWorkflwLog(workflowId)
     this.logList = data
   }
+  // 检查工作流状态
+  private async checkWorkState() {
+    let isRun = false
+    // 判断节点是否运作中
+    this.nodeList.map((item: any) => {
+      if (item && item.runStatus && item.runStatus === 1) {
+        isRun = true
+      }
+    })
+    if (isRun) {
+      if (this.workStateTimer) {
+        clearTimeout(this.workStateTimer)
+        this.workStateTimer = null
+      }
+      this.workStateTimer = setTimeout(() => {
+        this.getWorkState()
+      }, 5000)
+    } else {
+      if (this.workStateTimer) {
+        clearTimeout(this.workStateTimer)
+        this.workStateTimer = null
+      }
+    }
+  }
   private async getWorkState() {
     const id = this.workflowId
     const { data } = await getWorkflowStatus({ id })
@@ -422,7 +448,7 @@ export default class workflowIndex extends Vue {
     this.getNodeList()
     const name = this.$route.query.workflow
     BreadcrumbModule.SET_WORKFLOW(name)
-    this.getWorkState()
+    this.checkWorkState()
   }
   private async getSign() {
     const checkAddress = alayaService.checkAddress()
@@ -440,6 +466,12 @@ export default class workflowIndex extends Vue {
     const taskId = this.nodeList[this.currentIndex].taskId
     this.resultsVisible = true
     ;(this.$refs['ViewRun'] as any).getResultsList(taskId)
+  }
+  beforeDestroy() {
+    if (this.workStateTimer) {
+      clearTimeout(this.workStateTimer)
+      this.workStateTimer = null
+    }
   }
 }
 </script>

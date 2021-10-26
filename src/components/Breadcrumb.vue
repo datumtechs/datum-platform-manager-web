@@ -71,7 +71,7 @@ export default class extends Vue {
     if (this.isAlgorithmDetail(last)) {
       const id = this.$route.params.id
       matched.splice(1, 0, {
-        path: '/home/data',
+        path: '/home/algorithm',
         meta: { title: 'algorithmDetail' },
       } as RouteRecord)
     }
