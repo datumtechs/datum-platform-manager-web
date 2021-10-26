@@ -326,7 +326,7 @@ export default class InputViewIndex extends Vue {
   height 100%
   font-size 14px
   box-sizing: border-box;
-  padding-bottom: 30px;
+  padding-bottom: 180px;
   overflow-y: auto;
   .title
     color #333
