@@ -39,6 +39,7 @@
           >
           </el-option>
         </el-select>
+        <span class="unit">核</span>
       </div>
       <div class="block select">
         <div class="text">内存</div>
@@ -55,6 +56,7 @@
           >
           </el-option>
         </el-select>
+        <span class="unit">GiB</span>
       </div>
       <div class="block select">
         <div class="text">宽带</div>
@@ -67,6 +69,7 @@
           >
           </el-option>
         </el-select>
+        <span class="unit">Mbps</span>
       </div>
       <div class="block select">
         <div class="text">最长运行时长</div>
@@ -185,6 +188,8 @@ export default class EnviromentView extends Vue {
     // margin 25px 0 15px 0
   .select
     margin-top 15px
+    .unit
+        margin-left 10px
     .num-input
       >>> .el-input-number
         width 160px!important

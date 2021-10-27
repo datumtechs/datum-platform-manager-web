@@ -89,12 +89,14 @@ class Workflow extends VuexModule implements WFlowState {
   /*
     输入的组织
     list：[
-      {id:1,name:'组织1'},
-      {id:2,name:'组织2'},
+      {identityId:1,name:'组织1'},
+      {identityId:2,name:'组织2'},
+      {identityId:3,name:'组织3'},
     ]
-    ids:[1]
+    ids:[1,2]
     res:[
-      {id:1,name:'组织1'},
+      {identityId:1,name:'组织1',senderFlag:1},
+      {identityId:2,name:'组织2',senderFlag:0},
     ]
   */
   @Mutation

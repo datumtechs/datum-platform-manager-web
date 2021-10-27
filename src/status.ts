@@ -27,13 +27,10 @@ export const cpuOptions = {
  *
  */
 export const memoryOptions = {
-  1: '0.00000763',
-  2: '0.0001',
-  3: '2',
+  2: '2',
   4: '4',
-  5: '6',
-  6: '8',
-  7: '16',
+  8: '8',
+  16: '16',
 }
 /**
  * 最长运行时长
@@ -50,7 +47,7 @@ export const gpuOptions = {
  *
  */
 export const broadbandOptions = {
-  10: '10 Mbps',
-  20: '20 Mbps',
-  30: '30 Mbps',
+  10: '10',
+  20: '20',
+  30: '30',
 }
