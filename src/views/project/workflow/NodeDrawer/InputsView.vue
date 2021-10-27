@@ -9,6 +9,26 @@
       </jz-button>
     </div>
     <div class="block">
+      <div class="block-row" v-if="isModel">
+        <div class="text">
+          模型
+        </div>
+        <el-select
+          style="width:320px"
+          v-model="modelValue"
+          placeholder="请选择模型"
+          :disabled="isAuth"
+          @visible-change="visibleChange"
+        >
+          <el-option
+            v-for="(item, index) in modelOptions"
+            :key="index"
+            :label="item.fileName"
+            :value="item.modelId"
+          >
+          </el-option>
+        </el-select>
+      </div>
       <template>
         <div
           class="block-row"
@@ -65,7 +85,7 @@
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import JzButton from '@/components/JzButton.vue'
 import Transfer from './Transfer.vue'
-import { getTables, getColumns } from '@/api/workflow'
+import { getTables, getColumns, queryAllModelByProjectId } from '@/api/workflow'
 import { WorkflowModule } from '@/store/modules/workflow'
 @Component({
   name: 'InputView',
@@ -79,6 +99,10 @@ export default class InputViewIndex extends Vue {
   private selectLayout = Array(this.minLen).fill({})
   private inputValue: any = []
   private columnsList: any = []
+  private modelValue = ''
+  get isModel() {
+    return WorkflowModule.algorithms.inputModel
+  }
   // 选中的组织
   get inputValueOrg() {
     return this.inputValue.map((item: any) => {
@@ -87,6 +111,9 @@ export default class InputViewIndex extends Vue {
   }
   get minLen() {
     return Number(WorkflowModule.algorithms.minNumbers)
+  }
+  get modelOptions() {
+    return WorkflowModule.modelList
   }
   get organizations() {
     return WorkflowModule.organizationList
@@ -174,6 +201,9 @@ export default class InputViewIndex extends Vue {
   }
   private async handleSave() {
     if (this.handleisAuth()) return
+    if (this.isModel && this.modelValue === '') {
+      return this.$message.warning('请输入模型')
+    }
     if (this.inputValue.length < this.minLen) {
       return this.$message.warning(`至少输入${this.minLen}个数据协同方`)
     }
@@ -215,6 +245,12 @@ export default class InputViewIndex extends Vue {
     await WorkflowModule.setOrganizationId(organizationId)
     WorkflowModule.SAVE_ORG_OPTIONS()
     WorkflowModule.SET_INPUT_LEN(this.inputValue.length)
+  }
+  private visibleChange(state: boolean) {
+    if (!state) {
+      console.log('fas')
+      WorkflowModule.SET_MODEL_VALUE(this.modelValue)
+    }
   }
   private inputDelete(index: number) {
     this.cascaderKey.splice(index, 1)
@@ -271,6 +307,7 @@ export default class InputViewIndex extends Vue {
     this.init()
   }
   private async init() {
+    this.modelValue = WorkflowModule.modelValue
     await WorkflowModule.getOrganizations()
     // 回显
     this.handleInputValue()

@@ -6,7 +6,11 @@ import {
   getModule,
 } from 'vuex-module-decorators'
 import store from '@/store'
-import { getOrganization, getNodes } from '@/api/workflow'
+import {
+  getOrganization,
+  getNodes,
+  queryAllModelByProjectId,
+} from '@/api/workflow'
 export interface WFlowState {
   algorithms: any
   workflowNodeInputVoList: any
@@ -22,6 +26,9 @@ export interface WFlowState {
 class Workflow extends VuexModule implements WFlowState {
   // 节点数据结构
   public nodeList = []
+  // 模型列表
+  public modelList = []
+  public modelValue = ''
   // 当前节点
   public currentIndex = 0
   public valueListNumber = 0
@@ -33,6 +40,7 @@ class Workflow extends VuexModule implements WFlowState {
     maxNumbers: '',
     minNumbers: '',
     supportLanguage: '',
+    inputModel: '',
   }
   // 输入
   public workflowNodeInputVoList = []
@@ -58,10 +66,6 @@ class Workflow extends VuexModule implements WFlowState {
     this.workflowNodeOutputVoList = data[index]['workflowNodeOutputVoList']
   }
   @Mutation
-  public DEL_DATA(index: number) {
-    this.nodeList.splice(index, 1)
-  }
-  @Mutation
   public SET_ORG_ID(state: any) {
     this.organizationsId = state
   }
@@ -69,6 +73,14 @@ class Workflow extends VuexModule implements WFlowState {
   @Mutation
   public SET_ORG(state: any) {
     this.organizationList = state
+  }
+  @Mutation
+  public SET_MODELS(state: any) {
+    this.modelList = state
+  }
+  @Mutation
+  public SET_MODEL_VALUE(state: any) {
+    this.modelValue = state
   }
   @Mutation
   public SET_ORG_DISABLED(state: any) {
@@ -130,6 +142,7 @@ class Workflow extends VuexModule implements WFlowState {
       maxNumbers: '',
       minNumbers: '',
       supportLanguage: '',
+      inputModel: '',
     }
     this.workflowNodeInputVoList = []
     this.workflowNodeOutputVoList = []
@@ -183,6 +196,11 @@ class Workflow extends VuexModule implements WFlowState {
   public async getOrganizations() {
     const { data } = await getOrganization()
     this.SET_ORG(data)
+  }
+  @Action
+  public async getModels(id: any) {
+    const { data } = await queryAllModelByProjectId(id)
+    this.SET_MODELS(data)
   }
 
   @Action

@@ -137,6 +137,20 @@ export default class workflowIndex extends Vue {
   private createState = false
   // 轮询工作流
   private workStateTimer: any = null
+  // 是否包含 逻辑回归训练
+  get isModel() {
+    let state = false
+    this.nodeList.map((item: any) => {
+      if (item.nodeAlgorithmVo.inputModel) {
+        state = true
+      }
+    })
+    return state
+  }
+  // 输入模型id
+  get modelId() {
+    return WorkflowModule.modelValue
+  }
   get toolStateList() {
     const { saveState, startState, endState, deleteState } = this
     return [saveState, startState, endState, deleteState]
@@ -282,12 +296,16 @@ export default class workflowIndex extends Vue {
     const { workflowId } = this
     await addWorkflowNode({ algorithmId, nodeName, workflowId })
   }
+  // 保存
   private async handleSave() {
     if (this.saveState) return
     if (this.handleisAuth()) return
     if (!this.nodeList.length) {
       this.$message.error('暂无节点')
       return
+    }
+    if (this.isModel && this.modelId === '') {
+      return this.$message.warning('请输入模型')
     }
     const params = this.getSaveParams()
     this.saveState = true
@@ -312,6 +330,7 @@ export default class workflowIndex extends Vue {
     const workflowNodeReqList = nodeList.map((item: any, index: number) => {
       return {
         algorithmId: item.algorithmId,
+        modelId: item.nodeAlgorithmVo.inputModel ? this.modelId : null,
         nodeName: item.nodeName,
         nodeStep: index + 1,
         workflowId,
@@ -347,8 +366,6 @@ export default class workflowIndex extends Vue {
     const index = this.currentIndex
     this.nodeList.splice(index, 1)
     this.isNodeDrawer = false
-    // this.nodeList = []
-    WorkflowModule.DEL_DATA(index)
   }
   // 清空节点
   private async handleEmpty() {
@@ -444,6 +461,10 @@ export default class workflowIndex extends Vue {
     })
     this.getLogList()
   }
+  private async getModels() {
+    const id = this.$route.params.id
+    await WorkflowModule.getModels(id)
+  }
   created() {
     const { params, query } = this.$route
     this.workflowId = params.workflow
@@ -452,6 +473,7 @@ export default class workflowIndex extends Vue {
     const name = this.$route.query.workflow
     BreadcrumbModule.SET_WORKFLOW(name)
     this.getWorkState()
+    this.getModels()
   }
   private async getSign() {
     const checkAddress = alayaService.checkAddress()
@@ -501,17 +523,17 @@ export default class workflowIndex extends Vue {
     .flow-node
       width 500px
       margin 0px auto
-      margin-top 115px
+      margin-top 80px
       transform: translateX(-150px)
       position relative
       .arrow
         position: absolute;
         left: 54%;
-        top: -130px;
+        top: -100px;
         .line
           width: 1px;
-          height: 100px;
-          background: #7e7d7dd4;
+          height: 74px;
+          background: rgb(55 53 53 / 83%);
           transform: translate(9px, 10px);
         i
           font-size: 19px

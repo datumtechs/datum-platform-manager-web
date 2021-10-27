@@ -129,8 +129,9 @@ export default class extends Vue {
     if (val && val.length > 0) {
       val.map((item: any) => {
         if (item.senderFlag && item.senderFlag === 1) {
-          this.checkList.push(item.identityId)
-          this.checkList = Array.from(new Set(this.checkList))
+          // this.checkList.push(item.identityId)
+          // this.checkList = Array.from(new Set(this.checkList))
+          this.checkList[0] = item.identityId
         }
       })
       this.handleSave(true)

@@ -18,8 +18,8 @@
           :name="toolStateList[0] ? 'w-loading' : 'w-end'"
           :class="['icon-button ', toolStateList[1] ? 'w-loading' : '']"
           color="#5F4FFB"
-          width="34"
-          height="34"
+          :width="toolStateList[0] ? '34' : '26'"
+          :height="toolStateList[0] ? '34' : '26'"
         />
         <span>
           终止

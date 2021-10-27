@@ -81,3 +81,8 @@ export const getTaskResult = (id: string | number) => {
 export const getWorkflowStatus = (parmas: any) => {
   return get('/workflow/getWorkflowStatus', parmas)
 }
+
+// 查询项目模型
+export const queryAllModelByProjectId = (id: any) => {
+  return get('/project/queryAllModelByProjectId/' + id)
+}
