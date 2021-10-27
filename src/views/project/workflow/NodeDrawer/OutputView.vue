@@ -32,9 +32,9 @@
       </div>
       <div class="select-value" v-if="isSelect">
         <el-checkbox-group v-model="checkList" :disabled="isAuth">
-          <div v-for="(item, key, index) in checkOptions" :key="index">
-            <el-checkbox :label="key" :disabled="!index"
-              >{{ item }}
+          <div v-for="(item, index) in checkOptions" :key="index">
+            <el-checkbox :label="item.identityId" :disabled="!index"
+              >{{ item.identityName }}
             </el-checkbox>
           </div>
         </el-checkbox-group>
@@ -44,7 +44,7 @@
       存储形式
     </div>
     <div class="info">
-      明文
+      {{ storePattern == 1 ? '明文' : '密文' }}
     </div>
   </div>
 </template>
@@ -66,6 +66,9 @@ export default class extends Vue {
   get checkOptions() {
     return WorkflowModule.orgOptions
   }
+  get storePattern() {
+    return (WorkflowModule.algorithms as any).storePattern
+  }
   // 查看者权限
   get isAuth() {
     const role = Number(this.$route.params.role)
@@ -82,11 +85,10 @@ export default class extends Vue {
   private async handleSave(state: boolean) {
     if (!this.checkList.length) return
     const handleItem = (id: string, index: number) => {
-      const name = (this.checkOptions as any)[id]
       return {
         identityId: id,
-        identityName: name,
         senderFlag: !index ? 1 : 0,
+        storePattern: this.storePattern,
       }
     }
     let res: any = []
@@ -105,7 +107,6 @@ export default class extends Vue {
       (workflowNodeOutputVoList && workflowNodeOutputVoList.length) ||
       (workflowNodeInputVoList && workflowNodeInputVoList.length)
     ) {
-      WorkflowModule.SET_ORG_OPTIONS()
       this.isSelect = true
       const list = workflowNodeOutputVoList.map((item: any) => item.identityId)
       this.checkList = Array.from(new Set(list))
@@ -125,9 +126,13 @@ export default class extends Vue {
   // 默认勾选第一个数据方
   @Watch('checkOptions', { deep: true })
   handleCheckOptions(val: any): void {
-    const checkOptions = Object.keys(val)
-    if (checkOptions && checkOptions.length > 0) {
-      this.checkList[0] = checkOptions[0]
+    if (val && val.length > 0) {
+      val.map((item: any) => {
+        if (item.senderFlag && item.senderFlag === 1) {
+          this.checkList.push(item.identityId)
+          this.checkList = Array.from(new Set(this.checkList))
+        }
+      })
       this.handleSave(true)
       this.isSelect = true
     }

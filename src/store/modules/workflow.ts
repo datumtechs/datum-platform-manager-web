@@ -86,32 +86,38 @@ class Workflow extends VuexModule implements WFlowState {
       item.disabled = false
     })
   }
+  /*
+    输入的组织
+    list：[
+      {id:1,name:'组织1'},
+      {id:2,name:'组织2'},
+    ]
+    ids:[1]
+    res:[
+      {id:1,name:'组织1'},
+    ]
+  */
   @Mutation
   public SAVE_ORG_OPTIONS() {
-    // 过滤选择的组织
     const list = this.organizationList
     const ids = this.organizationsId
-    const data = list.filter((v) => {
-      return ids.indexOf(v['identityId']) !== -1
+    console.log('SAVE_ORG_OPTIONS', list, ids)
+    // 过滤选择的组织
+    let data: any = list.filter((v) => {
+      return (
+        ids.indexOf(v['identityId']) !== -1 && ids.includes(v['identityId'])
+      )
     })
-    // 转换为map
-    const res: any = {}
-    data.map((item: any) => {
-      const key = item['identityId']
-      const val = item['identityName']
-      res[key] = val
+    let selectData: any = JSON.parse(JSON.stringify(data))
+    selectData.map((item: any) => {
+      if (item.identityId === ids[0]) {
+        item.senderFlag = 1
+      } else {
+        item.senderFlag = 0
+      }
     })
-    this.orgOptions = res
-  }
-  @Mutation
-  public SET_ORG_OPTIONS() {
-    const res: any = {}
-    this.workflowNodeOutputVoList.map((item: any) => {
-      const key = item['identityId']
-      const val = item['identityName']
-      res[key] = val
-    })
-    this.orgOptions = res
+    let res = selectData.sort((a: any, b: any) => b.senderFlag - a.senderFlag)
+    this.orgOptions = selectData
   }
   @Mutation
   public INIT_DATA() {
