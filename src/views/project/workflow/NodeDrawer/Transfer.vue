@@ -219,7 +219,7 @@ export default class TransferIndex extends Vue {
 
 <style scoped lang="stylus">
 .transfer
-  height: 200px
+  height: 230px
   margin 10px 0
   display: flex
   font-size: 12px;
@@ -261,7 +261,7 @@ export default class TransferIndex extends Vue {
             fill: #333;
   .result
     height: 100%
-    width: 130px
+    width: 150px
     .item
       margin 4px 0
       padding: 4px
@@ -274,9 +274,9 @@ export default class TransferIndex extends Vue {
       border-radius: 4px
       overflow-y: auto;
       margin-top 4px
-      height: 73px
+      height: 100px
     .features-auto
-      height: 125px
+      height: 150px
     .features-item
       cursor pointer
       padding: 4px

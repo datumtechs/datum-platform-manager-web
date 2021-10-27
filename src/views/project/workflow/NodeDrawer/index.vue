@@ -117,7 +117,18 @@ export default class NodeDrawerIndex extends Vue {
     box-shadow 0px 1px 4px 0px #d3d5d4
 >>> .el-drawer
       top: 160px!important
-      width: 590px!important
+      width: 580px!important
       height: calc(100vh - 160px)!important
       padding: 0!important
+::-webkit-scrollbar-track
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, .1);
+  background-color: transparent
+  cursor pointer
+::-webkit-scrollbar
+  width: 6px;
+  height: 6px;
+  background-color: transparent
+::-webkit-scrollbar-thumb
+  background-color: transparent;
+  border: 4px solid #ccc
 </style>

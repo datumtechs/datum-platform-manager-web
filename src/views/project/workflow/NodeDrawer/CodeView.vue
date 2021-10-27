@@ -64,6 +64,7 @@ export default class CodeIndex extends Vue {
   font-size 14px
   box-sizing: border-box;
   padding-bottom: 60px;
+  padding-right: 20px
   overflow-y: auto;
   .title
     color #333
