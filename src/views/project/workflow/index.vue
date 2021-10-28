@@ -232,8 +232,15 @@ export default class workflowIndex extends Vue {
       return this.$message.warning(`至少输入${min}个数据协同方`)
     }
     if (!inputValue && !min) {
-      console.log('node', this.nodeList)
-      return this.$message.warning('未输入数据协同方')
+      let isInput = false
+      this.nodeList.forEach((item: any) => {
+        if (item.workflowNodeInputVoList.length === 0) {
+          isInput = true
+        }
+      })
+      if (isInput) {
+        return this.$message.warning('未输入数据协同方')
+      }
     }
     const sign = await this.getSign()
     this.nodeList = WorkflowModule.nodeList
