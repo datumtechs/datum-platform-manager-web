@@ -186,7 +186,7 @@ export default class DispatchIndex extends Vue {
     const { beginTime, endTime, repeatInterval } = row
     this.repeatInterval = repeatInterval
     const start = beginTime.split(' ')
-    const end = endTime.split(' ')
+    const end = endTime && endTime.split ? endTime.split(' ') : ''
     this.startDate = start[0]
     this.startTime = new Date(start)
     this.endDate = end[0]
@@ -197,7 +197,7 @@ export default class DispatchIndex extends Vue {
     if (repeatInterval) {
       this.repeatRadio = true
     }
-    if (endTime.length) {
+    if (endTime && endTime.length) {
       this.endRadio = true
     }
   }
