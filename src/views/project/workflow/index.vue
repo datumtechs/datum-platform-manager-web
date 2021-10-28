@@ -254,7 +254,7 @@ export default class workflowIndex extends Vue {
       const { code, msg } = await startWorkflow(params)
       if (code === 10000) {
         this.$message.success(msg)
-        this.checkWorkState()
+        this.checkWorkState(true)
       }
       this.startState = false
       this.copySaveParams = JSON.stringify(workflowNodeReqList)
@@ -272,7 +272,7 @@ export default class workflowIndex extends Vue {
       const { code, msg } = await endWorkflow({ workflowId })
       if (code === 10000) {
         this.$message.success(msg)
-        this.checkWorkState()
+        this.checkWorkState(false)
       }
       this.endState = false
     } catch (error) {
@@ -418,7 +418,7 @@ export default class workflowIndex extends Vue {
     this.copySaveParams = JSON.stringify(
       this.getSaveParams().workflowNodeReqList,
     )
-    this.checkWorkState()
+    this.checkWorkState(false)
   }
   private async getLogList() {
     const { nodeList, workflowId } = this
@@ -426,11 +426,10 @@ export default class workflowIndex extends Vue {
     this.logList = data
   }
   // 检查工作流状态
-  private async checkWorkState() {
-    let isRun = false
+  private async checkWorkState(isRun: boolean) {
     // 判断节点是否运作中
     this.nodeList.map((item: any) => {
-      if (item && item.runStatus && item.runStatus > 0) {
+      if (item && item.runStatus && item.runStatus == 1) {
         isRun = true
       }
     })
