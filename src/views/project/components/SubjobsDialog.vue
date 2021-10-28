@@ -127,7 +127,7 @@ export default class WorkDialog extends Vue {
 
   // 关联工作流
   private workflowOptions = []
-  private workflowId = ''
+  private workflowId: string | number = ''
   private name = ''
   private desc = ''
   private jobId = ''
@@ -159,6 +159,10 @@ export default class WorkDialog extends Vue {
         const dom = this.$refs as any
         if (dom && dom.Dispatch && dom.Dispatch.resetTime) {
           dom.Dispatch.resetTime()
+        }
+        const route = this.$route
+        if (route.name === 'workflow') {
+          this.workflowId = Number(route.params.workflow)
         }
       }, 13)
     } else {

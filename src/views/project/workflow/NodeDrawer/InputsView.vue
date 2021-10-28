@@ -248,7 +248,6 @@ export default class InputViewIndex extends Vue {
   }
   private visibleChange(state: boolean) {
     if (!state) {
-      console.log('fas')
       WorkflowModule.SET_MODEL_VALUE(this.modelValue)
     }
   }

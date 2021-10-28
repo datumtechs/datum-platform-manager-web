@@ -362,7 +362,6 @@ export default class workflowIndex extends Vue {
   // 删除该节点
   private async handleDelete() {
     if (this.handleisAuth()) return
-    console.log('index', this.currentIndex)
     const index = this.currentIndex
     this.nodeList.splice(index, 1)
     this.isNodeDrawer = false
@@ -429,10 +428,8 @@ export default class workflowIndex extends Vue {
   // 检查工作流状态
   private async checkWorkState() {
     let isRun = false
-    console.log('item.runStatus', this.nodeList)
     // 判断节点是否运作中
     this.nodeList.map((item: any) => {
-      console.log('item.runStatus', item.runStatus)
       if (item && item.runStatus && item.runStatus > 0) {
         isRun = true
       }

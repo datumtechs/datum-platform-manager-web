@@ -4,7 +4,6 @@ class alayaService {
   private web3: any = null
   private win: any = window
   private alaya: any = this.win.alaya
-  private platon: any = this.win.platon
   constructor() {
     this.web3 = null //web3对象
     try {
@@ -14,9 +13,9 @@ class alayaService {
     }
   }
   initAlaya() {
-    const { alaya, platon } = this
+    const { alaya } = this
     //判断是否存在alaya
-    if (typeof alaya === 'undefined' || typeof platon === 'undefined') {
+    if (typeof alaya === 'undefined') {
       console.log('No alaya, You should consider trying Samurai!')
       UserModule.SET_ADDRESS('')
       UserModule.IS_INIT_WALLET(false)
@@ -26,11 +25,9 @@ class alayaService {
       // 切换用户
       alaya.on('accountsChanged', (account: string[]) => {
         if (account.length === 0) {
-          console.log('account =0', account)
           UserModule.SET_ADDRESS('')
         } else if (account.length > 0) {
           UserModule.SET_ADDRESS(account[0])
-          console.log('account >0', account)
         } else {
           console.log('Alaya account changed but same address')
         }
@@ -38,7 +35,7 @@ class alayaService {
       // 切换网络
       alaya.on('chainChanged', () => {
         setTimeout(() => {
-          UserModule.SET_ADDRESS(platon.selectedAddress)
+          UserModule.SET_ADDRESS(alaya.selectedAddress)
         }, 0)
       })
     }
@@ -189,8 +186,8 @@ class alayaService {
   public checkAddress() {
     if (UserModule.user_info.address && UserModule.user_info.address.length)
       return true
-    if (this.platon && this.platon.selectedAddress) {
-      const address = this.platon.selectedAddress
+    if (this.alaya && this.alaya.selectedAddress) {
+      const address = this.alaya.selectedAddress
       if (address && address.length) {
         UserModule.SET_ADDRESS(address)
         return true
