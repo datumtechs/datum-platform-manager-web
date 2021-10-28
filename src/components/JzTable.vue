@@ -121,7 +121,8 @@
                 @click="handleBtn(index, scope.row)"
                 :key="index"
                 :disabled="
-                  scope.row.btnStatus === 1 ||
+                  scope.row.btnStatus === 2 ||
+                    scope.row.btnStatus === 1 ||
                     scope.row.btnStatus === 3 ||
                     isAuth(scope.row)
                 "

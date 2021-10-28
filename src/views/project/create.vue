@@ -81,28 +81,7 @@ import { addProject, getProjectTemplate } from '@/api/project'
 })
 export default class createIndex extends Vue {
   private templateIndex = 0
-  private templates = [
-    // {
-    //   id: 1,
-    //   lable: 'create.blank',
-    // },
-    // {
-    //   id: 2,
-    //   lable: 'create.blacklist',
-    // },
-    // {
-    //   id: 3,
-    //   lable: 'create.qualified',
-    // },
-    // {
-    //   id: 4,
-    //   lable: 'create.collaborative',
-    // },
-    // {
-    //   id: 5,
-    //   lable: 'create.scorecard',
-    // },
-  ]
+  private templates = []
   private input = ''
   private textarea = ''
   private projectTempId = ''
@@ -132,6 +111,18 @@ export default class createIndex extends Vue {
   }
   private async handleSubmit() {
     const { input, textarea, projectTempId } = this
+    if (input.length > 30) {
+      this.$message.warning('项目名称不超过30个字')
+      return false
+    }
+    if (textarea.length > 200) {
+      this.$message.warning('项目描述不超过200个字')
+      return false
+    }
+    if (!input) {
+      this.$message.warning('请输入项目名称')
+      return false
+    }
     const data = {
       projectName: input,
       projectDesc: textarea,

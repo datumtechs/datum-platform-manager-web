@@ -3,7 +3,7 @@
     <el-dialog
       :title="$t(title)"
       :visible.sync="workVisible"
-      width="30%"
+      width="500px"
       :before-close="handleClose"
     >
       <div class="wrap">
@@ -20,7 +20,7 @@
         <div>
           <el-input
             v-model="describe"
-            placeholder="请输入工作流描述，最长50字"
+            placeholder="请输入工作流描述，最长200字"
           ></el-input>
         </div>
       </div>
@@ -78,6 +78,18 @@ export default class WorkDialog extends Vue {
   @Emit('submit')
   private async handleSubmit() {
     const { name, describe, type } = this
+    if (name.length > 30) {
+      this.$message.warning('工作流名称不超过30个字')
+      return false
+    }
+    if (describe.length > 200) {
+      this.$message.warning('工作流描述不超过200个字')
+      return false
+    }
+    if (!name) {
+      this.$message.warning('请输入工作流名称')
+      return false
+    }
     const projectId = this.$route.params.id
     const data: any = {
       projectId,

@@ -283,6 +283,7 @@ export default class WorkIndex extends Vue {
     this.getList()
   }
   private async handleSubmit(params: any) {
+    if (!params) return
     const { type, data } = params
     let res
     if (type === 0) {

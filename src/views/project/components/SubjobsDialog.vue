@@ -57,12 +57,12 @@
           <template v-if="tabsIndex === 1">
             <div class="baseInfor">
               <span class="lable">名称</span>
-              <el-input v-model="name" placeholder="请输入项目名称"></el-input>
+              <el-input v-model="name" placeholder="请输入作业名称"></el-input>
               <span class="lable">描述（选填）</span>
               <el-input
                 type="textarea"
                 :rows="3"
-                placeholder="请输入项目描述"
+                placeholder="请输入作业描述"
                 v-model="desc"
               >
               </el-input>
@@ -141,7 +141,15 @@ export default class WorkDialog extends Vue {
     }
     if (this.tabsIndex === 1) {
       if (!this.name) {
-        this.$message.warning('请输入项目名称')
+        this.$message.warning('请输入作业名称')
+        return false
+      }
+      if (this.name.length > 30) {
+        this.$message.warning('作业名称不超过30个字')
+        return false
+      }
+      if (this.desc.length > 200) {
+        this.$message.warning('作业描述不超过200个字')
         return false
       }
     }
@@ -190,7 +198,15 @@ export default class WorkDialog extends Vue {
     }
     if (this.tabsIndex === 1) {
       if (!this.name) {
-        this.$message.warning('请输入项目名称')
+        this.$message.warning('请输入作业名称')
+        return false
+      }
+      if (this.name.length > 30) {
+        this.$message.warning('作业名称不超过30个字')
+        return false
+      }
+      if (this.desc.length > 200) {
+        this.$message.warning('作业描述不超过200个字')
         return false
       }
     }
@@ -219,6 +235,14 @@ export default class WorkDialog extends Vue {
     }
     if (!name) {
       this.$message.warning('请选择名称')
+      return false
+    }
+    if (this.name.length > 30) {
+      this.$message.warning('作业名称不超过30个字')
+      return false
+    }
+    if (this.desc.length > 200) {
+      this.$message.warning('作业描述不超过200个字')
       return false
     }
     const parmams: any = {
@@ -344,4 +368,6 @@ export default class WorkDialog extends Vue {
           margin-top 45px
           .submit
             margin-right 40px
+        >>> .el-textarea textarea
+              resize: none;
 </style>

@@ -55,6 +55,18 @@ export default class editIndex extends Vue {
   }
   private async handleSubmit() {
     const { input, textarea, id } = this
+    if (input.length > 30) {
+      this.$message.warning('项目名称不超过30个字')
+      return false
+    }
+    if (textarea.length > 200) {
+      this.$message.warning('项目描述不超过200个字')
+      return false
+    }
+    if (!input) {
+      this.$message.warning('请输入项目名称')
+      return false
+    }
     const data = { projectName: input, projectDesc: textarea, id }
     const { code } = await setProject(data)
     if (code === 10000) {
