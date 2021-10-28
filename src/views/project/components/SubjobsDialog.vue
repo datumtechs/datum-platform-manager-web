@@ -251,6 +251,7 @@ export default class WorkDialog extends Vue {
       desc,
       workflowId,
       repeatFlag: repeatFlag ? 1 : 0,
+      endTimeFlag: endRadio ? 1 : 0,
     }
     if (repeatFlag) {
       parmams['repeatInterval'] = repeatInterval
@@ -258,8 +259,6 @@ export default class WorkDialog extends Vue {
     // 勾选结束时间
     if (endRadio) {
       parmams['endTime'] = endTime
-    } else {
-      parmams['endTime'] = '2025-12-29 11:59:59'
     }
     if (this.type) {
       parmams['id'] = this.jobId
