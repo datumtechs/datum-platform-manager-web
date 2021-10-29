@@ -9,10 +9,20 @@
       <div class="wrap">
         <div class="name">{{ nodeName }}</div>
         <el-table :data="gridData" class="results-tabel">
+          <el-table-column prop="id" label="ID"></el-table-column>
+          <el-table-column prop="fileName" label="FileName"></el-table-column>
+          <el-table-column prop="filePath" label="FilePath"></el-table-column>
           <el-table-column
-            property="date"
-            label="ID"
-            width="150"
+            prop="metadataId"
+            label="MetadataId"
+          ></el-table-column>
+          <el-table-column
+            prop="createTime"
+            label="CreateTime"
+          ></el-table-column>
+          <el-table-column
+            prop="updateTime"
+            label="UpdateTime"
           ></el-table-column>
         </el-table>
       </div>
@@ -37,7 +47,8 @@ export default class ViewResult extends Vue {
   }
   async getResultsList(taskId: string | number) {
     const { data } = await getTaskResult(taskId)
-    console.log(data)
+    // this.gridData = Array(20).fill(data)
+    this.gridData = data
   }
 }
 </script>
@@ -48,5 +59,5 @@ export default class ViewResult extends Vue {
   .name
     margin-bottom 20px
   .results-tabel
-     min-height: 450px;
+    height: 450px;
 </style>
