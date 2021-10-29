@@ -113,7 +113,17 @@ export default class InputViewIndex extends Vue {
     return Number(WorkflowModule.algorithms.minNumbers)
   }
   get modelOptions() {
-    return WorkflowModule.modelList
+    const item: any = {
+      fileName: '前置节点输出模型',
+      modelId: '0',
+    }
+    const list = WorkflowModule.modelList
+    const index = WorkflowModule.currentIndex
+    if (index) {
+      return [item, ...WorkflowModule.modelList]
+    } else {
+      return WorkflowModule.modelList
+    }
   }
   get organizations() {
     return WorkflowModule.organizationList
@@ -353,6 +363,10 @@ export default class InputViewIndex extends Vue {
         return item[0]
       }
     })
+  }
+  beforeDestroy() {
+    this.modelValue = ''
+    WorkflowModule.SET_MODEL_VALUE(this.modelValue)
   }
 }
 </script>

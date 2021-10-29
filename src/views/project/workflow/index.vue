@@ -55,7 +55,9 @@
       <v-contextmenu-item @click="handleResetName">重命名</v-contextmenu-item>
       <!-- <v-contextmenu-item @click="handleCopy">复制</v-contextmenu-item> -->
       <v-contextmenu-item @click="handleDelete">删除</v-contextmenu-item>
-      <v-contextmenu-item @click="viewResults">查看运行结果</v-contextmenu-item>
+      <v-contextmenu-item :disabled="handleRunState()" @click="viewResults">
+        查看运行结果
+      </v-contextmenu-item>
     </v-contextmenu>
     <!-- 右侧节点弹窗 -->
     <template v-if="isNodeDrawer">
@@ -226,6 +228,9 @@ export default class workflowIndex extends Vue {
       this.$message.error('暂无节点')
       return
     }
+    if (this.isModel && this.modelId === '') {
+      return this.$message.warning('未输入模型')
+    }
     const min = Number(WorkflowModule.algorithms.minNumbers)
     const inputValue = WorkflowModule.valueListNumber
     if (inputValue < min) {
@@ -262,6 +267,7 @@ export default class workflowIndex extends Vue {
       const { code, msg } = await startWorkflow(params)
       if (code === 10000) {
         this.$message.success(msg)
+        await this.getWorkState()
         this.checkWorkState(true)
       }
       this.startState = false
@@ -280,7 +286,8 @@ export default class workflowIndex extends Vue {
       const { code, msg } = await endWorkflow({ workflowId })
       if (code === 10000) {
         this.$message.success(msg)
-        this.checkWorkState(false)
+        await this.getWorkState()
+        this.checkWorkState()
       }
       this.endState = false
     } catch (error) {
@@ -311,9 +318,6 @@ export default class workflowIndex extends Vue {
     if (!this.nodeList.length) {
       this.$message.error('暂无节点')
       return
-    }
-    if (this.isModel && this.modelId === '') {
-      return this.$message.warning('请输入模型')
     }
     const params = this.getSaveParams()
     this.saveState = true
@@ -426,7 +430,7 @@ export default class workflowIndex extends Vue {
     this.copySaveParams = JSON.stringify(
       this.getSaveParams().workflowNodeReqList,
     )
-    this.checkWorkState(false)
+    this.checkWorkState()
   }
   private async getLogList() {
     const { nodeList, workflowId } = this
@@ -434,7 +438,7 @@ export default class workflowIndex extends Vue {
     this.logList = data
   }
   // 检查工作流状态
-  private async checkWorkState(isRun: boolean) {
+  private async checkWorkState(isRun?: boolean) {
     // 判断节点是否运作中
     this.nodeList.map((item: any) => {
       if (item && item.runStatus && item.runStatus == 1) {
@@ -488,6 +492,14 @@ export default class workflowIndex extends Vue {
       this.$message.error('钱包地址异常，请重新连接钱包')
       UserModule.ResetToken()
       throw new Error('钱包地址异常，请重新连接钱包')
+    }
+  }
+  private handleRunState() {
+    const node = this.nodeList[this.currentIndex]
+    if (node && node.runStatus === 2) {
+      return false
+    } else {
+      return true
     }
   }
   private viewResults() {
