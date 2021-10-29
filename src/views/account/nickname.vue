@@ -9,10 +9,10 @@
         <div class="address">
           {{ $t('account.address') }}：
           <span>{{ address }}</span>
-          <svg-icon name="record" width="24" height="24" color="#515151" />
+          <!-- <svg-icon name="record" width="24" height="24" color="#515151" />
           <span class="scan" @click="handleScan">
             {{ $t('account.scan') }}
-          </span>
+          </span> -->
         </div>
         <div class="nickname">
           <!-- <div>{{ $t('account.name') }}</div> -->
@@ -92,9 +92,9 @@ export default class resourcesData extends Vue {
   private handleCancel() {
     this.$router.go(-1)
   }
-  private handleScan() {
-    window.open('https://scan.platon.network/', '_blank')
-  }
+  // private handleScan() {
+  //   window.open('https://scan.platon.network/', '_blank')
+  // }
 }
 </script>
 

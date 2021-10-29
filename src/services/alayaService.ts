@@ -3,7 +3,7 @@ import { UserModule } from '@/store/modules/user'
 class alayaService {
   private web3: any = null
   private win: any = window
-  private alaya: any = this.win.alaya
+  private moirae: any = this.win.moirae
   constructor() {
     this.web3 = null //web3对象
     try {
@@ -13,17 +13,17 @@ class alayaService {
     }
   }
   initAlaya() {
-    const { alaya } = this
+    const { moirae } = this
     //判断是否存在alaya
-    if (typeof alaya === 'undefined') {
+    if (typeof moirae === 'undefined') {
       console.log('No alaya, You should consider trying Samurai!')
       UserModule.SET_ADDRESS('')
       UserModule.IS_INIT_WALLET(false)
     } else {
       console.log('on accountsChanged')
-      this.web3 = new Web3(alaya)
+      this.web3 = new Web3(moirae)
       // 切换用户
-      alaya.on('accountsChanged', (account: string[]) => {
+      moirae.on('accountsChanged', (account: string[]) => {
         if (account.length === 0) {
           UserModule.SET_ADDRESS('')
         } else if (account.length > 0) {
@@ -33,9 +33,9 @@ class alayaService {
         }
       })
       // 切换网络
-      alaya.on('chainChanged', () => {
+      moirae.on('chainChanged', () => {
         setTimeout(() => {
-          UserModule.SET_ADDRESS(alaya.selectedAddress)
+          UserModule.SET_ADDRESS(moirae.selectedAddress)
         }, 0)
       })
     }
@@ -47,8 +47,8 @@ class alayaService {
   async connectWallet() {
     console.log('connectWallet')
     UserModule.SET_LOADING(true)
-    const { alaya } = this
-    if (typeof alaya == 'undefined') {
+    const { moirae } = this
+    if (typeof moirae == 'undefined') {
       UserModule.IS_INIT_WALLET(false)
       UserModule.SET_LOADING(false)
       // 旧的配置
@@ -57,8 +57,8 @@ class alayaService {
       // 新的配置待确定
     } else {
       try {
-        const data = await alaya.request({
-          method: 'platon_requestAccounts',
+        const data = await moirae.request({
+          method: 'moirae_requestAccounts',
         })
         UserModule.ConnectWallet(data)
         UserModule.SET_LOADING(false)
@@ -136,7 +136,7 @@ class alayaService {
     // workflow：  this.singParams()
     const msgParams = type === 'login' ? this.msgParams() : this.singParams()
     var params = [from, msgParams]
-    var method = 'platon_signTypedData_v4'
+    var method = 'moirae_signTypedData_v4'
     console.log({
       method,
       params,
@@ -186,8 +186,8 @@ class alayaService {
   public checkAddress() {
     if (UserModule.user_info.address && UserModule.user_info.address.length)
       return true
-    if (this.alaya && this.alaya.selectedAddress) {
-      const address = this.alaya.selectedAddress
+    if (this.moirae && this.moirae.selectedAddress) {
+      const address = this.moirae.selectedAddress
       if (address && address.length) {
         UserModule.SET_ADDRESS(address)
         return true

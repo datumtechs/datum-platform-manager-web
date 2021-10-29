@@ -56,7 +56,7 @@
             />
             账户隐私保留在本地
           </div>
-          <div>
+          <!-- <div>
             <svg-icon
               name="samurai-3"
               width="20"
@@ -65,7 +65,7 @@
               color="#606266"
             />
             无缝适配PlatON网络
-          </div>
+          </div> -->
           <el-button type="primary" @click="handleSamurai">安装</el-button>
         </div>
       </div>
