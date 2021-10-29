@@ -5,6 +5,7 @@
       title="运行结果预览"
       :visible.sync="resultsVisible"
       :before-close="handleClose"
+      width="720px"
     >
       <div class="wrap">
         <div class="name">{{ nodeName }}</div>
@@ -47,7 +48,7 @@ export default class ViewResult extends Vue {
   }
   async getResultsList(taskId: string | number) {
     const { data } = await getTaskResult(taskId)
-    // this.gridData = Array(20).fill(data)
+    // this.gridData = Array(20).fill(...data)
     this.gridData = data
   }
 }
@@ -56,8 +57,11 @@ export default class ViewResult extends Vue {
 <style scoped lang="stylus">
 .wrap
   padding 20px
-  .name
-    margin-bottom 20px
+  height: 450px;
+  overflow-y: auto;
   .results-tabel
-    height: 450px;
+    padding 10px
+    height: 420px;
+    overflow-y: auto;
+    box-sizing: border-box
 </style>
