@@ -66,7 +66,7 @@
             />
             无缝适配PlatON网络
           </div> -->
-          <el-button type="primary" @click="handleSamurai">安装</el-button>
+<!--          <el-button type="primary" @click="handleSamurai">安装</el-button>-->
         </div>
       </div>
     </el-dialog>
