@@ -66,14 +66,14 @@
             v-if="isLogin"
           >
             <svg-icon
-              v-show="!isLoggedData"
+              v-show="historyIndex !== 1"
               name="my-resources"
               class="logged-data"
               width="18"
               height="18"
             />
             <svg-icon
-              v-show="isLoggedData"
+              v-show="historyIndex === 1"
               name="close"
               class="icon-close"
               color="#000"
@@ -90,7 +90,7 @@
           }}</span>
           <span @click="handleUser" class="user-item" v-if="isLogin">
             <svg-icon
-              v-show="!isUserShow"
+              v-show="historyIndex !== 2"
               name="user"
               class="icon-user"
               color="#000"
@@ -98,7 +98,7 @@
               height="18"
             />
             <svg-icon
-              v-show="isUserShow"
+              v-show="historyIndex === 2"
               name="close"
               class="icon-close"
               color="#000"
@@ -111,7 +111,7 @@
     </el-row>
     <transition name="drawer-fade">
       <RightDrawer
-        v-if="isUserShow || isLoggedData"
+        v-if="historyIndex > 0"
         :historyIndex="historyIndex"
         @clickItem="handeleClose"
         ref="RightDrawer"
@@ -142,7 +142,7 @@ export default class HeaderComponent extends Vue {
   private isEnglish: boolean = false
   private isUserShow: boolean = false
   private isLoggedData: boolean = false
-  private historyIndex: number[] = []
+  private historyIndex: number = 0
   private visible: boolean = false
 
   get activeMenu() {
@@ -162,27 +162,18 @@ export default class HeaderComponent extends Vue {
     return getSubStr(UserModule.user_info.userName)
   }
   private handleUser() {
-    this.isUserShow = !this.isUserShow
-    if (this.isUserShow) {
-      this.historyIndex.push(1)
+    if (this.historyIndex !== 2) {
+      this.historyIndex = 2
     } else {
-      // 关闭时候删除该下标
-      this.historyIndex.splice(
-        this.historyIndex.findIndex((e) => e === 1),
-        1,
-      )
+      this.historyIndex = 0
     }
   }
   // 点击切换资源
   private handleLoggedData() {
-    this.isLoggedData = !this.isLoggedData
-    if (this.isLoggedData) {
-      this.historyIndex.push(0)
+    if (this.historyIndex !== 1) {
+      this.historyIndex = 1
     } else {
-      this.historyIndex.splice(
-        this.historyIndex.findIndex((e) => e === 0),
-        1,
-      )
+      this.historyIndex = 0
     }
   }
   private handleSelect(key: string, keyPath: string) {
@@ -192,7 +183,7 @@ export default class HeaderComponent extends Vue {
   private handeleClose() {
     this.isUserShow = false
     this.isLoggedData = false
-    this.historyIndex = []
+    this.historyIndex = 0
   }
   private changeLanguage() {
     this.isEnglish = !this.isEnglish
