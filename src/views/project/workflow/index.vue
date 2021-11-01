@@ -353,13 +353,13 @@ export default class workflowIndex extends Vue {
         },
         workflowNodeInputReqList: item.workflowNodeInputVoList,
         workflowNodeOutputReqList: item.workflowNodeOutputVoList,
-        workflowNodeResourceReq: {
-          costBandwidth: Number(item.nodeAlgorithmVo.costBandwidth),
-          costCpu: Number(item.nodeAlgorithmVo.costCpu),
-          costGpu: item.nodeAlgorithmVo.costGpu,
-          runTime: item.nodeAlgorithmVo.runTime,
-          costMem: Number(item.nodeAlgorithmVo.costMem),
-        },
+        // workflowNodeResourceReq: {
+        //   costBandwidth: Number(item.nodeAlgorithmVo.costBandwidth),
+        //   costCpu: Number(item.nodeAlgorithmVo.costCpu),
+        //   costGpu: item.nodeAlgorithmVo.costGpu,
+        //   runTime: item.nodeAlgorithmVo.runTime,
+        //   costMem: Number(item.nodeAlgorithmVo.costMem),
+        // },
       }
     })
     return {
@@ -452,7 +452,7 @@ export default class workflowIndex extends Vue {
       }
       this.workStateTimer = setInterval(() => {
         this.getWorkState()
-      }, 5000)
+      }, 3000)
     } else {
       if (this.workStateTimer) {
         clearTimeout(this.workStateTimer)

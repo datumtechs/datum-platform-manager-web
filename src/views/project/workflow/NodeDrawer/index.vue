@@ -24,7 +24,7 @@
           <InputView v-show="navIndex === 1"></InputView>
           <OutputView v-show="navIndex === 2"></OutputView>
           <CodeView v-show="navIndex === 3"></CodeView>
-          <EnviromentView v-show="navIndex === 4"></EnviromentView>
+          <!-- <EnviromentView v-show="navIndex === 4"></EnviromentView> -->
         </div>
       </div>
     </el-drawer>
@@ -37,7 +37,7 @@ import OverView from './OversView.vue'
 import OutputView from './OutputView.vue'
 import InputView from './InputsView.vue'
 import CodeView from './CodeView.vue'
-import EnviromentView from './EnviromentView.vue'
+// import EnviromentView from './EnviromentView.vue'
 import { WorkflowModule } from '@/store/modules/workflow'
 
 @Component({
@@ -47,7 +47,7 @@ import { WorkflowModule } from '@/store/modules/workflow'
     OutputView,
     InputView,
     CodeView,
-    EnviromentView,
+    // EnviromentView,
   },
 })
 export default class NodeDrawerIndex extends Vue {
@@ -67,9 +67,9 @@ export default class NodeDrawerIndex extends Vue {
     {
       lable: 'workflow.code',
     },
-    {
-      lable: 'workflow.enviroment',
-    },
+    // {
+    //   lable: 'workflow.enviroment',
+    // },
   ]
   get currentIndex() {
     return WorkflowModule.currentIndex

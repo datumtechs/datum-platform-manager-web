@@ -86,7 +86,7 @@ export default class LayoutIndex extends Vue {
   position fixed
   top 62px
   right 0px
-  z-index 99
+  z-index 100
   color #c6c6c6
 
   padding-left 28px
