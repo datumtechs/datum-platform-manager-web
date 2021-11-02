@@ -59,7 +59,7 @@ export default class LayoutIndex extends Vue {
   ]
   get configs() {
     const { historyIndex } = this
-    return this.configList[historyIndex[historyIndex.length - 1]]
+    return this.configList[historyIndex - 1]
   }
   @Emit('clickItem')
   private async handleItem(path: string) {
