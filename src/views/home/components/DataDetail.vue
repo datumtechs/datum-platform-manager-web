@@ -100,7 +100,8 @@ export default class DataDetail extends Vue {
   ]
 
   private async getList() {
-    const { data } = await getDataDetail(this.$route.params.id)
+    const metaDataId = this.$route.params.metaid
+    const { data } = await getDataDetail(metaDataId)
     this.data = data
     this.data.fileType = data.fileType ? 'csv' : '未知'
     this.data.size = formatBytes(data.size)

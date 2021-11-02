@@ -75,7 +75,7 @@ export default class Detail extends Vue {
     this.tabIndex = index
   }
   private handleAuthorize() {
-    // TODO 判断用户登录
+    // 判断用户登录
     const id = this.$route.params.id
     this.$router.push(`/data/${id}/authorize`)
   }

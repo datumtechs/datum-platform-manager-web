@@ -14,7 +14,7 @@
             :class="['wallet-btn', isRadio ? 'wallet-btn-active' : '']"
           >
             <img
-              src="@/assets/images/icons/samurai-walle.svg"
+              src="@/assets/images/icons/samurai-walle.png"
               alt="samurai"
               class="icon"
             />
@@ -66,7 +66,7 @@
             />
             无缝适配PlatON网络
           </div> -->
-<!--          <el-button type="primary" @click="handleSamurai">安装</el-button>-->
+          <!--          <el-button type="primary" @click="handleSamurai">安装</el-button>-->
         </div>
       </div>
     </el-dialog>
