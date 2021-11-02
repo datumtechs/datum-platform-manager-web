@@ -40,7 +40,11 @@
             <img
               v-if="item.runStatus > 0"
               class="node-state"
-              :src="require(`@/assets/images/icons/${stateIcon[item.runStatus]}.svg`)"
+              :src="
+                require(`@/assets/images/icons/${
+                  stateIcon[item.runStatus]
+                }.svg`)
+              "
             />
           </div>
           <!-- <ul class="state">
