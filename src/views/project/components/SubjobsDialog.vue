@@ -135,21 +135,25 @@ export default class WorkDialog extends Vue {
   private handleTable(index: number) {
     if (!this.tabsIndex) {
       if (!this.workflowId) {
-        this.$message.warning('请选择工作流')
+        const tips: any = this.$t('tips.workflowName')
+        this.$message.warning(tips)
         return false
       }
     }
     if (this.tabsIndex === 1) {
       if (!this.name) {
-        this.$message.warning('请输入作业名称')
+        const tips: any = this.$t('tips.jobName')
+        this.$message.warning(tips)
         return false
       }
       if (this.name.length > 30) {
-        this.$message.warning('作业名称不超过30个字')
+        const tips: any = this.$t('tips.maxJobName')
+        this.$message.warning(tips)
         return false
       }
       if (this.desc.length > 200) {
-        this.$message.warning('作业描述不超过200个字')
+        const tips: any = this.$t('tips.maxJobInfo')
+        this.$message.warning(tips)
         return false
       }
     }
@@ -192,21 +196,25 @@ export default class WorkDialog extends Vue {
   private handleNext() {
     if (!this.tabsIndex) {
       if (!this.workflowId) {
-        this.$message.warning('请选择工作流')
+        const tips: any = this.$t('tips.workflowName')
+        this.$message.warning(tips)
         return false
       }
     }
     if (this.tabsIndex === 1) {
       if (!this.name) {
-        this.$message.warning('请输入作业名称')
+        const tips: any = this.$t('tips.jobName')
+        this.$message.warning(tips)
         return false
       }
       if (this.name.length > 30) {
-        this.$message.warning('作业名称不超过30个字')
+        const tips: any = this.$t('tips.maxJobName')
+        this.$message.warning(tips)
         return false
       }
       if (this.desc.length > 200) {
-        this.$message.warning('作业描述不超过200个字')
+        const tips: any = this.$t('tips.maxJobInfo')
+        this.$message.warning(tips)
         return false
       }
     }
@@ -230,19 +238,23 @@ export default class WorkDialog extends Vue {
     const { beginTime, endTime, repeatInterval, repeatFlag, endRadio } = data
     const { name, desc, workflowId } = this
     if (!workflowId) {
-      this.$message.warning('请选择工作流')
+      const tips: any = this.$t('tips.workflowName')
+      this.$message.warning(tips)
       return false
     }
     if (!name) {
-      this.$message.warning('请选择名称')
+      const tips: any = this.$t('tips.jobName')
+      this.$message.warning(tips)
       return false
     }
     if (this.name.length > 30) {
-      this.$message.warning('作业名称不超过30个字')
+      const tips: any = this.$t('tips.maxJobName')
+      this.$message.warning(tips)
       return false
     }
     if (this.desc.length > 200) {
-      this.$message.warning('作业描述不超过200个字')
+      const tips: any = this.$t('tips.maxJobInfo')
+      this.$message.warning(tips)
       return false
     }
     const parmams: any = {

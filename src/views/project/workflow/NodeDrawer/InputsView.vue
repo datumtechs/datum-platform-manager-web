@@ -87,6 +87,8 @@ import JzButton from '@/components/JzButton.vue'
 import Transfer from './Transfer.vue'
 import { getTables, getColumns, queryAllModelByProjectId } from '@/api/workflow'
 import { WorkflowModule } from '@/store/modules/workflow'
+import { AppModule } from '@/store/modules/app'
+
 @Component({
   name: 'InputView',
   components: {
@@ -102,6 +104,9 @@ export default class InputViewIndex extends Vue {
   private modelValue = ''
   get isModel() {
     return WorkflowModule.algorithms.inputModel
+  }
+  get lan() {
+    return AppModule.language
   }
   // 选中的组织
   get inputValueOrg() {
@@ -135,7 +140,8 @@ export default class InputViewIndex extends Vue {
   }
   private handleisAuth() {
     if (this.isAuth) {
-      this.$message.warning('您是项目查看者，暂无编辑权限')
+      const tips: any = this.$t('tips.noAuth')
+      this.$message.warning(tips)
       return true
     } else {
       return false
@@ -212,13 +218,21 @@ export default class InputViewIndex extends Vue {
   private async handleSave() {
     if (this.handleisAuth()) return
     if (this.isModel && this.modelValue === '') {
-      return this.$message.warning('请输入模型')
+      const tips: any = this.$t('tips.inputModel')
+      return this.$message.warning(tips)
     }
     if (this.inputValue.length < this.minLen) {
-      return this.$message.warning(`至少输入${this.minLen}个数据协同方`)
+      if (this.lan === 'zh') {
+        return this.$message.warning(`至少输入${this.minLen}个数据协同方`)
+      } else {
+        return this.$message.warning(
+          `Enter at least ${this.minLen} data collaborators`,
+        )
+      }
     }
     if (!this.inputValue[0]) {
-      return this.$message.warning('请输入数据发起方')
+      const tips: any = this.$t('tips.inputDataSend')
+      return this.$message.warning(tips)
     }
     const columnLists = this.handleColumnList()
     const inputVoList: any = []
@@ -243,7 +257,8 @@ export default class InputViewIndex extends Vue {
     })
     // 提交输入数据
     WorkflowModule.SET_INPUT_LIST(inputVoList)
-    this.$message.success('保存成功')
+    const tips: any = this.$t('tips.save')
+    this.$message.success(tips)
     // 缓存选中的选项
     const organizationId: string[] = []
     // 过滤空值

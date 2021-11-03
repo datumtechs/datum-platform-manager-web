@@ -135,7 +135,8 @@ export default class DispatchIndex extends Vue {
   @Emit('create')
   private handleCreate() {
     if (!this.startDate || !this.startTime) {
-      this.$message.warning('请输入开始时间')
+      const tips: any = this.$t('tips.startTime')
+      this.$message.warning(tips)
       return false
     }
     const beginTime =
@@ -157,13 +158,15 @@ export default class DispatchIndex extends Vue {
     } = this
     if (endRadio) {
       if (!this.endDate) {
-        this.$message.warning('请输入结束时间')
+        const tips: any = this.$t('tips.endTime')
+        this.$message.warning(tips)
         return false
       }
       const stampStart = new Date(beginTime).getTime()
       const stampEnd = new Date(endTime).getTime()
       if (stampStart > stampEnd) {
-        this.$message.warning('结束时间必须大于开始时间')
+        const tips: any = this.$t('tips.maxEnd')
+        this.$message.warning(tips)
         return false
       }
     }

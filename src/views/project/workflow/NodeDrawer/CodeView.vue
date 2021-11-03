@@ -41,7 +41,8 @@ export default class CodeIndex extends Vue {
   }
   private handleisAuth() {
     if (this.isAuth) {
-      this.$message.warning('您是项目查看者，暂无编辑权限')
+      const tips: any = this.$t('tips.noAuth')
+      this.$message.warning(tips)
       return true
     } else {
       return false
@@ -50,7 +51,8 @@ export default class CodeIndex extends Vue {
   private async handleSave() {
     if (this.handleisAuth()) return
     WorkflowModule.SET_NODES_CODE(this.textarea)
-    this.$message.success('保存成功')
+    const tips: any = this.$t('tips.save')
+    this.$message.success(tips)
   }
   created() {
     this.textarea = (WorkflowModule.algorithms as any).calculateContractCode

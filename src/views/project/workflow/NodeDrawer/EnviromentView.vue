@@ -124,7 +124,8 @@ export default class EnviromentView extends Vue {
   }
   private handleisAuth() {
     if (this.isAuth) {
-      this.$message.warning('您是项目查看者，暂无编辑权限')
+      const tips: any = this.$t('tips.noAuth')
+      this.$message.warning(tips)
       return true
     } else {
       return false
@@ -140,7 +141,8 @@ export default class EnviromentView extends Vue {
       costMem: memoryValue,
     }
     WorkflowModule.SET_NODES_RESOURCE(params)
-    this.$message.success('保存成功')
+    const tips: any = this.$t('tips.save')
+    this.$message.success(tips)
   }
   created() {
     const info: any = WorkflowModule.algorithms

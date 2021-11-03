@@ -6,7 +6,7 @@
         type="primary"
         icon="el-icon-search"
         class="icon-search"
-        >搜索</el-button
+        >{{ $t('home.search') }}</el-button
       >
       <el-input
         v-model="inputInfo"
@@ -139,11 +139,13 @@ export default class HomeList extends Vue {
       return
     }
     if (authStatus === 0) {
-      this.$message.warning('等待审核中')
+      const tips: any = this.$t('tips.wait')
+      this.$message.warning(tips)
       return
     }
     if (authMetadataState === 0 && authStatus !== -1) {
-      this.$message.error('数据授权未知错误')
+      const tips: any = this.$t('tips.unknown')
+      this.$message.error(tips)
       return
     }
     this.$router.push(`/data/${id}/authorize/${metaid}`)

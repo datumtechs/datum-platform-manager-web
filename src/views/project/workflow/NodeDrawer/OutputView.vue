@@ -76,7 +76,8 @@ export default class extends Vue {
   }
   private handleisAuth() {
     if (this.isAuth) {
-      this.$message.warning('您是项目查看者，暂无编辑权限')
+      const tips: any = this.$t('tips.noAuth')
+      this.$message.warning(tips)
       return true
     } else {
       return false
@@ -97,7 +98,8 @@ export default class extends Vue {
     })
     WorkflowModule.SET_NODES_OUTPUT(res)
     if (!state) {
-      this.$message.success('保存成功')
+      const tips: any = this.$t('tips.save')
+      this.$message.success(tips)
     }
   }
   created() {

@@ -104,6 +104,7 @@ import { WorkflowModule } from '@/store/modules/workflow'
 import { BreadcrumbModule } from '@/store/modules/breadcrumb'
 import { UserModule } from '@/store/modules/user'
 import alayaService from '@/services/alayaService'
+import { AppModule } from '@/store/modules/app'
 
 @Component({
   name: 'workflow',
@@ -139,6 +140,9 @@ export default class workflowIndex extends Vue {
   private createState = false
   // 轮询工作流
   private workStateTimer: any = null
+  get lan() {
+    return AppModule.language
+  }
   // 是否包含 逻辑回归训练
   get isModel() {
     let state = false
@@ -185,7 +189,8 @@ export default class workflowIndex extends Vue {
   }
   private handleisAuth() {
     if (this.isAuth) {
-      this.$message.warning('您是项目查看者，暂无编辑权限')
+      const tips: any = this.$t('tips.noAuth')
+      this.$message.warning(tips)
       return true
     } else {
       return false
@@ -201,12 +206,14 @@ export default class workflowIndex extends Vue {
   private async handleItem(data: AlgorithmType) {
     if (this.handleisAuth()) return
     if (this.nodeList.length >= 3) {
-      return this.$message.warning('最多添加3个节点')
+      const tips: any = this.$t('tips.maxNode')
+      return this.$message.warning(tips)
     }
     const algorithmId = data.algorithmId
     const algorithmIds = this.nodeList.map((item: any) => item.algorithmId)
     if (algorithmIds.includes(algorithmId)) {
-      return this.$message.warning('请不要重复添加算法')
+      const tips: any = this.$t('tips.noRepeat')
+      return this.$message.warning(tips)
     }
     const item = JSON.parse(JSON.stringify(data))
     const { workflowId } = this
@@ -225,16 +232,22 @@ export default class workflowIndex extends Vue {
     if (this.startState) return
     if (this.handleisAuth()) return
     if (!this.nodeList.length) {
-      this.$message.error('暂无节点')
+      const tips: any = this.$t('tips.noNode')
+      this.$message.error(tips)
       return
     }
     if (this.isModel && this.modelId === '') {
-      return this.$message.warning('未输入模型')
+      const tips: any = this.$t('tips.inputModel')
+      return this.$message.warning(tips)
     }
     const min = Number(WorkflowModule.algorithms.minNumbers)
     const inputValue = WorkflowModule.valueListNumber
     if (inputValue < min) {
-      return this.$message.warning(`至少输入${min}个数据协同方`)
+      if (this.lan === 'zh') {
+        return this.$message.warning(`至少输入${min}个数据协同方`)
+      } else {
+        return this.$message.warning(`Enter at least ${min} data collaborators`)
+      }
     }
     if (!inputValue && !min) {
       let isInput = false
@@ -244,7 +257,8 @@ export default class workflowIndex extends Vue {
         }
       })
       if (isInput) {
-        return this.$message.warning('未输入数据协同方')
+        const tips: any = this.$t('tips.inputDataCoordination')
+        return this.$message.warning(tips)
       }
     }
     const sign = await this.getSign()
@@ -316,7 +330,8 @@ export default class workflowIndex extends Vue {
     if (this.saveState) return
     if (this.handleisAuth()) return
     if (!this.nodeList.length) {
-      this.$message.error('暂无节点')
+      const tips: any = this.$t('tips.noNode')
+      this.$message.error(tips)
       return
     }
     const params = this.getSaveParams()
@@ -383,7 +398,8 @@ export default class workflowIndex extends Vue {
     if (this.deleteState) return
     if (this.handleisAuth()) return
     if (this.isRun) {
-      return this.$message.warning('该算法启动中，请勿清空节点')
+      const tips: any = this.$t('tips.noDetele')
+      return this.$message.warning(tips)
     }
     this.nodeList = []
     WorkflowModule.INIT_DATA()
@@ -489,9 +505,10 @@ export default class workflowIndex extends Vue {
       const sign = await alayaService.signAlaya()
       return sign
     } else {
-      this.$message.error('钱包地址异常，请重新连接钱包')
+      const tips: any = this.$t('tips.noToken')
+      this.$message.error(tips)
       UserModule.ResetToken()
-      throw new Error('钱包地址异常，请重新连接钱包')
+      throw new Error(tips)
     }
   }
   private handleRunState() {

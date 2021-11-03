@@ -79,15 +79,18 @@ export default class WorkDialog extends Vue {
   private async handleSubmit() {
     const { name, describe, type } = this
     if (name.length > 30) {
-      this.$message.warning('工作流名称不超过30个字')
+      const tips: any = this.$t('tips.maxWorkflowName')
+      this.$message.warning(tips)
       return false
     }
     if (describe.length > 200) {
-      this.$message.warning('工作流描述不超过200个字')
+      const tips: any = this.$t('tips.maxWorkflowInfo')
+      this.$message.warning(tips)
       return false
     }
     if (!name) {
-      this.$message.warning('请输入工作流名称')
+      const tips: any = this.$t('tips.workflowName')
+      this.$message.warning(tips)
       return false
     }
     const projectId = this.$route.params.id
