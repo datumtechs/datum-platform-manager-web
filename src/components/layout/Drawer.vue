@@ -64,7 +64,8 @@ export default class LayoutIndex extends Vue {
   @Emit('clickItem')
   private async handleItem(path: string) {
     if (!UserModule.token) {
-      this.$message.error('Please login!')
+      const tips: any = this.$t('tips.noToken')
+      this.$message.error(tips)
       return false
     }
     if (path.length) {

@@ -56,15 +56,18 @@ export default class editIndex extends Vue {
   private async handleSubmit() {
     const { input, textarea, id } = this
     if (input.length > 30) {
-      this.$message.warning('项目名称不超过30个字')
+      const tips: any = this.$t('tips.maxProjectName')
+      this.$message.warning(tips)
       return false
     }
     if (textarea.length > 200) {
-      this.$message.warning('项目描述不超过200个字')
+      const tips: any = this.$t('tips.maxProjectInfo')
+      this.$message.warning(tips)
       return false
     }
     if (!input) {
-      this.$message.warning('请输入项目名称')
+      const tips: any = this.$t('tips.projectName')
+      this.$message.warning(tips)
       return false
     }
     const data = { projectName: input, projectDesc: textarea, id }

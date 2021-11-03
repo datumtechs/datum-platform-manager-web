@@ -62,7 +62,8 @@ export default class CaseIndex extends Vue {
   // 创建项目
   private handleDetail(id: string | number) {
     if (!this.isLogin) {
-      this.$message.warning('请连接钱包')
+      const tips: any = this.$t('tips.noToken')
+      this.$message.error(tips)
       return
     }
     const caseId = String(id)

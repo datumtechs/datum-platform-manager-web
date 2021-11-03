@@ -67,21 +67,23 @@ export default class resourcesData extends Vue {
   }
   private async handleSubmit() {
     const { nickname, address } = this
-    if (strlen(nickname) > 40) {
-      this.$message.error('昵称最大支持20个汉字！')
+    if (nickname.length > 20) {
+      const tips: any = this.$t('tips.maxNick')
+      this.$message.error(tips)
       return
     }
     if (nickname === '') {
-      this.$message.error('昵称不能为空！')
+      const tips: any = this.$t('tips.nick')
+      this.$message.error(tips)
       return
     }
     const params = {
       address,
       nickName: nickname,
     }
-    const data: any = await setNickName({ ...params })
-    if (data.code === 10000) {
-      this.$message.success('修改昵称成功')
+    const { code, msg } = await setNickName({ ...params })
+    if (code === 10000) {
+      this.$message.success(msg)
       this.nickname = params.nickName
       UserModule.SET_USER({ userName: this.nickname })
       setTimeout(() => {

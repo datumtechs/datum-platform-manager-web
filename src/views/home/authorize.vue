@@ -144,9 +144,10 @@ export default class Authorize extends Vue {
       const sign = await alayaService.signAlaya()
       return sign
     } else {
-      this.$message.error('钱包地址异常，请重新连接钱包')
+      const tips: any = this.$t('tips.noToken')
+      this.$message.error(tips)
       UserModule.ResetToken()
-      throw new Error('钱包地址异常，请重新连接钱包')
+      throw new Error(tips)
     }
   }
   private async handleAuthorize() {
@@ -160,13 +161,15 @@ export default class Authorize extends Vue {
           !this.endDate ||
           !this.endTime
         ) {
-          this.$message.error('请输入时间')
+          const tips: any = this.$t('tips.inputTime')
+          this.$message.error(tips)
           return true
         }
       },
       '2': () => {
         if (!this.authValue) {
-          this.$message.error('请输入次数')
+          const tips: any = this.$t('tips.inputFrequency')
+          this.$message.error(tips)
           return true
         }
       },

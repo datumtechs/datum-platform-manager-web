@@ -111,11 +111,13 @@ export default class MemberDialog extends Vue {
   private async handleSubmit() {
     const { user, role, memberId } = this
     if (user === '') {
-      this.$message.error('请选中用户')
+      const tips: any = this.$t('tips.selectUser')
+      this.$message.error(tips)
       return
     }
     if (role === '') {
-      this.$message.error('请设置角色')
+      const tips: any = this.$t('tips.selectRole')
+      this.$message.error(tips)
       return
     }
     const data: any = {

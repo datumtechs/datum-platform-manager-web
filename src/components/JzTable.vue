@@ -216,7 +216,8 @@ export default class TableIndex extends Vue {
   }
   private isViewer() {
     if (Number(this.$route.params.role) === 3) {
-      this.$message.warning('您是项目查看者，暂无编辑权限')
+      const tips: any = this.$t('tips.noAuth')
+      this.$message.warning(tips)
       return true
     } else {
       return false

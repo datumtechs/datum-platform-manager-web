@@ -224,7 +224,8 @@ export default class WorkIndex extends Vue {
   }
   private createWork() {
     if (Number(this.$route.params.role) === 3) {
-      this.$message.warning('您是项目查看者，暂无创建工作流权限')
+      const tips: any = this.$t('tips.noAddAuth')
+      this.$message.warning(tips)
       return true
     }
     // this.workDialog = true
@@ -232,7 +233,8 @@ export default class WorkIndex extends Vue {
   }
   private createJobs() {
     if (Number(this.$route.params.role) === 3) {
-      this.$message.warning('您是项目查看者，暂无创建作业权限')
+      const tips: any = this.$t('tips.noAddAuth')
+      this.$message.warning(tips)
       return true
     }
     ;(this.$refs.subjobDialog as any).handleOpen(0)
