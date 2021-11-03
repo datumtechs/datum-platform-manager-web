@@ -12,7 +12,10 @@
           active-text-color="#5F4FFB"
           :router="true"
         >
-          <el-submenu index="/" class="logo-wrap">
+          <el-menu-item index="/" class="logo-wrap">
+            <span class="logo-text">隐私计算服务平台</span>
+          </el-menu-item>
+          <!-- <el-submenu index="/" class="logo-wrap">
             <template slot="title">
               <svg-icon
                 name="logo"
@@ -25,7 +28,7 @@
             <el-menu-item>RosettaNet</el-menu-item>
             <el-menu-item>RosettaFlow</el-menu-item>
             <el-menu-item>RosettaMAS</el-menu-item>
-          </el-submenu>
+          </el-submenu> -->
           <el-submenu index="home">
             <template slot="title">
               {{ $t('nav.market') }}
@@ -310,5 +313,10 @@ export default class HeaderComponent extends Vue {
 .el-menu--horizontal .el-menu--popup .el-menu-item:hover{
   background: #fff !important;
   color: #5F4FFB !important;
+}
+.logo-text{
+  color #5f4ffb
+  font-weight: 700
+  font-size: 18px;
 }
 </style>
