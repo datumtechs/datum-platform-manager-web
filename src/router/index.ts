@@ -84,7 +84,7 @@ export const constantRoutes: RouteConfig[] = [
         ],
       },
       {
-        path: 'data/:id/authorize',
+        path: 'data/:id/authorize/:metaid',
         component: () =>
           import(
             /* webpackChunkName: "authorize" */ '@/views/home/authorize.vue'

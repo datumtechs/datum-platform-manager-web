@@ -75,9 +75,9 @@ export default class Detail extends Vue {
     this.tabIndex = index
   }
   private handleAuthorize() {
-    // TODO 判断用户登录
     const id = this.$route.params.id
-    this.$router.push(`/data/${id}/authorize`)
+    const metaid = this.$route.params.metaid
+    this.$router.push(`/data/${id}/authorize/${metaid}`)
   }
   get isAlgo() {
     return this.$route.name === 'algorithmDetail'
