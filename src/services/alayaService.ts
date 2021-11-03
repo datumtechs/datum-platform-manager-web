@@ -72,11 +72,11 @@ class alayaService {
     const uuid = UserModule.user_info.uuid
     return JSON.stringify({
       domain: {
-        name: 'Moirae',
+        name: 'JUGO',
       },
       message: {
         key: uuid,
-        desc: 'Welcome to Moirae!',
+        desc: 'Welcome to JUGO!',
       },
       primaryType: 'Login',
       types: {

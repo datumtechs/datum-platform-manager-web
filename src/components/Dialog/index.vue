@@ -18,7 +18,7 @@
               alt="samurai"
               class="icon"
             />
-            <span class="text">Samurai</span>
+            <span class="text">JugoWallet</span>
           </div>
         </div>
         <div class="info">
@@ -34,7 +34,7 @@
         </div>
       </div>
       <div class="walle-wrap walle-init" v-else>
-        <div class="title">Samurai扩展</div>
+        <div class="title">JugoWallet扩展</div>
         <div class="init-info">
           <div>
             <svg-icon
