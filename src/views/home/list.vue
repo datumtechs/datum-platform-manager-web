@@ -46,6 +46,7 @@
               type="jz-button--primary"
               @click="
                 handleAuthorize(
+                  item.id,
                   item.metaDataId,
                   item.authStatus,
                   item.authMetadataState,
@@ -129,6 +130,7 @@ export default class HomeList extends Vue {
   }
   private handleAuthorize(
     id: string | number,
+    metaid: string | number,
     authStatus: number,
     authMetadataState: number,
   ) {
@@ -144,7 +146,7 @@ export default class HomeList extends Vue {
       this.$message.error('数据授权未知错误')
       return
     }
-    this.$router.push(`/data/${id}/authorize`)
+    this.$router.push(`/data/${id}/authorize/${metaid}`)
   }
   private async getList() {
     // 过滤空格
