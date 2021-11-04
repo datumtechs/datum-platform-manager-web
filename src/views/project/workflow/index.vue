@@ -37,15 +37,22 @@
                 :name="stateIcon[item.runStatus]"
               /> -->
             <!-- 节点运行状态 -->
-            <img
+            <el-tooltip
               v-if="item.runStatus > 0"
-              class="node-state"
-              :src="
-                require(`@/assets/images/icons/${
-                  stateIcon[item.runStatus]
-                }.svg`)
-              "
-            />
+              class="item"
+              effect="dark"
+              :content="stateList[item.runStatus]"
+              placement="right"
+            >
+              <img
+                class="node-state"
+                :src="
+                  require(`@/assets/images/icons/${
+                    stateIcon[item.runStatus]
+                  }.svg`)
+                "
+              />
+            </el-tooltip>
           </div>
           <!-- <ul class="state">
             <li
@@ -145,7 +152,7 @@ export default class workflowIndex extends Vue {
   private workflowNodeId = ''
   private nodeList: any = []
   private menus = []
-  // private stateList = ['未开始', '运行中', '成功', '失败']
+  private stateList = ['未开始', '运行中', '运行成功', '运行失败']
   private stateIcon = [
     '',
     'node-state-run',
