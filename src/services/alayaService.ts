@@ -103,7 +103,7 @@ class alayaService {
     const address = UserModule.user_info.address
     return JSON.stringify({
       domain: {
-        name: 'Moirae',
+        name: 'JUGO',
       },
       message: {
         address,
