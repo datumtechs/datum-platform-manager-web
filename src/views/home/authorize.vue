@@ -99,6 +99,7 @@
             :width="116"
             :height="41"
             @click="handleAuthorize"
+            :class="authBtn ? 'disable-auth' : ''"
           >
             {{ $t('apply.authorize') }}
           </jz-button>
@@ -134,20 +135,26 @@ export default class Authorize extends Vue {
   private endTime = ''
   private authValue = 1
   private detailId = ''
+  // 避免多次点击申请按钮
+  private authBtn = false
   // private handleChange(currentValue: number, oldValue: number) {
   //   console.log(currentValue, oldValue)
   // }
   private async getSign() {
-    const checkAddress = alayaService.checkAddress()
-    if (checkAddress) {
-      await UserModule.GetLoginNonce()
-      const sign = await alayaService.signAlaya()
-      return sign
-    } else {
-      const tips: any = this.$t('tips.noToken')
-      this.$message.error(tips)
-      UserModule.ResetToken()
-      throw new Error(tips)
+    try {
+      const checkAddress = alayaService.checkAddress()
+      if (checkAddress) {
+        await UserModule.GetLoginNonce()
+        const sign = await alayaService.signAlaya()
+        return sign
+      } else {
+        const tips: any = this.$t('tips.noToken')
+        this.$message.error(tips)
+        UserModule.ResetToken()
+        throw new Error(tips)
+      }
+    } catch (error) {
+      console.log(error)
     }
   }
   private async handleAuthorize() {
@@ -175,9 +182,14 @@ export default class Authorize extends Vue {
       },
     }
     const ischecks = checks[authType]()
-
+    if (this.authBtn) return
     if (!ischecks) {
+      this.authBtn = true
       const sign = await this.getSign()
+      if (!sign) {
+        this.authBtn = false
+        return
+      }
       // 发送授权请求
       const params = {
         authBeginTime: '',
@@ -208,7 +220,10 @@ export default class Authorize extends Vue {
         this.$message.success(msg)
         setTimeout(() => {
           this.$router.push('/resources/data')
-        }, 2000)
+        }, 1000)
+        this.authBtn = false
+      } else {
+        this.authBtn = false
       }
     }
   }
@@ -236,6 +251,7 @@ export default class Authorize extends Vue {
   width 1200px
   margin 20px auto
   margin-top 0
+  box-sizing: border-box;
   .authorize-wrap
     padding 30px
     box-shadow: 0px 20px 40px 0px rgba(209,209,209,0.18);
@@ -308,7 +324,10 @@ export default class Authorize extends Vue {
         display  flex
         div
           margin-right 50px
-
+        .disable-auth
+          border: 1px solid #8f89ca;
+          background: #8f89ca;
+          cursor: not-allowed;
 >>> .el-radio__input.is-checked .el-radio__inner {
     border-color: #5f4ffb;
     background: #5f4ffb;
