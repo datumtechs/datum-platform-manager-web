@@ -4,8 +4,8 @@
       <div class="title">{{ item.title }}</div>
       <div class="item-info" v-if="item.describes && item.describes.length > 0">
         <div v-for="(desc, i) in item.describes" :key="i">
-          <div class="lable">{{ desc.lable }}</div>
-          <div class="info">{{ data[desc.value] }}</div>
+          <div class="lable" v-if="data[desc.value]">{{ desc.lable }}</div>
+          <div class="info" v-if="data[desc.value]">{{ data[desc.value] }}</div>
         </div>
       </div>
       <div class="item-info" v-else>{{ data[item.describe] }}</div>
@@ -95,6 +95,10 @@ export default class DataDetail extends Vue {
           lable: '支持授权方式：',
           value: 'authType',
         },
+        {
+          lable: '授权值：',
+          value: 'authValueStr',
+        },
       ],
     },
   ]
@@ -138,7 +142,7 @@ export default class DataDetail extends Vue {
           width 160px
           color rgba(0,0,0,0.50)
         .info
-          width 200px
+          width 400px
           color #000
   .detail-item:first-child
     margin-top 0

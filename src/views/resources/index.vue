@@ -51,7 +51,7 @@ export default class resourcesData extends Vue {
     },
     {
       label: '授权值',
-      prop: 'authValue',
+      prop: 'authValueStr',
     },
     {
       label: '机构',
