@@ -95,7 +95,7 @@ export default class HomeList extends Vue {
   private tabIndex = 0
   private listQuery = {
     current: 1,
-    size: 6,
+    size: 20,
   }
   private inputInfo = ''
   private tabs: string[] = ['data', 'algorithm', 'service']
