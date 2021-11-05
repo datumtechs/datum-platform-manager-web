@@ -78,6 +78,7 @@
             :prop="item.prop"
             :label="item.label"
             :key="index"
+            show-overflow-tooltip
           >
             <template slot-scope="scope">
               <span>

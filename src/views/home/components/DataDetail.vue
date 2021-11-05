@@ -142,7 +142,7 @@ export default class DataDetail extends Vue {
           width 160px
           color rgba(0,0,0,0.50)
         .info
-          width 200px
+          width 400px
           color #000
   .detail-item:first-child
     margin-top 0
