@@ -35,7 +35,9 @@
           </jz-button>
           <template v-if="!tabIndex">
             <jz-button
-              v-if="item.authStatus === 1 && isLogin"
+              v-if="
+                item.authStatus === 1 && item.authMetadataState === 2 && isLogin
+              "
               type="jz-button--primary"
               class="button passed"
             >
