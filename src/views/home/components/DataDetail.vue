@@ -24,6 +24,21 @@ import { formatBytes } from '@/utils/format'
 export default class DataDetail extends Vue {
   private data: any = {}
   private authTypeList: string[] = ['按次数/按时间', '按时间', '按次数']
+  private industryList: string[] = [
+    '',
+    '金融业（银行）',
+    '金融业（保险）',
+    '金融业（证券）',
+    '金融业（其他）',
+    'ICT',
+    '制造业',
+    '能源业',
+    '交通运输业',
+    '医疗健康业',
+    '公共服务业',
+    '传媒广告业',
+    '其他行业',
+  ]
   private dataDesc = [
     {
       title: '简介',
@@ -110,6 +125,7 @@ export default class DataDetail extends Vue {
     this.data.fileType = data.fileType ? 'csv' : '未知'
     this.data.size = formatBytes(data.size)
     this.data.authType = this.authTypeList[data.authType]
+    this.data.industry = this.industryList[data.industry]
     BreadcrumbModule.SET_DATADETAIL(data.dataName)
   }
   created() {

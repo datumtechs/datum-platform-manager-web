@@ -188,13 +188,15 @@ export default class workflowIndex extends Vue {
     return role === 3
   }
   private handleisAuth() {
-    if (this.isAuth) {
-      const tips: any = this.$t('tips.noAuth')
-      this.$message.warning(tips)
-      return true
-    } else {
-      return false
-    }
+    // if (this.isAuth) {
+    //   const tips: any = this.$t('tips.noAuth')
+    //   this.$message.warning(tips)
+    //   return true
+    // } else {
+    //   return false
+    // }
+    // 无权限不提示，按钮置灰
+    return this.isAuth
   }
   // 算法列表
   private async getAlaor() {
@@ -397,6 +399,11 @@ export default class workflowIndex extends Vue {
   private async handleEmpty() {
     if (this.deleteState) return
     if (this.handleisAuth()) return
+    if (!this.nodeList.length) {
+      const tips: any = this.$t('tips.noNode')
+      this.$message.error(tips)
+      return
+    }
     if (this.isRun) {
       const tips: any = this.$t('tips.noDetele')
       return this.$message.warning(tips)

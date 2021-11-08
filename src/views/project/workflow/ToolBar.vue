@@ -1,11 +1,11 @@
 <template>
   <div class="tool-bar">
     <div class="tool-bar-wrap">
-      <div @click="handleSave">
+      <div :class="isAuth ? 'disable-icon' : ''" @click="handleSave">
         <svg-icon
           :name="toolStateList[0] ? 'w-loading' : 'w-save'"
           :class="['icon-button ', toolStateList[0] ? 'w-loading' : '']"
-          color="#5F4FFB"
+          :color="isAuth ? '#666' : '#5F4FFB'"
           width="28"
           height="28"
         />
@@ -13,11 +13,15 @@
           保存
         </span>
       </div>
-      <div @click="handleEndWorkflow" v-if="startShow === 1">
+      <div
+        :class="isAuth ? 'disable-icon' : ''"
+        @click="handleEndWorkflow"
+        v-if="startShow === 1"
+      >
         <svg-icon
           :name="toolStateList[0] ? 'w-loading' : 'w-end'"
           :class="['icon-button ', toolStateList[1] ? 'w-loading' : '']"
-          color="#5F4FFB"
+          :color="isAuth ? '#666' : '#5F4FFB'"
           :width="toolStateList[0] ? '34' : '26'"
           :height="toolStateList[0] ? '34' : '26'"
         />
@@ -25,11 +29,15 @@
           终止
         </span>
       </div>
-      <div @click="handleStartWorkflow" v-else>
+      <div
+        :class="isAuth ? 'disable-icon' : ''"
+        @click="handleStartWorkflow"
+        v-else
+      >
         <svg-icon
           :name="toolStateList[2] ? 'w-loading' : 'w-start'"
           :class="['icon-button ', toolStateList[2] ? 'w-loading' : '']"
-          color="#5F4FFB"
+          :color="isAuth ? '#666' : '#5F4FFB'"
           width="30"
           height="30"
         />
@@ -37,11 +45,11 @@
           启动
         </span>
       </div>
-      <div @click="handleEmpty">
+      <div :class="isAuth ? 'disable-icon' : ''" @click="handleEmpty">
         <svg-icon
           :name="toolStateList[3] ? 'w-loading' : 'w-delete'"
           :class="['icon-button ', toolStateList[3] ? 'w-loading' : '']"
-          color="#5F4FFB"
+          :color="isAuth ? '#666' : '#5F4FFB'"
           width="27"
           height="25"
         />
@@ -49,11 +57,11 @@
           清空
         </span>
       </div>
-      <div :class="!isSuccess ? 'disable-icon' : ''" @click="openJob">
+      <div :class="!isSuccess || isAuth ? 'disable-icon' : ''" @click="openJob">
         <svg-icon
           name="w-create"
           class="icon-button"
-          :color="!isSuccess ? '#666' : '#5F4FFB'"
+          :color="!isSuccess || isAuth ? '#666' : '#5F4FFB'"
           width="50"
           height="28"
         />
@@ -79,6 +87,11 @@ export default class ToolBarIndex extends Vue {
   @Prop({ required: true, default: [] }) private toolStateList!: any
   @Prop({ required: true, default: 0 }) private startShow!: number
   @Prop({ required: true, default: false }) private isSuccess!: boolean
+  // 查看者权限
+  get isAuth() {
+    const role = Number(this.$route.params.role)
+    return role === 3
+  }
   @Emit('handleSave')
   private handleSave() {
     return true
@@ -138,6 +151,11 @@ export default class ToolBarIndex extends Vue {
       }
     .disable-icon
       cursor:not-allowed
+      -moz-user-select: none;
+      -webkit-user-select: none;
+      -ms-user-select: none;
+      -khtml-user-select: none;
+      user-select: none;
       span
         color #666
 </style>
