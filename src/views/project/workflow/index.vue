@@ -75,6 +75,7 @@
       <div class="log-title">运行日志</div>
       <div class="list">
         <div class="item" v-for="(item, index) in logList" :key="index">
+          {{ item.taskId }}<br />
           {{ item.name }}&nbsp;&nbsp;{{ item.createAt }}&nbsp;&nbsp;{{
             item.identityId
           }}&nbsp;&nbsp;{{ item.partyId }}&nbsp;&nbsp;{{ item.content }}
@@ -165,15 +166,6 @@ export default class workflowIndex extends Vue {
   }
   get isNode() {
     return !!this.nodeList.length
-  }
-  get isRun() {
-    let state = false
-    this.nodeList.forEach((item: any) => {
-      if (item.runStatus === 1) {
-        state = true
-      }
-    })
-    return state
   }
   get isSuccess() {
     let state = false
@@ -286,7 +278,7 @@ export default class workflowIndex extends Vue {
       if (code === 10000) {
         this.$message.success(msg)
         await this.getWorkState()
-        this.checkWorkState(true)
+        this.checkWorkState()
       }
       this.startState = false
       this.copySaveParams = JSON.stringify(workflowNodeReqList)
@@ -406,7 +398,7 @@ export default class workflowIndex extends Vue {
       this.$message.error(tips)
       return
     }
-    if (this.isRun) {
+    if (this.startShow == 1) {
       const tips: any = this.$t('tips.noDetele')
       return this.$message.warning(tips)
     }
@@ -463,13 +455,14 @@ export default class workflowIndex extends Vue {
     this.logList = data
   }
   // 检查工作流状态
-  private async checkWorkState(isRun?: boolean) {
+  private async checkWorkState() {
     // 判断节点是否运作中
-    this.nodeList.map((item: any) => {
-      if (item && item.runStatus && item.runStatus == 1) {
-        isRun = true
-      }
-    })
+    // this.nodeList.map((item: any) => {
+    //   if (item && item.runStatus && item.runStatus == 1) {
+    //     isRun = true
+    //   }
+    // })
+    const isRun = this.startShow == 1
     if (isRun) {
       if (this.workStateTimer) {
         clearTimeout(this.workStateTimer)
