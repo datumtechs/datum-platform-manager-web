@@ -477,7 +477,7 @@ export default class workflowIndex extends Vue {
       }
       this.workStateTimer = setInterval(() => {
         this.getWorkState()
-      }, 5000)
+      }, 10000)
     } else {
       if (this.workStateTimer) {
         clearTimeout(this.workStateTimer)
