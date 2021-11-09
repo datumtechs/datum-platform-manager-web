@@ -455,13 +455,8 @@ export default class workflowIndex extends Vue {
     this.logList = data
   }
   // 检查工作流状态
-  private async checkWorkState() {
+  private checkWorkState() {
     // 判断节点是否运作中
-    // this.nodeList.map((item: any) => {
-    //   if (item && item.runStatus && item.runStatus == 1) {
-    //     isRun = true
-    //   }
-    // })
     const isRun = this.startShow == 1
     if (isRun) {
       if (this.workStateTimer) {
@@ -485,6 +480,10 @@ export default class workflowIndex extends Vue {
     this.nodeList.map((item: any, index: number) => {
       item.runStatus = data.getNodeStatusVoList[index]['runStatus']
     })
+    // 节点不是运行中，清除定时器
+    if (this.startShow !== 1) {
+      this.checkWorkState()
+    }
     this.getLogList()
   }
   private async getModels() {
