@@ -190,7 +190,7 @@ export default class HeaderComponent extends Vue {
   }
   private changeLanguage() {
     this.isEnglish = !this.isEnglish
-    const lang = this.isEnglish ? 'en' : 'zh'
+    const lang = this.isEnglish ? 'en-US' : 'zh-CN'
     AppModule.SetLanguage(lang)
     this.$i18n.locale = lang
   }
