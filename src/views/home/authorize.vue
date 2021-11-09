@@ -42,6 +42,7 @@
                 v-model="startDate"
                 type="date"
                 placeholder="mm/dd/yy"
+                :picker-options="startPickerOptions"
               >
               </el-date-picker>
               <el-time-picker
@@ -51,8 +52,7 @@
                 :picker-options="{
                   selectableRange: '0:0:00 - 23:59:00',
                 }"
-                format="HH:mm:A"
-                placeholder="hh:mm AM"
+                placeholder="hh:mm"
               >
               </el-time-picker>
               <span class="and">至</span>
@@ -62,6 +62,7 @@
                 v-model="endDate"
                 type="date"
                 placeholder="mm/dd/yy"
+                :picker-options="startPickerOptions"
               >
               </el-date-picker>
               <el-time-picker
@@ -71,8 +72,7 @@
                 :picker-options="{
                   selectableRange: '0:0:00 - 23:59:00',
                 }"
-                format="HH:mm:A"
-                placeholder="hh:mm AM"
+                placeholder="hh:mm"
               >
               </el-time-picker>
             </div>
@@ -115,9 +115,9 @@ import { getDataDetail } from '@/api/home'
 import { getDataAuth } from '@/api/authorize'
 import alayaService from '@/services/alayaService'
 import { UserModule } from '@/store/modules/user'
-import { formatDate } from '@/utils/format'
 import { BreadcrumbModule } from '@/store/modules/breadcrumb'
-import { formatBytes } from '@/utils/format'
+import { formatBytes, formatDate } from '@/utils/format'
+
 @Component({
   name: 'Authorize',
   components: {
@@ -128,8 +128,8 @@ export default class Authorize extends Vue {
   private dataInfo: any = {}
   private authType = '1'
   private dateTime = []
-  private startDate = ''
-  private startTime = ''
+  private startDate = new Date()
+  private startTime = new Date()
   private endDate = ''
   private endTime = ''
   private authValue = 1
@@ -137,6 +137,11 @@ export default class Authorize extends Vue {
   // private handleChange(currentValue: number, oldValue: number) {
   //   console.log(currentValue, oldValue)
   // }
+  private startPickerOptions: any = {
+    disabledDate(time: any) {
+      return time.getTime() < Date.now() - 8.64e7
+    },
+  }
   private async getSign() {
     const checkAddress = alayaService.checkAddress()
     if (checkAddress) {
@@ -175,7 +180,21 @@ export default class Authorize extends Vue {
       },
     }
     const ischecks = checks[authType]()
-
+    const beginTime =
+      formatDate(new Date(this.startDate), 'Y-M-D ') +
+      '' +
+      formatDate(new Date(this.startTime), 'h:m:s')
+    const endTime =
+      formatDate(new Date(this.endDate), 'Y-M-D ') +
+      '' +
+      formatDate(new Date(this.endTime), 'h:m:s')
+    const stampStart = new Date(beginTime).getTime()
+    const stampEnd = new Date(endTime).getTime()
+    if (stampStart > stampEnd) {
+      const tips: any = this.$t('tips.maxEnd')
+      this.$message.warning(tips)
+      return false
+    }
     if (!ischecks) {
       const sign = await this.getSign()
       // 发送授权请求
