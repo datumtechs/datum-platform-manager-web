@@ -1,5 +1,5 @@
-import request from '@/utils/request'
+import { get, post, put, del } from './index'
 // 已授权资源
 export const getListByOwner = (params?: any) => {
-  return request.get('/data/listByOwner/', params)
+  return get('/data/listByOwner/', params)
 }

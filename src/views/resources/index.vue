@@ -72,6 +72,7 @@ export default class resourcesData extends Vue {
     current: 1,
     size: 20,
   }
+  private dataName = ''
   private tabs: string[] = ['data']
   private tabIndex = 0
   private btnList = [
@@ -86,12 +87,15 @@ export default class resourcesData extends Vue {
   }
   private handleBtn() {}
   private async getList() {
-    const { data } = await getListByOwner()
+    const { current, size } = this.listQuery
+    const { dataName } = this
+    const { data } = await getListByOwner({ current, size, dataName })
     this.list = this.formatData(data.items)
     this.total = data.total
   }
   changeList(parmams: any) {
-    this.listQuery = parmams
+    this.listQuery = parmams.list
+    this.dataName = parmams.input
     this.getList()
   }
   created() {
