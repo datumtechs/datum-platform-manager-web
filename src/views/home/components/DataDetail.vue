@@ -77,10 +77,6 @@ export default class DataDetail extends Vue {
           value: 'size',
         },
         {
-          lable: '算法所属大类：',
-          value: 'industry',
-        },
-        {
           lable: '数据条数：',
           value: 'rows',
         },
