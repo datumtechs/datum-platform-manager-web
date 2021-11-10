@@ -6,8 +6,8 @@ export const getDataList = (params?: any) => {
 }
 
 // 数据详情
-export const getDataDetail = (id: string | number) => {
-  return get('/data/detail/' + id)
+export const getDataDetail = (params?: any) => {
+  return get('/data/detail', params)
 }
 
 // 元数据分页

@@ -59,7 +59,7 @@ export const constantRoutes: RouteConfig[] = [
         ],
       },
       {
-        path: 'data/detail/:id/:metaid',
+        path: 'data/detail/:id/:userMateDataId/:metaid',
         component: () =>
           import(/* webpackChunkName: "home" */ '@/views/home/detail.vue'),
         name: 'dataDetail',
@@ -84,7 +84,7 @@ export const constantRoutes: RouteConfig[] = [
         ],
       },
       {
-        path: 'data/:id/authorize/:metaid',
+        path: 'data/:id/:userMateDataId/authorize/:metaid',
         component: () =>
           import(
             /* webpackChunkName: "authorize" */ '@/views/home/authorize.vue'
@@ -265,7 +265,7 @@ export const constantRoutes: RouteConfig[] = [
           import(/* webpackChunkName: "data" */ '@/views/resources/index.vue'),
       },
       {
-        path: 'detail/:id/:metaid',
+        path: 'detail/:id/:userMateDataId/:metaid',
         name: 'resourcesData',
         meta: {
           title: 'resourcesData',

@@ -88,18 +88,18 @@ export default class createIndex extends Vue {
   private data = {
     input: '',
     textarea: '',
-    projectTempId: '',
+    projectTempId: 0,
   }
   private handleSelect(index: number) {
     this.templateIndex = index
     const { projectName, projectDesc, id } = this.templates[index]
+    this.projectTempId = id
     if (this.templateIndex == 0) {
       this.input = ''
       this.textarea = ''
     } else {
       this.input = projectName
       this.textarea = projectDesc
-      this.projectTempId = id
     }
   }
   // 取消

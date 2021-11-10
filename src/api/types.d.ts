@@ -34,6 +34,7 @@ export interface AlgorithmType {
   algDetailsVo: any
 }
 export interface TableNameType {
+  metaDataPkId: string | number
   id: string | number
   name: string
   role?: number | string

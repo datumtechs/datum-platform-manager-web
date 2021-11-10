@@ -258,7 +258,11 @@ export default class workflowIndex extends Vue {
     WorkflowModule.SET_DATA(this.nodeList)
     WorkflowModule.SET_NODES(this.nodeList)
   }
-  // 启动工作流
+  /*
+    启动工作流
+    启动前判断，用户是否修改过
+    原数据 copySaveParams， 启动时getSaveParams()
+  */
   private async handleStartWorkflow() {
     if (this.startState) return
     if (this.handleisAuth()) return

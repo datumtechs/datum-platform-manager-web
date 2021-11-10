@@ -28,7 +28,7 @@
         <div class="item-describe">{{ item.dataDesc }}</div>
         <div class="item-button">
           <jz-button
-            @click="handleDetail(item.id, item.metaDataId)"
+            @click="handleDetail(item.id, item.userMateDataId, item.metaDataId)"
             class="button"
           >
             {{ $t('home.detail') }}
@@ -49,6 +49,7 @@
               @click="
                 handleAuthorize(
                   item.id,
+                  item.userMateDataId,
                   item.metaDataId,
                   item.authStatus,
                   item.authMetadataState,
@@ -122,16 +123,23 @@ export default class HomeList extends Vue {
     return info
   }
   private marketList = []
-  private handleDetail(id: string | number, metaid: string) {
+  private handleDetail(
+    id: string | number,
+    userMateDataId: string | number,
+    metaid: string,
+  ) {
+    // 数据详情
     if (!this.tabIndex) {
-      this.$router.push(`/data/detail/${id}/${metaid}`)
+      this.$router.push(`/data/detail/${id}/${userMateDataId}/${metaid}`)
     }
+    // 算法详情
     if (this.tabIndex === 1) {
       this.$router.push(`/algorithm/detail/${id}`)
     }
   }
   private handleAuthorize(
     id: string | number,
+    userMateDataId: string | number,
     metaid: string | number,
     authStatus: number,
     authMetadataState: number,
@@ -150,7 +158,7 @@ export default class HomeList extends Vue {
       this.$message.error(tips)
       return
     }
-    this.$router.push(`/data/${id}/authorize/${metaid}`)
+    this.$router.push(`/data/${id}/${userMateDataId}/authorize/${metaid}`)
   }
   private async getList() {
     // 过滤空格

@@ -245,7 +245,6 @@ export default class TableIndex extends Vue {
     // if (this.isViewer()) return
     const id = this.tableId
     const selectId = this.multipleSelection.map((item: any) => item[id])
-    console.log('dele----', selectId)
     return selectId
   }
   // 取消选择
@@ -261,13 +260,17 @@ export default class TableIndex extends Vue {
     const { id } = row
     let role = ''
     let metaDataId = ''
+    let metaDataPkId = ''
     if (typeof row.role !== 'undefined') {
       role = row.role
     }
     if (typeof row.metaDataId !== 'undefined') {
       metaDataId = row.metaDataId
     }
-    return { id, name, role, metaDataId }
+    if (typeof row.metaDataPkId !== 'undefined') {
+      metaDataPkId = row.metaDataPkId
+    }
+    return { id, name, role, metaDataId, metaDataPkId }
   }
   // 点击操作按钮
   @Emit('clickBtn')

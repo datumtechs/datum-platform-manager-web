@@ -109,7 +109,6 @@ class Workflow extends VuexModule implements WFlowState {
   public SAVE_ORG_OPTIONS() {
     const list = this.organizationList
     const ids = this.organizationsId
-    console.log('SAVE_ORG_OPTIONS', list, ids)
     // 过滤选择的组织
     let data: any = list.filter((v) => {
       return (
