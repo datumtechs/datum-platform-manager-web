@@ -31,7 +31,7 @@ export function removeToken() {
 
 export function getLanguage() {
   const lan = Cookies.get(languageKey)
-  return lan ? lan : 'zh-CN'
+  return lan ? lan : 'zh'
 }
 export function setLanguage(language: string) {
   return Cookies.set(languageKey, language)

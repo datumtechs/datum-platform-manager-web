@@ -222,7 +222,7 @@ export default class InputViewIndex extends Vue {
       return this.$message.warning(tips)
     }
     if (this.inputValue.length < this.minLen) {
-      if (this.lan === 'zh-CN') {
+      if (this.lan === 'zh') {
         return this.$message.warning(`至少输入${this.minLen}个数据协同方`)
       } else {
         return this.$message.warning(
