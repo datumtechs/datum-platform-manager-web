@@ -81,9 +81,9 @@ export default class resourcesData extends Vue {
     },
   ]
   private handleName(data: TableNameType) {
-    const { id, metaDataId, name } = data
+    const { id, metaDataId, name, metaDataPkId } = data
     BreadcrumbModule.SET_RESOUR(name)
-    this.$router.push(`/resources/detail/${id}/${metaDataId}`)
+    this.$router.push(`/resources/detail/${metaDataPkId}/${id}/${metaDataId}`)
   }
   private handleBtn() {}
   private async getList() {

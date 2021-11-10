@@ -4,10 +4,10 @@
       <div class="title">{{ item.title }}</div>
       <div class="item-info" v-if="item.describes && item.describes.length > 0">
         <div v-for="(desc, i) in item.describes" :key="i">
-          <div class="lable" v-if="data[desc.value] !== 'undefined'">
+          <div class="lable">
             {{ desc.lable }}
           </div>
-          <div class="info" v-if="data[desc.value] !== 'undefined'">
+          <div class="info">
             {{ data[desc.value] }}
           </div>
         </div>
@@ -121,10 +121,6 @@ export default class DataDetail extends Vue {
           lable: '支持授权方式：',
           value: 'authType',
         },
-        {
-          lable: '授权值：',
-          value: 'authValueStr',
-        },
       ],
     },
   ]
@@ -133,19 +129,20 @@ export default class DataDetail extends Vue {
   }
   private async getList() {
     const metaDataId = this.$route.params.id
-    const { data } = await getDataDetail(metaDataId)
-    this.data = data
-    this.data.fileType = data.fileType ? 'csv' : '未知'
-    this.data.size = formatBytes(data.size)
-    this.data.authType = this.authTypeList[data.authType]
-    this.data.industry = this.industryList[data.industry]
-    this.data.expire = this.expireList[data.expire]
-    this.data.authMetadataState = this.authStateList[data.authMetadataState]
-    BreadcrumbModule.SET_DATADETAIL(data.dataName)
+    const metaDataPkId = this.$route.params.metaDataPkId
+    const parmans = {
+      metaDataPkId,
+      userMetaDataId: metaDataId,
+    }
+    const { data } = await getDataDetail(parmans)
     // 动态展示字段
     const authMetadataState = {
       lable: '数据授权信息有效性：',
       value: 'authMetadataState',
+    }
+    const authValueStr = {
+      lable: '授权值：',
+      value: 'authValueStr',
     }
     const expire = {
       lable: '是否过期：',
@@ -158,6 +155,7 @@ export default class DataDetail extends Vue {
     const len = this.dataDesc - 1
     if (this.isLogin) {
       this.dataDesc[3]['describes'].push(authMetadataState)
+      this.dataDesc[3]['describes'].push(authValueStr)
     }
     if (data.authType === 1) {
       this.dataDesc[3]['describes'].push(expire)
@@ -165,6 +163,14 @@ export default class DataDetail extends Vue {
     if (data.authType === 2) {
       this.dataDesc[3]['describes'].push(usedTimes)
     }
+    this.data = data
+    this.data.fileType = data.fileType ? 'csv' : '未知'
+    this.data.size = formatBytes(data.size)
+    this.data.authType = this.authTypeList[data.authType]
+    this.data.industry = this.industryList[data.industry]
+    this.data.expire = this.expireList[data.expire]
+    this.data.authMetadataState = this.authStateList[data.authMetadataState]
+    BreadcrumbModule.SET_DATADETAIL(data.dataName)
   }
   created() {
     this.getList()

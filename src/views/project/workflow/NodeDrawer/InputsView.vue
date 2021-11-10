@@ -234,6 +234,8 @@ export default class InputViewIndex extends Vue {
       const tips: any = this.$t('tips.inputDataSend')
       return this.$message.warning(tips)
     }
+    // 校验组织是否失效
+    this.checkOrgState()
     const columnLists = this.handleColumnList()
     const inputVoList: any = []
     this.inputValue.map((item: any, index: number) => {
@@ -270,6 +272,18 @@ export default class InputViewIndex extends Vue {
     await WorkflowModule.setOrganizationId(organizationId)
     WorkflowModule.SAVE_ORG_OPTIONS()
     WorkflowModule.SET_INPUT_LEN(this.inputValue.length)
+  }
+  // 校验组织是否失效
+  private checkOrgState() {
+    // const list = this.organizations
+    // const inputValue = this.getListFirst(this.inputValue)
+    // console.log('inputValue', inputValue)
+    // console.log('organizations', list)
+    // list.map((item: any) => {
+    //   if(!inputValue.includes(item.identityId)){
+    //     // 校验失败
+    //   }
+    // })
   }
   private visibleChange(state: boolean) {
     if (!state) {
@@ -371,6 +385,7 @@ export default class InputViewIndex extends Vue {
       ;(this.$refs[`Columns${index}`] as any)[0].handleEcho(params)
     }
   }
+  // 获取二维数组第一个值
   private getListFirst(list: any) {
     if (!list) return []
     return list.map((item: string[]) => {

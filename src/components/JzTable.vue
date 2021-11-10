@@ -261,13 +261,17 @@ export default class TableIndex extends Vue {
     const { id } = row
     let role = ''
     let metaDataId = ''
+    let metaDataPkId = ''
     if (typeof row.role !== 'undefined') {
       role = row.role
     }
     if (typeof row.metaDataId !== 'undefined') {
       metaDataId = row.metaDataId
     }
-    return { id, name, role, metaDataId }
+    if (typeof row.metaDataPkId !== 'undefined') {
+      metaDataPkId = row.metaDataPkId
+    }
+    return { id, name, role, metaDataId, metaDataPkId }
   }
   // 点击操作按钮
   @Emit('clickBtn')

@@ -239,7 +239,12 @@ export default class Authorize extends Vue {
 
   private async getList() {
     this.detailId = this.$route.params.id
-    const { data } = await getDataDetail(this.detailId)
+    const metaDataPkId = this.$route.params.metaDataPkId
+    const parmans = {
+      metaDataPkId,
+      userMetaDataId: this.detailId,
+    }
+    const { data } = await getDataDetail(parmans)
     this.dataInfo = data
     this.dataInfo.size = formatBytes(data.size)
     BreadcrumbModule.SET_DATADETAIL(data.dataName)
