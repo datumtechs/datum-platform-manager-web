@@ -245,7 +245,6 @@ export default class TableIndex extends Vue {
     // if (this.isViewer()) return
     const id = this.tableId
     const selectId = this.multipleSelection.map((item: any) => item[id])
-    console.log('dele----', selectId)
     return selectId
   }
   // 取消选择
