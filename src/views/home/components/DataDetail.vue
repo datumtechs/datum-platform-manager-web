@@ -4,8 +4,12 @@
       <div class="title">{{ item.title }}</div>
       <div class="item-info" v-if="item.describes && item.describes.length > 0">
         <div v-for="(desc, i) in item.describes" :key="i">
-          <div class="lable" v-if="data[desc.value]">{{ desc.lable }}</div>
-          <div class="info" v-if="data[desc.value]">{{ data[desc.value] }}</div>
+          <div class="lable" v-if="data[desc.value] !== 'undefined'">
+            {{ desc.lable }}
+          </div>
+          <div class="info" v-if="data[desc.value] !== 'undefined'">
+            {{ data[desc.value] }}
+          </div>
         </div>
       </div>
       <div class="item-info" v-else>{{ data[item.describe] }}</div>
@@ -18,12 +22,23 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 import { getDataDetail } from '@/api/home'
 import { BreadcrumbModule } from '@/store/modules/breadcrumb'
 import { formatBytes } from '@/utils/format'
+import { UserModule } from '@/store/modules/user'
+import alayaService from '@/services/alayaService'
+
 @Component({
   name: 'DataDetail',
 })
 export default class DataDetail extends Vue {
   private data: any = {}
   private authTypeList: string[] = ['按次数/按时间', '按时间', '按次数']
+  private expireList: string[] = ['未过期', '已过期']
+  private authStateList: string[] = [
+    '未知',
+    '还未发布的数据授权',
+    '已发布的数据授权',
+    '已撤销的数据授权 <失效前主动撤回的>',
+    '已经失效的数据授权 <过期or达到使用上限的or被拒绝的>',
+  ]
   private industryList: string[] = [
     '',
     '金融业（银行）',
@@ -39,7 +54,7 @@ export default class DataDetail extends Vue {
     '传媒广告业',
     '其他行业',
   ]
-  private dataDesc = [
+  private dataDesc: any = [
     {
       title: '简介',
       describe: 'dataDesc',
@@ -113,16 +128,43 @@ export default class DataDetail extends Vue {
       ],
     },
   ]
-
+  get isLogin() {
+    return !!UserModule.token && alayaService.checkAddress()
+  }
   private async getList() {
-    const metaDataId = this.$route.params.metaid
+    const metaDataId = this.$route.params.id
     const { data } = await getDataDetail(metaDataId)
     this.data = data
     this.data.fileType = data.fileType ? 'csv' : '未知'
     this.data.size = formatBytes(data.size)
     this.data.authType = this.authTypeList[data.authType]
     this.data.industry = this.industryList[data.industry]
+    this.data.expire = this.expireList[data.expire]
+    this.data.authMetadataState = this.authStateList[data.authMetadataState]
     BreadcrumbModule.SET_DATADETAIL(data.dataName)
+    // 动态展示字段
+    const authMetadataState = {
+      lable: '数据授权信息有效性：',
+      value: 'authMetadataState',
+    }
+    const expire = {
+      lable: '是否过期：',
+      value: 'expire',
+    }
+    const usedTimes = {
+      lable: '已使用次数：',
+      value: 'usedTimes',
+    }
+    const len = this.dataDesc - 1
+    if (this.isLogin) {
+      this.dataDesc[3]['describes'].push(authMetadataState)
+    }
+    if (data.authType === 1) {
+      this.dataDesc[3]['describes'].push(expire)
+    }
+    if (data.authType === 2) {
+      this.dataDesc[3]['describes'].push(usedTimes)
+    }
   }
   created() {
     this.getList()

@@ -48,7 +48,7 @@
               type="jz-button--primary"
               @click="
                 handleAuthorize(
-                  item.id,
+                  item.userMateDataId,
                   item.metaDataId,
                   item.authStatus,
                   item.authMetadataState,
