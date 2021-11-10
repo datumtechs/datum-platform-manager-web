@@ -22,6 +22,7 @@
             class="input-date"
             v-model="startTime"
             :disabled="type === 1"
+            format="HH:mm"
             :picker-options="{
               selectableRange: '0:0:00 - 23:59:00',
             }"
@@ -66,6 +67,7 @@
             class="input-date"
             v-model="endTime"
             :disabled="type === 1"
+            format="HH:mm"
             :picker-options="{
               selectableRange: '0:0:00 - 23:59:00',
             }"
@@ -106,8 +108,8 @@ import { formatDate } from '@/utils/format'
 export default class DispatchIndex extends Vue {
   @Prop({ default: false }) private type!: number
   private radio = '1'
-  private startDate: any = ''
-  private startTime: any = ''
+  private startDate: any = new Date()
+  private startTime: any = new Date()
   private endDate = ''
   private endTime: any = ''
   private repeatInterval = 1
@@ -205,8 +207,8 @@ export default class DispatchIndex extends Vue {
     }
   }
   private resetTime() {
-    this.startDate = ''
-    this.startTime = ''
+    this.startDate = new Date()
+    this.startTime = new Date()
     this.endDate = ''
     this.endTime = ''
     this.repeatInterval = 1
