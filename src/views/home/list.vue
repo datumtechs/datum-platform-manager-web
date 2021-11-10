@@ -28,7 +28,7 @@
         <div class="item-describe">{{ item.dataDesc }}</div>
         <div class="item-button">
           <jz-button
-            @click="handleDetail(item.id, item.metaDataId)"
+            @click="handleDetail(item.userMateDataId, item.metaDataId)"
             class="button"
           >
             {{ $t('home.detail') }}

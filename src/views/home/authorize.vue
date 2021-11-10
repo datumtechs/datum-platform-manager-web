@@ -49,6 +49,7 @@
                 :disabled="authType != '1'"
                 class="input-date"
                 v-model="startTime"
+                format="HH:mm"
                 :picker-options="{
                   selectableRange: '0:0:00 - 23:59:00',
                 }"
@@ -69,6 +70,7 @@
                 :disabled="authType != '1'"
                 class="input-date"
                 v-model="endTime"
+                format="HH:mm"
                 :picker-options="{
                   selectableRange: '0:0:00 - 23:59:00',
                 }"
