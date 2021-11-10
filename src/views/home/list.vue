@@ -123,7 +123,11 @@ export default class HomeList extends Vue {
     return info
   }
   private marketList = []
-  private handleDetail(metaDataPkId: string | number,id: string | number, metaid: string) {
+  private handleDetail(
+    metaDataPkId: string | number,
+    id: string | number,
+    metaid: string,
+  ) {
     // 数据详情
     if (!this.tabIndex) {
       this.$router.push(`/data/detail/${metaDataPkId}/${id}/${metaid}`)

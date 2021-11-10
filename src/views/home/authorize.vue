@@ -239,10 +239,11 @@ export default class Authorize extends Vue {
 
   private async getList() {
     this.detailId = this.$route.params.id
+    const detailId = this.detailId
     const metaDataPkId = this.$route.params.metaDataPkId
     const parmans = {
-      metaDataPkId,
-      userMetaDataId: this.detailId,
+      metaDataPkId: isNaN(Number(metaDataPkId)) ? null : metaDataPkId,
+      userMetaDataId: isNaN(Number(detailId)) ? null : detailId,
     }
     const { data } = await getDataDetail(parmans)
     this.dataInfo = data

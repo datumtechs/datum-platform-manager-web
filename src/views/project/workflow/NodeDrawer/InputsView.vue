@@ -235,7 +235,7 @@ export default class InputViewIndex extends Vue {
       return this.$message.warning(tips)
     }
     // 校验组织是否失效
-    this.checkOrgState()
+    // this.checkOrgState()
     const columnLists = this.handleColumnList()
     const inputVoList: any = []
     this.inputValue.map((item: any, index: number) => {
@@ -282,6 +282,8 @@ export default class InputViewIndex extends Vue {
     // list.map((item: any) => {
     //   if(!inputValue.includes(item.identityId)){
     //     // 校验失败
+    //   }else{
+    //     // 保存成功
     //   }
     // })
   }

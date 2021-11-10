@@ -131,8 +131,8 @@ export default class DataDetail extends Vue {
     const metaDataId = this.$route.params.id
     const metaDataPkId = this.$route.params.metaDataPkId
     const parmans = {
-      metaDataPkId,
-      userMetaDataId: metaDataId,
+      metaDataPkId: isNaN(Number(metaDataPkId)) ? null : metaDataPkId,
+      userMetaDataId: isNaN(Number(metaDataId)) ? null : metaDataId,
     }
     const { data } = await getDataDetail(parmans)
     // 动态展示字段
@@ -153,7 +153,7 @@ export default class DataDetail extends Vue {
       value: 'usedTimes',
     }
     const len = this.dataDesc - 1
-    if (this.isLogin) {
+    if (this.isLogin && data.authType) {
       this.dataDesc[3]['describes'].push(authMetadataState)
       this.dataDesc[3]['describes'].push(authValueStr)
     }
