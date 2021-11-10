@@ -77,8 +77,8 @@ export default class Detail extends Vue {
   private handleAuthorize() {
     const id = this.$route.params.id
     const metaid = this.$route.params.metaid
-    const metaDataPkId = this.$route.params.metaDataPkId
-    this.$router.push(`/data/${metaDataPkId}/${id}/authorize/${metaid}`)
+    const userMateDataId = this.$route.params.userMateDataId
+    this.$router.push(`/data/${id}/${userMateDataId}/authorize/${metaid}`)
   }
   get isAlgo() {
     return this.$route.name === 'algorithmDetail'

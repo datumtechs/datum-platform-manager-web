@@ -128,11 +128,11 @@ export default class DataDetail extends Vue {
     return !!UserModule.token && alayaService.checkAddress()
   }
   private async getList() {
-    const metaDataId = this.$route.params.id
-    const metaDataPkId = this.$route.params.metaDataPkId
+    const metaDataPkId = this.$route.params.id
+    const userMetaDataId = this.$route.params.userMateDataId
     const parmans = {
       metaDataPkId: isNaN(Number(metaDataPkId)) ? null : metaDataPkId,
-      userMetaDataId: isNaN(Number(metaDataId)) ? null : metaDataId,
+      userMetaDataId: isNaN(Number(userMetaDataId)) ? null : userMetaDataId,
     }
     const { data } = await getDataDetail(parmans)
     // 动态展示字段

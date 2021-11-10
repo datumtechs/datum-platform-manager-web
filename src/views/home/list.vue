@@ -124,13 +124,13 @@ export default class HomeList extends Vue {
   }
   private marketList = []
   private handleDetail(
-    metaDataPkId: string | number,
     id: string | number,
+    userMateDataId: string | number,
     metaid: string,
   ) {
     // 数据详情
     if (!this.tabIndex) {
-      this.$router.push(`/data/detail/${metaDataPkId}/${id}/${metaid}`)
+      this.$router.push(`/data/detail/${id}/${userMateDataId}/${metaid}`)
     }
     // 算法详情
     if (this.tabIndex === 1) {
@@ -138,8 +138,8 @@ export default class HomeList extends Vue {
     }
   }
   private handleAuthorize(
-    metaDataPkId: string | number,
     id: string | number,
+    userMateDataId: string | number,
     metaid: string | number,
     authStatus: number,
     authMetadataState: number,
@@ -158,7 +158,7 @@ export default class HomeList extends Vue {
       this.$message.error(tips)
       return
     }
-    this.$router.push(`/data/${metaDataPkId}/${id}/authorize/${metaid}`)
+    this.$router.push(`/data/${id}/${userMateDataId}/authorize/${metaid}`)
   }
   private async getList() {
     // 过滤空格
