@@ -72,9 +72,6 @@ class Workflow extends VuexModule implements WFlowState {
 
   @Mutation
   public SET_ORG(state: any) {
-    state.map((item: any) => {
-      item.disabled = item.authMetadataState !== 2
-    })
     this.organizationList = state
   }
   @Mutation
@@ -91,7 +88,7 @@ class Workflow extends VuexModule implements WFlowState {
       if (state.indexOf(item['identityId']) !== -1) {
         item.disabled = true
       } else {
-        item.disabled = item.authMetadataState !== 2
+        item.disabled = false
       }
     })
   }
