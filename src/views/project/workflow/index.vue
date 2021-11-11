@@ -15,7 +15,15 @@
             v-contextmenu:contextmenu
             @contextmenu.prevent.stop="handleContextmenu(index)"
           >
-            <span v-if="!isResetName">{{ item.nodeName }}</span>
+            <div class="node-lable">
+              <img
+                class="node-icon"
+                src="@/assets/images/icons/node-icon.svg"
+              />
+            </div>
+            <span class="node-text" v-if="!isResetName">
+              {{ item.nodeName }}
+            </span>
             <input
               v-else
               type="text"
@@ -24,8 +32,29 @@
               v-model="item.nodeName"
               class="reset-name"
             />
+            <!-- <svg-icon
+                v-if="item.runStatus > 0"
+                :name="stateIcon[item.runStatus]"
+              /> -->
+            <!-- 节点运行状态 -->
+            <el-tooltip
+              v-if="item.runStatus > 0"
+              class="item"
+              effect="dark"
+              :content="stateList[item.runStatus]"
+              placement="right"
+            >
+              <img
+                class="node-state"
+                :src="
+                  require(`@/assets/images/icons/${
+                    stateIcon[item.runStatus]
+                  }.svg`)
+                "
+              />
+            </el-tooltip>
           </div>
-          <ul class="state">
+          <!-- <ul class="state">
             <li
               v-for="(info, index) in stateList"
               :key="index"
@@ -33,7 +62,7 @@
             >
               {{ info }}
             </li>
-          </ul>
+          </ul> -->
           <div class="arrow" v-if="index > 0">
             <div class="line"></div>
             <i class="el-icon-arrow-down"></i>
@@ -126,7 +155,13 @@ export default class workflowIndex extends Vue {
   private workflowNodeId = ''
   private nodeList: any = []
   private menus = []
-  private stateList = ['未开始', '运行中', '成功', '失败']
+  private stateList = ['未开始', '运行中', '运行成功', '运行失败']
+  private stateIcon = [
+    '',
+    'node-state-run',
+    'node-state-success',
+    'node-state-fail',
+  ]
   private currentIndex: number = 0
   private logList = []
   private resultsVisible = false
@@ -566,11 +601,11 @@ export default class workflowIndex extends Vue {
       position relative
       .arrow
         position: absolute;
-        left: 54%;
-        top: -100px;
+        left: 64%
+        top: -80px
         .line
           width: 1px;
-          height: 74px;
+          height: 54px;
           background: rgb(55 53 53 / 83%);
           transform: translate(9px, 10px);
         i
@@ -578,21 +613,43 @@ export default class workflowIndex extends Vue {
           color: #292020
       .block
         margin-left 230px
-        width 105px
-        height 45px
-        line-height 45px
-        text-align center
-        background #80d9ff
-        border-radius 6px
-        color: #FFFFFF;
-        font-size 14px
+        width 200px
+        box-sizing: border-box
+        height 42px
+        line-height 42px
+        background: #FFFFFF;
+        box-shadow: 0px 4px 8px 0px rgba(234,234,234,0.5);
+        border-radius: 8px;
         cursor pointer
-      .reset-name
-        border 0
-        outline 0
-        width 80px
-        background #80d9ff
-        color #fff
+        overflow: hidden;
+        .node-lable
+          width: 40px;
+          height: 42px;
+          min-width: 40px
+          background: #E1F1FF;
+          display: inline-block
+          .node-icon
+            width: 18px;
+            height: 16px;
+            margin-left 12px
+        .node-text
+          display: inline-block
+          color: #000;
+          letter-spacing: 0;
+          font-weight: 400;
+          font-size 12px
+          padding-left 10px
+        .reset-name
+          border 0
+          font-size 12px
+          outline 0
+          width 80px
+          color #000
+        .node-state
+          display: inline-block
+          width: 20px
+          height: 20px
+          margin-left: 5px
       .state
         display flex
         text-align: center
@@ -606,6 +663,7 @@ export default class workflowIndex extends Vue {
           border-top 2px solid #0f62fe
           color #0f62fe
   .log-wrap
+    overflow-y: auto;
     position absolute
     z-index 99
     width: calc(100vw - 300px)

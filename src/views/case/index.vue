@@ -107,7 +107,8 @@ export default class CaseIndex extends Vue {
       .item-img
         width: 100%;
         height: 200px;
-        background #eee
+        background:url('../../assets/images/icons/case-bg.png')
+        background-size: 100% 100%
       .item-info
         padding 20px 25px
         .item-title

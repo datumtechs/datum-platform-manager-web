@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>编组 5</title>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="22备份-4" transform="translate(-1437.000000, -554.000000)">
+            <g id="编组-5" transform="translate(1437.000000, 554.000000)">
+                <path d="M15,0 C11.019,0 7.4,1.551 4.715,4.081 C1.812,6.816 0,10.697 0,15 C0,23.284 6.716,30 15,30 C23.284,30 30,23.284 30,15 C30,6.716 23.284,0 15,0 M15,2 C22.168,2 28,7.832 28,15 C28,22.168 22.168,28 15,28 C7.832,28 2,22.168 2,15 C2,11.381 3.451,8.02 6.087,5.537 C8.507,3.256 11.672,2 15,2" id="Fill-1" fill="#F16262"></path>
+                <line x1="15" y1="8" x2="15" y2="18" id="Stroke-5" stroke="#F16262" stroke-width="2" stroke-linecap="round"></line>
+                <path d="M14.084,21.4004 C13.863,20.8944 14.094,20.3054 14.6,20.0844 C15.105,19.8624 15.695,20.0934 15.916,20.5994 C16.137,21.1054 15.906,21.6944 15.4,21.9164 C14.895,22.1374 14.305,21.9064 14.084,21.4004" id="Fill-7" fill="#F16262"></path>
+            </g>
+        </g>
+    </g>
+</svg>

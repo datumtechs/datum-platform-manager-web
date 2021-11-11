@@ -25,9 +25,7 @@
           :width="toolStateList[0] ? '34' : '26'"
           :height="toolStateList[0] ? '34' : '26'"
         />
-        <span>
-          终止
-        </span>
+        <span>终止</span>
       </div>
       <div
         :class="isAuth ? 'disable-icon' : ''"
@@ -41,9 +39,7 @@
           width="30"
           height="30"
         />
-        <span>
-          启动
-        </span>
+        <span>启动</span>
       </div>
       <div :class="isAuth ? 'disable-icon' : ''" @click="handleEmpty">
         <svg-icon
@@ -53,9 +49,7 @@
           width="27"
           height="25"
         />
-        <span>
-          清空
-        </span>
+        <span>清空</span>
       </div>
       <div :class="!isSuccess || isAuth ? 'disable-icon' : ''" @click="openJob">
         <svg-icon
@@ -65,9 +59,7 @@
           width="50"
           height="28"
         />
-        <span>
-          创建作业
-        </span>
+        <span>创建作业</span>
       </div>
     </div>
     <subjobs-dialog ref="createJobDialog" :modalState="false"></subjobs-dialog>
@@ -124,10 +116,9 @@ export default class ToolBarIndex extends Vue {
   top 0
   color #000
   .tool-bar-wrap
-    padding 5px
     display inline-block
     margin-right 15px
-    font-size 14px
+    font-size 12px
     cursor pointer
     display: flex;
     div
@@ -142,6 +133,7 @@ export default class ToolBarIndex extends Vue {
       div:hover
       span
         color #5F4FFB
+        text-align: center;
       @keyframes turn{
         0%{-webkit-transform:rotate(0deg);}
         25%{-webkit-transform:rotate(90deg);}

@@ -12,7 +12,16 @@
           active-text-color="#5F4FFB"
           :router="true"
         >
-          <el-submenu index="/" class="logo-wrap">
+          <el-menu-item index="/" class="logo-wrap">
+            <svg-icon
+              name="logo"
+              width="100"
+              height="35"
+              class="logo-svg"
+              color="#5F4FFB"
+            />
+          </el-menu-item>
+          <!-- <el-submenu index="/" class="logo-wrap">
             <template slot="title">
               <svg-icon
                 name="logo"
@@ -25,7 +34,7 @@
             <el-menu-item>RosettaNet</el-menu-item>
             <el-menu-item>RosettaFlow</el-menu-item>
             <el-menu-item>RosettaMAS</el-menu-item>
-          </el-submenu>
+          </el-submenu> -->
           <el-submenu index="home">
             <template slot="title">
               {{ $t('nav.market') }}
