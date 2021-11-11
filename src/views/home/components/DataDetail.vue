@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator'
+import { Vue, Component, Emit } from 'vue-property-decorator'
 import { getDataDetail } from '@/api/home'
 import { BreadcrumbModule } from '@/store/modules/breadcrumb'
 import { formatBytes } from '@/utils/format'
@@ -119,7 +119,7 @@ export default class DataDetail extends Vue {
       describes: [
         {
           lable: '支持授权方式：',
-          value: 'authType',
+          value: 'authTypeStr',
         },
       ],
     },
@@ -127,6 +127,7 @@ export default class DataDetail extends Vue {
   get isLogin() {
     return !!UserModule.token && alayaService.checkAddress()
   }
+  @Emit('getAuthType')
   private async getList() {
     const metaDataPkId = this.$route.params.id
     const userMetaDataId = this.$route.params.userMateDataId
@@ -166,11 +167,12 @@ export default class DataDetail extends Vue {
     this.data = data
     this.data.fileType = data.fileType ? 'csv' : '未知'
     this.data.size = formatBytes(data.size)
-    this.data.authType = this.authTypeList[data.authType]
+    this.data.authTypeStr = this.authTypeList[data.authType]
     this.data.industry = this.industryList[data.industry]
     this.data.expire = this.expireList[data.expire]
     this.data.authMetadataState = this.authStateList[data.authMetadataState]
     BreadcrumbModule.SET_DATADETAIL(data.dataName)
+    return data.authType
   }
   created() {
     this.getList()
