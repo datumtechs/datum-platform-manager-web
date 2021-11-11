@@ -16,6 +16,7 @@ export const roleOptionMap: any = {
  *
  */
 export const cpuOptions = {
+  1: '1',
   2: '2',
   4: '4',
   8: '8',
@@ -27,6 +28,7 @@ export const cpuOptions = {
  *
  */
 export const memoryOptions = {
+  1: '1',
   2: '2',
   4: '4',
   8: '8',
