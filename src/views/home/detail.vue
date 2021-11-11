@@ -16,7 +16,7 @@
           @click="handleAuthorize"
           :height="42"
           :width="116"
-          v-if="isHomeDetail"
+          v-if="isHomeDetail && !authType"
         >
           {{ $t('detail.apply') }}
         </jz-button>
@@ -27,7 +27,7 @@
         </template>
         <template v-else>
           <MetaData v-if="tabIndex"></MetaData>
-          <DataDetail v-else></DataDetail>
+          <DataDetail @getAuthType="getAuthType" v-else></DataDetail>
         </template>
       </div>
     </div>
@@ -58,6 +58,7 @@ export default class Detail extends Vue {
     current: 1,
     size: 20,
   }
+  private authType = 1
   private list = []
   private tabIndex = 0
   get tabs() {
@@ -69,6 +70,10 @@ export default class Detail extends Vue {
   }
   get isHomeDetail() {
     return this.$route.name === 'dataDetail'
+  }
+  // 详情授权类型
+  getAuthType(type: number) {
+    this.authType = type
   }
 
   private handleTable(index: number) {

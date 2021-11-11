@@ -3,7 +3,7 @@
     <el-table
       :data="list"
       border
-      style="width: 100%;min-height: 540px;color:#000"
+      style="width: 100%;min-height: 530px;color:#000"
       :header-cell-style="{ background: '#FAFAFA', color: '#000' }"
     >
       <el-table-column prop="id" label="序号">
