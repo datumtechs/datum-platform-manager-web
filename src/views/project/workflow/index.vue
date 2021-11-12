@@ -662,6 +662,8 @@ export default class workflowIndex extends Vue {
         .active
           border-top 2px solid #0f62fe
           color #0f62fe
+    .flow-node:first-child
+      margin-top: 45px
   .log-wrap
     position absolute
     z-index 99
@@ -670,14 +672,27 @@ export default class workflowIndex extends Vue {
     bottom 0
     left 300px
     background: #fff;
-    // box-shadow  0 -2px 4px #d3d5d4
     border-top 1px solid #e8ebea
     box-sizing border-box
     color #333
-    padding 20px
+    padding 15px
+    box-sizing: border-box
     .log-title
-      margin-bottom 20px
-      .list
-        .item
-          padding 10px 0
+      margin-bottom 10px
+    .list
+      height: 80%
+      overflow-y auto
+      .item
+        padding 3px 0
+::-webkit-scrollbar-track
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, .1);
+  background-color: transparent
+  cursor pointer
+::-webkit-scrollbar
+  width: 6px;
+  height: 6px;
+  background-color: transparent
+::-webkit-scrollbar-thumb
+  background-color: transparent;
+  border: 4px solid #ccc
 </style>
