@@ -59,7 +59,7 @@
         <span class="unit">GiB</span>
       </div>
       <div class="block select">
-        <div class="text">宽带</div>
+        <div class="text">带宽</div>
         <el-select v-model="broadband" placeholder="请选择" :disabled="isAuth">
           <el-option
             v-for="(item, key, index) in broadbandOptions"

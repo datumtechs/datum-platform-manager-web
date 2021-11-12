@@ -45,7 +45,7 @@ export const gpuOptions = {
   16: '16',
 }
 /**
- * 宽带选项
+ * 带宽选项
  *
  */
 export const broadbandOptions = {
