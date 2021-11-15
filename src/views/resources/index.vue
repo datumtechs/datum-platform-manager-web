@@ -10,6 +10,7 @@
           <JzTable
             @clickName="handleName"
             @clickBtn="handleBtn"
+            @clickReapply="handleReapply"
             :keyList="keyList"
             :list="list"
             :total="total"
@@ -119,6 +120,12 @@ export default class resourcesData extends Vue {
       item.authType = authTypeList[item.authType]
     })
     return list
+  }
+  // 重新申请
+  private handleReapply(item: any) {
+    this.$router.push(
+      `/data/${item.metaDataPkId}/${item.id}/authorize/${item.metaDataId}`,
+    )
   }
 }
 </script>

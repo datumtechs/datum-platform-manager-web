@@ -91,7 +91,7 @@
                 >
                   <el-button
                     type="text"
-                    @click="handleReapply(index, scope.row)"
+                    @click="handleReapply(scope.row)"
                     style="margin-left:10px"
                   >
                     重新申请
@@ -295,8 +295,9 @@ export default class TableIndex extends Vue {
     return id
   }
   // 个人资源 handleReapply
-  handleReapply() {
-    console.log('重新申请')
+  @Emit('clickReapply')
+  handleReapply(item: any) {
+    return item
   }
   isAuth(row?: any) {
     if (this.isProject) {
