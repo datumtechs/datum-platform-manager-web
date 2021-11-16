@@ -526,10 +526,6 @@ export default class workflowIndex extends Vue {
     }
     this.getLogList()
   }
-  private async getModels() {
-    const id = this.$route.params.id
-    await WorkflowModule.getModels(id)
-  }
   created() {
     const { params, query } = this.$route
     this.workflowId = params.workflow
@@ -538,7 +534,6 @@ export default class workflowIndex extends Vue {
     const name = this.$route.query.workflow
     BreadcrumbModule.SET_WORKFLOW(name)
     this.getWorkState()
-    this.getModels()
   }
   private async getSign() {
     const checkAddress = alayaService.checkAddress()

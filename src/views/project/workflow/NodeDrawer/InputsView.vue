@@ -274,19 +274,19 @@ export default class InputViewIndex extends Vue {
     WorkflowModule.SET_INPUT_LEN(this.inputValue.length)
   }
   // 校验组织是否失效
-  private checkOrgState() {
-    // const list = this.organizations
-    // const inputValue = this.getListFirst(this.inputValue)
-    // console.log('inputValue', inputValue)
-    // console.log('organizations', list)
-    // list.map((item: any) => {
-    //   if(!inputValue.includes(item.identityId)){
-    //     // 校验失败
-    //   }else{
-    //     // 保存成功
-    //   }
-    // })
-  }
+  // private checkOrgState() {
+  // const list = this.organizations
+  // const inputValue = this.getListFirst(this.inputValue)
+  // console.log('inputValue', inputValue)
+  // console.log('organizations', list)
+  // list.map((item: any) => {
+  //   if(!inputValue.includes(item.identityId)){
+  //     // 校验失败
+  //   }else{
+  //     // 保存成功
+  //   }
+  // })
+  // }
   private visibleChange(state: boolean) {
     if (!state) {
       WorkflowModule.SET_MODEL_VALUE(this.modelValue)
@@ -343,12 +343,19 @@ export default class InputViewIndex extends Vue {
   private upCascaderKey() {
     this.changeInputValue(true, -1)
   }
+  // 模型列表
+  private async getModels() {
+    if (!this.isModel) return
+    const id = this.$route.params.id
+    await WorkflowModule.getModels(id)
+  }
   created() {
     this.init()
   }
   private async init() {
     this.modelValue = WorkflowModule.modelValue
     await WorkflowModule.getOrganizations()
+    this.getModels()
     // 回显
     this.handleInputValue()
     // 初始key，更新视图
