@@ -39,7 +39,9 @@
             <!-- 节点运行状态 -->
             <el-tooltip
               v-if="item.runStatus > 0"
+              :append-to-body="true"
               class="item"
+              :popper-class="item.runStatus == 2 ? 'success-tooltip' : ''"
               effect="dark"
               :content="stateList[item.runStatus]"
               placement="right"
@@ -696,4 +698,13 @@ export default class workflowIndex extends Vue {
 ::-webkit-scrollbar-thumb
   background-color: transparent;
   border: 4px solid #ccc
+</style>
+<style>
+.success-tooltip.el-tooltip__popper[x-placement^=right] .popper__arrow:after {
+  border-right-color: #169a20 !important;
+  border-left-width: 0;
+}
+.success-tooltip {
+  background: #169a20 !important;
+}
 </style>
