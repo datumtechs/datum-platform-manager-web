@@ -700,11 +700,13 @@ export default class workflowIndex extends Vue {
   border: 4px solid #ccc
 </style>
 <style>
-.success-tooltip.el-tooltip__popper[x-placement^=right] .popper__arrow:after {
-  border-right-color: #169a20 !important;
-  border-left-width: 0;
+.success-tooltip.el-tooltip__popper[x-placement^='right'] .popper__arrow {
+  border-right-color: #36a33d;
+}
+.success-tooltip.el-tooltip__popper[x-placement^='right'] .popper__arrow:after {
+  border-right-color: #36a33d;
 }
 .success-tooltip {
-  background: #169a20 !important;
+  background: #36a33d !important;
 }
 </style>
