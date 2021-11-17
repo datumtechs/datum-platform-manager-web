@@ -186,8 +186,8 @@ class Workflow extends VuexModule implements WFlowState {
   }
 
   @Action
-  public async getOrganizations() {
-    const { data } = await getOrganization()
+  public async getOrganizations(id: string) {
+    const { data } = await getOrganization({ projectId: Number(id) })
     this.SET_ORG(data)
   }
   @Action

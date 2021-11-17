@@ -187,7 +187,6 @@ export default class DispatchIndex extends Vue {
   }
   // 编辑回显
   public handleEcho(row: any) {
-    console.log(row, 'row')
     const { beginTime, endTime, repeatInterval } = row
     this.repeatInterval = repeatInterval
     const start = beginTime.split(' ')
