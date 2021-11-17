@@ -9,7 +9,57 @@
     >
       <div class="wrap">
         <div class="name">{{ nodeName }}</div>
-        <el-table :data="gridData" class="results-tabel">
+        <div class="results-detail">
+          <div class="item">
+            <div class="lable">
+              ID
+            </div>
+            <div class="info">
+              {{ gridData.id }}
+            </div>
+          </div>
+          <div class="item">
+            <div class="lable">
+              FileName
+            </div>
+            <div class="info">
+              {{ gridData.fileName }}
+            </div>
+          </div>
+          <div class="item">
+            <div class="lable">
+              FilePath
+            </div>
+            <div class="info">
+              {{ gridData.filePath }}
+            </div>
+          </div>
+          <div class="item">
+            <div class="lable">
+              MetadataId
+            </div>
+            <div class="info">
+              {{ gridData.metadataId }}
+            </div>
+          </div>
+          <div class="item">
+            <div class="lable">
+              CreateTime
+            </div>
+            <div class="info">
+              {{ gridData.createTime }}
+            </div>
+          </div>
+          <div class="item">
+            <div class="lable">
+              UpdateTime
+            </div>
+            <div class="info">
+              {{ gridData.updateTime }}
+            </div>
+          </div>
+        </div>
+        <!-- <el-table :data="gridData" class="results-tabel">
           <el-table-column prop="id" label="ID"></el-table-column>
           <el-table-column prop="fileName" label="FileName"></el-table-column>
           <el-table-column prop="filePath" label="FilePath"></el-table-column>
@@ -25,7 +75,7 @@
             prop="updateTime"
             label="UpdateTime"
           ></el-table-column>
-        </el-table>
+        </el-table> -->
       </div>
     </el-dialog>
   </div>
@@ -48,8 +98,8 @@ export default class ViewResult extends Vue {
   }
   async getResultsList(taskId: string | number) {
     const { data } = await getTaskResult(taskId)
-    // this.gridData = Array(20).fill(...data)
-    this.gridData = data
+    //  目前只有一条数据，详情展示
+    this.gridData = data[0]
   }
 }
 </script>
@@ -57,11 +107,26 @@ export default class ViewResult extends Vue {
 <style scoped lang="stylus">
 .wrap
   padding 20px
-  height: 450px;
+  padding-top: 0;
+  height: 400px;
   overflow-y: auto;
+  .name
+    font-size: 18px
   .results-tabel
     padding 10px
     height: 420px;
     overflow-y: auto;
     box-sizing: border-box
+  .results-detail
+    margin-top 25px
+    margin-left 10px
+    .item
+      display: flex
+      flex-direction: row
+      font-size: 16px
+      margin-bottom: 20px
+      .lable
+        width: 120px
+      .info
+        width 540px
 </style>
