@@ -13,13 +13,7 @@
           :router="true"
         >
           <el-menu-item index="/" class="logo-wrap">
-            <svg-icon
-              name="logo"
-              width="100"
-              height="35"
-              class="logo-svg"
-              color="#5F4FFB"
-            />
+            <span class="logo-text">隐私计算网络</span>
           </el-menu-item>
           <!-- <el-submenu index="/" class="logo-wrap">
             <template slot="title">
@@ -319,5 +313,10 @@ export default class HeaderComponent extends Vue {
 .el-menu--horizontal .el-menu--popup .el-menu-item:hover{
   background: #fff !important;
   color: #5F4FFB !important;
+}
+.logo-text{
+  color #5f4ffb
+  font-weight: 700
+  font-size: 18px;
 }
 </style>
