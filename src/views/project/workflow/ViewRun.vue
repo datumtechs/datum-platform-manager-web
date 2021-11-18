@@ -9,7 +9,7 @@
     >
       <div class="wrap">
         <div class="name">{{ nodeName }}</div>
-        <div class="results-detail">
+        <div class="results-detail" v-if="gridData">
           <div class="item">
             <div class="lable">
               ID
@@ -59,6 +59,9 @@
             </div>
           </div>
         </div>
+        <div class="results-no" v-else>
+          暂无数据
+        </div>
         <!-- <el-table :data="gridData" class="results-tabel">
           <el-table-column prop="id" label="ID"></el-table-column>
           <el-table-column prop="fileName" label="FileName"></el-table-column>
@@ -91,7 +94,7 @@ export default class ViewResult extends Vue {
   @Prop({ required: true, default: false }) private resultsVisible!: boolean
   @Prop({ required: true, default: '' }) private nodeName!: string
 
-  private gridData = []
+  private gridData = null
   @Emit('update:resultsVisible')
   private handleClose() {
     return false
@@ -99,7 +102,9 @@ export default class ViewResult extends Vue {
   async getResultsList(taskId: string | number) {
     const { data } = await getTaskResult(taskId)
     //  目前只有一条数据，详情展示
-    this.gridData = data[0]
+    if (data && data.length) {
+      this.gridData = data[0]
+    }
   }
 }
 </script>
@@ -129,4 +134,9 @@ export default class ViewResult extends Vue {
         width: 120px
       .info
         width 540px
+  .results-no
+    margin-top 100px
+    font-size: 12px
+    width 100%
+    text-align: center
 </style>
