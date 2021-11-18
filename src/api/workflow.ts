@@ -45,8 +45,8 @@ export const addNodeInput = (params?: any) => {
 }
 
 // 查询组织选项
-export const getOrganization = () => {
-  return get('/data/getAllAuthOrganization/')
+export const getOrganization = (parmas: any) => {
+  return get('/data/getAllAuthOrganization/', parmas)
 }
 // 查询表选项
 export const getTables = (parmas: any) => {

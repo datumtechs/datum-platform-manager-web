@@ -194,7 +194,6 @@ export default class InputViewIndex extends Vue {
       // 使用穿梭框，不用3级下拉
       // else if (level === 2) {
       //   const { data } = await getColumns(node.data.code)
-      //   console.log('最后的', data)
       //   let nodes = data.map((item: any) => ({
       //     code: item.columnIndex,
       //     name: item.columnName,
@@ -354,7 +353,8 @@ export default class InputViewIndex extends Vue {
   }
   private async init() {
     this.modelValue = WorkflowModule.modelValue
-    await WorkflowModule.getOrganizations()
+    const id = this.$route.params.id
+    await WorkflowModule.getOrganizations(id)
     this.getModels()
     // 回显
     this.handleInputValue()

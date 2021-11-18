@@ -158,7 +158,6 @@ export default class HeaderComponent extends Vue {
     return path
   }
   get isLogin() {
-    console.log('alayaState', alayaService.checkAddress())
     return !!UserModule.token && alayaService.checkAddress()
   }
   get userName() {

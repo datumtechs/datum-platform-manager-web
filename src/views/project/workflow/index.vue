@@ -492,7 +492,9 @@ export default class workflowIndex extends Vue {
   private async getLogList() {
     const { nodeList, workflowId } = this
     const { data } = await getWorkflwLog(workflowId)
-    this.logList = data
+    if (data && data.length) {
+      this.logList = data
+    }
   }
   // 检查工作流状态
   private checkWorkState() {

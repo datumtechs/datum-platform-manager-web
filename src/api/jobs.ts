@@ -18,7 +18,6 @@ export const setJobBase = (params: any) => {
 }
 // 查询关联工作流
 export const queryWorkflow = (params: any) => {
-  console.log(params)
   return get('/job/queryRelatedWorkflowName', params)
 }
 // 操作作业

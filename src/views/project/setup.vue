@@ -133,7 +133,6 @@ export default class SetupIndex extends Vue {
   private async selectDelete(ids: number[]) {
     if (!ids.length) return
     const params = ids.join(',')
-    console.log(params)
     const { msg } = await delProjMembers({ projMemberIds: params })
     this.$message.success(msg)
     this.getList()
