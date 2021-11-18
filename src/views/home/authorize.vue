@@ -165,6 +165,7 @@ export default class Authorize extends Vue {
     }
   }
   private async handleAuthorize() {
+    if (this.authBtn) return
     const { authType, detailId } = this
     // 校验
     const checks: any = {
