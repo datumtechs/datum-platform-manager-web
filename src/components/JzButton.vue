@@ -1,8 +1,9 @@
 <template>
   <div
-    :class="[type, align]"
+    :class="[type, align, disabled ? 'disabled' : '']"
     :style="`width:${width}px;height:${height}px;line-height:${height - 2}px`"
     @click="handleClick"
+    ref="jzButton"
   >
     <slot></slot>
   </div>
@@ -14,11 +15,16 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
   name: 'JzButton',
 })
 export default class JzButton extends Vue {
+  // jz-button--primary: 蓝色 jz-button： 白色
   @Prop({ default: 'jz-button' }) private type!: string
+  @Prop({ default: false }) private disabled!: boolean
   @Prop({ default: 'center' }) private align!: string
   @Prop({ default: 80 }) private width!: number
   @Prop({ default: 30 }) private height!: number
   handleClick(evt: any) {
+    // 配合v-preventReClick指令，节流
+    const disabled = (this.$refs as any).jzButton.disabled
+    if (disabled) return
     this.$emit('click', evt)
   }
 }
@@ -38,6 +44,16 @@ export default class JzButton extends Vue {
   cursor pointer
   transform 0.6s
   border-radius: 4px;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+.disabled
+  border: 1px solid #8f89ca;
+  background: #8f89ca;
+  cursor: not-allowed;
 .center
   text-align center
 .left
@@ -52,6 +68,4 @@ export default class JzButton extends Vue {
   color #fff
   border: 1px solid #5F4FFB;
   background: #5F4FFB;
-// .jz-button--primary:hover
-//   background rgba(3, 83, 233, 1)
 </style>

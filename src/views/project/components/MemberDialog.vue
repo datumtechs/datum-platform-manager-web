@@ -41,7 +41,7 @@
         <el-button @click="handleClose">
           {{ $t('project.cancel') }}
         </el-button>
-        <el-button type="primary" @click="handleSubmit">
+        <el-button type="primary" @click="handleSubmit" v-preventReClick>
           {{ $t('project.submit') }}
         </el-button>
       </span>

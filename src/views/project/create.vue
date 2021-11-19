@@ -59,6 +59,7 @@
           :width="116"
           :height="41"
           @click="handleSubmit"
+          v-preventReClick
         >
           {{ $t('project.submit') }}
         </jz-button>
