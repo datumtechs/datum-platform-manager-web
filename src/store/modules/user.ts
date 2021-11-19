@@ -115,6 +115,7 @@ class User extends VuexModule implements IUserState {
     await getLogOut()
     resetRouter()
     this.ResetToken()
+    router.replace('/')
   }
   @Action
   public async getUser() {

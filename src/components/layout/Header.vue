@@ -203,9 +203,11 @@ export default class HeaderComponent extends Vue {
     this.visible = true
   }
   private async handleName() {
-    if (!this.isLogin) return
     const checkName = !!UserModule.user_info.userName
     const checkAddress = alayaService.checkAddress()
+    // 如果没有登录，不请求用户信息
+    if (!this.isLogin) return
+    // 没有用户名， 有钱包地址请求用户信息
     if (!checkName && checkAddress) {
       const address = UserModule.user_info.address
       const { data } = await getUserInfo({ address })
