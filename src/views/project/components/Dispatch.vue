@@ -84,6 +84,7 @@
         :height="40"
         @click="handleCreate"
         class="create"
+        v-preventReClick
       >
         {{ type ? $t('workflow.save') : $t('jobs.create') }}
       </jz-button>

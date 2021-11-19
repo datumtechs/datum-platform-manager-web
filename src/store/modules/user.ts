@@ -6,7 +6,7 @@ import {
   getModule,
 } from 'vuex-module-decorators'
 // import alayaService from '@/services/alayaService'
-import { getLoginNonce, getLogin, getLogOut } from '@/api/user'
+import { getLoginNonce, getLogin, getLogOut, getUserInfo } from '@/api/user'
 import store from '@/store'
 import router, { resetRouter } from '@/router'
 import { setToken, getToken, removeToken } from '@/utils/auth'
@@ -43,7 +43,9 @@ class User extends VuexModule implements IUserState {
   }
   @Mutation
   public SET_ADDRESS(val: string) {
-    this.user_info.address = val
+    if (val) {
+      this.user_info.address = val
+    }
   }
   @Mutation
   public SET_SIGN(val: string) {
@@ -60,7 +62,9 @@ class User extends VuexModule implements IUserState {
   }
   @Mutation
   public SET_USER(data: any) {
-    this.user_info.userName = data.userName
+    if (data && data.userName) {
+      this.user_info.userName = data.userName
+    }
   }
   @Mutation
   private RESET_USER() {
@@ -111,6 +115,19 @@ class User extends VuexModule implements IUserState {
     await getLogOut()
     resetRouter()
     this.ResetToken()
+  }
+  @Action
+  public async getUser() {
+    try {
+      const address = this.user_info.address
+      const { data, code, msg } = await getUserInfo({ address })
+      if (code !== 10000) {
+        throw new Error(msg)
+      }
+      this.SET_USER(data)
+    } catch (error) {
+      console.log(error)
+    }
   }
   get userType() {
     const address = this.user_info.address

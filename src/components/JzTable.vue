@@ -155,6 +155,7 @@
                   class="delete"
                   @click="handleDelete(scope.row[tableId])"
                   :disabled="isAuth(scope.row)"
+                  v-preventReClick
                 >
                   删除
                 </el-button>
