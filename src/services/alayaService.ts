@@ -23,23 +23,33 @@ class alayaService {
       this.web3 = new Web3(alaya)
       // 切换用户
       alaya.on('accountsChanged', (account: string[]) => {
-        console.log('切换用户', account[0])
-        if (account.length === 0) {
-          UserModule.SET_ADDRESS('')
-        } else if (account.length > 0) {
-          UserModule.SET_ADDRESS(account[0])
-          // 更新用户信息
-          UserModule.getUser()
-        } else {
-          console.log('Alaya account changed but same address')
-        }
+        setTimeout(() => {
+          if (account.length > 0) {
+            const newAddress = account[0]
+            const currentAddress = UserModule.user_info.address
+            if (!newAddress) return
+            if (!currentAddress) return
+            if (newAddress !== currentAddress) {
+              // 用户退出
+              UserModule.LogOut()
+            }
+          } else {
+            console.log('Alaya account changed but same address')
+          }
+        }, 13)
       })
       // 切换网络
       alaya.on('chainChanged', () => {
         setTimeout(() => {
-          console.log('切换网络', alaya.selectedAddress)
-          UserModule.SET_ADDRESS(alaya.selectedAddress)
-        }, 0)
+          const newAddress = alaya.selectedAddress
+          const currentAddress = UserModule.user_info.address
+          if (!newAddress) return
+          if (!currentAddress) return
+          if (newAddress !== currentAddress) {
+            // 更新地址
+            UserModule.SET_ADDRESS(alaya.selectedAddress)
+          }
+        }, 13)
       })
     }
   }
@@ -139,11 +149,6 @@ class alayaService {
     const msgParams = type === 'login' ? this.msgParams() : this.singParams()
     var params = [from, msgParams]
     var method = 'platon_signTypedData_v4'
-    console.log({
-      method,
-      params,
-      from,
-    })
     const signPromise = new Promise((resolve, reject) => {
       this.web3.currentProvider.sendAsync(
         {
