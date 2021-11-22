@@ -4,33 +4,41 @@
       <span> {{ $t('case.title') }} </span>
     </div>
     <div class="block-wrap">
-      <div
-        class="block-wrap-item"
-        v-for="(item, index) in marketList"
-        :key="index"
-      >
-        <div class="item-img"></div>
-        <div class="item-info">
-          <div class="item-title">{{ item.projectName }}</div>
-          <div class="item-describe">{{ item.projectDesc }}</div>
-          <div class="item-button">
-            <jz-button
-              @click="handleDetail(item.id)"
-              type="jz-button--primary"
-              class="btn"
-            >
-              {{ $t('case.project') }}
-            </jz-button>
-            <jz-button
-              type="jz-button--primary"
-              @click="handleDescription(item.id)"
-              class="btn"
-            >
-              {{ $t('case.guidance') }}
-            </jz-button>
+      <template v-if="marketList && marketList.length">
+        <div
+          class="block-wrap-item"
+          v-for="(item, index) in marketList"
+          :class="(index + 1) % 3 === 0 ? 'item-right' : ''"
+          :key="index"
+        >
+          <div class="item-img"></div>
+          <div class="item-info">
+            <div class="item-title">{{ item.projectName }}</div>
+            <div class="item-describe">{{ item.projectDesc }}</div>
+            <div class="item-button">
+              <jz-button
+                @click="handleDetail(item.id)"
+                type="jz-button--primary"
+                class="btn"
+              >
+                {{ $t('case.project') }}
+              </jz-button>
+              <jz-button
+                type="jz-button--primary"
+                @click="handleDescription(item.id)"
+                class="btn"
+              >
+                {{ $t('case.guidance') }}
+              </jz-button>
+            </div>
           </div>
         </div>
-      </div>
+      </template>
+      <template v-else>
+        <div class="empty">
+          <el-empty :image-size="200" description=" "></el-empty>
+        </div>
+      </template>
     </div>
   </div>
 </template>
@@ -128,4 +136,9 @@ export default class CaseIndex extends Vue {
           .btn
             border-radius 0
             margin-right 25px
+    .item-right
+      margin-right 0
+    .empty
+      width: 100%
+      margin-top 50px
 </style>
