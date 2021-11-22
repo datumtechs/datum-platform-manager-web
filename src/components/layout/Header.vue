@@ -39,7 +39,7 @@
             <el-menu-item index="/home/algorithm">
               {{ $t('home.algorithm') }}
             </el-menu-item>
-            <el-menu-item index="/home/service">
+            <el-menu-item>
               {{ $t('home.service') }}
             </el-menu-item>
           </el-submenu>
