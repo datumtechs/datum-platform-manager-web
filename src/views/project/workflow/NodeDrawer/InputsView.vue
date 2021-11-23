@@ -187,7 +187,7 @@ export default class InputViewIndex extends Vue {
         let nodes = data.map((item: any) => ({
           code: item.metaDataId,
           name: item.dataName,
-          leaf: level >= 1, //  >=2： 展示3级 >= 1： 展示3级
+          leaf: level >= 1, //  >=2： 展示3级 >= 1： 展示2级
         }))
         resolve(nodes)
       }
@@ -310,18 +310,24 @@ export default class InputViewIndex extends Vue {
     const res: any = []
     if (workflowNodeInputVoList && workflowNodeInputVoList.length) {
       this.selectLayout = workflowNodeInputVoList
+      const organizations = this.organizations.map(
+        (item: any) => item.identityId,
+      )
       workflowNodeInputVoList.map((item: any, index: number) => {
-        res[index] = [
-          item.identityId,
-          item.dataTableId,
-          // item.dataColumnIds
-        ]
-        // 回显穿梭框
-        this.getColumnList(item.dataTableId, index, {
-          keyColumn: item.keyColumn,
-          dependentVariable: item.dependentVariable,
-          dataColumnIds: item.dataColumnIds,
-        })
+        // 需要检测已选组织id，是否存在组织列表里面
+        if (organizations.includes(item.identityId)) {
+          res[index] = [
+            item.identityId,
+            item.dataTableId,
+            // item.dataColumnIds
+          ]
+          // 回显穿梭框
+          this.getColumnList(item.dataTableId, index, {
+            keyColumn: item.keyColumn,
+            dependentVariable: item.dependentVariable,
+            dataColumnIds: item.dataColumnIds,
+          })
+        }
       })
     }
     this.inputValue = res
@@ -355,6 +361,7 @@ export default class InputViewIndex extends Vue {
     this.modelValue = WorkflowModule.modelValue
     const id = this.$route.params.id
     await WorkflowModule.getOrganizations(id)
+    // 模型列表
     this.getModels()
     // 回显
     this.handleInputValue()
