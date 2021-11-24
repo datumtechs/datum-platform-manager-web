@@ -109,10 +109,21 @@ export default class extends Vue {
       (workflowNodeOutputVoList && workflowNodeOutputVoList.length) ||
       (workflowNodeInputVoList && workflowNodeInputVoList.length)
     ) {
-      this.isSelect = true
       const list = workflowNodeOutputVoList.map((item: any) => item.identityId)
-      this.checkList = Array.from(new Set(list))
+      const checkList = Array.from(new Set(list))
+      // 检测选中key对应的value是否存在
+      this.checkValue(checkList)
     }
+  }
+  private checkValue(checkList: string[]) {
+    // checkList
+    const orgList = WorkflowModule.orgOptions
+    orgList.map((item: any) => {
+      if (checkList.includes(item.identityId)) {
+        this.checkList.push(item.identityId)
+        this.isSelect = true
+      }
+    })
   }
   // 数组对象去重
   repeatArr(list: any) {

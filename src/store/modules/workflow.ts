@@ -49,7 +49,7 @@ class Workflow extends VuexModule implements WFlowState {
   // 输入数据方id
   public organizationsId = []
   public organizationList = []
-  public orgOptions = {}
+  public orgOptions = []
   @Mutation
   public SET_INPUT_LEN(state: number) {
     this.valueListNumber = state
@@ -62,6 +62,7 @@ class Workflow extends VuexModule implements WFlowState {
     if (data[index] && data[index]['nodeAlgorithmVo']) {
       this.algorithms = data[index]['nodeAlgorithmVo']
     }
+    console.log('organizationList.', this.organizationList)
     this.workflowNodeInputVoList = data[index]['workflowNodeInputVoList'] || []
     this.workflowNodeOutputVoList = data[index]['workflowNodeOutputVoList']
   }
@@ -141,7 +142,7 @@ class Workflow extends VuexModule implements WFlowState {
     this.workflowNodeOutputVoList = []
     this.organizationsId = []
     this.organizationList = []
-    this.orgOptions = {}
+    this.orgOptions = []
     this.nodeList = []
   }
   @Mutation
