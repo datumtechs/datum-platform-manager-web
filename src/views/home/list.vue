@@ -199,7 +199,6 @@ export default class HomeList extends Vue {
   }
   created() {
     this.handleTabIndex()
-    
   }
 }
 </script>
