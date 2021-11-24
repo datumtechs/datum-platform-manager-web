@@ -551,7 +551,7 @@ export default class workflowIndex extends Vue {
   }
   private handleRunState() {
     const node = this.nodeList[this.currentIndex]
-    if (node && node.runStatus === 2) {
+    if (node && node.taskId && node.runStatus === 2) {
       return false
     } else {
       return true
