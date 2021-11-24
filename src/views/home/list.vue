@@ -105,6 +105,10 @@ export default class HomeList extends Vue {
   private handleTabIndex() {
     const name: string = this.$route.name || ''
     this.tabIndex = this.tabs.indexOf(name)
+    this.listQuery = {
+      current: 1,
+      size: 20,
+    }
     this.getList()
   }
   @Watch('$route', { deep: true })
@@ -165,7 +169,7 @@ export default class HomeList extends Vue {
     const inputInfo = this.inputInfo.replace(/\s+/g, '')
     const params: ParamsType = {
       current: 1,
-      size: 6,
+      size: 20,
     }
     const { current, size } = this.listQuery
     params.current = current
@@ -182,20 +186,20 @@ export default class HomeList extends Vue {
     }
     // 算法列表
     if (this.tabIndex === 1) {
-      // TODO 接口 缺少total
       params['algorithmName'] = inputInfo
       const { data } = await geAlgorithms({ ...params })
-      data.map((item: any) => {
+      this.marketList = data.items
+      this.marketList.map((item: any) => {
         item.id = item.algorithmId
         item.dataName = item.algorithmName
         item.dataDesc = item.algorithmDesc
       })
-      this.marketList = data
-      this.total = data.length
+      this.total = data.total
     }
   }
   created() {
     this.handleTabIndex()
+    
   }
 }
 </script>
