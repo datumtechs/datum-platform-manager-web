@@ -20,6 +20,22 @@
           </div>
           <div class="item">
             <div class="lable">
+              IP
+            </div>
+            <div class="info">
+              {{ gridData.ip }}
+            </div>
+          </div>
+          <div class="item">
+            <div class="lable">
+              Port
+            </div>
+            <div class="info">
+              {{ gridData.port }}
+            </div>
+          </div>
+          <div class="item">
+            <div class="lable">
               FileName
             </div>
             <div class="info">
@@ -113,13 +129,13 @@ export default class ViewResult extends Vue {
 .wrap
   padding 20px
   padding-top: 0;
-  height: 400px;
+  height: 480px;
   overflow-y: auto;
   .name
     font-size: 18px
   .results-tabel
     padding 10px
-    height: 420px;
+    height: 500px;
     overflow-y: auto;
     box-sizing: border-box
   .results-detail
