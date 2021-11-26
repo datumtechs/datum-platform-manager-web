@@ -37,12 +37,8 @@ service.interceptors.response.use(
     if (res.code !== 10000) {
       message.error(res.msg)
       if (res.code === 20006 || res.code === 20007 || res.code === 20008) {
-        removeToken()
         UserModule.ResetToken()
         router.replace('/')
-      }
-      if (res.code === 4018) {
-        window.location.href = '/403'
       }
     }
     return res
