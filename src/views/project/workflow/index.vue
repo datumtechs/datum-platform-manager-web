@@ -41,7 +41,9 @@
               v-if="item.runStatus > 0"
               class="item"
               effect="dark"
-              :content="stateList[item.runStatus]"
+              :content="
+                item.runStatus === 3 ? item.runMsg : stateList[item.runStatus]
+              "
               placement="right"
             >
               <img
@@ -271,10 +273,6 @@ export default class workflowIndex extends Vue {
       const tips: any = this.$t('tips.noNode')
       this.$message.error(tips)
       return
-    }
-    if (this.isModel && this.modelId === '') {
-      const tips: any = this.$t('tips.inputModel')
-      return this.$message.warning(tips)
     }
     const min = Number(WorkflowModule.algorithms.minNumbers)
     const inputValue = WorkflowModule.valueListNumber
@@ -521,6 +519,7 @@ export default class workflowIndex extends Vue {
     this.startShow = data.runStatus
     this.nodeList.map((item: any, index: number) => {
       item.runStatus = data.getNodeStatusVoList[index]['runStatus']
+      item.runMsg = data.getNodeStatusVoList[index]['runMsg']
     })
     // 节点不是运行中，清除定时器
     if (this.startShow !== 1) {

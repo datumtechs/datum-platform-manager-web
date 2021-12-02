@@ -28,7 +28,6 @@ class Workflow extends VuexModule implements WFlowState {
   public nodeList = []
   // 模型列表
   public modelList = []
-  public modelValue = ''
   // 当前节点
   public currentIndex = 0
   public valueListNumber = 0
@@ -50,6 +49,9 @@ class Workflow extends VuexModule implements WFlowState {
   public organizationsId = []
   public organizationList = []
   public orgOptions = []
+  get modelValue() {
+    return this.nodeList[this.currentIndex]['modelId'] || '0'
+  }
   @Mutation
   public SET_INPUT_LEN(state: number) {
     this.valueListNumber = state
@@ -81,7 +83,8 @@ class Workflow extends VuexModule implements WFlowState {
   }
   @Mutation
   public SET_MODEL_VALUE(state: any) {
-    this.modelValue = state
+    const { currentIndex } = this
+    ;(this.nodeList[currentIndex] as any)['modelId'] = state
   }
   @Mutation
   public SET_ORG_DISABLED(state: any) {

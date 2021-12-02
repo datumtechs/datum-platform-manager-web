@@ -101,7 +101,7 @@ export default class InputViewIndex extends Vue {
   private selectLayout = Array(this.minLen).fill({})
   private inputValue: any = []
   private columnsList: any = []
-  private modelValue = ''
+  private modelValue: any = null
   get isModel() {
     return WorkflowModule.algorithms.inputModel
   }
@@ -216,7 +216,7 @@ export default class InputViewIndex extends Vue {
   }
   private async handleSave() {
     if (this.handleisAuth()) return
-    if (this.isModel && this.modelValue === '') {
+    if (this.isModel && this.modelValue === null) {
       const tips: any = this.$t('tips.inputModel')
       return this.$message.warning(tips)
     }
@@ -306,7 +306,8 @@ export default class InputViewIndex extends Vue {
   }
   // 回显选择状态
   private async handleInputValue() {
-    const { workflowNodeInputVoList } = WorkflowModule
+    const { workflowNodeInputVoList, modelValue } = WorkflowModule
+    this.modelValue = modelValue
     const res: any = []
     if (workflowNodeInputVoList && workflowNodeInputVoList.length) {
       this.selectLayout = workflowNodeInputVoList
@@ -358,7 +359,6 @@ export default class InputViewIndex extends Vue {
     this.init()
   }
   private async init() {
-    this.modelValue = WorkflowModule.modelValue
     const id = this.$route.params.id
     await WorkflowModule.getOrganizations(id)
     // 模型列表
@@ -409,10 +409,6 @@ export default class InputViewIndex extends Vue {
         return item[0]
       }
     })
-  }
-  beforeDestroy() {
-    this.modelValue = ''
-    WorkflowModule.SET_MODEL_VALUE(this.modelValue)
   }
 }
 </script>
