@@ -2,7 +2,7 @@ import Vue from 'vue'
 import axios from 'axios'
 import qs from 'qs'
 import { message } from '@/plugins/message.ts'
-import { getToken, removeToken, getLanguage } from '@/utils/auth'
+import { getToken, removeToken, getLanguage, setToken } from '@/utils/auth'
 import { UserModule } from '@/store/modules/user'
 import router from '@/router'
 
@@ -22,6 +22,8 @@ service.interceptors.request.use(
     if (token) {
       config.headers.common['Access-Token'] = token
       config.headers.common['Accept-Language'] = language
+      // 设置token失效时间, 默认30min
+      setToken(token)
     }
     return config
   },

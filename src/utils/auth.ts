@@ -21,8 +21,8 @@ export function getToken() {
   return Cookies.get(TokenKey)
 }
 
-export function setToken(token: any) {
-  return Cookies.set(TokenKey, token)
+export function setToken(token: any, time: string = '30min') {
+  return Cookies.set(TokenKey, token, time)
 }
 
 export function removeToken() {
