@@ -74,27 +74,17 @@
               {{ gridData.updateTime }}
             </div>
           </div>
+          <el-link
+            class="download"
+            :disabled="isDownload"
+            type="primary"
+            @click="downloadResults"
+            >下载运行结果</el-link
+          >
         </div>
         <div class="results-no" v-else>
           暂无数据
         </div>
-        <!-- <el-table :data="gridData" class="results-tabel">
-          <el-table-column prop="id" label="ID"></el-table-column>
-          <el-table-column prop="fileName" label="FileName"></el-table-column>
-          <el-table-column prop="filePath" label="FilePath"></el-table-column>
-          <el-table-column
-            prop="metadataId"
-            label="MetadataId"
-          ></el-table-column>
-          <el-table-column
-            prop="createTime"
-            label="CreateTime"
-          ></el-table-column>
-          <el-table-column
-            prop="updateTime"
-            label="UpdateTime"
-          ></el-table-column>
-        </el-table> -->
       </div>
     </el-dialog>
   </div>
@@ -102,24 +92,58 @@
 
 <script lang="ts">
 import { Vue, Component, Prop, Emit } from 'vue-property-decorator'
-import { getTaskResult } from '@/api/workflow'
+import { getTaskResult, downloadTaskResultFile } from '@/api/workflow'
+import { Message } from 'element-ui'
+
 @Component({
   name: 'ViewResults',
 })
 export default class ViewResult extends Vue {
   @Prop({ required: true, default: false }) private resultsVisible!: boolean
   @Prop({ required: true, default: '' }) private nodeName!: string
-
+  private taskId?: number
   private gridData = null
+  private isDownload = false
   @Emit('update:resultsVisible')
   private handleClose() {
     return false
   }
-  async getResultsList(taskId: string | number) {
+  // 下载运行结果
+  private downloadResults() {
+    if (this.isDownload) return
+    this.isDownload = true
+    const that = this
+    const id = this.taskId
+    downloadTaskResultFile({
+      id,
+      compress: 1, // 1:zip, 2: tar.gz
+    }).then((res: any) => {
+      if (res) {
+        that.download(res, that.nodeName)
+        // Message.success(this.$t('tips.operationSucces'))
+        this.isDownload = false
+      } else {
+        Message.error(this.$t('tips.operationFailed'))
+        this.isDownload = false
+      }
+    })
+  }
+  private download(data: any, fileName: string) {
+    const url = window.URL.createObjectURL(new Blob([data]))
+    const link = document.createElement('a')
+    link.style.display = 'none'
+    link.href = url
+    link.setAttribute('download', `${fileName}.zip`)
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+  }
+  async getResultsList(taskId: string) {
     const { data } = await getTaskResult(taskId)
     //  目前只有一条数据，详情展示
     if (data && data.length) {
       this.gridData = data[0]
+      this.taskId = data[0].id
     }
   }
 }
@@ -150,6 +174,9 @@ export default class ViewResult extends Vue {
         width: 120px
       .info
         width 540px
+    .download
+      float right
+      margin-right 10px
   .results-no
     margin-top 100px
     font-size: 12px

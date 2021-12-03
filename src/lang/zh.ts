@@ -171,5 +171,7 @@ export default {
     inputFrequency: '请输入次数',
     nick: '昵称不能为空',
     maxNick: '昵称最大支持20个字',
+    operationSucces: '下载成功',
+    operationFailed: '下载失败，请联系管理员',
   },
 }

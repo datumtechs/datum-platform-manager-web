@@ -1,4 +1,4 @@
-import { get, post, put, del } from './index'
+import { get, post, down, put, del } from './index'
 
 // 新增工作流节点
 export const addWorkflowNode = (params?: any) => {
@@ -85,4 +85,9 @@ export const getWorkflowStatus = (parmas: any) => {
 // 查询项目模型
 export const queryAllModelByProjectId = (id: any) => {
   return get('/project/queryAllModelByProjectId/' + id)
+}
+
+// 下载运行结果
+export const downloadTaskResultFile = (parmas: any) => {
+  return down('/workflowNode/downloadTaskResultFile', parmas)
 }

@@ -34,7 +34,8 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   (response: any) => {
     const res = response.data
-    if (res.code !== 10000) {
+    const responseType = response.request.responseType
+    if (res.code !== 10000 && responseType !== 'blob') {
       message.error(res.msg)
       if (res.code === 20006 || res.code === 20007 || res.code === 20008) {
         UserModule.ResetToken()

@@ -168,5 +168,7 @@ export default {
     inputFrequency: 'Please enter the number of times',
     nick: 'Nickname cannot be empty',
     maxNick: 'The nickname can support up to 20 words',
+    operationSucces: 'Download succeeded',
+    operationFailed: 'Download failed, please contact the administrator',
   },
 }
