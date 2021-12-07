@@ -2,8 +2,7 @@ const Web3 = require('web3')
 import { UserModule } from '@/store/modules/user'
 class alayaService {
   private web3: any = null
-  private win: any = window
-  private alaya: any = this.win.alaya
+  private Eth: any = (window as any).ethereum
   constructor() {
     this.web3 = null //web3对象
     try {
@@ -13,16 +12,16 @@ class alayaService {
     }
   }
   initAlaya() {
-    const { alaya } = this
+    const { Eth } = this
     //判断是否存在alaya
-    if (typeof alaya === 'undefined') {
-      console.log('No alaya, You should consider trying Samurai!')
+    if (typeof Eth === 'undefined') {
+      console.log('No MetaMask, You should consider trying  MetaMask!')
       UserModule.SET_ADDRESS('')
       UserModule.IS_INIT_WALLET(false)
     } else {
-      this.web3 = new Web3(alaya)
+      this.web3 = new Web3(Eth)
       // 切换用户
-      alaya.on('accountsChanged', (account: string[]) => {
+      Eth.on('accountsChanged', (account: string[]) => {
         setTimeout(() => {
           if (account.length > 0) {
             const newAddress = account[0]
@@ -39,15 +38,15 @@ class alayaService {
         }, 13)
       })
       // 切换网络
-      alaya.on('chainChanged', () => {
+      Eth.on('chainChanged', () => {
         setTimeout(() => {
-          const newAddress = alaya.selectedAddress
+          const newAddress = Eth.selectedAddress
           const currentAddress = UserModule.user_info.address
           if (!newAddress) return
           if (!currentAddress) return
           if (newAddress !== currentAddress) {
             // 更新地址
-            UserModule.SET_ADDRESS(alaya.selectedAddress)
+            UserModule.SET_ADDRESS(Eth.selectedAddress)
           }
         }, 13)
       })
@@ -59,8 +58,8 @@ class alayaService {
    */
   async connectWallet() {
     UserModule.SET_LOADING(true)
-    const { alaya } = this
-    if (typeof alaya == 'undefined') {
+    const { Eth } = this
+    if (typeof Eth == 'undefined') {
       UserModule.IS_INIT_WALLET(false)
       UserModule.SET_LOADING(false)
       // 旧的配置
@@ -69,8 +68,8 @@ class alayaService {
       // 新的配置待确定
     } else {
       try {
-        const data = await alaya.request({
-          method: 'platon_requestAccounts',
+        const data = await Eth.request({
+          method: 'eth_requestAccounts',
         })
         UserModule.ConnectWallet(data)
         UserModule.SET_LOADING(false)
@@ -148,7 +147,7 @@ class alayaService {
     // workflow：  this.singParams()
     const msgParams = type === 'login' ? this.msgParams() : this.singParams()
     var params = [from, msgParams]
-    var method = 'platon_signTypedData_v4'
+    var method = 'eth_signTypedData_v4'
     const signPromise = new Promise((resolve, reject) => {
       this.web3.currentProvider.sendAsync(
         {
@@ -193,8 +192,8 @@ class alayaService {
   public checkAddress() {
     if (UserModule.user_info.address && UserModule.user_info.address.length)
       return true
-    if (this.alaya && this.alaya.selectedAddress) {
-      const address = this.alaya.selectedAddress
+    if (this.Eth && this.Eth.selectedAddress) {
+      const address = this.Eth.selectedAddress
       if (address && address.length) {
         UserModule.SET_ADDRESS(address)
         return true

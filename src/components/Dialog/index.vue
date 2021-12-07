@@ -14,11 +14,11 @@
             :class="['wallet-btn', isRadio ? 'wallet-btn-active' : '']"
           >
             <img
-              src="@/assets/images/icons/samurai-walle.svg"
+              src="@/assets/images/icons/metamask-fox.svg"
               alt="samurai"
               class="icon"
             />
-            <span class="text">Samurai</span>
+            <span class="text">MetaMask</span>
           </div>
         </div>
         <div class="info">
@@ -34,7 +34,7 @@
         </div>
       </div>
       <div class="walle-wrap walle-init" v-else>
-        <div class="title">Samurai扩展</div>
+        <div class="title">MetaMask扩展</div>
         <div class="init-info">
           <div>
             <svg-icon
@@ -64,7 +64,7 @@
               class="init-icon"
               color="#606266"
             />
-            无缝适配PlatON网络
+            无缝适配Ethereum网络
           </div>
           <el-button type="primary" @click="handleSamurai">安装</el-button>
         </div>
