@@ -56,7 +56,7 @@
             />
             账户隐私保留在本地
           </div>
-          <div>
+          <!-- <div>
             <svg-icon
               name="samurai-3"
               width="20"
@@ -65,7 +65,7 @@
               color="#606266"
             />
             无缝适配Ethereum网络
-          </div>
+          </div> -->
           <el-button type="primary" @click="handleSamurai">安装</el-button>
         </div>
       </div>
@@ -118,10 +118,10 @@ export default class DialogIndex extends Vue {
   }
   // 安装钱包插件
   private handleSamurai() {
-    this.handleClose()
-    window.open(
-      ' https://devdocs.platon.network/docs/zh-CN/Samurai_user_manual ',
-    )
+    window.open('https://metamask.io')
+    setTimeout(() => {
+      this.handleClose()
+    }, 13)
   }
   @Watch('address', { deep: true })
   addressChange(val: any): void {
