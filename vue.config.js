@@ -1,5 +1,4 @@
 // vue.config.js
-const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin')
 const CompressionWebpackPlugin = require('compression-webpack-plugin')
 const productionGzipExtensions = /\.(js|css|json|txt|html|ico|svg)(\?.*)?$/i
 
@@ -30,7 +29,7 @@ module.exports = {
       // AMap: 'AMap',
       // AMapUI: 'AMapUI',
     }
-    const plugins = [new MonacoWebpackPlugin()]
+    const plugins = []
 
     // Begin 生成 gzip 压缩文件
     plugins.push(
