@@ -174,4 +174,11 @@ export default {
     operationSucces: '下载成功',
     operationFailed: '下载失败，请联系管理员',
   },
+  wallet: {
+    connectWallet: '连接钱包',
+    extend: 'MetaMask扩展',
+    application: '一键连接区块链应用',
+    local: '账户隐私保留在本地',
+    install: '安装',
+  },
 }

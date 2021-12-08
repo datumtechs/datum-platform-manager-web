@@ -7,7 +7,7 @@
       :before-close="handleClose"
     >
       <div class="walle-wrap" v-if="isInitWallet">
-        <div class="title">连接钱包</div>
+        <div class="title">{{ $t('wallet.connectWallet') }}</div>
         <div class="wallet-block">
           <div
             @click="handleLogin"
@@ -26,15 +26,18 @@
             :class="['radio', isRadio ? 'active' : '']"
             @click="handleRadio"
           ></span>
-          <span
-            ><span @click="handleRadio">阅读并同意</span><i>用户协议</i>和<i
-              >隐私声明</i
-            ></span
-          >
+          <span v-if="isEnglish">
+            <span @click="handleRadio"> I have read and agreed to the </span>
+            <i>Term of Use</i> and <i> Privacy Policy</i>
+          </span>
+          <span v-else>
+            <span @click="handleRadio">阅读并同意</span>
+            <i>用户协议</i>和<i>隐私声明</i>
+          </span>
         </div>
       </div>
       <div class="walle-wrap walle-init" v-else>
-        <div class="title">MetaMask扩展</div>
+        <div class="title">{{ $t('wallet.extend') }}</div>
         <div class="init-info">
           <div>
             <svg-icon
@@ -44,7 +47,7 @@
               class="init-icon"
               color="#606266"
             />
-            一键连接区块链应用
+            {{ $t('wallet.application') }}
           </div>
           <div>
             <svg-icon
@@ -54,7 +57,7 @@
               class="init-icon"
               color="#606266"
             />
-            账户隐私保留在本地
+            {{ $t('wallet.local') }}
           </div>
           <!-- <div>
             <svg-icon
@@ -66,7 +69,9 @@
             />
             无缝适配Ethereum网络
           </div> -->
-          <el-button type="primary" @click="handleSamurai">安装</el-button>
+          <el-button type="primary" @click="handleSamurai">{{
+            $t('wallet.install')
+          }}</el-button>
         </div>
       </div>
     </el-dialog>
@@ -77,6 +82,7 @@
 import { Vue, Component, Prop, Emit, Watch } from 'vue-property-decorator'
 import alayaService from '@/services/alayaService'
 import { UserModule } from '@/store/modules/user'
+import { AppModule } from '@/store/modules/app'
 
 @Component({
   name: 'dialogView',
@@ -84,6 +90,9 @@ import { UserModule } from '@/store/modules/user'
 export default class DialogIndex extends Vue {
   @Prop({ default: false }) private visible!: boolean
   private isRadio = false
+  get isEnglish() {
+    return AppModule.language === 'en'
+  }
   get address() {
     return UserModule.user_info.address
   }
@@ -134,6 +143,10 @@ export default class DialogIndex extends Vue {
 
 <style scoped lang="stylus">
 .dialog-view
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
   .walle-wrap
     padding 20px
     padding-top 5px

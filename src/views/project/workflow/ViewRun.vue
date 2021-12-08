@@ -121,10 +121,10 @@ export default class ViewResult extends Vue {
       if (res) {
         that.download(res, that.nodeName)
         // Message.success(this.$t('tips.operationSucces'))
-        this.isDownload = false
+        that.isDownload = false
       } else {
-        Message.error(this.$t('tips.operationFailed'))
-        this.isDownload = false
+        Message.error(that.$t('tips.operationFailed'))
+        that.isDownload = false
       }
     })
   }

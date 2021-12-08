@@ -288,10 +288,10 @@ export default class HeaderComponent extends Vue {
       line-height 60px
       cursor pointer
       .icon-user{
-        vertical-align: -4px;
+        vertical-align: -3px;
       }
       .logged-data {
-        vertical-align: -4px;
+        vertical-align: -3px;
       }
       .icon-close{
         vertical-align: 0px

@@ -171,4 +171,11 @@ export default {
     operationSucces: 'Download succeeded',
     operationFailed: 'Download failed, please contact the administrator',
   },
+  wallet: {
+    connectWallet: 'ConnectWallet',
+    extend: 'MetaMask Extension',
+    application: 'One-click to Blockchain Apps',
+    local: 'Privacy Preserved Locally',
+    install: 'Install',
+  },
 }
