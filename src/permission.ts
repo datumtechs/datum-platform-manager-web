@@ -3,6 +3,8 @@ import { Route } from 'vue-router'
 import { UserModule } from '@/store/modules/user'
 import { message } from '@/plugins/message.ts'
 import { PermissionModule } from '@/store/modules/permission'
+import { AppModule } from '@/store/modules/app'
+
 // 白名单
 const whiteList = [
   '/404',
@@ -17,6 +19,9 @@ const whiteList = [
 ]
 //  判断 白名单 =》用户登录页面。全局检测 token =》 role
 router.beforeEach(async (to: Route, _: Route, next: any) => {
+  const title =
+    AppModule.language === 'en' ? 'Privacy-Preserving Network' : '隐私计算网络'
+  document.title = title
   if (UserModule.token) {
     next()
   } else {
@@ -28,7 +33,11 @@ router.beforeEach(async (to: Route, _: Route, next: any) => {
     } else {
       // Other pages that do not have permission to access are redirected to the login page.
       next('/home/data')
-      message.error('暂无权限，请连接钱包')
+      const errInfo =
+        AppModule.language === 'en'
+          ? 'No permission, please connect Wallet'
+          : '暂无权限，请连接钱包'
+      message.error(errInfo)
     }
   }
 })

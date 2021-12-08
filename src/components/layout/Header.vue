@@ -13,7 +13,7 @@
           :router="true"
         >
           <el-menu-item index="/" class="logo-wrap">
-            <span class="logo-text">隐私计算网络</span>
+            <span class="logo-text">{{ $t('home.logo') }}</span>
           </el-menu-item>
           <!-- <el-submenu index="/" class="logo-wrap">
             <template slot="title">
@@ -192,6 +192,8 @@ export default class HeaderComponent extends Vue {
     const lang = this.isEnglish ? 'en' : 'zh'
     AppModule.SetLanguage(lang)
     this.$i18n.locale = lang
+    const title = this.isEnglish ? 'Privacy-Preserving Network' : '隐私计算网络'
+    document.title = title
   }
   private connectWallet() {
     this.visible = true

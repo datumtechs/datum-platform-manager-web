@@ -25,6 +25,7 @@ export default {
     all: 'All Projects',
   },
   home: {
+    logo: 'Privacy-Preserving Network',
     connectWallet: 'ConnectWallet',
     authorize: 'Apply',
     authorizePassed: 'Apply Passed',

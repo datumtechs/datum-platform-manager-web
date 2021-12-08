@@ -26,6 +26,7 @@ export default {
     all: '所有项目',
   },
   home: {
+    logo: '隐私计算网络',
     connectWallet: '连接钱包',
     authorize: '申请授权',
     authorizePassed: '已授权',
