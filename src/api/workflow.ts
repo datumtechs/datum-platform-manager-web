@@ -83,8 +83,8 @@ export const getWorkflowStatus = (parmas: any) => {
 }
 
 // 查询项目模型
-export const queryAllModelByProjectId = (id: any) => {
-  return get('/project/queryCurrentProjAlgModel/' + id)
+export const queryAllModelByProjectId = (parmas: any) => {
+  return get('/project/queryCurrentProjAlgModel/', parmas)
 }
 
 // 下载运行结果
