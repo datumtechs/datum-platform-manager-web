@@ -55,7 +55,7 @@
         <div class="right right-layout">
           <span class="language" @click="changeLanguage">
             <svg-icon
-              :name="isEnglish ? 'language-en' : 'language-zh'"
+              :name="!isEnglish ? 'language-en' : 'language-zh'"
               class="logged-data"
               color="#000"
               width="18"
