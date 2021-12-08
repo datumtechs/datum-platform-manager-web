@@ -195,8 +195,8 @@ class Workflow extends VuexModule implements WFlowState {
     this.SET_ORG(data)
   }
   @Action
-  public async getModels(id: any) {
-    const { data } = await queryAllModelByProjectId(id)
+  public async getModels(params: any) {
+    const { data } = await queryAllModelByProjectId(params)
     this.SET_MODELS(data)
   }
 

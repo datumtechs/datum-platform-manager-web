@@ -85,7 +85,7 @@
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import JzButton from '@/components/JzButton.vue'
 import Transfer from './Transfer.vue'
-import { getTables, getColumns, queryAllModelByProjectId } from '@/api/workflow'
+import { getTables, getColumns } from '@/api/workflow'
 import { WorkflowModule } from '@/store/modules/workflow'
 import { AppModule } from '@/store/modules/app'
 
@@ -353,7 +353,12 @@ export default class InputViewIndex extends Vue {
   private async getModels() {
     if (!this.isModel) return
     const id = this.$route.params.id
-    await WorkflowModule.getModels(id)
+    const nodeItem: any = WorkflowModule.nodeList[WorkflowModule.currentIndex]
+    const parmans = {
+      projectId: id,
+      algorithmId: nodeItem.algorithmId,
+    }
+    await WorkflowModule.getModels(parmans)
   }
   created() {
     this.init()
