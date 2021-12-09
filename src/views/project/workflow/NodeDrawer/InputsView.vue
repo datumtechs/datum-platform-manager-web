@@ -18,6 +18,7 @@
           v-model="modelValue"
           placeholder="请选择模型"
           :disabled="isAuth"
+          filterable
         >
           <el-option
             v-for="(item, index) in modelOptions"
@@ -56,6 +57,7 @@
                 changeInputValue(e, index)
               }
             "
+            clearable
           ></el-cascader>
           <div
             class="input-delete"
@@ -373,6 +375,11 @@ export default class InputViewIndex extends Vue {
   }
   private async changeInputValue(e: any, index: number) {
     const that = this
+    // 清空输入框，关联字段重置
+    if (e && e.length === 0) {
+      this.columnsList[index] = []
+      ;(this.$refs[`Columns${index}`] as any)[0].initDatas()
+    }
     if (e) {
       const val: string[] = this.getListFirst(this.inputValue)
       WorkflowModule.SET_ORG_DISABLED(val || [])

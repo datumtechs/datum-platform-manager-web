@@ -64,7 +64,6 @@ class Workflow extends VuexModule implements WFlowState {
     if (data[index] && data[index]['nodeAlgorithmVo']) {
       this.algorithms = data[index]['nodeAlgorithmVo']
     }
-    console.log('organizationList.', this.organizationList)
     this.workflowNodeInputVoList = data[index]['workflowNodeInputVoList'] || []
     this.workflowNodeOutputVoList = data[index]['workflowNodeOutputVoList']
   }
