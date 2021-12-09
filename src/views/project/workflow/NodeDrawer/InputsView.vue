@@ -18,7 +18,6 @@
           v-model="modelValue"
           placeholder="请选择模型"
           :disabled="isAuth"
-          @visible-change="visibleChange"
         >
           <el-option
             v-for="(item, index) in modelOptions"
@@ -101,7 +100,7 @@ export default class InputViewIndex extends Vue {
   private selectLayout = Array(this.minLen).fill({})
   private inputValue: any = []
   private columnsList: any = []
-  private modelValue: any = null
+  private modelValue: any = 0
   get isModel() {
     return WorkflowModule.algorithms.inputModel
   }
@@ -120,13 +119,16 @@ export default class InputViewIndex extends Vue {
   get modelOptions() {
     const item: any = {
       fileName: '前置节点输出模型',
-      modelId: '0',
+      modelId: 0,
     }
     const list = WorkflowModule.modelList
     const index = WorkflowModule.currentIndex
     if (index) {
       return [item, ...WorkflowModule.modelList]
     } else {
+      if (this.modelValue == 0) {
+        this.modelValue = null
+      }
       return WorkflowModule.modelList
     }
   }
@@ -216,10 +218,11 @@ export default class InputViewIndex extends Vue {
   }
   private async handleSave() {
     if (this.handleisAuth()) return
-    if (this.isModel && this.modelValue === null) {
+    if (this.isModel && !this.modelValue) {
       const tips: any = this.$t('tips.inputModel')
       return this.$message.warning(tips)
     }
+    WorkflowModule.SET_MODEL_VALUE(this.modelValue)
     if (this.inputValue.length < this.minLen) {
       if (this.lan === 'zh') {
         return this.$message.warning(`至少输入${this.minLen}个数据协同方`)
@@ -286,11 +289,6 @@ export default class InputViewIndex extends Vue {
   //   }
   // })
   // }
-  private visibleChange(state: boolean) {
-    if (!state) {
-      WorkflowModule.SET_MODEL_VALUE(this.modelValue)
-    }
-  }
   private inputDelete(index: number) {
     this.cascaderKey.splice(index, 1)
     this.selectLayout.splice(index, 1)

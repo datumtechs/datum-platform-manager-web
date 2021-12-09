@@ -194,10 +194,6 @@ export default class workflowIndex extends Vue {
     })
     return state
   }
-  // 输入模型id
-  get modelId() {
-    return WorkflowModule.modelValue
-  }
   get toolStateList() {
     const { saveState, startState, endState, deleteState } = this
     return [saveState, startState, endState, deleteState]
@@ -271,6 +267,11 @@ export default class workflowIndex extends Vue {
     if (this.handleisAuth()) return
     if (!this.nodeList.length) {
       const tips: any = this.$t('tips.noNode')
+      this.$message.error(tips)
+      return
+    }
+    if (!this.hasModel()) {
+      const tips: any = this.$t('tips.inputModel')
       this.$message.error(tips)
       return
     }
@@ -368,6 +369,11 @@ export default class workflowIndex extends Vue {
       this.$message.error(tips)
       return
     }
+    if (!this.hasModel()) {
+      const tips: any = this.$t('tips.inputModel')
+      this.$message.error(tips)
+      return
+    }
     const params = this.getSaveParams()
     this.saveState = true
     try {
@@ -391,7 +397,7 @@ export default class workflowIndex extends Vue {
     const workflowNodeReqList = nodeList.map((item: any, index: number) => {
       return {
         algorithmId: item.algorithmId,
-        modelId: item.nodeAlgorithmVo.inputModel ? this.modelId : null,
+        modelId: item.modelId,
         nodeName: item.nodeName,
         nodeStep: index + 1,
         workflowId,
@@ -561,6 +567,17 @@ export default class workflowIndex extends Vue {
     const taskId = this.nodeList[this.currentIndex].taskId
     this.resultsVisible = true
     ;(this.$refs['ViewRun'] as any).getResultsList(taskId)
+  }
+  private hasModel() {
+    let flag = true
+    const nodeList = WorkflowModule.nodeList
+    nodeList.map((item: any, index) => {
+      // modelId: 模型的id， inputModel：0：不需要模型 1需要模型
+      if (!index && item.nodeAlgorithmVo.inputModel && !item.modelId) {
+        flag = false
+      }
+    })
+    return flag
   }
   beforeDestroy() {
     if (this.workStateTimer) {
