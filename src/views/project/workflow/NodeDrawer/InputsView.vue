@@ -218,7 +218,7 @@ export default class InputViewIndex extends Vue {
   }
   private async handleSave() {
     if (this.handleisAuth()) return
-    if (this.isModel && !this.modelValue) {
+    if (this.isModel && this.modelValue === null) {
       const tips: any = this.$t('tips.inputModel')
       return this.$message.warning(tips)
     }
