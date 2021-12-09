@@ -397,7 +397,7 @@ export default class workflowIndex extends Vue {
     const workflowNodeReqList = nodeList.map((item: any, index: number) => {
       return {
         algorithmId: item.algorithmId,
-        modelId: item.modelId,
+        modelId: item.modelId || 0,
         nodeName: item.nodeName,
         nodeStep: index + 1,
         workflowId,

@@ -50,7 +50,7 @@ class Workflow extends VuexModule implements WFlowState {
   public organizationList = []
   public orgOptions = []
   get modelValue() {
-    return this.nodeList[this.currentIndex]['modelId']
+    return this.nodeList[this.currentIndex]['modelId'] || 0
   }
   @Mutation
   public SET_INPUT_LEN(state: number) {
