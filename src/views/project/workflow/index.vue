@@ -394,7 +394,6 @@ export default class workflowIndex extends Vue {
   private getSaveParams() {
     this.nodeList = WorkflowModule.nodeList
     const { workflowId, nodeList } = this
-    console.log('nodeList', nodeList)
     const workflowNodeReqList = nodeList.map((item: any, index: number) => {
       return {
         algorithmId: item.algorithmId,
