@@ -6,14 +6,14 @@
           v-model="startRadio"
           class="checkbox"
           :disabled="type === 1"
-          >开始时间</el-checkbox
+          >{{ $t('table.startTime') }}</el-checkbox
         >
         <div class="num-input">
           <el-date-picker
             class="input-date"
             v-model="startDate"
             type="date"
-            placeholder="开始日期"
+            placeholder="mm/dd/yy"
             :picker-options="startPickerOptions"
             :disabled="type === 1"
           >
@@ -26,7 +26,7 @@
             :picker-options="{
               selectableRange: '0:0:00 - 23:59:00',
             }"
-            placeholder="开始时间"
+            placeholder="hh:mm"
           >
           </el-time-picker>
         </div>
@@ -36,8 +36,9 @@
           v-model="repeatRadio"
           :disabled="type === 1"
           class="checkbox"
-          >重复 <span class="num-lable"></span> 每</el-checkbox
-        >
+          >{{ $t('project.repeat') }} <span class="num-lable"></span>
+          {{ $t('project.every') }}
+        </el-checkbox>
         <div class="num-input">
           <el-input-number
             v-model="repeatInterval"
@@ -46,12 +47,15 @@
             size="small"
           >
           </el-input-number>
-          <span class="unit">分钟</span>
+          <span class="unit">{{ $t('enviroment.minute') }}</span>
         </div>
       </div>
       <div v-show="repeatRadio">
-        <el-checkbox v-model="endRadio" :disabled="type === 1" class="checkbox"
-          >结束时间</el-checkbox
+        <el-checkbox
+          v-model="endRadio"
+          :disabled="type === 1"
+          class="checkbox"
+          >{{ $t('table.endTime') }}</el-checkbox
         >
         <div class="num-input">
           <el-date-picker
@@ -59,7 +63,7 @@
             :disabled="type === 1"
             v-model="endDate"
             type="date"
-            placeholder="结束日期"
+            placeholder="mm/dd/yy"
             :picker-options="endPickerOptions"
           >
           </el-date-picker>
@@ -71,7 +75,7 @@
             :picker-options="{
               selectableRange: '0:0:00 - 23:59:00',
             }"
-            placeholder="结束时间"
+            placeholder="hh:mm"
           >
           </el-time-picker>
         </div>
@@ -80,7 +84,6 @@
     <div class="block-btn">
       <jz-button
         type="jz-button--primary"
-        align="left"
         :height="40"
         @click="handleCreate"
         class="create"
@@ -88,7 +91,7 @@
       >
         {{ type ? $t('workflow.save') : $t('jobs.create') }}
       </jz-button>
-      <jz-button @click="handlePrevious" :height="40" align="left">
+      <jz-button @click="handlePrevious" :height="40">
         {{ $t('jobs.previous') }}
       </jz-button>
     </div>

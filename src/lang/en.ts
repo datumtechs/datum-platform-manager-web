@@ -1,7 +1,7 @@
 export default {
   route: {
     market: 'Marketplace',
-    case: 'Cases',
+    case: 'Templates',
     projectAll: 'Projects',
     all: 'All Projects',
     dataDetail: 'Data',
@@ -20,7 +20,7 @@ export default {
   },
   nav: {
     market: 'Marketplace',
-    case: 'Cases',
+    case: 'Templates',
     project: 'Projects',
     all: 'All Projects',
   },
@@ -134,6 +134,11 @@ export default {
     description: 'Description',
     nameP: 'Please enter a project name',
     descriptionP: 'Please enter a project description',
+    selectWorkflow: 'Select workflow',
+    selectWorkflowP: 'Please select a workflow',
+    descriptionOptional: 'Description (optional)',
+    repeat: 'Repeat',
+    every: 'every',
   },
   worke: {
     edit: 'Edit',
@@ -243,6 +248,7 @@ export default {
     maxWorkflowName: 'Workflow name shall not exceed 30 words',
     maxWorkflowInfo: 'Workflow description shall not exceed 200 words',
     jobName: 'Please enter a job name',
+    jobNameDes: 'Please enter job description',
     maxJobName: 'The job name shall not exceed 30 words',
     maxJobInfo: 'The job description shall not exceed 200 words',
     setProjectName: 'Please modify the project name',
