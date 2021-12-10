@@ -49,15 +49,15 @@
     </div>
     <div class="result">
       <div class="ids">
-        <div>ID列</div>
+        <div>{{ $t('input.column') }}</div>
         <div class="item">{{ ids.length ? ids[0].columnName : '' }}</div>
       </div>
       <div class="lable" v-if="isLables">
-        <div>因变量（标签，可选)</div>
+        <div>{{ $t('input.variable') }}</div>
         <div class="item">{{ lables.length ? lables[0].columnName : '' }}</div>
       </div>
       <div class="feature">
-        <div>自变量（特征)</div>
+        <div>{{ $t('input.independent') }}</div>
         <div class="features" :class="isLables ? '' : 'features-auto'">
           <div
             :class="[

@@ -189,6 +189,9 @@ export default {
     add: '添加',
     model: '模型',
     selectModel: '请选择模型',
+    column: 'ID 列',
+    variable: '因变量（标签，可选)',
+    independent: '自变量（特征)',
   },
   role: {
     viewer: '查看者',

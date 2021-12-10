@@ -171,6 +171,9 @@ export default {
     add: 'Add',
     model: 'Model',
     selectModel: 'Please select a model',
+    column: 'ID column',
+    variable: 'Label',
+    independent: 'Features',
   },
   output: {
     saveTo: 'Save To Data Collaborators',
