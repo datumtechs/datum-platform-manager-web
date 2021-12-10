@@ -1,4 +1,5 @@
 <template>
+  <!-- 创建作业 -->
   <div class="subjob-dialog">
     <el-dialog
       :visible.sync="subjobVisible"
@@ -25,10 +26,10 @@
         <div class="wrap-view">
           <template v-if="tabsIndex === 0">
             <div class="workflow">
-              <span class="lable">选择工作流</span>
+              <span class="lable">{{ $t('project.selectWorkflow') }}</span>
               <el-select
                 v-model="workflowId"
-                placeholder="请选择"
+                :placeholder="$t('project.selectWorkflowP')"
                 :disabled="type === 1"
                 class="workflowInfo"
               >
@@ -56,13 +57,16 @@
           </template>
           <template v-if="tabsIndex === 1">
             <div class="baseInfor">
-              <span class="lable">名称</span>
-              <el-input v-model="name" placeholder="请输入作业名称"></el-input>
-              <span class="lable">描述（选填）</span>
+              <span class="lable">{{ $t('project.name') }}</span>
+              <el-input
+                v-model="name"
+                :placeholder="$t('tips.jobName')"
+              ></el-input>
+              <span class="lable">{{ $t('project.descriptionOptional') }}</span>
               <el-input
                 type="textarea"
                 :rows="3"
-                placeholder="请输入作业描述"
+                :placeholder="$t('tips.jobNameDes')"
                 v-model="desc"
               >
               </el-input>

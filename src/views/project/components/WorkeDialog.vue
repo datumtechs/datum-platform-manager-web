@@ -7,20 +7,20 @@
       :before-close="handleClose"
     >
       <div class="wrap">
-        <div class="updata bottom" v-if="!type">
+        <!-- <div class="updata bottom" v-if="!type">
           <i class="el-icon-document"></i>
           导入工作流（可选，仅支持本平台生成的.***文件)
-        </div>
+        </div> -->
         <div class="bottom">
           <el-input
             v-model="name"
-            placeholder="请输入工作流名称，最长30字"
+            :placeholder="$t('tips.maxWorkflowName')"
           ></el-input>
         </div>
         <div>
           <el-input
             v-model="describe"
-            placeholder="请输入工作流描述，最长200字"
+            :placeholder="$t('tips.maxWorkflowInfo')"
           ></el-input>
         </div>
       </div>
