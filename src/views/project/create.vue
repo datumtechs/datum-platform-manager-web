@@ -18,7 +18,7 @@
             @click="handleSelect(index)"
           >
             <span class="template-item-text">
-              {{ $t(item.projectName) }}
+              {{ item.projectName }}
             </span>
             <i class="el-icon-success select-icon"></i>
           </div>
