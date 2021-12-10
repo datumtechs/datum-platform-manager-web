@@ -10,7 +10,7 @@
           height="28"
         />
         <span>
-          保存
+          {{ $t('workflow.save') }}
         </span>
       </div>
       <div
@@ -25,7 +25,7 @@
           :width="toolStateList[0] ? '34' : '26'"
           :height="toolStateList[0] ? '34' : '26'"
         />
-        <span>终止</span>
+        <span>{{ $t('workflow.terminate') }}</span>
       </div>
       <div
         :class="isAuth ? 'disable-icon' : ''"
@@ -39,7 +39,7 @@
           width="30"
           height="30"
         />
-        <span>启动</span>
+        <span>{{ $t('workflow.start') }}</span>
       </div>
       <div :class="isAuth ? 'disable-icon' : ''" @click="handleEmpty">
         <svg-icon
@@ -49,7 +49,7 @@
           width="27"
           height="25"
         />
-        <span>清空</span>
+        <span>{{ $t('workflow.empty') }}</span>
       </div>
       <div :class="!isSuccess || isAuth ? 'disable-icon' : ''" @click="openJob">
         <svg-icon
@@ -59,7 +59,7 @@
           width="50"
           height="28"
         />
-        <span>创建作业</span>
+        <span>{{ $t('workflow.newJob') }}</span>
       </div>
     </div>
     <subjobs-dialog ref="createJobDialog" :modalState="false"></subjobs-dialog>

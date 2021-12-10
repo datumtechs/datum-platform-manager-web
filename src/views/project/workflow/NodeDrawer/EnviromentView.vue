@@ -26,11 +26,11 @@
         <div slot="tip" class="el-upload__tip">仅支持txt文件，多个依赖换行</div>
       </el-upload> -->
       <div class="block-title">
-        计算资源（最低要求）
+        {{ $t('enviroment.minimum') }}
       </div>
       <div class="block select">
         <div class="text">CPU</div>
-        <el-select v-model="cpuValue" placeholder="请选择" :disabled="isAuth">
+        <el-select v-model="cpuValue" :disabled="isAuth">
           <el-option
             v-for="(item, key, index) in cpuOptions"
             :key="index"
@@ -39,15 +39,15 @@
           >
           </el-option>
         </el-select>
-        <span class="unit">核</span>
+        <span class="unit">
+          {{ $t('enviroment.cores') }}
+        </span>
       </div>
       <div class="block select">
-        <div class="text">内存</div>
-        <el-select
-          v-model="memoryValue"
-          placeholder="请选择"
-          :disabled="isAuth"
-        >
+        <div class="text">
+          {{ $t('enviroment.memory') }}
+        </div>
+        <el-select v-model="memoryValue" :disabled="isAuth">
           <el-option
             v-for="(item, key, index) in memoryOptions"
             :key="index"
@@ -59,8 +59,10 @@
         <span class="unit">GiB</span>
       </div>
       <div class="block select">
-        <div class="text">带宽</div>
-        <el-select v-model="broadband" placeholder="请选择" :disabled="isAuth">
+        <div class="text">
+          {{ $t('enviroment.bandwidth') }}
+        </div>
+        <el-select v-model="broadband" :disabled="isAuth">
           <el-option
             v-for="(item, key, index) in broadbandOptions"
             :key="index"
@@ -72,10 +74,14 @@
         <span class="unit">Mbps</span>
       </div>
       <div class="block select">
-        <div class="text">最长运行时长</div>
+        <div class="text">
+          {{ $t('enviroment.maxDuration') }}
+        </div>
         <div class="num-input">
           <el-input-number v-model="runTime" :min="1"></el-input-number>
-          <span class="unit">分钟</span>
+          <span class="unit">
+            {{ $t('enviroment.minute') }}
+          </span>
         </div>
       </div>
     </div>

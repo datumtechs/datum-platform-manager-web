@@ -45,9 +45,9 @@
             <el-menu-item index="/home/algorithm">
               {{ $t('home.algorithm') }}
             </el-menu-item>
-            <el-menu-item>
+            <!-- <el-menu-item>
               {{ $t('home.service') }}
-            </el-menu-item>
+            </el-menu-item> -->
           </el-submenu>
           <el-menu-item index="/case/index">
             {{ $t('nav.case') }}
@@ -61,7 +61,7 @@
         <div class="right right-layout">
           <span class="language" @click="changeLanguage">
             <svg-icon
-              :name="isEnglish ? 'language-en' : 'language-zh'"
+              :name="!isEnglish ? 'language-en' : 'language-zh'"
               class="logged-data"
               color="#000"
               width="18"

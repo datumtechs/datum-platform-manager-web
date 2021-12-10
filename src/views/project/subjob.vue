@@ -44,23 +44,23 @@ export default class subjobIndex extends Vue {
   private stateList = ['未开始', '运行中', '运行成功', '运行失败']
   private subjobKey = [
     {
-      label: 'ID',
+      label: 'table.id',
       prop: 'id',
     },
     {
-      label: '状态',
+      label: 'table.status',
       prop: 'state', // 0-未开始,1-运行中,2-运行成功,3-运行失败
     },
     {
-      label: '开始时间',
+      label: 'table.startTime',
       prop: 'beginTime',
     },
     {
-      label: '结束时间',
+      label: 'table.endTime',
       prop: 'endTime',
     },
     {
-      label: '持续时间',
+      label: 'table.duration',
       prop: 'runTime',
     },
   ]

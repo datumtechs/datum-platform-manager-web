@@ -1,11 +1,13 @@
 <template>
   <div class="data-detail">
     <div class="detail-item" v-for="(item, index) in dataDesc" :key="index">
-      <div class="title">{{ item.title }}</div>
+      <div class="title">{{ $t(item.title) }}</div>
       <div class="item-info" v-if="item.describes && item.describes.length > 0">
         <div v-for="(desc, i) in item.describes" :key="i">
-          <div class="lable">{{ desc.lable }}</div>
-          <div class="info">{{ data[desc.value] }}</div>
+          <div class="lable">{{ $t(desc.lable) }}：</div>
+          <div class="info" :class="isEnglish && desc.move ? 'info-en' : ''">
+            {{ data[desc.value] }}
+          </div>
         </div>
       </div>
       <div class="item-info" v-else>{{ data[item.describe] }}</div>
@@ -17,6 +19,7 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { getAlgorithmsDetail } from '@/api/algorithm'
 import { BreadcrumbModule } from '@/store/modules/breadcrumb'
+import { AppModule } from '@/store/modules/app'
 
 @Component({
   name: 'AlgorithmDetail',
@@ -25,44 +28,49 @@ export default class AlgorithmDetail extends Vue {
   private data: any = {}
   private dataDesc = [
     {
-      title: '简介',
+      title: 'detail.introduction',
       describe: 'algorithmDesc',
     },
     {
-      title: '基本信息',
+      title: 'detail.basic',
       describes: [
         {
-          lable: '算法名称：',
+          lable: 'detail.algorithmName',
           value: 'algorithmName',
         },
         {
-          lable: '作者：',
+          lable: 'detail.author',
           value: 'author',
         },
         {
-          lable: '支持协同方最大数量：',
+          lable: 'detail.maxNumbers',
           value: 'maxNumbers',
+          move: true,
         },
         {
-          lable: '支持协同方最小数量：',
+          lable: 'detail.minNumbers',
           value: 'minNumbers',
+          move: true,
         },
         {
-          lable: '支持语言：',
+          lable: 'detail.supportLanguage',
           value: 'supportLanguage',
         },
         {
-          lable: '支持操作系统：',
+          lable: 'detail.supportOsSystem',
           value: 'supportOsSystem',
+          move: true,
         },
         {
-          lable: '算法所属大类：',
+          lable: 'detail.algorithmTypeDesc',
           value: 'algorithmTypeDesc',
         },
       ],
     },
   ]
-
+  get isEnglish() {
+    return AppModule.language === 'en'
+  }
   private async getList() {
     const { data } = await getAlgorithmsDetail(this.$route.params.id)
     this.data = data
@@ -102,6 +110,8 @@ export default class AlgorithmDetail extends Vue {
         .info
           width 200px
           color #000
+        .info-en
+          transform: translateY(26px)
   .detail-item:first-child
     margin-top 0
 </style>

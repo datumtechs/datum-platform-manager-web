@@ -43,27 +43,27 @@ import { BreadcrumbModule } from '@/store/modules/breadcrumb'
 export default class resourcesData extends Vue {
   private keyList = [
     {
-      label: '名称',
+      label: 'table.name',
       prop: 'dataName',
     },
     {
-      label: '授权方式',
+      label: 'table.method',
       prop: 'authType', // 1-按时间, 2-按次数, 3-永久
     },
     {
-      label: '授权值',
+      label: 'table.value',
       prop: 'authValueStr',
     },
     {
-      label: '机构',
+      label: 'table.owner',
       prop: 'identityName',
     },
     {
-      label: '申请时间',
+      label: 'table.applyTime',
       prop: 'applyTime',
     },
     {
-      label: '状态',
+      label: 'table.status',
       prop: 'authStatus', //0-等待审核中, 1-审核通过, 2-已拒绝
     },
   ]

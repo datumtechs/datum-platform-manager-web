@@ -5,19 +5,19 @@
       <div class="authorize-block">
         <div class="block-info">
           <div>
-            <div class="row-lable">数据名称：</div>
+            <div class="row-lable">{{ $t('detail.name') }}：</div>
             <div class="row-value">{{ dataInfo.dataName }}</div>
           </div>
           <div>
-            <div class="row-lable">数据方：</div>
+            <div class="row-lable">{{ $t('detail.owner') }}</div>
             <div class="row-value">{{ dataInfo.identityName }}</div>
           </div>
           <div>
-            <div class="row-lable">数据大小：</div>
+            <div class="row-lable">{{ $t('detail.size') }}：</div>
             <div class="row-value">{{ dataInfo.size }}</div>
           </div>
           <div>
-            <div class="row-lable">数据条数：</div>
+            <div class="row-lable">{{ $t('detail.rows') }}：</div>
             <div class="row-value">{{ dataInfo.rows }}</div>
           </div>
           <!-- <div class="row-lable">字段：</div>
@@ -25,7 +25,9 @@
         </div>
         <div class="block-input">
           <div>
-            <el-radio v-model="authType" label="1">按时间</el-radio>
+            <el-radio v-model="authType" label="1">{{
+              $t('detail.time')
+            }}</el-radio>
             <div class="time-input">
               <!-- <el-date-picker
                 :disabled="authType != '1'"
@@ -56,7 +58,7 @@
                 placeholder="hh:mm"
               >
               </el-time-picker>
-              <span class="and">至</span>
+              <span class="and">{{ $t('detail.to') }}</span>
               <el-date-picker
                 :disabled="authType != '1'"
                 class="input-date"
@@ -80,7 +82,9 @@
             </div>
           </div>
           <div>
-            <el-radio v-model="authType" label="2">按次数</el-radio>
+            <el-radio v-model="authType" label="2">{{
+              $t('detail.frequency')
+            }}</el-radio>
             <div class="num-input">
               <el-input-number
                 v-model="authValue"
