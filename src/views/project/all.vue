@@ -54,15 +54,15 @@ export default class AllIndex extends Vue {
   private projectName = ''
   private keyList = [
     {
-      label: '名称',
+      label: 'table.name',
       prop: 'projectName',
     },
     {
-      label: '创建者',
+      label: 'table.creator',
       prop: 'userName',
     },
     {
-      label: '创建时间',
+      label: 'table.creationTime',
       prop: 'time',
     },
   ]

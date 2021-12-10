@@ -1,12 +1,10 @@
 <template>
   <div class="data-detail">
     <div class="detail-item" v-for="(item, index) in dataDesc" :key="index">
-      <div class="title">{{ item.title }}</div>
+      <div class="title">{{ $t(item.title) }}</div>
       <div class="item-info" v-if="item.describes && item.describes.length > 0">
         <div v-for="(desc, i) in item.describes" :key="i">
-          <div class="lable">
-            {{ desc.lable }}
-          </div>
+          <div class="lable">{{ $t(desc.lable) }}：</div>
           <div class="info">
             {{ data[desc.value] }}
           </div>
@@ -56,51 +54,51 @@ export default class DataDetail extends Vue {
   ]
   private dataDesc: any = [
     {
-      title: '简介',
+      title: 'detail.introduction',
       describe: 'dataDesc',
     },
     {
-      title: '基本信息',
+      title: 'detail.basic',
       describes: [
         {
-          lable: '数据名称：',
+          lable: 'detail.name',
           value: 'dataName',
         },
         {
-          lable: '机构：',
+          lable: 'detail.institution',
           value: 'identityName',
         },
         {
-          lable: '数据节点：',
+          lable: 'detail.node',
           value: 'identityId',
         },
         {
-          lable: '所属行业：',
+          lable: 'detail.industry',
           value: 'industry',
         },
       ],
     },
     {
-      title: '规格',
+      title: 'detail.specification',
       describes: [
         {
-          lable: '存储格式：',
+          lable: 'detail.format',
           value: 'fileType',
         },
         {
-          lable: '大小：',
+          lable: 'detail.size',
           value: 'size',
         },
         {
-          lable: '数据条数：',
+          lable: 'detail.rows',
           value: 'rows',
         },
         {
-          lable: '发布时间：',
+          lable: 'detail.launchtime',
           value: 'createTime',
         },
         {
-          lable: '更新时间：',
+          lable: 'detail.updatetime',
           value: 'updateTime',
         },
 
@@ -115,10 +113,10 @@ export default class DataDetail extends Vue {
       ],
     },
     {
-      title: '交易',
+      title: 'detail.exchange',
       describes: [
         {
-          lable: '支持授权方式：',
+          lable: 'detail.authType',
           value: 'authTypeStr',
         },
       ],
@@ -138,19 +136,19 @@ export default class DataDetail extends Vue {
     const { data } = await getDataDetail(parmans)
     // 动态展示字段
     const authMetadataState = {
-      lable: '数据授权信息有效性：',
+      lable: 'detail.effectiveness',
       value: 'authMetadataState',
     }
     const authValueStr = {
-      lable: '授权值：',
+      lable: 'detail.authValue',
       value: 'authValueStr',
     }
     const expire = {
-      lable: '是否过期：',
+      lable: 'detail.expired',
       value: 'expire',
     }
     const usedTimes = {
-      lable: '已使用次数：',
+      lable: 'detail.usedtimes',
       value: 'usedTimes',
     }
     const len = this.dataDesc - 1

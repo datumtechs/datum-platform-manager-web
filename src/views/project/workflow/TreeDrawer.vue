@@ -2,7 +2,7 @@
   <!-- 菜单列表 -->
   <el-row class="tac">
     <div class="tac-title">
-      我的算法
+      {{ $t('workflow.algorithms') }}
     </div>
     <el-col>
       <el-menu

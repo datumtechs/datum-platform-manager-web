@@ -11,12 +11,12 @@
     <div class="block">
       <div class="block-row" v-if="isModel">
         <div class="text">
-          模型
+          {{ $t('input.model') }}
         </div>
         <el-select
           style="width:320px"
           v-model="modelValue"
-          placeholder="请选择模型"
+          :placeholder="$t('input.selectModel')"
           :disabled="isAuth"
           filterable
         >
@@ -36,7 +36,7 @@
           :key="index"
         >
           <div class="text" v-if="index < 2">
-            {{ index ? '数据响应方' : '数据发起方' }}
+            {{ index ? $t('input.collaborators') : $t('input.initiator') }}
           </div>
           <el-cascader
             :span="12"
@@ -76,7 +76,7 @@
     </div>
     <div class="block">
       <span class="add-button" @click="addSelect"
-        >添加 <i class="el-icon-plus"></i
+        >{{ $t('input.add') }} <i class="el-icon-plus"></i
       ></span>
     </div>
   </div>

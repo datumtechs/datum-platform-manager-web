@@ -84,11 +84,11 @@ export default class WorkIndex extends Vue {
   private keyList = {
     work: [
       {
-        label: '名称',
+        label: 'table.name',
         prop: 'workflowName',
       },
       {
-        label: '创造者',
+        label: 'table.creator',
         prop: 'userName',
       },
       // {
@@ -96,21 +96,21 @@ export default class WorkIndex extends Vue {
       //   prop: 'authValue', // TODO 没有字段
       // },
       {
-        label: '创建时间',
+        label: 'table.creationTime',
         prop: 'createTime',
       },
     ],
     jobs: [
       {
-        label: '名称',
+        label: 'table.name',
         prop: 'name',
       },
       {
-        label: '关联工作流',
+        label: 'table.associatedWorkflow',
         prop: 'workflowName', // 工作流ID
       },
       {
-        label: '创建时间',
+        label: 'table.creationTime',
         prop: 'createTime',
       },
     ],

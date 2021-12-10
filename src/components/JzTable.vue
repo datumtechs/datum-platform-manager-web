@@ -16,7 +16,10 @@
       </template>
       <!-- 数据选中展示  -->
       <div class="select-block" v-else>
-        <span>选中 {{ multipleSelection.length }} 条</span>
+        <span>
+          {{ $t('table.select') }} {{ multipleSelection.length }}
+          {{ $t('table.size') }}
+        </span>
         <div class="select-btn">
           <jz-button
             type="jz-button--primary"
@@ -55,7 +58,7 @@
           <el-table-column
             v-if="!index"
             :prop="item.prop"
-            :label="item.label"
+            :label="$t(item.label)"
             sortable
             :key="index"
           >
@@ -76,7 +79,7 @@
             v-else
             sortable
             :prop="item.prop"
-            :label="item.label"
+            :label="$t(item.label)"
             :key="index"
             show-overflow-tooltip
           >
@@ -94,7 +97,7 @@
                     @click="handleReapply(scope.row)"
                     style="margin-left:10px"
                   >
-                    重新申请
+                    {{ $t(item.reapply) }}
                   </el-button>
                 </template>
               </span>
@@ -102,7 +105,7 @@
           </el-table-column>
         </template>
         <!-- 操作 -->
-        <el-table-column label="操作" v-if="isOperate">
+        <el-table-column :label="$t('table.actions')" v-if="isOperate">
           <template slot-scope="scope">
             <template v-for="(item, index) in btnList">
               <!-- 暂停 -->
@@ -157,7 +160,7 @@
                   :disabled="isAuth(scope.row)"
                   v-preventReClick
                 >
-                  删除
+                  {{ $t('table.delete') }}
                 </el-button>
               </p>
               <div slot="reference">

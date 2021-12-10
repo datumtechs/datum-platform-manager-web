@@ -103,7 +103,7 @@
     ></ViewRun>
     <!-- 运行日志 -->
     <div class="log-wrap">
-      <div class="log-title">运行日志</div>
+      <div class="log-title">{{ $t('workflow.runlog') }}</div>
       <div class="list">
         <div class="item" v-if="logList.length">{{ logList[0]['taskId'] }}</div>
         <div class="item" v-for="(item, index) in logList" :key="index">

@@ -6,16 +6,19 @@
       style="width: 100%;min-height: 530px;color:#000"
       :header-cell-style="{ background: '#FAFAFA', color: '#000' }"
     >
-      <el-table-column prop="id" label="序号">
+      <el-table-column prop="id" :label="$t('table.id')">
         <template slot-scope="scope">
           <span>
             {{ (listQuery.current - 1) * listQuery.size + scope.$index + 1 }}
           </span>
         </template>
       </el-table-column>
-      <el-table-column prop="columnName" label="字段"> </el-table-column>
-      <el-table-column prop="columnType" label="数据类型"> </el-table-column>
-      <el-table-column prop="columnDesc" label="描述"> </el-table-column>
+      <el-table-column prop="columnName" :label="$t('table.collumns')">
+      </el-table-column>
+      <el-table-column prop="columnType" :label="$t('table.type')">
+      </el-table-column>
+      <el-table-column prop="columnDesc" :label="$t('table.description')">
+      </el-table-column>
     </el-table>
     <pagination
       v-show="total > 0"

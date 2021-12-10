@@ -79,15 +79,15 @@ export default class SetupIndex extends Vue {
   private total = 0
   private keyList = [
     {
-      label: '昵称',
+      label: 'table.nickname',
       prop: 'userName',
     },
     {
-      label: '角色',
+      label: 'table.role',
       prop: 'roleName',
     },
     {
-      label: '创建时间',
+      label: 'table.creationTime',
       prop: 'time',
     },
   ]

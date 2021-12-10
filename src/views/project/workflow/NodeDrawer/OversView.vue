@@ -11,7 +11,7 @@
     </div>
     <div class="view-block">
       <div class="text">
-        作者
+        {{ $t('overview.author') }}
       </div>
       <div class="info">
         {{ dataInfo.author }}
@@ -19,7 +19,7 @@
     </div>
     <div class="view-block">
       <div class="text">
-        支持数据协同方数量
+        {{ $t('overview.supported') }}
       </div>
       <div class="info">
         {{ dataInfo.maxNumbers !== dataInfo.minNumbers ? '>=' : '' }}
@@ -28,7 +28,7 @@
     </div>
     <div class="view-block">
       <div class="text">
-        支持语言
+        {{ $t('overview.languages') }}
       </div>
       <div class="info" v-for="(item, index) in supportLanguage" :key="index">
         {{ item }}

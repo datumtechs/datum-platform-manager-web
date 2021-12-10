@@ -39,9 +39,9 @@
             <el-menu-item index="/home/algorithm">
               {{ $t('home.algorithm') }}
             </el-menu-item>
-            <el-menu-item>
+            <!-- <el-menu-item>
               {{ $t('home.service') }}
-            </el-menu-item>
+            </el-menu-item> -->
           </el-submenu>
           <el-menu-item index="/case/index">
             {{ $t('nav.case') }}

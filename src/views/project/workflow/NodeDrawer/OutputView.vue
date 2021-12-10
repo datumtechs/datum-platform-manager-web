@@ -14,10 +14,10 @@
       </jz-button>
     </div>
     <div class="text">
-      保存至数据响应方
+      {{ $t('output.saveTo') }}
     </div>
     <div class="info">
-      说明：已默认保存至数据发起方
+      {{ $t('output.notes') }}
     </div>
     <div class="select">
       <div class="select-switch">
@@ -28,7 +28,9 @@
           :disabled="isAuth"
         >
         </el-switch>
-        <span class="switch-text"> {{ isSelect ? '是' : '否' }} </span>
+        <span class="switch-text">
+          {{ isSelect ? $t('output.yes') : $t('output.no') }}
+        </span>
       </div>
       <div class="select-value" v-if="isSelect">
         <el-checkbox-group v-model="checkList" :disabled="isAuth">
@@ -41,10 +43,10 @@
       </div>
     </div>
     <div class="text">
-      存储形式
+      {{ $t('output.storageForm') }}
     </div>
     <div class="info">
-      {{ storePattern == 1 ? '明文' : '密文' }}
+      {{ storePattern == 1 ? $t('output.plaintext') : $t('output.ciphertext') }}
     </div>
   </div>
 </template>
