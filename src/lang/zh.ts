@@ -116,6 +116,8 @@ export default {
     storageForm: '存储形式',
     plaintext: '明文',
     ciphertext: '密文',
+    yes: '是',
+    no: '否',
   },
   enviroment: {
     minimum: '计算资源（最低要求）',
