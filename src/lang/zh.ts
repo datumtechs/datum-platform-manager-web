@@ -279,4 +279,12 @@ export default {
     local: '账户隐私保留在本地',
     install: '安装',
   },
+  run: {
+    rename: '重命名',
+    delete: '删除',
+    result: '查看运行结果',
+    preview: '运行结果预览',
+    download: '下载运行结果',
+    nodata: '暂无数据',
+  },
 }

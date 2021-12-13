@@ -194,6 +194,9 @@ export default class HeaderComponent extends Vue {
     this.$i18n.locale = lang
     const title = this.isEnglish ? 'Privacy-Preserving Network' : '隐私计算网络'
     document.title = title
+    setTimeout(() => {
+      window.location.reload()
+    }, 13)
   }
   private connectWallet() {
     this.visible = true

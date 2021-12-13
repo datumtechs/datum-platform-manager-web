@@ -276,4 +276,12 @@ export default {
     local: 'Privacy Preserved Locally',
     install: 'Install',
   },
+  run: {
+    rename: 'Rename',
+    delete: 'Delete',
+    result: 'View run results',
+    preview: 'Run result Preview',
+    download: 'Download run results',
+    nodata: 'No data',
+  },
 }

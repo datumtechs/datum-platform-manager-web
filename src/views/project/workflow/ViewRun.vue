@@ -2,7 +2,7 @@
   <!-- 运行结果弹窗 -->
   <div class="results">
     <el-dialog
-      title="运行结果预览"
+      :title="$t('run.preview')"
       :visible.sync="resultsVisible"
       :before-close="handleClose"
       width="720px"
@@ -79,11 +79,11 @@
             :disabled="isDownload"
             type="primary"
             @click="downloadResults"
-            >下载运行结果</el-link
+            >{{ $t('run.download') }}</el-link
           >
         </div>
         <div class="results-no" v-else>
-          暂无数据
+          {{ $t('run.nodata') }}
         </div>
       </div>
     </el-dialog>
