@@ -271,4 +271,12 @@ export default {
     operationSucces: '下载成功',
     operationFailed: '下载失败，请联系管理员',
   },
+  run: {
+    rename: '重命名',
+    delete: '删除',
+    result: '查看运行结果',
+    preview: '运行结果预览',
+    download: '下载运行结果',
+    nodata: '暂无数据',
+  },
 }

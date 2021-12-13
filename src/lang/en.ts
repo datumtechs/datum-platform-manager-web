@@ -268,4 +268,12 @@ export default {
     operationSucces: 'Download succeeded',
     operationFailed: 'Download failed, please contact the administrator',
   },
+  run: {
+    rename: 'Rename',
+    delete: 'Delete',
+    result: 'View run results',
+    preview: 'Run result Preview',
+    download: 'Download run results',
+    nodata: 'No data',
+  },
 }

@@ -198,6 +198,9 @@ export default class HeaderComponent extends Vue {
     const lang = this.isEnglish ? 'en' : 'zh'
     AppModule.SetLanguage(lang)
     this.$i18n.locale = lang
+    setTimeout(() => {
+      window.location.reload()
+    }, 13)
   }
   private connectWallet() {
     this.visible = true

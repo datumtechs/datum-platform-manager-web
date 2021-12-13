@@ -86,11 +86,11 @@
     ></ToolBar>
     <!-- 记得右键菜单 -->
     <v-contextmenu ref="contextmenu">
-      <v-contextmenu-item @click="handleResetName">重命名</v-contextmenu-item>
+      <v-contextmenu-item @click="handleResetName">{{ $t('run.rename') }}</v-contextmenu-item>
       <!-- <v-contextmenu-item @click="handleCopy">复制</v-contextmenu-item> -->
-      <v-contextmenu-item @click="handleDelete">删除</v-contextmenu-item>
+      <v-contextmenu-item @click="handleDelete">{{ $t('run.delete') }}</v-contextmenu-item>
       <v-contextmenu-item :disabled="handleRunState()" @click="viewResults">
-        查看运行结果
+        {{ $t('run.result') }}
       </v-contextmenu-item>
     </v-contextmenu>
     <!-- 右侧节点弹窗 -->
