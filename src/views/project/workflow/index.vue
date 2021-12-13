@@ -21,7 +21,10 @@
                 src="@/assets/images/icons/node-icon.svg"
               />
             </div>
-            <span class="node-text" v-if="!isResetName">
+            <span
+              class="node-text"
+              v-if="!isResetName || (isResetName && index !== currentIndex)"
+            >
               {{ item.nodeName }}
             </span>
             <input
@@ -627,11 +630,12 @@ export default class workflowIndex extends Vue {
           font-size: 19px
           color: #292020
       .block
+        display: flex;
+        align-items: center;
         margin-left 230px
         width 200px
         box-sizing: border-box
         height 42px
-        line-height 42px
         background: #FFFFFF;
         box-shadow: 0px 4px 8px 0px rgba(234,234,234,0.5);
         border-radius: 8px;
@@ -643,12 +647,14 @@ export default class workflowIndex extends Vue {
           min-width: 40px
           background: #E1F1FF;
           display: inline-block
+          line-height 42px
           .node-icon
             width: 18px;
             height: 16px;
             margin-left 12px
         .node-text
-          display: inline-block
+          width 120px
+          line-height: 14px
           color: #000;
           letter-spacing: 0;
           font-weight: 400;
@@ -658,13 +664,13 @@ export default class workflowIndex extends Vue {
           border 0
           font-size 12px
           outline 0
-          width 80px
+          width 120px
           color #000
+          text-align center
         .node-state
           display: inline-block
           width: 20px
-          height: 20px
-          margin-left: 5px
+          line-height: 42px
       .state
         display flex
         text-align: center
