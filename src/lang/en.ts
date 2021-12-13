@@ -156,7 +156,7 @@ export default {
     output: 'Output',
     code: 'Code',
     enviroment: 'Enviroment',
-    runlog: 'Run log',
+    runlog: 'Running log',
     save: 'Save',
     empty: 'Empty',
     cancel: 'Cancel',
