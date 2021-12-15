@@ -265,32 +265,16 @@ export default class InputViewIndex extends Vue {
     WorkflowModule.SET_INPUT_LIST(inputVoList)
     const tips: any = this.$t('tips.save')
     this.$message.success(tips)
-    // 缓存选中的选项
-    const organizationId: string[] = []
+
     // 过滤空值
     this.inputValue = this.inputValue.filter(Boolean)
-    this.inputValue.map((item: string[]) => {
-      organizationId.push(item[0])
-    })
+    this.inputValue = this.inputValue.filter(Boolean)
+    const organizationId: string[] = this.getListFirst(this.inputValue)
     // 输出提供List
     await WorkflowModule.setOrganizationId(organizationId)
     WorkflowModule.SAVE_ORG_OPTIONS()
     WorkflowModule.SET_INPUT_LEN(this.inputValue.length)
   }
-  // 校验组织是否失效
-  // private checkOrgState() {
-  // const list = this.organizations
-  // const inputValue = this.getListFirst(this.inputValue)
-  // console.log('inputValue', inputValue)
-  // console.log('organizations', list)
-  // list.map((item: any) => {
-  //   if(!inputValue.includes(item.identityId)){
-  //     // 校验失败
-  //   }else{
-  //     // 保存成功
-  //   }
-  // })
-  // }
   private inputDelete(index: number) {
     this.cascaderKey.splice(index, 1)
     this.selectLayout.splice(index, 1)

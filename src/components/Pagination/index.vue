@@ -66,7 +66,6 @@ export default class extends Vue {
 
 <style lang="stylus" scoped>
 .pagination-container {
-  background: #fff;
   padding: 24px 0px 5px;
   >>> .el-pagination.is-background .el-pager li:not(.disabled).active{
     background-color: #5f4ffb;

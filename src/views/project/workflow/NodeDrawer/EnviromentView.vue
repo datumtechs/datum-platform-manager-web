@@ -56,7 +56,7 @@
           >
           </el-option>
         </el-select>
-        <span class="unit">GiB</span>
+        <span class="unit">GiB(s)</span>
       </div>
       <div class="block select">
         <div class="text">

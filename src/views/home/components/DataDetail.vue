@@ -22,36 +22,57 @@ import { BreadcrumbModule } from '@/store/modules/breadcrumb'
 import { formatBytes } from '@/utils/format'
 import { UserModule } from '@/store/modules/user'
 import alayaService from '@/services/alayaService'
+import { AppModule } from '@/store/modules/app'
 
 @Component({
   name: 'DataDetail',
 })
 export default class DataDetail extends Vue {
   private data: any = {}
-  private authTypeList: string[] = ['按次数/按时间', '按时间', '按次数']
-  private expireList: string[] = ['未过期', '已过期']
-  private authStateList: string[] = [
-    '未知',
-    '还未发布的数据授权',
-    '已发布的数据授权',
-    '已撤销的数据授权 <失效前主动撤回的>',
-    '已经失效的数据授权 <过期or达到使用上限的or被拒绝的>',
-  ]
-  private industryList: string[] = [
-    '',
-    '金融业（银行）',
-    '金融业（保险）',
-    '金融业（证券）',
-    '金融业（其他）',
-    'ICT',
-    '制造业',
-    '能源业',
-    '交通运输业',
-    '医疗健康业',
-    '公共服务业',
-    '传媒广告业',
-    '其他行业',
-  ]
+  private authTypeList: any = {
+    zh: ['按次数/按时间', '按时间', '按次数'],
+    en: ['Usage count/Usage period', 'Usage period', 'Usage count'],
+  }
+  private expireList: any = {
+    zh: ['未过期', '已过期'],
+    en: ['No', 'Yes'],
+  }
+  private authStateList: any = {
+    zh: ['已申请', '已授权', '已拒绝', '已撤销', '已失效'],
+    en: ['Applied', 'Authorized', 'Declined', 'Canceled', 'Invalid'],
+  }
+  private industryList: any = {
+    zh: [
+      '',
+      '金融业（银行）',
+      '金融业（保险）',
+      '金融业（证券）',
+      '金融业（其他）',
+      '信息与通信',
+      '制造业',
+      '能源业',
+      '交通运输业',
+      '医疗健康业',
+      '公共服务业',
+      '传媒广告业',
+      '其他行业',
+    ],
+    en: [
+      '',
+      'Finance(Banking)',
+      'Finance(Insurance)',
+      'Finance(Securities)',
+      'Finance(Others)',
+      'ICT',
+      'Manufacturing',
+      'Energy',
+      'Transportation',
+      'Healthcare',
+      'Public service',
+      'Media & advertising',
+      'Others',
+    ],
+  }
   private dataDesc: any = [
     {
       title: 'detail.introduction',
@@ -101,15 +122,6 @@ export default class DataDetail extends Vue {
           lable: 'detail.updatetime',
           value: 'updateTime',
         },
-
-        // {
-        //   lable: '更新频率：',
-        //   value: '贷款逾期数据',
-        // },
-        // {
-        //   lable: '更新方式：',
-        //   value: '贷款逾期数据',
-        // },
       ],
     },
     {
@@ -122,19 +134,45 @@ export default class DataDetail extends Vue {
       ],
     },
   ]
+  get language() {
+    return AppModule.language
+  }
   get isLogin() {
     return !!UserModule.token && alayaService.checkAddress()
   }
+  created() {
+    this.getList()
+  }
   @Emit('getAuthType')
   private async getList() {
-    const metaDataPkId = this.$route.params.id
-    const userMetaDataId = this.$route.params.userMateDataId
+    const metaDataPkId = Number(this.$route.params.id)
+    const userMetaDataId = Number(this.$route.params.userMateDataId)
     const parmans = {
-      metaDataPkId: isNaN(Number(metaDataPkId)) ? null : metaDataPkId,
-      userMetaDataId: isNaN(Number(userMetaDataId)) ? null : userMetaDataId,
+      metaDataPkId: isNaN(metaDataPkId) ? null : metaDataPkId,
+      userMetaDataId: isNaN(userMetaDataId) ? null : userMetaDataId,
     }
     const { data } = await getDataDetail(parmans)
     // 动态展示字段
+    this.handleField(data)
+    return this.data.authType
+  }
+  /*
+    详情页交易字段展示分为，1 未授权 2 按次数，按时间（1已授权）
+      未授权：
+        授权方式 authType
+      按次数：
+        授权方式 authType
+        授权状态  authStatus
+        授权值 authValue
+        已使用次数 usedTimes
+      按时间：
+        授权方式 authType
+        授权状态  authStatus
+        授权值 authValue
+        是否过期  expire
+  */
+  private handleField(data: any) {
+    const { language } = this
     const authMetadataState = {
       lable: 'detail.effectiveness',
       value: 'authMetadataState',
@@ -148,32 +186,30 @@ export default class DataDetail extends Vue {
       value: 'expire',
     }
     const usedTimes = {
-      lable: 'detail.usedtimes',
+      lable: 'detail.usedcount',
       value: 'usedTimes',
     }
-    const len = this.dataDesc - 1
     if (this.isLogin && data.authType) {
       this.dataDesc[3]['describes'].push(authMetadataState)
       this.dataDesc[3]['describes'].push(authValueStr)
     }
+    // 按时间
     if (data.authType === 1) {
       this.dataDesc[3]['describes'].push(expire)
     }
+    // 按次数
     if (data.authType === 2) {
       this.dataDesc[3]['describes'].push(usedTimes)
     }
     this.data = data
     this.data.fileType = data.fileType ? 'csv' : '未知'
     this.data.size = formatBytes(data.size)
-    this.data.authTypeStr = this.authTypeList[data.authType]
-    this.data.industry = this.industryList[data.industry]
+    this.data.authTypeStr = this.authTypeList[language][data.authType]
+    this.data.industry = this.industryList[language][data.industry]
     this.data.expire = this.expireList[data.expire]
-    this.data.authMetadataState = this.authStateList[data.authMetadataState]
+    this.data.authMetadataState = this.authStateList[language][data.authStatus]
+    // 面包屑路由名称
     BreadcrumbModule.SET_DATADETAIL(data.dataName)
-    return data.authType
-  }
-  created() {
-    this.getList()
   }
 }
 </script>

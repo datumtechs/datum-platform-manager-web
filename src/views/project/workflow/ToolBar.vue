@@ -22,7 +22,7 @@
           :name="toolStateList[0] ? 'w-loading' : 'w-end'"
           :class="['icon-button ', toolStateList[1] ? 'w-loading' : '']"
           :color="isAuth ? '#666' : '#5F4FFB'"
-          :width="toolStateList[0] ? '34' : '26'"
+          :width="toolStateList[0] ? '34' : lan ? '54' : '26'"
           :height="toolStateList[0] ? '34' : '26'"
         />
         <span>{{ $t('workflow.terminate') }}</span>
@@ -79,6 +79,7 @@ export default class ToolBarIndex extends Vue {
   @Prop({ required: true, default: [] }) private toolStateList!: any
   @Prop({ required: true, default: 0 }) private startShow!: number
   @Prop({ required: true, default: false }) private isSuccess!: boolean
+  @Prop({ required: true, default: false }) private lan!: boolean
   // 查看者权限
   get isAuth() {
     const role = Number(this.$route.params.role)

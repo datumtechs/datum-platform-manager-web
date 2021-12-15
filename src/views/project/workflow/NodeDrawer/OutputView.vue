@@ -127,16 +127,6 @@ export default class extends Vue {
       }
     })
   }
-  // 数组对象去重
-  repeatArr(list: any) {
-    let map = new Map()
-    for (let item of list) {
-      if (!map.has(item.identityId)) {
-        map.set(item.identityId, item)
-      }
-    }
-    return [...map.values()]
-  }
 
   // 默认勾选第一个数据方
   @Watch('checkOptions', { deep: true })
