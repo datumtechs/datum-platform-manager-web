@@ -152,7 +152,7 @@ export default class createIndex extends Vue {
     // 案例来源，自动勾选模板
     const id = this.$route.query.id
     if (id) {
-      this.templateIndex = Number(id)
+      this.templateIndex = Number(id) - 1
       this.handleSelect(this.templateIndex)
     }
   }
