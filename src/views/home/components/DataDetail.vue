@@ -124,15 +124,7 @@ export default class DataDetail extends Vue {
         },
       ],
     },
-    {
-      title: 'detail.exchange',
-      describes: [
-        {
-          lable: 'detail.authType',
-          value: 'authTypeStr',
-        },
-      ],
-    },
+    
   ]
   get language() {
     return AppModule.language
@@ -188,6 +180,17 @@ export default class DataDetail extends Vue {
     const usedTimes = {
       lable: 'detail.usedcount',
       value: 'usedTimes',
+    }
+    if (this.isLogin) {
+      this.dataDesc.push({
+        title: 'detail.exchange',
+        describes: [
+          {
+            lable: 'detail.authType',
+            value: 'authTypeStr',
+          },
+        ],
+      })
     }
     if (this.isLogin && data.authType) {
       this.dataDesc[3]['describes'].push(authMetadataState)
