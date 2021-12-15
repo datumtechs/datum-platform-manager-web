@@ -4,8 +4,10 @@
       <div class="title">{{ $t(item.title) }}</div>
       <div class="item-info" v-if="item.describes && item.describes.length > 0">
         <div v-for="(desc, i) in item.describes" :key="i">
-          <div class="lable">{{ $t(desc.lable) }}：</div>
-          <div class="info" :class="isEnglish && desc.move ? 'info-en' : ''">
+          <div class="lable" :class="isEnglish ? 'lable-en' : ''">
+            {{ $t(desc.lable) }}：
+          </div>
+          <div class="info">
             {{ data[desc.value] }}
           </div>
         </div>
@@ -107,6 +109,8 @@ export default class AlgorithmDetail extends Vue {
         .lable
           width 145px
           color rgba(0,0,0,0.50)
+        .lable-en
+          width 245px !important
         .info
           width 200px
           color #000
