@@ -23,6 +23,7 @@ import JzButton from '@/components/JzButton.vue'
 import { ParamsType, TableParams, QueryType } from '@/api/types'
 import { subJoblist, subJobaction, subDeleteBatch } from '@/api/jobs'
 import { BreadcrumbModule } from '@/store/modules/breadcrumb'
+import { AppModule } from '@/store/modules/app'
 @Component({
   name: 'subjob',
   components: {
@@ -41,7 +42,10 @@ export default class subjobIndex extends Vue {
       disabled: 'restart',
     },
   ]
-  private stateList = ['未开始', '运行中', '运行成功', '运行失败']
+  private stateList: any = {
+    zh: ['未开始', '运行中', '运行成功', '运行失败'],
+    en: ['not started', 'in progress', 'failed', 'success'],
+  }
   private subjobKey = [
     {
       label: 'table.id',
@@ -71,7 +75,11 @@ export default class subjobIndex extends Vue {
     current: 1,
     size: 10,
   }
+  get language() {
+    return AppModule.language
+  }
   private async getList() {
+    const { language } = this
     // 过滤空格
     const subJobId = this.projectName.replace(/\s+/g, '')
     const project = this.$route.params.id
@@ -88,7 +96,7 @@ export default class subjobIndex extends Vue {
     params.projectId = this.$route.params.id
     const { data } = await subJoblist({ ...params })
     data.items.map((item: any) => {
-      item.state = this.stateList[item.subJobStatus]
+      item.state = this.stateList[language][item.subJobStatus]
       item.btnStatus = item.subJobStatus
     })
     this.list = data.items

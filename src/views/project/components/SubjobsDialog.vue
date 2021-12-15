@@ -17,7 +17,12 @@
             :class="tabsIndex === index ? 'avtive' : ''"
             @click="handleTable(index)"
           >
-            <span>
+            <span
+              :class="[
+                !index && isEnglish ? 'first-info' : '',
+                isEnglish ? 'span-en' : '',
+              ]"
+            >
               {{ $t(item) }}
             </span>
             <i :class="tabsIndex !== index ? 'hover' : ''"></i>
@@ -112,6 +117,7 @@ import { Vue, Component, Emit, Prop } from 'vue-property-decorator'
 import JzButton from '@/components/JzButton.vue'
 import Dispatch from './Dispatch.vue'
 import { addJob, setJobBase, queryWorkflow } from '@/api/jobs'
+import { AppModule } from '@/store/modules/app'
 @Component({
   name: 'SubjobDialog',
   components: {
@@ -135,7 +141,9 @@ export default class WorkDialog extends Vue {
   private name = ''
   private desc = ''
   private jobId = ''
-
+  get isEnglish() {
+    return AppModule.language === 'en'
+  }
   private handleTable(index: number) {
     if (!this.tabsIndex) {
       if (!this.workflowId) {
@@ -342,11 +350,18 @@ export default class WorkDialog extends Vue {
         cursor pointer
         position relative
         text-align: center;
-        writing-mode vertical-lr
+        writing-mode vertical-rl
         span
           font-size: 14px;
           color: #393939;
           line-height: 18px;
+        .span-en
+          display block
+          transform: rotate(-180deg)
+        .first-info
+          width 26px
+          height: 72%
+          margin-top 14%
         i.hover
           position absolute
           left 0px

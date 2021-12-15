@@ -44,6 +44,13 @@
               {{ $t('home.authorizePassed') }}
             </jz-button>
             <jz-button
+              v-else-if="item.authStatus === 0"
+              type="jz-button--primary"
+              class="button "
+            >
+              {{ $t('home.applied') }}
+            </jz-button>
+            <jz-button
               v-else
               type="jz-button--primary"
               @click="

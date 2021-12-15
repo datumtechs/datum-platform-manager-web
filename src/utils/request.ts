@@ -19,9 +19,9 @@ service.interceptors.request.use(
   (config: any) => {
     const token: string = getToken()
     const language: string = getLanguage()
+    config.headers.common['Accept-Language'] = language
     if (token) {
       config.headers.common['Access-Token'] = token
-      config.headers.common['Accept-Language'] = language
       // 设置token失效时间, 默认30min
       setToken(token)
     }

@@ -33,6 +33,8 @@ import JzNav from '@/components/JzNav.vue'
 import { getListByOwner } from '@/api/resources'
 import { TableNameType } from '@/api/types'
 import { BreadcrumbModule } from '@/store/modules/breadcrumb'
+import { AppModule } from '@/store/modules/app'
+
 @Component({
   name: 'resourcesData',
   components: {
@@ -81,11 +83,21 @@ export default class resourcesData extends Vue {
       lable: 'worke.edit',
     },
   ]
+  private authTypeList: any = {
+    zh: ['按次数/按时间', '按时间', '按次数'],
+    en: ['Usage count/Usage period', 'Usage period', 'Usage count'],
+  }
+  private authStateList: any = {
+    zh: ['已申请', '已授权', '已拒绝', '已撤销', '已失效'],
+    en: ['Applied', 'Authorized', 'Declined', 'Canceled', 'Invalid'],
+  }
+  get language() {
+    return AppModule.language
+  }
   private handleName(data: TableNameType) {
     const { id, metaDataId, name, metaDataPkId } = data
     BreadcrumbModule.SET_RESOUR(name)
     this.$router.push(`/resources/detail/${metaDataPkId}/${id}/${metaDataId}`)
-    // this.$router.push(`/data/detail/${metaDataPkId}/${id}/${metaDataId}`)
   }
   private handleBtn() {}
   private async getList() {
@@ -104,20 +116,15 @@ export default class resourcesData extends Vue {
     this.getList()
   }
   private formatData(data: any) {
-    const authTypeList: any = {
-      1: '按时间',
-      2: '按次数',
-      3: '永久',
-    }
-    const authStatusList: any = {
-      0: '等待审核中',
-      1: '审核通过',
-      2: '已拒绝',
-    }
     const list = data
+    const { language, authStateList, authTypeList } = this
+    /*
+    授权状态 
+    authStatus 0:已申请 1:已授权 2:已拒绝 3: 已撤销  4:已失效
+  */
     list.map((item: any) => {
-      item.authStatus = authStatusList[item.authStatus]
-      item.authType = authTypeList[item.authType]
+      item.authStatus = authStateList[language][item.authStatus]
+      item.authType = authTypeList[language][item.authType]
     })
     return list
   }

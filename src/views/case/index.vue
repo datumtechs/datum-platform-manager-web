@@ -20,6 +20,7 @@
                 @click="handleDetail(item.id)"
                 type="jz-button--primary"
                 class="btn"
+                :class="isEnglish ? 'btn-en' : ''"
               >
                 {{ $t('case.project') }}
               </jz-button>
@@ -48,6 +49,7 @@ import { Vue, Component } from 'vue-property-decorator'
 import JzButton from '@/components/JzButton.vue'
 import { addProject, getProjectTemplate } from '@/api/project'
 import { UserModule } from '@/store/modules/user'
+import { AppModule } from '@/store/modules/app'
 import alayaService from '@/services/alayaService'
 
 @Component({
@@ -59,6 +61,9 @@ import alayaService from '@/services/alayaService'
 export default class CaseIndex extends Vue {
   get isLogin() {
     return !!UserModule.token && alayaService.checkAddress()
+  }
+  get isEnglish() {
+    return AppModule.language === 'en'
   }
   private marketList = []
   // 案例说明
@@ -82,7 +87,7 @@ export default class CaseIndex extends Vue {
   }
   private async getList() {
     const { data } = await getProjectTemplate()
-    this.marketList = data.filter((item: any) => item.id > 0)
+    this.marketList = data.filter((item: any) => item.id > 1)
   }
   created() {
     this.getList()
@@ -136,6 +141,8 @@ export default class CaseIndex extends Vue {
           .btn
             border-radius 0
             margin-right 25px
+          .btn-en
+            width: 95px !important;
     .item-right
       margin-right 0
     .empty

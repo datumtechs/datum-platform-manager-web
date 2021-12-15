@@ -32,7 +32,6 @@ class alayaService {
             if (newAddress !== currentAddress) {
               // 用户退出
               UserModule.LogOut()
-              window.location.reload()
             }
           } else {
             console.log('Alaya account changed but same address')

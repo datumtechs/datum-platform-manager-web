@@ -45,7 +45,9 @@
               class="item"
               effect="dark"
               :content="
-                item.runStatus === 3 ? item.runMsg : stateList[item.runStatus]
+                item.runStatus === 3
+                  ? item.runMsg
+                  : stateList[lan][item.runStatus]
               "
               placement="right"
             >
@@ -59,15 +61,6 @@
               />
             </el-tooltip>
           </div>
-          <!-- <ul class="state">
-            <li
-              v-for="(info, index) in stateList"
-              :key="index"
-              :class="item.runStatus === index ? 'active' : ''"
-            >
-              {{ info }}
-            </li>
-          </ul> -->
           <div class="arrow" v-if="index > 0">
             <div class="line"></div>
             <i class="el-icon-arrow-down"></i>
@@ -83,12 +76,17 @@
       @handleEndWorkflow="handleEndWorkflow"
       @handleStartWorkflow="handleStartWorkflow"
       @handleEmpty="handleEmpty"
+      :lan="lan === 'en'"
     ></ToolBar>
     <!-- 记得右键菜单 -->
     <v-contextmenu ref="contextmenu">
-      <v-contextmenu-item @click="handleResetName">{{ $t('run.rename') }}</v-contextmenu-item>
+      <v-contextmenu-item @click="handleResetName">{{
+        $t('run.rename')
+      }}</v-contextmenu-item>
       <!-- <v-contextmenu-item @click="handleCopy">复制</v-contextmenu-item> -->
-      <v-contextmenu-item @click="handleDelete">{{ $t('run.delete') }}</v-contextmenu-item>
+      <v-contextmenu-item @click="handleDelete">{{
+        $t('run.delete')
+      }}</v-contextmenu-item>
       <v-contextmenu-item :disabled="handleRunState()" @click="viewResults">
         {{ $t('run.result') }}
       </v-contextmenu-item>
@@ -161,7 +159,10 @@ export default class workflowIndex extends Vue {
   private workflowNodeId = ''
   private nodeList: any = []
   private menus = []
-  private stateList = ['未开始', '运行中', '运行成功', '运行失败']
+  private stateList: any = {
+    zh: ['未开始', '运行中', '运行成功', '运行失败'],
+    en: ['not started', 'in progress', 'failed', 'success'],
+  }
   private stateIcon = [
     '',
     'node-state-run',
