@@ -124,7 +124,6 @@ export default class DataDetail extends Vue {
         },
       ],
     },
-    
   ]
   get language() {
     return AppModule.language
@@ -209,7 +208,7 @@ export default class DataDetail extends Vue {
     this.data.size = formatBytes(data.size)
     this.data.authTypeStr = this.authTypeList[language][data.authType]
     this.data.industry = this.industryList[language][data.industry]
-    this.data.expire = this.expireList[data.expire]
+    this.data.expire = this.expireList[language][data.expire || 0]
     this.data.authMetadataState = this.authStateList[language][data.authStatus]
     // 面包屑路由名称
     BreadcrumbModule.SET_DATADETAIL(data.dataName)
