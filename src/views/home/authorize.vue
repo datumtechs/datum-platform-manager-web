@@ -244,10 +244,7 @@ export default class Authorize extends Vue {
       const { code, msg } = await getDataAuth({ ...params })
       if (code === 10000) {
         this.$message.success(msg)
-        setTimeout(() => {
-          this.$router.push('/resources/data')
-        }, 1000)
-        this.authBtn = false
+        this.$router.push('/resources/data')
       } else {
         this.authBtn = false
       }
