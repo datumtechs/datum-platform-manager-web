@@ -28,7 +28,7 @@
           </div>
           <el-select v-model="role" :placeholder="$t('worke.role')">
             <el-option
-              v-for="(item, key, i) in roleOptionMap"
+              v-for="(item, key, i) in roleOptionMap[language]"
               :key="i"
               :label="item"
               :value="key"
@@ -55,6 +55,8 @@ import JzButton from '@/components/JzButton.vue'
 import { userList } from '@/api/user'
 import { addProjMember, setProjMember } from '@/api/project'
 import { roleOptionMap } from '@/status'
+import { AppModule } from '@/store/modules/app'
+
 @Component({
   name: 'MemberDialog',
   components: {
@@ -73,6 +75,9 @@ export default class MemberDialog extends Vue {
   private userOptions = []
   private role: number | string = ''
   private memberId = ''
+  get language() {
+    return AppModule.language
+  }
   get roleOptionMap() {
     return roleOptionMap
   }
