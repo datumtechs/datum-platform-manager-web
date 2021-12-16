@@ -34,6 +34,7 @@ import { getListByOwner } from '@/api/resources'
 import { TableNameType } from '@/api/types'
 import { BreadcrumbModule } from '@/store/modules/breadcrumb'
 import { AppModule } from '@/store/modules/app'
+import { authTypeList, authStateList } from '@/status'
 
 @Component({
   name: 'resourcesData',
@@ -83,13 +84,11 @@ export default class resourcesData extends Vue {
       lable: 'worke.edit',
     },
   ]
-  private authTypeList: any = {
-    zh: ['按次数/按时间', '按时间', '按次数'],
-    en: ['Usage count/Usage period', 'Usage period', 'Usage count'],
+  get authTypeList() {
+    return authTypeList
   }
-  private authStateList: any = {
-    zh: ['已申请', '已授权', '已拒绝', '已撤销', '已失效'],
-    en: ['Applied', 'Authorized', 'Declined', 'Canceled', 'Invalid'],
+  get authStateList() {
+    return authStateList
   }
   get language() {
     return AppModule.language

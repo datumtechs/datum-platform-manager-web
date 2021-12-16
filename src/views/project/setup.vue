@@ -59,6 +59,7 @@ import { getMember, delProjMember, delProjMembers } from '@/api/project'
 import { ParamsType, TableParams, QueryType } from '@/api/types'
 import { formatDate } from '@/utils/format'
 import { roleOptionMap } from '@/status'
+import { AppModule } from '@/store/modules/app'
 
 @Component({
   name: 'projectSetup',
@@ -97,6 +98,9 @@ export default class SetupIndex extends Vue {
       lable: 'worke.edit',
     },
   ]
+  get language() {
+    return AppModule.language
+  }
   get queryId() {
     return Number(this.$route.params.id)
   }
@@ -156,9 +160,10 @@ export default class SetupIndex extends Vue {
       params['userName'] = userName
     }
     const { data } = await getMember({ ...params })
+    const { language } = this
     data.items.map((item: any) => {
       item.time = formatDate(new Date(item.createTime), 'Y-M-D h:m:s')
-      item.roleName = roleOptionMap[item.role]
+      item.roleName = roleOptionMap[language][item.role]
     })
     this.list = data.items
     this.total = data.total

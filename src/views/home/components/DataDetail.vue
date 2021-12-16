@@ -23,55 +23,24 @@ import { formatBytes } from '@/utils/format'
 import { UserModule } from '@/store/modules/user'
 import alayaService from '@/services/alayaService'
 import { AppModule } from '@/store/modules/app'
+import { authTypeList, expireList, authStateList, industryList } from '@/status'
 
 @Component({
   name: 'DataDetail',
 })
 export default class DataDetail extends Vue {
   private data: any = {}
-  private authTypeList: any = {
-    zh: ['按次数/按时间', '按时间', '按次数'],
-    en: ['Usage count/Usage period', 'Usage period', 'Usage count'],
+  get authTypeList() {
+    return authTypeList
   }
-  private expireList: any = {
-    zh: ['未过期', '已过期'],
-    en: ['No', 'Yes'],
+  get expireList() {
+    return expireList
   }
-  private authStateList: any = {
-    zh: ['已申请', '已授权', '已拒绝', '已撤销', '已失效'],
-    en: ['Applied', 'Authorized', 'Declined', 'Canceled', 'Invalid'],
+  get authStateList() {
+    return authStateList
   }
-  private industryList: any = {
-    zh: [
-      '',
-      '金融业（银行）',
-      '金融业（保险）',
-      '金融业（证券）',
-      '金融业（其他）',
-      '信息与通信',
-      '制造业',
-      '能源业',
-      '交通运输业',
-      '医疗健康业',
-      '公共服务业',
-      '传媒广告业',
-      '其他行业',
-    ],
-    en: [
-      '',
-      'Finance(Banking)',
-      'Finance(Insurance)',
-      'Finance(Securities)',
-      'Finance(Others)',
-      'ICT',
-      'Manufacturing',
-      'Energy',
-      'Transportation',
-      'Healthcare',
-      'Public service',
-      'Media & advertising',
-      'Others',
-    ],
+  get industryList() {
+    return industryList
   }
   private dataDesc: any = [
     {
