@@ -83,7 +83,7 @@ export default class editIndex extends Vue {
     this.textarea = data.projectDesc
   }
   created() {
-    this.id = this.$route.params.id
+    this.id = this.$route.query.pid
     this.getDetail()
   }
 }

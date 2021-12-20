@@ -216,7 +216,7 @@ export default class workflowIndex extends Vue {
   }
   // 查看者权限
   get isAuth() {
-    const role = Number(this.$route.params.role)
+    const role = Number(this.$route.query.rid)
     return role === 3
   }
   private handleisAuth() {
@@ -539,11 +539,11 @@ export default class workflowIndex extends Vue {
     this.getLogList()
   }
   created() {
-    const { params, query } = this.$route
-    this.workflowId = params.workflow
+    const { query } = this.$route
+    this.workflowId = query.wid
     this.getAlaor()
     this.getNodeList()
-    const name = this.$route.query.workflow
+    const name = query.workflow
     BreadcrumbModule.SET_WORKFLOW(name)
     this.getWorkState()
   }

@@ -82,7 +82,7 @@ export default class ToolBarIndex extends Vue {
   @Prop({ required: true, default: false }) private lan!: boolean
   // 查看者权限
   get isAuth() {
-    const role = Number(this.$route.params.role)
+    const role = Number(this.$route.query.rid)
     return role === 3
   }
   @Emit('handleSave')

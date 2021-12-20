@@ -149,7 +149,7 @@ export default class DataDetail extends Vue {
       lable: 'detail.usedcount',
       value: 'usedTimes',
     }
-    if (this.isLogin) {
+    if (this.isLogin && data.authType) {
       this.dataDesc.push({
         title: 'detail.exchange',
         describes: [

@@ -66,28 +66,32 @@ export const formatCompareSort = (propertyName: string) => {
     }
   }
 }
-// 正则匹配 1~99 正整数
-export const vailLnteger99 = (data: any) => {
-  const reg = new RegExp(/^[1-9][0-9]?$/)
-  return reg.test(data)
-}
-// 正则匹配 1~100 正整数正整数
-export const vailLnteger100 = (data: any) => {
-  const reg = new RegExp(/^([1-9][0-9]{0,1}|100)$/)
-  return reg.test(data)
-}
 
-// 正则匹配 1~1000 正整数
-export const vailLnteger1000 = (data: any) => {
-  const reg = new RegExp(/^(\+?[1-9]{1}[0-9]{0,2}\d{0,0}|1000)$/)
-  return reg.test(data)
-}
-// 正则匹配 0.1~99.9 保留一位小数
-export const vailDecimal = (data: any) => {
-  if (data === 0) {
-    return false
-  } else {
-    const reg = new RegExp(/^([0-9]|[1-9][0-9])(\.\d{0,1})?$/)
-    return reg.test(data)
-  }
-}
+/**
+ *AES 加解密
+ */
+// const DEFAULTKEY = '12345678900000001234567890000000'
+// const IV = '1234567890000000'
+// export const encrypto = (word: any) => {
+//   var str = JSON.stringify(word)
+//   var key = CryptoJS.enc.Utf8.parse(DEFAULTKEY)
+//   var srcs = CryptoJS.enc.Utf8.parse(str)
+//   var iv = CryptoJS.enc.Utf8.parse(IV)
+//   var encrypted = CryptoJS.AES.encrypt(srcs, key, {
+//     iv,
+//     mode: CryptoJS.mode.ECB,
+//     padding: CryptoJS.pad.Pkcs7,
+//   })
+//   return encrypted.toString()
+// }
+
+// export const decrypto = (str: any) => {
+//   var key = CryptoJS.enc.Utf8.parse(DEFAULTKEY)
+//   var iv = CryptoJS.enc.Utf8.parse(IV)
+//   var decrypt = CryptoJS.AES.decrypt(str, key, {
+//     iv,
+//     mode: CryptoJS.mode.ECB,
+//     padding: CryptoJS.pad.Pkcs7,
+//   })
+//   return CryptoJS.enc.Utf8.stringify(decrypt).toString()
+// }

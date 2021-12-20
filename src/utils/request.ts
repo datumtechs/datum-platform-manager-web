@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import axios from 'axios'
-import qs from 'qs'
 import { message } from '@/plugins/message.ts'
 import { getToken, removeToken, getLanguage, setToken } from '@/utils/auth'
 import { UserModule } from '@/store/modules/user'

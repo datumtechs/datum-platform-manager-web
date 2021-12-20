@@ -49,7 +49,6 @@ import JzButton from '@/components/JzButton.vue'
 import JzNav from '@/components/JzNav.vue'
 import { setNickName } from '@/api/user'
 import { UserModule } from '@/store/modules/user'
-import { strlen } from '@/utils/validateRules'
 @Component({
   name: 'resourcesData',
   components: {

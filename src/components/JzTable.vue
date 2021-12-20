@@ -220,7 +220,7 @@ export default class TableIndex extends Vue {
     return this.$route.name === 'jobs'
   }
   private isViewer() {
-    if (Number(this.$route.params.role) === 3) {
+    if (Number(this.$route.query.rid) === 3) {
       const tips: any = this.$t('tips.noAuth')
       this.$message.warning(tips)
       return true
@@ -307,7 +307,7 @@ export default class TableIndex extends Vue {
     if (this.isProject) {
       return row.role > 1
     } else if (this.isWork || this.isJobs) {
-      const role = Number(this.$route.params.role)
+      const role = Number(this.$route.query.rid)
       return role > 2
     } else {
       return false

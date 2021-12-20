@@ -240,7 +240,6 @@ export default class HomeList extends Vue {
   .block-wrap
     width 1200px
     min-height 876px
-    overflow hidden
     margin 0 auto
     margin-top 70px
     display flex

@@ -32,7 +32,7 @@ import { compile } from 'path-to-regexp'
 import { Component, Vue, Watch } from 'vue-property-decorator'
 import { RouteRecord, Route } from 'vue-router'
 import { BreadcrumbModule } from '@/store/modules/breadcrumb'
-
+import qs from 'qs'
 @Component({
   name: 'Breadcrumb',
 })
@@ -62,40 +62,34 @@ export default class extends Vue {
     // 判断申请授权页面，添加父级标签
     const last = matched[matched.length - 1]
     if (this.isAuthorize(last) || this.isDataDetail(last)) {
-      const id = this.$route.params.id
       matched.splice(1, 0, {
         path: '/home/data',
         meta: { title: 'dataDetail' },
       } as RouteRecord)
     }
     if (this.isAlgorithmDetail(last)) {
-      const id = this.$route.params.id
       matched.splice(1, 0, {
         path: '/home/algorithm',
         meta: { title: 'algorithmDetail' },
       } as RouteRecord)
     }
     if (this.isResourcesData(last)) {
-      const id = this.$route.params.id
       matched.splice(1, 0, {
         path: '/resources/data',
         meta: { title: 'data' },
       } as RouteRecord)
     }
     if (this.isWorkflow(last)) {
-      const id = this.$route.params.id
-      const role = this.$route.params.role
-      const query = this.$route.query
+      const query = qs.stringify(this.$route.query)
       matched.splice(2, 0, {
-        path: `/project/${id}/${role}`,
+        path: `/project/work?${query}`,
         meta: { title: 'work' },
       } as RouteRecord)
     }
     if (this.isSubjob(last)) {
-      const id = this.$route.params.id
-      const name = this.$route.query.name
+      const query = qs.stringify(this.$route.query)
       matched.splice(2, 0, {
-        path: `/project/${id}/jobs/jobs?name=${name}`,
+        path: `/project/jobs?${query}`,
         meta: { title: 'jobs' },
       } as RouteRecord)
     }
@@ -160,59 +154,26 @@ export default class extends Vue {
 
   private handleLink(item: any) {
     const { redirect, path } = item
-
+    const query = qs.stringify(this.$route.query)
     if (redirect) {
       try {
         let redirects = ''
         if (item.meta.title === 'project') {
-          const name = this.$route.query.name
-          redirects = redirect + '?name=' + name
+          redirects = redirect + '?' + query
         } else {
-          redirects = path
+          redirects = redirect
         }
-        // :id,:workflows,:subjob 转换为id
-        const res = this.handlePath(redirects)
-        this.$router.push(res)
+        this.$router.push(redirects)
       } catch (error) {
         console.warn(error)
       }
       return
     }
     try {
-      let redirects = ''
-      if (item.meta.title === 'work') {
-        const name = this.$route.query.name
-        redirects = path + '/work?name=' + name
-      } else {
-        redirects = path
-      }
-      const res = this.handlePath(redirects)
-      // console.log('pathCompile', this.pathCompile(res));
-      this.$router.push(res)
+      this.$router.push(path)
     } catch (error) {
       console.warn(error)
     }
-  }
-  // 处理动态路径
-  private handlePath(path: string) {
-    let res: string = path
-    if (res.indexOf(':id') > -1) {
-      const id = this.$route.params.id
-      res = res.replace(/:id/g, id)
-    }
-    if (res.indexOf(':workflow') > -1) {
-      const workflow = this.$route.params.workflow
-      res = res.replace(/:workflow/g, workflow)
-    }
-    if (res.indexOf(':subjob') > -1) {
-      const subjob = this.$route.params.subjob
-      res = res.replace(/:subjob/g, subjob)
-    }
-    if (res.indexOf(':role') > -1) {
-      const role = this.$route.params.role
-      res = res.replace(/:role/g, role)
-    }
-    return res
   }
 }
 </script>
