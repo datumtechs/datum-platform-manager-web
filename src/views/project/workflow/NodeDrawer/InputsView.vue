@@ -139,7 +139,7 @@ export default class InputViewIndex extends Vue {
   }
   // 查看者权限
   get isAuth() {
-    const role = Number(this.$route.params.role)
+    const role = Number(this.$route.query.rid)
     return role === 3
   }
   private handleisAuth() {
@@ -336,7 +336,7 @@ export default class InputViewIndex extends Vue {
   // 模型列表
   private async getModels() {
     if (!this.isModel) return
-    const id = this.$route.params.id
+    const id = this.$route.query.pid
     const nodeItem: any = WorkflowModule.nodeList[WorkflowModule.currentIndex]
     const parmans = {
       projectId: id,
@@ -348,7 +348,7 @@ export default class InputViewIndex extends Vue {
     this.init()
   }
   private async init() {
-    const id = this.$route.params.id
+    const id = this.$route.query.pid
     await WorkflowModule.getOrganizations(id)
     // 模型列表
     this.getModels()

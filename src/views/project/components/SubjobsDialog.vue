@@ -186,7 +186,7 @@ export default class WorkDialog extends Vue {
         }
         const route = this.$route
         if (route.name === 'workflow') {
-          this.workflowId = Number(route.params.workflow)
+          this.workflowId = Number(route.query.wid)
         }
       }, 13)
     } else {
@@ -311,7 +311,7 @@ export default class WorkDialog extends Vue {
   }
   // 工作流列表
   private async getWorkflow() {
-    const id = this.$route.params.id
+    const id = this.$route.query.pid
     const params = {
       projectId: id,
     }

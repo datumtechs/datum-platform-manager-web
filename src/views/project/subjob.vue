@@ -82,8 +82,8 @@ export default class subjobIndex extends Vue {
     const { language } = this
     // 过滤空格
     const subJobId = this.projectName.replace(/\s+/g, '')
-    const project = this.$route.params.id
-    const jobId = this.$route.params.subjob
+    const project = this.$route.query.pid
+    const jobId = this.$route.query.jid
     const params: ParamsType = {
       current: 1,
       size: 6,
@@ -93,7 +93,7 @@ export default class subjobIndex extends Vue {
     const { current, size } = this.listQuery
     params.current = current
     params.size = size
-    params.projectId = this.$route.params.id
+    params.projectId = project
     const { data } = await subJoblist({ ...params })
     data.items.map((item: any) => {
       item.state = this.stateList[language][item.subJobStatus]

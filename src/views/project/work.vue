@@ -152,19 +152,21 @@ export default class WorkIndex extends Vue {
   }
   private handleName(data: TableNameType) {
     const { id, name } = data
-    const project = this.$route.params.id
-    const role = this.$route.params.role
+    const pid = this.$route.query.pid
+    const rid = this.$route.query.rid
     const projectName = this.$route.query.name
+    const wquery: any = { workflow: name, name: projectName, pid, rid, wid: id }
     if (this.pageType === 'work') {
       this.$router.push({
-        path: `/project/${project}/${role}/workflow/${id}`,
-        query: { workflow: name, name: projectName },
+        path: '/project/workflow',
+        query: wquery,
       })
     }
+    const jquery: any = { task: name, name: projectName, pid, rid, jid: id }
     if (this.pageType === 'jobs') {
       this.$router.push({
-        path: `/project/${project}/${role}/subjob/${id}`,
-        query: { task: name, name: projectName },
+        path: '/project/subjob',
+        query: jquery,
       })
     }
   }
@@ -223,7 +225,7 @@ export default class WorkIndex extends Vue {
     }
   }
   private createWork() {
-    if (Number(this.$route.params.role) === 3) {
+    if (Number(this.$route.query.role) === 3) {
       const tips: any = this.$t('tips.noAddAuth')
       this.$message.warning(tips)
       return true
@@ -232,7 +234,7 @@ export default class WorkIndex extends Vue {
     ;(this.$refs.workDialog as any).handleOpen(0)
   }
   private createJobs() {
-    if (Number(this.$route.params.role) === 3) {
+    if (Number(this.$route.query.role) === 3) {
       const tips: any = this.$t('tips.noAddAuth')
       this.$message.warning(tips)
       return true
@@ -257,7 +259,7 @@ export default class WorkIndex extends Vue {
     const { current, size } = this.listQuery
     params.current = current
     params.size = size
-    params.projectId = this.$route.params.id
+    params.projectId = this.$route.query.pid
     if (this.pageType === 'work') {
       if (projectName.length) {
         params['workflowName'] = projectName
@@ -313,6 +315,8 @@ export default class WorkIndex extends Vue {
   }
   @Watch('$route')
   private onRouteChange(route: any) {
+    this.list = []
+    this.total = 0
     this.getList()
   }
 }

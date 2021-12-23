@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router, { RouteConfig } from 'vue-router'
 /* Layout */
 import Layout from '@/components/layout/index.vue'
+import { stringifyQuery, parseQuery } from './utils/query'
 Vue.use(Router)
 
 export const constantRoutes: RouteConfig[] = [
@@ -160,8 +161,8 @@ export const constantRoutes: RouteConfig[] = [
           ),
       },
       {
-        path: ':id/:role',
-        redirect: '/project/:id/:role/work',
+        path: '',
+        redirect: '/project/work',
         component: () =>
           import(/* webpackChunkName: "project" */ '@/views/project/index.vue'),
         name: 'project',
@@ -197,7 +198,7 @@ export const constantRoutes: RouteConfig[] = [
               ),
           },
           {
-            path: 'workflow/:workflow',
+            path: 'workflow',
             name: 'workflow',
             meta: {
               title: 'workflow',
@@ -210,7 +211,7 @@ export const constantRoutes: RouteConfig[] = [
               ),
           },
           {
-            path: 'subjob/:subjob',
+            path: 'subjob',
             name: 'subjob',
             meta: {
               title: 'subjob',
@@ -225,7 +226,7 @@ export const constantRoutes: RouteConfig[] = [
         ],
       },
       {
-        path: 'edit/:id/:role',
+        path: 'edit',
         component: () =>
           import(
             /* webpackChunkName: "project-edit" */ '@/views/project/setup.vue'
@@ -237,7 +238,7 @@ export const constantRoutes: RouteConfig[] = [
         },
       },
       {
-        path: 'manage/:id/:role',
+        path: 'manage',
         component: () =>
           import(
             /* webpackChunkName: "project-manage" */ '@/views/project/setup.vue'
@@ -260,7 +261,7 @@ export const constantRoutes: RouteConfig[] = [
     children: [
       {
         path: 'data',
-        name: 'data',
+        name: 'resourcesList',
         component: () =>
           import(/* webpackChunkName: "data" */ '@/views/resources/index.vue'),
       },
@@ -320,9 +321,10 @@ const createRouter = () =>
   new Router({
     mode: 'history',
     base: process.env.BASE_URL,
+    stringifyQuery: stringifyQuery, // 加密
+    parseQuery: parseQuery, // 解密
     routes: constantRoutes,
   })
-
 const router = createRouter()
 export function resetRouter() {
   const newRouter = createRouter()

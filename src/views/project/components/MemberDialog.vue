@@ -132,7 +132,7 @@ export default class MemberDialog extends Vue {
     if (this.type) {
       data.id = this.memberId
     } else {
-      data.projectId = Number(this.$route.params.id)
+      data.projectId = Number(this.$route.query.pid)
     }
     let code, res
     if (this.type) {

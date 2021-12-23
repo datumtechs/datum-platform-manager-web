@@ -93,7 +93,7 @@ export default class WorkDialog extends Vue {
       this.$message.warning(tips)
       return false
     }
-    const projectId = this.$route.params.id
+    const projectId = this.$route.query.pid
     const data: any = {
       projectId,
       workflowDesc: describe,

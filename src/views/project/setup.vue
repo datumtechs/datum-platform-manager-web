@@ -102,18 +102,24 @@ export default class SetupIndex extends Vue {
     return AppModule.language
   }
   get queryId() {
-    return Number(this.$route.params.id)
+    return Number(this.$route.query.pid)
   }
   private tabs: string[] = ['edit', 'manage']
   private tabIndex = 0
   // 点击tab 跳转对应页面
   private handleTable(index: number) {
-    const id = Number(this.$route.params.id)
-    const role = Number(this.$route.params.role)
+    const { pid, rid } = this.$route.query
+    const query: any = {
+      pid,
+      rid,
+    }
     if (this.tabIndex !== index) {
       this.tabIndex = index
       const type = this.tabIndex ? 'manage' : 'edit'
-      this.$router.push(`/project/${type}/${id}/${role}`)
+      this.$router.push({
+        path: `/project/${type}`,
+        query,
+      })
     }
   }
   private handleBtn(data: any) {
@@ -130,16 +136,20 @@ export default class SetupIndex extends Vue {
     ;(this.$refs.MemberDialog as any).handleOpen(0, list)
   }
   private async handleDelete(id: number) {
-    const { msg } = await delProjMember({ projMemberId: id })
-    this.$message.success(msg)
-    this.getList()
+    const { msg, code } = await delProjMember({ projMemberId: id })
+    if (code === 10000) {
+      this.$message.success(msg)
+      this.getList()
+    }
   }
   private async selectDelete(ids: number[]) {
     if (!ids.length) return
     const params = ids.join(',')
-    const { msg } = await delProjMembers({ projMemberIds: params })
-    this.$message.success(msg)
-    this.getList()
+    const { msg, code } = await delProjMembers({ projMemberIds: params })
+    if (code === 10000) {
+      this.$message.success(msg)
+      this.getList()
+    }
   }
   private changeList(data: TableParams) {
     this.userName = data.input

@@ -282,7 +282,7 @@ export default class HeaderComponent extends Vue {
     user-select: none;
     color #000
     span {
-      padding 0 18px
+      padding 0 14px
       display inline-block
       line-height 60px
       cursor pointer

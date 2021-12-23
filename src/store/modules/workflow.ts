@@ -78,7 +78,14 @@ class Workflow extends VuexModule implements WFlowState {
   }
   @Mutation
   public SET_MODELS(state: any) {
-    this.modelList = state
+    if (state && state.length) {
+      state.map((item: any) => {
+        item.fileName = `${item.algorithmName}——${item.fileName} `
+      })
+      this.modelList = state
+    } else {
+      this.modelList = []
+    }
   }
   @Mutation
   public SET_MODEL_VALUE(state: any) {

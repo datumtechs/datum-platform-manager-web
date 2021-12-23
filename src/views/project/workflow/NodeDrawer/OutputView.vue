@@ -25,7 +25,7 @@
           v-model="isSelect"
           active-color="#13ce66"
           inactive-color="#8d8d8d"
-          :disabled="isAuth"
+          :disabled="!checkOptions.length || isAuth"
         >
         </el-switch>
         <span class="switch-text">
@@ -73,7 +73,7 @@ export default class extends Vue {
   }
   // 查看者权限
   get isAuth() {
-    const role = Number(this.$route.params.role)
+    const role = Number(this.$route.query.rid)
     return role === 3
   }
   private handleisAuth() {
@@ -86,6 +86,7 @@ export default class extends Vue {
     }
   }
   private async handleSave(state: boolean) {
+    if (this.handleisAuth()) return
     if (!this.checkList.length) return
     const handleItem = (id: string, index: number) => {
       return {

@@ -32,14 +32,14 @@ export default class ProjectIndex extends Vue {
   private tabIndex = 0
   // 点击tab 跳转对应页面
   private handleTable(index: number) {
-    const { id, role } = this.$route.params
+    const { pid, rid } = this.$route.query
     if (this.tabIndex !== index) {
       this.tabIndex = index
       const type = this.tabIndex ? 'jobs' : 'work'
       const { projectName } = this
       this.$router.push({
-        path: `/project/${id}/${role}/${type}`,
-        query: { name: projectName },
+        path: `/project/${type}`,
+        query: { name: projectName, pid, rid },
       })
     }
   }
