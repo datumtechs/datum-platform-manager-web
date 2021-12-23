@@ -11,7 +11,12 @@
           <div>
             {{ $t('worke.select') }}
           </div>
-          <el-select v-model="user" :placeholder="$t('worke.select')">
+          <el-select
+            v-model="user"
+            :placeholder="$t('worke.select')"
+            :disabled="type === 1"
+            :class="type === 1 ? 'isDisabled' : ''"
+          >
             <el-option
               v-for="item in userOptions"
               :key="item.id"
@@ -183,6 +188,8 @@ export default class MemberDialog extends Vue {
         font-size: 14px;
         letter-spacing: 0.16px;
         margin-bottom 4px
+        background: #fff
+        color #000
       >>> .el-input__inner:focus
         border: 2px solid rgba(15, 98, 254, 1)!important;
 </style>
