@@ -261,7 +261,7 @@ export const constantRoutes: RouteConfig[] = [
     children: [
       {
         path: 'data',
-        name: 'data',
+        name: 'resourcesList',
         component: () =>
           import(/* webpackChunkName: "data" */ '@/views/resources/index.vue'),
       },

@@ -136,16 +136,20 @@ export default class SetupIndex extends Vue {
     ;(this.$refs.MemberDialog as any).handleOpen(0, list)
   }
   private async handleDelete(id: number) {
-    const { msg } = await delProjMember({ projMemberId: id })
-    this.$message.success(msg)
-    this.getList()
+    const { msg, code } = await delProjMember({ projMemberId: id })
+    if (code === 10000) {
+      this.$message.success(msg)
+      this.getList()
+    }
   }
   private async selectDelete(ids: number[]) {
     if (!ids.length) return
     const params = ids.join(',')
-    const { msg } = await delProjMembers({ projMemberIds: params })
-    this.$message.success(msg)
-    this.getList()
+    const { msg, code } = await delProjMembers({ projMemberIds: params })
+    if (code === 10000) {
+      this.$message.success(msg)
+      this.getList()
+    }
   }
   private changeList(data: TableParams) {
     this.userName = data.input

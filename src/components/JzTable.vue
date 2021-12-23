@@ -145,7 +145,7 @@
             </template>
           </template>
         </el-table-column>
-        <el-table-column width="50" class="column-more">
+        <el-table-column width="50" class="column-more" v-if="!isDelete">
           <template slot-scope="scope">
             <el-popover
               placement="bottom"
@@ -212,6 +212,9 @@ export default class TableIndex extends Vue {
   }
   get isProject() {
     return this.$route.name === 'projectAll'
+  }
+  get isDelete() {
+    return this.$route.name === 'resourcesList'
   }
   get isWork() {
     return this.$route.name === 'work'
