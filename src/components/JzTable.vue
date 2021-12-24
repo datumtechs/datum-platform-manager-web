@@ -157,7 +157,7 @@
                   type="text"
                   class="delete"
                   @click="handleDelete(scope.row[tableId])"
-                  :disabled="isAuth(scope.row)"
+                  :disabled="isAuth(scope.row) || isDeleteSelf(scope.row)"
                   v-preventReClick
                 >
                   {{ $t('table.delete') }}
@@ -189,6 +189,7 @@ import { Vue, Component, Emit, Prop } from 'vue-property-decorator'
 import Pagination from '@/components/Pagination/index.vue'
 import JzButton from '@/components/JzButton.vue'
 import { QueryType } from '@/api/types'
+import { UserModule } from '@/store/modules/user'
 @Component({
   name: 'tableIndex',
   components: {
@@ -213,6 +214,7 @@ export default class TableIndex extends Vue {
   get isProject() {
     return this.$route.name === 'projectAll'
   }
+  // 个人资源没有删除
   get isDelete() {
     return this.$route.name === 'resourcesList'
   }
@@ -221,6 +223,9 @@ export default class TableIndex extends Vue {
   }
   get isJobs() {
     return this.$route.name === 'jobs'
+  }
+  get isManage() {
+    return this.$route.name === 'manage'
   }
   private isViewer() {
     if (Number(this.$route.query.rid) === 3) {
@@ -306,12 +311,21 @@ export default class TableIndex extends Vue {
   handleReapply(item: any) {
     return item
   }
-  isAuth(row?: any) {
+  private isAuth(row?: any) {
     if (this.isProject) {
       return row.role > 1
     } else if (this.isWork || this.isJobs) {
       const role = Number(this.$route.query.rid)
       return role > 2
+    } else {
+      return false
+    }
+  }
+  // 不能删除自己项目权限
+  private isDeleteSelf(row?: any) {
+    if (this.isManage) {
+      const userId = UserModule.user_info.userId
+      return row.userId === userId
     } else {
       return false
     }
