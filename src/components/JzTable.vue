@@ -157,7 +157,7 @@
                   type="text"
                   class="delete"
                   @click="handleDelete(scope.row[tableId])"
-                  :disabled="isAuth(scope.row) || isDeleteSelf(scope.row)"
+                  :disabled="isAuth(scope.row)"
                   v-preventReClick
                 >
                   {{ $t('table.delete') }}
@@ -311,19 +311,21 @@ export default class TableIndex extends Vue {
   handleReapply(item: any) {
     return item
   }
+  /**
+ * 成员角色
+ *
+ * 管理员：1
+ * 编辑者：2
+ * 查看者：3
+ */
   private isAuth(row?: any) {
     if (this.isProject) {
       return row.role > 1
     } else if (this.isWork || this.isJobs) {
       const role = Number(this.$route.query.rid)
       return role > 2
-    } else {
-      return false
-    }
-  }
-  // 不能删除自己项目权限
-  private isDeleteSelf(row?: any) {
-    if (this.isManage) {
+      // 管理成员，不能编辑删除自己创建的项目
+    } else if (this.isManage && row.userId) {
       const userId = UserModule.user_info.userId
       return row.userId === userId
     } else {
