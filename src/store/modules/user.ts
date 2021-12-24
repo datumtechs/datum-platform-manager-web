@@ -32,6 +32,7 @@ class User extends VuexModule implements IUserState {
     address: '',
     sign: '',
     uuid: '',
+    userId: null,
   }
   @Mutation
   public SET_LOADING(state: boolean) {
@@ -64,6 +65,7 @@ class User extends VuexModule implements IUserState {
   public SET_USER(data: any) {
     if (data && data.userName) {
       this.user_info.userName = data.userName
+      this.user_info.userId = data.id
     }
   }
   @Mutation
@@ -73,6 +75,7 @@ class User extends VuexModule implements IUserState {
       address: '',
       sign: '',
       uuid: '',
+      userId: null,
     }
   }
   @Action
