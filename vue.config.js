@@ -1,48 +1,85 @@
-// vue.config.js
-const CompressionWebpackPlugin = require('compression-webpack-plugin')
-const productionGzipExtensions = /\.(js|css|json|txt|html|ico|svg)(\?.*)?$/i
+const webpack = require('webpack')
+const LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
+const isProduction = process.env.NODE_ENV === 'production'
 
 module.exports = {
-  publicPath: '/moirae/',
+  publicPath: '/',
   outputDir: 'dist',
-  assetsDir: 'moirae',
-  productionSourceMap: false,
+  assetsDir: 'static',
+  filenameHashing: true,
   devServer: {
-    host: '0.0.0.0',
-    port: 8080,
-    proxy: {
-      '/rosettaflow/': {
-        target: 'http://10.10.8.176:8234',
-        // target: 'http://192.168.1.33:8234',
-        // target: 'http://192.168.1.24:8234',
-        changeOrigin: true,
-        pathRewrite: { '^/rosettaflow/': '/rosettaflow/' },
-      },
+    open: true,
+    overlay: {
+      // 让浏览器 overlay 同时显示警告和错误
+      warnings: true,
+      errors: true
     },
+    // host: 'localhost',
+    port: 8080,
+    hotOnly: false,
+    disableHostCheck: true,
+    // proxy: proxyUtil.localProxy,
+    proxy: {
+      '/scan': {
+        target: 'http://39.103.230.158:8087',
+        // target: 'http://192.168.10.146:8087', // 146
+        pathRewrite: {
+          '^/scan': '/metis-scan',
+          changeOrigin: true
+        }
+      },
+      '/flow': { // moirae  
+        target: 'http://39.103.230.158:8234/',
+        // target: 'http://10.10.8.174:8234/', // 146
+        pathRewrite: {
+          '^/flow': '/rosettaflow',
+          changeOrigin: true
+        }
+      }
+    },
+    before: app => { }
   },
-  configureWebpack: (config) => {
-    config.externals = {
-      // vue: 'Vue',
-      // 'element-ui': 'ELEMENT',
-      // 'vue-router': 'VueRouter',
-      // axios: 'axios',
-      // AMap: 'AMap',
-      // AMapUI: 'AMapUI',
+  lintOnSave: false,
+  productionSourceMap: false,
+  chainWebpack: config => {
+    config.plugin('provide').use(webpack.ProvidePlugin, [ {
+      $: 'jquery',
+      jquery: 'jquery',
+      jQuery: 'jquery',
+      'window.jQuery': 'jquery'
+    } ])
+    if (isProduction) {
+      config.optimization.minimizer('js')
+        .use(require.resolve('terser-webpack-plugin'), [ {
+          terserOptions: {
+            // 打包删掉注释
+            comments: true,
+            compress: {
+              drop_console: true,
+              drop_debugger: true
+            }
+          }
+        } ])
+      config.performance.set('maxAssetSize', 100 * 1024)
+      config.performance.set('assetFilter', (assetFilename) => {
+        return assetFilename.endsWith('.js')
+      })
     }
-    const plugins = []
-
-    // Begin 生成 gzip 压缩文件
-    plugins.push(
-      new CompressionWebpackPlugin({
-        filename: '[path].gz[query]',
-        algorithm: 'gzip',
-        test: productionGzipExtensions,
-        threshold: 10240,
-        minRatio: 0.8,
-      }),
-    )
-    // End 生成 gzip 压缩文件
-
-    config.plugins = [...config.plugins, ...plugins]
   },
+  configureWebpack: {
+    resolve: {
+      alias: {
+        components: '@/components',
+        constants: '@/config/constants',
+        assets: '@/assets',
+        views: '@/views',
+        utils: '@/utils/utils',
+        apis: '@/api',
+        request: '@/utils/request'
+      }
+    },
+    plugins: [
+      new LodashModuleReplacementPlugin()
+    ]
+  }
 }

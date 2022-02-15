@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="73px" height="9px" viewBox="0 0 73 9" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>编组</title>
+    <g id="2期" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="1.首页" transform="translate(-270.000000, -3527.000000)">
+            <g id="编组" transform="translate(83.000000, 3351.000000)">
+                <g transform="translate(187.873754, 176.329128)">
+                    <polygon id="Fill-33" fill="#1CC2EB" points="0.561545011 0.207375543 2.70087505 0.207375543 2.70087505 7.56121855 0.561545011 7.56121855"></polygon>
+                    <polygon id="Fill-35" fill="#1CC2EB" points="4.94389287 7.56121855 7.08338934 7.56121855 7.08338934 0.207375543 4.94389287 0.207375543"></polygon>
+                    <polygon id="Fill-37" fill="#1CC2EB" points="9.32640716 7.56121855 11.4657372 7.56121855 11.4657372 0.207375543 9.32640716 0.207375543"></polygon>
+                    <polygon id="Fill-39" fill="#1CC2EB" points="13.708755 7.56121855 15.8464207 7.56121855 15.8464207 0.207375543 13.708755 0.207375543"></polygon>
+                    <polygon id="Fill-41" fill="#1CC2EB" points="18.0889392 7.56121855 20.2287686 7.56121855 20.2287686 0.207375543 18.0889392 0.207375543"></polygon>
+                    <polygon id="Stroke-43" stroke="#38FF82" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round" points="23.0617915 7.26629923 29.8236322 7.26629923 29.8236322 0.502461288 23.0617915 0.502461288"></polygon>
+                    <polygon id="Stroke-44" stroke="#38FF82" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round" points="33.3796401 7.26629923 40.1433116 7.26629923 40.1433116 0.502461288 33.3796401 0.502461288"></polygon>
+                    <polygon id="Stroke-45" stroke="#38FF82" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round" points="43.6996524 7.26629923 50.4616596 7.26629923 50.4616596 0.502461288 43.6996524 0.502461288"></polygon>
+                    <polygon id="Stroke-46" stroke="#1CC2EB" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round" points="54.0175011 7.26629923 60.7815055 7.26629923 60.7815055 0.502461288 54.0175011 0.502461288"></polygon>
+                    <polygon id="Stroke-47" stroke="#1CC2EB" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round" points="64.3378462 7.26629923 71.0995205 7.26629923 71.0995205 0.502461288 64.3378462 0.502461288"></polygon>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

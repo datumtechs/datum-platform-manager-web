@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="8px" height="6px" viewBox="0 0 8 6" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>8.icon3</title>
+    <g id="3期" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="8.My-Algorithms" transform="translate(-278.000000, -286.000000)" fill="#CBCFE3">
+            <g id="门户左侧菜单" transform="translate(103.000000, 178.000000)">
+                <g id="02-左侧菜单（展开）-03" transform="translate(1.000000, 47.000000)">
+                    <g id="侧导航" transform="translate(0.000000, 44.000000)">
+                        <g id="icon_arrow" transform="translate(170.000000, 12.000000)">
+                            <path d="M5.8125,6.29441738 C6.33026695,6.29441738 6.75,6.71415043 6.75,7.23191738 L6.75,10.6694174 L10.1875,10.6694174 C10.705267,10.6694174 11.125,11.0891504 11.125,11.6069174 C11.125,12.1246843 10.705267,12.5444174 10.1875,12.5444174 L5.8125,12.5444174 C5.29473305,12.5444174 4.875,12.1246843 4.875,11.6069174 L4.875,7.23191738 C4.875,6.71415043 5.29473305,6.29441738 5.8125,6.29441738 Z" id="形状结合" transform="translate(8.000000, 9.419417) rotate(-225.000000) translate(-8.000000, -9.419417) "></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
