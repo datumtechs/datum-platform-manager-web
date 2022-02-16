@@ -37,7 +37,10 @@
             <img :src="getUrl(box.industry)" alt="" class="data-card-bg" />
             <p class="data-card-title">
               <img src="@/assets/images/default/dataS.svg" alt="" class="data-card-img" />
-              <span class="data-card-text">{{ box.dataName }}</span>
+              <el-tooltip class="item" effect="dark" :content="box.dataName" placement="top">
+                <span class="data-card-text">{{ box.dataName }}</span>
+              </el-tooltip>
+              <!-- <span class="data-card-text">{{ box.dataName }}</span> -->
             </p>
             <div class="data-card-detail-box">
               <el-row class="mb12 data-card-detail-line">
@@ -298,6 +301,10 @@ export default {
           font-size: 14px;
           color: #1d2832;
           margin-left: 10px;
+          width: 100%;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
         }
       }
       .data-card-detail-box {
