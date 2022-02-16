@@ -85,7 +85,7 @@ export default {
       projectApi
         .queryRecordList({
           current: this.curPage,
-          sizes: this.pageSize,
+          size: this.pageSize,
           workflowName: this.searchText,
           projectId: this.projectId
         })
