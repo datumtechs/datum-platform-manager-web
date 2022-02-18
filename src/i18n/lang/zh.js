@@ -82,7 +82,7 @@ export default {
     dataAmountTrent: '全网数据总量走势',
     bank: '银行',
     government: '政务',
-    insurance: '银行',
+    insurance: '保险',
     medical: '医疗',
     logistics: '物流',
     searchPlacehold: '搜索100多种服务',
