@@ -1,41 +1,13 @@
-import Vue, { DirectiveOptions } from 'vue'
+import { createApp } from 'vue'
+import { createPinia } from 'pinia'
+
 import App from './App.vue'
 import router from './router'
-import 'element-ui/lib/theme-chalk/index.css'
-import '@/assets/fonts/font.css'
-import i18n from './lang'
-import ElementUI from 'element-ui'
-import SvgIcon from 'vue-svgicon'
-import { message } from '@/plugins/message.ts'
-import store from './store'
-import Vuex from 'vuex'
-import contentmenu from 'v-contextmenu'
-import 'v-contextmenu/dist/index.css'
-import '@/permission'
-import '@/icons/components'
-import * as directives from '@/directives'
+import i18n from './i18n'
+import 'element-plus/dist/index.css'
 
-Vue.config.devtools = true
-Vue.config.productionTip = false
-Vue.use(ElementUI, {
-  i18n: (key: string, value: string) => i18n.t(key, value),
-})
-Vue.use(SvgIcon, {
-  tagName: 'svg-icon',
-  defaultWidth: '1em',
-  defaultHeight: '1em',
-})
-Vue.use(Vuex)
-Vue.use(contentmenu)
-Vue.prototype.$message = message
-Object.keys(directives).forEach((key) => {
-  Vue.directive(key, (directives as { [key: string]: DirectiveOptions })[key])
-})
-Vue.prototype.$bus = new Vue()
-const win: any = window
-win.vm = new Vue({
-  router,
-  store,
-  i18n,
-  render: (h) => h(App),
-}).$mount('#app')
+const app = createApp(App)
+
+app.use(i18n).use(createPinia()).use(router)
+
+app.mount('#app')

@@ -1,17 +1,23 @@
-<template>
-  <div id="app">
-    <router-view></router-view>
-  </div>
-</template>
+<script setup lang="ts">
+import elementZhLocale from 'element-plus/lib/locale/lang/zh-cn'
+import elementEnLocale from 'element-plus/lib/locale/lang/en'
+import { useGlobalStore } from '@/stores/modules/global'
+import { storeToRefs } from 'pinia'
 
-<script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
-@Component({
-  name: 'App',
-})
-export default class AppIndex extends Vue {}
+const { lang } = storeToRefs(useGlobalStore())
+// const lang = computed<string>(() => useGlobalStore.lang)
+const globalStore = useGlobalStore()
+const lang2 = computed(() => globalStore.lang)
+console.log('store', lang)
+// const lang = ref<string>(store.lang)
 </script>
-
-<style lang="stylus">
-@import './assets/css/index.styl'
+<template>
+  <el-config-provider :locale="lang === 'zh' ? elementZhLocale : elementEnLocale">
+    {{ lang }}
+    {{ lang2 }}
+    <router-view />
+  </el-config-provider>
+</template>
+<style>
+@import '@/assets/css/base.scss';
 </style>
