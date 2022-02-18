@@ -1,15 +1,15 @@
 <template>
-  <div class="header-wrapper">
-    <div class="header-logo">juzix</div>
+  <div class="h-70px bg-[#fff] flex opacity-79 items-center justify-between px-40px">
+    <div>juzix</div>
     <!-- <div class="header-search-box"></div> -->
-    <div class="header-menu-box">
+    <div>
       <el-button @click="goFurther">{{ t('header.go') }} to Index</el-button>
     </div>
-    <div class="header-option-box">
+    <div class="flex">
       <el-space :size="11" :wrap="false">
-        <div class="header-option-"><img />用户头像</div>
-        <div class="header-option-name">
-          <p>用户名称{{}}</p>
+        <div><img />用户头像</div>
+        <div>
+          <p class="bg-red-100 w-100px flex text-size-[16px] text-red-600 hstack">用户名称{{}}</p>
         </div>
       </el-space>
     </div>
@@ -46,18 +46,4 @@ onMounted(() => {
 })
 </script>
 
-<style scoped lang="scss">
-.header-wrapper {
-  height: 70px;
-  background: #ffffff;
-  opacity: 0.79;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 45px;
-  border-bottom: 2px solid #e2e2e2;
-  .header-option-box {
-    display: flex;
-  }
-}
-</style>
+<style scoped lang="scss"></style>

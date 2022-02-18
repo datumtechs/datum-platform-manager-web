@@ -4,13 +4,13 @@ import vue from '@vitejs/plugin-vue'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
-
-console.log('import.meta', import.meta)
+import WindiCSS from 'vite-plugin-windicss'
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     vue(),
+    WindiCSS(),
     AutoImport({
       dts: 'src/auto-import.d.ts',
       include: [

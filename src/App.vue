@@ -12,9 +12,7 @@ console.log('store', lang)
 // const lang = ref<string>(store.lang)
 </script>
 <template>
-  <el-config-provider :locale="lang === 'zh' ? elementZhLocale : elementEnLocale">
-    {{ lang }}
-    {{ lang2 }}
+  <el-config-provider :locale="globalStore.lang === 'zh' ? elementZhLocale : elementEnLocale">
     <router-view />
   </el-config-provider>
 </template>

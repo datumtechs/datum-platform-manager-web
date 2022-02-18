@@ -1,7 +1,7 @@
 <template>
-  <div class="home-wrapper">
+  <div>
     <HeadBar />
-    <div class="home-banner">This is the banner</div>
+    <div class="flex items-center justify-center font-bold text-red-600 text-[72px]">This is the banner</div>
   </div>
 </template>
 

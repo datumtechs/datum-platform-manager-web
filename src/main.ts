@@ -5,6 +5,7 @@ import App from './App.vue'
 import router from './router'
 import i18n from './i18n'
 import 'element-plus/dist/index.css'
+import 'virtual:windi.css'
 
 const app = createApp(App)
 
