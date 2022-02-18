@@ -9,6 +9,7 @@ export const useGlobalStore = defineStore('global', {
   },
   actions: {
     saveLang(lang: string) {
+      localStorage.setItem('lang', lang)
       this.lang = lang
     }
   }
