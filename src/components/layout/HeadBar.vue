@@ -22,12 +22,12 @@ const store = useGlobalStore()
 const router = useRouter()
 const { t, locale } = useI18n()
 const goFurther = () => {
-  // router.push({
-  //   name: 'index'
-  // })
   locale.value = locale.value === 'zh' ? 'en' : 'zh'
   localStorage.lang = locale.value
   store.saveLang(locale.value)
+  router.push({
+    name: 'index'
+  })
 }
 
 const props = defineProps({
