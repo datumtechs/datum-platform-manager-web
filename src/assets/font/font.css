@@ -21,21 +21,21 @@
 
 @font-face {
   font-family: "DINPro-Regular";
-  src: url("./din/DINPro-Regular.otf");
+  src: url("./din/D-DIN-PRO-Regular.otf");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: "DINPro-Medium";
-  src: url("./din/DINPro-Medium.otf");
+  src: url("./din/D-DIN-PRO-Medium.otf");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: "DINPro-Bold";
-  src: url("./din/DINPro-Bold.otf");
+  src: url("./din/D-DIN-PRO-Bold.otf");
   font-weight: normal;
   font-style: normal;
 }
