@@ -1,7 +1,6 @@
 import { createI18n } from 'vue-i18n'
 import zh from './lang/zh'
 import en from './lang/en'
-// import messages from '@intlify/vite-plugin-vue-i18n/messages'
 
 type MessageSchema = typeof en
 

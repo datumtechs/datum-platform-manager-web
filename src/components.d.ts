@@ -4,11 +4,18 @@
 
 declare module 'vue' {
   export interface GlobalComponents {
-    ElButton: typeof import('element-plus/es')['ElButton']
+    ElAside: typeof import('element-plus/es')['ElAside']
     ElConfigProvider: typeof import('element-plus/es')['ElConfigProvider']
-    ElPagination: typeof import('element-plus/es')['ElPagination']
-    ElSpace: typeof import('element-plus/es')['ElSpace']
-    HeadBar: typeof import('./components/layout/HeadBar.vue')['default']
+    ElIcon: typeof import('element-plus/es')['ElIcon']
+    ElInput: typeof import('element-plus/es')['ElInput']
+    ElMenu: typeof import('element-plus/es')['ElMenu']
+    ElMenuItem: typeof import('element-plus/es')['ElMenuItem']
+    ElSubMenu: typeof import('element-plus/es')['ElSubMenu']
+    Header: typeof import('./components/layout/Header.vue')['default']
+    Menu: typeof import('./components/layout/Menu.vue')['default']
+    PersonalCenter: typeof import('./components/layout/PersonalCenter.vue')['default']
+    Search: typeof import('./components/Search.vue')['default']
+    Side: typeof import('./components/layout/Side.vue')['default']
   }
 }
 

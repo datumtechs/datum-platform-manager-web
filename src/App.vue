@@ -1,19 +1,16 @@
 <script setup lang="ts">
 import elementZhLocale from 'element-plus/lib/locale/lang/zh-cn'
 import elementEnLocale from 'element-plus/lib/locale/lang/en'
-import { useGlobalStore } from '@/stores/modules/global'
-import { storeToRefs } from 'pinia'
+import { LANGUAGE } from '@/stores'
+import IndexLayout from '@/Layout/IndexLayout.vue'
+const language = computed(()=> LANGUAGE().langue == 'zh' ? elementZhLocale : elementEnLocale)
 
-const { lang } = storeToRefs(useGlobalStore())
-// const lang = computed<string>(() => useGlobalStore.lang)
-const globalStore = useGlobalStore()
-const lang2 = computed(() => globalStore.lang)
-console.log('store', lang)
-// const lang = ref<string>(store.lang)
+
 </script>
 <template>
-  <el-config-provider :locale="globalStore.lang === 'zh' ? elementZhLocale : elementEnLocale">
-    <router-view />
+  <el-config-provider :locale="language">
+    <!-- <component :is="$route.path == '/' ? Home : IndexLayout"></component> -->
+    <IndexLayout />
   </el-config-provider>
 </template>
 <style>

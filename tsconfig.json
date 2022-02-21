@@ -1,14 +1,20 @@
 {
   "extends": "@vue/tsconfig/tsconfig.web.json",
+  "exclude":["node_modules"],
   "include": [
     "env.d.ts",
     "src/**/*",
     "src/**/*.vue"
   ],
   "compilerOptions": {
+    "target": "ES2020",
+    "module": "ESNext",
+    "moduleResolution": "node",
     "types": [
-      "element-plus/global"
+      "element-plus/global",
+      "vite/client"
     ],
+    "skipLibCheck": true,
     "baseUrl": ".",
     "paths": {
       "@/*": [
