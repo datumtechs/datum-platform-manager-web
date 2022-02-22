@@ -3,21 +3,20 @@ import {Search,Operation} from '@element-plus/icons-vue'
 const input1 = ''
 </script>
 <template>
-<div id="search">
-    <el-input
-        class="flex"
-        v-model="input1"
-        :suffix-icon="Operation"
-         :prefix-icon="Search"
-        placeholder="Please input">
-       <!-- <template #append>.com</template> -->
-    </el-input>
+<div id="search" class="pl-45px pr-25px flex-1">
+  <el-input
+    class="flex"
+    v-model="input1"
+    :prefix-icon="Search"
+    placeholder="Please input">
+    <template #suffix>
+      <img src="@/assets/Images/header/select.png"/>
+    </template>
+  </el-input>
 </div>
 </template>
 <style lang="scss" scoped>
 #search{
-  width: 100%;
-  padding: 0 25px 0 45px;
   ::v-deep .el-input{
     height: 40px;
     border-radius: 20px;
@@ -31,6 +30,7 @@ const input1 = ''
       padding-left: 53px;
       padding-right: 46px;
       border: none;
+      text-indent: 5px;
     }
     .el-input__prefix{
         left:22px;
@@ -38,7 +38,13 @@ const input1 = ''
     }
     .el-input__suffix{
       right:23px;
-      font-size: 18px;
+      img{
+        width: 18px;
+        height: 16.5px;
+      }
+      .el-input__suffix-inner{
+        align-items: center;
+      }
     }
   }
    

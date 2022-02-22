@@ -1,6 +1,6 @@
-import { defineStore  } from "pinia";
+import { defineStore } from "pinia";
 
-export default  defineStore('language', {
+export default defineStore('language', {
   state: () => ({
     langue: localStorage.langue || 'zh'
   }),

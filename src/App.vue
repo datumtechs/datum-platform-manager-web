@@ -1,18 +1,15 @@
 <script setup lang="ts">
 import elementZhLocale from 'element-plus/lib/locale/lang/zh-cn'
 import elementEnLocale from 'element-plus/lib/locale/lang/en'
-import { LANGUAGE } from '@/stores'
+import { USELANGUAGE } from '@/stores'
 import IndexLayout from '@/Layout/IndexLayout.vue'
-const language = computed(()=> LANGUAGE().langue == 'zh' ? elementZhLocale : elementEnLocale)
-
 
 </script>
 <template>
-  <el-config-provider :locale="language">
-    <!-- <component :is="$route.path == '/' ? Home : IndexLayout"></component> -->
+  <el-config-provider :locale="USELANGUAGE().langue == 'zh' ? elementZhLocale : elementEnLocale">
     <IndexLayout />
   </el-config-provider>
 </template>
 <style>
-@import '@/assets/css/base.scss';
+@import "@/assets/css/base.scss";
 </style>

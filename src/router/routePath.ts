@@ -1,58 +1,69 @@
 export default [
   {
-    path: '/nodes',
-    name:"nodes",
+    path: '/',
+    name: "home",
     meta: {
-      breadcrumbs: 'menu.nodes'
+      show: [1, 2],//1 首页展示 2 side展示
+      label: 'menu.home'
     },
-    component: () => import(/* webpackChunkName: "nodes" */ '@/views/nodes/index.vue'),
+    component: () => import('@/views/home/index.vue'),
+  },
+  {
+    path: '/nodes',
+    name: "nodes",
+    meta: {
+      show: [1, 2],//1 首页展示 2 side展示
+      label: 'menu.nodes'
+    },
+    component: () => import('@/views/nodes/index.vue'),
     children: [{
       path: 'Details',
-      name:"Details",
+      name: "Details",
       meta: {
-        breadcrumbs: 'menu.nodesDetail'
+        label: 'menu.nodesDetail'
       },
-      component: () => import(/* webpackChunkName: "nodesDetail" */ '@/views/nodes/components/Details.vue')
+      component: () => import('@/views/nodes/components/Details.vue')
     }],
   },
   {
     path: '/marketplace',
-    name:"marketplace",
+    name: "marketplace",
     meta: {
-      breadcrumbs: 'menu.marketplace'
+      show: [1, 2],//1 首页展示 2 side展示
+      label: 'menu.marketplace'
     },
-    component: () => import(/* webpackChunkName: "marketplace" */ '@/views/marketplace/index.vue'),
+    component: () => import('@/views/marketplace/index.vue'),
     children: [{
       path: 'Details',
-      name:"Details",
+      name: "Details",
       meta: {
-        breadcrumbs: 'menu.marketplaceDetails'
+        label: 'menu.marketplaceDetails'
       },
-      component: () => import(/* webpackChunkName: "marketplaceDetail" */ '@/views/marketplace/components/Details.vue')
+      component: () => import('@/views/marketplace/components/Details.vue')
     }],
   },
   {
     path: '/computing',
-    name:"computing",
+    name: "computing",
     meta: {
-      breadcrumbs: 'menu.computing'
+      show: [1, 2],//1 首页展示 2 side展示
+      label: 'menu.computing'
     },
-    component: () => import(/* webpackChunkName: "computing" */ '@/views/computing/index.vue'),
+    component: () => import('@/views/computing/index.vue'),
     children: [{
       path: 'Details',
-      name:"Details",
+      name: "Details",
       meta: {
-        breadcrumbs: 'menu.computingDetails'
+        label: 'menu.computingDetails'
       },
-      component: () => import(/* webpackChunkName: "computingDetails" */ '@/views/computing/components/Details.vue')
+      component: () => import('@/views/computing/components/Details.vue')
     }],
   },
   {
     path: '/*',
     redirect: 'assetsDetail',
     meta: {
-      show: false,
-      breadcrumbs: 'menu.computingDetails'
+      show: [],//不展示
     },
   }
 ]

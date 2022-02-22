@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import routePath from '@/router/routePath'
-const routeList = routePath.filter(v=> v.meta.show !== false) 
+const routeList = routePath.filter(v=> v.meta.show.includes(2)) 
 </script>
 
 <template>

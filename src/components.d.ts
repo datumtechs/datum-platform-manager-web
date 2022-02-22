@@ -5,15 +5,21 @@
 declare module 'vue' {
   export interface GlobalComponents {
     ElAside: typeof import('element-plus/es')['ElAside']
+    ElButton: typeof import('element-plus/es')['ElButton']
     ElConfigProvider: typeof import('element-plus/es')['ElConfigProvider']
+    ElDialog: typeof import('element-plus/es')['ElDialog']
+    ElDrawer: typeof import('element-plus/es')['ElDrawer']
     ElIcon: typeof import('element-plus/es')['ElIcon']
     ElInput: typeof import('element-plus/es')['ElInput']
     ElMenu: typeof import('element-plus/es')['ElMenu']
     ElMenuItem: typeof import('element-plus/es')['ElMenuItem']
-    ElSubMenu: typeof import('element-plus/es')['ElSubMenu']
+    ElPopover: typeof import('element-plus/es')['ElPopover']
     Header: typeof import('./components/layout/Header.vue')['default']
+    Login: typeof import('./components/Login.vue')['default']
     Menu: typeof import('./components/layout/Menu.vue')['default']
-    PersonalCenter: typeof import('./components/layout/PersonalCenter.vue')['default']
+    PersonalCenter: typeof import('./components/layout/components/PersonalCenter.vue')['default']
+    PersonalDrawer: typeof import('./components/layout/components/PersonalDrawer.vue')['default']
+    PersonalPopover: typeof import('./components/layout/components/PersonalPopover.vue')['default']
     Search: typeof import('./components/Search.vue')['default']
     Side: typeof import('./components/layout/Side.vue')['default']
   }

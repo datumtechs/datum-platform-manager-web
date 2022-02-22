@@ -1,26 +1,28 @@
 <script setup lang="ts">
 import routePath from '@/router/routePath'
-const routeList = routePath.filter(v=> v.meta.show !== false) 
+const routeList = routePath.filter(v => v.meta.show.includes(1))
+const lang = computed(() => {
+  console.log(useI18n().locale.value)
+
+  return useI18n().locale.value
+})
+
+
 </script>
 <template>
-  <div  class="menu flex flex-1 ">
-    <router-link class="menu-item inline-grid" v-for="item in routeList" :key="item.path" :to="item.path">
-      {{item.name}}
-    </router-link>
+  <div class="menu flex flex-1 justify-center pr-50px pl-50px">
+    <router-link
+      class="menu-item inline-grid ml-49px text-l font-normal leading-6 no-underline"
+      v-for="item in routeList"
+      :key="item.path"
+      :to="item.path"
+    >{{ $t(`${item.meta.label}`) }}</router-link>
   </div>
 </template>
 <style scoped lang="scss">
-.menu{
-  justify-content: center;
-  padding: 0 30px 0 100px;
-  .menu-item{
-    margin-left: 49px;
-    font-size: 14px;
-    font-family: PingFangSC-Regular, PingFang SC;
-    font-weight: 400;
+.menu {
+  .menu-item {
     color: #333336;
-    line-height: 20px;
-    text-decoration:none;
   }
 }
 </style>

@@ -2,23 +2,23 @@
 import Header from '@/components/layout/Header.vue'
 import Home from '@/views/home/index.vue'
 import Side from '@/components/layout/Side.vue'
-import { ElContainer,ElHeader } from 'element-plus';
+import { ElContainer, ElHeader } from 'element-plus';
 </script>
 <template>
- <el-container>
-      <el-header>
-        <Header />
-      </el-header>
-      <el-container v-if="$route.path !== '/'">
-          <el-aside width='219px'><Side /></el-aside>
-          <router-view /> 
-      </el-container>
-      <el-container v-else> <Home /></el-container>
-</el-container>
+  <el-container>
+    <el-header class="p-0 h-auto">
+      <Header />
+    </el-header>
+    <el-container v-if="$route.path !== '/'">
+      <el-aside width="219px">
+        <Side />
+      </el-aside>
+      <router-view />
+    </el-container>
+    <el-container v-else>
+      <Home />
+    </el-container>
+  </el-container>
 </template>
 <style scoped lang="scss">
-.el-header{
-  padding: 0;
-  height: auto;
-}
 </style>
