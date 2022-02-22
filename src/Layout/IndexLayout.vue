@@ -13,7 +13,7 @@ import { ElContainer,ElHeader } from 'element-plus';
           <el-aside width='219px'><Side /></el-aside>
           <router-view /> 
       </el-container>
-      <el-container v-else> <Home /></el-container>
+      <Home v-else />
 </el-container>
 </template>
 <style scoped lang="scss">

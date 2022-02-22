@@ -10,7 +10,7 @@ declare module 'vue' {
     ElInput: typeof import('element-plus/es')['ElInput']
     ElMenu: typeof import('element-plus/es')['ElMenu']
     ElMenuItem: typeof import('element-plus/es')['ElMenuItem']
-    ElSubMenu: typeof import('element-plus/es')['ElSubMenu']
+    ElSpace: typeof import('element-plus/es')['ElSpace']
     Header: typeof import('./components/layout/Header.vue')['default']
     Menu: typeof import('./components/layout/Menu.vue')['default']
     PersonalCenter: typeof import('./components/layout/PersonalCenter.vue')['default']
