@@ -20,6 +20,9 @@ const zh = {
     install: "安装",
     intallTipOne: "一键连接区块链应用",
     installTipTwo: "账户隐私保留在本地"
+  },
+  home:{
+    dataOverview:'数据总览'
   }
 }
 

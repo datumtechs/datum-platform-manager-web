@@ -19,6 +19,9 @@ const en = {
     install: "install",
     intallTipOne: 'One-click blockchain application',
     installTipTwo: 'Privacy Preserved Locally',
+  },
+  home:{
+    dataOverview:'Data Overview'
   }
 }
 

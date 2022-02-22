@@ -17,6 +17,7 @@ declare module 'vue' {
     Header: typeof import('./components/layout/Header.vue')['default']
     Login: typeof import('./components/Login.vue')['default']
     Menu: typeof import('./components/layout/Menu.vue')['default']
+    PersonalCenter: typeof import('./components/layout/PersonalCenter.vue')['default']
     PersonalCenter: typeof import('./components/layout/components/PersonalCenter.vue')['default']
     PersonalDrawer: typeof import('./components/layout/components/PersonalDrawer.vue')['default']
     PersonalPopover: typeof import('./components/layout/components/PersonalPopover.vue')['default']
