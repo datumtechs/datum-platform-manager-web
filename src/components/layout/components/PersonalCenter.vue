@@ -9,6 +9,7 @@ const drawerShowChange = () => {
 }
 
 const loginShowChange = () => {
+  console.log(1)
   loginShow.value = !loginShow.value
 }
 
@@ -30,7 +31,7 @@ const connect = () => {
     </div>
     <div
       v-else
-      @click="loginShow = true"
+      @click="() => loginShow = true"
       class="w-126px h-40px rounded-2/1 flex items-center justify-center border text-light-50 font-500 ml-11px"
     >{{ $t('head.connect') }}</div>
     <PersonalDrawer :drawer-show="drawerShow" @drawerShowchange="drawerShowChange" />

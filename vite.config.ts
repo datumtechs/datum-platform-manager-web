@@ -51,23 +51,23 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
-      '@api': fileURLToPath(new URL('./src/api',import.meta.url)),
-      '@config': fileURLToPath(new URL('./src/config',import.meta.url)),
-      '@layout': fileURLToPath(new URL('./src/layout',import.meta.url)),
-      '@route': fileURLToPath(new URL('./src/route',import.meta.url)),
-      '@store': fileURLToPath(new URL('./src/store',import.meta.url)),
-      '@views': fileURLToPath(new URL('./src/views',import.meta.url)),
-      '@utils': fileURLToPath(new URL('./src/utils',import.meta.url)),
-      '@assets': fileURLToPath(new URL('./src/assets',import.meta.url))
+      '@api': fileURLToPath(new URL('./src/api', import.meta.url)),
+      '@config': fileURLToPath(new URL('./src/config', import.meta.url)),
+      '@layout': fileURLToPath(new URL('./src/layout', import.meta.url)),
+      '@route': fileURLToPath(new URL('./src/route', import.meta.url)),
+      '@store': fileURLToPath(new URL('./src/store', import.meta.url)),
+      '@views': fileURLToPath(new URL('./src/views', import.meta.url)),
+      '@utils': fileURLToPath(new URL('./src/utils', import.meta.url)),
+      '@assets': fileURLToPath(new URL('./src/assets', import.meta.url))
     }
   },
   server: {
-    port:8080,//启动端口
+    port: 8080,//启动端口
     open: true,
     proxy: {
       // 选项写法
       '/api': 'http://xxxx.xx.xx.xx:xxxx'//代理网址
     },
-    cors:true
+    cors: true
   }
 })

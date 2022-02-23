@@ -1,12 +1,3 @@
-<script lang="ts" setup>
-import { Pointer, Cloudy } from '@element-plus/icons-vue'
-const emit = defineEmits(['loginShowChange'])
-const props = defineProps({
-  loginShow: Boolean
-})
-const linkToMetamask = () => { }
-
-</script>
 <template>
   <el-dialog
     :model-value="props.loginShow"
@@ -40,6 +31,25 @@ const linkToMetamask = () => { }
     </div>
   </el-dialog>
 </template>
+
+<script lang="ts" setup>
+import { getCurrentInstance } from 'vue'
+import { Pointer, Cloudy } from '@element-plus/icons-vue'
+const internalInstance: any = getCurrentInstance()
+const { locale } = useI18n()
+const emit = defineEmits(['loginShowChange'])
+const props = defineProps({
+  loginShow: { type: Boolean, default: false }
+})
+const linkToMetamask = () => {
+  //window.open(`https://devdocs.platon.network/docs/${internalInstance.ctx.$i18n.locale !== 'en' ? 'zh-CN' : 'en'}/MetaMask`)
+  window.open(`https://devdocs.platon.network/docs/${locale.value !== 'en' ? 'zh-CN' : 'en'}/MetaMask`)
+  emit('loginShowChange')
+}
+
+
+</script>
+
 <style scoped lang="scss">
 :global(.el-dialog__header) {
   height: 62px;

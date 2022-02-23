@@ -10,11 +10,12 @@ export default defineConfig({
       '@md': { min: '700px', max: '1220px' },
       lg: { max: '1440px' }
     },
-    backgroundColor: () => ({
+    backgroundColor: theme => ({
+      ...theme('colors'),
       "backgroundColor-ccc": "#ccc",
     }),
-    fontSize: () => ({
-      "text-size-20": "20px"
-    })
+    // fontSize: () => ({
+    //   "text-size-20": "20px"
+    // })
   }
 })
