@@ -5,11 +5,15 @@ import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import WindiCSS from 'vite-plugin-windicss'
+import ElementPlus from 'unplugin-element-plus/vite'
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     vue(),
+    ElementPlus({
+      useSource: true,
+    }),
     WindiCSS(),
     AutoImport({
       dts: 'src/auto-import.d.ts',
@@ -60,6 +64,13 @@ export default defineConfig({
       '@utils': fileURLToPath(new URL('./src/utils',import.meta.url)),
       '@assets': fileURLToPath(new URL('./src/assets',import.meta.url))
     }
+  },
+  css:{
+    preprocessorOptions: {
+      scss: {
+        additionalData: `@use "@/assets/css/element/index.scss" as *;`,
+      },
+    },
   },
   server: {
     port:8080,//启动端口

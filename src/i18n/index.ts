@@ -13,7 +13,7 @@ const messages = {
   }
 }
 const getLocale = () => {
-  const storagelanguage = localStorage.lang
+  const storagelanguage = localStorage.langue
   if (storagelanguage) {
     return storagelanguage
   }

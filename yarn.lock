@@ -37,7 +37,7 @@
   resolved "https://registry.yarnpkg.com/@ctrl/tinycolor/-/tinycolor-3.4.0.tgz#c3c5ae543c897caa9c2a68630bed355be5f9990f"
   integrity sha512-JZButFdZ1+/xAfpguQHoabIXkcqRRKpMrWKBkpEZZyxfY9C1DpADFB8PEqGSTeFr135SaTRfKqGKx5xSCLI7ZQ==
 
-"@element-plus/icons-vue@^0.2.6":
+"@element-plus/icons-vue@^0.2.6", "@element-plus/icons-vue@^0.2.7":
   version "0.2.7"
   resolved "https://registry.yarnpkg.com/@element-plus/icons-vue/-/icons-vue-0.2.7.tgz#c0b75363098bf1fba414e18706604bfe5057ae1b"
   integrity sha512-S8kDbfVaWkQvbUYQE1ui448tzaHfUvyESCep9J6uPRlViyQPXjdIfwLBhV6AmQSOfFS8rL+xehJGhvzPXLrSBg==
@@ -774,6 +774,11 @@ entities@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/entities/-/entities-3.0.1.tgz#2b887ca62585e96db3903482d336c1006c3001d4"
   integrity sha512-WiyBqoomrwMdFG1e0kqvASYfnlb0lp8M5o5Fw2OFq1hNZxxcNk8Ik0Xm7LxzBhuidnZB/UtBqVCgUz3kBOP51Q==
+
+es-module-lexer@^0.9.3:
+  version "0.9.3"
+  resolved "https://registry.yarnpkg.com/es-module-lexer/-/es-module-lexer-0.9.3.tgz#6f13db00cc38417137daf74366f535c8eb438f19"
+  integrity sha512-1HQ2M2sPtxwnvOvT1ZClHyQDiggdNjURWpY2we6aMKCQiUVxTmVs2UYPLIrD84sS+kMdUwfBSylbJPwNnBrnHQ==
 
 esbuild-android-arm64@0.14.22:
   version "0.14.22"
@@ -1857,6 +1862,16 @@ unplugin-auto-import@^0.6.0:
     local-pkg "^0.4.1"
     magic-string "^0.25.7"
     resolve "^1.22.0"
+    unplugin "^0.3.2"
+
+unplugin-element-plus@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/unplugin-element-plus/-/unplugin-element-plus-0.3.1.tgz#9f99add93a9d63ca4fe1865162b691927fb1fd1a"
+  integrity sha512-DowQB5yvyJ/89q45o9LELGiRFYIGo5AJZqEBsjVJOVHL0x3OY57XB5BTLxUd5Of3wPk646MvADKY3htJvopy9w==
+  dependencies:
+    "@rollup/pluginutils" "^4.1.2"
+    es-module-lexer "^0.9.3"
+    magic-string "^0.25.7"
     unplugin "^0.3.2"
 
 unplugin-vue-components@^0.17.18:

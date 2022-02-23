@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { getCurrentInstance } from 'vue'
 import { USELANGUAGE } from '@/stores'
-const internalInstance: any = getCurrentInstance()
+
+const { locale } = useI18n()
 const changeLangue = (langue: string) => {
-  internalInstance.ctx.$i18n.locale = langue
+  locale.value = langue
   USELANGUAGE().saveLang(langue)
 }
 
