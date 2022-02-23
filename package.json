@@ -11,11 +11,15 @@
   },
   "dependencies": {
     "@element-plus/icons-vue": "^0.2.7",
+    "@esbuild-plugins/node-globals-polyfill": "^0.1.1",
+    "@esbuild-plugins/node-modules-polyfill": "^0.1.4",
     "element-plus": "^2.0.2",
     "pinia": "^2.0.11",
+    "rollup-plugin-node-polyfills": "^0.2.1",
     "vue": "^3.2.29",
     "vue-i18n": "^9.2.0-beta.30",
-    "vue-router": "^4.0.12"
+    "vue-router": "^4.0.12",
+    "web3": "^1.7.0"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.1.0",

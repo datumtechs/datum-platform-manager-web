@@ -4,14 +4,22 @@ import { UserFilled } from '@element-plus/icons-vue'
 import Login from '../../Login.vue'
 const drawerShow = ref(false)
 const loginShow = ref(false)
+// const aa 
 const drawerShowChange = () => {
   drawerShow.value = !drawerShow.value
 }
 
+
+// console.log(aa)
+
 const loginShowChange = () => {
-  console.log(1)
   loginShow.value = !loginShow.value
 }
+
+// onMounted(() => {
+//   console.log(ctx)
+
+// })
 
 const connect = () => {
 

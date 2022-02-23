@@ -1,8 +1,8 @@
 import { USEWALLET, USEUSERSINFO } from '@/stores'
 import I18n from '../i18n/index'
 import { ElMessage } from 'element-plus'
-// import Web3 from 'web3'
-const Web3 = window.Web3
+import Web3 from 'web3'
+// const Web3 = window.Web3
 
 class Web3Service {
   private web3: any
