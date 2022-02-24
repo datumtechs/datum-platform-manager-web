@@ -104,7 +104,7 @@ export default defineConfig({
       // ********************//
     }
   },
-  css:{
+  css: {
     preprocessorOptions: {
       scss: {
         additionalData: `@use "@/assets/css/element/index.scss" as *;`,
@@ -116,7 +116,11 @@ export default defineConfig({
     open: true,
     proxy: {
       // 选项写法
-      '/api': 'http://xxxx.xx.xx.xx:xxxx'//代理网址
+      '/flow': {
+        target: 'http://10.10.8.174:8234/', // 146
+        changeOrigin: true,
+        rewrite: path => path.replace(/^\/flow/, '/rosettaflow')
+      }
     },
     cors: true
   },

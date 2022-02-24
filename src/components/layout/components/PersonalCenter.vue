@@ -2,9 +2,10 @@
 import PersonalPopoverVue from './PersonalPopover.vue';
 import { UserFilled } from '@element-plus/icons-vue'
 import Login from '../../Login.vue'
+import { USEUSERSINFO } from '@/stores'
+
 const drawerShow = ref(false)
 const loginShow = ref(false)
-// const aa 
 const drawerShowChange = () => {
   drawerShow.value = !drawerShow.value
 }
@@ -16,20 +17,11 @@ const loginShowChange = () => {
   loginShow.value = !loginShow.value
 }
 
-// onMounted(() => {
-//   console.log(ctx)
-
-// })
-
-const connect = () => {
-
-}
-
 </script>
 <template>
   <div class="personal flex items-center cursor-pointer w-220px">
     <PersonalPopoverVue />
-    <div class="flex items-center" v-if="false" @click="drawerShowChange">
+    <div class="flex items-center" v-if="USEUSERSINFO().getToken" @click="drawerShowChange">
       <span class="head rounded-1/2 flex w-35px h-35px ml-20px mr-11px items-center justify-center">
         <el-icon>
           <user-filled />
@@ -42,8 +34,12 @@ const connect = () => {
       @click="() => loginShow = true"
       class="w-126px h-40px rounded-2/1 flex items-center justify-center border text-light-50 font-500 ml-11px"
     >{{ $t('head.connect') }}</div>
-    <PersonalDrawer :drawer-show="drawerShow" @drawerShowchange="drawerShowChange" />
-    <Login :login-show="loginShow" @loginShowChange="loginShowChange" />
+    <PersonalDrawer
+      v-if="drawerShow"
+      :drawer-show="drawerShow"
+      @drawerShowchange="drawerShowChange"
+    />
+    <Login v-if="loginShow" :login-show="loginShow" @loginShowChange="loginShowChange" />
   </div>
 </template>
 <style lang="scss" scoped>

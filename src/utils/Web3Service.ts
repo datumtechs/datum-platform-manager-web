@@ -15,7 +15,7 @@ class Web3Service {
     this.useWallet = USEWALLET()
     this.useUsersInfo = USEUSERSINFO()
     this.i18n = I18n
-
+    this.eth = undefined
     try {
       this.initAlaya()
     } catch (error) {
@@ -24,32 +24,28 @@ class Web3Service {
   }
 
   initAlaya() {
-    const {
-      eth
-    } = this
-    if (typeof eth === 'undefined') {
-      console.log('no metamask you should check you chrome chrome-extension')
-    } else {
-      this.useWallet.setIsWallet(true)
-      this.web3 = new Web3(eth)
-      eth.on('accountsChanged', (account: any) => {
-        console.log(account, eth.chainId)
-        // this.store.dispatch('app/getLogout')
-        this.useUsersInfo.clean()
-      })
+    this.eth = window.eth || window.ethereum || undefined
+    if (this.eth) {
+      try {
+        this.useWallet.setIsWallet(true)
+        this.web3 = new Web3(this.eth)
+        this.eth.on('accountsChanged', (account: any) => {
+          this.useUsersInfo.clean()
+        })
 
-      // 切换网络
-      eth.on('chainChanged', () => {
-        console.log('chain changed')
-        // this.store.dispatch('app/getLogout')
-        this.useUsersInfo.clean()
-      })
+        // 切换网络
+        this.eth.on('chainChanged', () => {
+          this.useUsersInfo.clean()
+        })
+      } catch (err: any) {
+        console.log('初始化web3错误,原因：', err);
+      }
     }
   }
 
   _getAbiForLogin() {
     // const uuId = this.store.getters['app/nonceId']
-    const uuId = this.useWallet.getNonceId()
+    const uuId = this.useWallet.getNonceId
     return JSON.stringify({
       domain: {
         name: 'Moirae'
@@ -79,7 +75,7 @@ class Web3Service {
 
   _getAbiForTx() {
     // const address = this.store.getters['app/address']
-    const address: string = this.useUsersInfo.getAddress()
+    const address: string = this.useUsersInfo.getAddress
     return JSON.stringify({
       domain: {
         name: 'Moirae'
@@ -104,36 +100,31 @@ class Web3Service {
   // 连接钱包
 
   async connectWallet() {
-    const {
-      eth
-    } = this
-    if (typeof eth === 'undefined') {
-      console.log('no metamask you should check you chrome chrome-extension')
-      // this.store.commit('app/SET_ISWALLET', false)
-    } else {
+    if (this.eth) {
       try {
         this.useWallet.setIsWallet(true)
         // 注意metamask版本更新, 是否取消eth._metamask.isUnlocked方法 后续是否修复锁定弹窗
-        const isLocked = await eth._metamask.isUnlocked()
+        const isLocked = await this.eth._metamask.isUnlocked()
+
         if (!isLocked) {
           if (this.i18n && this.i18n.locale === 'zh') return ElMessage.error('请先解锁metamask钱包')
           return ElMessage.error('Please unlock metamask wallet first')
         }
-        const data = await eth.request({
+        const data = await this.eth.request({
           method: 'eth_requestAccounts'
         })
-        // this.store.dispatch('app/saveAddress', data)
-        this.useUsersInfo.setAddress(data)
+        this.useUsersInfo.setAddress(data[0])
+        console.log(this.useUsersInfo.getAddress);
+
       } catch (error) {
-        console.log(error)
+        console.log('连接钱包错误，原因：', error)
       }
     }
   }
 
   signForWallet(type?: string) {
     const abi = type === 'login' ? this._getAbiForLogin() : this._getAbiForTx()
-    // const from = this.store.getters['app/address']
-    const from = this.useUsersInfo.getAddress()
+    const from = this.useUsersInfo.getAddress
     const result = new Promise((resolve, reject) => {
       this.web3.currentProvider.sendAsync({
         method: 'eth_signTypedData_v4',
@@ -145,7 +136,6 @@ class Web3Service {
           const {
             result
           } = res
-          // this.store.commit('app/SET_SIGN', result)
           this.useWallet.setSign(result)
           resolve(result)
         }
@@ -156,14 +146,14 @@ class Web3Service {
 
   loginParams() {
     return {
-      address: this.useUsersInfo.getAddress(),
-      sign: this.useWallet.getSign(),
+      address: this.useUsersInfo.getAddress,
+      sign: this.useWallet.getSign,
       signMessage: this._getAbiForLogin()
     }
   }
 
   checkAddress() {
-    const address = this.useUsersInfo.getAddress()
+    const address = this.useUsersInfo.getAddress
     if (address && address.length) return true
     if (this.eth && this.eth.selectedAddress) {
       const address = this.eth.selectedAddress

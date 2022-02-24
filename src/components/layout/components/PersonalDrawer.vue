@@ -1,22 +1,8 @@
-<script setup lang="ts">
-import { Edit, Link as IconLink, Help } from '@element-plus/icons-vue'
-const emit = defineEmits(['drawerShowchange'])
-const props = defineProps({
-  drawerShow: Boolean
-})
-
-const toLink = (type: string) => {
-  console.log(type)
-}
-
-const logout = () => {
-
-}
-</script>
 <template>
   <el-drawer
     :title="$t('head.myAccountTitle')"
     :size="'300px'"
+    ref="drawer"
     :model-value="props.drawerShow"
     :append-to-body="true"
     :custom-class="'moirae-info-drawer'"
@@ -47,6 +33,35 @@ const logout = () => {
     </ul>
   </el-drawer>
 </template>
+<script setup lang="ts">
+import { USEUSERSINFO } from '@/stores'
+import { Logout } from '@/api/login'
+import { Edit, Link as IconLink, Help } from '@element-plus/icons-vue'
+const emit = defineEmits(['drawerShowchange'])
+const props = defineProps({
+  drawerShow: Boolean
+})
+const childRef = ref()
+
+const toLink = (type: string) => {
+  console.log(type)
+}
+
+const logout = async () => {
+  try {
+    const res: any = await Logout()
+    console.log(res)
+    const { code } = res
+    if (code === 10000) {
+      emit('drawerShowchange')
+      USEUSERSINFO().clean()
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+</script>
 <style lang="scss" scoped>
 .moirae-info-drawer {
   :global(.el-drawer__header) {

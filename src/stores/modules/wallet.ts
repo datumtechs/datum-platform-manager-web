@@ -7,7 +7,7 @@ export default defineStore('Wallet', {
     sign: ''
   }),
   getters: {
-    getLang: state => state.isWallet,
+    getIsWallet: state => state.isWallet,
     getNonceId: state => state.nonceId,
     getSign: state => state.sign
   },
