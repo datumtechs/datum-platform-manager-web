@@ -6,6 +6,7 @@ import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import WindiCSS from 'vite-plugin-windicss'
 import ElementPlus from 'unplugin-element-plus/vite'
+import path from 'path'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -62,7 +63,8 @@ export default defineConfig({
       '@store': fileURLToPath(new URL('./src/store',import.meta.url)),
       '@views': fileURLToPath(new URL('./src/views',import.meta.url)),
       '@utils': fileURLToPath(new URL('./src/utils',import.meta.url)),
-      '@assets': fileURLToPath(new URL('./src/assets',import.meta.url))
+      '@assets': fileURLToPath(new URL('./src/assets',import.meta.url)),
+      'web3': path.resolve(__dirname, './node_modules/web3/dist/web3.min.js')
     }
   },
   css:{

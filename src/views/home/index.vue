@@ -5,20 +5,16 @@ import Overview from './components/Overview.vue'
 import PowerRank from './components/PowerRank.vue'
 import DataRank from './components/DataRank.vue'
 </script>
-
 <template>
   <section class="min-height">
     <Banner />
-    <section class="max-w-1160px mx-auto">
+    <section class="max-w-1160px mx-auto mb-205px">
       <Slide />
       <Overview />
       <PowerRank />
       <DataRank />
     </section>
   </section>
-  
 </template>
-
 <style lang="scss">
-
 </style>
