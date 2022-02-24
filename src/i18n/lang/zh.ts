@@ -39,7 +39,9 @@ const zh = {
     nodeName:'节点名称',
     powerRatio:'算力占比',
     ranking: '排名',
-    viewAllNode:'查看所有节点'
+    viewAllNode:'查看所有节点',
+    dataUseTop10:'数据凭证任务使用TOP10',
+    modelUseTop10:'模型凭证任务使用TOP10'
   }
 }
 

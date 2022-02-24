@@ -12,13 +12,14 @@
                     <p class="leading-29px text-[24px] text-deep mt-18px font-bold">{{ item.value }}</p>
                 </div>
             </div>
-            <div></div>
+            <DataCharts />
         </div>
     </div>
 </template>
 
 <script setup lang='ts'>
 import Title from './Title.vue'
+import DataCharts from './DataCharts.vue'
 const { t } = useI18n()
 const viewList = computed(() => {
     return [

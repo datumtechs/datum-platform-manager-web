@@ -6,11 +6,7 @@ import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import WindiCSS from 'vite-plugin-windicss'
 import ElementPlus from 'unplugin-element-plus/vite'
-
-//以下配置为解决web3 兼容问题
-import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill'
-import { NodeModulesPolyfillPlugin } from '@esbuild-plugins/node-modules-polyfill'
-// import rollupNodePolyFill from 'rollup-plugin-node-polyfills'
+import path from 'path'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -68,40 +64,7 @@ export default defineConfig({
       '@views': fileURLToPath(new URL('./src/views', import.meta.url)),
       '@utils': fileURLToPath(new URL('./src/utils', import.meta.url)),
       '@assets': fileURLToPath(new URL('./src/assets', import.meta.url)),
-      //web3访问路径别名修改
-      // ********************//
-      util: 'rollup-plugin-node-polyfills/polyfills/util',
-      sys: 'util',
-      events: 'rollup-plugin-node-polyfills/polyfills/events',
-      stream: 'rollup-plugin-node-polyfills/polyfills/stream',
-      path: 'rollup-plugin-node-polyfills/polyfills/path',
-      querystring: 'rollup-plugin-node-polyfills/polyfills/qs',
-      punycode: 'rollup-plugin-node-polyfills/polyfills/punycode',
-      url: 'rollup-plugin-node-polyfills/polyfills/url',
-      // string_decoder:   //1.7版本特别注释
-      //   'rollup-plugin-node-polyfills/polyfills/string-decoder',
-      http: 'rollup-plugin-node-polyfills/polyfills/http',
-      https: 'rollup-plugin-node-polyfills/polyfills/http',
-      os: 'rollup-plugin-node-polyfills/polyfills/os',
-      assert: 'rollup-plugin-node-polyfills/polyfills/assert',
-      constants: 'rollup-plugin-node-polyfills/polyfills/constants',
-      _stream_duplex:
-        'rollup-plugin-node-polyfills/polyfills/readable-stream/duplex',
-      _stream_passthrough:
-        'rollup-plugin-node-polyfills/polyfills/readable-stream/passthrough',
-      _stream_readable:
-        'rollup-plugin-node-polyfills/polyfills/readable-stream/readable',
-      _stream_writable:
-        'rollup-plugin-node-polyfills/polyfills/readable-stream/writable',
-      _stream_transform:
-        'rollup-plugin-node-polyfills/polyfills/readable-stream/transform',
-      timers: 'rollup-plugin-node-polyfills/polyfills/timers',
-      console: 'rollup-plugin-node-polyfills/polyfills/console',
-      vm: 'rollup-plugin-node-polyfills/polyfills/vm',
-      zlib: 'rollup-plugin-node-polyfills/polyfills/zlib',
-      tty: 'rollup-plugin-node-polyfills/polyfills/tty',
-      domain: 'rollup-plugin-node-polyfills/polyfills/domain',
-      // ********************//
+      'web3': path.resolve(__dirname, './node_modules/web3/dist/web3.min.js')
     }
   },
   css: {
@@ -123,29 +86,5 @@ export default defineConfig({
       }
     },
     cors: true
-  },
-  //解决web3 开发阶段 globalThis
-  // ********************//
-  optimizeDeps: {
-    esbuildOptions: {
-      define: {
-        global: 'globalThis'
-      },
-      plugins: [
-        NodeGlobalsPolyfillPlugin({
-          process: true,
-          buffer: true
-        }),
-        NodeModulesPolyfillPlugin()
-      ]
-    }
-  },
-  build: {
-    rollupOptions: {
-      plugins: [
-        // rollupNodePolyFill()
-      ]
-    }
   }
-  // ********************//
 })

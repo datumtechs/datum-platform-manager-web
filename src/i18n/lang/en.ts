@@ -39,7 +39,9 @@ const en = {
     nodeName:'Node name',
     powerRatio:'Power Ratio',
     ranking: 'Ranking',
-    viewAllNode:'View All Nodes'
+    viewAllNode:'View All Nodes',
+    dataUseTop10:'Data Credential Use TOP10',
+    modelUseTop10:'Model Credential Use TOP10'
   }
 }
 

@@ -10,15 +10,13 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "@antv/g2": "^4.1.46",
     "@element-plus/icons-vue": "^0.2.7",
-    "@esbuild-plugins/node-globals-polyfill": "^0.1.1",
-    "@esbuild-plugins/node-modules-polyfill": "^0.1.4",
     "@types/qs": "^6.9.7",
     "axios": "^0.26.0",
     "element-plus": "^2.0.2",
     "pinia": "^2.0.11",
     "qs": "^6.10.3",
-    "rollup-plugin-node-polyfills": "^0.2.1",
     "vue": "^3.2.29",
     "vue-i18n": "^9.2.0-beta.30",
     "vue-router": "^4.0.12",
