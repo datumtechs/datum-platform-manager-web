@@ -5,6 +5,7 @@ import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import WindiCSS from 'vite-plugin-windicss'
+import ElementPlus from 'unplugin-element-plus/vite'
 
 //以下配置为解决web3 兼容问题
 import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill'
@@ -15,6 +16,9 @@ import { NodeModulesPolyfillPlugin } from '@esbuild-plugins/node-modules-polyfil
 export default defineConfig({
   plugins: [
     vue(),
+    ElementPlus({
+      useSource: true,
+    }),
     WindiCSS(),
     AutoImport({
       dts: 'src/auto-import.d.ts',
@@ -99,6 +103,13 @@ export default defineConfig({
       domain: 'rollup-plugin-node-polyfills/polyfills/domain',
       // ********************//
     }
+  },
+  css:{
+    preprocessorOptions: {
+      scss: {
+        additionalData: `@use "@/assets/css/element/index.scss" as *;`,
+      },
+    },
   },
   server: {
     port: 8080,//启动端口

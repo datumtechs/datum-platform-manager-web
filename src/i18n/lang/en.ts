@@ -13,6 +13,7 @@ const en = {
     connect: 'Connect Moirae',
     login: 'Log In RosettaFlow',
     logout: 'Log Out',
+    myAccount: 'My Account',
     editNickname: 'Modify Nickname',
     nodeManagement: 'Node Management',
     loginDialogTitle: "Metamask Extension",
@@ -21,7 +22,24 @@ const en = {
     installTipTwo: 'Privacy Preserved Locally',
   },
   home:{
-    dataOverview:'Data Overview'
+    dataOverview:'Data Overview',
+    privacyComputations:'Privacy Computations',
+    participatingAddresses:'Participating Addresses',
+    activeAddresses:'24h Active Addresses',
+    aIModels:'AI Models',
+    modelCredentials:'Model Credentials',
+    modelCredUse:'Model Cred. Use',
+    dataAmount:'Data Amount',
+    dataCredentials:'Data Credentials',
+    dataCredUse:'Data Cred. Use',
+    globalPowerAndRank:'Computing Power Overview & Ranking',
+    totalCpu:'Total CPU',
+    totalMemory:'Total Memory',
+    totalBandwidth:'Total Bandwidth',
+    nodeName:'Node name',
+    powerRatio:'Power Ratio',
+    ranking: 'Ranking',
+    viewAllNode:'View All Nodes'
   }
 }
 
