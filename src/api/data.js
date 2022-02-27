@@ -23,7 +23,7 @@ const dataApi = {
   queryMetaListByNodeId: params => {
     return http({
       method: 'get',
-      url: '/scan/data/listDataFileByIdentityId',
+      url: '/flow/data/listDataFileByIdentityId',
       params
     })
   },
@@ -32,7 +32,7 @@ const dataApi = {
   getDataFile: params => {
     return http({
       method: 'get',
-      url: '/scan/data/getDataFile',
+      url: '/flow/data/getDataFile',
       params
     })
   },
@@ -41,7 +41,7 @@ const dataApi = {
   listMetaDataColumn: params => {
     return http({
       method: 'get',
-      url: '/scan/data/listMetaDataColumn',
+      url: '/flow/data/listMetaDataColumn',
       params
     })
   },
@@ -50,7 +50,7 @@ const dataApi = {
   listDataFile: params => {
     return http({
       method: 'get',
-      url: '/scan/data/listDataFile',
+      url: '/flow/data/listDataFile',
       params
     })
   }

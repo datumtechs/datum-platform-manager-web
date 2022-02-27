@@ -87,6 +87,9 @@ export default {
     margin-top: 0.66rem;
     display: flex;
     justify-content: space-between;
+    @media screen and (max-width: 1366px) {
+      margin-top: 0.2rem;
+    }
     .homepage-content-left {
       position: relative;
       width: 750px;

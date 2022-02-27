@@ -5,7 +5,7 @@ const orgApi = {
   findOrgInfo: params => {
     return http({
       method: 'get',
-      url: '/scan/org/findOrgInfo',
+      url: '/flow/org/findOrgInfo',
       params
     })
   },
@@ -14,7 +14,7 @@ const orgApi = {
   queryNodeList: params => {
     return http({
       method: 'get',
-      url: '/scan/org/listOrgInfo',
+      url: '/flow/org/listOrgInfo',
       params
     })
   },
@@ -23,7 +23,7 @@ const orgApi = {
   listOrgInfoByName: params => {
     return http({
       method: 'get',
-      url: '/scan/org/listOrgInfoByName',
+      url: '/flow/org/listOrgInfoByName',
       params
     })
   },
@@ -32,7 +32,7 @@ const orgApi = {
   listOrgInfoByActivity: params => {
     return http({
       method: 'get',
-      url: '/scan/org/listOrgInfoByActivity',
+      url: '/flow/org/listOrgInfoByActivity',
       params
     })
   },
@@ -41,7 +41,7 @@ const orgApi = {
   listOrgInfoByMemory: params => {
     return http({
       method: 'get',
-      url: '/scan/org/listOrgInfoByMemory',
+      url: '/flow/org/listOrgInfoByMemory',
       params
     })
   },
@@ -50,7 +50,7 @@ const orgApi = {
   listOrgInfoByTotalAlgo: params => {
     return http({
       method: 'get',
-      url: '/scan/org/listOrgInfoByTotalAlgo',
+      url: '/flow/org/listOrgInfoByTotalAlgo',
       params
     })
   },
@@ -59,7 +59,7 @@ const orgApi = {
   listOrgInfoByTotalData: params => {
     return http({
       method: 'get',
-      url: '/scan/org/listOrgInfoByTotalData',
+      url: '/flow/org/listOrgInfoByTotalData',
       params
     })
   }

@@ -10,37 +10,39 @@
           </span>
           <span v-if="lang === 'en'">
             <span>Moirae provides solutions for</span>&nbsp;
-            <span class="strong">banking, insurance, government affairs,medical treatment, logistics</span>&nbsp;
+            <span
+              class="strong"
+            >banking, insurance, government affairs,medical treatment, logistics</span>&nbsp;
             <span>and other industries.</span>
           </span>
         </span>
       </HomeTitle>
       <div class="homepage-content-box">
-        <img src="~assets/images/home/1.bj5.svg" alt="" class="content-line" />
+        <img src="~assets/images/home/1.bj5.svg" alt class="content-line" />
         <div class="content-lineone">
           <div class="content-line-mini-box line-mini-box">
-            <img src="~assets/images/home/1.bank2.svg" alt="" class="bg-img" />
+            <img src="~assets/images/home/1.bank2.svg" alt class="bg-img" />
             <IndustryLabel :title="$t('homepage.bank')" />
           </div>
           <div class="content-line-mini-box line-mini-box">
-            <img src="~assets/images/home/1.government.svg" alt="" class="bg-img" />
+            <img src="~assets/images/home/1.government.svg" alt class="bg-img" />
             <IndustryLabel :title="$t('homepage.government')" />
           </div>
           <div class="content-line-mini-box line-mini-box">
-            <img src="~assets/images/home/1.logistics.svg" alt="" class="bg-img" />
+            <img src="~assets/images/home/1.logistics.svg" alt class="bg-img" />
             <IndustryLabel :title="$t('homepage.medical')" />
           </div>
         </div>
         <div class="content-linetwo">
           <div class="line2-sub-box">
             <div class="content-line2-mini-box line-mini-box">
-              <img src="~assets/images/home/1.insurance.svg" alt="" class="bg-img" />
+              <img src="~assets/images/home/1.insurance.svg" alt class="bg-img" />
               <IndustryLabel :title="$t('homepage.insurance')" />
             </div>
           </div>
           <div class="line2-sub-box">
             <div class="content-line2-mini-box line-mini-box">
-              <img src="~assets/images/home/1.medical.svg" alt="" class="bg-img" />
+              <img src="~assets/images/home/1.medical.svg" alt class="bg-img" />
               <IndustryLabel :title="$t('homepage.logistics')" />
             </div>
           </div>
@@ -63,8 +65,8 @@ export default {
   },
   computed: {},
   watch: {},
-  created () {},
-  mounted () {},
+  created () { },
+  mounted () { },
   methods: {}
 }
 </script>
@@ -85,12 +87,18 @@ export default {
       flex-direction: row;
       justify-content: space-between;
       padding: 0 0.5rem;
+      @media screen and (max-width: 1366px) {
+        margin-top: 0.2rem;
+      }
     }
     .content-linetwo {
       display: flex;
       width: 100%;
       margin-top: 0.63rem;
       padding: 0 0.5rem;
+      @media screen and (max-width: 1366px) {
+        margin-top: 0.2rem;
+      }
       .line2-sub-box {
         flex: 1;
         display: flex;
@@ -98,7 +106,7 @@ export default {
       }
     }
     .line-mini-box {
-      background: url('../../../assets/images/home/1.bj6.svg') no-repeat;
+      background: url("../../../assets/images/home/1.bj6.svg") no-repeat;
       background-size: 100%;
       width: 166px;
       height: 166px;

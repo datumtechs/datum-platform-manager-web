@@ -4,7 +4,7 @@
       <span class="main-title-box" v-html="title"></span>
     </div>
     <div class="subtitle">
-      <slot name="subtitle"> </slot>
+      <slot name="subtitle"></slot>
     </div>
   </div>
 </template>
@@ -18,13 +18,13 @@ export default {
       default: ''
     }
   },
-  data() {
+  data () {
     return {}
   },
   computed: {},
   watch: {},
-  created() {},
-  mounted() {},
+  created () { },
+  mounted () { },
   methods: {}
 }
 </script>
@@ -32,6 +32,9 @@ export default {
 .homepage-title-box {
   padding-top: 0.6rem;
   color: #ffffff;
+  @media screen and (max-width: 1366px) {
+    padding-top: 0.3rem;
+  }
   .main {
     font-family: DINPro-Medium, Ali-Medium;
     font-size: 30px;
@@ -41,9 +44,9 @@ export default {
     .main-title-box {
       position: relative;
       &:before {
-        content: '';
+        content: "";
         position: absolute;
-        background: url('../assets/images/home/1.icon2.png');
+        background: url("../assets/images/home/1.icon2.png");
         background-size: 100%;
         width: 32px;
         height: 33px;
@@ -52,9 +55,9 @@ export default {
         top: 5px;
       }
       &:after {
-        content: '';
+        content: "";
         position: absolute;
-        background: url('../assets/images/home/1.icon2.png');
+        background: url("../assets/images/home/1.icon2.png");
         background-size: 100%;
         width: 32px;
         height: 33px;

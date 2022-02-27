@@ -1,14 +1,17 @@
 <template>
   <div class="homepage-box">
     <div class="homepage-wrapper">
-      <HomeTitle :title="$t('homepage.recommendedServices')"> </HomeTitle>
+      <HomeTitle :title="$t('homepage.recommendedServices')"></HomeTitle>
       <div class="homepage-recommend-box">
-        <div v-for="card in serviceList" :key="card.id" class="recommend-mini-box pointer">
+        <div v-for=" card in serviceList" :key="card.id" class="recommend-mini-box pointer">
           <p class="recommend-mini-box-title">{{ card.title }}</p>
           <p class="recommend-mini-box-label">{{ card.label }}</p>
         </div>
       </div>
-      <div class="view-all-cases view-btn pointer" @click="linkToCase">{{ $t('homepage.viewAllCases') }}</div>
+      <div
+        class="view-all-cases view-btn pointer"
+        @click="linkToCase"
+      >{{ $t('homepage.viewAllCases') }}</div>
     </div>
     <!-- <MoveDown /> -->
   </div>
@@ -63,16 +66,20 @@ export default {
   .homepage-recommend-box {
     display: flex;
     justify-content: space-between;
+
     .recommend-mini-box {
       margin-top: 1.1rem;
       width: 275px;
       height: 361px;
-      background: url('../../../assets/images/home/1.bj9.svg') no-repeat;
+      background: url("../../../assets/images/home/1.bj9.svg") no-repeat;
       background-size: 100%;
       padding: 30px;
       position: relative;
       transition: all 0.3s;
       text-align: left;
+      @media screen and (max-width: 1366px) {
+          margin-top: 0.3rem;
+      }
       .recommend-mini-box-title {
         font-family: DINPro-Medium, Ali-Medium;
         font-size: 18px;
@@ -98,6 +105,9 @@ export default {
   .view-all-cases {
     margin-top: 1rem;
     font-size: 18px;
+    @media screen and (max-width: 1366px) {
+      margin-top: 0.4rem;
+    }
   }
 }
 </style>

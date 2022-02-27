@@ -4,7 +4,7 @@
       <div class="left-earth">
         <!-- <Earth /> -->
         <Cube />
-        <img src="@/assets/images/home/earthBg.png" alt="" class="earthImg" />
+        <img src="@/assets/images/home/earthBg.png" alt class="earthImg" />
       </div>
       <div class="right-data-board">
         <div class="title-box">
@@ -73,9 +73,7 @@
             </p>
           </div>
         </div>
-        <div class="btn-box pointer" @click="linkToAllNode">
-          {{ $t('homepage.viewAllNodes') }}
-        </div>
+        <div class="btn-box pointer" @click="linkToAllNode">{{ $t('homepage.viewAllNodes') }}</div>
       </div>
     </div>
     <MoveDown />
@@ -93,7 +91,7 @@ export default {
   props: {
     pageObj: {
       type: Object,
-      default: () => {}
+      default: () => { }
     }
   },
   data () {
@@ -139,6 +137,9 @@ export default {
     position: relative;
     // background: url('../../../assets/images/home/earthBg.png') no-repeat;
     z-index: 10000;
+    @media screen and (max-width: 1366px) {
+      margin-top: 0.3rem;
+    }
     .earthImg {
       position: relative;
       left: 20px;
@@ -150,9 +151,12 @@ export default {
     width: 484px;
     padding-right: 45px;
     height: 563px;
-    background: url('../../../assets/images/home/1.bj2.png') no-repeat;
+    background: url("../../../assets/images/home/1.bj2.png") no-repeat;
     background-size: 100%;
     text-align: center;
+    @media screen and (max-width: 1366px) {
+      margin-top: 0.3rem;
+    }
     .title-box {
       margin-top: 98px;
       .title {
@@ -210,7 +214,7 @@ export default {
     }
     .btn-box {
       margin-top: 60px;
-      background: url('../../../assets/images/home/1.butt.svg') no-repeat;
+      background: url("../../../assets/images/home/1.butt.svg") no-repeat;
       background-size: 100%;
       display: inline-block;
       padding: 10px 67px;
