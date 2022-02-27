@@ -3,7 +3,7 @@
     <div class="common-banner">
       <DataBanner
         :meta-data-id="baseInfo.metaDataId"
-        :file-name="baseInfo.fileName"
+        :file-name="baseInfo.metaDataName"
         :org-name="orgName"
         :identity-id="identityId"
         type="data"
@@ -14,42 +14,49 @@
       <div class="detail-content">
         <el-row type="flex" class="data-line">
           <el-col :span="4" class="data-title">{{ $t('node.dataType') }}</el-col>
-          <el-col :span="6" class="data-content">{{ getType(baseInfo.fileType) }} </el-col>
+          <el-col :span="6" class="data-content">{{ getType(baseInfo.fileType) }}</el-col>
           <el-col :span="4" class="data-title">{{ $t('node.dataSize') }}</el-col>
-          <el-col :span="6" class="data-content">{{ changeSizeFn(baseInfo.size) }} </el-col>
+          <el-col :span="6" class="data-content">{{ changeSizeFn(baseInfo.size) }}</el-col>
         </el-row>
         <el-row type="flex" class="data-line">
           <el-col :span="4" class="data-title">{{ $t('node.rowNum') }}</el-col>
-          <el-col :span="6" class="data-content">{{ formatNumber(baseInfo.rows) }} </el-col>
+          <el-col :span="6" class="data-content">{{ formatNumber(baseInfo.rows) }}</el-col>
           <el-col :span="4" class="data-title">{{ $t('node.colNum') }}</el-col>
-          <el-col :span="6" class="data-content">{{ formatNumber(baseInfo.columns) }} </el-col>
+          <el-col :span="6" class="data-content">{{ formatNumber(baseInfo.columns) }}</el-col>
         </el-row>
         <el-row type="flex" class="data-line">
           <el-col :span="4" class="data-title">{{ $t('node.publicTime') }}</el-col>
-          <el-col :span="6" class="data-content">
-            {{ dayjs(baseInfo.publishedAt).format('YYYY-MM-DD HH:mm:ss') }}
-          </el-col>
+          <el-col
+            :span="6"
+            class="data-content"
+          >{{ dayjs(baseInfo.publishedAt).format('YYYY-MM-DD HH:mm:ss') }}</el-col>
           <el-col :span="4" class="data-title">{{ $t('node.involvedNum') }}</el-col>
-          <el-col :span="6" class="data-content">{{ formatNumber(baseInfo.dynamicFields.taskCount) }} </el-col>
+          <el-col
+            :span="6"
+            class="data-content"
+          >{{ formatNumber(baseInfo.taskCount) }}</el-col>
           <!-- TODO -->
         </el-row>
         <el-row type="flex" class="data-line">
           <el-col :span="4" class="data-title">{{ $t('node.industry') }}</el-col>
-          <el-col :span="6" class="data-content">{{ getIndustry(baseInfo.industry) }} </el-col>
+          <el-col :span="6" class="data-content">{{ getIndustry(baseInfo.industry) }}</el-col>
         </el-row>
         <el-row type="flex" class="data-line">
           <el-col :span="4" class="data-title">{{ $t('node.dataDesc') }}</el-col>
-          <el-col :span="16" class="data-content">
-            {{ baseInfo.remarks }}
-          </el-col>
+          <el-col :span="16" class="data-content">{{ baseInfo.remarks }}</el-col>
         </el-row>
       </div>
       <div class="detail-title">{{ $t('node.fieldsInfo') }}</div>
       <el-table style="width: 100%" :data="columnList">
-        <el-table-column type="index" :label="`${$t('common.num')}`" :index="indexMethod" width="80"> </el-table-column>
-        <el-table-column prop="columnName" :label="`${$t('node.dataName')}`" width="300"> </el-table-column>
-        <el-table-column prop="columnType" :label="`${$t('node.dataType')}`" width="200"> </el-table-column>
-        <el-table-column prop="remarks" :label="`${$t('node.remarks')}`"> </el-table-column>
+        <el-table-column
+          type="index"
+          :label="`${$t('common.num')}`"
+          :index="indexMethod"
+          width="80"
+        ></el-table-column>
+        <el-table-column prop="columnName" :label="`${$t('node.dataName')}`" width="300"></el-table-column>
+        <el-table-column prop="columnType" :label="`${$t('node.dataType')}`" width="200"></el-table-column>
+        <el-table-column prop="remarks" :label="`${$t('node.remarks')}`"></el-table-column>
       </el-table>
       <div class="pagination">
         <div></div>
@@ -58,7 +65,7 @@
           :total="totalNum"
           :page-size="pageSize"
           :current-page="curPage"
-          :page-sizes="[10, 20, 50, 100]"
+          :page-sizes="[ 10, 20, 50, 100 ]"
           layout="total,sizes, prev, pager, next"
           class="pagination"
           @size-change="handleSizeChange"
@@ -67,14 +74,10 @@
       </div>
       <div class="btn-group">
         <div class="back-btn pointer" @click="back()">
-          <span class="text">
-            {{ $t('common.back') }}
-          </span>
+          <span class="text">{{ $t('common.back') }}</span>
         </div>
         <div class="back-btn main-back-btn pointer" @click="linkToTaskList()">
-          <span class="view">
-            {{ $t('node.viewTask') }}
-          </span>
+          <span class="view">{{ $t('node.viewTask') }}</span>
         </div>
       </div>
     </div>
@@ -112,12 +115,11 @@ export default {
         rows: 0,
         columns: 0,
         publishedAt: '',
-        dynamicFields: {
-          taskCount: 0
-        },
+          taskCount: 0,
         industry: '',
         remarks: '',
-        metaDataId: ''
+        metaDataId: '',
+        metaDataName: ''
       },
       columnList: []
     }
@@ -165,7 +167,7 @@ export default {
       dataApi.getDataFile({ metaDataId: this.metaDataId }).then(res => {
         if (res.data) {
           this.baseInfo = res.data
-          this.identityId = res.data?.identityId
+          this.identityId = res.data.identityId
         }
       })
     },
@@ -177,9 +179,10 @@ export default {
           pageSize: this.pageSize
         })
         .then(res => {
-          if (res.data) {
-            this.columnList = res.data
-            this.totalNum = res.totalRows
+          const { code, data } = res
+          if (code) {
+            this.columnList = data.items
+            this.totalNum = data.total
           }
         })
     }

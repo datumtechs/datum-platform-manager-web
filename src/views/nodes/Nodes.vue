@@ -4,22 +4,19 @@
       <div class="banner-content">
         <div class="content-left">
           <div class="title">
-            <span class="type">
-              {{ $t('node.nodes') }}
-            </span>
+            <span class="type">{{ $t('node.nodes') }}</span>
             <span v-if="lang === 'en'" class="desc">
-              <span class="value">{{ totalNode }} </span> participant nodes in the RosettaNet
+              <span class="value">{{ totalNode }}</span> participant nodes in the RosettaNet
             </span>
             <span v-else class="desc">
-              全网共 <span class="value"> {{ totalNode }} </span>个 可参与隐私计算任务的节点
+              全网共
+              <span class="value">{{ totalNode }}</span>个 可参与隐私计算任务的节点
             </span>
           </div>
-          <div class="content">
-            {{ $t('node.desc') }}
-          </div>
+          <div class="content">{{ $t('node.desc') }}</div>
         </div>
         <div class="content-right">
-          <img src="@/assets/images/node/2.bj.png" alt="" />
+          <img src="@/assets/images/node/2.bj.png" alt />
         </div>
       </div>
     </div>
@@ -38,22 +35,22 @@
           <!-- <el-button slot="append" icon="el-icon-search" class="search-btn" @click="searchFn"></el-button> -->
         </el-input>
         <el-select v-model="typeSelected" class="select" @change="handleSelectChange">
-          <el-option v-for="item in options" :key="item.id" :value="item.value" :label="item.label"> </el-option>
+          <el-option v-for=" item in options" :key="item.id" :value="item.value" :label="item.label"></el-option>
         </el-select>
       </div>
       <el-table v-loading="loading" style="width: 100%" :data="tableData" :show-header="false">
-        <el-table-column type="index" :label="`${$t('common.num')}`" :index="indexMethod"> </el-table-column>
+        <el-table-column type="index" :label="`${$t('common.num')}`" :index="indexMethod"></el-table-column>
         <el-table-column prop="bank-logo" width="120">
-          <template slot-scope="">
+          <template slot-scope>
             <div>
-              <img src="../../assets/images/default/node.svg" alt="" />
+              <img src="../../assets/images/default/node.svg" alt />
             </div>
           </template>
         </el-table-column>
         <el-table-column v-if="typeSelected === 'name'">
           <template slot-scope="{ row }">
             <div>
-              <p>{{ row.orgName }}</p>
+              <p>{{ row.nodeName }}</p>
               <p>{{ $t('node.identifier') }} : {{ row.identityId }}</p>
             </div>
           </template>
@@ -61,10 +58,10 @@
         <el-table-column v-if="typeSelected === 'data'">
           <template slot-scope="{ row }">
             <div>
-              <p>{{ row.orgName }}</p>
+              <p>{{ row.nodeName }}</p>
               <p class="detail-cell">
-                <span>{{ $t('node.dataAmount') }} : {{ row.dynamicFields.totalFile || 0 }}</span>
-                <span>{{ $t('node.dataTotalSize') }} : {{ changeSizeFn(row.dynamicFields.totalData) }}</span>
+                <span>{{ $t('node.dataAmount') }} : {{ row.totalFile || 0 }}</span>
+                <span>{{ $t('node.dataTotalSize') }} : {{ changeSizeFn(row.totalData) }}</span>
               </p>
             </div>
           </template>
@@ -72,11 +69,12 @@
         <el-table-column v-if="typeSelected === 'activtity'">
           <template slot-scope="{ row }">
             <div>
-              <p>{{ row.orgName }}</p>
+              <p>{{ row.nodeName }}</p>
               <div class="detail-cell">
-                <span> {{ $t('node.taskInMonth') }} : {{ row.dynamicFields.taskCount || 0 }}</span>
+                <span>{{ $t('node.taskInMonth') }} : {{ row.taskCount || 0 }}</span>
                 <p class="detail-active-cell">
-                  {{ $t('node.activeDegree') }} : <Activtity :idle-days="row.dynamicFields.idleDays || 0" />
+                  {{ $t('node.activeDegree') }} :
+                  <Activtity :idle-days="row.idleDays || 0" />
                 </p>
               </div>
             </div>
@@ -85,11 +83,11 @@
         <el-table-column v-if="typeSelected === 'power'">
           <template slot-scope="{ row }">
             <div>
-              <p>{{ row.orgName }}</p>
+              <p>{{ row.nodeName }}</p>
               <p class="detail-cell">
-                <span> {{ $t('node.memory') }} : {{ changeSizeFn(row.dynamicFields.totalMemory) }}</span>
-                <span> {{ $t('node.cpu') }} : {{ row.dynamicFields.totalCore }}</span>
-                <span> {{ $t('node.bandwidth') }} : {{ changeSizeFn(row.dynamicFields.totalBandwidth) + 'P/S' }}</span>
+                <span>{{ $t('node.memory') }} : {{ changeSizeFn(row.totalMemory) }}</span>
+                <span>{{ $t('node.cpu') }} : {{ row.totalCore }}</span>
+                <span>{{ $t('node.bandwidth') }} : {{ changeSizeFn(row.totalBandwidth) + 'P/S' }}</span>
               </p>
             </div>
           </template>
@@ -106,7 +104,7 @@
           :current-page.sync="curPage"
           background
           :total="totalNum"
-          :page-sizes="[4, 20, 50, 100]"
+          :page-sizes="[ 4, 20, 50, 100 ]"
           layout="total,sizes, prev, pager, next"
           class="pagination"
           @size-change="handleSizeChange"
@@ -209,9 +207,10 @@ export default {
         this.loading = false
       }
       this.loading = false
-      if (res?.code === 0) {
-        this.tableData = res.data
-        this.totalNum = res.totalRows
+      const { code, data } = res
+      if (code === 0) {
+        this.tableData = data.items
+        this.totalNum = data.total
       }
     },
     indexMethod (index) {

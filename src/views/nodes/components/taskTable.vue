@@ -1,27 +1,24 @@
 <template>
   <div class="task-table-wrapper">
     <el-table v-loading="taskLoading" border style="width: 100%" :data="tableData">
-      <el-table-column type="index" :label="`${$t('common.num')}`" :index="indexMethod" width="80"> </el-table-column>
-      <el-table-column prop="taskName" :label="`${$t('node.taskName')}`"> </el-table-column>
+      <el-table-column type="index" :label="`${$t('common.num')}`" :index="indexMethod" width="80"></el-table-column>
+      <el-table-column prop="taskName" :label="`${$t('node.taskName')}`"></el-table-column>
       <!-- <el-table-column prop="taskType" :label="`${$t('node.taskType')}`"> Privacy joint AI training </el-table-column> -->
-      <el-table-column prop="capacity" :label="`${$t('node.capacity')}`">
+      <el-table-column :label="`${$t('node.capacity')}`">
         <template slot-scope="{ row }">
-          <p v-for="role in getRole(row.dynamicFields)" :key="role">
-            {{ $t(`roles.${role}`) }}
-          </p>
+          <p v-for=" role in getRole(row)" :key="role">{{ $t(`roles.${role}`) }}</p>
         </template>
       </el-table-column>
-      <el-table-column prop="startAt" :label="`${$t('node.taskStartTime')}`">
-        <template slot-scope="{ row }">
-          {{ dayjs(row.createAt).format('YYYY-MM-DD HH:mm:ss') }}
-        </template>
+      <!-- TODO 任务开始时间 还是任务创建时间 -->
+      <el-table-column :label="`${$t('node.taskStartTime')}`">
+        <template slot-scope="{ row }">{{ dayjs(row.createAt).format('YYYY-MM-DD HH:mm:ss') }}</template>
       </el-table-column>
-      <el-table-column prop="taskSpent" :label="`${$t('node.taskSpent')}`">
-        <template slot-scope="{ row }">
-          {{ formatDuring(new Date(row.endAt).getTime() - new Date(row.createAt).getTime()) }}
-        </template>
+      <el-table-column :label="`${$t('node.taskSpent')}`">
+        <template
+          slot-scope="{ row }"
+        >{{ formatDuring(new Date(row.endAt).getTime() - new Date(row.createAt).getTime()) }}</template>
       </el-table-column>
-      <el-table-column prop="operation" :label="`${$t('common.actions')}`" width="100">
+      <el-table-column :label="`${$t('common.actions')}`" width="100">
         <template slot-scope="{ row }">
           <span class="pointer link-btn" @click="viewDetail(row)">{{ $t('node.viewDetail') }}</span>
         </template>
@@ -34,7 +31,7 @@
         :total="totalRows"
         :page-size="taskPagesize"
         :current-page="taskCurpage"
-        :page-sizes="[4, 20, 50, 100]"
+        :page-sizes="[ 4, 20, 50, 100 ]"
         layout="total,sizes, prev, pager, next"
         class="pagination"
         @current-change="handleTaskPageChange"
@@ -84,16 +81,23 @@ export default {
   },
   computed: {},
   watch: {},
-  created () {},
-  mounted () {},
+  created () { },
+  mounted () { },
   methods: {
     dayjs,
     formatDuring,
-    getRole (roles) {
+    getRole (row) {
+      const roles = {
+        isAlgoProvider: row.isAlgoProvider,
+        isDataProvider: row.isDataProvider,
+        isPowerProvider: row.isPowerProvider,
+        isResultReceiver: row.isResultReceiver,
+        isTaskSponsor: row.isTaskSponsor
+      }
       const ary = []
       Object.keys(roles).forEach(r => {
-        if (roles[r] === 0) {
-          delete roles[r]
+        if (roles[ r ] === 0) {
+          delete roles[ r ]
         } else {
           ary.push(r)
         }

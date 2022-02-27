@@ -1,23 +1,20 @@
 <template>
   <div class="detail-wrapper">
     <el-table style="width: 100%" :data="tableData">
-      <el-table-column type="index" :label="`${$t('common.num')}`" :index="indexMethod" width="70"> </el-table-column>
-      <el-table-column prop="eventType" :label="`${$t('node.eventType')}`" width="200"> </el-table-column>
-      <el-table-column prop="dynamicFields.orgName" :label="`${$t('node.eventMaker')}`" width="200"> </el-table-column>
+      <el-table-column type="index" :label="`${$t('common.num')}`" :index="indexMethod" width="70"></el-table-column>
+      <el-table-column prop="eventType" :label="`${$t('node.eventType')}`" width="200"></el-table-column>
+      <!-- 此处字段不对 缺少name -->
+      <el-table-column prop="identityId" :label="`${$t('node.eventMaker')}`" width="200"></el-table-column>
       <el-table-column prop="eventAt" :label="`${$t('node.generationTime')}`" width="300">
         <template slot-scope="{ row }">
-          <div>
-            {{ dayjs(row.eventAt).format('YYYY-MM-DD HH:mm:ss') }}
-          </div>
+          <div>{{ dayjs(row.eventAt).format('YYYY-MM-DD HH:mm:ss') }}</div>
         </template>
       </el-table-column>
-      <el-table-column prop="eventContent" :label="`${$t('node.eventContent')}`"> </el-table-column>
+      <el-table-column prop="eventContent" :label="`${$t('node.eventContent')}`"></el-table-column>
     </el-table>
     <div class="btn-group">
       <div class="back-btn pointer" @click="back()">
-        <span class="text">
-          {{ $t('common.back') }}
-        </span>
+        <span class="text">{{ $t('common.back') }}</span>
       </div>
     </div>
   </div>
@@ -57,7 +54,10 @@ export default {
     dayjs,
     initData () {
       taskApi.listTaskEvent({ taskId: this.taskId }).then(res => {
-        this.tableData = res.data
+        const { code, data } = res
+        if (code === 10000) {
+          this.tableData = data
+        }
       })
     },
     back () {

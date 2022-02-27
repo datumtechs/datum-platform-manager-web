@@ -38,7 +38,7 @@
       <div class="detail-title">{{ $t('node.participantsInfo') }}</div>
       <div class="info-table-box">
         <p class="info-table-title">{{ $t('common.sponsor') }}</p>
-        <el-table style="width: 100%" :data="[...details.sponsor]">
+        <el-table style="width: 100%" :data="details.taskSponsor">
           <el-table-column type="index" :index="indexMethod" width="70"> </el-table-column>
           <el-table-column prop="orgName" :label="`${$t('common.name')}`" width="300"> </el-table-column>
           <el-table-column prop="identityId" :label="`${$t('node.identifier')}`"> </el-table-column>
@@ -46,7 +46,7 @@
       </div>
       <div class="info-table-box">
         <p class="info-table-title">{{ $t('common.resultReceiver') }}</p>
-        <el-table style="width: 100%" :data="[...details.taskResultReceiverList]">
+        <el-table style="width: 100%" :data="details.resultReceiverList">
           <el-table-column type="index" :index="indexMethod" width="70"> </el-table-column>
           <el-table-column prop="orgName" :label="`${$t('common.name')}`" width="300"> </el-table-column>
           <el-table-column prop="identityId" :label="`${$t('node.identifier')}`"> </el-table-column>
@@ -54,7 +54,7 @@
       </div>
       <div class="info-table-box">
         <p class="info-table-title">{{ $t('common.executor') }}</p>
-        <el-table style="width: 100%" :data="[...details.taskPowerProviderList]">
+        <el-table style="width: 100%" :data="details.powerProviderList">
           <el-table-column type="index" :index="indexMethod" width="70"> </el-table-column>
           <el-table-column prop="dynamicFields.orgName" :label="`${$t('common.name')}`" width="300"> </el-table-column>
           <el-table-column prop="identityId" :label="`${$t('node.identifier')}`"> </el-table-column>
@@ -77,7 +77,7 @@
       </div>
       <div class="info-table-box">
         <p class="info-table-title">{{ $t('common.dataProvider') }}</p>
-        <el-table style="width: 100%" :data="[...details.taskDataProviderList]">
+        <el-table style="width: 100%" :data="details.dataProviderList">
           <el-table-column type="index" :index="indexMethod" width="70"> </el-table-column>
           <el-table-column prop="dynamicFields.orgName" :label="`${$t('common.name')}`" width="300"> </el-table-column>
           <el-table-column prop="identityId" :label="`${$t('node.identifier')}`"> </el-table-column>
@@ -92,7 +92,7 @@
       </div>
       <div class="info-table-box">
         <p class="info-table-title">{{ $t('common.algorithmProvider') }}</p>
-        <el-table style="width: 100%" :data="[...details.taskAlgoProvider]">
+        <el-table style="width: 100%" :data="details.algoProvider">
           <el-table-column type="index" :index="indexMethod" width="70"> </el-table-column>
           <el-table-column prop="dynamicFields.orgName" :label="`${$t('common.name')}`" width="300"> </el-table-column>
           <el-table-column prop="identityId" :label="`${$t('node.identifier')}`"> </el-table-column>
@@ -130,11 +130,11 @@ export default {
         createAt: '',
         endAt: '',
         startAt: '',
-        sponsor: {},
-        taskResultReceiverList: [],
-        taskPowerProviderList: [],
+        taskSponsor: {},
+        resultReceiverList: [],
+        powerProviderList: [],
         taskDataProviderList: [],
-        taskAlgoProvider: [],
+        algoProvider: [],
         status: -1
       },
       curPage: 1,

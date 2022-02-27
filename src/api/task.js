@@ -5,14 +5,14 @@ const taskApi = {
   queryTaskListByNodeId: params => {
     return http({
       method: 'get',
-      url: '/scan/task/listTaskByIdentityId',
+      url: '/flow/task/getOrgTaskListByIdentityId',
       params
     })
   },
   queryTaskDetailById: params => {
     return http({
       method: 'get',
-      url: '/scan/task/getTaskDetails',
+      url: '/flow/task/getTaskDetails',
       params
     })
   },
@@ -21,16 +21,17 @@ const taskApi = {
   listTaskEvent: params => {
     return http({
       method: 'get',
-      url: '/scan/task/listTaskEvent',
+      url: '/flow/task/getTaskEventList',
       params
     })
   },
 
+  // TODO : 这个接口不见了
   // 查询数据关联任务 /task/listTaskByMetaDataId
   listTaskByMetaDataId: params => {
     return http({
       method: 'get',
-      url: '/scan/task/listTaskByMetaDataId',
+      url: '/flow/task/listTaskByMetaDataId',
       params
     })
   }

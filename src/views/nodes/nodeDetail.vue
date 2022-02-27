@@ -4,7 +4,7 @@
       <div class="banner-content">
         <div class="left-area">
           <div class="logo-box">
-            <img src="@/assets/images/default/data.svg" alt="" class="logo-avatar" />
+            <img src="@/assets/images/default/data.svg" alt class="logo-avatar" />
             <span class="logo-name">{{ nodeName }}</span>
           </div>
           <div class="identifier-box">
@@ -13,7 +13,7 @@
           </div>
         </div>
         <div class="right-area">
-          <div v-for="item in dataList" :key="item.id" class="value-box">
+          <div v-for=" item in dataList" :key="item.id" class="value-box">
             <div class="center-data">
               <p class="value">
                 <span class="front">{{ getInt(changeSizeObj(item.value).value) }}</span>
@@ -24,7 +24,7 @@
             </div>
             <div class="value-box-tail">
               <p class="title">{{ item.name }}</p>
-              <img src="@/assets/images/home/1.bj7.svg" alt="" />
+              <img src="@/assets/images/home/1.bj7.svg" alt />
             </div>
           </div>
         </div>
@@ -34,15 +34,15 @@
       <div class="search-box">
         <ul class="tab-box">
           <li
-            v-for="item in menuList"
+            v-for=" item in menuList"
             :key="item.id"
             class="tab-mini-box pointer"
             :class="{ active: item.value === curTab }"
             @click="handleTabClick(item.value)"
           >
             <span class="ring"></span>
-            <span> {{ item.label }}</span>
-            <span class="font-b"> {{ item.total || 0 }}</span>
+            <span>{{ item.label }}</span>
+            <span class="font-b">{{ item.total || 0 }}</span>
           </li>
         </ul>
       </div>
@@ -68,9 +68,7 @@
         @handleTaskPageChange="handleTaskPageChange"
       />
       <div class="back-btn pointer" @click="back">
-        <span class="text">
-          {{ $t('common.back') }}
-        </span>
+        <span class="text">{{ $t('common.back') }}</span>
       </div>
     </div>
   </div>
@@ -99,7 +97,6 @@ export default {
       dataLoading: false,
       taskLoading: false,
       globalData: {
-        totalAlgo: '',
         totalBandwidth: '',
         totalCore: '',
         totalData: '',
@@ -171,11 +168,11 @@ export default {
   methods: {
     ...mapMutations('nodes', [ 'SET_NODE_DETAIL_TAB', 'SET_NODE_DETAIL_DATA_PAGE', 'SET_NODE_DETAIL_TASK_PAGE' ]),
     changeSizeObj,
-    getUnit () {},
+    getUnit () { },
     findOrgInfo () {
       orgApi.findOrgInfo({ identityId: this.identityId }).then(res => {
         if (res.code === 0) {
-          this.globalData = res.data.dynamicFields
+          this.globalData = res.data
         }
       })
     },
@@ -192,11 +189,11 @@ export default {
     },
     getInt (value) {
       if (!value) return '0'
-      return value.toString().split('.')[0]
+      return value.toString().split('.')[ 0 ]
     },
     getFloat (value) {
       if (!value) return '00'
-      return value.toString().split('.')[1]
+      return value.toString().split('.')[ 1 ]
     },
     handleTabClick (tab) {
       this.SET_NODE_DETAIL_TAB(tab)
@@ -236,8 +233,11 @@ export default {
         })
         .then(res => {
           this.taskLoading = false
-          this.taskTableData = res.data
-          this.taskTotalnum = res.totalRows
+          const { code, data } = res
+          if (code === 10000) {
+            this.taskTableData = data.items
+            this.taskTotalnum = data.total
+          }
         })
         .catch(err => {
           console.log(err)
@@ -278,7 +278,7 @@ export default {
           border-radius: 50%;
           position: relative;
           &::before {
-            content: '';
+            content: "";
             width: 8px;
             height: 8px;
             background-color: #fff;

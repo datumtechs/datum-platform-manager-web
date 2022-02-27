@@ -1,8 +1,8 @@
 <template>
   <div class="data-table-wrapper">
     <el-table v-loading="dataLoading" style="width: 100%" :data="tableData">
-      <el-table-column type="index" :label="`${$t('common.num')}`" :index="indexMethod" width="80"> </el-table-column>
-      <el-table-column prop="fileName" :label="`${$t('node.dataName')}`"> </el-table-column>
+      <el-table-column type="index" :label="`${$t('common.num')}`" :index="indexMethod" width="80"></el-table-column>
+      <el-table-column prop="fileName" :label="`${$t('node.dataName')}`"></el-table-column>
       <!-- <el-table-column prop="fileName" :label="`${$t('node.back-btn pointer')}`"> </el-table-column> -->
       <el-table-column prop="fileType" :label="`${$t('node.dataType')}`">
         <template slot-scope="{ row }">
@@ -15,11 +15,11 @@
         </template>
       </el-table-column>
       <el-table-column prop="publishedAt" :label="`${$t('node.publicTime')}`">
-        <template slot-scope="scope">
-          {{ dayjs(scope.row.publishedAt).format('YYYY-MM-DD HH:mm:ss') }}
-        </template>
+        <template
+          slot-scope="scope"
+        >{{ dayjs(scope.row.publishedAt).format('YYYY-MM-DD HH:mm:ss') }}</template>
       </el-table-column>
-      <el-table-column prop="dynamicFields.taskCount" :label="`${$t('node.involvedNum')}`"> </el-table-column>
+      <el-table-column prop="dynamicFields.taskCount" :label="`${$t('node.involvedNum')}`"></el-table-column>
       <el-table-column prop="operation" width="100" :label="`${$t('common.actions')}`">
         <template slot-scope="{ row }">
           <span class="pointer link-btn" @click="viewDetail(row)">{{ $t('node.viewMetaData') }}</span>
@@ -33,7 +33,7 @@
         :total="totalRows"
         :page-size="dataPagesize"
         :current-page="dataCurpage"
-        :page-sizes="[4, 20, 50, 100]"
+        :page-sizes="[ 4, 20, 50, 100 ]"
         layout="total,sizes, prev, pager, next"
         class="pagination"
         @size-change="handleSizeChange"
@@ -77,19 +77,19 @@ export default {
       default: 4
     }
   },
-  data() {
+  data () {
     return {}
   },
   methods: {
     dayjs,
     changeSizeFn,
-    handleSizeChange(val) {
+    handleSizeChange (val) {
       this.$emit('update:dataPagesize', val)
     },
-    handleDataPageChange(page) {
+    handleDataPageChange (page) {
       this.$emit('handleDataPageChange', page)
     },
-    viewDetail(item) {
+    viewDetail (item) {
       this.$router.push({
         name: 'metaDetail',
         query: {
@@ -99,7 +99,7 @@ export default {
         }
       })
     },
-    indexMethod(index) {
+    indexMethod (index) {
       return (this.dataCurpage - 1) * this.dataPagesize + index + 1
     }
   }
