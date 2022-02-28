@@ -6,7 +6,6 @@ import IndexLayout from '@/Layout/IndexLayout.vue'
 import Web3 from 'web3'
 
 onMounted(() => {
-  const web3 = new Web3()
   
 })
 

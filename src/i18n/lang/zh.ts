@@ -1,4 +1,7 @@
 const zh = {
+  common:{
+    search:'搜索',
+  },
   menu: {
     home: '首页',
     nodes: '网络节点',
@@ -41,7 +44,8 @@ const zh = {
     ranking: '排名',
     viewAllNode:'查看所有节点',
     dataUseTop10:'数据凭证任务使用TOP10',
-    modelUseTop10:'模型凭证任务使用TOP10'
+    modelUseTop10:'模型凭证任务使用TOP10',
+    explorer:'浏览器'
   }
 }
 

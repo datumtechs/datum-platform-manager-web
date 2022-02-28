@@ -1,4 +1,7 @@
 const en = {
+  common:{
+    search:'Search',
+  },
   menu: {
     home: 'Home',
     nodes: 'Nodes',
@@ -41,7 +44,8 @@ const en = {
     ranking: 'Ranking',
     viewAllNode:'View All Nodes',
     dataUseTop10:'Data Credential Use TOP10',
-    modelUseTop10:'Model Credential Use TOP10'
+    modelUseTop10:'Model Credential Use TOP10',
+    explorer:'Explorer'
   }
 }
 

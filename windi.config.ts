@@ -12,8 +12,12 @@ export default defineConfig({
     },
     backgroundColor: theme => ({
       ...theme('colors'),
-      "backgroundColor-ccc": "#ccc",
+      "bg-ccc": "#ccc",
+      "bg-main":'#2B60E9'
     }),
+    colors:{
+      "main":'#2B60E9'
+    }
     // fontSize: () => ({
     //   "text-size-20": "20px"
     // })
