@@ -20,14 +20,7 @@ module.exports = {
     disableHostCheck: true,
     // proxy: proxyUtil.localProxy,
     proxy: {
-      // '/scan': {
-      //   target: 'http://39.103.230.158:8087',
-      //   // target: 'http://192.168.10.146:8087', // 146
-      //   pathRewrite: {
-      //     '^/scan': '/metis-scan',
-      //     changeOrigin: true
-      //   }
-      // },
+  
       '/flow': { // moirae  
         target: 'http://192.168.10.145:20000/',
         // target: 'http://10.10.8.174:8234/', // 146

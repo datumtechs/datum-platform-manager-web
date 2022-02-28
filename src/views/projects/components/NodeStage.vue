@@ -105,7 +105,7 @@ export default {
       default: false
     }
   },
-  data() {
+  data () {
     return {
       taskId: '',
       currentName: '',
@@ -122,11 +122,11 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('workflow', ['nodeList', 'curNodeId', 'dragStatus', 'curNodeIndex']),
+    ...mapGetters('workflow', [ 'nodeList', 'curNodeId', 'dragStatus', 'curNodeIndex' ]),
     projectId: function () {
       return this.$route.params.id
     },
-    nodeListWithStatus() {
+    nodeListWithStatus () {
       const that = this
       if (that.statusList.length === 0) return that.nodeList
       // :0-未运行,1-运行中,2-运行成功，3-运行失败
@@ -140,17 +140,17 @@ export default {
     }
   },
   watch: {
-    dragStatus(val) {
+    dragStatus (val) {
       this.showDot = val
     },
-    nodeListWithStatus() {
+    nodeListWithStatus () {
       this.nodeListWithStatus.length &&
         this.nodeListWithStatus[this.currentIndex] &&
         this.showNodeDetail(this.nodeListWithStatus[this.currentIndex], this.currentIndex)
     }
   },
-  mounted() {},
-  beforeDestroy() {
+  mounted () {},
+  beforeDestroy () {
     this.clearCache()
   },
   methods: {
@@ -164,7 +164,7 @@ export default {
       'RESET_NODE_LIST',
       'SET_NODE_NAME'
     ]),
-    filterFtatusList() {
+    filterFtatusList () {
       const that = this
       if (that.statusList.length === 0) return that.nodeList // showNodeDetail
       // :0-未运行,1-运行中,2-运行成功，3-运行失败
@@ -174,16 +174,16 @@ export default {
       })
       return list
     },
-    lossFocus(node, index) {
+    lossFocus (node, index) {
       this.SET_NODE_NAME(this.currentName)
       this.nodeListWithStatus[index].isEdit = false
     },
 
-    clearCache() {
+    clearCache () {
       this.SET_NODE_INDEX(0)
       this.SET_CUR_NODE_ID(this.currentName)
     },
-    deleteNode() {
+    deleteNode () {
       this.showMenu = false
       // if (this.statusList[this.curNodeIndex].runStatus === 1) {
       //   this.$message.error(this.$t('tip.nodeRunningNoDelete'))
@@ -195,11 +195,11 @@ export default {
       this.SET_NODE_PANEL(false)
       // TODO: change statusList
     },
-    callPanel(id) {
+    callPanel (id) {
       this.$bus.$emit('showPanel', id)
       this.SET_NODE_PANEL(true)
     },
-    renameNode(node) {
+    renameNode (node) {
       this.showMenu = false
       this.currentName = this.nodeListWithStatus[this.currentIndex].nodeName
       this.nodeListWithStatus[this.currentIndex].isEdit = true
@@ -207,11 +207,11 @@ export default {
         this.$refs[`rename-input-${this.currentIndex}`][0].focus()
       })
     },
-    async viewResult() {
+    async viewResult () {
       await this.queryResult()
       this.resultVisible = true
     },
-    queryResult() {
+    queryResult () {
       // 此处是应该根据点击获取的实时taskId进行查询
       projectApi
         .getTaskResult({
@@ -224,17 +224,17 @@ export default {
           }
         })
     },
-    showNodeDetail(node, index) {
+    showNodeDetail (node, index) {
       this.currentIndex = index
       this.SET_CUR_NODE_ID(node.algorithmId)
       this.SET_NODE_INDEX(index)
       this.SET_CUR_DATA(this.nodeList)
       this.callPanel(node.algorithmId)
     },
-    closeMenu() {
+    closeMenu () {
       this.showMenu = false
     },
-    showMenuFn(e, item, index) {
+    showMenuFn (e, item, index) {
       this.showMenu = true
       this.taskId = item.taskId
       this.taskItemDetails = item

@@ -38,25 +38,25 @@
       <div class="detail-title">{{ $t('node.participantsInfo') }}</div>
       <div class="info-table-box">
         <p class="info-table-title">{{ $t('common.sponsor') }}</p>
-        <el-table style="width: 100%" :data="details.taskSponsor">
+        <el-table style="width: 100%" :data="[...details.taskSponsor]">
           <el-table-column type="index" :index="indexMethod" width="70"> </el-table-column>
-          <el-table-column prop="orgName" :label="`${$t('common.name')}`" width="300"> </el-table-column>
+          <el-table-column prop="nodeName" :label="`${$t('common.name')}`" width="300"> </el-table-column>
           <el-table-column prop="identityId" :label="`${$t('node.identifier')}`"> </el-table-column>
         </el-table>
       </div>
       <div class="info-table-box">
         <p class="info-table-title">{{ $t('common.resultReceiver') }}</p>
-        <el-table style="width: 100%" :data="details.resultReceiverList">
+        <el-table style="width: 100%" :data="[...details.resultReceiverList]">
           <el-table-column type="index" :index="indexMethod" width="70"> </el-table-column>
-          <el-table-column prop="orgName" :label="`${$t('common.name')}`" width="300"> </el-table-column>
+          <el-table-column prop="nodeName" :label="`${$t('common.name')}`" width="300"> </el-table-column>
           <el-table-column prop="identityId" :label="`${$t('node.identifier')}`"> </el-table-column>
         </el-table>
       </div>
       <div class="info-table-box">
         <p class="info-table-title">{{ $t('common.executor') }}</p>
-        <el-table style="width: 100%" :data="details.powerProviderList">
+        <el-table style="width: 100%" :data="[...details.powerProviderList]">
           <el-table-column type="index" :index="indexMethod" width="70"> </el-table-column>
-          <el-table-column prop="dynamicFields.orgName" :label="`${$t('common.name')}`" width="300"> </el-table-column>
+          <el-table-column prop="nodeName" :label="`${$t('common.name')}`" width="300"> </el-table-column>
           <el-table-column prop="identityId" :label="`${$t('node.identifier')}`"> </el-table-column>
           <el-table-column :label="`${$t('node.computingResource')}`">
             <template slot-scope="{ row }">
@@ -77,14 +77,14 @@
       </div>
       <div class="info-table-box">
         <p class="info-table-title">{{ $t('common.dataProvider') }}</p>
-        <el-table style="width: 100%" :data="details.dataProviderList">
+        <el-table style="width: 100%" :data="[...details.dataProviderList]">
           <el-table-column type="index" :index="indexMethod" width="70"> </el-table-column>
-          <el-table-column prop="dynamicFields.orgName" :label="`${$t('common.name')}`" width="300"> </el-table-column>
+          <el-table-column prop="nodeName" :label="`${$t('common.name')}`" width="300"> </el-table-column>
           <el-table-column prop="identityId" :label="`${$t('node.identifier')}`"> </el-table-column>
           <el-table-column :label="`${$t('node.metaNameAndId')}`">
             <template slot-scope="{ row }">
               <div>
-                <span>{{ row.dynamicFields.resourceName }} ( ID:{{ row.metaDataId }} )</span>
+                <span>{{ row.metaDataName }} ( ID:{{ row.metaDataId }} )</span>
               </div>
             </template>
           </el-table-column>
@@ -92,9 +92,9 @@
       </div>
       <div class="info-table-box">
         <p class="info-table-title">{{ $t('common.algorithmProvider') }}</p>
-        <el-table style="width: 100%" :data="details.algoProvider">
+        <el-table style="width: 100%" :data="[...details.algoProvider]">
           <el-table-column type="index" :index="indexMethod" width="70"> </el-table-column>
-          <el-table-column prop="dynamicFields.orgName" :label="`${$t('common.name')}`" width="300"> </el-table-column>
+          <el-table-column prop=".nodeName" :label="`${$t('common.name')}`" width="300"> </el-table-column>
           <el-table-column prop="identityId" :label="`${$t('node.identifier')}`"> </el-table-column>
         </el-table>
       </div>
@@ -170,7 +170,7 @@ export default {
     },
     initData () {
       taskApi.queryTaskDetailById({ taskId: this.taskId }).then(res => {
-        if (res.code === 0) {
+        if (res.code === 10000) {
           this.details = res.data
         }
       })

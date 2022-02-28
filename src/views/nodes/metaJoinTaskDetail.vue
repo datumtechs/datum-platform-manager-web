@@ -1,8 +1,8 @@
 <template>
   <div class="detail-wrapper">
     <el-table style="width: 100%" :data="tableData">
-      <el-table-column type="index" :label="`${$t('common.num')}`" :index="indexMethod" width="80"> </el-table-column>
-      <el-table-column prop="taskName" :label="`${$t('node.taskName')}`"> </el-table-column>
+      <el-table-column type="index" :label="`${$t('common.num')}`" :index="indexMethod" width="80"></el-table-column>
+      <el-table-column prop="taskName" :label="`${$t('node.taskName')}`"></el-table-column>
       <el-table-column :label="`${$t('menu.task')}${$t('assets.status')}`">
         <template slot-scope="{ row }">
           <div>{{ getStatus(row.status) }}</div>
@@ -15,9 +15,7 @@
       </el-table-column>
       <el-table-column prop="taskSpent" :label="`${$t('node.taskSpent')}`">
         <template slot-scope="{ row }">
-          <div>
-            {{ formatDuring(new Date(row.endAt) - new Date(row.createAt)) }}
-          </div>
+          <div>{{ formatDuring(new Date(row.endAt) - new Date(row.createAt)) }}</div>
         </template>
       </el-table-column>
       <el-table-column :label="`${$t('common.actions')}`">
@@ -33,7 +31,7 @@
         :total="totalNum"
         :page-size="pageSize"
         :current-page="curPage"
-        :page-sizes="[10, 20, 50, 100]"
+        :page-sizes="[ 10, 20, 50, 100 ]"
         layout="total,sizes, prev, pager, next"
         class="pagination"
         @size-change="handleSizeChange"
@@ -41,9 +39,7 @@
       />
     </div>
     <div class="back-btn pointer" @click="back()">
-      <span class="text">
-        {{ $t('common.back') }}
-      </span>
+      <span class="text">{{ $t('common.back') }}</span>
     </div>
   </div>
 </template>
@@ -117,8 +113,11 @@ export default {
       taskApi
         .listTaskByMetaDataId({ metaDataId: this.metaDataId, pageNo: this.curPage, pageSize: this.pageSize })
         .then(res => {
-          this.tableData = res.data
-          this.totalNum = res.totalRows
+          const { code, data } = res
+          if (code === 10000) {
+            this.tableData = data.items
+            this.totalNum = data.total
+          }
         })
     }
   }

@@ -171,7 +171,7 @@ export default {
     getUnit () { },
     findOrgInfo () {
       orgApi.findOrgInfo({ identityId: this.identityId }).then(res => {
-        if (res.code === 0) {
+        if (res.code === 10000) {
           this.globalData = res.data
         }
       })
@@ -215,8 +215,11 @@ export default {
         })
         .then(res => {
           this.dataLoading = false
-          this.dataTableData = res.data
-          this.dataTotalnum = res.totalRows
+          const { code, data } = res
+          if (code === 10000) {
+            this.dataTableData = data.items
+            this.dataTotalnum = data.total
+          }
         })
         .catch(err => {
           console.log(err)

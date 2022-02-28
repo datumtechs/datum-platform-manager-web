@@ -117,7 +117,7 @@ export default {
     initData () {
       homeApi.queryGlobalData().then(res => {
         const { data, code } = res
-        if (code === 0) {
+        if (code === 10000) {
           this.pageObj.powerOrgCount = data.powerOrgCount
           this.pageObj.totalMemory = data.totalMemory
           this.pageObj.totalBandwidth = data.totalBandwidth

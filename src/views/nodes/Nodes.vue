@@ -173,12 +173,13 @@ export default {
       console.log(value)
     },
     handleSelectChange (type) {
+      this.curPage = 1
       this.typeSelected = type
       this.initData()
     },
     queryGlobalData () {
       homeApi.queryGlobalData().then(res => {
-        if (res.code === 0) {
+        if (res.code === 10000) {
           this.totalNode = res.data.powerOrgCount
         }
       })
@@ -208,7 +209,7 @@ export default {
       }
       this.loading = false
       const { code, data } = res
-      if (code === 0) {
+      if (code === 10000) {
         this.tableData = data.items
         this.totalNum = data.total
       }

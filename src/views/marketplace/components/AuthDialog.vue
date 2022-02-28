@@ -1,8 +1,12 @@
 <template>
-  <el-dialog :visible="showForm" :title="$t('data.applyForAuth')" width="480px" class="dialog-box" @close="close">
-    <div slot="title" class="dialog-title">
-      {{ $t('data.applyForAuth') }}
-    </div>
+  <el-dialog
+    :visible="showForm"
+    :title="$t('data.applyForAuth')"
+    width="480px"
+    class="dialog-box"
+    @close="close"
+  >
+    <div slot="title" class="dialog-title">{{ $t('data.applyForAuth') }}</div>
     <ApplyInfo ref="applyInfo" :form-obj="formObj" />
     <div slot="footer" class="dialog-footer">
       <el-button size="small" @click="handleClose">{{ $t('common.cancel') }}</el-button>
@@ -26,22 +30,22 @@ export default {
     },
     formObj: {
       type: Object,
-      default: () => {}
+      default: () => { }
     }
   },
-  data() {
+  data () {
     return {
       dialogVisible: false
     }
   },
   computed: {
-    ...mapGetters('app', ['address'])
+    ...mapGetters('app', [ 'address' ])
   },
   watch: {},
-  mounted() {},
+  mounted () { },
   methods: {
-    ...mapActions('app', ['getLoginNonce', 'getUserType', 'resetLogin']),
-    async applyFn() {
+    ...mapActions('app', [ 'getLoginNonce', 'getUserType', 'resetLogin' ]),
+    async applyFn () {
       const that = this
       const { curMode, startDate, startTime, endDate, endTime, authValue } = that.$refs.applyInfo.queryParams()
 
@@ -70,14 +74,14 @@ export default {
       // 判断是否登录 未登录 先调用登录
       if (that.address) {
         // 校验 请输入时间 请输入次数
-        const pass = checks[curMode]()
+        const pass = checks[ curMode ]()
         pass && this.getAuth(begin, end, curMode)
       } else {
         await this.resetLogin()
         this.$Web3Service.connectWallet()
       }
     },
-    async getAuth(begin, end) {
+    async getAuth (begin, end) {
       const sign = await this.getSign()
       const type = await this.getUserType()
       const params = {
@@ -98,7 +102,7 @@ export default {
         }
       })
     },
-    async getSign() {
+    async getSign () {
       try {
         await this.getLoginNonce()
         const sign = await this.$Web3Service.signForWallet()
@@ -107,11 +111,11 @@ export default {
         console.log(error)
       }
     },
-    handleClose() {
-      //保证关闭后刷新页面
+    handleClose () {
+      // 保证关闭后刷新页面
       this.$emit('update:showForm', false)
     },
-    close() {
+    close () {
       this.handleClose()
     }
   }

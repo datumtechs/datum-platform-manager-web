@@ -2,11 +2,11 @@
   <div class="data-table-wrapper">
     <el-table v-loading="dataLoading" style="width: 100%" :data="tableData">
       <el-table-column type="index" :label="`${$t('common.num')}`" :index="indexMethod" width="80"></el-table-column>
-      <el-table-column prop="fileName" :label="`${$t('node.dataName')}`"></el-table-column>
+      <el-table-column prop="metaDataName" :label="`${$t('node.dataName')}`"></el-table-column>
       <!-- <el-table-column prop="fileName" :label="`${$t('node.back-btn pointer')}`"> </el-table-column> -->
       <el-table-column prop="fileType" :label="`${$t('node.dataType')}`">
         <template slot-scope="{ row }">
-          <div>{{ row.fileType === '1' ? 'CSV' : '' }}</div>
+          <div>{{ row.fileType === 1 ? 'CSV' : '' }}</div>
         </template>
       </el-table-column>
       <el-table-column prop="size" :label="`${$t('node.dataSize')}`">
