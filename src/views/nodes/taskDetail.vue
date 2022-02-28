@@ -80,7 +80,7 @@
         <el-table style="width: 100%" :data="[...details.dataProviderList]">
           <el-table-column type="index" :index="indexMethod" width="70"> </el-table-column>
           <el-table-column prop="nodeName" :label="`${$t('common.name')}`" width="300"> </el-table-column>
-          <el-table-column prop="identityId" :label="`${$t('node.identifier')}`"> </el-table-column>
+          <el-table-column prop="identityId" :label="`${$t('node.identifier')}`" width="400"> </el-table-column>
           <el-table-column :label="`${$t('node.metaNameAndId')}`">
             <template slot-scope="{ row }">
               <div>

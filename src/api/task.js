@@ -26,12 +26,11 @@ const taskApi = {
     })
   },
 
-  // TODO : 这个接口不见了
-  // 查询数据关联任务 /task/listTaskByMetaDataId
-  listTaskByMetaDataId: params => {
+  // 查询数据关联任务 /task/getTaskByMetaDataId
+  getTaskByMetaDataId: params => {
     return http({
       method: 'get',
-      url: '/flow/task/listTaskByMetaDataId',
+      url: '/flow/task/getTaskByMetaDataId',
       params
     })
   }

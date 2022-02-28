@@ -96,15 +96,14 @@ export default {
       }
       const ary = []
       Object.keys(roles).forEach(r => {
-        if (roles[ r ] === 0) {
+        console.log(r)
+        if (roles[ r ] === false) {
           delete roles[ r ]
         } else {
-          ary.push(r)
+          ary.push(r.replace(/^is/g, '').replace(/^./, (L) => L.toLowerCase()))
         }
       })
       return ary
-      // ary.forEach(r => this.$t(`roles.${r}`))
-      // console.log(ary)
     },
     handleSizeChange (val) {
       this.$emit('update:taskPagesize', val)

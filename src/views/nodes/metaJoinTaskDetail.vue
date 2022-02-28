@@ -111,7 +111,7 @@ export default {
     },
     initData () {
       taskApi
-        .listTaskByMetaDataId({ metaDataId: this.metaDataId, pageNo: this.curPage, pageSize: this.pageSize })
+        .getTaskByMetaDataId({ metaDataId: this.metaDataId, pageNo: this.curPage, pageSize: this.pageSize })
         .then(res => {
           const { code, data } = res
           if (code === 10000) {

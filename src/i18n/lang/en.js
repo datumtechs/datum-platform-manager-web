@@ -199,6 +199,7 @@ export default {
     taskSponsor: 'Task sponsor',
     algoProvider: 'Algorithm provider',
     resultConsumer: 'Result consumer',
+    resultReceiver: 'Result consumer',
     dataProvider: 'Data provider',
     powerProvider: 'Power provider'
   },

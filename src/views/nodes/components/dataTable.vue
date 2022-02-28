@@ -19,7 +19,7 @@
           slot-scope="scope"
         >{{ dayjs(scope.row.publishedAt).format('YYYY-MM-DD HH:mm:ss') }}</template>
       </el-table-column>
-      <el-table-column prop="dynamicFields.taskCount" :label="`${$t('node.involvedNum')}`"></el-table-column>
+      <el-table-column prop="taskCount" :label="`${$t('node.involvedNum')}`"></el-table-column>
       <el-table-column prop="operation" width="100" :label="`${$t('common.actions')}`">
         <template slot-scope="{ row }">
           <span class="pointer link-btn" @click="viewDetail(row)">{{ $t('node.viewMetaData') }}</span>

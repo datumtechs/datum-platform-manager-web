@@ -199,6 +199,7 @@ export default {
     taskSponsor: '任务发起方',
     algoProvider: '算法提供方',
     resultConsumer: '结果接收方',
+    resultReceiver: '结果接收方',
     dataProvider: '数据提供方',
     powerProvider: '算力提供方'
   },
