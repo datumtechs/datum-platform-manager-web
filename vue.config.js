@@ -22,7 +22,7 @@ module.exports = {
     proxy: {
   
       '/flow': { // moirae  
-        target: 'http://192.168.10.145:20000/',
+        target: 'https://192.168.10.145:443/',
         // target: 'http://10.10.8.174:8234/', // 146
         pathRewrite: {
           '^/flow': '/flow',
