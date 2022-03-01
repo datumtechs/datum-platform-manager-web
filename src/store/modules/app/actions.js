@@ -14,13 +14,15 @@ const actions = {
   async getLoginNonce ({ commit, getters }) {
     try {
       const address = getters.address
-      const {
-        data, code
-      } = await loginApi.getLoginNonce(address)
-      if (code !== 10000) {
-        throw new Error('Wallet address exception')
+      if (address) {
+        const {
+          data, code
+        } = await loginApi.getLoginNonce(address)
+        if (code !== 10000) {
+          throw new Error('Wallet address exception')
+        }
+        commit('SET_NONCE_ID', data.nonce)
       }
-      commit('SET_NONCE_ID', data.nonce)
     } catch (error) {
       console.log(error)
     }
