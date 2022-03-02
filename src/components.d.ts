@@ -5,6 +5,7 @@
 declare module 'vue' {
   export interface GlobalComponents {
     Banner: typeof import('./components/Banner.vue')['default']
+    ComTabs: typeof import('./components/ComTabs.vue')['default']
     ElAside: typeof import('element-plus/es')['ElAside']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCheckbox: typeof import('element-plus/es')['ElCheckbox']
@@ -19,6 +20,8 @@ declare module 'vue' {
     ElSpace: typeof import('element-plus/es')['ElSpace']
     ElTable: typeof import('element-plus/es')['ElTable']
     ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
+    ElTabPane: typeof import('element-plus/es')['ElTabPane']
+    ElTabs: typeof import('element-plus/es')['ElTabs']
     Header: typeof import('./components/layout/Header.vue')['default']
     Login: typeof import('./components/login/index.vue')['default']
     Menu: typeof import('./components/layout/Menu.vue')['default']
@@ -27,6 +30,8 @@ declare module 'vue' {
     PersonalPopover: typeof import('./components/layout/components/PersonalPopover.vue')['default']
     Search: typeof import('./components/Search.vue')['default']
     Side: typeof import('./components/layout/Side.vue')['default']
+    Tabs: typeof import('./components/ComTabs.vue')['default']
+    Tage: typeof import('./components/tage.vue')['default']
   }
 }
 
