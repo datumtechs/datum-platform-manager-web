@@ -104,7 +104,7 @@ export default {
       default: false
     }
   },
-  data() {
+  data () {
     return {
       loading: true,
       showWarning: false,
@@ -114,19 +114,19 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('app', ['user', 'address']),
-    warnTitle() {
+    ...mapGetters('app', [ 'user', 'address' ]),
+    warnTitle () {
       return this.$t('assets.revoke')
     },
-    confirmText() {
+    confirmText () {
       return this.$t('common.apply')
     }
   },
   methods: {
-    ...mapActions('app', ['getLoginNonce']),
+    ...mapActions('app', [ 'getLoginNonce' ]),
     formatNumber,
     dayjs,
-    async deleteCb() {
+    async deleteCb () {
       if (this.user) {
         await this.getLoginNonce()
         const res = await this.$Web3Service.signForWallet()
@@ -138,12 +138,11 @@ export default {
         // this.$Web3Service.connectWallet()
       }
     },
-    revokeAssets(sign) {
+    revokeAssets (sign) {
       assetsApi
         .revokeAssets({
           address: this.address,
-          id: this.curId,
-          metadataAuthId: this.metaDataPkId,
+          metadataAuthId: this.curId,
           sign
         })
         .then(res => {
@@ -157,7 +156,7 @@ export default {
           }
         })
     },
-    getType(type) {
+    getType (type) {
       switch (type) {
         case 0:
           return 'N/A'
@@ -171,7 +170,7 @@ export default {
       }
     },
     //  0-已申请(待审核), 1-已授权, 2-已拒绝, 3-已撤销, 4-已失效
-    getStatus(status) {
+    getStatus (status) {
       switch (status) {
         case 0:
           return this.$t('projects.applying')
@@ -188,16 +187,16 @@ export default {
       }
     },
 
-    handlePageChange(page) {
+    handlePageChange (page) {
       this.$emit('changeDataCurpage', page)
     },
-    handleSizeChange(size) {
+    handleSizeChange (size) {
       this.$emit('changeDataPageSize', size)
     },
-    indexMethod(index) {
+    indexMethod (index) {
       return (this.curPage - 1) * this.pageSize + index + 1
     },
-    viewFn(row) {
+    viewFn (row) {
       this.$router.push({
         path: '/assets/detail',
         query: {
@@ -208,14 +207,14 @@ export default {
         }
       })
     },
-    revokeFn(row) {
+    revokeFn (row) {
       this.showWarning = true
       this.curName = row.dataName
-      this.curId = row.id
+      this.curId = row.metaDataAuthId
       this.metaDataPkId = row.metaDataPkId
     },
     // 重置
-    reapply(row) {
+    reapply (row) {
       this.$router.push({
         name: 'assetsReapply',
         query: {

@@ -9,7 +9,7 @@
             <span class="text">pieces of metadata in the RosettaNet</span>
           </p>
           <p v-else class="data-slogan">
-            <span class="text">共 </span>
+            <span class="text">共</span>
             <span class="num">{{ totalNum }}</span>
             <span class="text">个已发布的可用数据</span>
           </p>
@@ -23,20 +23,20 @@
           >
             <!-- <template slot="append">
               <el-button type="primary" @click="showFilterFn">{{ $t('data.filter') }}</el-button>
-            </template> -->
+            </template>-->
           </el-input>
           <!-- <FilterDialog :visible.sync="showFilter" /> -->
         </div>
         <div class="data-right-box">
-          <img src="@/assets/images/data/14.bj.png" alt="" />
+          <img src="@/assets/images/data/14.bj.png" alt />
         </div>
       </div>
       <div v-loading="loading" class="loading-wrapper">
         <div class="data-card-box">
-          <div v-for="box in cardList" :key="box.id" class="data-card">
-            <img :src="getUrl(box.industry)" alt="" class="data-card-bg" />
+          <div v-for=" box in cardList" :key="box.id" class="data-card">
+            <img :src="getUrl(box.industry)" alt class="data-card-bg" />
             <p class="data-card-title">
-              <img src="@/assets/images/default/dataS.svg" alt="" class="data-card-img" />
+              <img src="@/assets/images/default/dataS.svg" alt class="data-card-img" />
               <el-tooltip class="item" effect="dark" :content="box.dataName" placement="top">
                 <span class="data-card-text">{{ box.dataName }}</span>
               </el-tooltip>
@@ -62,14 +62,21 @@
             </div>
             <div class="btn-box">
               <!-- 授权状态: -1-未知(1.未登录故获取不到授权状态 2.用户未申请使用元数据), 0-已申请(待审核), 1-已授权, 2-已拒绝, 3-已撤销, 4-已失效") -->
-              <div class="btn view pointer" @click="linkToMetadata(box)">{{ $t('node.viewMetaData') }}</div>
+              <div
+                class="btn view pointer"
+                @click="linkToMetadata(box)"
+              >{{ $t('node.viewMetaData') }}</div>
               <div v-if="box.authStatus == 0" class="btn applied-btn">{{ $t('data.applied') }}</div>
               <div v-else-if="box.authStatus == 1" class="btn auth-btn">{{ $t('data.authed') }}</div>
               <!-- 已拒绝数据申请可再次申请 -->
               <!-- <div v-else-if="box.authStatus == 2" class="btn refuse-btn pointer" @click="reAuthFn(box)">
                 {{ $t('projects.refused') }}
-              </div> -->
-              <div v-else class="btn notAuth-btn pointer" @click="showDialog(box)">{{ $t('data.applyAuth') }}</div>
+              </div>-->
+              <div
+                v-else
+                class="btn notAuth-btn pointer"
+                @click="showDialog(box)"
+              >{{ $t('data.applyAuth') }}</div>
             </div>
           </div>
         </div>
@@ -81,7 +88,7 @@
           :total="totalNum"
           :page-size.sync="pageSize"
           :current-page.sync="curPage"
-          :page-sizes="[8, 20, 50, 100]"
+          :page-sizes="[ 8, 20, 50, 100 ]"
           layout="total,sizes, prev, pager, next"
           class="pagination"
           @size-change="handleSizeChange"
@@ -90,7 +97,7 @@
       </div>
     </div>
     <!-- <AuthDialog v-if="showForm" @_close="close" :form-obj="formObj" /> -->
-    <AuthDialog v-if="showForm" :show-form.sync="showForm" @query="initData" :form-obj="formObj" />
+    <AuthDialog v-if="showForm" :show-form.sync="showForm" :form-obj="formObj" @query="initData" />
   </div>
 </template>
 
@@ -109,7 +116,7 @@ export default {
     AuthDialog
     // ConnectorDialog
   },
-  data() {
+  data () {
     return {
       loading: false,
       showForm: false,
@@ -122,39 +129,41 @@ export default {
         identityName: '',
         size: 0,
         rows: 0,
-        id: ''
+        id: '',
+        metaDataId: ''
       },
       cardList: []
     }
   },
   computed: {
-    ...mapGetters('app', ['user'])
+    ...mapGetters('app', [ 'user' ])
   },
   watch: {
-    searchText(val) {
+    searchText (val) {
       this.sensitive()
     }
   },
-  mounted() {
+  mounted () {
     this.initData()
   },
   methods: {
     changeSizeFn,
-    handleSizeChange() {
+    handleSizeChange () {
       this.initData()
     },
-    handlePageChange() {
+    handlePageChange () {
       this.initData()
     },
-    setCurFormData(box) {
+    setCurFormData (box) {
       this.showForm = true
       this.formObj.dataName = box.dataName
       this.formObj.identityName = box.identityName
       this.formObj.size = box.size
       this.formObj.rows = box.rows
       this.formObj.id = box.id
+      this.formObj.metaDataId = box.metaDataId
     },
-    showDialog(box) {
+    showDialog (box) {
       if (this.user) {
         this.setCurFormData(box)
       } else {
@@ -167,7 +176,7 @@ export default {
     sensitive: debounce(function () {
       this.initData()
     }, 500),
-    initData() {
+    initData () {
       this.loading = true
       dataApi
         .queryDataPageList({
@@ -187,10 +196,10 @@ export default {
           this.loading = false
         })
     },
-    showFilterFn() {
+    showFilterFn () {
       this.showFilter = !this.showFilter
     },
-    linkToMetadata(box) {
+    linkToMetadata (box) {
       this.$router.push({
         name: 'metaDetail',
         query: {
@@ -199,17 +208,17 @@ export default {
         }
       })
     },
-    getFileType(type) {
+    getFileType (type) {
       return FILEMAP.get(Number(type)) ? FILEMAP.get(Number(type)) : ''
     },
-    getIndustry(industry) {
+    getIndustry (industry) {
       const dust = INDUSTRYMAP.get(Number(industry))
       if (dust) {
         return this.$t(`industry.${dust}`)
       }
       return ''
     },
-    getUrl(industry) {
+    getUrl (industry) {
       const imgName = INDUSTRYMAP.get(Number(industry))
       if (imgName) {
         if (

@@ -1,5 +1,10 @@
 <template>
-  <el-descriptions :title="$t('assets.authorization')" direction="vertical" :column="1" class="info-box">
+  <el-descriptions
+    :title="$t('assets.authorization')"
+    direction="vertical"
+    :column="1"
+    class="info-box"
+  >
     <el-descriptions-item :label="$t('assets.authType')">
       <el-input v-model="curType" size="small" readonly class="info-input"></el-input>
     </el-descriptions-item>
@@ -26,7 +31,7 @@ export default {
   props: {
     detailObj: {
       type: Object,
-      default: () => {}
+      default: () => { }
     }
   },
   computed: {
@@ -34,14 +39,14 @@ export default {
       return this.getType(this.detailObj.authType)
     },
     authValueStr () {
-      if (this.detailObj.authType === 1) return this.detailObj.authValueStr
-      return formatNumber(this.detailObj.authValueStr)
+      if (this.detailObj.authType === 1) return `${dayjs(this.detailObj.authBeginTime).format('YYYY-MM-DD HH:mm:ss')} To ${dayjs(this.detailObj.authEndTime).format('YYYY-MM-DD HH:mm:ss')}`
+      return formatNumber(this.detailObj.authValue)
     },
     useAuthValue () {
       return formatNumber(this.detailObj.usedTimes)
     }
   },
-  mounted () {},
+  mounted () { },
   methods: {
     dayjs,
     getType (type) {

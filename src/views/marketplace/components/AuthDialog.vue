@@ -89,16 +89,16 @@ export default {
         authEndTime: dayjs(end).valueOf(),
         authType: this.curMode,
         authValue: this.authValue,
-        id: Number(this.formObj.id),
+        metaDataId: this.formObj.metaDataId,
         sign,
         userType: type,
         address: this.address
       }
       dataApi.authData(params).then(res => {
-        this.handleClose()
-        this.$emit('query')
         if (res.code === 10000) {
           this.$message.success(this.$t('tip.authSuccess'))
+          this.$emit('query')
+          this.handleClose()
         }
       })
     },
