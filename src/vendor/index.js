@@ -113,5 +113,6 @@ Vue.prototype.$confirm = MessageBox.confirm
 Vue.prototype.$Web3Service = Web3Service
   ; (function rem () {
     const winWidth = document.documentElement.clientWidth || document.body.clientWidth
-    document.documentElement.style.fontSize = winWidth / 13.6 + 'px'
+    const htmlDocument = document.getElementsByTagName('html')[0]
+    htmlDocument.style.fontSize = winWidth / 13.6 + 'px'
   })()

@@ -66,14 +66,14 @@
                 class="btn view pointer"
                 @click="linkToMetadata(box)"
               >{{ $t('node.viewMetaData') }}</div>
-              <div v-if="box.authStatus == 0" class="btn applied-btn">{{ $t('data.applied') }}</div>
-              <div v-else-if="box.authStatus == 1" class="btn auth-btn">{{ $t('data.authed') }}</div>
+              <div v-if="box.actionShow === 1" class="btn applied-btn">{{ $t('data.applied') }}</div>
+              <div v-else-if="box.actionShow === 2" class="btn auth-btn">{{ $t('data.authed') }}</div>
               <!-- 已拒绝数据申请可再次申请 -->
               <!-- <div v-else-if="box.authStatus == 2" class="btn refuse-btn pointer" @click="reAuthFn(box)">
                 {{ $t('projects.refused') }}
               </div>-->
               <div
-                v-else
+                v-else-if="box.actionShow === 0"
                 class="btn notAuth-btn pointer"
                 @click="showDialog(box)"
               >{{ $t('data.applyAuth') }}</div>
