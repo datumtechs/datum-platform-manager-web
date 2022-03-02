@@ -14,7 +14,7 @@ class Web3Service {
     this.web3 = null
     this.useWallet = USEWALLET()
     this.useUsersInfo = USEUSERSINFO()
-    this.i18n = I18n
+    this.i18n = I18n.global
     this.eth = undefined
     try {
       this.initAlaya()
@@ -105,7 +105,6 @@ class Web3Service {
         this.useWallet.setIsWallet(true)
         // 注意metamask版本更新, 是否取消eth._metamask.isUnlocked方法 后续是否修复锁定弹窗
         const isLocked = await this.eth._metamask.isUnlocked()
-
         if (!isLocked) {
           if (this.i18n && this.i18n.locale === 'zh') return ElMessage.error('请先解锁metamask钱包')
           return ElMessage.error('Please unlock metamask wallet first')

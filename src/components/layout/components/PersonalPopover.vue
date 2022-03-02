@@ -1,16 +1,3 @@
-<script setup lang="ts">
-//import { getCurrentInstance } from 'vue'
-import { USELANGUAGE } from '@/stores'
-//const internalInstance: any = getCurrentInstance()
-const { locale } = useI18n()
-const changeLangue = (langue: string) => {
-  locale.value = langue
-  USELANGUAGE().saveLang(langue)
-}
-
-const popoverShow = ref(false)
-
-</script>
 <template>
   <el-popover
     @show="popoverShow = true"
@@ -31,17 +18,29 @@ const popoverShow = ref(false)
     <div class="popover flex flex-col justify-between">
       <p
         class="mb-24px text-l font-normal cursor-pointer"
-        :class="{ active: USELANGUAGE().langue == 'zh' }"
+        :class="{ active: store.langue == 'zh' }"
         @click="changeLangue('zh')"
       >简体中文</p>
       <p
         @click="changeLangue('en')"
         class="text-l font-normal cursor-pointer"
-        :class="{ active: USELANGUAGE().langue !== 'zh' }"
+        :class="{ active: store.langue !== 'zh' }"
       >English</p>
     </div>
   </el-popover>
 </template>
+<script setup lang="ts">
+import { USELANGUAGE } from '@/stores'
+const store = USELANGUAGE()
+const { locale } = useI18n()
+const changeLangue = (langue: string) => {
+  locale.value = langue
+  store.saveLang(langue)
+}
+
+const popoverShow = ref(false)
+
+</script>
 <style lang="scss" scoped>
 .popover {
   color: #333333;

@@ -2,8 +2,9 @@ export default [
   {
     path: '/',
     name: "home",
+    alias: '/home',
     meta: {
-      show: [1, 2],//1 首页展示 2 side展示
+      show: [1],//1 首页展示 2 side展示
       label: 'menu.home'
     },
     component: () => import('@/views/home/index.vue'),
@@ -13,7 +14,8 @@ export default [
     name: "nodes",
     meta: {
       show: [1, 2],//1 首页展示 2 side展示
-      label: 'menu.nodes'
+      label: 'menu.nodes',
+      search: true
     },
     component: () => import('@/views/nodes/index.vue'),
     children: [{
@@ -30,7 +32,8 @@ export default [
     name: "marketplace",
     meta: {
       show: [1, 2],//1 首页展示 2 side展示
-      label: 'menu.marketplace'
+      label: 'menu.marketplace',
+      search: true
     },
     component: () => import('@/views/marketplace/index.vue'),
     children: [{
@@ -47,7 +50,8 @@ export default [
     name: "computing",
     meta: {
       show: [1, 2],//1 首页展示 2 side展示
-      label: 'menu.computing'
+      label: 'menu.computing',
+      search: true
     },
     component: () => import('@/views/computing/index.vue'),
     children: [{
@@ -58,6 +62,15 @@ export default [
       },
       component: () => import('@/views/computing/components/Details.vue')
     }],
+  },
+  {
+    path: '/myAccount/:infoType',
+    name: "myAccount",
+    meta: {
+      show: [],
+      label: 'head.myAccount'
+    },
+    component: () => import('@/views/myAccount/index.vue')
   },
   {
     path: '/*',

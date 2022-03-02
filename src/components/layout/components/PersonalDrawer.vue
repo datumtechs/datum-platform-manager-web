@@ -10,7 +10,7 @@
   >
     <ul class="pl-0px">
       <li
-        @click="toLink('default')"
+        @click="toLink('account')"
         class="cursor-pointer list-none py-10px mb-6px flex items-center"
       >
         <el-icon>
@@ -37,14 +37,17 @@
 import { USEUSERSINFO } from '@/stores'
 import { Logout } from '@/api/login'
 import { Edit, Link as IconLink, Help } from '@element-plus/icons-vue'
+import { type Router, useRouter } from 'vue-router'
 const emit = defineEmits(['drawerShowchange'])
 const props = defineProps({
   drawerShow: Boolean
 })
 const childRef = ref()
+const router: Router = useRouter()
 
 const toLink = (type: string) => {
-  console.log(type)
+  emit('drawerShowchange')
+  router.push({ name: "myAccount", params: { infoType: type } })
 }
 
 const logout = async () => {

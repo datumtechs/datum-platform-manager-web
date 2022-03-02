@@ -33,7 +33,6 @@
       >{{ $t('head.install') }}</el-button>
     </div>
     <div v-else class="h-157px flex items-center justify-center flex-col">
-      {{ checked }}
       <div
         @click="login"
         :class="{ 'cursor-not-allowed': !checked, 'cursor-pointer': checked }"
@@ -43,20 +42,21 @@
         <span class="font-bold text-[20px] text-color-[#333333]">MetaMask</span>
       </div>
       <div
-        @click="checked = !checked"
         class="agreement w-264px mt-19px flex items-flex-start text-[12px] text-color-[#999999] cursor-pointer"
       >
-        <el-checkbox class="checkbox" :model-value="checked" size="large">&nbsp;</el-checkbox>
-        <span v-if="locale === 'zh'">
-          <span>阅读并同意</span>
-          <i class="text-color-[#0052D9]">用户协议</i>和
-          <i class="text-color-[#0052D9]">隐私声明</i>
-        </span>
-        <span v-else>
-          <span>I have read and agreed to the</span>
-          <i class="text-color-[#0052D9]">Term of Use</i> and
-          <i class="text-color-[#0052D9]">Privacy Policy</i>
-        </span>
+        <el-checkbox class="checkbox" v-model="checked" size="large">&nbsp;</el-checkbox>
+        <div @click="checked = !checked" class="flex">
+          <span v-if="locale === 'zh'">
+            <span>阅读并同意</span>
+            <i class="text-color-[#0052D9]">用户协议</i>和
+            <i class="text-color-[#0052D9]">隐私声明</i>
+          </span>
+          <span v-else>
+            <span>I have read and agreed to the</span>
+            <i class="text-color-[#0052D9]">Term of Use</i> and
+            <i class="text-color-[#0052D9]">Privacy Policy</i>
+          </span>
+        </div>
       </div>
     </div>
   </el-dialog>
@@ -71,12 +71,14 @@ import { Login, LoginNonceId } from '@/api/login'
 import type { ElDialog } from 'element-plus';
 const emit = defineEmits(['loginShowChange'])
 const { locale } = useI18n()
-const checked = ref(false)
+const checked = ref<any>(false)
 const islogin = ref(false)
 const props = defineProps({ loginShow: { type: Boolean, default: false } })
 const doalog = ref<InstanceType<typeof ElDialog> | null>(null)
 const Web3 = new Web3Service()
-const isWallet = USEWALLET().getIsWallet
+const walletStore = USEWALLET()
+const userInfoStore = USEUSERSINFO()
+const isWallet = walletStore.getIsWallet
 
 const closeDialog = () => {
   checked.value = false
@@ -93,8 +95,8 @@ const getLogin = async (params: any) => {
     const res: any = await Login(params)
     const { data, code } = res
     if (code === 10000) {
-      USEUSERSINFO().setToken(data.token)
-      USEUSERSINFO().setUsers(data.userName)
+      userInfoStore.setToken(data.token)
+      userInfoStore.setUsers(data.userName)
       closeDialog()
     }
     islogin.value = false
@@ -106,20 +108,21 @@ const getLogin = async (params: any) => {
 
 const getLoginNonce = async () => {
   try {
-    const address: string = USEUSERSINFO().getAddress
+    const address: string = userInfoStore.getAddress
     const {
       data, code
     } = await LoginNonceId(address)
     if (code !== 10000) {
       throw new Error('Wallet address exception')
     }
-    USEWALLET().setNonceId(data.nonce)
+    walletStore.setNonceId(data.nonce)
   } catch (error) {
     console.log(error)
   }
 }
 
 const login = async () => {
+  if (!checked.value || islogin.value) return
   try {
     islogin.value = true
     await Web3.connectWallet()
@@ -128,6 +131,7 @@ const login = async () => {
     res && getLogin(Web3.loginParams())
   } catch (error) {
     console.log(error)
+    islogin.value = false
   }
 }
 

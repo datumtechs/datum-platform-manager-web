@@ -1,6 +1,6 @@
 const zh = {
-  common:{
-    search:'搜索',
+  common: {
+    search: '搜索',
   },
   menu: {
     home: '首页',
@@ -24,28 +24,28 @@ const zh = {
     intallTipOne: "一键连接区块链应用",
     installTipTwo: "账户隐私保留在本地"
   },
-  home:{
-    dataOverview:'数据总览',
-    privacyComputations:'隐私计算总次数',
-    participatingAddresses:'参与计算地址总数',
-    activeAddresses:'24h活跃地址数',
-    aIModels:'全网AI模型总数',
-    modelCredentials:'模型凭证数量',
-    modelCredUse:'模型凭证使用量',
-    dataAmount:'全网数据总量',
-    dataCredentials:'数据凭证数量',
-    dataCredUse:'数据凭证使用量',
-    globalPowerAndRank:'全网算力概况与排行',
-    totalCpu:'全网总CPU',
-    totalMemory:'全网总内存',
-    totalBandwidth:'全网总带宽',
-    nodeName:'节点名称',
-    powerRatio:'算力占比',
+  home: {
+    dataOverview: '数据总览',
+    privacyComputations: '隐私计算总次数',
+    participatingAddresses: '参与计算地址总数',
+    activeAddresses: '24h活跃地址数',
+    aIModels: '全网AI模型总数',
+    modelCredentials: '模型凭证数量',
+    modelCredUse: '模型凭证使用量',
+    dataAmount: '全网数据总量',
+    dataCredentials: '数据凭证数量',
+    dataCredUse: '数据凭证使用量',
+    globalPowerAndRank: '全网算力概况与排行',
+    totalCpu: '全网总CPU',
+    totalMemory: '全网总内存',
+    totalBandwidth: '全网总带宽',
+    nodeName: '节点名称',
+    powerRatio: '算力占比',
     ranking: '排名',
-    viewAllNode:'查看所有节点',
-    dataUseTop10:'数据凭证任务使用TOP10',
-    modelUseTop10:'模型凭证任务使用TOP10',
-    explorer:'浏览器'
+    viewAllNode: '查看所有节点',
+    dataUseTop10: '数据凭证任务使用TOP10',
+    modelUseTop10: '模型凭证任务使用TOP10',
+    explorer: '浏览器'
   }
 }
 
