@@ -5,9 +5,9 @@
             <el-table-column prop="nodeName" :label="$t('home.nodeName')" />
             <el-table-column prop="powerRatio" :label="$t('home.powerRatio')" width="100" />
         </el-table>
-        <div type="primary" class="mt-14px bg-primary w-388px h-50px rounded-25px">
+        <div type="primary" class="mt-14px bg-main w-388px h-50px rounded-25px">
             <p
-                class="leading-50px text-[14px] text-white text-center cursor-pointer"
+                class="leading-50px text-[14px] text-[#fff] text-center cursor-pointer"
             >{{ $t("home.viewAllNode") }}</p>
         </div>
     </div>

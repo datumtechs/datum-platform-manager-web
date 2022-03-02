@@ -45,7 +45,8 @@ const zh = {
     viewAllNode:'查看所有节点',
     dataUseTop10:'数据凭证任务使用TOP10',
     modelUseTop10:'模型凭证任务使用TOP10',
-    explorer:'浏览器'
+    explorer:'浏览器',
+    viewAllComputingTask:'查看所有计算任务'
   }
 }
 
