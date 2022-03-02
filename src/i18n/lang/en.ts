@@ -1,6 +1,7 @@
 const en = {
   common:{
     search:'Search',
+    success:'Successful'
   },
   menu: {
     home: 'Home',

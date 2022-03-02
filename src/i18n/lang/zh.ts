@@ -1,6 +1,7 @@
 const zh = {
   common:{
     search:'搜索',
+    success:'成功'
   },
   menu: {
     home: '首页',
