@@ -18,7 +18,7 @@
           <div
             v-for="(box, index) in rankList"
             :key="box.id"
-            class="w-174px h-200px rounded-8px p-20px gap-20px text-white"
+            class="w-174px h-200px rounded-8px p-20px gap-20px text-[#fff]"
             :class="`rank-box-${index + 1}`"
           >
             <p class="text-[20px] leading-24px black-font">{{ box.title }}</p>

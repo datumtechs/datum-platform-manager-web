@@ -18,8 +18,5 @@ export default defineConfig({
     colors: {
       "main": '#2B60E9'
     }
-    // fontSize: () => ({
-    //   "text-size-20": "20px"
-    // })
   }
 })
