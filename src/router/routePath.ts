@@ -1,3 +1,5 @@
+//show: [1,2,3],//1 首页展示 2 side展示 3 登录可见菜单
+
 export default [
   {
     path: '/',
@@ -15,7 +17,8 @@ export default [
     meta: {
       show: [1, 2],//1 首页展示 2 side展示
       label: 'menu.nodes',
-      search: true
+      search: true,
+      icon: "side-node-icon"
     },
     component: () => import('@/views/nodes/index.vue'),
     children: [{
@@ -33,7 +36,8 @@ export default [
     meta: {
       show: [1, 2],//1 首页展示 2 side展示
       label: 'menu.marketplace',
-      search: true
+      search: true,
+      icon: "side-marketplace-icon"
     },
     component: () => import('@/views/marketplace/index.vue'),
     children: [{
@@ -51,7 +55,8 @@ export default [
     meta: {
       show: [1, 2],//1 首页展示 2 side展示
       label: 'menu.computing',
-      search: true
+      search: true,
+      icon: "side-computing-icon"
     },
     component: () => import('@/views/computing/index.vue'),
     children: [{
@@ -71,6 +76,56 @@ export default [
       label: 'head.myAccount'
     },
     component: () => import('@/views/myAccount/index.vue')
+  },
+  {
+    path: '/createTask',
+    name: "createTask",
+    meta: {
+      show: [],
+      label: 'menu.createTask'
+    },
+    component: () => import('@/views/task/CreateTask.vue')
+  },
+  {
+    path: '/credentials',
+    name: "credentials",
+    meta: {
+      show: [3],
+      label: 'menu.credentials',
+      search: true,
+      icon: "side-my-credentials-icon"
+    },
+    component: () => import('@/views/myCredentials/index.vue'),
+  },
+  {
+    path: '/task',
+    name: "task",
+    meta: {
+      show: [3],
+      label: 'menu.task',
+      search: true,
+      icon: "side-my-task-icon"
+    },
+    component: () => import('@/views/task/index.vue'),
+    children: [{
+      path: 'Details',
+      name: "Details",
+      meta: {
+        label: 'menu.taskDetails'
+      },
+      component: () => import('@/views/task/Details.vue')
+    }],
+  },
+  {
+    path: '/models',
+    name: "models",
+    meta: {
+      show: [3],
+      label: 'menu.models',
+      search: true,
+      icon: "side-my-models-icon"
+    },
+    component: () => import('@/views/myModels/index.vue'),
   },
   {
     path: '/*',

@@ -18,6 +18,11 @@ const en = {
     marketplaceDetails: 'Marketplace Details',
     computing: 'Computing Services',
     computingDetails: 'Computing Services Details',
+    createTask: "Create Task",
+    credentials: "My Credentials",
+    task: "My Tasks",
+    taskDetails: "Tasks Details",
+    models: "My Models"
   },
   head: {
     myAccountTitle: 'My Account',
@@ -64,12 +69,19 @@ const en = {
     copyStatusFailed: 'Copy Failed',
     nickPlaceholder: 'Please enter a nickname',
     nickValidateTips: 'The length is between 3 and 20 characters',
+    tips: "Tips",
+    tipsText: "Delete node"
+
   },
   node: {
     nodePort: 'Node Port',
     nodeIP: 'Node IP',
     nodeName: 'Node name',
     addNode: "Add Node"
+  },
+  task: {
+    createTaskBriefInfo: "Create new task you need",
+    expertMode: "Expert Mode"
   }
 }
 

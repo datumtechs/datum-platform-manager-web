@@ -8,7 +8,11 @@
         <back />
       </el-icon>
       {{ $t(`${$route.meta.label}`) }}
+      <div class="text-14px font-medium font-400 text-color-[#999999] leading20px mt-14px">
+        <slot name="briefInfo"></slot>
+      </div>
     </div>
+
     <div class="absolute h-50px -bottom-25px min-w-100px">
       <slot name="select"></slot>
     </div>
@@ -22,8 +26,38 @@ import bgMap3 from '@/assets/Images/banner/backgroundMap3.png'
 import bgMap4 from '@/assets/Images/banner/backgroundMap4.png'
 import bgMap5 from '@/assets/Images/banner/backgroundMap5.png'
 
-const bgUrl = computed(() => bgMap1)
-const props = defineProps({ backShow: { type: Boolean, default: false } })
+const props = defineProps({
+  bgIndex: {
+    type: Number,
+    default: 1
+  },
+  backShow: { type: Boolean, default: false }
+})
+
+const bgUrl = computed(() => {
+  let bgMap = bgMap1
+  switch (props.bgIndex) {
+    case 1:
+      bgMap = bgMap1;
+      break;
+    case 2:
+      bgMap = bgMap2;
+      break;
+    case 3:
+      bgMap = bgMap3;
+      break;
+    case 4:
+      bgMap = bgMap4;
+      break;
+    case 5:
+      bgMap = bgMap5;
+      break;
+    default:
+      bgMap = bgMap1;
+      break;
+  }
+  return bgMap
+})
 
 </script>
 <style lang="scss" scoped>

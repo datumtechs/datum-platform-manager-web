@@ -64,7 +64,8 @@ export default defineConfig({
       '@views': fileURLToPath(new URL('./src/views', import.meta.url)),
       '@utils': fileURLToPath(new URL('./src/utils', import.meta.url)),
       '@assets': fileURLToPath(new URL('./src/assets', import.meta.url)),
-      'web3': path.resolve(__dirname, './node_modules/web3/dist/web3.min.js')
+      'web3': path.resolve(__dirname, './node_modules/web3/dist/web3.min.js'),
+      'vue-i18n': path.resolve(__dirname, './node_modules/vue-i18n/dist/vue-i18n.cjs.js'),
     }
   },
   css: {

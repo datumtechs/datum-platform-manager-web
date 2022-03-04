@@ -1,5 +1,5 @@
 <template>
-  <div class="mx-24px my-57px account">
+  <div class="mx-24px my-57px account mb-100px">
     <el-table :data="tableData">
       <el-table-column type="index" width="100">
         <template #header>{{ $t('common.num') }}</template>
@@ -19,11 +19,12 @@
       </el-table-column>
     </el-table>
     <div
-      class="w-170px h-50px rounded-25px com-button mt-40px relative right-[0]"
+      class="w-170px h-50px rounded-25px com-button my-40px absolute right-[0]"
     >{{ $t('node.addNode') }}</div>
   </div>
 </template>
 <script setup lang="ts">
+const { t } = useI18n()
 
 const tableData = [
   {
@@ -36,6 +37,21 @@ const tableData = [
   }
 ]
 const del = (row: any, index: Number) => {
+  ElMessageBox.confirm(
+    `${t('account.tipsText')}${row.nodeName}`,
+    t('account.tips'),
+    {
+      confirmButtonText: t('common.delete'),
+      cancelButtonText: t('common.cancel'),
+      type: 'info',
+    }
+  )
+    .then(() => {
+      submit()
+    })
+}
+
+const submit = () => {
 
 }
 </script>

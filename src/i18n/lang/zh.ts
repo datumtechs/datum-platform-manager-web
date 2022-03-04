@@ -18,6 +18,11 @@ const zh = {
     marketplaceDetails: '凭证市场详情',
     computing: '计算服务',
     computingDetails: '计算服务详情',
+    createTask: "创建任务",
+    credentials: "我的凭证",
+    task: "我的任务",
+    taskDetails: "详情任务",
+    models: "我的模型"
   },
   head: {
     myAccountTitle: "我的账户",
@@ -64,12 +69,18 @@ const zh = {
     copyStatusFailed: '复制失败',
     nickPlaceholder: '请输入昵称',
     nickValidateTips: '长度在 3 到 20 个字符',
+    tips: "提示",
+    tipsText: "是否删除节点"
   },
   node: {
     nodeName: "节点名称",
     nodePort: '节点端口',
     nodeIP: '节点IP',
     addNode: "添加节点"
+  },
+  task: {
+    createTaskBriefInfo: "创建你需要的任务",
+    expertMode: "专家模式"
   }
 }
 
