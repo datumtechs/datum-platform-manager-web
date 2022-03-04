@@ -11,7 +11,7 @@
     @close="emit('loginShowChange')"
   >
     <template #title>
-      <p class="text-[18px] font-bold">{{ $t('head.loginDialogTitle') }}</p>
+      <p class="text-[18px] black-font">{{ $t('head.loginDialogTitle') }}</p>
     </template>
     <div v-if="!isWallet">
       <div class="flex mb-30px items-center gap-10px justify-center">
@@ -39,7 +39,7 @@
         class="flex w-264px h-70px flex items-center justify-center rounded-4px bg-color-[#F7F8F9] border-1 border-solid border-[#EEEEEE]"
       >
         <img :src="metamask" class="w-43px h-43px mr-28px" />
-        <span class="font-bold text-[20px] text-color-[#333333]">MetaMask</span>
+        <span class="black-font text-[20px] text-color-[#333333]">MetaMask</span>
       </div>
       <div
         class="agreement w-264px mt-19px flex items-flex-start text-[12px] text-color-[#999999] cursor-pointer"

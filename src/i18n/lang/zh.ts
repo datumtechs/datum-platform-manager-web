@@ -1,7 +1,14 @@
 const zh = {
   common: {
     search: '搜索',
-    success: '成功'
+    success: '成功',
+    edit: "编辑",
+    preservation: "保存",
+    Submit: "提交",
+    cancel: "取消",
+    delete: "删除",
+    actions: "操作",
+    num: '序号',
   },
   menu: {
     home: '首页',
@@ -18,6 +25,7 @@ const zh = {
     login: '登录 RosettaFlow',
     logout: '登出',
     myAccount: '我的账户',
+    Nickname: "昵称",
     editNickname: '修改昵称',
     nodeManagement: '网络节点管理',
     loginDialogTitle: "Metamask 扩展",
@@ -48,6 +56,20 @@ const zh = {
     modelUseTop10: '模型凭证任务使用TOP10',
     explorer: '浏览器',
     viewAllComputingTask: '查看所有计算任务'
+  },
+  account: {
+    walletAddress: '钱包地址',
+    viewExplorer: '查看浏览器',
+    copyStatusSuccess: '复制成功',
+    copyStatusFailed: '复制失败',
+    nickPlaceholder: '请输入昵称',
+    nickValidateTips: '长度在 3 到 20 个字符',
+  },
+  node: {
+    nodeName: "节点名称",
+    nodePort: '节点端口',
+    nodeIP: '节点IP',
+    addNode: "添加节点"
   }
 }
 

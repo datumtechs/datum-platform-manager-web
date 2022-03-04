@@ -4,11 +4,14 @@
   >
     <div
       :ref="setItemRef"
-      class="px-20px h-full flex-1 flex items-center z-1 text-16px text-color-[#a5a5a5]"
+      class="px-20px h-full flex-1 flex items-center justify-center z-1 text-16px text-color-[#a5a5a5]"
+      style="word-break: keep-all;white-space:nowrap"
       :class="{ active: +index == activeIndex }"
       v-for="(item, index) in props.list"
       @click="tabsClick(index)"
-    >{{ item.name + '.' + index }}</div>
+    >
+      <p>{{ $t(`${item.name}`) }}</p>
+    </div>
     <div
       :style="{ width: sliderWidth + 'px', transform: `translateX(${translateX}px)` }"
       class="absolute z-0 top-5px h-40px bg-color-[#fff] rounded-20px tabs-slider"
@@ -16,16 +19,29 @@
   </div>
 </template>
 <script lang="ts" setup>
-const activeIndex = ref(0)
 const tabsItems = ref<any[]>([])
 const sliderWidth = ref(0)
 const translateX = ref(0)
 const props = defineProps({
   list: {
     type: Object, default: () => []
+  },
+  activekey: {
+    type: Number, default: 0
   }
 })
+const activeIndex = ref(props.activekey)
+
 const emit = defineEmits(['change'])
+const { locale } = useI18n()
+
+watch(locale, () => {
+
+  nextTick(() => {
+    console.log('语言变化')
+    handleTabs(+activeIndex.value)
+  })
+})
 
 const setItemRef = (el: any) => {
   if (el) tabsItems.value?.push(el)
@@ -34,22 +50,27 @@ const setItemRef = (el: any) => {
 onMounted(() => {
   nextTick(() => {
     if (tabsItems.value?.length) {
-      console.log(tabsItems.value[0]?.offsetWidth)
-      sliderWidth.value = tabsItems.value[0]?.offsetWidth
+      handleTabs(+activeIndex.value)
     }
   })
 })
 
+
+
 const tabsClick = (index: string) => {
+  handleTabs(+index)
+  emit('change', +index)
+}
+
+const handleTabs = (index: number) => {
   let x = 0
   for (let i = 0; i < +index; i++) {
     x += tabsItems.value[i]?.offsetWidth
   }
+  sliderWidth.value = tabsItems.value[+index]?.offsetWidth
   activeIndex.value = +index
   translateX.value = x
-  emit('change', index)
 }
-
 
 const handleClick = () => {
   // console.log(el)
@@ -69,6 +90,7 @@ $tiems: 0.5s;
   }
   .active {
     color: #393939;
+    font-weight: 600;
   }
 }
 </style>
