@@ -7,7 +7,12 @@
       </div>
       <div slot="footer" class="footer">
         <el-button size="small" class="footer-btn" @click="handleClose">{{ $t('common.cancel') }}</el-button>
-        <el-button size="small" class="footer-btn" type="primary" @click="applyFn">{{ $t('data.apply') }}</el-button>
+        <el-button
+          size="small"
+          class="footer-btn"
+          type="primary"
+          @click="applyFn"
+        >{{ $t('data.apply') }}</el-button>
       </div>
     </div>
   </div>
@@ -42,6 +47,9 @@ export default {
     userMetaDataId () {
       return this.$route.query.id
     },
+    metaDataId () {
+      return this.$route.query.metaDataId
+    },
     ...mapGetters('app', [ 'address' ])
   },
   watch: {},
@@ -50,7 +58,7 @@ export default {
   },
   methods: {
     ...mapActions('app', [ 'getLoginNonce', 'getUserType', 'resetLogin' ]),
-    searchCb () {},
+    searchCb () { },
     initData () {
       assetsApi
         .getMetaDetail({
@@ -99,7 +107,7 @@ export default {
       // 判断是否登录 未登录 先调用登录
       if (that.address) {
         // 校验 请输入时间 请输入次数
-        const pass = checks[curMode]()
+        const pass = checks[ curMode ]()
         pass && this.getAuth(begin, end, curMode)
       } else {
         await this.resetLogin()
@@ -114,7 +122,7 @@ export default {
         authEndTime: dayjs(end).valueOf(),
         authType: this.curMode,
         authValue: this.authValue,
-        id: Number(this.metaDataPkId),
+        metaDataId: this.metaDataId,
         sign,
         userType: type,
         address: this.address

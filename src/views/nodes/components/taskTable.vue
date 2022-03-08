@@ -31,7 +31,7 @@
         :total="totalRows"
         :page-size="taskPagesize"
         :current-page="taskCurpage"
-        :page-sizes="[ 4, 20, 50, 100 ]"
+        :page-sizes="[ 10, 20, 50, 100 ]"
         layout="total,sizes, prev, pager, next"
         class="pagination"
         @current-change="handleTaskPageChange"

@@ -189,8 +189,8 @@ export default {
       let res
       const params = {
         keyword: this.searchInputed,
-        pageNo: this.curPage,
-        pageSize: this.pageSize
+        current: this.curPage,
+        size: this.pageSize
       }
       try {
         if (this.typeSelected === 'name') {

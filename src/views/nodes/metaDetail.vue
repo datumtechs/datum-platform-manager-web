@@ -175,8 +175,8 @@ export default {
       dataApi
         .listMetaDataColumn({
           metaDataId: this.metaDataId,
-          pageNo: this.curPage,
-          pageSize: this.pageSize
+          current: this.curPage,
+          size: this.pageSize
         })
         .then(res => {
           const { code, data } = res

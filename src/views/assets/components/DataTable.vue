@@ -2,8 +2,8 @@
 <template>
   <div class="tabs-table">
     <el-table v-loading="dataLoading" style="width: 100%" :data="tableData">
-      <el-table-column type="index" :label="`${$t('common.num')}`" :index="indexMethod" width="80"> </el-table-column>
-      <el-table-column prop="dataName" :label="`${$t('node.dataName')}`"> </el-table-column>
+      <el-table-column type="index" :label="`${$t('common.num')}`" :index="indexMethod" width="80"></el-table-column>
+      <el-table-column prop="dataName" :label="`${$t('node.dataName')}`"></el-table-column>
       <el-table-column prop="authType" :label="`${$t('assets.authType')}`">
         <template slot-scope="{ row }">
           <div>{{ getType(row.authType) }}</div>
@@ -18,7 +18,7 @@
           <div v-if="row.authType === 2">{{ formatNumber(row.authValue) }}</div>
         </template>
       </el-table-column>
-      <el-table-column prop="identityName" :label="`${$t('assets.owner')}`"> </el-table-column>
+      <el-table-column prop="identityName" :label="`${$t('assets.owner')}`"></el-table-column>
       <el-table-column prop="applyTime" :label="`${$t('assets.applicationTime')}`">
         <template slot-scope="{ row }">
           <div>{{ dayjs(row.applyTime).format('YYYY-MM-DD HH:mm:ss') }}</div>
@@ -35,7 +35,7 @@
           <div v-if="row.actionShow === 0" class="table-btn-group">
             <span class="pointer link-btn" @click="viewFn(row)">{{ $t('assets.view') }}</span>
             <!-- <span class="pointer link-btn" @click="revokeFn(row)">{{ $t('assets.revoke') }}</span>
-            <span class="pointer link-btn" @click="reapply(row)">{{ $t('assets.reapply') }}</span> -->
+            <span class="pointer link-btn" @click="reapply(row)">{{ $t('assets.reapply') }}</span>-->
           </div>
           <div v-if="row.actionShow === 1" class="table-btn-group">
             <span class="pointer link-btn" @click="reapply(row)">{{ $t('assets.reapply') }}</span>
@@ -53,7 +53,7 @@
         :total="totalDataNum"
         :page-size.sync="pageSize"
         :current-page.sync="curPage"
-        :page-sizes="[10, 20, 50, 100]"
+        :page-sizes="[ 10, 20, 50, 100 ]"
         layout="total,sizes, prev, pager, next"
         class="pagination"
         @size-change="row => $emit('update:pageSize', row)"
@@ -220,7 +220,8 @@ export default {
         query: {
           id: row.id,
           dataName: row.dataName,
-          metaDataPkId: row.metaDataPkId
+          metaDataPkId: row.metaDataPkId,
+          metaDataId: row.metaDataId
         }
       })
     }

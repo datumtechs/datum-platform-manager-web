@@ -210,8 +210,8 @@ export default {
       dataApi
         .queryMetaListByNodeId({
           identityId: this.identityId,
-          pageNo: this.nodeDetailDataPage,
-          pageSize: this.dataPagesize
+          current: this.nodeDetailDataPage,
+          size: this.dataPagesize
         })
         .then(res => {
           this.dataLoading = false
@@ -231,8 +231,8 @@ export default {
       taskApi
         .queryTaskListByNodeId({
           identityId: this.identityId,
-          pageNo: this.nodeDetailTaskPage,
-          pageSize: this.taskPagesize
+          current: this.nodeDetailTaskPage,
+          size: this.taskPagesize
         })
         .then(res => {
           this.taskLoading = false
