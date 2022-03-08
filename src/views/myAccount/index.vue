@@ -25,6 +25,10 @@ const list = ref([
   }
 ])
 
+watch(route, () => {
+  console.log(1123)
+})
+
 const tabsChange = (index: string) => {
   activekey.value = +index
 }

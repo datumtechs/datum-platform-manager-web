@@ -85,7 +85,6 @@ const handIcon = (name: string | undefined): any => {
 
 const handActive = (path: string) => {
   const pathList = path.split('/')
-  console.log(route.path)
   return pathList.includes(route.path.replace('/', ''))
 }
 

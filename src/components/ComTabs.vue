@@ -36,9 +36,7 @@ const emit = defineEmits(['change'])
 const { locale } = useI18n()
 
 watch(locale, () => {
-
   nextTick(() => {
-    console.log('语言变化')
     handleTabs(+activeIndex.value)
   })
 })
@@ -72,12 +70,6 @@ const handleTabs = (index: number) => {
   translateX.value = x
 }
 
-const handleClick = () => {
-  // console.log(el)
-  // 67005272
-  // 63628153
-  //62563281
-}
 </script>
 <style lang="scss">
 $tiems: 0.5s;
