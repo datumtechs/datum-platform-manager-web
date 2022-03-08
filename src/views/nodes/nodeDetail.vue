@@ -87,8 +87,8 @@ export default {
       isTask: 4,
       // dataCurpage: 1,缓存
       // taskCurpage: 1,
-      dataPagesize: 8,
-      taskPagesize: 8,
+      dataPagesize: 10,
+      taskPagesize: 10,
       dataTableData: [],
       taskTableData: [],
       dataTotalnum: 0,
