@@ -9,6 +9,7 @@ const zh = {
     delete: "删除",
     actions: "操作",
     num: '序号',
+    next: "下一步"
   },
   menu: {
     home: '首页',
@@ -80,7 +81,30 @@ const zh = {
   },
   task: {
     createTaskBriefInfo: "创建你需要的任务",
-    expertMode: "专家模式"
+    expertMode: "专家模式",
+    step: "步骤",
+    stepOneInfo: "选择算法",
+    stepTwoInfo: "选择训练输入数据",
+    stepThreeInfo: "选择预测输入数据",
+    stepFourInfo: "选择计算环境",
+    stepFiveInfo: "选择结果接收方",
+    modeIntroductionTips: "专家模式适合熟悉AI算法的开发者，支持AI算法的超参数修改等一系列复杂操作。",
+    taskName: "任务名称",
+    pleaseEnter: "请输入",
+    taskNameRules: "任务名称命名规则",
+    taskNameRulesOne: "设置后无法修改",
+    taskNameRulesTwo: "输入的字符类型无限制",
+    taskNameRulesThree: "最少输入8个字符",
+    taskNameRulesfour: "最多输入64个字符",
+    stepOneSelectComputingTitle: "请选择隐私计算类型",
+    statistics: "统计分析",
+    AiComputing: "AI计算",
+    stepOneSelectAlgorithmTitle: "请选择统计分析算法",
+    stepOneSelectAIAlgorithmTitle: "请选择AI算法",
+    stepOneSelectProcedureTitle: "请选择计算流程",
+    procedureTrain: "训练",
+    procedurePredict: "预测",
+    procedureAll: "训练，并预测",
   }
 }
 

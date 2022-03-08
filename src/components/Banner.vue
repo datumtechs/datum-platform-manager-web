@@ -8,7 +8,7 @@
         <back />
       </el-icon>
       {{ $t(`${$route.meta.label}`) }}
-      <div class="text-14px font-medium font-400 text-color-[#999999] leading20px mt-14px">
+      <div class="text-14px font-medium font-400 text-color-[#999999] leading-20px mt-14px">
         <slot name="briefInfo"></slot>
       </div>
     </div>

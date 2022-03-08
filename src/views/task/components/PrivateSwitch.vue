@@ -1,6 +1,8 @@
 <template>
-  <div class="flex items-center private-switch-wrap">
-    <div class="text-16px font-600 leading-22px mr-10px">{{ $t('task.expertMode') }}</div>
+  <div class="flex items-center private-switch-wrap cursor-pointer">
+    <div
+      class="text-16px font-600 leading-22px mr-10px text-color-[#333333]"
+    >{{ $t('task.expertMode') }}</div>
     <div
       class="w-70px h-28px rounded-14px overflow-hidden border-1 border-solid border-[#cccccc]"
       @click="change"
@@ -18,9 +20,7 @@
         ></div>
       </div>
     </div>
-    <div
-      class="rounded-1/2 ml-13px w-18px h-18px border-1 border-solid border-[#333333] text-color-[#333333] text-12px flex items-center justify-center"
-    >?</div>
+    <question-mark />
   </div>
 </template>
 <script lang="ts" setup>

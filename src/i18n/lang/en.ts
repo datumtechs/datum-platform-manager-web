@@ -9,6 +9,7 @@ const en = {
     delete: "Delete",
     actions: 'Actions',
     num: 'No.',
+    next: "Next"
   },
   menu: {
     home: 'Home',
@@ -81,7 +82,30 @@ const en = {
   },
   task: {
     createTaskBriefInfo: "Create new task you need",
-    expertMode: "Expert Mode"
+    expertMode: "Expert Mode",
+    step: "Step",
+    stepOneInfo: "Select algorithm",
+    stepTwoInfo: "Select training data  ",
+    stepThreeInfo: "Select prediction data",
+    stepFourInfo: "Select environment",
+    stepFiveInfo: "Select result receivers",
+    modeIntroductionTips: "Expert mode is suitable for developers who are familiar with AI algorithms, and supports a series of complex operations such as hyperparameter modification of AI algorithms.",
+    taskName: "Task Name",
+    pleaseEnter: "Please Enter",
+    taskNameRules: "Naming rules",
+    taskNameRulesOne: "cannot be modified after submitting",
+    taskNameRulesTwo: "no limit to character type",
+    taskNameRulesThree: " 8 characters at least",
+    taskNameRulesfour: "64 characters at most",
+    stepOneSelectComputingTitle: "Select the category of the privacy computing",
+    Statistics: "Statistics",
+    AiComputing: "AI computing",
+    stepOneSelectAlgorithmTitle: "Select the algorithm",
+    stepOneSelectAIAlgorithmTitle: "Select the AI algorithm",
+    stepOneSelectProcedureTitle: "Select the task procedure",
+    procedureTrain: "Train",
+    procedurePredict: "Predict",
+    procedureAll: "Train and then predict",
   }
 }
 

@@ -1,7 +1,72 @@
 <template>
-  <div>
-    <slot name="mode"></slot>正常模式
+  <div class="normal-wrap p-26px">
+    <div class="flex item-center px-9px py-5px bg-color-[#F7F8F9] h-80px">
+      <div
+        @click="activeIndex = index"
+        class="flex-1 flex-col flex pl-31px leading-24px justify-center font-800"
+        v-for="(item, index) in list"
+        :key="item.setp"
+        :class="{ active: activeIndex == index }"
+      >
+        <div class="setp-item-name text-22px font-medium font-800 text-color-[#CCCCCC]">
+          {{ $t('task.step') }}
+          <span class="ml-10px font-800">{{ item.setp }}</span>
+          <span class="cover inline-block w-11px h-11px top-6px -left--6px bg-color-[#F7F8F9]"></span>
+        </div>
+        <p
+          class="setp-item-info font-medium text-color-[#666666] text-16px font-500 mt-5px"
+        >{{ $t(`${item.info}`) }}</p>
+      </div>
+    </div>
+    <div v-if="activeIndex == 0" class="mt-38px mb-42px ml-6px">
+      <slot name="mode"></slot>
+      <StepOne />
+    </div>
   </div>
 </template>
-<script lang="ts" setup></script>
-<style lang="scss" scoped></style>
+<script lang="ts" setup>
+import StepOne from './normal/StepOne.vue';
+const activeIndex = ref(0)
+const list = [
+  {
+    setp: '01',
+    info: 'task.stepOneInfo'
+  },
+  {
+    setp: '02',
+    info: 'task.stepTwoInfo'
+  },
+  {
+    setp: '03',
+    info: 'task.stepThreeInfo'
+  },
+  {
+    setp: '04',
+    info: 'task.stepFourInfo'
+  },
+  {
+    setp: '05',
+    info: 'task.stepFiveInfo'
+  },
+
+]
+</script>
+<style lang="scss" scoped>
+.normal-wrap {
+  .cover {
+    transform: rotate(45deg);
+  }
+  .active {
+    background: #2b60e9;
+    border-radius: 8px;
+    .setp-item-name,
+    .setp-item-info {
+      color: #ffffff !important;
+    }
+    .cover {
+      background: #2b60e9;
+      border-left: 1px solid #fff;
+    }
+  }
+}
+</style>
