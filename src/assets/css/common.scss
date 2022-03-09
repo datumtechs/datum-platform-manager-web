@@ -1,6 +1,18 @@
+.layout-mian-wrap{
+  width: calc(100vw - 219px);
+  height: calc(100vh - 70px);
+  overflow: auto;
+}
+@media screen and (max-width: 1000px)  {
+  .com-mian{
+    width: 1000px;
+  }
+}
+
 .border-bottom {
   border-bottom: 1px solid #EEEEEE;
 }
+
 
 .com-button{
   font-size: 14px;
@@ -10,4 +22,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.rotate-180 {
+  transform: rotate(180deg);
 }

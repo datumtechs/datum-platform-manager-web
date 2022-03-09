@@ -20,13 +20,33 @@
     </div>
     <div v-if="activeIndex == 0" class="mt-38px mb-42px ml-6px">
       <slot name="mode"></slot>
-      <StepOne />
+      <StepOne
+        :taskParams="taskParams"
+        @next="activeIndex = 1"
+        @getParams="(params) => (taskParams.one = params)"
+      />
     </div>
+    <StepTwo
+      v-if="activeIndex == 1"
+      :taskParams="taskParams"
+      @previous="previous"
+      @next="activeIndex = 2"
+      @getParams="(params) => (taskParams.two = params)"
+    />
+    <StepThree
+      v-if="activeIndex == 2"
+      :taskParams="taskParams"
+      @previous="previous"
+      @next="activeIndex = 2"
+      @getParams="(params) => (taskParams.two = params)"
+    />
   </div>
 </template>
 <script lang="ts" setup>
 import StepOne from './normal/StepOne.vue';
-const activeIndex = ref(0)
+import StepTwo from './normal/StepTwo.vue';
+import StepThree from './normal/StepThree.vue';
+const activeIndex = ref(1)
 const list = [
   {
     setp: '01',
@@ -50,6 +70,17 @@ const list = [
   },
 
 ]
+const taskParams = ref({
+  one: {},
+  two: {},
+  three: {},
+  four: {},
+  five: {}
+})
+
+const previous = () => {
+  activeIndex.value = 0
+}
 </script>
 <style lang="scss" scoped>
 .normal-wrap {

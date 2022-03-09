@@ -18,9 +18,11 @@ declare module 'vue' {
     ElInput: typeof import('element-plus/es')['ElInput']
     ElMenu: typeof import('element-plus/es')['ElMenu']
     ElMenuItem: typeof import('element-plus/es')['ElMenuItem']
+    ElOption: typeof import('element-plus/es')['ElOption']
     ElPopover: typeof import('element-plus/es')['ElPopover']
     ElRadio: typeof import('element-plus/es')['ElRadio']
     ElRadioGroup: typeof import('element-plus/es')['ElRadioGroup']
+    ElSelect: typeof import('element-plus/es')['ElSelect']
     ElSpace: typeof import('element-plus/es')['ElSpace']
     ElTable: typeof import('element-plus/es')['ElTable']
     ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
@@ -34,6 +36,7 @@ declare module 'vue' {
     QuestionMark: typeof import('./components/QuestionMark.vue')['default']
     Search: typeof import('./components/Search.vue')['default']
     Side: typeof import('./components/layout/Side.vue')['default']
+    TaskParamsTransfer: typeof import('./components/TaskParamsTransfer.vue')['default']
   }
 }
 

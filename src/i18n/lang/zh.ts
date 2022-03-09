@@ -9,7 +9,11 @@ const zh = {
     delete: "删除",
     actions: "操作",
     num: '序号',
-    next: "下一步"
+    next: "下一步",
+    add: "添加",
+    data: "数据",
+    previous: "上一步",
+    saveAndReturn: "保存，并返回"
   },
   menu: {
     home: '首页',
@@ -105,6 +109,19 @@ const zh = {
     procedureTrain: "训练",
     procedurePredict: "预测",
     procedureAll: "训练，并预测",
+    selection: "已选择",
+    selectSponsor: "请选择任务发起方",
+    importFields: "导入字段",
+    field: "字段",
+    fieldTips: "请选择任务所用的字段",
+    selectFiels: "已选择字段",
+    setTo: "将其设置为",
+    idColumn: "ID 列",
+    label: "因变量",
+    feature: "自变量",
+    selectData: "请选择数据",
+    select: "请选择",
+    selectModel: "请选择预测所用的模型"
   }
 }
 

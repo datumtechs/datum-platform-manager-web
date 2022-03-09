@@ -9,7 +9,11 @@ const en = {
     delete: "Delete",
     actions: 'Actions',
     num: 'No.',
-    next: "Next"
+    next: "Next",
+    add: "Add",
+    data: "Data",
+    previous: "Previous",
+    saveAndReturn: "Save And Return"
   },
   menu: {
     home: 'Home',
@@ -106,6 +110,19 @@ const en = {
     procedureTrain: "Train",
     procedurePredict: "Predict",
     procedureAll: "Train and then predict",
+    selection: "Selection",
+    selectSponsor: "Select the sponsor",
+    importFields: "Import fields",
+    field: "Field",
+    fieldTips: "Select and assign the fields used in your task",
+    selectFiels: "Select",
+    setTo: "Set to",
+    idColumn: "ID column",
+    label: "Label",
+    feature: "Feature",
+    selectData: "Data",
+    select: "Select",
+    selectModel: "Select the model"
   }
 }
 

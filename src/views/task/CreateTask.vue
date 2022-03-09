@@ -1,5 +1,5 @@
 <template>
-  <div class="flex-1 task-wrap">
+  <div class="flex-1 task-wrap com-mian">
     <Banner :bg-index="5">
       <template #briefInfo>{{ $t('task.createTaskBriefInfo') }}</template>
     </Banner>
