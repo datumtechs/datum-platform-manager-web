@@ -13,7 +13,14 @@ const zh = {
     add: "添加",
     data: "数据",
     previous: "上一步",
-    saveAndReturn: "保存，并返回"
+    saveAndReturn: "保存，并返回",
+    cpu: "CPU",
+    memory: "内存",
+    bandwidth: "带宽",
+    cores: "核",
+    minute: '分钟',
+    hours: '小时',
+    second: '秒'
   },
   menu: {
     home: '首页',
@@ -24,10 +31,11 @@ const zh = {
     computing: '计算服务',
     computingDetails: '计算服务详情',
     createTask: "创建任务",
-    credentials: "我的凭证",
+    credentials: "我的数据",
     task: "我的任务",
     taskDetails: "详情任务",
-    models: "我的模型"
+    models: "我的模型",
+    computTask: "计算任务",
   },
   head: {
     myAccountTitle: "我的账户",
@@ -121,7 +129,14 @@ const zh = {
     feature: "自变量",
     selectData: "请选择数据",
     select: "请选择",
-    selectModel: "请选择预测所用的模型"
+    selectModel: "请选择预测所用的模型",
+    environmentTtraining: "请设置训练任务计算环境",
+    environmentPrediction: "请设置预测任务计算环境",
+    lowestNeed: "最低算力需求",
+    longestTime: "最长计算时间",
+    trainingResultreceivers: "请选择将训练任务结果发送到",
+    predictionResultreceivers: "请选择将预测任务结果发送到",
+    startTask: "启动任务"
   }
 }
 

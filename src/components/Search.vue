@@ -19,7 +19,7 @@ const input1 = ''
 </template>
 <style lang="scss" scoped>
 #search {
-  ::v-deep .el-input {
+  :deep(.el-input) {
     height: 40px;
     border-radius: 20px;
     overflow: hidden;

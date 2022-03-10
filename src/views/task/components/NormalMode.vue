@@ -29,16 +29,30 @@
     <StepTwo
       v-if="activeIndex == 1"
       :taskParams="taskParams"
-      @previous="previous"
+      @previous="activeIndex = 0"
       @next="activeIndex = 2"
       @getParams="(params) => (taskParams.two = params)"
     />
     <StepThree
       v-if="activeIndex == 2"
       :taskParams="taskParams"
-      @previous="previous"
-      @next="activeIndex = 2"
-      @getParams="(params) => (taskParams.two = params)"
+      @previous="activeIndex = 1"
+      @next="activeIndex = 3"
+      @getParams="(params) => (taskParams.three = params)"
+    />
+    <Stepfour
+      v-if="activeIndex == 3"
+      :taskParams="taskParams"
+      @previous="activeIndex = 2"
+      @next="activeIndex = 4"
+      @getParams="(params) => (taskParams.four = params)"
+    />
+    <StepFive
+      v-if="activeIndex == 4"
+      :taskParams="taskParams"
+      @previous="activeIndex = 3"
+      @next="submit"
+      @getParams="(params) => (taskParams.four = params)"
     />
   </div>
 </template>
@@ -46,7 +60,9 @@
 import StepOne from './normal/StepOne.vue';
 import StepTwo from './normal/StepTwo.vue';
 import StepThree from './normal/StepThree.vue';
-const activeIndex = ref(1)
+import Stepfour from './normal/Stepfour.vue';
+import StepFive from './normal/StepFive.vue';
+const activeIndex = ref(4)
 const list = [
   {
     setp: '01',
@@ -80,6 +96,9 @@ const taskParams = ref({
 
 const previous = () => {
   activeIndex.value = 0
+}
+const submit = () => {
+
 }
 </script>
 <style lang="scss" scoped>

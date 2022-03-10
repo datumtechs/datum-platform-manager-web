@@ -13,7 +13,14 @@ const en = {
     add: "Add",
     data: "Data",
     previous: "Previous",
-    saveAndReturn: "Save And Return"
+    saveAndReturn: "Save And Return",
+    cpu: "CPU",
+    memory: "Memory",
+    bandwidth: "Bandwidth",
+    cores: "Cores",
+    minute: 'minute',
+    hours: 'hours',
+    second: 'second'
   },
   menu: {
     home: 'Home',
@@ -24,10 +31,11 @@ const en = {
     computing: 'Computing Services',
     computingDetails: 'Computing Services Details',
     createTask: "Create Task",
-    credentials: "My Credentials",
+    credentials: "My Datas",
     task: "My Tasks",
     taskDetails: "Tasks Details",
-    models: "My Models"
+    models: "My Models",
+    computTask: "Computing Tasks"
   },
   head: {
     myAccountTitle: 'My Account',
@@ -122,7 +130,14 @@ const en = {
     feature: "Feature",
     selectData: "Data",
     select: "Select",
-    selectModel: "Select the model"
+    selectModel: "Select the model",
+    environmentTtraining: "Select the environment of the training task",
+    environmentPrediction: "Select the environment of the prediction task",
+    lowestNeed: "Lowest computing power need",
+    longestTime: "Longest computing time",
+    trainingResultreceivers: "Select result receivers of the training task",
+    predictionResultreceivers: "Select result receivers of the prediction task",
+    startTask: "Start Task"
   }
 }
 

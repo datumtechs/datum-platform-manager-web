@@ -1,6 +1,8 @@
 .layout-mian-wrap{
   width: calc(100vw - 219px);
   height: calc(100vh - 70px);
+  max-width: 1200px;
+  margin: 0 auto;
   overflow: auto;
 }
 @media screen and (max-width: 1000px)  {
@@ -25,4 +27,12 @@
 }
 .rotate-180 {
   transform: rotate(180deg);
+}
+
+.main-w{
+  width: calc(100vw - 219px) ;
+}
+
+.com-border-eee{
+border: 1px solid #EEEEEE;
 }

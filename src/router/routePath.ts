@@ -69,6 +69,17 @@ export default [
     }],
   },
   {
+    path: '/computTask',
+    name: "computTask",
+    meta: {
+      show: [2],
+      label: 'menu.computTask',
+      search: true,
+      icon: "side-my-models-icon"
+    },
+    component: () => import('@/views/computing/ComputTask.vue'),
+  },
+  {
     path: '/myAccount/:infoType',
     name: "myAccount",
     meta: {
@@ -116,17 +127,17 @@ export default [
       component: () => import('@/views/task/Details.vue')
     }],
   },
-  {
-    path: '/models',
-    name: "models",
-    meta: {
-      show: [3],
-      label: 'menu.models',
-      search: true,
-      icon: "side-my-models-icon"
-    },
-    component: () => import('@/views/myModels/index.vue'),
-  },
+  // {
+  //   path: '/models',
+  //   name: "models",
+  //   meta: {
+  //     show: [3],
+  //     label: 'menu.models',
+  //     search: true,
+  //     icon: "side-my-models-icon"
+  //   },
+  //   component: () => import('@/views/myModels/index.vue'),
+  // },
   {
     path: '/*',
     redirect: 'assetsDetail',

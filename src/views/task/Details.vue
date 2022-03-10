@@ -1,6 +1,6 @@
 <template>
   <div class="flex-1">
-    <Banner :bg-index="5"></Banner>
+    <Banner :bg-name="'book'"></Banner>
   </div>
   <TaskMain />
 </template>

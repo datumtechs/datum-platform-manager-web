@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-50px step-wo-wrap">
+  <div class="mt-50px step-three-wrap step-two-wrap">
     <div class="flex items-center mb-36px text-14px">
       <div class="mr-20px text-color-[#666666]">{{ $t('task.selection') }} ：</div>
       <div class="flex items-center justify-center text-color-[#333333]">
@@ -87,7 +87,7 @@ const previous = () => {
 
 </script>
 <style lang="scss">
-.step-wo-wrap {
+.step-three-wrap {
   .el-select .el-input__inner {
     height: 40px;
     border: none;
