@@ -4,7 +4,7 @@
     :style="{ background: `url(${bgUrl}) no-repeat right`, 'background-size': 'auto 100%' }"
   >
     <div class="w-full black-font text-48px text-color-[#393939] font-900 leading-58px">
-      <el-icon v-if="backShow">
+      <el-icon v-if="backShow" class="cursor-pointer" @click="emit('back')">
         <back />
       </el-icon>
       {{ $t(`${$route.meta.label}`) }}
@@ -25,7 +25,7 @@ import book from '@/assets/Images/banner/book.png'
 import clocksWatches from '@/assets/Images/banner/clocksWatches.png'
 import flag from '@/assets/Images/banner/flag.png'
 import rocket from '@/assets/Images/banner/rocket.png'
-
+const emit = defineEmits(['back'])
 const props = defineProps({
   bgName: {
     type: String,

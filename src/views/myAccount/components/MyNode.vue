@@ -24,6 +24,7 @@
   </div>
 </template>
 <script setup lang="ts">
+import { ElMessageBox } from 'element-plus'
 const { t } = useI18n()
 
 const tableData = [

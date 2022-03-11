@@ -1,14 +1,12 @@
 .layout-mian-wrap{
   width: calc(100vw - 219px);
   height: calc(100vh - 70px);
-  max-width: 1200px;
-  margin: 0 auto;
   overflow: auto;
+
 }
-@media screen and (max-width: 1000px)  {
-  .com-mian{
-    width: 1000px;
-  }
+.com-mian{
+  width: 1200px;
+  margin: 0 auto;
 }
 
 .border-bottom {
@@ -34,5 +32,15 @@
 }
 
 .com-border-eee{
-border: 1px solid #EEEEEE;
+  border: 1px solid #EEEEEE;
+}
+
+.com-table {
+  .el-table__header .el-table__cell {
+    border-bottom: none;
+    height: 50px;
+  }
+  .el-table__body .el-table__row {
+    height: 70px;
+  }
 }
