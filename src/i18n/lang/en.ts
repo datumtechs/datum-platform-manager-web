@@ -92,7 +92,13 @@ const en = {
     nodePort: 'Node Port',
     nodeIP: 'Node IP',
     nodeName: 'Node name',
-    addNode: "Add Node"
+    addNode: "Add Node",
+    view:'View',
+    credentials:'Credentials',
+    computations:'Computations',
+    totalCpu:'Total CPU',
+    totalMemory:'Total Memory',
+    totalBandwidth:'Total Bandwidth'
   },
   task: {
     createTaskBriefInfo: "Create new task you need",

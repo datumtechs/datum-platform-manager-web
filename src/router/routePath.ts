@@ -13,7 +13,8 @@ export default [
   },
   {
     path: '/nodes',
-    name: "nodes",
+    redirect:'nodesIndex',
+    // name: "nodes",
     meta: {
       show: [1, 2],//1 首页展示 2 side展示
       label: 'menu.nodes',
@@ -21,13 +22,22 @@ export default [
       icon: "side-node-icon"
     },
     component: () => import('@/views/nodes/index.vue'),
-    children: [{
-      path: 'Details',
-      name: "Details",
+    children: [
+      {
+        path: '/nodes',
+        name: "nodesIndex",
+        meta: {
+          label: 'menu.nodes',
+        },
+        component: () => import('@/views/nodes/components/NodeIndex.vue'),
+      },
+      {
+      path: 'details',
+      name: "nodeDetails",
       meta: {
         label: 'menu.nodesDetail'
       },
-      component: () => import('@/views/nodes/components/Details.vue')
+      component: () => import('@/views/nodes/components/NodeDetails.vue')
     }],
   },
   {

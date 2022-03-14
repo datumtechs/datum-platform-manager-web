@@ -6,6 +6,7 @@ declare module 'vue' {
   export interface GlobalComponents {
     Banner: typeof import('./components/Banner.vue')['default']
     ComTabs: typeof import('./components/ComTabs.vue')['default']
+    DetailBanner: typeof import('./components/DetailBanner.vue')['default']
     ElAside: typeof import('element-plus/es')['ElAside']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCheckbox: typeof import('element-plus/es')['ElCheckbox']
@@ -17,6 +18,7 @@ declare module 'vue' {
     ElMenu: typeof import('element-plus/es')['ElMenu']
     ElMenuItem: typeof import('element-plus/es')['ElMenuItem']
     ElPopover: typeof import('element-plus/es')['ElPopover']
+    ElSpace: typeof import('element-plus/es')['ElSpace']
     ElTable: typeof import('element-plus/es')['ElTable']
     ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
     Header: typeof import('./components/layout/Header.vue')['default']

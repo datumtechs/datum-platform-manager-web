@@ -1,0 +1,46 @@
+<template>
+    <div class="w-full h-167px flex justify-between relative border-bottom px-50px py-42px">
+        <div class="flex">
+            <el-icon
+                :size="40"
+                v-if="backShow"
+                class="cursor-pointer mr-30px"
+                @click="emit('back')"
+            >
+                <back />
+            </el-icon>
+            <div class="mr-14px h-36px">
+                <img class="w-40px h-40px rounded-1/2" :src="top1bg" />
+            </div>
+            <div class="w-full black-font text-48px text-color-[#393939] font-900 leading-58px">
+                <p class="leading-40px">{{ $t(`${$route.meta.label}`) }}</p>
+                <div
+                    class="text-14px font-medium font-400 text-color-[#999999] leading-20px mt-14px"
+                >
+                    <slot name="briefInfo"></slot>
+                </div>
+            </div>
+        </div>
+        <div class="h-50px -bottom-25px min-w-100px">
+            <slot name="machine"></slot>
+        </div>
+    </div>
+</template>
+<script lang="ts" setup>
+import { Back } from '@element-plus/icons-vue'
+import top1bg from '@/assets/Images/home/top1bg.png'
+const emit = defineEmits(['back'])
+const props = defineProps({
+    bgName: {
+        type: String,
+        default: 'arrow'
+    },
+    backShow: { type: Boolean, default: false },
+    imgUrl: {
+        type: String, default: ""
+    }
+})
+
+</script>
+<style lang="scss" scoped>
+</style>
