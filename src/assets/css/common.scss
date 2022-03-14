@@ -1,6 +1,18 @@
+.layout-mian-wrap{
+  width: calc(100vw - 219px);
+  height: calc(100vh - 70px);
+  overflow: auto;
+
+}
+.com-mian{
+  width: 1200px;
+  margin: 0 auto;
+}
+
 .border-bottom {
   border-bottom: 1px solid #EEEEEE;
 }
+
 
 .com-button{
   font-size: 14px;
@@ -10,4 +22,25 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.rotate-180 {
+  transform: rotate(180deg);
+}
+
+.main-w{
+  width: calc(100vw - 219px) ;
+}
+
+.com-border-eee{
+  border: 1px solid #EEEEEE;
+}
+
+.com-table {
+  .el-table__header .el-table__cell {
+    border-bottom: none;
+    height: 50px;
+  }
+  .el-table__body .el-table__row {
+    height: 70px;
+  }
 }

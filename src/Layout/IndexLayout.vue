@@ -13,14 +13,33 @@ import { ElContainer, ElHeader } from 'element-plus';
       <el-aside width="219px">
         <Side />
       </el-aside>
-      <router-view v-slot="{ Component }">
-        <transition name="fade">
-          <component :is="Component" />
-        </transition>
-      </router-view>
+      <div class="layout-mian-wrap">
+        <router-view v-slot="{ Component }">
+          <transition name="fade">
+            <component :is="Component" />
+          </transition>
+        </router-view>
+      </div>
     </el-container>
     <router-view v-else></router-view>
   </el-container>
 </template>
 <style scoped lang="scss">
+.layout-mian-wrap::-webkit-scrollbar {
+  /*滚动条整体样式*/
+  width: 7px; /*高宽分别对应横竖滚动条的尺寸*/
+}
+.layout-mian-wrap::-webkit-scrollbar-thumb {
+  /*滚动条里面小方块*/
+  height: 30px;
+  border-radius: 10px;
+  // box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+  background: #d8d8d8;
+}
+.layout-mian-wrap::-webkit-scrollbar-track {
+  /*滚动条里面轨道*/
+  // box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  background: #ffffff;
+}
 </style>

@@ -69,6 +69,17 @@ export default [
     }],
   },
   {
+    path: '/computTask',
+    name: "computTask",
+    meta: {
+      show: [2],
+      label: 'menu.computTask',
+      search: true,
+      icon: "side-my-models-icon"
+    },
+    component: () => import('@/views/computing/ComputTask.vue'),
+  },
+  {
     path: '/myAccount/:infoType',
     name: "myAccount",
     meta: {
@@ -87,15 +98,33 @@ export default [
     component: () => import('@/views/task/CreateTask.vue')
   },
   {
-    path: '/credentials',
-    name: "credentials",
+    path: '/datas',
+    name: "datas",
     meta: {
       show: [3],
-      label: 'menu.credentials',
+      label: 'menu.datas',
       search: true,
-      icon: "side-my-credentials-icon"
+      icon: "side-my-datas-icon"
     },
-    component: () => import('@/views/myCredentials/index.vue'),
+    component: () => import('@/views/myDatas/index.vue')
+  },
+  {
+    path: '/datas/details',
+    name: "datasDetails",
+    meta: {
+      label: 'menu.datasDetails',
+      show: []
+    },
+    component: () => import('@/views/myDatas/components/Details.vue')
+  },
+  {
+    path: '/datas/credentials',
+    name: "datasCredentials",
+    meta: {
+      label: 'menu.datasCredentials',
+      show: []
+    },
+    component: () => import('@/views/myDatas/components/Credentials.vue')
   },
   {
     path: '/task',
@@ -109,24 +138,24 @@ export default [
     component: () => import('@/views/task/index.vue'),
     children: [{
       path: 'Details',
-      name: "Details",
+      name: "taskDetails",
       meta: {
         label: 'menu.taskDetails'
       },
       component: () => import('@/views/task/Details.vue')
     }],
   },
-  {
-    path: '/models',
-    name: "models",
-    meta: {
-      show: [3],
-      label: 'menu.models',
-      search: true,
-      icon: "side-my-models-icon"
-    },
-    component: () => import('@/views/myModels/index.vue'),
-  },
+  // {
+  //   path: '/models',
+  //   name: "models",
+  //   meta: {
+  //     show: [3],
+  //     label: 'menu.models',
+  //     search: true,
+  //     icon: "side-my-models-icon"
+  //   },
+  //   component: () => import('@/views/myModels/index.vue'),
+  // },
   {
     path: '/*',
     redirect: 'assetsDetail',

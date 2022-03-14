@@ -5,7 +5,7 @@
         <PrivateSwitch :mode="mode" @change="change" />
       </template>
     </NormalMode>
-    <ExpertModel v-if="mode">
+    <ExpertModel v-else>
       <template #mode>
         <PrivateSwitch :mode="mode" @change="change" />
       </template>

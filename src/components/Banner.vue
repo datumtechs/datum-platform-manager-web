@@ -4,7 +4,7 @@
     :style="{ background: `url(${bgUrl}) no-repeat right`, 'background-size': 'auto 100%' }"
   >
     <div class="w-full black-font text-48px text-color-[#393939] font-900 leading-58px">
-      <el-icon v-if="backShow">
+      <el-icon v-if="backShow" class="cursor-pointer" @click="emit('back')">
         <back />
       </el-icon>
       {{ $t(`${$route.meta.label}`) }}
@@ -20,40 +20,40 @@
 </template>
 <script lang="ts" setup>
 import { Back } from '@element-plus/icons-vue'
-import bgMap1 from '@/assets/Images/banner/backgroundMap1.png'
-import bgMap2 from '@/assets/Images/banner/backgroundMap2.png'
-import bgMap3 from '@/assets/Images/banner/backgroundMap3.png'
-import bgMap4 from '@/assets/Images/banner/backgroundMap4.png'
-import bgMap5 from '@/assets/Images/banner/backgroundMap5.png'
-
+import arrow from '@/assets/Images/banner/arrow.png'
+import book from '@/assets/Images/banner/book.png'
+import clocksWatches from '@/assets/Images/banner/clocksWatches.png'
+import flag from '@/assets/Images/banner/flag.png'
+import rocket from '@/assets/Images/banner/rocket.png'
+const emit = defineEmits(['back'])
 const props = defineProps({
-  bgIndex: {
-    type: Number,
-    default: 1
+  bgName: {
+    type: String,
+    default: 'arrow'
   },
   backShow: { type: Boolean, default: false }
 })
 
 const bgUrl = computed(() => {
-  let bgMap = bgMap1
-  switch (props.bgIndex) {
-    case 1:
-      bgMap = bgMap1;
+  let bgMap = arrow
+  switch (props.bgName) {
+    case 'arrow':
+      bgMap = arrow;
       break;
-    case 2:
-      bgMap = bgMap2;
+    case 'book':
+      bgMap = book;
       break;
-    case 3:
-      bgMap = bgMap3;
+    case 'clocksWatches':
+      bgMap = clocksWatches;
       break;
-    case 4:
-      bgMap = bgMap4;
+    case 'flag':
+      bgMap = flag;
       break;
-    case 5:
-      bgMap = bgMap5;
+    case 'rocket':
+      bgMap = rocket;
       break;
     default:
-      bgMap = bgMap1;
+      bgMap = arrow;
       break;
   }
   return bgMap

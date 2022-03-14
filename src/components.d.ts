@@ -12,19 +12,13 @@ declare module 'vue' {
     ElConfigProvider: typeof import('element-plus/es')['ElConfigProvider']
     ElDialog: typeof import('element-plus/es')['ElDialog']
     ElDrawer: typeof import('element-plus/es')['ElDrawer']
-    ElForm: typeof import('element-plus/es')['ElForm']
-    ElFormItem: typeof import('element-plus/es')['ElFormItem']
     ElIcon: typeof import('element-plus/es')['ElIcon']
     ElInput: typeof import('element-plus/es')['ElInput']
     ElMenu: typeof import('element-plus/es')['ElMenu']
     ElMenuItem: typeof import('element-plus/es')['ElMenuItem']
     ElPopover: typeof import('element-plus/es')['ElPopover']
-    ElRadio: typeof import('element-plus/es')['ElRadio']
-    ElRadioGroup: typeof import('element-plus/es')['ElRadioGroup']
-    ElSpace: typeof import('element-plus/es')['ElSpace']
     ElTable: typeof import('element-plus/es')['ElTable']
     ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
-    ElTooltip: typeof import('element-plus/es')['ElTooltip']
     Header: typeof import('./components/layout/Header.vue')['default']
     Login: typeof import('./components/login/index.vue')['default']
     Menu: typeof import('./components/layout/Menu.vue')['default']
@@ -34,6 +28,7 @@ declare module 'vue' {
     QuestionMark: typeof import('./components/QuestionMark.vue')['default']
     Search: typeof import('./components/Search.vue')['default']
     Side: typeof import('./components/layout/Side.vue')['default']
+    TaskParamsTransfer: typeof import('./components/TaskParamsTransfer.vue')['default']
   }
 }
 

@@ -16,11 +16,8 @@
       </el-menu-item>
     </el-menu>
     <el-menu router class="flex-1 bg-color-[#F7F8F9] pt-26px">
-      <el-menu-item
-        class="h-63px"
-        :index="'/createTask'"
-        :class="{ active: handActive('createTask') }"
-      >
+      <el-menu-item class="h-63px mb-16px" :index="'/createTask'">
+        <!-- :class="{ active: handActive('createTask') }" -->
         <div
           class="mx-15px h-50px w-full flex items-center justify-center bg-color-[#2B60E9] rounded-[25px] text-color-[#fff]"
         >
@@ -72,7 +69,7 @@ const handIcon = (name: string | undefined): any => {
       itemIcon = computingIcon; break;
     case 'side-my-task-icon':
       itemIcon = myTaskIcon; break;
-    case 'side-my-credentials-icon':
+    case 'side-my-datas-icon':
       itemIcon = credentialsIcon; break;
     case 'side-my-models-icon':
       itemIcon = myMmodelsIcon; break;
@@ -85,7 +82,8 @@ const handIcon = (name: string | undefined): any => {
 
 const handActive = (path: string) => {
   const pathList = path.split('/')
-  return pathList.includes(route.path.replace('/', ''))
+  const routeList = route.path.split('/')
+  return routeList.includes(pathList[1])
 }
 
 </script>

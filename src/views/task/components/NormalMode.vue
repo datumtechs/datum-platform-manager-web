@@ -20,13 +20,49 @@
     </div>
     <div v-if="activeIndex == 0" class="mt-38px mb-42px ml-6px">
       <slot name="mode"></slot>
-      <StepOne />
+      <StepOne
+        :taskParams="taskParams"
+        @next="activeIndex = 1"
+        @getParams="(params) => (taskParams.one = params)"
+      />
     </div>
+    <StepTwo
+      v-if="activeIndex == 1"
+      :taskParams="taskParams"
+      @previous="activeIndex = 0"
+      @next="activeIndex = 2"
+      @getParams="(params) => (taskParams.two = params)"
+    />
+    <StepThree
+      v-if="activeIndex == 2"
+      :taskParams="taskParams"
+      @previous="activeIndex = 1"
+      @next="activeIndex = 3"
+      @getParams="(params) => (taskParams.three = params)"
+    />
+    <Stepfour
+      v-if="activeIndex == 3"
+      :taskParams="taskParams"
+      @previous="activeIndex = 2"
+      @next="activeIndex = 4"
+      @getParams="(params) => (taskParams.four = params)"
+    />
+    <StepFive
+      v-if="activeIndex == 4"
+      :taskParams="taskParams"
+      @previous="activeIndex = 3"
+      @next="submit"
+      @getParams="(params) => (taskParams.four = params)"
+    />
   </div>
 </template>
 <script lang="ts" setup>
 import StepOne from './normal/StepOne.vue';
-const activeIndex = ref(0)
+import StepTwo from './normal/StepTwo.vue';
+import StepThree from './normal/StepThree.vue';
+import Stepfour from './normal/Stepfour.vue';
+import StepFive from './normal/StepFive.vue';
+const activeIndex = ref(4)
 const list = [
   {
     setp: '01',
@@ -50,6 +86,20 @@ const list = [
   },
 
 ]
+const taskParams = ref({
+  one: {},
+  two: {},
+  three: {},
+  four: {},
+  five: {}
+})
+
+const previous = () => {
+  activeIndex.value = 0
+}
+const submit = () => {
+
+}
 </script>
 <style lang="scss" scoped>
 .normal-wrap {
