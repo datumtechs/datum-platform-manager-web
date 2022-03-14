@@ -3,7 +3,9 @@
     <Banner :bg-name="'book'">
       <template #briefInfo>{{ $t('task.createTaskBriefInfo') }}</template>
     </Banner>
-    <TaskMain />
+    <div class="com-main-data-wrap">
+      <TaskMain />
+    </div>
   </div>
 </template>
 <script lang="ts" setup>

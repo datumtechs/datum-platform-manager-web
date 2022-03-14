@@ -34,7 +34,7 @@ const zh = {
     datas: "我的数据",
     datasDetails: "数据详情",
     datasCredentials: "数据凭证",
-    task: "我的任务",
+    workflow: "我的工作流",
     taskDetails: "详情任务",
     models: "我的模型",
     computTask: "计算任务",

@@ -11,12 +11,14 @@
         </p>
       </template>
     </Banner>
-    <DataTable
-      :data="tableData"
-      @purchase="purchase"
-      @viewData="viewData"
-      @viewCredential="viewCredential"
-    />
+    <div class="com-main-data-wrap">
+      <DataTable
+        :data="tableData"
+        @purchase="purchase"
+        @viewData="viewData"
+        @viewCredential="viewCredential"
+      />
+    </div>
   </div>
 </template>
 <script lang="ts" setup>

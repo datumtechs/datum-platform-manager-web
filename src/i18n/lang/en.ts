@@ -34,7 +34,7 @@ const en = {
     datas: "My Datas",
     datasDetails: "Datas Details",
     datasCredentials: "Datas Credentials",
-    task: "My Tasks",
+    workflow: "My Workflow",
     taskDetails: "Tasks Details",
     models: "My Models",
     computTask: "Computing Tasks"

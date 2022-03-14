@@ -127,23 +127,23 @@ export default [
     component: () => import('@/views/myDatas/components/Credentials.vue')
   },
   {
-    path: '/task',
-    name: "task",
+    path: '/workflow',
+    name: "workflow",
     meta: {
       show: [3],
-      label: 'menu.task',
+      label: 'menu.workflow',
       search: true,
       icon: "side-my-task-icon"
     },
     component: () => import('@/views/task/index.vue'),
-    children: [{
-      path: 'Details',
-      name: "taskDetails",
-      meta: {
-        label: 'menu.taskDetails'
-      },
-      component: () => import('@/views/task/Details.vue')
-    }],
+    // children: [{
+    //   path: 'Details',
+    //   name: "taskDetails",
+    //   meta: {
+    //     label: 'menu.taskDetails'
+    //   },
+    //   component: () => import('@/views/task/Details.vue')
+    // }],
   },
   // {
   //   path: '/models',

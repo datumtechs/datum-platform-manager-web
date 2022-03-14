@@ -5,9 +5,11 @@
         <ComTabs :list="list" :activekey="activekey" @change="tabsChange" />
       </template>
     </Banner>
-    <BaseInfo v-if="activekey == 0" :tableData="tableData" />
-    <MetaData v-if="activekey == 1" :data="MetadataData" />
-    <TaskInvolved v-if="activekey == 2" :data="TaskInvolvedData" />
+     <div class="com-main-data-wrap">
+      <BaseInfo v-if="activekey == 0" :tableData="tableData" />
+      <MetaData v-if="activekey == 1" :data="MetadataData" />
+      <TaskInvolved v-if="activekey == 2" :data="TaskInvolvedData" />
+    </div>
   </div>
 </template>
 <script lang="ts" setup>

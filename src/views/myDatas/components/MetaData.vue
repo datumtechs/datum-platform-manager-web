@@ -1,11 +1,11 @@
 <template>
-  <el-table :data="props.data" class="mt-63px" border>
-    <el-table-column type="index" width="200">
+  <el-table :data="props.data" class="mt-63px table-header-bg-Grayscale" border>
+    <el-table-column type="index" width="200" align="center" >
       <template #header>{{ $t('common.num') }}</template>
     </el-table-column>
-    <el-table-column prop="field" :label="$t('myDatas.field')" />
-    <el-table-column prop="dataType" :label="$t('myDatas.dataType')" />
-    <el-table-column prop="remarks" :label="$t('myDatas.remarks')" />
+    <el-table-column prop="field"  align="center" :label="$t('myDatas.field')" />
+    <el-table-column prop="dataType"  align="center" :label="$t('myDatas.dataType')" />
+    <el-table-column prop="remarks"  align="center" :label="$t('myDatas.remarks')" />
   </el-table>
 </template>
 <script lang="ts" setup>
