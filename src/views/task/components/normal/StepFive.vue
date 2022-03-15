@@ -20,7 +20,7 @@
         <div class="p-30px">
           <div
             class="pb-20px text-color-[#333333] text-16px font-medium font-600"
-          >{{ item == 1 ? $t('task.trainingResultreceivers') : $t('task.predictionResultreceivers') }}</div>
+          >{{ item == 1 ? $t('task.trainingResultReceivers') : $t('task.predictionResultReceivers') }}</div>
           <el-form-item>
             <el-radio-group v-model="form.radio">
               <el-radio :label="1">Option A</el-radio>

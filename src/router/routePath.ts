@@ -13,7 +13,7 @@ export default [
   },
   {
     path: '/nodes',
-    redirect:'nodesIndex',
+    redirect: 'nodesIndex',
     // name: "nodes",
     meta: {
       show: [1, 2],//1 首页展示 2 side展示
@@ -32,13 +32,13 @@ export default [
         component: () => import('@/views/nodes/components/NodeIndex.vue'),
       },
       {
-      path: 'details',
-      name: "nodeDetails",
-      meta: {
-        label: 'menu.nodesDetail'
-      },
-      component: () => import('@/views/nodes/components/NodeDetails.vue')
-    }],
+        path: 'details',
+        name: "nodeDetails",
+        meta: {
+          label: 'menu.nodesDetail'
+        },
+        component: () => import('@/views/nodes/components/NodeDetails.vue')
+      }],
   },
   {
     path: '/marketplace',
@@ -79,15 +79,15 @@ export default [
     }],
   },
   {
-    path: '/computTask',
-    name: "computTask",
+    path: '/computeTask',
+    name: "computeTask",
     meta: {
       show: [2],
-      label: 'menu.computTask',
+      label: 'menu.computeTask',
       search: true,
       icon: "side-my-models-icon"
     },
-    component: () => import('@/views/computing/ComputTask.vue'),
+    component: () => import('@/views/computing/computeTask.vue'),
   },
   {
     path: '/myAccount/:infoType',
@@ -108,33 +108,33 @@ export default [
     component: () => import('@/views/task/CreateTask.vue')
   },
   {
-    path: '/datas',
-    name: "datas",
+    path: '/data',
+    name: "data",
     meta: {
       show: [3],
-      label: 'menu.datas',
+      label: 'menu.data',
       search: true,
       icon: "side-my-datas-icon"
     },
-    component: () => import('@/views/myDatas/index.vue')
+    component: () => import('@/views/myData/index.vue')
   },
   {
-    path: '/datas/details',
-    name: "datasDetails",
+    path: '/data/details',
+    name: "dataDetails",
     meta: {
-      label: 'menu.datasDetails',
+      label: 'menu.dataDetails',
       show: []
     },
-    component: () => import('@/views/myDatas/components/Details.vue')
+    component: () => import('@/views/myData/components/Details.vue')
   },
   {
-    path: '/datas/credentials',
-    name: "datasCredentials",
+    path: '/data/credentials',
+    name: "dataCredentials",
     meta: {
-      label: 'menu.datasCredentials',
+      label: 'menu.dataCredentials',
       show: []
     },
-    component: () => import('@/views/myDatas/components/Credentials.vue')
+    component: () => import('@/views/myData/components/Credentials.vue')
   },
   {
     path: '/workflow',
@@ -146,14 +146,6 @@ export default [
       icon: "side-my-task-icon"
     },
     component: () => import('@/views/task/index.vue'),
-    // children: [{
-    //   path: 'Details',
-    //   name: "taskDetails",
-    //   meta: {
-    //     label: 'menu.taskDetails'
-    //   },
-    //   component: () => import('@/views/task/Details.vue')
-    // }],
   },
   // {
   //   path: '/models',

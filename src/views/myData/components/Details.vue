@@ -1,5 +1,5 @@
 <template>
-  <div class="flex-1 task-wrap com-mian">
+  <div class="flex-1 task-wrap com-main">
     <Banner :back-show="true" :bg-name="'arrow'" @back="router.go(-1)">
       <template #select>
         <ComTabs :list="list" :activekey="activekey" @change="tabsChange" />
@@ -21,47 +21,47 @@ const router: Router = useRouter()
 const activekey = ref(0)
 const list = ref([
   {
-    name: 'myDatas.basicInfo'
+    name: 'myData.basicInfo'
   },
   {
-    name: 'myDatas.metadata'
+    name: 'myData.metadata'
   },
   {
-    name: 'myDatas.tasksInvolved'
+    name: 'myData.tasksInvolved'
   }
 ])
 
 const MetadataData = ref([{
-  remarks: "myDatas"
+  remarks: "myData"
 }])
 
 const TaskInvolvedData = ref([{
-  remarks: "myDatas"
+  remarks: "myData"
 }])
 
 
 const tableData = ref([{
-  lName: 'myDatas.dataName',
+  lName: 'myData.dataName',
   lProp: "dataName",
-  rName: 'myDatas.credentialSymbo',
-  rProp: "credentialSymbo",
+  rName: 'myData.credentialSymbol',
+  rProp: "credentialSymbol",
 }, {
-  lName: 'myDatas.launchTime',
+  lName: 'myData.launchTime',
   lProp: "launchTime",
-  rName: 'myDatas.industryData',
+  rName: 'myData.industryData',
   rProp: "industryData",
 }, {
-  lName: 'myDatas.dataFormat',
+  lName: 'myData.dataFormat',
   lProp: "dataFormat",
-  rName: 'myDatas.dataSize',
+  rName: 'myData.dataSize',
   rProp: "dataSize",
 }, {
-  lName: 'myDatas.rowsData',
+  lName: 'myData.rowsData',
   lProp: "rowsData",
-  rName: 'myDatas.columnsData',
+  rName: 'myData.columnsData',
   rProp: "columnsData",
 }, {
-  lName: 'myDatas.dataDescription',
+  lName: 'myData.dataDescription',
   lProp: "dataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescription",
   last: true
 }])

@@ -31,13 +31,13 @@ const en = {
     computing: 'Computing Services',
     computingDetails: 'Computing Services Details',
     createTask: "Create Task",
-    datas: "My Datas",
-    datasDetails: "Datas Details",
-    datasCredentials: "Datas Credentials",
+    data: "My Data",
+    dataDetails: "Data Details",
+    dataCredentials: "Data Credentials",
     workflow: "My Workflow",
     taskDetails: "Tasks Details",
     models: "My Models",
-    computTask: "Computing Tasks"
+    computeTask: "Computing Tasks"
   },
   head: {
     myAccountTitle: 'My Account',
@@ -50,7 +50,7 @@ const en = {
     nodeManagement: 'Node Management',
     loginDialogTitle: "Metamask Extension",
     install: "install",
-    intallTipOne: 'One-click blockchain application',
+    installTipOne: 'One-click blockchain application',
     installTipTwo: 'Privacy Preserved Locally',
   },
   home: {
@@ -93,12 +93,12 @@ const en = {
     nodeIP: 'Node IP',
     nodeName: 'Node name',
     addNode: "Add Node",
-    view:'View',
-    credentials:'Credentials',
-    computations:'Computations',
-    totalCpu:'Total CPU',
-    totalMemory:'Total Memory',
-    totalBandwidth:'Total Bandwidth'
+    view: 'View',
+    credentials: 'Credentials',
+    computations: 'Computations',
+    totalCpu: 'Total CPU',
+    totalMemory: 'Total Memory',
+    totalBandwidth: 'Total Bandwidth'
   },
   task: {
     createTaskBriefInfo: "Create new task you need",
@@ -116,7 +116,7 @@ const en = {
     taskNameRulesOne: "cannot be modified after submitting",
     taskNameRulesTwo: "no limit to character type",
     taskNameRulesThree: " 8 characters at least",
-    taskNameRulesfour: "64 characters at most",
+    taskNameRulesFour: "64 characters at most",
     stepOneSelectComputingTitle: "Select the category of the privacy computing",
     Statistics: "Statistics",
     AiComputing: "AI computing",
@@ -131,7 +131,7 @@ const en = {
     importFields: "Import fields",
     field: "Field",
     fieldTips: "Select and assign the fields used in your task",
-    selectFiels: "Select",
+    selectField: "Select",
     setTo: "Set to",
     idColumn: "ID column",
     label: "Label",
@@ -139,17 +139,17 @@ const en = {
     selectData: "Data",
     select: "Select",
     selectModel: "Select the model",
-    environmentTtraining: "Select the environment of the training task",
+    environmentTraining: "Select the environment of the training task",
     environmentPrediction: "Select the environment of the prediction task",
     lowestNeed: "Lowest computing power need",
     longestTime: "Longest computing time",
-    trainingResultreceivers: "Select result receivers of the training task",
-    predictionResultreceivers: "Select result receivers of the prediction task",
+    trainingResultReceivers: "Select result receivers of the training task",
+    predictionResultReceivers: "Select result receivers of the prediction task",
     startTask: "Start Task"
   },
-  myDatas: {
-    tasksBriefInfoFirstParagraph: "There are",
-    tasksBriefInfoTwoParagraph: "valid data that can participate in privacy computing in the whole network",
+  myData: {
+    tasksBriefInfoFirstParagraph: " ",
+    tasksBriefInfoTwoParagraph: "effective data",
     dataName: "Data Name",
     dataProvider: "Data Provider",
     credentialName: "Credential Name",
@@ -161,7 +161,7 @@ const en = {
     basicInfo: "basic Information",
     metadata: "Metadata",
     tasksInvolved: "Tasks Involved",
-    credentialSymbo: "Credential symbo",
+    credentialSymbol: "Credential symbol",
     launchTime: "Launch time",
     industryData: "Industry of data",
     dataFormat: "Data format",
@@ -173,10 +173,20 @@ const en = {
     dataType: "Data Type",
     remarks: "Remarks",
     taskID: "Task ID",
-    TtaskCategory: "Task Category",
+    TaskCategory: "Task Category",
     capability: "Capability",
     createTime: "Create Time",
     totalTime: "Total Time",
+  },
+  workflow: {
+    workflowName: "Workflow Name",
+    workflowAlgorithm: "Workflow Algorithm",
+    workflowSteps: "Workflow Steps",
+    latestRunningTime: "Latest Running Time",
+    creationTime: "Creation Time",
+    viewRecords: "View Records",
+    continueEditing: "Continue Edit",
+    deleteWorkflow: "Delete"
   }
 }
 

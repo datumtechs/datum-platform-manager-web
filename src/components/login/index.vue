@@ -18,7 +18,7 @@
         <el-icon>
           <pointer />
         </el-icon>
-        <p class>{{ $t('head.intallTipOne') }}</p>
+        <p class>{{ $t('head.installTipOne') }}</p>
       </div>
       <div class="flex mb-30px items-center gap-10px justify-center">
         <el-icon>

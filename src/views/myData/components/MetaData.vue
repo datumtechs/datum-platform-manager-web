@@ -3,9 +3,9 @@
     <el-table-column type="index" width="200" align="center" >
       <template #header>{{ $t('common.num') }}</template>
     </el-table-column>
-    <el-table-column prop="field"  align="center" :label="$t('myDatas.field')" />
-    <el-table-column prop="dataType"  align="center" :label="$t('myDatas.dataType')" />
-    <el-table-column prop="remarks"  align="center" :label="$t('myDatas.remarks')" />
+    <el-table-column prop="field"  align="center" :label="$t('myData.field')" />
+    <el-table-column prop="dataType"  align="center" :label="$t('myData.dataType')" />
+    <el-table-column prop="remarks"  align="center" :label="$t('myData.remarks')" />
   </el-table>
 </template>
 <script lang="ts" setup>

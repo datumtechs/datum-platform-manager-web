@@ -44,7 +44,7 @@
       <!--中间-->
       <div class="border-l-r flex-1 pt-20px px-30px">
         <div class="flex mb-30px items-center">
-          <span class="inline-block w-100px text-color-[#333333]">{{ $t('task.selectFiels') }} ：</span>
+          <span class="inline-block w-100px text-color-[#333333]">{{ $t('task.selectField') }} ：</span>
           <div
             class="flex flex-1 items-center justify-center text-color-[#999999]"
           >{{ activeItem?.name || undefined }}</div>

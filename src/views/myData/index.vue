@@ -1,13 +1,13 @@
 <template>
-  <div class="flex-1 task-wrap com-mian">
+  <div class="flex-1 task-wrap com-main">
     <Banner :bg-name="'arrow'">
       <template #briefInfo>
         <p class="text-color-[#999999]">
-          {{ $t('myDatas.tasksBriefInfoFirstParagraph') }}
+          {{ $t('myData.tasksBriefInfoFirstParagraph') }}
           <span
             class="text-color-[#2B60E9] text-16px"
           >11990</span>
-          {{ $t('myDatas.tasksBriefInfoTwoParagraph') }}
+          {{ $t('myData.tasksBriefInfoTwoParagraph') }}
         </p>
       </template>
     </Banner>
@@ -37,10 +37,10 @@ const tableData = [
 ]
 const purchase = (obj: any) => { }
 const viewData = (obj: any) => {
-  router.push({ name: "datasDetails", params: { ...obj } })
+  router.push({ name: "dataDetails", params: { ...obj } })
 }
 const viewCredential = (obj: any) => {
-  router.push({ name: "datasCredentials", params: { ...obj } })
+  router.push({ name: "dataCredentials", params: { ...obj } })
 }
 </script>
 <style lang="scss" scoped>
