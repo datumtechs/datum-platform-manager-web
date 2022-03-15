@@ -21,6 +21,12 @@
   margin: 0 auto;
 }
 
+@media screen and (max-width: 1400px) {
+  .com-main-data-wrap{
+    padding:0 50px;
+  }
+}
+
 .com-main{
   min-width: 1200px;
 }

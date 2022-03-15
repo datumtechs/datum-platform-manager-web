@@ -21,7 +21,17 @@ const en = {
     minute: 'minute',
     hours: 'hours',
     second: 'second',
-    computations:'computations'
+    copy: "Copy",
+    payment: "Pay",
+    continuePayment: "Continue Pay",
+    viewResults: "View results",
+    startUp: "StartUp",
+    address: "Address",
+    day: "Day",
+    month: "Month",
+    year: "Year",
+    all: "all",
+    computations: 'computations'
   },
   menu: {
     home: 'Home',
@@ -36,6 +46,7 @@ const en = {
     dataDetails: "Data Details",
     dataCredentials: "Data Credentials",
     workflow: "My Workflow",
+    workflowDetails: "Workflow Details",
     taskDetails: "Tasks Details",
     models: "My Models",
     computeTask: "Computing Tasks"
@@ -188,7 +199,18 @@ const en = {
     creationTime: "Creation Time",
     viewRecords: "View Records",
     continueEditing: "Continue Edit",
-    deleteWorkflow: "Delete"
+    deleteWorkflow: "Delete",
+    totalOf: " ",
+    workTipsBriefInfoTwoParagraph: "privacy computing workflows",
+    recordWorkflow: "Record of this workflow"
+  },
+  credentials: {
+    circulation: "Circulation",
+    numberHolders: "Number of Holders",
+    viewExplorer: "View on the blockchain explorer",
+    presentPrice: "Present price",
+    priceTrend: "Price Trend",
+    volumeTrend: "Volume Trend"
   }
 }
 

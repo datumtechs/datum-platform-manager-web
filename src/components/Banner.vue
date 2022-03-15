@@ -1,6 +1,6 @@
 <template>
   <div
-    class="w-full h-167px flex justify-between relative border-bottom px-50px py-42px"
+    class="w-full h-167px flex justify-between relative border-bottom px-5vw py-42px com-main"
     :style="{ background: `url(${bgUrl}) no-repeat right`, 'background-size': 'auto 100%' }"
   >
     <div class="w-full black-font text-48px text-color-[#393939] font-900 leading-58px">

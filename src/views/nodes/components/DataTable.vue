@@ -21,6 +21,7 @@
                     <el-space :size="20">
                         <span
                             class="text-14px text-color-[#0052D9] leading-23px cursor-pointer"
+                            @click="linkToViewData(row)"
                         >{{ $t('myData.viewData') }}</span>
                         <span
                             class="text-14px text-color-[#0052D9] leading-23px cursor-pointer"
@@ -52,6 +53,13 @@ const tableData = reactive([
         launchTime: '2022-3-15'
     }
 ])
+const router = useRouter()
+const linkToViewData = (row: any) => {
+    router.push({
+        name: 'dataOverview'
+    })
+}
+
 </script>
 
 <style scoped lang='scss'>

@@ -38,6 +38,13 @@ export default [
           label: 'menu.nodesDetail'
         },
         component: () => import('@/views/nodes/components/NodeDetails.vue')
+      },{
+        path: '/nodes/details/dataOverview',
+        name: "dataOverview",
+        meta: {
+          label: 'menu.nodesDetail'
+        },
+        component: () => import('@/views/nodes/components/DataOverview.vue')
       }],
   },
   {
@@ -87,7 +94,7 @@ export default [
       search: true,
       icon: "side-my-models-icon"
     },
-    component: () => import('@/views/computing/computeTask.vue'),
+    component: () => import('@/views/computing/ComputeTask.vue'),
   },
   {
     path: '/myAccount/:infoType',
@@ -146,6 +153,17 @@ export default [
       icon: "side-my-task-icon"
     },
     component: () => import('@/views/task/index.vue'),
+  },
+  {
+    path: '/workflow/details/:id',
+    name: "workflowDetails",
+    meta: {
+      show: [],
+      label: 'menu.workflowDetails',
+      search: true,
+      icon: "side-my-task-icon"
+    },
+    component: () => import('@/views/task/Details.vue'),
   },
   // {
   //   path: '/models',
