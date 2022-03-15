@@ -91,7 +91,13 @@ const zh = {
     nodeName: "节点名称",
     nodePort: '节点端口',
     nodeIP: '节点IP',
-    addNode: "添加节点"
+    addNode: "添加节点",
+    view:'查看',
+    credentials:'发布凭证',
+    computations:'参与计算任务',
+    totalCpu:'总CPU',
+    totalMemory:'总内存',
+    totalBandwidth:'总带宽'
   },
   task: {
     createTaskBriefInfo: "创建你需要的任务",
