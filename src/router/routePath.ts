@@ -87,7 +87,7 @@ export default [
       search: true,
       icon: "side-my-models-icon"
     },
-    component: () => import('@/views/computing/computeTask.vue'),
+    component: () => import('@/views/computing/ComputeTask.vue'),
   },
   {
     path: '/myAccount/:infoType',
@@ -146,6 +146,17 @@ export default [
       icon: "side-my-task-icon"
     },
     component: () => import('@/views/task/index.vue'),
+  },
+  {
+    path: '/workflow/details/:id',
+    name: "workflowDetails",
+    meta: {
+      show: [],
+      label: 'menu.workflowDetails',
+      search: true,
+      icon: "side-my-task-icon"
+    },
+    component: () => import('@/views/task/Details.vue'),
   },
   // {
   //   path: '/models',

@@ -20,7 +20,17 @@ const zh = {
     cores: "核",
     minute: '分钟',
     hours: '小时',
-    second: '秒'
+    second: '秒',
+    copy: "复制",
+    payment: "支付",
+    continuePayment: "继续支付",
+    viewResults: "查看结果",
+    startUp: "启动",
+    address: "合约地址",
+    day: "天",
+    month: "月",
+    year: "年",
+    all: "全部"
   },
   menu: {
     home: '首页',
@@ -35,6 +45,7 @@ const zh = {
     dataDetails: "数据详情",
     dataCredentials: "数据凭证",
     workflow: "我的工作流",
+    workflowDetails: "工作流详情",
     taskDetails: "详情任务",
     models: "我的模型",
     computeTask: "计算任务",
@@ -185,7 +196,19 @@ const zh = {
     creationTime: "创建时间",
     viewRecords: "查看记录",
     continueEditing: "继续编辑",
-    deleteWorkflow: "删除工作流"
+    deleteWorkflow: "删除工作流",
+    totalOf: "共",
+    workTipsBriefInfoTwoParagraph: "个隐私计算工作流",
+    recordWorkflow: "条 该工作流的运行记录"
+  },
+  credentials: {
+    circulation: "总发布量",
+    numberHolders: "持有人数",
+    viewExplorer: "在区块链浏览器上查看",
+    presentPrice: "当前价格",
+    priceTrend: "价格走势",
+    volumeTrend: "交易量走势"
+
   }
 }
 

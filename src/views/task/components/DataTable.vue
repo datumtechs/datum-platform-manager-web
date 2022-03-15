@@ -55,7 +55,7 @@ const Edit = (obj: any) => {
   router.push({name:'createTask'})
  }
 const viewData = (obj: any) => {
-  router.push({name:'createTask'})
+  router.push({name:'workflowDetails',params:{id:1}})
 }
 const del = (obj: any) => {
   

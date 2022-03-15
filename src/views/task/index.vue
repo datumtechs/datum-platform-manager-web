@@ -1,13 +1,13 @@
 <template>
   <div class="flex-1 task-wrap com-main">
-    <Banner :bg-name="'arrow'">
+    <Banner :bg-name="'clocksWatches'">
       <template #briefInfo>
         <p class="text-color-[#999999]">
-          {{ $t('myData.tasksBriefInfoFirstParagraph') }}
+          {{ $t('workflow.totalOf') }}
           <span
             class="text-color-[#2B60E9] text-16px"
           >11990</span>
-          {{ $t('myData.tasksBriefInfoTwoParagraph') }}
+          {{ $t('workflow.workTipsBriefInfoTwoParagraph') }}
         </p>
       </template>
     </Banner>
