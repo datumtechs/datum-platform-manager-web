@@ -30,7 +30,8 @@ const en = {
     day: "Day",
     month: "Month",
     year: "Year",
-    all: "all"
+    all: "all",
+    computations: 'computations'
   },
   menu: {
     home: 'Home',
@@ -97,19 +98,18 @@ const en = {
     nickValidateTips: 'The length is between 3 and 20 characters',
     tips: "Tips",
     tipsText: "Delete node"
-
   },
   node: {
+    nodeName: 'Node name',
     nodePort: 'Node Port',
     nodeIP: 'Node IP',
-    nodeName: 'Node name',
     addNode: "Add Node",
     view: 'View',
     credentials: 'Credentials',
     computations: 'Computations',
     totalCpu: 'Total CPU',
     totalMemory: 'Total Memory',
-    totalBandwidth: 'Total Bandwidth'
+    totalBandwidth: 'Total Bandwidth',
   },
   task: {
     createTaskBriefInfo: "Create new task you need",

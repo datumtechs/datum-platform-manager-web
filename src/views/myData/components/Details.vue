@@ -43,7 +43,11 @@ const TaskInvolvedData = ref([{
 const tableData = ref([{
   lName: 'myData.dataName',
   lProp: "dataName",
+<<<<<<< HEAD:src/views/myDatas/components/Details.vue
+  rName: 'myDatas.credentialSymbol',
+=======
   rName: 'myData.credentialSymbol',
+>>>>>>> 9104538a60daf7bb2b23e41a3687d8a959ba81b2:src/views/myData/components/Details.vue
   rProp: "credentialSymbol",
 }, {
   lName: 'myData.launchTime',

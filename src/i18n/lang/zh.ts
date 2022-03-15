@@ -30,7 +30,8 @@ const zh = {
     day: "天",
     month: "月",
     year: "年",
-    all: "全部"
+    all: "全部",
+    computations: '计算任务'
   },
   menu: {
     home: '首页',
@@ -56,7 +57,7 @@ const zh = {
     login: '登录 RosettaFlow',
     logout: '登出',
     myAccount: '我的账户',
-    Nickname: "昵称",
+    nickname: "昵称",
     editNickname: '修改昵称',
     nodeManagement: '网络节点管理',
     loginDialogTitle: "Metamask 扩展",
@@ -108,7 +109,7 @@ const zh = {
     computations: '参与计算任务',
     totalCpu: '总CPU',
     totalMemory: '总内存',
-    totalBandwidth: '总带宽'
+    totalBandwidth: '总带宽',
   },
   task: {
     createTaskBriefInfo: "创建你需要的任务",
