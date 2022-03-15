@@ -21,7 +21,7 @@
             <br />
             3、{{ $t('task.taskNameRulesThree') }}
             <br />
-            4、{{ $t('task.taskNameRulesfour') }}
+            4、{{ $t('task.taskNameRulesFour') }}
             <br />
           </template>
         </question-mark>

@@ -1,12 +1,14 @@
 <template>
-  <div class="flex-1">
+  <div class="min-w-1000px">
     <Banner>
       <template #select>
         <ComTabs :list="list" :activekey="activekey" @change="tabsChange" />
       </template>
     </Banner>
-    <MyNode v-if="activekey == 1" />
-    <Account v-else />
+    <div class="com-main-data-wrap">
+      <MyNode v-if="activekey == 1" />
+      <Account v-else />
+    </div>
   </div>
 </template>
 <script lang="ts" setup>

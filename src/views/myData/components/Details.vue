@@ -1,13 +1,15 @@
 <template>
-  <div class="flex-1 task-wrap com-mian">
+  <div class="flex-1 task-wrap com-main">
     <Banner :back-show="true" :bg-name="'arrow'" @back="router.go(-1)">
       <template #select>
         <ComTabs :list="list" :activekey="activekey" @change="tabsChange" />
       </template>
     </Banner>
-    <BaseInfo v-if="activekey == 0" :tableData="tableData" />
-    <MetaData v-if="activekey == 1" :data="MetadataData" />
-    <TaskInvolved v-if="activekey == 2" :data="TaskInvolvedData" />
+     <div class="com-main-data-wrap">
+      <BaseInfo v-if="activekey == 0" :tableData="tableData" />
+      <MetaData v-if="activekey == 1" :data="MetadataData" />
+      <TaskInvolved v-if="activekey == 2" :data="TaskInvolvedData" />
+    </div>
   </div>
 </template>
 <script lang="ts" setup>
@@ -19,47 +21,51 @@ const router: Router = useRouter()
 const activekey = ref(0)
 const list = ref([
   {
-    name: 'myDatas.basicInfo'
+    name: 'myData.basicInfo'
   },
   {
-    name: 'myDatas.metadata'
+    name: 'myData.metadata'
   },
   {
-    name: 'myDatas.tasksInvolved'
+    name: 'myData.tasksInvolved'
   }
 ])
 
 const MetadataData = ref([{
-  remarks: "myDatas"
+  remarks: "myData"
 }])
 
 const TaskInvolvedData = ref([{
-  remarks: "myDatas"
+  remarks: "myData"
 }])
 
 
 const tableData = ref([{
-  lName: 'myDatas.dataName',
+  lName: 'myData.dataName',
   lProp: "dataName",
+<<<<<<< HEAD:src/views/myDatas/components/Details.vue
   rName: 'myDatas.credentialSymbol',
+=======
+  rName: 'myData.credentialSymbol',
+>>>>>>> 9104538a60daf7bb2b23e41a3687d8a959ba81b2:src/views/myData/components/Details.vue
   rProp: "credentialSymbol",
 }, {
-  lName: 'myDatas.launchTime',
+  lName: 'myData.launchTime',
   lProp: "launchTime",
-  rName: 'myDatas.industryData',
+  rName: 'myData.industryData',
   rProp: "industryData",
 }, {
-  lName: 'myDatas.dataFormat',
+  lName: 'myData.dataFormat',
   lProp: "dataFormat",
-  rName: 'myDatas.dataSize',
+  rName: 'myData.dataSize',
   rProp: "dataSize",
 }, {
-  lName: 'myDatas.rowsData',
+  lName: 'myData.rowsData',
   lProp: "rowsData",
-  rName: 'myDatas.columnsData',
+  rName: 'myData.columnsData',
   rProp: "columnsData",
 }, {
-  lName: 'myDatas.dataDescription',
+  lName: 'myData.dataDescription',
   lProp: "dataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescription",
   last: true
 }])

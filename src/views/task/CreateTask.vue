@@ -1,9 +1,11 @@
 <template>
-  <div class="flex-1 task-wrap com-mian">
+  <div class="flex-1 task-wrap com-main">
     <Banner :bg-name="'book'">
       <template #briefInfo>{{ $t('task.createTaskBriefInfo') }}</template>
     </Banner>
-    <TaskMain />
+    <div class="com-main-data-wrap">
+      <TaskMain />
+    </div>
   </div>
 </template>
 <script lang="ts" setup>

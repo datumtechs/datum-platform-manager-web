@@ -19,7 +19,7 @@
       >
         <div
           class="p-30px border-bottom text-color-[#333333] text-16px font-medium font-600"
-        >{{ item == 1 ? $t('task.environmentTtraining') : $t('task.environmentPrediction') }}</div>
+        >{{ item == 1 ? $t('task.environmentTraining') : $t('task.environmentPrediction') }}</div>
         <div class="p-30px">
           <div class="pb-20px text-color-[#333333] font-medium font-600">{{ $t('task.lowestNeed') }}</div>
           <el-form-item :label="`${$t('common.cpu')}：`">

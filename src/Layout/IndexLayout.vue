@@ -21,7 +21,9 @@ import { ElContainer, ElHeader } from 'element-plus';
         </router-view>
       </div>
     </el-container>
-    <router-view v-else></router-view>
+     <div class="layout-home" v-else>
+      <router-view ></router-view>
+    </div>
   </el-container>
 </template>
 <style scoped lang="scss">

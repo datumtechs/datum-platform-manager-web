@@ -3,9 +3,32 @@
   height: calc(100vh - 70px);
   overflow: auto;
 }
-.com-mian {
-  width: 1200px;
+
+.com-main-data-wrap{
+  //width: 1000px;
+  min-width: 1000px;
+  max-width: 1320px;
+}
+
+.main-w{
+  width: calc(100vw - 219px) ;
+}
+
+.com-main-data-wrap{
+  //width: 1000px;
+  min-width: 1000px;
+  max-width: 1320px;
   margin: 0 auto;
+}
+
+.com-main{
+  min-width: 1200px;
+}
+
+.layout-home{
+  min-width: 1200px;
+  max-height: calc(100vh - 70px);
+  overflow: auto;
 }
 
 .border-bottom {
@@ -40,6 +63,13 @@
   }
   .el-table__body .el-table__row {
     height: 70px;
+  }
+}
+.table-header-bg-Grayscale{
+  .el-table__header-wrapper{
+    .el-table__header tr th {
+      background: #F7F8F9;
+    }
   }
 }
 

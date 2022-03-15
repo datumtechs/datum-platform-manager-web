@@ -3,6 +3,7 @@
     <el-menu router>
       <el-menu-item
         class="h-63px"
+        :key="item.path"
         :class="{ active: handActive(item.path) }"
         :index="item.path"
         v-for="item in routeList"
@@ -29,6 +30,7 @@
       </el-menu-item>
       <el-menu-item
         class="h-63px"
+        :key="item.path"
         :class="{ active: handActive(item.path) }"
         :index="item.path"
         v-for="item in List"
@@ -51,11 +53,13 @@ import marketplaceIcon from '@/assets/Images/side/side-marketplace-icon.png'
 import computingIcon from '@/assets/Images/side/side-computing-icon.png'
 import myTaskIcon from '@/assets/Images/side/side-my-task-icon.png'
 import credentialsIcon from '@/assets/Images/side/side-my-credentials-icon.png'
-import myMmodelsIcon from '@/assets/Images/side/side-my-models-icon.png'
+import myModelsIcon from '@/assets/Images/side/side-my-models-icon.png'
 import { type RouteLocationNormalizedLoaded, useRoute } from 'vue-router'
 
 const route: RouteLocationNormalizedLoaded = useRoute()
+//@ts-ignore
 const routeList = routePath.filter(v => v.meta.show.includes(2))
+//@ts-ignore
 const List = routePath.filter(v => v.meta.show.includes(3))
 
 const handIcon = (name: string | undefined): any => {
@@ -72,7 +76,7 @@ const handIcon = (name: string | undefined): any => {
     case 'side-my-datas-icon':
       itemIcon = credentialsIcon; break;
     case 'side-my-models-icon':
-      itemIcon = myMmodelsIcon; break;
+      itemIcon = myModelsIcon; break;
     default:
       itemIcon = HelpFilled;
       break;
