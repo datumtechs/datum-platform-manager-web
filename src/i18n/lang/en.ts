@@ -99,6 +99,8 @@ const en = {
     totalCpu:'Total CPU',
     totalMemory:'Total Memory',
     totalBandwidth:'Total Bandwidth',
+    capabilityInTask:'Capability',
+    startTime:'Start Time'
   },
   task: {
     createTaskBriefInfo: "Create new task you need",

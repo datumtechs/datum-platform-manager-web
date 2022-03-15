@@ -130,4 +130,7 @@ const nodeList = reactive([
 </script>
 
 <style scoped lang='scss'>
+.task-wrap {
+    height: calc(100vh - 70px);
+}
 </style>

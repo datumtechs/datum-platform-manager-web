@@ -13,7 +13,7 @@
                 <img class="w-40px h-40px rounded-1/2" :src="top1bg" />
             </div>
             <div class="w-full black-font text-48px text-color-[#393939] font-900 leading-58px">
-                <p class="leading-40px">{{ $t(`${$route.meta.label}`) }}</p>
+                <p class="leading-40px">xxxxxxx Name </p>
                 <div
                     class="text-14px font-medium font-400 text-color-[#999999] leading-20px mt-14px"
                 >
@@ -21,8 +21,8 @@
                 </div>
             </div>
         </div>
-        <div class="h-50px -bottom-25px min-w-100px">
-            <slot name="machine"></slot>
+        <div class="flex items-center">
+            <slot name="machineInfo"></slot>
         </div>
     </div>
 </template>
