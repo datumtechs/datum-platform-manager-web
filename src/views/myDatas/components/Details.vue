@@ -41,8 +41,8 @@ const TaskInvolvedData = ref([{
 const tableData = ref([{
   lName: 'myDatas.dataName',
   lProp: "dataName",
-  rName: 'myDatas.credentialSymbo',
-  rProp: "credentialSymbo",
+  rName: 'myDatas.credentialSymbol',
+  rProp: "credentialSymbol",
 }, {
   lName: 'myDatas.launchTime',
   lProp: "launchTime",

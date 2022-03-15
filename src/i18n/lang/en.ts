@@ -20,7 +20,8 @@ const en = {
     cores: "Cores",
     minute: 'minute',
     hours: 'hours',
-    second: 'second'
+    second: 'second',
+    computations:'computations'
   },
   menu: {
     home: 'Home',
@@ -50,7 +51,7 @@ const en = {
     nodeManagement: 'Node Management',
     loginDialogTitle: "Metamask Extension",
     install: "install",
-    intallTipOne: 'One-click blockchain application',
+    installTipOne: 'One-click blockchain application',
     installTipTwo: 'Privacy Preserved Locally',
   },
   home: {
@@ -98,7 +99,11 @@ const en = {
     computations:'Computations',
     totalCpu:'Total CPU',
     totalMemory:'Total Memory',
-    totalBandwidth:'Total Bandwidth'
+    totalBandwidth:'Total Bandwidth',
+    dataName:'Data Name',
+    credentialName:'Credential Name',
+    createTime:'Create Time'
+
   },
   task: {
     createTaskBriefInfo: "Create new task you need",
@@ -161,7 +166,7 @@ const en = {
     basicInfo: "basic Information",
     metadata: "Metadata",
     tasksInvolved: "Tasks Involved",
-    credentialSymbo: "Credential symbo",
+    credentialSymbol: "Credential symbol",
     launchTime: "Launch time",
     industryData: "Industry of data",
     dataFormat: "Data format",

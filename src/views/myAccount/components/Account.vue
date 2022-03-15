@@ -25,7 +25,7 @@
       </span>
       <input :ref="(el) => addressRef = el" class="w-1 opacity-0" :value="store.address" />
     </el-form-item>
-    <el-form-item :label="`${$t('head.Nickname')}:`" prop="name">
+    <el-form-item :label="`${$t('head.nickname')}:`" prop="name">
       <div class="flex w-full">
         <el-input
           v-model="form.name"

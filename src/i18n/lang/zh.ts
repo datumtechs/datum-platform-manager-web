@@ -20,7 +20,8 @@ const zh = {
     cores: "核",
     minute: '分钟',
     hours: '小时',
-    second: '秒'
+    second: '秒',
+    computations:'计算任务'
   },
   menu: {
     home: '首页',
@@ -45,12 +46,12 @@ const zh = {
     login: '登录 RosettaFlow',
     logout: '登出',
     myAccount: '我的账户',
-    Nickname: "昵称",
+    nickname: "昵称",
     editNickname: '修改昵称',
     nodeManagement: '网络节点管理',
     loginDialogTitle: "Metamask 扩展",
     install: "安装",
-    intallTipOne: "一键连接区块链应用",
+    installTipOne: "一键连接区块链应用",
     installTipTwo: "账户隐私保留在本地"
   },
   home: {
@@ -97,7 +98,11 @@ const zh = {
     computations:'参与计算任务',
     totalCpu:'总CPU',
     totalMemory:'总内存',
-    totalBandwidth:'总带宽'
+    totalBandwidth:'总带宽',
+    dataName:'数据名称',
+    credentialName:'凭证名称',
+    credentialSymbol:'凭证符号',
+    createTime:'发布时间'
   },
   task: {
     createTaskBriefInfo: "创建你需要的任务",
@@ -160,7 +165,7 @@ const zh = {
     basicInfo: "基本信息",
     metadata: "元数据",
     tasksInvolved: "参与的任务",
-    credentialSymbo: "凭证符号",
+    credentialSymbol: "凭证符号",
     launchTime: "发布时间",
     industryData: "所属行业",
     dataFormat: "数据格式",
