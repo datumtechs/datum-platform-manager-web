@@ -27,9 +27,9 @@ const en = {
     viewResults: "View results",
     startUp: "StartUp",
     address: "Address",
-    day: "Day",
-    month: "Month",
-    year: "Year",
+    day: "D",
+    month: "M",
+    year: "Y",
     all: "all",
     computations: 'computations'
   },
@@ -104,14 +104,14 @@ const en = {
     nodePort: 'Node Port',
     nodeIP: 'Node IP',
     addNode: "Add Node",
-    view:'View',
-    credentials:'Credentials',
-    computations:'Computations',
-    totalCpu:'Total CPU',
-    totalMemory:'Total Memory',
-    totalBandwidth:'Total Bandwidth',
-    capabilityInTask:'Capability',
-    startTime:'Start Time'
+    view: 'View',
+    credentials: 'Credentials',
+    computations: 'Computations',
+    totalCpu: 'Total CPU',
+    totalMemory: 'Total Memory',
+    totalBandwidth: 'Total Bandwidth',
+    capabilityInTask: 'Capability',
+    startTime: 'Start Time'
   },
   task: {
     createTaskBriefInfo: "Create new task you need",
@@ -210,7 +210,10 @@ const en = {
     viewExplorer: "View on the blockchain explorer",
     presentPrice: "Present price",
     priceTrend: "Price Trend",
-    volumeTrend: "Volume Trend"
+    volumeTrend: "Volume Trend",
+    credentialExchangePool: "Credential Exchange Pool",
+    total: 'Total',
+    myShare: "My share"
   }
 }
 

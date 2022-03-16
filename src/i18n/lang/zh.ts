@@ -104,14 +104,14 @@ const zh = {
     nodePort: '节点端口',
     nodeIP: '节点IP',
     addNode: "添加节点",
-    view:'查看',
-    credentials:'发布凭证',
-    computations:'参与计算任务',
-    totalCpu:'总CPU',
-    totalMemory:'总内存',
-    totalBandwidth:'总带宽',
-    capabilityInTask:'任务中的角色',
-    startTime:'开始时间'
+    view: '查看',
+    credentials: '发布凭证',
+    computations: '参与计算任务',
+    totalCpu: '总CPU',
+    totalMemory: '总内存',
+    totalBandwidth: '总带宽',
+    capabilityInTask: '任务中的角色',
+    startTime: '开始时间'
   },
   task: {
     createTaskBriefInfo: "创建你需要的任务",
@@ -210,8 +210,10 @@ const zh = {
     viewExplorer: "在区块链浏览器上查看",
     presentPrice: "当前价格",
     priceTrend: "价格走势",
-    volumeTrend: "交易量走势"
-
+    volumeTrend: "交易量走势",
+    credentialExchangePool: "凭证兑换池",
+    total: '总量',
+    myShare: "我的份额"
   }
 }
 
