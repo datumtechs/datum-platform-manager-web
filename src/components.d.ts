@@ -5,7 +5,11 @@
 declare module 'vue' {
   export interface GlobalComponents {
     Banner: typeof import('./components/Banner.vue')['default']
+    Comcard: typeof import('./components/Comcard.vue')['default']
+    ComCard: typeof import('./components/ComCard.vue')['default']
+    ComItemCard: typeof import('./components/ComItemCard.vue')['default']
     ComTabs: typeof import('./components/ComTabs.vue')['default']
+    ComTabsCard: typeof import('./components/ComTabsCard.vue')['default']
     DetailBanner: typeof import('./components/DetailBanner.vue')['default']
     ElAside: typeof import('element-plus/es')['ElAside']
     ElButton: typeof import('element-plus/es')['ElButton']
@@ -28,8 +32,6 @@ declare module 'vue' {
     ElSpace: typeof import('element-plus/es')['ElSpace']
     ElTable: typeof import('element-plus/es')['ElTable']
     ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
-    ElTabPane: typeof import('element-plus/es')['ElTabPane']
-    ElTabs: typeof import('element-plus/es')['ElTabs']
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
     Header: typeof import('./components/layout/Header.vue')['default']
     Login: typeof import('./components/login/index.vue')['default']

@@ -8,6 +8,7 @@
       style="word-break: keep-all;white-space:nowrap"
       :class="{ active: +index == activeIndex }"
       v-for="(item, index) in props.list"
+      :key="index"
       @click="tabsClick(index)"
     >
       <p>{{ $t(`${item.name}`) }}</p>
