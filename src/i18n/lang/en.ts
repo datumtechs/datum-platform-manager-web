@@ -214,6 +214,12 @@ const en = {
     credentialExchangePool: "Credential Exchange Pool",
     total: 'Total',
     myShare: "My share"
+  },
+  computing: {
+    privacyStatistics: "Privacy Statistics",
+    privacyAIComputing: "Privacy AI Computing",
+    privacyComputing: "Privacy Computing",
+    nonPrivacyComputing: "Non-Privacy Computing"
   }
 }
 

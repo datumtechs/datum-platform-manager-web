@@ -214,6 +214,12 @@ const zh = {
     credentialExchangePool: "凭证兑换池",
     total: '总量',
     myShare: "我的份额"
+  },
+  computing: {
+    privacyStatistics: "隐私统计分析",
+    privacyAIComputing: "隐私AI计算",
+    privacyComputing: "隐私计算",
+    nonPrivacyComputing: "非隐私计算"
   }
 }
 

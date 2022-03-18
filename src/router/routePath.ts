@@ -38,7 +38,7 @@ export default [
           label: 'menu.nodesDetail'
         },
         component: () => import('@/views/nodes/components/NodeDetails.vue')
-      },{
+      }, {
         path: '/nodes/details/dataOverview',
         name: "dataOverview",
         meta: {
@@ -67,23 +67,15 @@ export default [
     }],
   },
   {
-    path: '/computing',
-    name: "computing",
+    path: '/ComputeServe',
+    name: "ComputeServe",
     meta: {
       show: [1, 2],//1 首页展示 2 side展示
       label: 'menu.computing',
       search: true,
       icon: "side-computing-icon"
     },
-    component: () => import('@/views/computing/index.vue'),
-    children: [{
-      path: 'Details',
-      name: "Details",
-      meta: {
-        label: 'menu.computingDetails'
-      },
-      component: () => import('@/views/computing/components/Details.vue')
-    }],
+    component: () => import('@/views/computing/ComputeServe.vue'),
   },
   {
     path: '/computeTask',
