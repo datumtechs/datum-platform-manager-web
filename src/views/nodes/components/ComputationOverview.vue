@@ -32,15 +32,15 @@
             <!-- <DataTable v-if="activekey === 0" />
             <ComputationTable v-else />-->
             <DataInfo v-if="activekey === 0" />
-            <MetaData v-if="activekey === 1" />
-            <TaskInvolved v-if="activekey === 2 " />
+            <PartyInfo v-if="activekey === 1" />
+            <TaskInvolved v-if="activekey === 2" />
         </div>
     </div>
 </template>
 
 <script setup lang='ts'>
 import DataInfo from '../../myData/components/BaseInfo.vue'
-import MetaData from '../../myData/components/MetaData.vue'
+import PartyInfo from '@/components/commonTable/PartyInfo.vue'
 import TaskInvolved from '../../myData/components/TaskInvolved.vue'
 
 const router = useRouter()
@@ -50,13 +50,14 @@ const list = reactive([
         name: 'myData.basicInfo'
     },
     {
-        name: 'myData.metadata'
+        name: 'common.partyInfo'
     },
     {
         name: 'myData.tasksInvolved'
     }
 ])
 const tabsChange = (index: string) => {
+    console.log(index);
     activekey.value = +index
 }
 </script>

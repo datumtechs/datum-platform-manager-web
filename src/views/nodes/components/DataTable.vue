@@ -25,6 +25,7 @@
                         >{{ $t('myData.viewData') }}</span>
                         <span
                             class="text-14px text-color-[#0052D9] leading-23px cursor-pointer"
+                            @click="linkToViewToken(row)"
                         >{{ $t('myData.viewCredential') }}</span>
                     </el-space>
                 </template>
@@ -54,6 +55,9 @@ const tableData = reactive([
     }
 ])
 const router = useRouter()
+const linkToViewToken = (row: any) => {
+    //    TODO go dex
+}
 const linkToViewData = (row: any) => {
     router.push({
         name: 'dataOverview'

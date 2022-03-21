@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import DataTable from './DataTable.vue'
 import ComputationTable from './ComputationTable.vue'
+const router = useRouter()
 const activekey = ref(0)
 const list = reactive([
   {
@@ -11,13 +12,12 @@ const list = reactive([
   }
 ])
 const tabsChange = (index: string) => {
-  console.log(index);
   activekey.value = +index
 }
 </script>
 <template>
   <div class="flex-1 h-full relative">
-    <DetailBanner :backShow="true">
+    <DetailBanner :backShow="true" @back="router.go(-1)">
       <template #briefInfo>Identifier：XXXXXXXXXXXXXXXXXXXXX</template>
       <template #machineInfo class="flex">
         <div class="flex text-center">

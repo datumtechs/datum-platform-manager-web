@@ -31,7 +31,12 @@ const en = {
     month: "M",
     year: "Y",
     all: "all",
-    computations: 'computations'
+    computations: 'computations',
+    partyInfo:'Participant Information',
+    taskRole:'Task role',
+    identityId:'IdentityID',
+    info:'Info',
+    name:'Name'
   },
   menu: {
     home: 'Home',

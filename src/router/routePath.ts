@@ -45,6 +45,13 @@ export default [
           label: 'menu.nodesDetail'
         },
         component: () => import('@/views/nodes/components/DataOverview.vue')
+      },{
+        path: '/nodes/details/computationOverview',
+        name: "computationOverview",
+        meta: {
+          label: 'menu.nodesDetail'
+        },
+        component: () => import('@/views/nodes/components/ComputationOverview.vue')
       }],
   },
   {

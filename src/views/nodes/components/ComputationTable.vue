@@ -13,9 +13,10 @@
             <el-table-column prop="startTime" :label="$t('node.startTime')" />
             <el-table-column prop="totalTime" :label="$t('myData.totalTime')" />
             <el-table-column :label="$t('common.actions')">
-                <template #default>
+                <template #default="{ row }">
                     <span
                         class="text-14px text-color-[#0052D9] cursor-pointer"
+                        @click="linkToViewComputations(row)"
                     >{{ $t('node.view') }}</span>
                 </template>
             </el-table-column>
@@ -27,6 +28,7 @@
 </template>
 
 <script setup lang='ts'>
+const router = useRouter()
 const tableData = reactive([
     {
         id: 1,
@@ -43,6 +45,11 @@ const tableData = reactive([
         totalTime: '03:00'
     }
 ])
+const linkToViewComputations = (row: any) => {
+    router.push({
+        name: 'computationOverview'
+    })
+}
 </script>
 
 <style scoped lang='scss'>
