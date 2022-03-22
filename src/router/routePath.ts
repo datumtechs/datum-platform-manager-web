@@ -56,23 +56,29 @@ export default [
   },
   {
     path: '/marketplace',
-    name: "marketplace",
+    redirect: 'marketplaceIndex',
     meta: {
       show: [1, 2],//1 首页展示 2 side展示
       label: 'menu.marketplace',
       search: true,
-      icon: "side-marketplace-icon"
+      icon: "side-marketplace-icon",
     },
     component: () => import('@/views/marketplace/index.vue'),
-  },
-  {
-    path: '/marketplace/details',
-    name: "marketplaceDetails",
-    meta: {
-      show: [],//1 首页展示 2 side展示
-      label: 'menu.marketplaceDetails'
-    },
-    component: () => import('@/views/marketplace/components/Details.vue')
+    children: [{
+      path: '/marketplace',
+      name: "marketplaceIndex",
+      meta: {
+        label: 'menu.marketplace',
+      },
+      component: () => import('@/views/marketplace/components/MarketplaceIndex.vue'),
+    },{
+      path: '/marketplace/dataOverview',
+      name: "marketDataOverview",
+      meta: {
+        label: 'menu.marketplace'
+      },
+      component: () => import('@/components/DataDetails.vue')
+    }],
   },
   {
     path: '/ComputeServe',

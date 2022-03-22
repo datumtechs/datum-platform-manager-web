@@ -37,7 +37,7 @@ const tabsChange = (index: string) => {
       </template>
     </DetailBanner>
     <div class="mt-30px max-w-1200px px-25px mx-auto">
-      <div class="w-427px h-50px">
+      <div class="inline-block h-50px">
         <ComTabs :list="list" :activekey="activekey" @change="tabsChange" />
       </div>
       <DataTable v-if="activekey === 0" />

@@ -32,12 +32,15 @@ const zh = {
     year: "年",
     all: "全部",
     computations: '计算任务',
-    partyInfo: '参与方信息',
-    taskRole: '任务角色',
-    identityId: '身份标识',
-    info: '信息',
-    name: '名称',
-    view: "查看"
+    partyInfo:'参与方信息',
+    taskRole:'任务角色',
+    identityId:'身份标识',
+    info:'信息',
+    name:'名称',
+    credentialPrice:'凭证价格',
+    purchase:'购买',
+    algorithm:'算法',
+	view: "查看"
   },
   menu: {
     home: '首页',
