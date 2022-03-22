@@ -36,7 +36,10 @@ const en = {
     taskRole:'Task role',
     identityId:'IdentityID',
     info:'Info',
-    name:'Name'
+    name:'Name',
+    credentialPrice:'Credential Price',
+    purchase:'Purchase',
+    algorithm:'Algorithm',
   },
   menu: {
     home: 'Home',

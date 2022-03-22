@@ -36,7 +36,10 @@ const zh = {
     taskRole:'任务角色',
     identityId:'身份标识',
     info:'信息',
-    name:'名称'
+    name:'名称',
+    credentialPrice:'凭证价格',
+    purchase:'购买',
+    algorithm:'算法',
   },
   menu: {
     home: '首页',

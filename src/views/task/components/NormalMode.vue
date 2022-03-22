@@ -62,7 +62,7 @@ import StepTwo from './normal/StepTwo.vue';
 import StepThree from './normal/StepThree.vue';
 import Stepfour from './normal/Stepfour.vue';
 import StepFive from './normal/StepFive.vue';
-const activeIndex = ref(4)
+const activeIndex = ref(0)
 const list = [
   {
     setp: '01',
