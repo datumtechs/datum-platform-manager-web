@@ -180,7 +180,7 @@ const en = {
     purchase: "Purchase",
     viewData: "View Data",
     viewCredential: "View Credential",
-    basicInfo: "basic Information",
+    basicInfo: "Basic Information",
     metadata: "Metadata",
     tasksInvolved: "Tasks Involved",
     credentialSymbol: "Credential symbol",
