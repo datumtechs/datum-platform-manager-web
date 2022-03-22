@@ -2,11 +2,6 @@
 const { locale } = useI18n()
 const totalData = ref(1876)
 const router = useRouter()
-// const activekey = ref(0)
-
-// const tabsChange = (index: string) => {
-//   activekey.value = +index
-// }
 
 const list = ref([
     {

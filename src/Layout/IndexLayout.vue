@@ -5,7 +5,7 @@ import Side from '@/components/layout/Side.vue'
 import { ElContainer, ElHeader } from 'element-plus';
 </script>
 <template>
-  <el-container>
+  <el-container class="min-w-1000px min-w-500px">
     <el-header class="p-0 h-auto">
       <Header />
     </el-header>
@@ -21,8 +21,8 @@ import { ElContainer, ElHeader } from 'element-plus';
         </router-view>
       </div>
     </el-container>
-     <div class="layout-home" v-else>
-      <router-view ></router-view>
+    <div class="layout-home" v-else>
+      <router-view></router-view>
     </div>
   </el-container>
 </template>

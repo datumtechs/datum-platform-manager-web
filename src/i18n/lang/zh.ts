@@ -40,6 +40,7 @@ const zh = {
     credentialPrice:'凭证价格',
     purchase:'购买',
     algorithm:'算法',
+    view: "查看"
   },
   menu: {
     home: '首页',
@@ -48,7 +49,7 @@ const zh = {
     marketplace: '数据市场',
     marketplaceDetails: '凭证市场详情',
     computing: '计算服务',
-    computingDetails: '计算服务详情',
+    computeTaskDetails: '计算任务详情',
     createTask: "创建任务",
     data: "我的数据",
     dataDetails: "数据详情",
@@ -228,6 +229,34 @@ const zh = {
     privacyAIComputing: "隐私AI计算",
     privacyComputing: "隐私计算",
     nonPrivacyComputing: "非隐私计算"
+  },
+  computeTask: {
+    taskId: "任务 ID",
+    taskCategory: "任务类型",
+    startTime: "发起时间",
+    totalTime: "任务用时",
+    tasksBriefInfoTwoParagraph: "条 隐私计算任务的运行记录",
+    taskEvents: "任务事件",
+    taskStartTime: "任务发起时间",
+    computingStartTime: "计算开始时间",
+    taskEndTime: "任务结束时间",
+    taskResult: "任务结果",
+    declaredComputingPowerRequired: "声明的任务所需最低算力",
+    capacity: "任务角色",
+    name: "名称",
+    identifier: "身份标识",
+    information: "信息",
+    eventType: "事件类型",
+    eventMaker: "生成事件的参与方",
+    generationTime: "生成时间",
+    eventContent: "事件内容"
+  },
+  expert: {
+    overview:'概览',
+    input:'输入',
+    output:'输出',
+    code:'代码',
+    environment:'环境'
   }
 }
 

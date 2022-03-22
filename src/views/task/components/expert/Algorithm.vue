@@ -3,9 +3,7 @@
         <p class="text-18px font-black">{{ $t('common.algorithm') }}</p>
         <div class="mt-40px">
             <div v-for="algo in algoList">
-                <p
-                    class="text-14px leading-20px text-[#000] font-bold mt-40px"
-                >{{ $t('computing.privacyAIComputing') }}</p>
+                <p class="text-14px leading-20px text-[#000] font-bold mt-40px">{{ algo.label }}</p>
                 <ul class="mt-20px">
                     <li
                         class="mb-10px"

@@ -45,7 +45,7 @@ export default [
           label: 'menu.nodesDetail'
         },
         component: () => import('@/views/nodes/components/DataOverview.vue')
-      },{
+      }, {
         path: '/nodes/details/computationOverview',
         name: "computationOverview",
         meta: {
@@ -77,7 +77,7 @@ export default [
       meta: {
         label: 'menu.marketplace'
       },
-      component: () => import('@/views/nodes/components/DataOverview.vue')
+      component: () => import('@/components/DataDetails.vue')
     }],
   },
   {
@@ -101,6 +101,17 @@ export default [
       icon: "side-my-models-icon"
     },
     component: () => import('@/views/computing/ComputeTask.vue'),
+  },
+  {
+    path: '/computeTask/details',
+    name: "computeTaskDetails",
+    meta: {
+      show: [],
+      label: 'menu.computeTaskDetails',
+      search: true,
+      icon: "side-my-models-icon"
+    },
+    component: () => import('@/views/computing/components/Details.vue'),
   },
   {
     path: '/myAccount/:infoType',
@@ -184,7 +195,7 @@ export default [
   // },
   {
     path: '/*',
-    redirect: 'assetsDetail',
+    redirect: 'home',
     meta: {
       show: [],//不展示
     },

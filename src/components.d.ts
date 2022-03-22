@@ -5,8 +5,11 @@
 declare module 'vue' {
   export interface GlobalComponents {
     Banner: typeof import('./components/Banner.vue')['default']
+    BaseInfo: typeof import('./components/dataComponents/BaseInfo.vue')['default']
     ComTabs: typeof import('./components/ComTabs.vue')['default']
     ComTabsCard: typeof import('./components/ComTabsCard.vue')['default']
+    DataDetails: typeof import('./components/DataDetails.vue')['default']
+    DataTable: typeof import('./components/dataComponents/DataTable.vue')['default']
     DetailBanner: typeof import('./components/DetailBanner.vue')['default']
     ElAside: typeof import('element-plus/es')['ElAside']
     ElButton: typeof import('element-plus/es')['ElButton']
@@ -33,6 +36,7 @@ declare module 'vue' {
     Header: typeof import('./components/layout/Header.vue')['default']
     Login: typeof import('./components/login/index.vue')['default']
     Menu: typeof import('./components/layout/Menu.vue')['default']
+    MetaData: typeof import('./components/dataComponents/MetaData.vue')['default']
     PartyInfo: typeof import('./components/commonTable/PartyInfo.vue')['default']
     PersonalCenter: typeof import('./components/layout/components/PersonalCenter.vue')['default']
     PersonalDrawer: typeof import('./components/layout/components/PersonalDrawer.vue')['default']
@@ -40,6 +44,7 @@ declare module 'vue' {
     QuestionMark: typeof import('./components/QuestionMark.vue')['default']
     Search: typeof import('./components/Search.vue')['default']
     Side: typeof import('./components/layout/Side.vue')['default']
+    TaskInvolved: typeof import('./components/dataComponents/TaskInvolved.vue')['default']
     TaskParamsTransfer: typeof import('./components/TaskParamsTransfer.vue')['default']
   }
 }

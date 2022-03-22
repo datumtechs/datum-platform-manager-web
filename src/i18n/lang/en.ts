@@ -40,6 +40,7 @@ const en = {
     credentialPrice:'Credential Price',
     purchase:'Purchase',
     algorithm:'Algorithm',
+    view: "View"
   },
   menu: {
     home: 'Home',
@@ -48,7 +49,7 @@ const en = {
     marketplace: 'Marketplace',
     marketplaceDetails: 'Marketplace Details',
     computing: 'Computing Services',
-    computingDetails: 'Computing Services Details',
+    computeTaskDetails: 'Computing Task Details',
     createTask: "Create Task",
     data: "My Data",
     dataDetails: "Data Details",
@@ -228,6 +229,34 @@ const en = {
     privacyAIComputing: "Privacy AI Computing",
     privacyComputing: "Privacy Computing",
     nonPrivacyComputing: "Non-Privacy Computing"
+  },
+  computeTask: {
+    taskId: "Task ID",
+    taskCategory: "Task Category",
+    startTime: "Start Time",
+    totalTime: "Total Time",
+    tasksBriefInfoTwoParagraph: "records of the privacy computing tasks",
+    taskEvents: "Task Events",
+    taskStartTime: "Task start time",
+    computingStartTime: "Computing start time",
+    taskEndTime: "Task end time",
+    taskResult: "Task result",
+    declaredComputingPowerRequired: "Declared computing power required",
+    capacity: "Capacity",
+    name: "Name",
+    identifier: "Identifier",
+    information: "Information",
+    eventType: "Event type",
+    eventMaker: "Event maker",
+    generationTime: "Generation time",
+    eventContent: "Event content"
+  },
+  expert: {
+    overview:'Overview',
+    input:'Input',
+    output:'Output',
+    code:'Code',
+    environment:'Environment'
   }
 }
 
