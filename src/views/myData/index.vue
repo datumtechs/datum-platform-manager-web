@@ -23,7 +23,6 @@
 </template>
 <script lang="ts" setup>
 import { type Router, useRouter } from 'vue-router'
-import DataTable from './components/DataTable.vue';
 const router: Router = useRouter()
 const tableData = [
   {

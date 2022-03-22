@@ -11,7 +11,9 @@
         <div class="setp-item-name text-22px font-medium font-800 text-color-[#CCCCCC]">
           {{ $t('task.step') }}
           <span class="ml-10px font-800">{{ item.setp }}</span>
-          <span class="cover inline-block w-11px h-11px top-6px -left--6px bg-color-[#F7F8F9]"></span>
+          <span
+            class="cover inline-block w-11px h-11px relative top-6px -left--6px bg-color-[#F7F8F9]"
+          ></span>
         </div>
         <p
           class="setp-item-info font-medium text-color-[#666666] text-16px font-500 mt-5px"

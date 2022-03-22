@@ -1,6 +1,46 @@
-<script lang="ts" setup>
-
-</script>
 <template>
-  <div>Marketplace</div>
+  <div class="flex-1 task-wrap com-main">
+    <Banner :bg-name="'arrow'">
+      <template #briefInfo>
+        <p class="text-color-[#999999]">
+          {{ $t('myData.tasksBriefInfoFirstParagraph') }}
+          <span
+            class="text-color-[#2B60E9] text-16px"
+          >11990</span>
+          {{ $t('myData.tasksBriefInfoTwoParagraph') }}
+        </p>
+      </template>
+    </Banner>
+    <div class="com-main-data-wrap">
+      <DataTable
+        :data="tableData"
+        @purchase="purchase"
+        @viewData="viewData"
+        @viewCredential="viewCredential"
+      />
+    </div>
+  </div>
 </template>
+<script lang="ts" setup>
+import { type Router, useRouter } from 'vue-router'
+const router: Router = useRouter()
+const tableData = [
+  {
+    dataName: 'Tom',
+    credentialName: 'No. 189, Grove St, Los Angeles',
+  },
+  {
+    dataName: 'Tom',
+    credentialName: 'No. 189, Grove St, Los Angeles',
+  }
+]
+const purchase = (obj: any) => { }
+const viewData = (obj: any) => {
+  router.push({ name: "marketplaceDetails", params: { ...obj } })
+}
+const viewCredential = (obj: any) => {
+  router.push({ name: "dataCredentials", params: { ...obj } })
+}
+</script>
+<style lang="scss" scoped>
+</style>
