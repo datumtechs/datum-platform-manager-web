@@ -4,7 +4,7 @@ const en = {
     success: 'Successful',
     edit: "Edit",
     preservation: "Submit",
-    Submit: "Submit",
+    submit: "Submit",
     cancel: "Cancel",
     delete: "Delete",
     actions: 'Actions',
@@ -256,7 +256,13 @@ const en = {
     input:'Input',
     output:'Output',
     code:'Code',
-    environment:'Environment'
+    environment:'Environment',
+    inputNameTips:'Enter the workflow name',
+    cannotModify:'cannot be modified after submitting',
+    noLimitType:'no limit to character type',
+    leastCharacter:'8 characters at least',
+    mostCharacter:'64 characters at most',
+    overviewTipForPanel:'Please set the task name first, and then select the algorithm from the "Algorithm Library" on the left according to the running order.'
   }
 }
 

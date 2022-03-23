@@ -4,7 +4,7 @@ const zh = {
     success: '成功',
     edit: "编辑",
     preservation: "保存",
-    Submit: "提交",
+    submit: "提交",
     cancel: "取消",
     delete: "删除",
     actions: "操作",
@@ -256,7 +256,13 @@ const zh = {
     input:'输入',
     output:'输出',
     code:'代码',
-    environment:'环境'
+    environment:'环境',
+    inputNameTips:'请输入工作流名称',
+    cannotModify:'设置后无法修改',
+    noLimitType:'输入的字符类型无限制',
+    leastCharacter:'最少输入8个字符',
+    mostCharacter:'最多输入64个字符',
+    overviewTipForPanel:'请先设置任务名称，再从左侧“算法库”中按照运行的先后顺序依次选择算法。'
   }
 }
 
