@@ -9,7 +9,7 @@
                 :key="tab.id"
             >{{ tab.label }}</div>
         </div>
-        <div v-if="showNodePanel" :key="viewKey" class="p-30px main-panel">
+        <div v-if="showNodePanel" :key="viewKey" class="main-panel">
             <Overview v-show="currentTab === 'overview'" :overview-obj="overviewObj" />
             <Input v-show="currentTab === 'input'" v-bind="$attrs" />
             <Output v-show="currentTab === 'output'" v-bind="$attrs" />
@@ -37,7 +37,7 @@ const envObj = reactive({
 
 })
 
-const showNodePanel = ref(false)
+const showNodePanel = ref(true)
 const code = ref('')
 const currentTab = ref('overview')
 const tabList = reactive([
@@ -75,5 +75,6 @@ const tabList = reactive([
 }
 .main-panel {
     height: calc(100% - 40px);
+    overflow: hidden;
 }
 </style>

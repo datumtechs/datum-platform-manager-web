@@ -262,7 +262,13 @@ const en = {
     noLimitType:'no limit to character type',
     leastCharacter:'8 characters at least',
     mostCharacter:'64 characters at most',
-    overviewTipForPanel:'Please set the task name first, and then select the algorithm from the "Algorithm Library" on the left according to the running order.'
+    overviewTipForPanel:'Please set the task name first, and then select the algorithm from the "Algorithm Library" on the left according to the running order.',
+    author:'Author',
+    supportNum:'Supported Data Collaborators',
+    supportLang:'Programming Languages',
+    setAlgoEnv:'Please set the environment for the algorithm',
+    minimumResource:'Minimum computing resource requirements',
+    longestComputingTime:'Longest computing time'
   }
 }
 

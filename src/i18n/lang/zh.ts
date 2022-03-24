@@ -262,7 +262,13 @@ const zh = {
     noLimitType:'输入的字符类型无限制',
     leastCharacter:'最少输入8个字符',
     mostCharacter:'最多输入64个字符',
-    overviewTipForPanel:'请先设置任务名称，再从左侧“算法库”中按照运行的先后顺序依次选择算法。'
+    overviewTipForPanel:'请先设置任务名称，再从左侧“算法库”中按照运行的先后顺序依次选择算法。',
+    author:'作者',
+    supportNum:'支持数据协同方数量',
+    supportLang:'支持语言',
+    setAlgoEnv:'请设置算法环境',
+    minimumResource:'最低计算资源需求',
+    longestComputingTime:'最长运行时间'
   }
 }
 
