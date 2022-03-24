@@ -4,19 +4,16 @@
       <template #briefInfo>
         <p class="text-color-[#999999]">
           {{ $t('workflow.totalOf') }}
-          <span
-            class="text-color-[#2B60E9] text-16px"
-          >11990</span>
+          <span class="text-color-[#2B60E9] text-16px">11990</span>
           {{ $t('workflow.workTipsBriefInfoTwoParagraph') }}
         </p>
       </template>
     </Banner>
     <div class="com-main-data-wrap">
-      <DataTable
-        :data="tableData"
-      />
+      <DataTable :data="tableData" />
     </div>
   </div>
+  <Search></Search>
 </template>
 <script lang="ts" setup>
 import { type Router, useRouter } from 'vue-router'
