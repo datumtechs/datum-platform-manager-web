@@ -26,22 +26,22 @@
             </template>
         </DetailBanner>
         <div class="mt-30px max-w-1200px px-25px mx-auto">
-            <div class="w-427px h-50px">
+            <div class="inline-block h-50px">
                 <ComTabs :list="list" :activekey="activekey" @change="tabsChange" />
             </div>
             <!-- <DataTable v-if="activekey === 0" />
             <ComputationTable v-else />-->
-            <DataInfo v-if="activekey === 0" />
+            <BaseInfo v-if="activekey === 0" :tableData="tableData" />
             <MetaData v-if="activekey === 1" />
-            <TaskInvolved v-if="activekey === 2 " />
+            <TaskInvolved v-if="activekey === 2" />
         </div>
     </div>
 </template>
 
 <script setup lang='ts'>
-import DataInfo from '../../myData/components/BaseInfo.vue'
-import MetaData from '../../myData/components/MetaData.vue'
-import TaskInvolved from '../../myData/components/TaskInvolved.vue'
+import BaseInfo from '@/components/dataComponents/BaseInfo.vue'
+import MetaData from '@/components/dataComponents/MetaData.vue'
+import TaskInvolved from '@/components/dataComponents/TaskInvolved.vue'
 
 const router = useRouter()
 const activekey = ref(0)
@@ -59,6 +59,31 @@ const list = reactive([
 const tabsChange = (index: string) => {
     activekey.value = +index
 }
+const tableData = reactive([{
+    lName: 'myData.dataName',
+    lProp: "dataName",
+    rName: 'myData.credentialSymbol',
+    rProp: "credentialSymbol",
+}, {
+    lName: 'myData.launchTime',
+    lProp: "launchTime",
+    rName: 'myData.industryData',
+    rProp: "industryData",
+}, {
+    lName: 'myData.dataFormat',
+    lProp: "dataFormat",
+    rName: 'myData.dataSize',
+    rProp: "dataSize",
+}, {
+    lName: 'myData.rowsData',
+    lProp: "rowsData",
+    rName: 'myData.columnsData',
+    rProp: "columnsData",
+}, {
+    lName: 'myData.dataDescription',
+    lProp: "dataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescription",
+    last: true
+}])
 </script>
 
 <style scoped lang='scss'>

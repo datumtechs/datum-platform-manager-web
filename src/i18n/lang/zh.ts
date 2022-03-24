@@ -4,7 +4,7 @@ const zh = {
     success: '成功',
     edit: "编辑",
     preservation: "保存",
-    Submit: "提交",
+    submit: "提交",
     cancel: "取消",
     delete: "删除",
     actions: "操作",
@@ -32,11 +32,14 @@ const zh = {
     year: "年",
     all: "全部",
     computations: '计算任务',
-    partyInfo: '参与方信息',
-    taskRole: '任务角色',
-    identityId: '身份标识',
-    info: '信息',
-    name: '名称',
+    partyInfo:'参与方信息',
+    taskRole:'任务角色',
+    identityId:'身份标识',
+    info:'信息',
+    name:'名称',
+    credentialPrice:'凭证价格',
+    purchase:'购买',
+    algorithm:'算法',
     view: "查看"
   },
   menu: {
@@ -237,7 +240,7 @@ const zh = {
     taskStartTime: "任务发起时间",
     computingStartTime: "计算开始时间",
     taskEndTime: "任务结束时间",
-    taskTesult: "任务结果",
+    taskResult: "任务结果",
     declaredComputingPowerRequired: "声明的任务所需最低算力",
     capacity: "任务角色",
     name: "名称",
@@ -247,6 +250,19 @@ const zh = {
     eventMaker: "生成事件的参与方",
     generationTime: "生成时间",
     eventContent: "事件内容"
+  },
+  expert: {
+    overview:'概览',
+    input:'输入',
+    output:'输出',
+    code:'代码',
+    environment:'环境',
+    inputNameTips:'请输入工作流名称',
+    cannotModify:'设置后无法修改',
+    noLimitType:'输入的字符类型无限制',
+    leastCharacter:'最少输入8个字符',
+    mostCharacter:'最多输入64个字符',
+    overviewTipForPanel:'请先设置任务名称，再从左侧“算法库”中按照运行的先后顺序依次选择算法。'
   }
 }
 

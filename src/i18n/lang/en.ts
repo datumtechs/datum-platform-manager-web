@@ -4,7 +4,7 @@ const en = {
     success: 'Successful',
     edit: "Edit",
     preservation: "Submit",
-    Submit: "Submit",
+    submit: "Submit",
     cancel: "Cancel",
     delete: "Delete",
     actions: 'Actions',
@@ -32,11 +32,14 @@ const en = {
     year: "Y",
     all: "all",
     computations: 'computations',
-    partyInfo: 'Participant Information',
-    taskRole: 'Task role',
-    identityId: 'IdentityID',
-    info: 'Info',
-    name: 'Name',
+    partyInfo:'Participant Information',
+    taskRole:'Task role',
+    identityId:'IdentityID',
+    info:'Info',
+    name:'Name',
+    credentialPrice:'Credential Price',
+    purchase:'Purchase',
+    algorithm:'Algorithm',
     view: "View"
   },
   menu: {
@@ -177,7 +180,7 @@ const en = {
     purchase: "Purchase",
     viewData: "View Data",
     viewCredential: "View Credential",
-    basicInfo: "basic Information",
+    basicInfo: "Basic Information",
     metadata: "Metadata",
     tasksInvolved: "Tasks Involved",
     credentialSymbol: "Credential symbol",
@@ -237,7 +240,7 @@ const en = {
     taskStartTime: "Task start time",
     computingStartTime: "Computing start time",
     taskEndTime: "Task end time",
-    taskTesult: "Task result",
+    taskResult: "Task result",
     declaredComputingPowerRequired: "Declared computing power required",
     capacity: "Capacity",
     name: "Name",
@@ -246,7 +249,20 @@ const en = {
     eventType: "Event type",
     eventMaker: "Event maker",
     generationTime: "Generation time",
-    eventContent: "Event conten"
+    eventContent: "Event content"
+  },
+  expert: {
+    overview:'Overview',
+    input:'Input',
+    output:'Output',
+    code:'Code',
+    environment:'Environment',
+    inputNameTips:'Enter the workflow name',
+    cannotModify:'cannot be modified after submitting',
+    noLimitType:'no limit to character type',
+    leastCharacter:'8 characters at least',
+    mostCharacter:'64 characters at most',
+    overviewTipForPanel:'Please set the task name first, and then select the algorithm from the "Algorithm Library" on the left according to the running order.'
   }
 }
 
