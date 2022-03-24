@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import Menu from '@/components/layout/Menu.vue'
-import Search from './../Search.vue'
 import PersonalCenter from './components/PersonalCenter.vue'
 </script>
 <template>
@@ -10,7 +9,7 @@ import PersonalCenter from './components/PersonalCenter.vue'
       @click="$router.push('/')"
       src="@/assets/Images/header/logo.png"
     />
-    <component :is="$route.path == '/' ? Menu : Search"></component>
+    <Menu />
     <PersonalCenter />
   </header>
 </template>

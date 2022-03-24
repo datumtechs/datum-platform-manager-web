@@ -18,7 +18,6 @@ export default [
     meta: {
       show: [1, 2],//1 首页展示 2 side展示
       label: 'menu.nodes',
-      search: true,
       icon: "side-node-icon"
     },
     component: () => import('@/views/nodes/index.vue'),
@@ -60,7 +59,6 @@ export default [
     meta: {
       show: [1, 2],//1 首页展示 2 side展示
       label: 'menu.marketplace',
-      search: true,
       icon: "side-marketplace-icon",
     },
     component: () => import('@/views/marketplace/index.vue'),
@@ -71,7 +69,7 @@ export default [
         label: 'menu.marketplace',
       },
       component: () => import('@/views/marketplace/components/MarketplaceIndex.vue'),
-    },{
+    }, {
       path: '/marketplace/dataOverview',
       name: "marketDataOverview",
       meta: {
@@ -86,7 +84,6 @@ export default [
     meta: {
       show: [1, 2],//1 首页展示 2 side展示
       label: 'menu.computing',
-      search: true,
       icon: "side-computing-icon"
     },
     component: () => import('@/views/computing/ComputeServe.vue'),
@@ -97,7 +94,6 @@ export default [
     meta: {
       show: [2],
       label: 'menu.computeTask',
-      search: true,
       icon: "side-my-models-icon"
     },
     component: () => import('@/views/computing/ComputeTask.vue'),
@@ -108,7 +104,6 @@ export default [
     meta: {
       show: [],
       label: 'menu.computeTaskDetails',
-      search: true,
       icon: "side-my-models-icon"
     },
     component: () => import('@/views/computing/components/Details.vue'),
@@ -137,7 +132,6 @@ export default [
     meta: {
       show: [3],
       label: 'menu.data',
-      search: true,
       icon: "side-my-datas-icon"
     },
     component: () => import('@/views/myData/index.vue')
@@ -166,7 +160,6 @@ export default [
     meta: {
       show: [3],
       label: 'menu.workflow',
-      search: true,
       icon: "side-my-task-icon"
     },
     component: () => import('@/views/task/index.vue'),
@@ -177,7 +170,6 @@ export default [
     meta: {
       show: [],
       label: 'menu.workflowDetails',
-      search: true,
       icon: "side-my-task-icon"
     },
     component: () => import('@/views/task/Details.vue'),
@@ -188,7 +180,6 @@ export default [
   //   meta: {
   //     show: [3],
   //     label: 'menu.models',
-  //     search: true,
   //     icon: "side-my-models-icon"
   //   },
   //   component: () => import('@/views/myModels/index.vue'),
