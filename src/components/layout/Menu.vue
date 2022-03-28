@@ -12,7 +12,7 @@ const routeList = routePath.filter(v => v.meta.show.includes(1))
       :to="item.path"
     >{{ $t(`${item.meta.label}`) }}</router-link>
   </div>
-  <div id="search" class="pl-45px pr-25px flex-1"></div>
+  <div v-else id="search" class="pl-45px pr-25px flex-1"></div>
 </template>
 <style scoped lang="scss">
 .menu {

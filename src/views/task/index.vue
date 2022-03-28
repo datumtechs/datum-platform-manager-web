@@ -13,7 +13,8 @@
       <DataTable :data="tableData" />
     </div>
   </div>
-  <Search></Search>
+  <!-- <Search></Search>
+  -->
 </template>
 <script lang="ts" setup>
 import { type Router, useRouter } from 'vue-router'
