@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import routePath from '@/router/routePath'
-const routeList = routePath.filter(v => v.meta.show.includes(1))
+const routeList = routePath.filter(v => {
+  // @ts-ignore
+  return v.meta.show.includes(1)
+})
 
 </script>
 <template>

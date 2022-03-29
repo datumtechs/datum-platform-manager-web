@@ -14,7 +14,7 @@
           <div
             class="w-317px box-flex-w h-265px overflow-hidden rounded-8px border-1px border-solid border-color-[#eeeeee]"
           >
-            <img class="w-full h-135px border-top" src />
+            <img class="w-full h-135px border-top" />
             <p class="text-16px text-color-[#000000] font-600 px-20px pt-20px pb-24px">XXXXXX</p>
             <div class="com-button w-120px h-40px mx-20px rounded-20px">{{ $t('menu.createTask') }}</div>
           </div>
@@ -28,7 +28,7 @@
           <div
             class="w-317px box-flex-w h-265px overflow-hidden rounded-8px border-1px border-solid border-color-[#eeeeee]"
           >
-            <img class="w-full h-135px border-top" src />
+            <img class="w-full h-135px border-top" />
             <p class="text-16px text-color-[#000000] font-600 px-20px pt-20px pb-24px">XXXXXX</p>
             <div class="flex w-full px-20px">
               <div class="com-button w-120px h-40px rounded-20px">{{ $t('menu.createTask') }}</div>

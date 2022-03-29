@@ -15,9 +15,7 @@ import { ElContainer, ElHeader } from 'element-plus';
       </el-aside>
       <div class="layout-mian-wrap">
         <router-view v-slot="{ Component }">
-          <transition name="fade">
-            <component :is="Component" />
-          </transition>
+          <component :is="Component" />
         </router-view>
       </div>
     </el-container>
