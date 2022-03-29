@@ -5,8 +5,8 @@ import Side from '@/components/layout/Side.vue'
 import { ElContainer, ElHeader } from 'element-plus';
 </script>
 <template>
-  <el-container class="min-w-1000px min-w-500px">
-    <el-header class="p-0 h-auto">
+  <el-container class="min-w-1200px">
+    <el-header class="p-0 h-auto w-full">
       <Header />
     </el-header>
     <el-container v-if="$route.path !== '/'">

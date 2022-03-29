@@ -1,7 +1,3 @@
-<script setup lang="ts">
-import { Search } from '@element-plus/icons-vue'
-const input1 = ref('')
-</script>
 <template>
   <teleport to="#search">
     <div class="input-wrap w-full h-full">
@@ -13,15 +9,37 @@ const input1 = ref('')
         placeholder="Please input"
       >
         <template #suffix>
-          <img class="w-24px" src="@/assets/Images/header/select.png" />
+          <el-popover
+            placement="bottom"
+            title="Title"
+            :width="428"
+            trigger="click"
+            content="this is content, this is content, this is content"
+          >
+            <template #reference>
+              <img class="w-24px cursor-pointer" src="@/assets/Images/header/select.png" />
+            </template>
+          </el-popover>
         </template>
       </el-input>
     </div>
   </teleport>
 </template>
+<script setup lang="ts">
+// import { unref } from 'vue'
+import { Search } from '@element-plus/icons-vue'
+const input1 = ref('')
+// const popoverRef = ref()
+// const buttonRef = ref()
+
+// const onClickOutside = () => {
+//   unref(popoverRef).popperRef?.delayHide?.()
+// }
+</script>
 <style lang="scss" scoped>
 .input-wrap {
   :deep(.el-input) {
+    display: block !important;
     height: 40px;
     border-radius: 20px;
     overflow: hidden;
