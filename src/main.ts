@@ -10,7 +10,6 @@ import '@/assets/font/font.scss'
 import 'virtual:windi.css'
 
 const app = createApp(App)
-
 app.use(i18n).use(store).use(router)
 // app.config.globalProperties.$Web3Service = Web3Service
 app.mount('#app')

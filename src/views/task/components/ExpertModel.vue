@@ -3,7 +3,7 @@
     <div>
       <slot name="mode"></slot>
     </div>
-    <div class="mt-37px flex border-1 border-solid border-color-[#EEE] operation-box">
+    <div class="my-30px h-668px flex border-1 border-solid border-color-[#EEE] operation-box">
       <Algorithm />
       <Flow />
       <Panel />
@@ -22,6 +22,6 @@ const showDialog = ref(false)
 </script>
 <style lang="scss" scoped>
 .operation-box {
-  height: calc(100vh - 406px);
+  // height: calc(100vh - 406px);
 }
 </style>

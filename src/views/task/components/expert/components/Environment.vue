@@ -1,6 +1,6 @@
 <template>
     <div class="p-30px env-box">
-        <p>{{ $t('expert.setAlgoEnv') }}</p>
+        <p class="text-color-[#333] font-bold">{{ $t('expert.setAlgoEnv') }}</p>
         <div class="mt-40px">
             <p>{{ $t('expert.minimumResource') }}</p>
             <div class="mt-20px">
@@ -66,35 +66,37 @@
 </template>
 
 <script setup lang='ts'>
-const cpuOptions = reactive([
+const { t } = useI18n()
+const cpuOptions = computed(() => [
     {
         id: 1,
         value: '1',
-        label: '1'
+        label: `1 ${t('common.cores')}`
     },
     {
         id: 2,
         value: '2',
-        label: '2'
+        label: `2 ${t('common.cores')}`
     },
     {
         id: 3,
         value: '4',
-        label: '4'
+        label: `4 ${t('common.cores')}`
     },
     {
         id: 4,
         value: '8',
-        label: '8'
+        label: `8 ${t('common.cores')}`
     },
     {
         id: 5,
         value: '16',
-        label: '16'
+        label: `16 ${t('common.cores')}`
     },
 ])
+
 const obj = reactive({
-    cores: 1,
+    cores: '1',
     memory: 32,
     bandwidth: 32,
     longestComputingTime: 1

@@ -266,10 +266,25 @@ const en = {
     author:'Author',
     supportNum:'Supported Data Collaborators',
     supportLang:'Programming Languages',
-    setAlgoEnv:'Please set the environment for the algorithm',
+    setAlgoEnv:'Configure the algorithm environment:',
     minimumResource:'Minimum computing resource requirements',
-    longestComputingTime:'Longest computing time'
-  }
+    longestComputingTime:'Longest computing time',
+    configureOutput:"Configure the algorithm output :",
+    configureInput:"Configure the algorithm input :",
+    saveNotes: 'Saved to the data initiator by default',
+    storageForm: 'Storage Form',
+    plaintext: 'Plaintext',
+    model:'Model',
+    selectModel:'Select Model',
+  },
+  role: {
+    taskSponsor: 'Task sponsor',
+    algoProvider: 'Algorithm provider',
+    resultConsumer: 'Result consumer',
+    resultReceiver: 'Result consumer',
+    dataProvider: 'Data provider',
+    powerProvider: 'Power provider'
+  },
 }
 
 export default en

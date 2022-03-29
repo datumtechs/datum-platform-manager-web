@@ -32,7 +32,7 @@
             </el-table-column>
         </el-table>
     </div>
-    <div class="flex mt-50px justify-center">
+    <div class="flex my-50px justify-center">
         <el-pagination background layout="prev, pager, next" :total="1000" />
     </div>
 </template>

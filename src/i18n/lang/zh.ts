@@ -268,8 +268,23 @@ const zh = {
     supportLang:'支持语言',
     setAlgoEnv:'请设置算法环境',
     minimumResource:'最低计算资源需求',
-    longestComputingTime:'最长运行时间'
-  }
+    longestComputingTime:'最长运行时间',
+    configureOutput:"请设置算法输出 :",
+    configureInput:"请设置算法输入 :",
+    saveNotes: '已默认保存至数据发起方',
+    storageForm: '存储形式',
+    plaintext: '明文',
+    model:'模型',
+    selectModel:'请选择模型',
+  },
+  role: {
+    taskSponsor: '任务发起方',
+    algoProvider: '算法提供方',
+    resultConsumer: '结果接收方',
+    resultReceiver: '结果接收方',
+    dataProvider: '数据提供方',
+    powerProvider: '算力提供方'
+  },
 }
 
 export default zh
