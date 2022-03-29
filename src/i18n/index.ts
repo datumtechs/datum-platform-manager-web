@@ -4,7 +4,7 @@ import en from './lang/en'
 
 type MessageSchema = typeof en
 
-const messages = {
+const messages: any = {
   en: {
     ...en
   },

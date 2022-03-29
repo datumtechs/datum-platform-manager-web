@@ -49,6 +49,7 @@
 </template>
 <script lang="ts" setup>
 import { DocumentCopy } from '@element-plus/icons-vue'
+import { ElMessage } from 'element-plus'
 import { USEUSERSINFO } from '@/stores'
 type Callback = (call?: any) => any;
 const { t, locale } = useI18n()

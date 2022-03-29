@@ -1,7 +1,7 @@
 <template>
   <el-table
     :data="tableData"
-    :span-method="arraySpanMethod"
+    :span-Method="arraySpanMethod"
     border
     class="mt-63px mb-30px"
     row-key="lName"
@@ -51,7 +51,7 @@ interface SpanMethodProps {
   columnIndex: number
 }
 
-const arraySpanMethod = ({ row }: SpanMethodProps) => {
+const arraySpanMethod = ({ row }: SpanMethodProps): [number, number] | undefined => {
   if (row.last) {
     return [1, 2]
   }

@@ -7,7 +7,6 @@ declare module 'vue' {
     Banner: typeof import('./components/Banner.vue')['default']
     BaseInfo: typeof import('./components/dataComponents/BaseInfo.vue')['default']
     ComTabs: typeof import('./components/ComTabs.vue')['default']
-    ComTabsCard: typeof import('./components/ComTabsCard.vue')['default']
     DataDetails: typeof import('./components/DataDetails.vue')['default']
     DataTable: typeof import('./components/dataComponents/DataTable.vue')['default']
     DetailBanner: typeof import('./components/DetailBanner.vue')['default']

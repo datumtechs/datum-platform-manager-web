@@ -1,7 +1,7 @@
 <template>
   <el-table
     :data="props.tableData"
-    :span-method="arraySpanMethod"
+    :span-Method="arraySpanMethod"
     border
     class="mt-63px mb-30px"
     row-key="lName"
@@ -42,7 +42,7 @@ const props = defineProps({
 })
 console.log(props.tableData)
 
-const arraySpanMethod = ({ row }: SpanMethodProps) => {
+const arraySpanMethod = ({ row }: SpanMethodProps): [number, number] | undefined => {
   if (row.last) {
     return [1, 2]
   }
