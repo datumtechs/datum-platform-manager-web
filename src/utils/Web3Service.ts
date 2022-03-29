@@ -2,6 +2,7 @@ import { USEWALLET, USEUSERSINFO } from '@/stores'
 import I18n from '../i18n/index'
 import { ElMessage } from 'element-plus'
 import Web3 from 'web3'
+import config from '../config/network.js'
 // const Web3 = window.Web3
 
 class Web3Service {
@@ -22,13 +23,14 @@ class Web3Service {
       console.log('initialization error!')
     }
   }
-
+  
   initAlaya() {
     this.eth = window.eth || window.ethereum || undefined
     if (this.eth) {
       try {
         this.useWallet.setIsWallet(true)
         this.web3 = new Web3(this.eth)
+        this._addNetwork()
         this.eth.on('accountsChanged', (account: any) => {
           this.useUsersInfo.clean()
         })
@@ -42,7 +44,25 @@ class Web3Service {
       }
     }
   }
-
+  _addNetwork(){
+    this.eth
+    .request({
+      method: 'wallet_addEthereumChain',
+      params: [
+        {
+          chainName:config.chainName,
+          chainId:'0x'+config.chainId.toString(16),
+          rpcUrls: [config.rpcUrl],
+          nativeCurrency:config.symbol,
+          blockExplorerUrls: [config.blockExplorerUrl],
+        },
+      ],
+    })
+    .then((res:any) => console.log(res))
+    .catch(console.log())
+    .finally(() => {
+    })
+  }
   _getAbiForLogin() {
     // const uuId = this.store.getters['app/nonceId']
     const uuId = this.useWallet.getNonceId

@@ -1,5 +1,5 @@
 <template>
-    <div class="flex-1 task-wrap">
+    <div class="flex-1">
         <Banner :bg-index="4">
             <template #briefInfo>
                 <p v-if="locale === 'zh'">全网共 {{ totalNode }} 个可参与隐私计算任务的节点</p>
@@ -133,7 +133,4 @@ const nodeList = reactive([
 </script>
 
 <style scoped lang='scss'>
-.task-wrap {
-    height: calc(100vh - 70px);
-}
 </style>

@@ -65,7 +65,6 @@
 <script lang="ts" setup>
 import { Pointer, Cloudy } from '@element-plus/icons-vue'
 import metamask from '@/assets/Images/header/metamask-fox.svg'
-import Web3Service from '@/utils/Web3Service';
 import { USEWALLET, USEUSERSINFO } from '@/stores'
 import { Login, LoginNonceId } from '@/api/login'
 import type { ElDialog } from 'element-plus';
@@ -75,7 +74,7 @@ const checked = ref<any>(false)
 const islogin = ref(false)
 const props = defineProps({ loginShow: { type: Boolean, default: false } })
 const doalog = ref<InstanceType<typeof ElDialog> | null>(null)
-const Web3 = new Web3Service()
+const web3:any = inject('web3')
 const walletStore = USEWALLET()
 const userInfoStore = USEUSERSINFO()
 const isWallet = walletStore.getIsWallet
@@ -125,10 +124,10 @@ const login = async () => {
   if (!checked.value || islogin.value) return
   try {
     islogin.value = true
-    await Web3.connectWallet()
+    await web3.connectWallet()
     await getLoginNonce()
-    const res = await Web3.signForWallet('login')
-    res && getLogin(Web3.loginParams())
+    const res = await web3.signForWallet('login')
+    res && getLogin(web3.loginParams())
   } catch (error) {
     console.log(error)
     islogin.value = false
