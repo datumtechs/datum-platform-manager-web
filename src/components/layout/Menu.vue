@@ -15,7 +15,7 @@ const routeList = routePath.filter(v => {
       :to="item.path"
     >{{ $t(`${item.meta.label}`) }}</router-link>
   </div>
-  <div v-else id="search" class="pl-45px pr-25px flex-1"></div>
+  <div v-show="$route.path !== '/'" id="search" class="pl-45px pr-25px flex-1 w-full h-40px"></div>
 </template>
 <style scoped lang="scss">
 .menu {

@@ -1,5 +1,5 @@
 <template>
-  <div class="normal-wrap p-26px">
+  <div class="normal-wrap pt-40px pb-40px">
     <div class="flex item-center px-9px py-5px bg-color-[#F7F8F9] h-80px">
       <div
         @click="activeIndex = index"
