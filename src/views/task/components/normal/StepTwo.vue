@@ -15,6 +15,7 @@
         v-model="sponsorValue"
         :suffix-icon="CaretBottom"
         :placeholder="$t('task.selectSponsor')"
+        style="flex:0 0 440px"
         class="h-40px rounded-20px border-1 basis-1/2 border-solid border-color-[#EEEEEE]"
       >
         <el-option
@@ -25,9 +26,9 @@
         ></el-option>
       </el-select>
     </div>
-    <TaskParamsTransfer :num="1" />
+    <TaskParamsTransfer :num="1" :sponsorOptions="sponsorOptions" />
     <div class="h-30px"></div>
-    <TaskParamsTransfer :num="2" />
+    <TaskParamsTransfer :num="2" :sponsorOptions="sponsorOptions" />
     <!--    <div
       class="flex items-center justify-center w-full h-50px rounded-25px border-1px border-solid border-color-[#EEE] text-color-[#2B60E9]"
     >
@@ -57,9 +58,23 @@ const props = defineProps({
 })
 
 
-const sponsorOptions = ref<{ value: string, label: string }[]>([{
-  value: '1',
-  label: '2'
+const sponsorOptions = ref<{ value: string, label: string, children: any[] }[]>([{
+  value: 'resource',
+  label: 'Resource',
+  children: [
+    {
+      value: 'axure',
+      label: 'Axure Components',
+    },
+    {
+      value: 'sketch',
+      label: 'Sketch Templates',
+    },
+    {
+      value: 'docs',
+      label: 'Design Documentation',
+    },
+  ]
 }])
 
 
@@ -80,12 +95,14 @@ const previous = () => {
 </script>
 <style lang="scss">
 .step-two-wrap {
+  .el-cascader .el-input__inner,
   .el-select .el-input__inner {
     height: 40px;
     border: none;
     background: transparent;
     text-indent: 20px;
   }
+  .el-cascader .el-input__suffix .el-icon,
   .el-select .el-input__suffix .el-icon {
     color: #333333;
   }

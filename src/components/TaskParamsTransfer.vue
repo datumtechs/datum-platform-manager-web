@@ -1,20 +1,21 @@
 <template>
   <div class="border-1 border-solid border-color-[#EEEEEE] w-full my-20px">
-    <div class="w-full flex items-center justify-center py-20px px-30px">
+    <div class="w-full flex items-center py-20px px-30px">
       <div
         class="text-color-[#666666] w-150px mr-11px font-medium"
       >{{ locale == 'zh' ? $t('task.selectData') : `${$t('task.select')} ${props.num}st ${$t('task.selectData')}` }} {{ locale == 'zh' ? props.num : '' }}：</div>
-      <el-select
+      <!--   <el-select
         v-model="form.sponsorValue"
         :suffix-icon="CaretBottom"
         :placeholder="$t('task.selectSponsor')"
-        class="h-40px rounded-20px border-1 w-full border-solid border-color-[#EEEEEE]"
+        class="h-40px rounded-20px border-1 w-395px border-solid border-color-[#EEEEEE]"
       >
-        <template #prefix>
+         <template #prefix>
           <div
             class="w-199px text-color-[#333333] text-14px flex items-center justify-center font-medium h-40px -ml-10px prefix-rounded-left bg-color-[#F7F8F9]"
           >123123</div>
         </template>
+       
         <el-option
           v-for="item in sponsorOptions"
           :key="item.value"
@@ -22,10 +23,19 @@
           :value="item.value"
         ></el-option>
       </el-select>
+      -->
+      <el-cascader
+        class="h-40px rounded-20px border-1 w-395px border-solid border-color-[#EEEEEE]"
+        :suffix-icon="CaretBottom"
+        v-model="form.sponsorValue"
+        :options="props.sponsorOptions"
+      />
+      <!--
       <el-button round class="h-40px px-24px ml-36px">
         <img :src="ImportIcon" class="h-12px ml-10px" />
         <span class="text-color-[#333333] ml-8px mr-10px">{{ $t('task.importFields') }}</span>
       </el-button>
+      -->
     </div>
     <div class="transfer flex h-411px min-w-600px">
       <!--左面-->
@@ -111,6 +121,7 @@
 <script lang="ts" setup>
 import { CaretBottom, Remove } from '@element-plus/icons-vue'
 import ImportIcon from '@/assets/Images/task/importIcon.png'
+import type { CascaderOption } from 'element-plus/lib/components/cascader-panel/src/node';
 const { locale } = useI18n()
 const props = defineProps({
   num: {
@@ -118,10 +129,10 @@ const props = defineProps({
     default: 1
   },
   sponsorOptions: {
-    type: Object,
-    default: () => ([{
+    default: (): CascaderOption[] => ([{
       value: '1',
-      label: '2'
+      label: '2',
+      children: []
     }])
   },
   fieldsList: {
