@@ -1,19 +1,20 @@
 <template>
-    <div class="w-242px bg-[#F7F8F9] px-25px py-15px">
-        <p class="text-18px font-black">{{ $t('common.algorithm') }}</p>
-        <div class="mt-40px">
-            <div v-for="algo in algoList">
-                <p class="text-14px leading-20px text-[#000] font-bold mt-40px">{{ algo.label }}</p>
-                <ul class="mt-20px">
-                    <li
-                        class="mb-10px"
-                        @dragstart="dragstart($event, item)"
-                        @dragend="dragend($event, item)"
-                        v-for="item in algo.children"
-                        :key="item.id"
-                    >{{ item.label }}</li>
-                </ul>
-            </div>
+    <div class="w-242px bg-[#F7F8F9]">
+        <p class="text-18px font-black mt-16px pl-24px">{{ $t('common.algorithm') }}</p>
+        <div v-for="algo in algoList" class="flex flex-col items-center mt-24px">
+            <p
+                class="h-36px w-230px text-14px leading-20px text-[#000] font-bold pl-18px flex items-center"
+            >{{ algo.label }}</p>
+            <ul class="mt-4px">
+                <li
+                    class="h-36px w-230px drag-box cursor-pointer flex items-center pl-18px"
+                    @dragstart="dragstart($event, item)"
+                    @dragend="dragend($event, item)"
+                    :draggable="true"
+                    v-for="item in algo.children"
+                    :key="item.id"
+                >{{ item.label }}</li>
+            </ul>
         </div>
     </div>
 </template>
@@ -59,4 +60,9 @@ const algoList = reactive({
 </script>
 
 <style scoped lang='scss'>
+.drag-box {
+    &:hover {
+        background: #e6ecf8;
+    }
+}
 </style>

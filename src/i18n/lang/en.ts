@@ -40,7 +40,9 @@ const en = {
     credentialPrice:'Credential Price',
     purchase:'Purchase',
     algorithm:'Algorithm',
-    view: "View"
+    view: "View",
+    save: 'Save',
+    viewEvent:'View Event'
   },
   menu: {
     home: 'Home',
