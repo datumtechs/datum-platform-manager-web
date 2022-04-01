@@ -105,10 +105,5 @@ const obj = reactive({
 
 <style scoped lang='scss'>
 .env-box {
-    :deep(.el-input__inner) {
-        height: 40px;
-        background: #eeeeee;
-        border-radius: 20px;
-    }
 }
 </style>

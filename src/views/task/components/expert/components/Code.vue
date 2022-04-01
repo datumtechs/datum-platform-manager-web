@@ -39,11 +39,6 @@ const variableList = reactive([
     .code-variable-box {
         border-bottom: 1px solid #eeeeee;
     }
-    :deep(.el-input__inner) {
-        height: 40px;
-        border-radius: 20px;
-        background-color: #eeeeee;
-    }
     .code-context-box {
         background-color: #f5f8fa;
         white-space: pre-line;

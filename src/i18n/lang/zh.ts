@@ -278,6 +278,10 @@ const zh = {
     plaintext: '明文',
     model:'模型',
     selectModel:'请选择模型',
+    viewResult:'查看结果',
+    psiHint:'勾选后,将在当前任务执行前进行PSI运算',
+    labelRequired:'labels（required)',
+    labelOptionals:'labels（optional)',
   },
   role: {
     taskSponsor: '任务发起方',

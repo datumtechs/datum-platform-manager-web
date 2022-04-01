@@ -77,4 +77,10 @@ const tabList = reactive([
     height: calc(100% - 40px);
     overflow: hidden;
 }
+:deep(.el-input__inner) {
+    padding: 0 15px;
+    height: 40px;
+    background: #eeeeee;
+    border-radius: 20px;
+}
 </style>
