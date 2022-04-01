@@ -38,7 +38,7 @@
       <el-button round class="h-50px previous ml-20px">{{ $t('common.saveAndReturn') }}</el-button>
       <el-button
         round
-        class="h-50px absolute right-0px com-button previous ml-20px"
+        class="h-50px absolute com-button previous ml-20px"
       >{{ $t('task.startTask') }}</el-button>
     </div>
   </div>

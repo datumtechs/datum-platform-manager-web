@@ -10,7 +10,7 @@
       </div>
     </div>
     <div class="flex items-center text-14px">
-      <div class="mr-20px text-color-[#666666] font-medium">{{ $t('task.selectSponsor') }} ：</div>
+      <div class="mr-20px text-color-[#666666] font-medium w-130px">{{ $t('task.selectSponsor') }} ：</div>
       <el-select
         v-model="sponsorValue"
         :suffix-icon="CaretBottom"
@@ -25,6 +25,8 @@
           :value="item.value"
         ></el-option>
       </el-select>
+      <el-checkbox class="ml-26px mr-10px" v-model="psi" label="psi">{{ }}</el-checkbox>
+      <span>{{ $t('task.PSI') }}</span>
     </div>
     <TaskParamsTransfer :num="1" :sponsorOptions="sponsorOptions" />
     <div class="h-30px"></div>
@@ -77,7 +79,7 @@ const sponsorOptions = ref<{ value: string, label: string, children: any[] }[]>(
   ]
 }])
 
-
+const psi = ref(false)
 const sponsorValue = ref('')
 
 

@@ -75,10 +75,11 @@
         <div>
           <span class="inline-block w-100px text-color-[#333333] mb-10px">{{ $t('task.idColumn') }}</span>
           <div
-            class="border-1px cursor-pointer border-solid border-color-[#eeeeee] rounded-26px mb-10px h-40px w-full flex items-center justify-center"
+            class="relative border-1px cursor-pointer border-solid border-color-[#eeeeee] rounded-26px mb-10px h-40px w-full flex items-center justify-center"
           >
             {{ form.idColumn?.name }}
             <el-icon
+              v-if="form.idColumn?.name"
               class="absolute right-10px text-19px text-color-[#565656]"
               @click="form.idColumn.disabled = false"
             >
@@ -89,10 +90,13 @@
         <div>
           <span class="inline-block w-100px text-color-[#333333] mb-10px">{{ $t('task.label') }}</span>
           <div
-            class="border-1px cursor-pointer border-solid border-color-[#eeeeee] rounded-26px mb-10px h-40px w-full flex items-center justify-center"
+            class="relative border-1px cursor-pointer border-solid border-color-[#eeeeee] rounded-26px mb-10px h-40px w-full flex items-center justify-center"
           >
             {{ form.label?.name }}
-            <el-icon class="absolute right-10px text-19px text-color-[#565656]">
+            <el-icon
+              v-if="form.label?.name"
+              class="absolute right-10px text-19px text-color-[#565656]"
+            >
               <remove />
             </el-icon>
           </div>
@@ -100,7 +104,7 @@
         <div>
           <span class="inline-block w-100px text-color-[#333333] mb-10px">{{ $t('task.feature') }}</span>
           <ul
-            class="fields-main w-full h-200px overflow-auto pr-10px border-1px border-solid border-color-[#eeeeee]"
+            class="relative fields-main w-full h-200px overflow-auto px-10px pt-10px border-1px border-solid border-color-[#eeeeee]"
           >
             <li
               class="cursor-pointer border-1px border-solid border-color-[#eeeeee] rounded-26px mb-10px h-40px w-full flex items-center justify-center"
@@ -108,7 +112,7 @@
               :key="index"
             >
               {{ item.name }}
-              <el-icon class="absolute right-10px text-19px text-color-[#565656]">
+              <el-icon class="absolute right-20px text-19px text-color-[#565656]">
                 <remove />
               </el-icon>
             </li>
