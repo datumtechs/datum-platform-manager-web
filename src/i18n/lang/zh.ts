@@ -40,7 +40,9 @@ const zh = {
     credentialPrice: '凭证价格',
     purchase: '购买',
     algorithm: '算法',
-    view: "查看"
+    view: "查看",
+    save: '保存',
+    viewEvent:'查看日志'
   },
   menu: {
     home: '首页',
