@@ -1,8 +1,10 @@
 $calcWidth:calc(100vw - 219px);
 $calcHeight:calc(100vh - 70px);
+$minWidth: calc(1200px - 219px);
 .layout-mian-wrap {
   width: $calcWidth;
   height: $calcHeight;
+  min-width: $minWidth;
   overflow: auto;
 }
 
@@ -11,7 +13,6 @@ $calcHeight:calc(100vh - 70px);
 }
 
 .com-main-data-wrap {
-  min-width: 1000px;
   max-width: 1200px;
   margin: 0 auto;
 }
@@ -23,7 +24,7 @@ $calcHeight:calc(100vh - 70px);
 }
 
 .com-main {
-  min-width: 1200px;
+  min-width: $minWidth;
 }
 
 .layout-home {

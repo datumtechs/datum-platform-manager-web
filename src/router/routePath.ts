@@ -94,7 +94,7 @@ export default [
     meta: {
       show: [2],
       label: 'menu.computeTask',
-      icon: "side-computeTask-icon"
+      icon: "side-my-models-icon"
     },
     component: () => import('@/views/computing/ComputeTask.vue'),
   },
@@ -132,7 +132,7 @@ export default [
     meta: {
       show: [3],
       label: 'menu.data',
-      icon: "side-my-data-icon"
+      icon: "side-my-datas-icon"
     },
     component: () => import('@/views/myData/index.vue')
   },
@@ -184,16 +184,6 @@ export default [
   //   },
   //   component: () => import('@/views/myModels/index.vue'),
   // },
-  {
-    name:'myAuth',
-    path:'/myAuthorization',
-    meta:{
-      show: [3],
-      label: 'menu.myAuthorization',
-      icon: "side-my-auth-icon"
-    },
-    component: () => import('@/views/myAuth/index.vue'),
-  },
   {
     path: '/*',
     redirect: 'home',

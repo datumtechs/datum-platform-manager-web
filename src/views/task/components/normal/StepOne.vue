@@ -1,5 +1,6 @@
 <template>
   <el-form
+    v-bind="$attrs"
     :label-position="'top'"
     :rules="rules"
     :ref="(el: any) => formRef = el"
@@ -83,7 +84,7 @@
 <script lang="ts" setup>
 import NextButton from './NextButton.vue'
 const { locale, t } = useI18n()
-const emit = defineEmits(["getParams"])
+const emit = defineEmits(["getParams", 'next'])
 const form = ref({
   name: "",
   calculationType: undefined,
@@ -105,11 +106,12 @@ const rules = ref({
 })
 
 const next = () => {
-  emit('getParams', Object.assign({}, form.value))
-  console.log(Object.assign({}, form.value))
+  // emit('getParams', Object.assign({}, form.value))
+  // console.log(Object.assign({}, form.value))
   formRef.value.validate().then((v: any) => {
     console.log(v)
     emit('getParams', Object.assign({}, form.value))
+    emit('next')
   }).catch(() => {
     console.log('验证失败')
   })

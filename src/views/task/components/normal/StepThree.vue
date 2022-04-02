@@ -3,25 +3,21 @@
     <div class="flex items-center mb-36px text-14px">
       <div class="mr-20px text-color-[#666666]">{{ $t('task.selection') }} ：</div>
       <div class="flex items-center justify-center text-color-[#333333]">
-        <span>{{ props.taskParams.one.name || "ai" }}</span>
+        <span>{{ props.taskParams.stepOneInfo.name || "ai" }}</span>
         <el-icon class="rotate-180 mx-5px">
           <back />
         </el-icon>
       </div>
     </div>
-    <div class="w-full flex items-center justify-center py-20px px-30px">
-      <div class="text-color-[#666666] w-150px mr-11px font-medium">{{ $t('task.selectModel') }}：</div>
+    <div class="flex items-center text-14px">
+      <div class="text-color-[#666666] font-medium w-150px">{{ $t('task.selectModel') }}：</div>
       <el-select
-        v-model="form.sponsorValue"
+        v-model="sponsorValue"
         :suffix-icon="CaretBottom"
         :placeholder="$t('task.selectSponsor')"
-        class="h-40px rounded-20px border-1 w-full border-solid border-color-[#EEEEEE]"
+        style="flex:0 0 440px"
+        class="h-40px rounded-20px border-1 basis-1/2 border-solid border-color-[#EEEEEE]"
       >
-        <template #prefix>
-          <div
-            class="w-199px text-color-[#333333] text-14px flex items-center justify-center font-medium h-40px -ml-10px prefix-rounded-left bg-color-[#F7F8F9]"
-          >123123</div>
-        </template>
         <el-option
           v-for="item in sponsorOptions"
           :key="item.value"
@@ -57,7 +53,7 @@ const emit = defineEmits(['previous', 'getParams', 'next'])
 const props = defineProps({
   taskParams: {
     type: Object,
-    default: () => ({ one: {} })
+    default: () => ({ stepOneInfo: {} })
   }
 })
 
@@ -76,12 +72,12 @@ const sponsorValue = ref('')
 
 const next = () => {
   emit('getParams')
+  emit('next')
 }
 
 
 const previous = () => {
   emit('previous')
-  emit('next')
 }
 
 
