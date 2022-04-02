@@ -132,7 +132,7 @@ export default [
     meta: {
       show: [3],
       label: 'menu.data',
-      icon: "side-my-datas-icon"
+      icon: "side-my-data-icon"
     },
     component: () => import('@/views/myData/index.vue')
   },

@@ -76,6 +76,7 @@ const handIcon = (name: string | undefined): any => {
     case 'side-my-task-icon':
       itemIcon = myTaskIcon; break;
     case 'side-my-data-icon':
+      console.log(myData)
       itemIcon = myData; break;
     case 'side-my-models-icon':
       itemIcon = myModelsIcon; break;
