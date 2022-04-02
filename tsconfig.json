@@ -13,6 +13,7 @@
     "declaration": true,
     "moduleResolution": "node",
     "isolatedModules": true,
+    "suppressImplicitAnyIndexErrors": true,
     "types": [
       "element-plus/global",
       "vite/client"

@@ -33,7 +33,7 @@
         :key="item.path"
         :class="{ active: handActive(item.path) }"
         :index="item.path"
-        v-for="item in List"
+        v-for="item in privateList"
       >
         <div class="pl-30px pr-15px flex items-center">
           <img class="w-22px mr-14px" v-if="item.meta.icon" :src="handIcon(item.meta.icon)" />
@@ -52,15 +52,17 @@ import nodeIcon from '@/assets/Images/side/side-node-icon.png'
 import marketplaceIcon from '@/assets/Images/side/side-marketplace-icon.png'
 import computingIcon from '@/assets/Images/side/side-computing-icon.png'
 import myTaskIcon from '@/assets/Images/side/side-my-task-icon.png'
-import credentialsIcon from '@/assets/Images/side/side-my-credentials-icon.png'
+import myData from '@/assets/Images/side/side-my-data-icon.png'
+import myAuth from '@/assets/Images/side/side-my-auth-icon.png'
 import myModelsIcon from '@/assets/Images/side/side-my-models-icon.png'
+import computeTask from '@/assets/Images/side/side-computeTask-icon.png'
 import { type RouteLocationNormalizedLoaded, useRoute } from 'vue-router'
 
 const route: RouteLocationNormalizedLoaded = useRoute()
 //@ts-ignore
 const routeList = routePath.filter(v => v.meta.show.includes(2))
 //@ts-ignore
-const List = routePath.filter(v => v.meta.show.includes(3))
+const privateList = routePath.filter(v => v.meta.show.includes(3))
 
 const handIcon = (name: string | undefined): any => {
   let itemIcon: any = HelpFilled
@@ -73,10 +75,14 @@ const handIcon = (name: string | undefined): any => {
       itemIcon = computingIcon; break;
     case 'side-my-task-icon':
       itemIcon = myTaskIcon; break;
-    case 'side-my-datas-icon':
-      itemIcon = credentialsIcon; break;
+    case 'side-my-data-icon':
+      itemIcon = myData; break;
     case 'side-my-models-icon':
       itemIcon = myModelsIcon; break;
+    case 'side-my-auth-icon':
+      itemIcon = myAuth; break;
+    case 'side-computeTask-icon':
+      itemIcon = computeTask; break;
     default:
       itemIcon = HelpFilled;
       break;

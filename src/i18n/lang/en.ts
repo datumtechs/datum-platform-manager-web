@@ -60,7 +60,8 @@ const en = {
     workflowDetails: "Workflow Details",
     taskDetails: "Tasks Details",
     models: "My Models",
-    computeTask: "Computing Tasks"
+    computeTask: "Computing Tasks",
+    myAuthorization:'My Authorization'
   },
   head: {
     myAccountTitle: 'My Account',
@@ -279,6 +280,10 @@ const en = {
     plaintext: 'Plaintext',
     model: 'Model',
     selectModel: 'Select Model',
+    viewResult:'View Results',
+    psiHint:'If checked, the PSI operation will be performed before the current task is executed',
+    labelRequired:'因变量（标签，必选)',
+    labelOptionals:'因变量（标签，选填)'
   },
   role: {
     taskSponsor: 'Task sponsor',

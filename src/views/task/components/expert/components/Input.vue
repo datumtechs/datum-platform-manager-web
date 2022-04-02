@@ -97,7 +97,7 @@
                     "
                 ></el-cascader>
                 <Transfer
-                    :ref="`Columns${index}`"
+                    :ref="setRef"
                     :view-model="viewModel"
                     :column-data="columnsList[index]"
                     :transfer-index="index"
@@ -111,23 +111,50 @@
 </template>
 
 <script setup lang='ts'>
+import type { Ref } from 'vue';
 import Transfer from './Transfer.vue'
 const modelKey = ref('')
 const taskSender = ref('')
 const viewModel = ref('')
-const showModel = ref(true)
+const showModel = ref(false)
 let selectLayout: any = ref([{ item: '111', value: '111', }])
-const minLen = 12
+const minLen = 2
 
 const cascaderKey = ref('')
-const inputValue = ref('')
+const inputValue: Ref<any[]> = ref([] as any[])
 
 const algorithms = ref([])
 
 const columnsList = ref([])
 
-const saveToStore = () => {
+const columnsRef = ref([] as any[])
 
+
+const setRef = (el: any) => {
+    columnsRef.value.push(el)
+    console.log(columnsRef.value);
+}
+nextTick(() => {
+    console.dir(columnsRef.value);
+});
+
+
+const saveToStore = (transferIndex: any) => {
+    const columnObj = columnsRef.value[transferIndex][0].getList()
+    const columnLists = Array(2).fill({})
+    columnLists[transferIndex] = columnObj
+
+    const params = {
+        keyColumn: Number(columnLists[transferIndex].keyColumn),
+        dataColumnIds: columnLists[transferIndex].dataColumnIds,
+        dataTableId: inputValue[transferIndex][1],
+        identityId: inputValue[transferIndex][0],
+        dependentVariable: 0
+    }
+    if (transferIndex === 0) {
+        params.dependentVariable = Number(columnLists[transferIndex].dependentVariable)
+    }
+    // this.SET_VO_LIST({ params, transferIndex }) TODO
 }
 
 const initInputPanel = () => {
