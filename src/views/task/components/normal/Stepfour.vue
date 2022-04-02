@@ -3,7 +3,7 @@
     <div class="flex items-center mb-36px text-14px">
       <div class="mr-20px text-color-[#666666]">{{ $t('task.selection') }} ：</div>
       <div class="flex items-center justify-center text-color-[#333333]">
-        <span>{{ props.taskParams.one.name || "ai" }}</span>
+        <span>{{ props.taskParams.stepOneInfo.name || "ai" }}</span>
         <el-icon class="rotate-180 mx-5px">
           <back />
         </el-icon>
@@ -15,6 +15,7 @@
         :key="item"
         class="w-530px com-border-eee rounded-8px border-b-1px border"
         label-position="top"
+        :style="{ 'margin-right': item == 1 ? '20px' : '' }"
         :model="form"
       >
         <div
@@ -107,7 +108,7 @@ const emit = defineEmits(['previous', 'getParams', 'next'])
 const props = defineProps({
   taskParams: {
     type: Object,
-    default: () => ({ one: {} })
+    default: () => ({ stepOneInfo: {} })
   }
 })
 
@@ -137,12 +138,12 @@ const timeCompanyList = ref([{
 
 const next = () => {
   emit('getParams')
+  emit('next')
 }
 
 
 const previous = () => {
   emit('previous')
-  emit('next')
 }
 
 

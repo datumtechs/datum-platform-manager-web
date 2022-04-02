@@ -3,7 +3,7 @@
     <div class="flex items-center mb-36px text-14px step-two-wrap">
       <div class="mr-20px text-color-[#666666]">{{ $t('task.selection') }} ：</div>
       <div class="flex items-center justify-center text-color-[#333333]">
-        <span>{{ props.taskParams.one.name || "ai" }}</span>
+        <span>{{ props.taskParams.stepOneInfo.name || "ai" }}</span>
         <el-icon class="rotate-180 mx-5px">
           <back />
         </el-icon>
@@ -14,6 +14,7 @@
         v-for="item in 2"
         :key="item"
         class="w-530px com-border-eee rounded-8px border-b-1px border"
+        :style="{ 'margin-right': item == 1 ? '20px' : '' }"
         label-position="top"
         :model="form"
       >
@@ -33,24 +34,24 @@
         </div>
       </el-form>
     </div>
-    <div class="flex items-center pt-20px">
+    <div class="flex items-center pt-20px relative">
       <el-button round class="h-50px previous" @click="previous">{{ $t('common.previous') }}</el-button>
       <el-button round class="h-50px previous ml-20px">{{ $t('common.saveAndReturn') }}</el-button>
       <el-button
         round
-        class="h-50px absolute com-button previous ml-20px"
+        @click="next"
+        class="h-50px absolute right-0px com-button previous ml-20px"
       >{{ $t('task.startTask') }}</el-button>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
 import { Back } from '@element-plus/icons-vue'
-import NextButton from './NextButton.vue'
 const emit = defineEmits(['previous', 'getParams', 'next'])
 const props = defineProps({
   taskParams: {
     type: Object,
-    default: () => ({ one: {} })
+    default: () => ({ stepOneInfo: {} })
   }
 })
 
@@ -62,12 +63,12 @@ const form = ref({
 
 const next = () => {
   emit('getParams')
+  emit('next')
 }
 
 
 const previous = () => {
   emit('previous')
-  emit('next')
 }
 
 
