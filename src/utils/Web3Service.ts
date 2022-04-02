@@ -3,7 +3,6 @@ import I18n from '../i18n/index'
 import { ElMessage } from 'element-plus'
 import Web3 from 'web3'
 import config from '../config/network.js'
-// const Web3 = window.Web3
 
 class Web3Service {
   private web3: any
@@ -18,50 +17,44 @@ class Web3Service {
     this.i18n = I18n.global
     this.eth = undefined
     try {
-      this.initAlaya()
+      this.initWeb3()
     } catch (error) {
       console.log('initialization error!')
     }
   }
-  
-  initAlaya() {
-    this.eth = window.eth || window.ethereum || undefined
-    if (this.eth) {
-      try {
-        this.useWallet.setIsWallet(true)
-        this.web3 = new Web3(this.eth)
-        this._addNetwork()
-        this.eth.on('accountsChanged', (account: any) => {
-          this.useUsersInfo.clean()
-        })
 
-        // 切换网络
-        this.eth.on('chainChanged', () => {
-          this.useUsersInfo.clean()
-        })
-      } catch (err: any) {
-        console.log('初始化web3错误,原因：', err);
-      }
+  initWeb3() {
+    this.eth = window.ethereum || undefined
+    if (this.eth) {
+      this.useWallet.setIsWallet(true)
+      this.web3 = new Web3(this.eth)
+      this._addNetwork()
+      this.eth.on('accountsChanged', (account: any) => {
+        this.useUsersInfo.clean()
+      })
+
+      // 切换网络
+      this.eth.on('chainChanged', () => {
+        this.useUsersInfo.clean()
+      })
     }
   }
-  _addNetwork(){
+  _addNetwork() {
     this.eth
-    .request({
-      method: 'wallet_addEthereumChain',
-      params: [
-        {
-          chainName:config.chainName,
-          chainId:'0x'+config.chainId.toString(16),
-          rpcUrls: [config.rpcUrl],
-          nativeCurrency:config.symbol,
-          blockExplorerUrls: [config.blockExplorerUrl],
-        },
-      ],
-    })
-    .then((res:any) => console.log(res))
-    .catch(console.log())
-    .finally(() => {
-    })
+      .request({
+        method: 'wallet_addEthereumChain',
+        params: [
+          {
+            chainName: config.chainName,
+            chainId: '0x' + config.chainId.toString(16),
+            rpcUrls: [config.rpcUrl],
+            nativeCurrency: config.symbol,
+            blockExplorerUrls: [config.blockExplorerUrl],
+          },
+        ],
+      })
+      .then((res: any) => console.log(res))
+      .catch(console.log())
   }
   _getAbiForLogin() {
     // const uuId = this.store.getters['app/nonceId']
@@ -117,12 +110,12 @@ class Web3Service {
     })
   }
 
-  // 连接钱包
 
+  // 连接钱包
   async connectWallet() {
     if (this.eth) {
+      this.useWallet.setIsWallet(true)
       try {
-        this.useWallet.setIsWallet(true)
         // 注意metamask版本更新, 是否取消eth._metamask.isUnlocked方法 后续是否修复锁定弹窗
         const isLocked = await this.eth._metamask.isUnlocked()
         if (!isLocked) {
@@ -172,12 +165,11 @@ class Web3Service {
   }
 
   checkAddress() {
-    const address = this.useUsersInfo.getAddress
-    if (address && address.length) return true
+    let address = this.useUsersInfo.getAddress
+    if (address) return true
     if (this.eth && this.eth.selectedAddress) {
-      const address = this.eth.selectedAddress
-      if (address && address.length) {
-        // this.store.commit.SET_ADDRESS(address)
+      address = this.eth.selectedAddress
+      if (address) {
         this.useUsersInfo.setAddress(address)
         return true
       } else {
