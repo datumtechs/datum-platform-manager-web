@@ -60,7 +60,8 @@ const en = {
     workflowDetails: "Workflow Details",
     taskDetails: "Tasks Details",
     models: "My Models",
-    computeTask: "Computing Tasks"
+    computeTask: "Computing Tasks",
+    myAuthorization:'My Authorization'
   },
   head: {
     myAccountTitle: 'My Account',

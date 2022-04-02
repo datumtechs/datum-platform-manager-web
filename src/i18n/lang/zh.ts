@@ -61,6 +61,7 @@ const zh = {
     taskDetails: "详情任务",
     models: "我的模型",
     computeTask: "计算任务",
+    myAuthorization:'我的授权'
   },
   head: {
     myAccountTitle: "我的账户",

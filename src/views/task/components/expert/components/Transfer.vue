@@ -21,18 +21,10 @@
         <img v-if="labels.length" src="@/assets/images/task/left-arrow.png" class="normal-arrow" />
         <img v-else src="@/assets/images/task/right-arrow.png" class="normal-arrow" />
       </div>
-      <div
-        class="arrow-icon"
-        :class="isLabels ? '' : 'arrow-icon-auto1'"
-        @click="handleTransfer(2)"
-      >
+      <div class="arrow-icon-auto" @click="handleTransfer(2)">
         <img src="@/assets/images/task/right-arrow.png" class="normal-arrow" />
       </div>
-      <div
-        class="arrow-icon"
-        :class="isLabels ? '' : 'arrow-icon-auto2'"
-        @click="handleTransfer(3, 1)"
-      >
+      <div class="arrow-icon-auto" @click="handleTransfer(3, 1)">
         <img src="@/assets/images/task/left-arrow.png" class="normal-arrow" />
       </div>
     </div>
@@ -89,7 +81,7 @@ let featureIndex = ref(0)
 
 
 const showTransfer = computed(() => ids.length || labels.length || features.length || list.length)
-const isLabels = false; // computed(() => transferIndex === 0 && !algorithms.inputModel)
+const isLabels = true; // computed(() => transferIndex === 0 && !algorithms.inputModel)
 const emit = defineEmits(['saveToStore'])
 const { columnData, transferIndex, algorithms, viewModel } = defineProps({
   columnData: {
@@ -186,33 +178,11 @@ const handleTransfer = (type: any, methods?: any) => {
       margin-bottom: 32px;
       height: 40px;
       cursor: pointer;
-      .normal-arrow {
-        color: #84878d;
-        // width: 40px;
-        // height: 28px;
-      }
     }
 
-    .arrow-icon-auto1 {
+    .arrow-icon-auto {
       margin-top: 10px;
-    }
-
-    .arrow-icon-auto2 {
-      margin-top: 10px;
-    }
-
-    .arrow-icon:nth-child(3) {
-      margin: 0 !important ;
-    }
-
-    .arrow-icon:nth-child(4) {
-      margin: 0 !important ;
-    }
-
-    .arrow-icon:hover {
-      >>> path {
-        fill: #333;
-      }
+      cursor: pointer;
     }
   }
   .result {
