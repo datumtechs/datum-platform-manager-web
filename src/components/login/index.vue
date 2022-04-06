@@ -74,7 +74,7 @@ const checked = ref<any>(false)
 const islogin = ref(false)
 const props = defineProps({ loginShow: { type: Boolean, default: false } })
 const doalog = ref<InstanceType<typeof ElDialog> | null>(null)
-const web3:any = inject('web3')
+const web3: any = inject('web3')
 const walletStore = USEWALLET()
 const userInfoStore = USEUSERSINFO()
 const isWallet = walletStore.getIsWallet
@@ -121,6 +121,11 @@ const getLoginNonce = async () => {
 }
 
 const login = async () => {
+  userInfoStore.setToken('0xd1b3d3cdc28a07fbb265ad6b0c3b77f65fe2fd49')
+  userInfoStore.setUsers('0xd1b3d3cdc28a07fbb265ad6b0c3b77f65fe2fd49')
+
+  return
+
   if (!checked.value || islogin.value) return
   try {
     islogin.value = true

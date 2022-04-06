@@ -12,6 +12,7 @@
         <a
           :href="`https://scan.platon.network/address-detail?address=${store.address}`"
           target="_blank"
+          class="text-16px"
         >
           {{
             $t('account.viewExplorer')
@@ -26,7 +27,7 @@
       <input :ref="(el) => addressRef = el" class="w-1 opacity-0" :value="store.address" />
     </el-form-item>
     <el-form-item :label="`${$t('head.nickname')}:`" prop="name">
-      <div class="flex w-full">
+      <div class="flex w-400px">
         <el-input
           v-model="form.name"
           :disabled="disabled"
@@ -41,7 +42,10 @@
         </el-button>
         <div class="flex" v-else>
           <el-button type="primary" round @click="submit">{{ $t('common.preservation') }}</el-button>
-          <el-button round @click="disabled = !disabled">{{ $t('common.cancel') }}</el-button>
+          <el-button
+            round
+            @click="disabled = !disabled, formRef.clearValidate()"
+          >{{ $t('common.cancel') }}</el-button>
         </div>
       </div>
     </el-form-item>
@@ -73,7 +77,7 @@ const rules = ref({
           callback()
         }
       },
-      trigger: 'blur'
+      // trigger: 'blur'
     }
   ]
 })

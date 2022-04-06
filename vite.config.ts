@@ -81,9 +81,9 @@ export default defineConfig({
     proxy: {
       // 选项写法
       '/flow': {
-        target: 'http://10.10.8.174:8234/', // 146
+        target: 'http://192.168.10.145:10000/', // 146
         changeOrigin: true,
-        rewrite: path => path.replace(/^\/flow/, '/rosettaflow')
+        // rewrite: path => path.replace(/^\/flow/, '/rosettaflow')
       }
     },
     cors: true

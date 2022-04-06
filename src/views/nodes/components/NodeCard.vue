@@ -1,5 +1,7 @@
 <template>
-    <div class="node-line mb-10px flex h-90px border-1 border-solid border-[#eee] items-center">
+    <div
+        class="node-line mb-10px flex h-90px border-1 border-solid border-[#eee] items-center hover-line"
+    >
         <div class="w-73px index-box">{{ currentIndex }}</div>
         <div class="pr-30px">
             <img class="w-36px h-36px rounded-1/2" :src="node.imgUrl" />
