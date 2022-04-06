@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import elementZhLocale from 'element-plus/lib/locale/lang/zh-cn'
 import elementEnLocale from 'element-plus/lib/locale/lang/en'
-import { USELANGUAGE } from '@/stores'
+import { useLanguage } from '@/stores'
 import IndexLayout from '@/Layout/IndexLayout.vue'
 import Web3Service from '@/utils/Web3Service'
 
@@ -13,7 +13,7 @@ onMounted(() => {
 
 </script>
 <template>
-  <el-config-provider :locale="USELANGUAGE().langue == 'zh' ? elementZhLocale : elementEnLocale">
+  <el-config-provider :locale="useLanguage().langue == 'zh' ? elementZhLocale : elementEnLocale">
     <IndexLayout />
   </el-config-provider>
 </template>

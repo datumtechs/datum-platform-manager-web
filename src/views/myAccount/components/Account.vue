@@ -50,10 +50,10 @@
 <script lang="ts" setup>
 import { DocumentCopy } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
-import { USEUSERSINFO } from '@/stores'
+import { useUsersInfo } from '@/stores'
 type Callback = (call?: any) => any;
 const { t, locale } = useI18n()
-const store = USEUSERSINFO()
+const store = useUsersInfo()
 const disabled = ref(true)
 const formRef = ref()
 const form = ref({

@@ -11,7 +11,8 @@ export const Login = (data: any): Promise<any> => {
 export const LoginNonceId = (address: string): Promise<any> => {
   return http({
     method: 'GET',
-    url: `/flow/user/getLoginNonce/${address}`
+    url: `/flow/user/getLoginNonce`,
+    params: { address }
   })
 }
 

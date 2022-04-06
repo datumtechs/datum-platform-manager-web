@@ -1,4 +1,4 @@
-import { USEWALLET, USEUSERSINFO } from '@/stores'
+import { useWallet, useUsersInfo } from '@/stores'
 import I18n from '../i18n/index'
 import { ElMessage } from 'element-plus'
 import Web3 from 'web3'
@@ -12,8 +12,8 @@ class Web3Service {
   protected i18n: any
   constructor() {
     this.web3 = null
-    this.useWallet = USEWALLET()
-    this.useUsersInfo = USEUSERSINFO()
+    this.useWallet = useWallet()
+    this.useUsersInfo = useUsersInfo()
     this.i18n = I18n.global
     this.eth = undefined
     try {

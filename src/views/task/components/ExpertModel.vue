@@ -17,7 +17,7 @@ import Panel from './expert/Panel.vue'
 import Flow from './expert/Flow.vue'
 import SetNameDialog from './expert/SetNameDialog.vue'
 
-const showDialog = ref(false)
+const showDialog = ref(true)
 
 </script>
 <style lang="scss" scoped>

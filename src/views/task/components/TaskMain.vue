@@ -13,12 +13,18 @@
   </div>
 </template>
 <script lang="ts" setup>
+import { mapState } from 'pinia'
 import PrivateSwitch from './PrivateSwitch.vue'
 import NormalMode from './NormalMode.vue'
 import ExpertModel from './ExpertModel.vue'
-const mode = ref(false)
-const change = (type: boolean) => {
-  mode.value = type
+import { useWorkFlow } from '@/stores'
+
+const workflowStatus = useWorkFlow()
+
+const mode = computed(() => workflowStatus.mode)
+
+const change = (type: string) => {
+  workflowStatus.setMode(type)
 }
 
 </script>

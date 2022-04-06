@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { USEUSERSINFO } from '@/stores'
+import { useUsersInfo } from '@/stores'
 import { addRequest, removeRequest } from '@/utils/cancelToken'
 import { ElMessage } from 'element-plus'
 import { getLanguage } from '@/utils/lang'
@@ -16,7 +16,7 @@ service.interceptors.request.use(
   (config: any) => {
     addRequest(config)
     config.headers.common['Accept-Language'] = getLanguage()
-    config.headers.common['Access-Token'] = USEUSERSINFO().getToken || ''
+    config.headers.common['Access-Token'] = useUsersInfo().getToken || ''
     return config
   },
   (error: any) => {
@@ -34,7 +34,7 @@ service.interceptors.response.use(
     if (data.code !== 10000) {
       if (data.code === 20006 || data.code === 20007) {
         // token  失效
-        USEUSERSINFO().clean()
+        useUsersInfo().clean()
       }
       if (config.url.includes('/flow') && !!data.msg && !tokenAbnormal) {
         tokenAbnormal = true

@@ -42,7 +42,7 @@ const en = {
     algorithm: 'Algorithm',
     view: "View",
     save: 'Save',
-    viewEvent:'View Event'
+    viewEvent: 'View Event'
   },
   menu: {
     home: 'Home',
@@ -61,7 +61,7 @@ const en = {
     taskDetails: "Tasks Details",
     models: "My Models",
     computeTask: "Computing Tasks",
-    myAuthorization:'My Authorization'
+    myAuthorization: 'My Authorization'
   },
   head: {
     myAccountTitle: 'My Account',
@@ -280,10 +280,10 @@ const en = {
     plaintext: 'Plaintext',
     model: 'Model',
     selectModel: 'Select Model',
-    viewResult:'View Results',
-    psiHint:'If checked, the PSI operation will be performed before the current task is executed',
-    labelRequired:'因变量（标签，必选)',
-    labelOptionals:'因变量（标签，选填)'
+    viewResult: 'View Results',
+    psiHint: 'If checked, the PSI operation will be performed before the current task is executed',
+    labelRequired: 'labels（required)',
+    labelOptionals: 'labels（optional)',
   },
   role: {
     taskSponsor: 'Task sponsor',
@@ -293,6 +293,10 @@ const en = {
     dataProvider: 'Data provider',
     powerProvider: 'Power provider'
   },
+  auth: {
+    tokenAuth: 'Certificate Authorization',
+    nodeAuth: 'Node authorization'
+  }
 }
 
 export default en
