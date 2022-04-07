@@ -20,7 +20,7 @@ const activekey = ref(route.params.infoType == 'node' ? 1 : 0)
 
 const list = ref([
   {
-    name: 'head.Nickname'
+    name: 'head.nickname'
   },
   {
     name: 'head.nodeManagement'

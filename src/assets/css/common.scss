@@ -1,6 +1,7 @@
 $calcWidth:calc(100vw - 219px);
 $calcHeight:calc(100vh - 70px);
 $minWidth: calc(1200px - 219px);
+
 .layout-mian-wrap {
   width: $calcWidth;
   height: $calcHeight;
@@ -46,6 +47,7 @@ $minWidth: calc(1200px - 219px);
   align-items: center;
   justify-content: center;
 }
+
 .rotate-180 {
   transform: rotate(180deg);
 }
@@ -60,10 +62,12 @@ $minWidth: calc(1200px - 219px);
     border-bottom: none;
     height: 50px;
   }
+
   .el-table__body .el-table__row {
     height: 70px;
   }
 }
+
 .table-header-bg-Grayscale {
   .el-table__header-wrapper {
     .el-table__header tr th {
@@ -99,4 +103,10 @@ $minWidth: calc(1200px - 219px);
   box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
   background-color: #c8c8c8;
+}
+
+.hover-line {
+  &:hover {
+    background-color: #f5f7fa;
+  }
 }
