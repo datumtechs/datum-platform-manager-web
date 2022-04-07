@@ -30,8 +30,8 @@
   </el-popover>
 </template>
 <script setup lang="ts">
-import { USELANGUAGE } from '@/stores'
-const store = USELANGUAGE()
+import { useLanguage } from '@/stores'
+const store = useLanguage()
 const { locale } = useI18n()
 const changeLangue = (langue: string) => {
   locale.value = langue

@@ -65,7 +65,7 @@
 <script lang="ts" setup>
 import { Pointer, Cloudy } from '@element-plus/icons-vue'
 import metamask from '@/assets/Images/header/metamask-fox.svg'
-import { USEWALLET, USEUSERSINFO } from '@/stores'
+import { useWallet, useUsersInfo } from '@/stores'
 import { Login, LoginNonceId } from '@/api/login'
 import type { ElDialog } from 'element-plus';
 const emit = defineEmits(['loginShowChange'])
@@ -75,8 +75,8 @@ const islogin = ref(false)
 const props = defineProps({ loginShow: { type: Boolean, default: false } })
 const doalog = ref<InstanceType<typeof ElDialog> | null>(null)
 const web3: any = inject('web3')
-const walletStore = USEWALLET()
-const userInfoStore = USEUSERSINFO()
+const walletStore = useWallet()
+const userInfoStore = useUsersInfo()
 const isWallet = walletStore.getIsWallet
 
 const closeDialog = () => {

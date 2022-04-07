@@ -34,7 +34,7 @@
   </el-drawer>
 </template>
 <script setup lang="ts">
-import { USEUSERSINFO } from '@/stores'
+import { useUsersInfo } from '@/stores'
 import { Logout } from '@/api/login'
 import { Edit, Link as IconLink, Help } from '@element-plus/icons-vue'
 import { type Router, useRouter } from 'vue-router'
@@ -57,7 +57,7 @@ const logout = async () => {
     const { code } = res
     if (code === 10000) {
       emit('drawerShowchange')
-      USEUSERSINFO().clean()
+      useUsersInfo().clean()
     }
   } catch (error) {
     console.log(error)

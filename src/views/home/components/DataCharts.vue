@@ -37,7 +37,7 @@ fetch('https://gw.alipayobjects.com/os/antvdemo/assets/data/nintendo.json')
         const chart = new Chart({
             container: 'container',
             autoFit: true,
-            width: 617,
+            width: 755,
             height: 355,
         });
         chart.data(data);

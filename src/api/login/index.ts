@@ -12,9 +12,7 @@ export const LoginNonceId = (address: string): Promise<any> => {
   return http({
     method: 'GET',
     url: `/flow/user/getLoginNonce`,
-    headers: {
-      address
-    }
+    params: { address }
   })
 }
 

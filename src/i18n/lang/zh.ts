@@ -42,7 +42,7 @@ const zh = {
     algorithm: '算法',
     view: "查看",
     save: '保存',
-    viewEvent:'查看日志'
+    viewEvent: '查看日志'
   },
   menu: {
     home: '首页',
@@ -61,7 +61,7 @@ const zh = {
     taskDetails: "详情任务",
     models: "我的模型",
     computeTask: "计算任务",
-    myAuthorization:'我的授权'
+    myAuthorization: '我的授权'
   },
   head: {
     myAccountTitle: "我的账户",
@@ -280,10 +280,10 @@ const zh = {
     plaintext: '明文',
     model: '模型',
     selectModel: '请选择模型',
-    viewResult:'查看结果',
-    psiHint:'勾选后,将在当前任务执行前进行PSI运算',
-    labelRequired:'labels（required)',
-    labelOptionals:'labels（optional)',
+    viewResult: '查看结果',
+    psiHint: '勾选后,将在当前任务执行前进行PSI运算',
+    labelRequired: '因变量（标签，必选)',
+    labelOptionals: '因变量（标签，选填)'
   },
   role: {
     taskSponsor: '任务发起方',
@@ -293,6 +293,10 @@ const zh = {
     dataProvider: '数据提供方',
     powerProvider: '算力提供方'
   },
+  auth: {
+    tokenAuth: '凭证授权',
+    nodeAuth: '节点授权'
+  }
 }
 
 export default zh

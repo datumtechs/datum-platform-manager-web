@@ -2,8 +2,8 @@
 import PersonalPopoverVue from './PersonalPopover.vue';
 import { UserFilled } from '@element-plus/icons-vue'
 import Login from '@/components/login/index.vue'
-import { USEUSERSINFO } from '@/stores'
-const store = USEUSERSINFO()
+import { useUsersInfo } from '@/stores'
+const store = useUsersInfo()
 const drawerShow = ref(false)
 const loginShow = ref(false)
 const drawerShowChange = () => {
