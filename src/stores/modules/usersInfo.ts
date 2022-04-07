@@ -2,21 +2,23 @@ import { defineStore } from "pinia";
 
 export default defineStore('usersInfo', {
   state: () => ({
-    users: '', // 用户改变名称
-    token: '',
+    user: '' || localStorage.getItem('user'), // 用户改变名称
+    token: '' || localStorage.getItem('token'),
     address: '' || localStorage.getItem('address') // 钱包地址
   }),
   getters: {
-    getUsers: state => state.users,
+    getUsers: state => state.user,
     getToken: state => state.token,
     getAddress: state => state.address,
   },
   actions: {
     setUsers(str: string) {
-      this.users = str
+      this.user = str
+      localStorage.setItem('user', str)
     },
     setToken(str: string) {
       this.token = str
+      localStorage.setItem('token', str)
     },
     setAddress(str: string) {
       this.address = str
@@ -25,7 +27,7 @@ export default defineStore('usersInfo', {
     clean() {
       this.address = ''
       this.token = ''
-      this.users = ''
+      this.user = ''
     }
   }
 })
