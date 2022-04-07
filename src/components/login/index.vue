@@ -121,11 +121,6 @@ const getLoginNonce = async () => {
 }
 
 const login = async () => {
-  userInfoStore.setToken('0xd1b3d3cdc28a07fbb265ad6b0c3b77f65fe2fd49')
-  userInfoStore.setUsers('0xd1b3d3cdc28a07fbb265ad6b0c3b77f65fe2fd49')
-
-  return
-
   if (!checked.value || islogin.value) return
   try {
     islogin.value = true
