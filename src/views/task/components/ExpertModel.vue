@@ -8,7 +8,7 @@
       <Flow />
       <Panel />
     </div>
-    <SetNameDialog v-model:show="showDialog" />
+    <!-- <SetNameDialog v-model:show="showDialog" /> -->
   </div>
 </template>
 <script lang="ts" setup>

@@ -74,7 +74,7 @@ const checked = ref<any>(false)
 const islogin = ref(false)
 const props = defineProps({ loginShow: { type: Boolean, default: false } })
 const doalog = ref<InstanceType<typeof ElDialog> | null>(null)
-const web3:any = inject('web3')
+const web3: any = inject('web3')
 const walletStore = useWallet()
 const userInfoStore = useUsersInfo()
 const isWallet = walletStore.getIsWallet
@@ -107,14 +107,18 @@ const getLogin = async (params: any) => {
 
 const getLoginNonce = async () => {
   try {
-    const address: string = userInfoStore.getAddress
-    const {
-      data, code
-    } = await LoginNonceId(address)
-    if (code !== 10000) {
-      throw new Error('Wallet address exception')
+    const address: string | null = userInfoStore.getAddress
+    if (address) {
+      const {
+        data, code
+      } = await LoginNonceId(address)
+      if (code !== 10000) {
+        return new Error('Wallet address exception')
+      }
+      walletStore.setNonceId(data.nonce)
+    } else {
+      console.log('get address error');
     }
-    walletStore.setNonceId(data.nonce)
   } catch (error) {
     console.log(error)
   }

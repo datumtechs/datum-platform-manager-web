@@ -2,9 +2,9 @@ import { defineStore } from "pinia";
 
 export default defineStore('usersInfo', {
   state: () => ({
-    users: '',
+    users: '', // 用户改变名称
     token: '',
-    address: ''
+    address: '' || localStorage.getItem('address') // 钱包地址
   }),
   getters: {
     getUsers: state => state.users,
@@ -20,6 +20,7 @@ export default defineStore('usersInfo', {
     },
     setAddress(str: string) {
       this.address = str
+      localStorage.setItem('address', str)
     },
     clean() {
       this.address = ''
