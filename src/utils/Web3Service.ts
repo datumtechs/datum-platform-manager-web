@@ -1,8 +1,9 @@
-import { useWallet, useUsersInfo } from '@/stores'
+import { useWallet, useUsersInfo, userNetwork } from '@/stores'
 import I18n from '../i18n/index'
 import { ElMessage } from 'element-plus'
 import Web3 from 'web3'
 import config from '../config/network.js'
+
 
 class Web3Service {
   private web3: any
@@ -36,14 +37,31 @@ class Web3Service {
 
       if (chainId !== config.chainId) await this._addNetwork()
 
+      const account = await this.eth.request({
+        method: 'eth_accounts'
+      })
+      console.log('account', account);
+
+
       // 切换账号
       this.eth.on('accountsChanged', (account: any) => {
+        console.log(account);
         this.useUsersInfo.clean()
       })
 
       // 切换网络
-      this.eth.on('chainChanged', () => {
-        this.useUsersInfo.clean()
+      this.eth.on('chainChanged', async () => {
+        // this.useUsersInfo.clean()
+        /**
+         * 切换网络 判断当前网络ChainId是否与目标chainId一致, 
+         * 如不一致显示网络错误, 该状态需要全局注入.
+         */
+        const chainId = await this._queryChainID()
+        console.log(chainId);
+        if (chainId && chainId !== config.chainId) {
+          userNetwork().setNetworkStatus(false)
+        }
+
       })
     }
   }
@@ -137,11 +155,11 @@ class Web3Service {
       try {
         // 注意metamask版本更新, 是否取消eth._metamask.isUnlocked方法 后续是否修复锁定弹窗
 
-        const isLocked = await this.eth._metamask.isUnlocked()
-        if (!isLocked) {
-          if (this.i18n && this.i18n.locale === 'zh') return ElMessage.error('请先解锁metamask钱包')
-          return ElMessage.error('Please unlock metamask wallet first')
-        }
+        // const isLocked = await this.eth._metamask.isUnlocked()
+        // if (!isLocked) {
+        //   if (this.i18n && this.i18n.locale === 'zh') return ElMessage.error('请先解锁metamask钱包')
+        //   return ElMessage.error('Please unlock metamask wallet first')
+        // }
         const chainId = await this._queryChainID()
         if (chainId !== config.chainId) await this._addNetwork()
         const data = await this.eth.request({
