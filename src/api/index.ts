@@ -35,6 +35,7 @@ service.interceptors.response.use(
       if (data.code === 20006 || data.code === 20007) {
         // token  失效
         useUsersInfo().clean()
+        window.location.href = '/'
       }
       if (config.url.includes('/flow') && !!data.msg && !tokenAbnormal) {
         tokenAbnormal = true

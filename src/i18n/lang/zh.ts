@@ -42,7 +42,8 @@ const zh = {
     algorithm: '算法',
     view: "查看",
     save: '保存',
-    viewEvent: '查看日志'
+    viewEvent: '查看日志',
+    noData: "暂无数据"
   },
   menu: {
     home: '首页',

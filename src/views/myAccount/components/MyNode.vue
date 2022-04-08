@@ -42,7 +42,7 @@
             class="w-100px"
             style="height: 40px;"
             round
-            @click="dialogFormVisible = false"
+            @click="cancel"
           >{{ $t('common.cancel') }}</el-button>
           <el-button
             class="w-100px"
@@ -57,7 +57,8 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ElMessageBox } from 'element-plus'
+import { ElMessageBox, ElMessage } from 'element-plus'
+import { getUserOrgList, postJoinOrg, delNodeOrg } from '@/api/login'
 const { t } = useI18n()
 const dialogFormVisible = ref(false)
 const form = ref({
@@ -97,16 +98,7 @@ const rules = ref(
 )
 
 
-const tableData = [
-  {
-    nodeName: 'Tom',
-    identityIp: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    nodeName: 'Tom',
-    identityIp: 'No. 189, Grove St, Los Angeles',
-  }
-]
+const tableData = ref([])
 const del = (row: any, index: Number) => {
   ElMessageBox.confirm(
     `${t('account.tipsText')}${row.nodeName}`,
@@ -118,7 +110,7 @@ const del = (row: any, index: Number) => {
     }
   )
     .then(() => {
-      submit()
+      delSubmit(row)
     })
 }
 
@@ -126,15 +118,53 @@ const addNode = () => {
   formRef.value?.validate((bol: boolean) => {
     if (bol) {
       console.log(form.value)
+      addSubmit()
     }
   })
-  // dialogFormVisible.value = false
 }
 
 
-const submit = () => {
-
+const delSubmit = (row: { id: number }) => {
+  delNodeOrg({ identityId: row.id }).then(res => {
+    const { data, code } = res
+    if (code === 10000) {
+      query()
+      ElMessage.success(t('common.success'))
+    }
+  })
 }
+
+const cancel = () => {
+  formRef.value?.resetFields()
+  dialogFormVisible.value = false
+}
+
+const addSubmit = () => {
+  postJoinOrg({ identityIp: form.value.nodeIP, identityPort: form.value.nodePort }).then(res => {
+    const { data, code } = res
+    if (code === 10000) {
+      query()
+      ElMessage.success(t('common.success'))
+    }
+    cancel()
+  })
+}
+
+const query = () => {
+  getUserOrgList().then(res => {
+    const { data, code } = res
+    if (code === 10000) {
+      console.log(data)
+      tableData.value = data
+    }
+  })
+}
+
+onMounted(() => {
+  query()
+})
+
+
 </script>
 <style lang="scss">
 .account {

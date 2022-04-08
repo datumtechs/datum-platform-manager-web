@@ -55,15 +55,21 @@
 import { DocumentCopy } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
 import { useUsersInfo } from '@/stores'
+import { updateUserInfo } from '@/api/login'
 type Callback = (call?: any) => any;
 const { t, locale } = useI18n()
 const store = useUsersInfo()
 const disabled = ref(true)
 const formRef = ref()
 const form = ref({
-  name: ''
+  name: store.userName
 })
 
+watch(store, () => {//解决form 表单不更新数据
+  form.value.name = store.userName
+})
+
+console.log(store)
 const rules = ref({
   name: [
     {
@@ -103,7 +109,15 @@ const copy = () => {
 const submit = () => {
   formRef.value?.validate((bol: boolean) => {
     if (bol) {
-      console.log(form.value?.name)
+      // console.log(form.value?.name)
+      updateUserInfo({ address: store.address, nickName: form.value?.name }).then(res => {
+        const { code } = res
+        if (code === 10000) {
+          ElMessage.success(t('common.success'))
+          store.setUsers(form.value?.name)
+          disabled.value = !disabled.value
+        }
+      })
     }
   })
 }

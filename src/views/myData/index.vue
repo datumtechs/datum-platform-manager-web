@@ -23,17 +23,12 @@
 </template>
 <script lang="ts" setup>
 import { type Router, useRouter } from 'vue-router'
+import { queryUserDataList } from '@/api/data'
 const router: Router = useRouter()
-const tableData = [
-  {
-    dataName: 'Tom',
-    credentialName: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    dataName: 'Tom',
-    credentialName: 'No. 189, Grove St, Los Angeles',
-  }
-]
+const tableData = ref([])
+const current = ref(1)
+const total = ref(10)
+
 const purchase = (obj: any) => { }
 const viewData = (obj: any) => {
   router.push({ name: "dataDetails", params: { ...obj } })
@@ -41,6 +36,24 @@ const viewData = (obj: any) => {
 const viewCredential = (obj: any) => {
   router.push({ name: "dataCredentials", params: { ...obj } })
 }
+
+
+const query = () => {
+  queryUserDataList().then(res => {
+    const { data, code } = res
+    if (code === 10000) {
+      tableData.value = data.items
+      current.value = data.current
+      total.value = data.total
+    }
+  })
+}
+
+onMounted(() => {
+  query()
+})
+
+
 </script>
 <style lang="scss" scoped>
 </style>
