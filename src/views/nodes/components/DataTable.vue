@@ -7,7 +7,7 @@
             highlight-current-row
             style="width: 100%"
         >
-            <el-table-column :label="$t('common.num')" width="80" />
+            <el-table-column type="index" :label="$t('common.num')" width="80" />
             <el-table-column show-overflow-tooltip prop="dataName" :label="$t('myData.dataName')" />
             <el-table-column
                 show-overflow-tooltip
@@ -33,28 +33,42 @@
         </el-table>
     </div>
     <div class="flex my-50px justify-center">
-        <el-pagination background layout="prev, pager, next" :total="1000" />
+        <el-pagination background layout="prev, pager, next" :total="total" />
     </div>
 </template>
 
 <script setup lang='ts'>
-const tableData = reactive([
-    {
-        id: 1,
-        dataName: '车田豆腐',
-        credentialName: 'SK-2',
-        credentialSymbol: 'SK-618',
-        launchTime: '2022-3-15'
-    },
-    {
-        id: 2,
-        dataName: '车田豆腐',
-        credentialName: 'SK-2',
-        credentialSymbol: 'SK-618',
-        launchTime: '2022-3-15'
-    }
-])
+import type { Ref } from 'vue'
+import { getDataListByOrg } from '@/api/data'
+const total: Ref<number> = ref(0)
+const tableData: Ref<{}[]> = ref([])
 const router = useRouter()
+
+const current: Ref<number> = ref(1)
+const size: Ref<number> = ref(10)
+const props = defineProps({
+    identityId: {
+        type: String,
+        default: ''
+    }
+})
+
+
+const getTableData = async () => {
+    const { code, data } = await getDataListByOrg({
+        identityId: props.identityId,
+        current: current.value,
+        size: size.value
+    })
+    if (code === 10000) {
+        console.log(data);
+
+    }
+}
+
+
+
+
 const linkToViewToken = (row: any) => {
     //    TODO go dex
 }
@@ -63,6 +77,10 @@ const linkToViewData = (row: any) => {
         name: 'dataOverview'
     })
 }
+
+onMounted(() => {
+    getTableData()
+})
 
 </script>
 

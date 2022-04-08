@@ -2,33 +2,35 @@
     <div
         class="node-line mb-10px flex h-90px border-1 border-solid border-[#eee] items-center hover-line"
     >
-        <div class="w-73px index-box">{{ currentIndex }}</div>
+        <div class="w-73px index-box">{{ useTableIndex(props.index, props.page, props.size) }}</div>
         <div class="pr-30px">
-            <img class="w-36px h-36px rounded-1/2" :src="node.imgUrl" />
+            <img class="w-36px h-36px rounded-1/2" :src="node.imageUrl" />
         </div>
         <div class="w-230px table-box">
-            <p class="deep-title font-bold w-210px ellipse">{{ node.orgName }}</p>
-            <p class="shallow-text w-210px ellipse">{{ node.orgId }}</p>
+            <p class="deep-title font-bold w-210px ellipse">{{ node.nodeName }}</p>
+            <el-tooltip placement="top" :content="node.identityId">
+                <p class="shallow-text w-210px ellipse">{{ node.identityId }}</p>
+            </el-tooltip>
         </div>
         <div class="w-125px table-box">
             <p class="title whitespace-nowrap">{{ $t('node.credentials') }}</p>
-            <p class="text">{{ node.tokens }}</p>
+            <p class="text">{{ node.totalDataToken }}</p>
         </div>
         <div class="w-140px table-box">
             <p class="title whitespace-nowrap">{{ $t('node.computations') }}</p>
-            <p class="text">{{ node.computations }}</p>
+            <p class="text">{{ node.totalTask }}</p>
         </div>
         <div class="w-120px table-box">
             <p class="title whitespace-nowrap">{{ $t('node.totalCpu') }}</p>
-            <p class="text">{{ node.cpu }}</p>
+            <p class="text">{{ node.orgTotalCore }}&nbsp;{{ $t('common.cores') }}</p>
         </div>
         <div class="w-140px table-box">
             <p class="title whitespace-nowrap">{{ $t('node.totalMemory') }}</p>
-            <p class="text">{{ node.memory }}</p>
+            <p class="text">{{ useSize(node.orgTotalMemory) }}</p>
         </div>
         <div class="w-140px table-box">
             <p class="title whitespace-nowrap">{{ $t('node.totalBandwidth') }}</p>
-            <p class="text">{{ node.bandwidth }}</p>
+            <p class="text">{{ useSize(node.orgTotalBandwidth) + 'P/S' }}</p>
         </div>
         <div class="operate text-center flex-grow">
             <p
@@ -40,6 +42,7 @@
 </template>
 
 <script setup lang='ts'>
+import { useSize, useTableIndex } from '@/hooks'
 const router = useRouter()
 const props = defineProps({
     index: {
@@ -55,13 +58,10 @@ const props = defineProps({
         default: () => { }
     }
 })
-const currentIndex = computed(() => (props.page - 1) * props.size + props.index + 1)
-onMounted(() => {
 
-})
 const linkToDetail = () => {
     router.push({
-        name: 'nodeDetails',
+        path: `/nodes/details/${props.node.identityId}`,
     })
 }
 </script>

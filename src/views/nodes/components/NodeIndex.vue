@@ -13,131 +13,41 @@
                 :page="1"
                 :node="node"
                 :index="index"
-                :key="node.id"
+                :key="index"
             />
         </div>
         <div class="flex my-50px justify-center">
-            <el-pagination background layout="prev, pager, next" :total="1000" />
+            <el-pagination background layout="prev, pager, next" :total="total" />
         </div>
     </div>
 </template>
 
 <script setup lang='ts'>
 import NodeCard from './NodeCard.vue'
-import top1bg from '@/assets/Images/home/top1bg.png'
 import { getOrgList } from '@/api/node'
 const { locale } = useI18n()
 const totalNode = ref(1876)
+
+const orderBy = ref('')
+const size = ref(10)
+const current = ref(1)
+const total = ref(0)
+let nodeList: any = reactive([])
+
 const queryOrgList = async () => {
-    const res = await getOrgList({})
+    const { code, data } = await getOrgList({
+        orderBy: orderBy.value, size: size.value, current: current.value
+    })
+    if (code === 10000) {
+        nodeList.push(...data.items)
+        total.value = data.total
+    }
 }
-onMounted(async () => {
-
-
+onMounted(() => {
+    queryOrgList()
 })
 
 
-const nodeList = reactive([
-    {
-        id: 1,
-        orgName: '可口可乐可口可乐可口可乐可口可乐可口可乐可口可乐可口可乐可口可乐可口可乐可口可乐可口可乐可口可乐可口可乐可口可乐',
-        orgId: 'xxxxxxxxxxxxxx',
-        imgUrl: top1bg,
-        tokens: 10,
-        computations: 10,
-        cpu: '1234',
-        memory: '3456',
-        bandwidth: '4567'
-    },
-    {
-        id: 2,
-        orgName: '百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐',
-        orgId: 'xxxxxxxxxxxxxxxxx',
-        imgUrl: top1bg,
-        tokens: 20,
-        computations: 20,
-        cpu: '5555',
-        memory: '6666',
-        bandwidth: '7777'
-    },
-    {
-        id: 3,
-        orgName: '百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐',
-        orgId: 'xxxxxxxxxxxxxxxxx',
-        imgUrl: top1bg,
-        tokens: 20,
-        computations: 20,
-        cpu: '5555',
-        memory: '6666',
-        bandwidth: '7777'
-    },
-    {
-        id: 4,
-        orgName: '百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐',
-        orgId: 'xxxxxxxxxxxxxxxxx',
-        imgUrl: top1bg,
-        tokens: 20,
-        computations: 20,
-        cpu: '5555',
-        memory: '6666',
-        bandwidth: '7777'
-    },
-    {
-        id: 5,
-        orgName: '百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐',
-        orgId: 'xxxxxxxxxxxxxxxxx',
-        imgUrl: top1bg,
-        tokens: 20,
-        computations: 20,
-        cpu: '5555',
-        memory: '6666',
-        bandwidth: '7777'
-    },
-    {
-        id: 6,
-        orgName: '百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐',
-        orgId: 'xxxxxxxxxxxxxxxxx',
-        imgUrl: top1bg,
-        tokens: 20,
-        computations: 20,
-        cpu: '5555',
-        memory: '6666',
-        bandwidth: '7777'
-    },
-    {
-        id: 7,
-        orgName: '百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐',
-        orgId: 'xxxxxxxxxxxxxxxxx',
-        imgUrl: top1bg,
-        tokens: 20,
-        computations: 20,
-        cpu: '5555',
-        memory: '6666',
-        bandwidth: '7777'
-    },
-    {
-        id: 8,
-        orgName: '百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐',
-        orgId: 'xxxxxxxxxxxxxxxxx',
-        imgUrl: top1bg,
-        tokens: 20,
-        computations: 20,
-        cpu: '5555',
-        memory: '6666',
-        bandwidth: '7777'
-    },
-    {
-        id: 9,
-        orgName: '百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐',
-        orgId: 'xxxxxxxxxxxxxxxxx',
-        imgUrl: top1bg,
-        tokens: 20,
-        computations: 20,
-        cpu: '5555',
-        memory: '6666',
-        bandwidth: '7777'
-    },
-])
 
 
 </script>

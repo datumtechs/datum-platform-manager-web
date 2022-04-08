@@ -1,108 +1,33 @@
 <script lang="ts" setup>
+import { queryDataList } from '@/api/data'
+import { useTableIndex } from '@/hooks'
 const { locale } = useI18n()
-const totalData = ref(1876)
+const total = ref(0)
 const router = useRouter()
+interface PageParams {
+    current: number,
+    size: number,
+    fileType?: string,
+    industry?: string,
+    keyword?: string,
+    maxSize?: string,
+    minSize?: string,
+    orderBy?: string,
+}
+const pageParams: PageParams = reactive({
+    current: 1,
+    size: 10,
+    fileType: 'CSV',
+    industry: '',
+    keyword: '',
+    maxSize: '',
+    minSize: '',
+    orderBy: 'PUBLISHED',
+})
 
-const list = ref([
-    {
-        name: 'computing.privacyComputing'
-    },
-    {
-        name: 'computing.nonPrivacyComputing'
-    }
-])
-const tableData = reactive([
-    {
-        id: 1,
-        orgName: '可口可乐可口可乐可口可乐可口可乐可口可乐可口可乐可口可乐可口可乐可口可乐可口可乐可口可乐可口可乐可口可乐可口可乐',
-        orgId: 'xxxxxxxxxxxxxx',
-        tokens: 10,
-        computations: 10,
-        cpu: '1234',
-        memory: '3456',
-        bandwidth: '4567'
-    },
-    {
-        id: 2,
-        orgName: '百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐',
-        orgId: 'xxxxxxxxxxxxxxxxx',
-        tokens: 20,
-        computations: 20,
-        cpu: '5555',
-        memory: '6666',
-        bandwidth: '7777'
-    },
-    {
-        id: 3,
-        orgName: '百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐',
-        orgId: 'xxxxxxxxxxxxxxxxx',
-        tokens: 20,
-        computations: 20,
-        cpu: '5555',
-        memory: '6666',
-        bandwidth: '7777'
-    },
-    {
-        id: 4,
-        orgName: '百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐',
-        orgId: 'xxxxxxxxxxxxxxxxx',
-        tokens: 20,
-        computations: 20,
-        cpu: '5555',
-        memory: '6666',
-        bandwidth: '7777'
-    },
-    {
-        id: 5,
-        orgName: '百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐',
-        orgId: 'xxxxxxxxxxxxxxxxx',
-        tokens: 20,
-        computations: 20,
-        cpu: '5555',
-        memory: '6666',
-        bandwidth: '7777'
-    },
-    {
-        id: 6,
-        orgName: '百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐',
-        orgId: 'xxxxxxxxxxxxxxxxx',
-        tokens: 20,
-        computations: 20,
-        cpu: '5555',
-        memory: '6666',
-        bandwidth: '7777'
-    },
-    {
-        id: 7,
-        orgName: '百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐',
-        orgId: 'xxxxxxxxxxxxxxxxx',
-        tokens: 20,
-        computations: 20,
-        cpu: '5555',
-        memory: '6666',
-        bandwidth: '7777'
-    },
-    {
-        id: 8,
-        orgName: '百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐',
-        orgId: 'xxxxxxxxxxxxxxxxx',
-        tokens: 20,
-        computations: 20,
-        cpu: '5555',
-        memory: '6666',
-        bandwidth: '7777'
-    },
-    {
-        id: 9,
-        orgName: '百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐百事可乐',
-        orgId: 'xxxxxxxxxxxxxxxxx',
-        tokens: 20,
-        computations: 20,
-        cpu: '5555',
-        memory: '6666',
-        bandwidth: '7777'
-    },
-])
+const indexMethod = (index: number) => useTableIndex(index, pageParams.current, pageParams.size)
+
+const tableData = ref([])
 const purchase = (row: any) => {
 
 }
@@ -115,13 +40,36 @@ const linkToViewToken = (row: any) => {
     //TODO dex
 
 }
+
+const queryTableData = async () => {
+    const { code, data } = await queryDataList({
+        current: pageParams.current,
+        size: pageParams.size,
+        fileType: pageParams.fileType,
+        industry: pageParams.industry,
+        keyword: pageParams.keyword,
+        maxSize: pageParams.maxSize,
+        minSize: pageParams.minSize,
+        orderBy: pageParams.orderBy,
+    })
+    if (code === 10000) {
+        console.log(data);
+        tableData.value = data.items
+        total.value = data.total
+    }
+}
+
+onMounted(() => {
+    queryTableData()
+})
+
 </script>
 <template>
     <div class="flex-1 task-wrap">
         <Banner :bg-index="'arrow'">
             <template #briefInfo>
-                <p v-if="locale === 'zh'">全网共 {{ totalData }} 可参与隐私计算的有效数据</p>
-                <p v-else>{{ totalData }} participant data in the privacy computing network</p>
+                <p v-if="locale === 'zh'">全网共 {{ total }} 可参与隐私计算的有效数据</p>
+                <p v-else>{{ total }} participant data in the privacy computing network</p>
             </template>
             <!-- <template #select>
         <ComTabs :list="list" :activekey="activekey" @change="tabsChange" />
@@ -135,23 +83,28 @@ const linkToViewToken = (row: any) => {
                 highlight-current-row
                 style="width: 100%"
             >
-                <el-table-column :label="$t('common.num')" width="80" />
+                <el-table-column
+                    type="index"
+                    :label="$t('common.num')"
+                    :index="indexMethod"
+                    width="80"
+                />
                 <el-table-column
                     show-overflow-tooltip
-                    prop="dataName"
+                    prop="metaDataName"
                     :label="$t('myData.dataName')"
                 />
                 <el-table-column
                     show-overflow-tooltip
-                    prop="dataProvider"
+                    prop="identityId"
                     :label="$t('myData.dataProvider')"
                 />
                 <el-table-column
                     show-overflow-tooltip
-                    prop="credentialName"
+                    prop="tokenName"
                     :label="$t('myData.credentialName')"
                 />
-                <el-table-column prop="credentialPrice" :label="$t('common.credentialPrice')" />
+                <el-table-column prop="tokenPrice" :label="$t('common.credentialPrice')" />
                 <el-table-column :label="$t('common.actions')" width="280">
                     <template #default="{ row }">
                         <el-space :size="20">
@@ -173,7 +126,7 @@ const linkToViewToken = (row: any) => {
             </el-table>
         </div>
         <div class="flex my-50px justify-center">
-            <el-pagination background layout="prev, pager, next" :total="1000" />
+            <el-pagination background layout="prev, pager, next" :total="total" />
         </div>
     </div>
 </template>

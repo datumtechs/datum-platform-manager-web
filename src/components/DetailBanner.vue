@@ -10,10 +10,12 @@
                 <back />
             </el-icon>
             <div class="mr-14px h-36px">
-                <img class="w-40px h-40px rounded-1/2" :src="top1bg" />
+                <img class="w-40px h-40px rounded-1/2" :src="props.imgUrl" />
             </div>
             <div class="w-full black-font text-48px text-color-[#393939] font-900 leading-58px">
-                <p class="leading-40px">xxxxxxx Name </p>
+                <p class="leading-40px">
+                    <slot name="primaryInfo"></slot>
+                </p>
                 <div
                     class="text-14px font-medium font-400 text-color-[#999999] leading-20px mt-14px"
                 >

@@ -31,21 +31,21 @@ export default [
         component: () => import('@/views/nodes/components/NodeIndex.vue'),
       },
       {
-        path: 'details',
+        path: '/nodes/details/:identityId',
         name: "nodeDetails",
         meta: {
           label: 'menu.nodesDetail'
         },
         component: () => import('@/views/nodes/components/NodeDetails.vue')
       }, {
-        path: '/nodes/details/dataOverview',
+        path: '/nodes/details/:identityId/dataOverview',
         name: "dataOverview",
         meta: {
           label: 'menu.nodesDetail'
         },
         component: () => import('@/views/nodes/components/DataOverview.vue')
       }, {
-        path: '/nodes/details/computationOverview',
+        path: '/nodes/details/:identityId/computationOverview',
         name: "computationOverview",
         meta: {
           label: 'menu.nodesDetail'
