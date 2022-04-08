@@ -24,7 +24,7 @@ const loginShowChange = () => {
           <user-filled />
         </el-icon>
       </span>
-      <span class="w-67px truncate">{{ store.user }}</span>
+      <span class="w-67px truncate">{{ store.userName }}</span>
     </div>
     <div
       v-else

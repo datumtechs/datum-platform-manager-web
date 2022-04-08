@@ -17,7 +17,11 @@
       </el-menu-item>
     </el-menu>
     <el-menu router class="flex-1 bg-color-[#F7F8F9] pt-26px">
-      <el-menu-item class="h-63px mb-16px" :index="'/createTask'">
+      <el-menu-item
+        class="h-63px mb-16px"
+        :index="'/createTask'"
+        v-if="privateList.length && store.token"
+      >
         <!-- :class="{ active: handActive('createTask') }" -->
         <div
           class="mx-15px h-50px w-full flex items-center justify-center bg-color-[#2B60E9] rounded-[25px] text-color-[#fff]"
@@ -33,6 +37,7 @@
         :key="item.path"
         :class="{ active: handActive(item.path) }"
         :index="item.path"
+        v-show="store.token"
         v-for="item in privateList"
       >
         <div class="pl-30px pr-15px flex items-center">
@@ -57,12 +62,13 @@ import myAuth from '@/assets/Images/side/side-my-auth-icon.png'
 import myModelsIcon from '@/assets/Images/side/side-my-models-icon.png'
 import computeTask from '@/assets/Images/side/side-computeTask-icon.png'
 import { type RouteLocationNormalizedLoaded, useRoute } from 'vue-router'
-
+import { useUsersInfo } from '@/stores'
+const store = useUsersInfo()
 const route: RouteLocationNormalizedLoaded = useRoute()
 //@ts-ignore
-const routeList = routePath.filter(v => v.meta.show.includes(2))
+const routeList = routePath.filter(v => v.meta.show.includes('side'))
 //@ts-ignore
-const privateList = routePath.filter(v => v.meta.show.includes(3))
+const privateList: any = routePath.filter(v => v.meta.show.includes('login')) || []
 
 const handIcon = (name: string | undefined): any => {
   let itemIcon: any = HelpFilled

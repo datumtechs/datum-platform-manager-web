@@ -22,3 +22,37 @@ export const Logout = (): Promise<any> => {
     url: '/flow/user/logout'
   })
 }
+
+export const updateUserInfo = (data: {}): Promise<any> => {
+  return http({
+    method: 'POST',
+    url: '/flow/user/updateNickName',
+    data
+  })
+}
+
+//网络节点列表
+export const getUserOrgList = (): Promise<any> => {
+  return http({
+    method: 'GET',
+    url: '/flow/org/getUserOrgList',
+  })
+}
+
+//  添加网络节点
+export const postJoinOrg = (data: {}): Promise<any> => {
+  return http({
+    method: 'POST',
+    url: '/flow/org/joinOrg',
+    data
+  })
+}
+
+//  删除网络节点
+export const delNodeOrg = (data: {}): Promise<any> => {
+  return http({
+    method: 'POST',
+    url: '/flow/org/quitOrg',
+    data
+  })
+}

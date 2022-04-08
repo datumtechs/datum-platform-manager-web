@@ -2,7 +2,7 @@
 import routePath from '@/router/routePath'
 const routeList = routePath.filter(v => {
   // @ts-ignore
-  return v.meta.show.includes(1)
+  return v.meta.show.includes('home')
 })
 
 </script>

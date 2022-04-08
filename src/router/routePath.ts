@@ -1,4 +1,4 @@
-//show: [1,2,3],//1 首页展示 2 side展示 3 登录可见菜单
+//show: ['home','side','login'],//1 首页展示 2 side展示 3 登录可见菜单
 
 export default [
   {
@@ -6,7 +6,7 @@ export default [
     name: "home",
     alias: '/home',
     meta: {
-      show: [1],//1 首页展示 2 side展示
+      show: ['home'],
       label: 'menu.home'
     },
     component: () => import('@/views/home/index.vue'),
@@ -16,7 +16,7 @@ export default [
     redirect: 'nodesIndex',
     // name: "nodes",
     meta: {
-      show: [1, 2],//1 首页展示 2 side展示
+      show: ['home', 'side'],
       label: 'menu.nodes',
       icon: "side-node-icon"
     },
@@ -57,7 +57,7 @@ export default [
     path: '/marketplace',
     redirect: 'marketplaceIndex',
     meta: {
-      show: [1, 2],//1 首页展示 2 side展示
+      show: ['home', 'side'],
       label: 'menu.marketplace',
       icon: "side-marketplace-icon",
     },
@@ -82,7 +82,7 @@ export default [
     path: '/ComputeServe',
     name: "ComputeServe",
     meta: {
-      show: [1, 2],//1 首页展示 2 side展示
+      show: ['home', 'side'],
       label: 'menu.computing',
       icon: "side-computing-icon"
     },
@@ -92,7 +92,7 @@ export default [
     path: '/computeTask',
     name: "computeTask",
     meta: {
-      show: [2],
+      show: ['side'],
       label: 'menu.computeTask',
       icon: "side-computeTask-icon"
     },
@@ -130,7 +130,7 @@ export default [
     path: '/data',
     name: "data",
     meta: {
-      show: [3],
+      show: ['login'],
       label: 'menu.data',
       icon: "side-my-data-icon"
     },
@@ -158,7 +158,7 @@ export default [
     path: '/workflow',
     name: "workflow",
     meta: {
-      show: [3],
+      show: ['login'],
       label: 'menu.workflow',
       icon: "side-my-task-icon"
     },
@@ -178,7 +178,7 @@ export default [
   //   path: '/models',
   //   name: "models",
   //   meta: {
-  //     show: [3],
+  //     show: ['login'],
   //     label: 'menu.models',
   //     icon: "side-my-models-icon"
   //   },
@@ -188,7 +188,7 @@ export default [
     path: '/myAuthorization',
     name: "myAuthorization",
     meta: {
-      show: [3],
+      show: ['login'],
       label: 'menu.myAuthorization',
       icon: "side-my-auth-icon"
     },

@@ -42,7 +42,8 @@ const en = {
     algorithm: 'Algorithm',
     view: "View",
     save: 'Save',
-    viewEvent: 'View Event'
+    viewEvent: 'View Event',
+    noData: "No Data"
   },
   menu: {
     home: 'Home',

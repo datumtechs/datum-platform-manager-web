@@ -33,65 +33,39 @@ class Web3Service {
 
       this.web3 = new Web3(this.eth)
       const chainId = await this._queryChainID()
-      console.log('chainId', chainId);
-
-      if (chainId !== config.chainId) await this._addNetwork()
+      if (this._getDecimalChainID(chainId) !== config.chainId) await this._addNetwork()
 
       const account = await this.eth.request({
         method: 'eth_accounts'
       })
-      console.log('account', account);
-
 
       // 切换账号
       this.eth.on('accountsChanged', (account: any) => {
-        console.log(account);
-        this.useUsersInfo.clean()
       })
 
       // 切换网络
       this.eth.on('chainChanged', async () => {
-        // this.useUsersInfo.clean()
-        /**
-         * 切换网络 判断当前网络ChainId是否与目标chainId一致, 
-         * 如不一致显示网络错误, 该状态需要全局注入.
-         */
-        const chainId = await this._queryChainID()
-        console.log(chainId);
-        if (chainId && chainId !== config.chainId) {
-          userNetwork().setNetworkStatus(false)
-        }
-
       })
     }
   }
-  async _queryChainID() {
-    try {
-      const res = await this.eth.request({
-        method: 'eth_chainId'
-      })
-      if (res) return parseInt(res, 16)
-    } catch (error) {
-      console.log(error);
-    }
+  _queryChainID() {
+    return this.eth.request({
+      method: 'eth_chainId'
+    })
   }
   _addNetwork() {
-    try {
-      this.eth.request({
-        method: 'wallet_addEthereumChain',
-        params: [
-          {
-            chainName: config.chainName,
-            chainId: '0x' + config.chainId.toString(16),
-            rpcUrls: [config.rpcUrl],
-            nativeCurrency: config.symbol,
-            blockExplorerUrls: [config.blockExplorerUrl],
-          },
-        ],
-      })
-    } catch (error) {
-      console.log(error);
-    }
+    return this.eth.request({
+      method: 'wallet_addEthereumChain',
+      params: [
+        {
+          chainName: config.chainName,
+          chainId: '0x' + config.chainId.toString(16),
+          rpcUrls: [config.rpcUrl],
+          nativeCurrency: config.symbol,
+          blockExplorerUrls: [config.blockExplorerUrl],
+        },
+      ],
+    })
   }
   _getAbiForLogin() {
     // const uuId = this.store.getters['app/nonceId']
@@ -147,29 +121,28 @@ class Web3Service {
     })
   }
 
+  _getDecimalChainID(originId: string, decimal: number = 10): number {
+    return parseInt(originId, decimal)
+  }
 
   // 连接钱包
   async connectWallet() {
     if (this.eth) {
       this.useWallet.setIsWallet(true)
       try {
-        // 注意metamask版本更新, 是否取消eth._metamask.isUnlocked方法 后续是否修复锁定弹窗
-
-        // const isLocked = await this.eth._metamask.isUnlocked()
-        // if (!isLocked) {
-        //   if (this.i18n && this.i18n.locale === 'zh') return ElMessage.error('请先解锁metamask钱包')
-        //   return ElMessage.error('Please unlock metamask wallet first')
-        // }
         const chainId = await this._queryChainID()
-        if (chainId !== config.chainId) await this._addNetwork()
+        console.log("chainId:=======>", chainId);
+
+        if (this._getDecimalChainID(chainId) !== config.chainId) await this._addNetwork()
+        console.log("step===========>", 'finish add network');
         const data = await this.eth.request({
           method: 'eth_requestAccounts'
         })
         this.useUsersInfo.setAddress(data[0])
-        console.log('getAddress', this.useUsersInfo.getAddress);
+        console.log('start get address', this.useUsersInfo.getAddress);
 
       } catch (error) {
-        console.log('连接钱包错误，原因：', error)
+        console.log('connect wallet error：', error)
       }
     }
   }
