@@ -9,12 +9,12 @@
     >
       <div
         class="bg-color-[#fff] w-full h-full flex items-center px-7px"
-        :style="{ background: switchValue ? '#2B60E9' : '#fff' }"
+        :style="{ background: isExpertMode ? '#2B60E9' : '#fff' }"
       >
         <div
           :style="{
-            backgroundColor: switchValue ? '#fff' : '#666666',
-            transform: `translateX(${switchValue ? 40 : 0}px)`
+            backgroundColor: isExpertMode ? '#fff' : '#666666',
+            transform: `translateX(${isExpertMode ? 40 : 0}px)`
           }"
           class="w-14px h-14px bg-color-[#666666] rounded-7px private-switch-transform"
         ></div>
@@ -27,14 +27,11 @@
 const switchValue = ref(false)
 const emit = defineEmits(['change'])
 const props = defineProps(['mode'])
+const isExpertMode = computed(() => props.mode === 'expert')
 const change = () => {
-  switchValue.value = !switchValue.value
-  emit('change', switchValue.value)
+  emit('change', isExpertMode.value ? 'normal' : 'expert')
 }
 
-nextTick(() => {
-  switchValue.value = props.mode
-})
 
 </script>
 <style lang="scss">

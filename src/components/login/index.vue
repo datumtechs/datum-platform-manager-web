@@ -107,14 +107,18 @@ const getLogin = async (params: any) => {
 
 const getLoginNonce = async () => {
   try {
-    const address: string = userInfoStore.getAddress
-    const {
-      data, code
-    } = await LoginNonceId(address)
-    if (code !== 10000) {
-      throw new Error('Wallet address exception')
+    const address: string | null = userInfoStore.getAddress
+    if (address) {
+      const {
+        data, code
+      } = await LoginNonceId(address)
+      if (code !== 10000) {
+        return new Error('Wallet address exception')
+      }
+      walletStore.setNonceId(data.nonce)
+    } else {
+      console.log('get address error');
     }
-    walletStore.setNonceId(data.nonce)
   } catch (error) {
     console.log(error)
   }

@@ -10,12 +10,14 @@ class Web3Service {
   protected useWallet: any
   protected useUsersInfo: any
   protected i18n: any
+  private chainId: number | string
   constructor() {
     this.web3 = null
     this.useWallet = useWallet()
     this.useUsersInfo = useUsersInfo()
     this.i18n = I18n.global
     this.eth = undefined
+    this.chainId = 0
     try {
       this.initWeb3()
     } catch (error) {
@@ -23,12 +25,18 @@ class Web3Service {
     }
   }
 
-  initWeb3() {
+  async initWeb3() {
     this.eth = window.ethereum || undefined
     if (this.eth) {
       this.useWallet.setIsWallet(true)
+
       this.web3 = new Web3(this.eth)
-      this._addNetwork()
+      const chainId = await this._queryChainID()
+      console.log('chainId', chainId);
+
+      if (chainId !== config.chainId) await this._addNetwork()
+
+      // 切换账号
       this.eth.on('accountsChanged', (account: any) => {
         this.useUsersInfo.clean()
       })
@@ -39,9 +47,19 @@ class Web3Service {
       })
     }
   }
+  async _queryChainID() {
+    try {
+      const res = await this.eth.request({
+        method: 'eth_chainId'
+      })
+      if (res) return parseInt(res, 16)
+    } catch (error) {
+      console.log(error);
+    }
+  }
   _addNetwork() {
-    this.eth
-      .request({
+    try {
+      this.eth.request({
         method: 'wallet_addEthereumChain',
         params: [
           {
@@ -53,8 +71,9 @@ class Web3Service {
           },
         ],
       })
-      .then((res: any) => console.log(res))
-      .catch(console.log())
+    } catch (error) {
+      console.log(error);
+    }
   }
   _getAbiForLogin() {
     // const uuId = this.store.getters['app/nonceId']
@@ -117,16 +136,19 @@ class Web3Service {
       this.useWallet.setIsWallet(true)
       try {
         // 注意metamask版本更新, 是否取消eth._metamask.isUnlocked方法 后续是否修复锁定弹窗
+
         const isLocked = await this.eth._metamask.isUnlocked()
         if (!isLocked) {
           if (this.i18n && this.i18n.locale === 'zh') return ElMessage.error('请先解锁metamask钱包')
           return ElMessage.error('Please unlock metamask wallet first')
         }
+        const chainId = await this._queryChainID()
+        if (chainId !== config.chainId) await this._addNetwork()
         const data = await this.eth.request({
           method: 'eth_requestAccounts'
         })
         this.useUsersInfo.setAddress(data[0])
-        console.log(this.useUsersInfo.getAddress);
+        console.log('getAddress', this.useUsersInfo.getAddress);
 
       } catch (error) {
         console.log('连接钱包错误，原因：', error)

@@ -29,10 +29,12 @@ export default defineStore('usersInfo', {
     setToken(str: string) {
       localStorage.setItem(token, (str && str_encrypt(str)) || '')
       this.token = str
+      localStorage.setItem('token', str)
     },
     setAddress(str: string) {
       localStorage.setItem(address, (str && str_encrypt(str)) || '')
       this.address = str
+      localStorage.setItem('address', str)
     },
     clean() {
       this.address = ''

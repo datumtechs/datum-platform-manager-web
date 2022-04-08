@@ -28,9 +28,11 @@ import top1bg from '@/assets/Images/home/top1bg.png'
 import { getOrgList } from '@/api/node'
 const { locale } = useI18n()
 const totalNode = ref(1876)
-onMounted(async () => {
+const queryOrgList = async () => {
     const res = await getOrgList({})
-    console.log(res);
+}
+onMounted(async () => {
+
 
 })
 
