@@ -10,11 +10,13 @@ export default defineStore('usersInfo', {
     token: localStorage[token] || '',
     address: localStorage[address] || ''
   }),
+
   getters: {
     getUsers: state => state.userName,
     getToken: state => state.token,
     getAddress: state => state.address,
   },
+
   actions: {
     setUsers(str: string) {
       localStorage.setItem(userName, str)
@@ -28,6 +30,7 @@ export default defineStore('usersInfo', {
       localStorage.setItem(address, str)
       this.address = str
     },
+
     clean() {
       this.address = ''
       this.token = ''
@@ -35,7 +38,6 @@ export default defineStore('usersInfo', {
       localStorage.setItem(address, '')
       localStorage.setItem(token, '')
       localStorage.setItem(userName, '')
-      location.href = '/'
     }
   }
 })
