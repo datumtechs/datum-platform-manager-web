@@ -6,7 +6,7 @@
           {{ $t('myData.tasksBriefInfoFirstParagraph') }}
           <span
             class="text-color-[#2B60E9] text-16px"
-          >11990</span>
+          >{{ dataTotal }}</span>
           {{ $t('myData.tasksBriefInfoTwoParagraph') }}
         </p>
       </template>
@@ -18,20 +18,35 @@
         @viewData="viewData"
         @viewCredential="viewCredential"
       />
+      <div class="flex my-50px justify-center">
+        <el-pagination
+          background
+          layout="prev, pager, next"
+          @current-change="(_) => {
+            current = _
+          }"
+          :total="total"
+        />
+      </div>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
 import { type Router, useRouter } from 'vue-router'
-import { queryUserDataList } from '@/api/data'
+import { queryUserDataList, queryDataStats } from '@/api/data'
 const router: Router = useRouter()
 const tableData = ref([])
 const current = ref(1)
-const total = ref(10)
+const total = ref(0)
+const dataTotal = ref(0)
 
 const purchase = (obj: any) => { }
 const viewData = (obj: any) => {
-  router.push({ name: "dataDetails", params: { ...obj } })
+  router.push({
+    path: "/data/details", query: {
+      metaDataId: obj.metaDataId
+    }
+  })
 }
 const viewCredential = (obj: any) => {
   router.push({ name: "dataCredentials", params: { ...obj } })
@@ -39,7 +54,7 @@ const viewCredential = (obj: any) => {
 
 
 const query = () => {
-  queryUserDataList().then(res => {
+  queryUserDataList({ current: current.value, size: 10 }).then(res => {
     const { data, code } = res
     if (code === 10000) {
       tableData.value = data.items
@@ -48,9 +63,18 @@ const query = () => {
     }
   })
 }
+const queryTotal = () => {
+  queryDataStats().then(res => {
+    const { data, code } = res
+    if (code === 10000) {
+      dataTotal.value = data.dataCount
+    }
+  })
+}
 
 onMounted(() => {
   query()
+  queryTotal()
 })
 
 

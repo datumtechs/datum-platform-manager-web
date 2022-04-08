@@ -297,6 +297,20 @@ const en = {
   auth: {
     tokenAuth: 'Certificate Authorization',
     nodeAuth: 'Node authorization'
+  },
+  industry: {
+    bank: 'Finance (bank)',
+    insurance: 'Finance (Insurance)',
+    securities: 'Finance (securities)',
+    other: 'Finance (other)',
+    iCT: "ICT",
+    manufacturing: "Manufacturing",
+    energy: "Energy industry",
+    transportation: "Transportation Industry",
+    medical: "Medical And Health Industry",
+    publicService: "Public Service Industry",
+    mediaAdvertis: "Media Advertising Industry",
+    otherIndustry: "Other Industry",
   }
 }
 
