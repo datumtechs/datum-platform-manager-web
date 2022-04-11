@@ -297,6 +297,20 @@ const zh = {
   auth: {
     tokenAuth: '凭证授权',
     nodeAuth: '节点授权'
+  },
+  industry: {
+    bank: '金融业（银行）',
+    insurance: '金融业（保险）',
+    securities: '金融业（证券）',
+    other: '金融业（其他）',
+    iCT: "ICT",
+    manufacturing: "制造业",
+    energy: "能源业",
+    transportation: "交通运输业",
+    medical: "医疗健康业",
+    publicService: "公共服务业",
+    mediaAdvertis: "传媒广告业",
+    otherIndustry: "其他行业",
   }
 }
 

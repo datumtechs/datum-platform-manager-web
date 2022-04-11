@@ -1,6 +1,6 @@
 <template>
   <div class="flex-1">
-    <Banner :bg-name="'clocksWatches'">
+    <Banner :bg-name="'clocksWatches'" :backShow="true" @back="$router.go(-1)">
       <template #briefInfo>
         <p class="text-color-[#999999]">
           {{ $t('workflow.totalOf') }}
@@ -10,11 +10,15 @@
       </template>
     </Banner>
     <div class="com-main-data-wrap">
-      <el-table :data="recordList" class="mt-50px com-table">
+      <el-table :data="tableData" class="mt-50px com-table">
         <el-table-column type="index" width="100">
           <template #header>{{ $t('common.num') }}</template>
         </el-table-column>
-        <el-table-column prop="dataName" :label="$t('workflow.workflowName')" />
+        <el-table-column
+          show-overflow-tooltip
+          prop="taskName"
+          :label="$t('workflow.workflowName')"
+        />
         <el-table-column
           show-overflow-tooltip
           prop="dataProvider"
@@ -32,10 +36,12 @@
         />
         <el-table-column
           show-overflow-tooltip
-          prop="Trading"
+          prop="createAt"
           :label="$t('workflow.creationTime')"
           :width="180"
-        />
+        >
+          <template #default="scope">{{ new Date(scope.row.createAt).toLocaleString() || '' }}</template>
+        </el-table-column>
         <el-table-column :label="$t('common.actions')" :fixed="'right'" :width="330">
           <template #default="scope">
             <el-button
@@ -71,20 +77,43 @@
           </template>
         </el-table-column>
       </el-table>
+      <div class="flex my-50px justify-center">
+        <el-pagination
+          background
+          layout="prev, pager, next"
+          @current-change="(_) => {
+            current = _
+            query()
+          }"
+          :total="total"
+        />
+      </div>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
-const recordList = [
-  {
-    dataName: 'Tom',
-    credentialName: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    dataName: 'Tom',
-    credentialName: 'No. 189, Grove St, Los Angeles',
-  }
-]
+import { queryTaskDetails } from '@/api/workflow'
+const route = useRoute()
+const taskId = route.params.id
+const current = ref(1)
+const total = ref(0)
+const tableData = ref([])
+
+const query = () => {
+  queryTaskDetails({ current: current.value, size: 10, taskId }).then(res => {
+    const { data, code }: any = res
+    if (code === 10000) {
+      tableData.value = [{ ...data }]
+      current.value = data.current
+      total.value = data.total
+    }
+  })
+}
+
+onMounted(() => {
+  query()
+})
+
 
 const copy = () => { }
 const payment = () => { }

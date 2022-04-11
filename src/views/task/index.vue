@@ -4,38 +4,61 @@
       <template #briefInfo>
         <p class="text-color-[#999999]">
           {{ $t('workflow.totalOf') }}
-          <span class="text-color-[#2B60E9] text-16px">11990</span>
+          <span class="text-color-[#2B60E9] text-16px">{{ taskStats }}</span>
           {{ $t('workflow.workTipsBriefInfoTwoParagraph') }}
         </p>
       </template>
     </Banner>
     <div class="com-main-data-wrap">
       <DataTable :data="tableData" />
+      <div class="flex my-50px justify-center">
+        <el-pagination
+          background
+          layout="prev, pager, next"
+          @current-change="(_) => {
+            current = _
+            query()
+          }"
+          :total="total"
+        />
+      </div>
     </div>
   </div>
   <Search></Search>
 </template>
 <script lang="ts" setup>
-import { type Router, useRouter } from 'vue-router'
 import DataTable from './components/DataTable.vue';
-const router: Router = useRouter()
-const tableData = [
-  {
-    dataName: 'Tom',
-    credentialName: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    dataName: 'Tom',
-    credentialName: 'No. 189, Grove St, Los Angeles',
-  }
-]
-const purchase = (obj: any) => { }
-const viewData = (obj: any) => {
-  router.push({ name: "dataDetails", params: { ...obj } })
+import { queryTaskList, queryTaskStats } from '@/api/workflow'
+const current = ref(1)
+const total = ref(0)
+const tableData = ref([])
+const taskStats = ref(0)
+
+const query = () => {
+  queryTaskList({ current: current.value, size: 10, taskStatus: 'ALL' }).then(res => {
+    const { data, code } = res
+    if (code === 10000) {
+      tableData.value = data.items
+      current.value = data.current
+      total.value = data.total
+    }
+  })
 }
-const viewCredential = (obj: any) => {
-  router.push({ name: "dataCredentials", params: { ...obj } })
+
+const getTaskStats = () => {
+  queryTaskStats({}).then(res => {
+    const { data, code } = res
+    if (code === 10000) {
+      taskStats.value = data.taskCount
+    }
+  })
 }
+
+onMounted(() => {
+  query()
+  getTaskStats()
+})
+
 </script>
 <style lang="scss" scoped>
 </style>

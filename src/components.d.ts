@@ -48,6 +48,7 @@ declare module 'vue' {
     Side: typeof import('./components/layout/Side.vue')['default']
     TaskInvolved: typeof import('./components/dataComponents/TaskInvolved.vue')['default']
     TaskParamsTransfer: typeof import('./components/TaskParamsTransfer.vue')['default']
+    UsersPersonalPopover: typeof import('./components/layout/components/UsersPersonalPopover.vue')['default']
   }
 }
 

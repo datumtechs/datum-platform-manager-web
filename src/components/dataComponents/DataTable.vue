@@ -3,14 +3,10 @@
     <el-table-column type="index" width="100">
       <template #header>{{ $t('common.num') }}</template>
     </el-table-column>
-    <el-table-column prop="dataName" :label="$t('myData.dataName')" />
-    <el-table-column show-overflow-tooltip prop="dataProvider" :label="$t('myData.dataProvider')" />
-    <el-table-column
-      show-overflow-tooltip
-      prop="credentialName"
-      :label="$t('myData.credentialName')"
-    />
-    <el-table-column show-overflow-tooltip prop="price" :label="$t('myData.price')" />
+    <el-table-column show-overflow-tooltip prop="metaDataName" :label="$t('myData.dataName')" />
+    <el-table-column show-overflow-tooltip prop="nodeName" :label="$t('myData.dataProvider')" />
+    <el-table-column show-overflow-tooltip prop="tokenName" :label="$t('myData.credentialName')" />
+    <el-table-column show-overflow-tooltip prop="tokenPrice" :label="$t('myData.price')" />
     <el-table-column
       show-overflow-tooltip
       prop="Trading"

@@ -3,8 +3,12 @@
     <el-table-column type="index" width="100">
       <template #header>{{ $t('common.num') }}</template>
     </el-table-column>
-    <el-table-column prop="dataName" :label="$t('workflow.workflowName')" />
-    <el-table-column show-overflow-tooltip prop="dataProvider" :label="$t('workflow.workflowAlgorithm')" />
+    <el-table-column prop="taskName" show-overflow-tooltip :label="$t('workflow.workflowName')" />
+    <el-table-column
+      show-overflow-tooltip
+      prop="dataProvider"
+      :label="$t('workflow.workflowAlgorithm')"
+    />
     <el-table-column
       show-overflow-tooltip
       prop="credentialName"
@@ -13,10 +17,12 @@
     <el-table-column show-overflow-tooltip prop="price" :label="$t('workflow.latestRunningTime')" />
     <el-table-column
       show-overflow-tooltip
-      prop="Trading"
+      prop="createAt"
       :label="$t('workflow.creationTime')"
       :width="180"
-    />
+    >
+      <template #default="scope">{{ new Date(scope.row.createAt).toLocaleString() || '' }}</template>
+    </el-table-column>
     <el-table-column :label="$t('common.actions')" :fixed="'right'" :width="330">
       <template #default="scope">
         <el-button
@@ -52,13 +58,13 @@ const props = defineProps({
 })
 
 const Edit = (obj: any) => {
-  router.push({name:'createTask'})
- }
+  router.push({ path: '/createTask', query: { id: obj.id } })
+}
 const viewData = (obj: any) => {
-  router.push({name:'workflowDetails',params:{id:1}})
+  router.push({ name: 'workflowDetails', params: { id: obj.id } })
 }
 const del = (obj: any) => {
-  
+
 }
 </script>
 <style lang="scss" scoped>

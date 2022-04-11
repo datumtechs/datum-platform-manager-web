@@ -19,7 +19,7 @@
       <template #default="{ row }">
         <div class="pl-32px" v-if="!row.last">
           <p class="text-color-[#999999]">{{ $t(`${row.rName}`) }}:</p>
-          <p class="text-color-[#393939] black-font">{{ row.lProp }}</p>
+          <p class="text-color-[#393939] black-font">{{ row.rProp }}</p>
         </div>
       </template>
     </el-table-column>
