@@ -23,33 +23,29 @@
         </el-table>
     </div>
     <div class="flex my-50px justify-center">
-        <el-pagination background layout="prev, pager, next" :total="1000" />
+        <el-pagination background layout="prev, pager, next" :total="total" />
     </div>
 </template>
 
 <script setup lang='ts'>
+import type { Ref } from 'vue'
 const router = useRouter()
-const tableData = reactive([
-    {
-        id: 1,
-        taskID: '车田豆腐',
-        capabilityInTask: 'SK-2',
-        startTime: '2022-3-15',
-        totalTime: '03:00'
-    },
-    {
-        id: 2,
-        taskID: '车田豆腐',
-        capabilityInTask: 'SK-2',
-        startTime: '2022-3-15',
-        totalTime: '03:00'
-    }
-])
+const tableData = ref([])
+const total: Ref<number> = ref(0)
 const linkToViewComputations = (row: any) => {
     router.push({
         name: 'computationOverview'
     })
 }
+
+const getTableData = async () => {
+
+
+}
+
+onMounted(() => {
+    getTableData()
+})
 </script>
 
 <style scoped lang='scss'>

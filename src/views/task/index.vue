@@ -1,6 +1,6 @@
 <template>
   <div class="flex-1 task-wrap com-main">
-    <Banner :bg-name="'clocksWatches'">
+    <Banner :bg-name="'workflow'">
       <template #briefInfo>
         <p class="text-color-[#999999]">
           {{ $t('workflow.totalOf') }}

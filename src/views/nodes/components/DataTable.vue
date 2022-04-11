@@ -66,9 +66,6 @@ const getTableData = async () => {
     }
 }
 
-
-
-
 const linkToViewToken = (row: any) => {
     //    TODO go dex
 }

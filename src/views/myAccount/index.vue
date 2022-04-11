@@ -1,6 +1,6 @@
 <template>
   <div class="min-w-1000px">
-    <Banner>
+    <Banner :bg-name="'myAccount'">
       <template #select>
         <ComTabs :list="list" :activekey="activekey" @change="tabsChange" />
       </template>

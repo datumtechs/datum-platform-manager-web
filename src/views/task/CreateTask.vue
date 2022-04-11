@@ -1,6 +1,6 @@
 <template>
   <div class="flex-1 task-wrap com-main">
-    <Banner :bg-name="'book'">
+    <Banner :bg-name="'newTask'">
       <template #briefInfo>{{ $t('task.createTaskBriefInfo') }}</template>
     </Banner>
     <div class="com-main-data-wrap">

@@ -1,6 +1,6 @@
 <template>
     <div class="flex-1">
-        <Banner :bg-index="4">
+        <Banner :bg-name="'network'">
             <template #briefInfo>
                 <p v-if="locale === 'zh'">全网共 {{ totalNode }} 个可参与隐私计算任务的节点</p>
                 <p v-else>{{ totalNode }} participant nodes in the privacy computing network</p>

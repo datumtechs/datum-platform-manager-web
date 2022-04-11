@@ -66,7 +66,7 @@ onMounted(() => {
 </script>
 <template>
     <div class="flex-1 task-wrap">
-        <Banner :bg-index="'arrow'">
+        <Banner :bg-name="'market'">
             <template #briefInfo>
                 <p v-if="locale === 'zh'">全网共 {{ total }} 可参与隐私计算的有效数据</p>
                 <p v-else>{{ total }} participant data in the privacy computing network</p>
@@ -104,7 +104,11 @@ onMounted(() => {
                     prop="tokenName"
                     :label="$t('myData.credentialName')"
                 />
-                <el-table-column prop="tokenPrice" :label="$t('common.credentialPrice')" />
+                <el-table-column prop="tokenPrice" :label="$t('common.credentialPrice')">
+                    <template #default="{ row }">
+                        <div>{{ row.tokenPrice }} LAT</div>
+                    </template>
+                </el-table-column>
                 <el-table-column :label="$t('common.actions')" width="280">
                     <template #default="{ row }">
                         <el-space :size="20">

@@ -23,40 +23,56 @@
 </template>
 <script lang="ts" setup>
 import { Back } from '@element-plus/icons-vue'
-import arrow from '@/assets/Images/banner/arrow.png'
-import book from '@/assets/Images/banner/book.png'
-import clocksWatches from '@/assets/Images/banner/clocksWatches.png'
-import flag from '@/assets/Images/banner/flag.png'
-import rocket from '@/assets/Images/banner/rocket.png'
+import network from '@/assets/Images/banner/network.png'
+import market from '@/assets/Images/banner/market.png'
+import workflow from '@/assets/Images/banner/workflow.png'
+import computeServe from '@/assets/Images/banner/computeServe.png'
+import globalTask from '@/assets/Images/banner/globalTask.png'
+import newTask from '@/assets/Images/banner/newTask.png'
+import myData from '@/assets/Images/banner/myData.png'
+import myAuth from '@/assets/Images/banner/myAuth.png'
+import myAccount from '@/assets/Images/banner/myAccount.png'
 const emit = defineEmits(['back'])
 const props = defineProps({
   bgName: {
     type: String,
-    default: 'arrow'
+    default: 'network'
   },
   backShow: { type: Boolean, default: false }
 })
 
 const bgUrl = computed(() => {
-  let bgMap = arrow
+  let bgMap = ''
   switch (props.bgName) {
-    case 'arrow':
-      bgMap = arrow;
+    case 'network':
+      bgMap = network;
       break;
-    case 'book':
-      bgMap = book;
+    case 'market':
+      bgMap = market;
       break;
-    case 'clocksWatches':
-      bgMap = clocksWatches;
+    case 'workflow':
+      bgMap = workflow;
       break;
-    case 'flag':
-      bgMap = flag;
+    case 'computeServe':
+      bgMap = computeServe;
       break;
-    case 'rocket':
-      bgMap = rocket;
+    case 'globalTask':
+      bgMap = globalTask;
+      break;
+    case 'newTask':
+      bgMap = newTask;
+      break;
+    case 'myData':
+      bgMap = myData;
+      break;
+    case 'myAuth':
+      bgMap = myAuth;
+      break;
+    case 'myAccount':
+      bgMap = myAccount;
       break;
     default:
-      bgMap = arrow;
+      bgMap = network;
       break;
   }
   return bgMap

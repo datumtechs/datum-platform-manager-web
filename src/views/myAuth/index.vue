@@ -1,6 +1,6 @@
 <template>
   <div class="flex-1 task-wrap com-main">
-    <Banner :bg-name="'rocket'">
+    <Banner :bg-name="'myAuth'">
       <template #select>
         <ComTabs :list="list" :activekey="activekey" @change="tabsChange" />
       </template>

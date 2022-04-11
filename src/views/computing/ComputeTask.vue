@@ -1,6 +1,6 @@
 <template>
   <div class="flex-1 task-wrap com-main">
-    <Banner :bg-name="'clocksWatches'">
+    <Banner :bg-name="'globalTask'">
       <template #briefInfo>
         <p class="text-color-[#999999]">
           {{ $t('myData.tasksBriefInfoFirstParagraph') }}
