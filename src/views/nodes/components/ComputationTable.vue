@@ -29,6 +29,7 @@
 
 <script setup lang='ts'>
 import type { Ref } from 'vue'
+// import {} from '@/api/computing'
 const router = useRouter()
 const tableData = ref([])
 const total: Ref<number> = ref(0)
@@ -39,7 +40,7 @@ const linkToViewComputations = (row: any) => {
 }
 
 const getTableData = async () => {
-
+    // const res = await 
 
 }
 
