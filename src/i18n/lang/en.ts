@@ -296,7 +296,14 @@ const en = {
   },
   auth: {
     tokenAuth: 'Certificate Authorization',
-    nodeAuth: 'Node authorization'
+    nodeAuth: 'Node authorization',
+    holdeQuantity: "Holde Quantity",
+    authQuantity: "Auth Quantity",
+    auth: "Auth",
+    cancelAuth: "Cancel Auth",
+    networkIP: "Network IP",
+    networkName: "Network Name",
+    quantityError: "The current quantity is incorrect"
   },
   industry: {
     bank: 'Finance (bank)',

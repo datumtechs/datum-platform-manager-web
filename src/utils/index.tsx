@@ -18,7 +18,7 @@ export const str_decrypt = (str: string) => {
 }
 
 // 用时计算
-const _isZero = time => {
+const _isZero = (time: any) => {
   if (time.toString().length < 2) {
     return `0${time}`
   }
@@ -26,7 +26,7 @@ const _isZero = time => {
 }
 
 
-export const formatDuring = time => {
+export const formatDuring = (time: any) => {
   const hours = parseInt(`${time / (1000 * 60 * 60)}`, 10)
   const minutes = parseInt(`${(time % (1000 * 60 * 60)) / (1000 * 60)}`, 10)
   const seconds = parseInt(`${(time % (1000 * 60)) / 1000}`, 10)

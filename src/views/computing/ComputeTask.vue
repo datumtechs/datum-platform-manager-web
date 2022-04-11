@@ -12,7 +12,7 @@
       </template>
     </Banner>
     <div class="com-main-data-wrap">
-      <el-table :data="list" class="mt-50px com-table">
+      <el-table :data="list" class="mt-50px com-table _com_el-table-wrap">
         <el-table-column type="index" width="100">
           <template #header>{{ $t('common.num') }}</template>
         </el-table-column>

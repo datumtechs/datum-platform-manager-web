@@ -296,7 +296,15 @@ const zh = {
   },
   auth: {
     tokenAuth: '凭证授权',
-    nodeAuth: '节点授权'
+    nodeAuth: '节点授权',
+    holdeQuantity: "持有数量",
+    authQuantity: "授权数量",
+    auth: "授权",
+    cancelAuth: "取消授权",
+    networkIP: "网络节点IP",
+    networkName: "网络节点名称",
+    quantityError: "当前数量不正确"
+
   },
   industry: {
     bank: '金融业（银行）',

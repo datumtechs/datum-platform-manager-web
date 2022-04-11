@@ -92,7 +92,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { queryTaskDetails } from '@/api/workflow'
+import { queryTaskDetails } from '@/api/task'
 const route = useRoute()
 const taskId = route.params.id
 const current = ref(1)
@@ -103,7 +103,7 @@ const query = () => {
   queryTaskDetails({ current: current.value, size: 10, taskId }).then(res => {
     const { data, code }: any = res
     if (code === 10000) {
-      tableData.value = [{ ...data }]
+      // tableData.value = [{ ...data }]
       current.value = data.current
       total.value = data.total
     }
