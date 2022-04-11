@@ -28,7 +28,7 @@
 </template>
 <script lang="ts" setup>
 import DataTable from './components/DataTable.vue';
-import { queryTaskList, queryTaskStats } from '@/api/workflow'
+import { queryTaskList, queryTaskStats } from '@/api/task'
 const current = ref(1)
 const total = ref(0)
 const tableData = ref([])

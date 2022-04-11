@@ -110,3 +110,10 @@ $minWidth: calc(1200px - 219px);
     background-color: #f5f7fa;
   }
 }
+
+._com_el-table-wrap {
+  .el-table__header .el-table__cell {
+    border-bottom: none !important;
+    height: 50px;
+  }
+}

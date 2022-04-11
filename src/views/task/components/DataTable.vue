@@ -1,5 +1,5 @@
 <template>
-  <el-table :data="props.data" class="mt-50px com-table">
+  <el-table :data="props.data" class="mt-50px com-table _com_el-table-wrap">
     <el-table-column type="index" width="100">
       <template #header>{{ $t('common.num') }}</template>
     </el-table-column>

@@ -4,6 +4,7 @@
     :model="form"
     class="account-form mx-50px my-67px"
     :rules="rules"
+    :label-position="'left'"
     :label-width="locale == 'zh' ? '80px' : '150px'"
   >
     <el-form-item :label="`${$t('account.walletAddress')}:`">
