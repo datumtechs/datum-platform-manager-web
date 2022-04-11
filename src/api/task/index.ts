@@ -22,3 +22,10 @@ export const queryTaskStats = (params: {}): Promise<any> => {
     params
   })
 }
+export const getTaskListByOrg = (params: {}): Promise<any> => {
+  return http({
+    method: 'GET',
+    url: '/flow/task/getTaskListByOrg',
+    params
+  })
+}

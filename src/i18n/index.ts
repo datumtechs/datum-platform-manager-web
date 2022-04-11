@@ -12,7 +12,7 @@ const messages: any = {
     ...zh
   }
 }
-const getLocale = () => {
+export const getLocale = () => {
   const storagelanguage = localStorage.langue
   if (storagelanguage) {
     return storagelanguage

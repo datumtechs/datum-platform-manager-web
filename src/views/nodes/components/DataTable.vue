@@ -7,7 +7,12 @@
             highlight-current-row
             style="width: 100%"
         >
-            <el-table-column type="index" :label="$t('common.num')" width="80" />
+            <el-table-column
+                type="index"
+                :label="$t('common.num')"
+                :index="indexMethod"
+                width="80"
+            />
             <el-table-column show-overflow-tooltip prop="dataName" :label="$t('myData.dataName')" />
             <el-table-column
                 show-overflow-tooltip
@@ -33,14 +38,20 @@
         </el-table>
     </div>
     <div class="flex my-50px justify-center">
-        <el-pagination background layout="prev, pager, next" :total="total" />
+        <el-pagination
+            background
+            layout="prev, pager, next"
+            v-model:current-page="pageObj.current"
+            v-model:page-size="pageObj.size"
+            :total="pageObj.total"
+        />
     </div>
 </template>
 
 <script setup lang='ts'>
 import type { Ref } from 'vue'
 import { getDataListByOrg } from '@/api/data'
-const total: Ref<number> = ref(0)
+import { useTableIndex } from '@/hooks'
 const tableData: Ref<{}[]> = ref([])
 const router = useRouter()
 
@@ -52,6 +63,13 @@ const props = defineProps({
         default: ''
     }
 })
+const indexMethod = (index: number) => useTableIndex(index, pageObj.current, pageObj.size)
+
+const pageObj = reactive({
+    current: 1,
+    size: 10,
+    total: 0
+})
 
 
 const getTableData = async () => {
@@ -61,8 +79,8 @@ const getTableData = async () => {
         size: size.value
     })
     if (code === 10000) {
-        console.log(data);
-
+        tableData.value = data.items
+        pageObj.total = data.total
     }
 }
 
