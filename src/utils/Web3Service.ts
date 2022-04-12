@@ -61,7 +61,11 @@ class Web3Service {
           chainName: config.chainName,
           chainId: '0x' + config.chainId.toString(16),
           rpcUrls: [config.rpcUrl],
-          nativeCurrency: config.symbol,
+          nativeCurrency: {
+            name: 'LAT',
+            symbol: config.symbol,
+            decimals: 18,
+          },
           blockExplorerUrls: [config.blockExplorerUrl],
         },
       ],
@@ -134,12 +138,10 @@ class Web3Service {
         console.log("chainId:=======>", chainId);
 
         if (this._getDecimalChainID(chainId) !== config.chainId) await this._addNetwork()
-        console.log("step===========>", 'finish add network');
         const data = await this.eth.request({
           method: 'eth_requestAccounts'
         })
         this.useUsersInfo.setAddress(data[0])
-        console.log('start get address', this.useUsersInfo.getAddress);
 
       } catch (error) {
         console.log('connect wallet error：', error)

@@ -33,25 +33,39 @@ export default [
       {
         path: '/nodes/details/:identityId',
         name: "nodeDetails",
+        redirect: {
+          name: "nodeDetailIndex"
+        },
         meta: {
           label: 'menu.nodesDetail'
         },
-        component: () => import('@/views/nodes/components/NodeDetails.vue')
-      }, {
-        path: '/nodes/details/:identityId/dataOverview',
-        name: "dataOverview",
-        meta: {
-          label: 'menu.nodesDetail'
-        },
-        component: () => import('@/views/nodes/components/DataOverview.vue')
-      }, {
-        path: '/nodes/details/:identityId/computationOverview',
-        name: "computationOverview",
-        meta: {
-          label: 'menu.nodesDetail'
-        },
-        component: () => import('@/views/nodes/components/ComputationOverview.vue')
-      }],
+        component: () => import('@/views/nodes/components/NodeDetails.vue'),
+        children: [
+          {
+            path: '/nodes/details/:identityId/index',
+            name: "nodeDetailIndex",
+            meta: {
+              label: 'menu.nodesDetail'
+            },
+            component: () => import('@/views/nodes/components/nodeDetailIndex.vue')
+          },
+          {
+            path: '/nodes/details/:identityId/dataOverview',
+            name: "dataOverview",
+            meta: {
+              label: 'menu.nodesDetail'
+            },
+            component: () => import('@/views/nodes/components/DataOverview.vue')
+          }, {
+            path: '/nodes/details/:identityId/computationOverview',
+            name: "computationOverview",
+            meta: {
+              label: 'menu.nodesDetail'
+            },
+            component: () => import('@/views/nodes/components/ComputationOverview.vue')
+          }
+        ]
+      },],
   },
   {
     path: '/marketplace',

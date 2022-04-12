@@ -1,39 +1,12 @@
 <template>
     <div class="flex-1 h-full relative">
-        <DetailBanner :backShow="true" @back="router.go(-1)">
-            <template #briefInfo>Identifier：XXXXXXXXXXXXXXXXXXXXX</template>
-            <template #machineInfo class="flex">
-                <div class="flex text-center">
-                    <div class="flex flex-col w-160px relative borderR">
-                        <p
-                            class="text-14px text-color-[#999999] leading-20px"
-                        >{{ $t('node.totalCpu') }}</p>
-                        <p class="text-14px text-color-[#333] mt-4px font-bold">1111</p>
-                    </div>
-                    <div class="flex flex-col w-160px relative borderR">
-                        <p
-                            class="text-14px text-color-[#999999] leading-20px"
-                        >{{ $t('node.totalMemory') }}</p>
-                        <p class="text-14px text-color-[#333] mt-4px font-bold">2222</p>
-                    </div>
-                    <div class="flex flex-col w-160px">
-                        <p
-                            class="text-14px text-color-[#999999] leading-20px"
-                        >{{ $t('node.totalBandwidth') }}</p>
-                        <p class="text-14px text-color-[#333] mt-4px font-bold">33333</p>
-                    </div>
-                </div>
-            </template>
-        </DetailBanner>
-        <div class="mt-30px max-w-1200px px-25px mx-auto">
+        <div class="mt-30px max-w-1200px px-25px mx-auto overflow-hidden">
             <div class="inline-block h-50px">
                 <ComTabs :list="list" :activekey="activekey" @change="tabsChange" />
             </div>
-            <!-- <DataTable v-if="activekey === 0" />
-            <ComputationTable v-else />-->
-            <BaseInfo v-if="activekey === 0" />
+            <BaseInfo v-if="activekey === 0" :tableData="baseData" type="task" />
             <PartyInfo v-if="activekey === 1" />
-            <TaskInvolved v-if="activekey === 2" />
+            <TaskEvents v-if="activekey === 2" :data="eventData" />
         </div>
     </div>
 </template>
@@ -41,9 +14,12 @@
 <script setup lang='ts'>
 import BaseInfo from '@/components/dataComponents/BaseInfo.vue'
 import PartyInfo from '@/components/commonTable/PartyInfo.vue'
-import TaskInvolved from '@/components/dataComponents/TaskInvolved.vue'
+import TaskEvents from '@/components/TaskEvents.vue'
+import { queryTaskDetails } from '@/api/task'
+import { useDuring, useFormatTime, useSize } from '@/hooks'
 
-const router = useRouter()
+const route = useRoute()
+const taskId = computed(() => route.query.taskId)
 const activekey = ref(0)
 const list = reactive([
     {
@@ -53,13 +29,76 @@ const list = reactive([
         name: 'common.partyInfo'
     },
     {
-        name: 'myData.tasksInvolved'
+        name: 'computeTask.taskEvents'
     }
 ])
+
+const baseData = reactive([{
+    lName: 'task.taskName',
+    lProp: "",
+    rName: 'computeTask.taskStartTime',
+    rProp: "",
+}, {
+    lName: 'computeTask.computingStartTime',
+    lProp: "",
+    rName: 'computeTask.taskEndTime',
+    rProp: "",
+}, {
+    lName: 'computeTask.totalTime',
+    lProp: "",
+    rName: 'computeTask.taskResult',
+    rProp: "",
+}, {
+    lName: 'computeTask.declaredComputingPowerRequired',
+    lProp: {
+        cpu: {
+            label: 'common.cpu',
+            value: ''
+        },
+        memory: {
+            label: 'common.memory',
+            value: ''
+        },
+        bandWidth: {
+            label: 'common.bandwidth',
+            value: ''
+        },
+    },
+    last: true
+}])
+
 const tabsChange = (index: string) => {
     console.log(index);
     activekey.value = +index
 }
+
+const eventData = ref([])
+
+const getTaskDetail = async () => {
+    const { code, data } = await queryTaskDetails({
+        taskId: taskId.value,
+    })
+    if (code === 10000) {
+        baseData[0].lProp = data.taskName
+        baseData[0].rProp = useFormatTime(data.createAt) + ''
+
+        baseData[1].lProp = useFormatTime(data.startAt) + ''
+        baseData[1].rProp = useFormatTime(data.endAt) + ''
+
+        baseData[2].lProp = useDuring(data.endAt - data.startAt)
+        baseData[2].rProp = data.status
+
+        baseData[3].lProp['cpu'].value = data.requiredCore
+        baseData[3].lProp['memory'].value = useSize(data.requiredMemory)
+        baseData[3].lProp['bandWidth'].value = useSize(data.requiredBandwidth) + 'P/S'
+
+        eventData.value = data.eventList
+    }
+}
+
+onMounted(() => {
+    getTaskDetail()
+})
 </script>
 
 <style scoped lang='scss'>

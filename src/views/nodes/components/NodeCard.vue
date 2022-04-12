@@ -1,7 +1,6 @@
 <template>
     <div
-        class="node-line mb-10px flex h-90px border-1 border-solid border-[#eee] items-center hover-line"
-    >
+        class="node-line mb-10px flex h-90px border-1 border-solid border-[#eee] items-center hover-line">
         <div class="w-73px index-box">{{ useTableIndex(props.index, props.page, props.size) }}</div>
         <div class="pr-30px">
             <img class="w-36px h-36px rounded-1/2" :src="node.imageUrl" />
@@ -33,10 +32,8 @@
             <p class="text">{{ useSize(node.orgTotalBandwidth) + 'P/S' }}</p>
         </div>
         <div class="operate text-center flex-grow">
-            <p
-                class="font-medium text-14px leading-20px text-color-[#0052D9] cursor-pointer px-10px"
-                @click="linkToDetail"
-            >{{ $t('node.view') }}</p>
+            <p class="font-medium text-14px leading-20px text-color-[#0052D9] cursor-pointer px-10px"
+                @click="linkToDetail">{{ $t('node.view') }}</p>
         </div>
     </div>
 </template>
@@ -72,19 +69,23 @@ const linkToDetail = () => {
     word-wrap: break-word;
     padding: 0 10px;
 }
+
 .index-box {
     @extend .box;
     text-align: center;
 }
+
 .table-box {
     @extend .box;
     overflow: hidden;
 }
+
 .title {
     font-size: 14px;
     color: #999;
     line-height: 12px;
 }
+
 .text {
     font-size: 14px;
     color: #333;
@@ -92,10 +93,12 @@ const linkToDetail = () => {
     line-height: 12px;
     font-family: Montserrat-Black, DINPro-Bold;
 }
+
 .deep-title {
     font-size: 18px;
     color: #333;
 }
+
 .shallow-text {
     font-size: 12px;
     color: #999;

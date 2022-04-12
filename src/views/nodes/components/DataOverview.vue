@@ -1,38 +1,13 @@
 <template>
     <div class="flex-1 h-full relative">
-        <DetailBanner :backShow="true" @back="router.go(-1)">
-            <template #briefInfo>Identifier：XXXXXXXXXXXXXXXXXXXXX</template>
-            <template #machineInfo class="flex">
-                <div class="flex text-center">
-                    <div class="flex flex-col w-160px relative borderR">
-                        <p
-                            class="text-14px text-color-[#999999] leading-20px"
-                        >{{ $t('node.totalCpu') }}</p>
-                        <p class="text-14px text-color-[#333] mt-4px font-bold">1111</p>
-                    </div>
-                    <div class="flex flex-col w-160px relative borderR">
-                        <p
-                            class="text-14px text-color-[#999999] leading-20px"
-                        >{{ $t('node.totalMemory') }}</p>
-                        <p class="text-14px text-color-[#333] mt-4px font-bold">2222</p>
-                    </div>
-                    <div class="flex flex-col w-160px">
-                        <p
-                            class="text-14px text-color-[#999999] leading-20px"
-                        >{{ $t('node.totalBandwidth') }}</p>
-                        <p class="text-14px text-color-[#333] mt-4px font-bold">33333</p>
-                    </div>
-                </div>
-            </template>
-        </DetailBanner>
-        <div class="mt-30px max-w-1200px px-25px mx-auto">
+        <div class="mt-30px max-w-1200px px-25px mx-auto overflow-hidden">
             <div class="inline-block h-50px">
                 <ComTabs :list="list" :activekey="activekey" @change="tabsChange" />
             </div>
             <!-- <DataTable v-if="activekey === 0" />
             <ComputationTable v-else />-->
             <BaseInfo v-if="activekey === 0" :tableData="tableData" />
-            <MetaData v-if="activekey === 1" />
+            <MetaData v-if="activekey === 1" :data="metadataData" />
             <TaskInvolved v-if="activekey === 2" />
         </div>
     </div>
@@ -42,8 +17,11 @@
 import BaseInfo from '@/components/dataComponents/BaseInfo.vue'
 import MetaData from '@/components/dataComponents/MetaData.vue'
 import TaskInvolved from '@/components/dataComponents/TaskInvolved.vue'
+import { queryDataDetails } from '@/api/data'
+import { useFormatTime } from '@/hooks'
+import { enums } from '@/utils/enum'
 
-const router = useRouter()
+const route = useRoute()
 const activekey = ref(0)
 const list = reactive([
     {
@@ -59,31 +37,52 @@ const list = reactive([
 const tabsChange = (index: string) => {
     activekey.value = +index
 }
-const tableData = reactive([{
-    lName: 'myData.dataName',
-    lProp: "dataName",
-    rName: 'myData.credentialSymbol',
-    rProp: "credentialSymbol",
-}, {
-    lName: 'myData.launchTime',
-    lProp: "launchTime",
-    rName: 'myData.industryData',
-    rProp: "industryData",
-}, {
-    lName: 'myData.dataFormat',
-    lProp: "dataFormat",
-    rName: 'myData.dataSize',
-    rProp: "dataSize",
-}, {
-    lName: 'myData.rowsData',
-    lProp: "rowsData",
-    rName: 'myData.columnsData',
-    rProp: "columnsData",
-}, {
-    lName: 'myData.dataDescription',
-    lProp: "dataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescriptiondataDescription",
-    last: true
-}])
+
+const metaDataId = computed(() => route.query.metaDataId)
+
+const metadataData = ref([])
+const tableData = ref<any[]>([])
+const { t } = useI18n()
+
+// const industry = computed(() => t(enums.industry[data.industry]))
+
+const getDataDetails = async () => {
+    const { code, data } = await queryDataDetails({ metaDataId: metaDataId.value })
+
+    if (code == 10000) {
+        tableData.value = [{
+            lName: 'myData.dataName',
+            lProp: data.metaDataName,
+            rName: 'myData.credentialSymbol',
+            rProp: data.tokenSymbol,
+        }, {
+            lName: 'myData.launchTime',
+            lProp: useFormatTime(data.publishedAt),
+            rName: 'myData.industryData',
+            rProp: t(enums.industry[data.industry])
+        }, {
+            lName: 'myData.dataFormat',
+            lProp: data.fileType,
+            rName: 'myData.dataSize',
+            rProp: data.size,
+        }, {
+            lName: 'myData.rowsData',
+            lProp: data.rows,
+            rName: 'myData.columnsData',
+            rProp: data.columns,
+        }, {
+            lName: 'myData.dataDescription',
+            lProp: data.remarks,
+            last: true
+        }]
+        metadataData.value = data.columnsList
+    }
+}
+
+onMounted(() => {
+    getDataDetails()
+})
+
 </script>
 
 <style scoped lang='scss'>

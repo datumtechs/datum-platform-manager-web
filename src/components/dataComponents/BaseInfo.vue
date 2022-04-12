@@ -9,7 +9,13 @@
   >
     <el-table-column class-name="h-100px">
       <template #default="{ row }">
-        <div class="pl-32px">
+        <div class="px-32px flex justify-between" v-if="row.last && type === 'task'">
+          <p v-for="item in row.lProp" class="text-color-[#393939] black-font">
+            <span >{{$t(`${item.label}`)}}:</span>
+            <span>&nbsp;&nbsp;{{item.value}}</span>
+          </p>
+        </div>
+        <div class="px-32px" v-else>
           <p class="text-color-[#999999]">{{ $t(`${row.lName}`) }}:</p>
           <p class="text-color-[#393939] black-font">{{ row.lProp }}</p>
         </div>
@@ -17,7 +23,7 @@
     </el-table-column>
     <el-table-column class-name="h-100px">
       <template #default="{ row }">
-        <div class="pl-32px" v-if="!row.last">
+        <div class="px-32px" v-if="!row.last">
           <p class="text-color-[#999999]">{{ $t(`${row.rName}`) }}:</p>
           <p class="text-color-[#393939] black-font">{{ row.rProp }}</p>
         </div>
@@ -38,6 +44,10 @@ const props = defineProps({
   tableData: {
     type: Array,
     default: () => []
+  },
+  type:{
+    type:String,
+    default: 'data'
   }
 })
 console.log(props.tableData)

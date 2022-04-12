@@ -15,7 +15,7 @@
 <script lang="ts" setup>
 import BaseInfo from './BaseInfo.vue';
 import PartyInfo from './PartyInfo.vue';
-import TaskEvents from './TaskEvents.vue'
+import TaskEvents from '@/components/TaskEvents.vue'
 import { type Router, useRouter } from 'vue-router'
 const router: Router = useRouter()
 const activekey = ref(0)

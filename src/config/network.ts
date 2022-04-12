@@ -8,8 +8,8 @@ interface Network {
 
 const config :Network= {
     chainName: 'PlatON开发网',
-    chainId: 210309,
-    rpcUrl: 'https://10.1.1.51:6789',
+    chainId: 2203181,
+    rpcUrl: 'https://devnetopenapi.platon.network/rpc',
     symbol: 'LAT',
     blockExplorerUrl: 'https://uatscan.platon.network:1443/'
 }

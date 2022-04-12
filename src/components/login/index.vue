@@ -1,15 +1,7 @@
 <template>
-  <el-dialog
-    :model-value="props.loginShow"
-    :append-to-body="true"
-    :width="400"
-    :top="'30vh'"
-    ref="doalog"
-    :destroy-on-close="true"
-    :close-on-click-modal="false"
-    :close-on-press-escape="false"
-    @close="emit('loginShowChange')"
-  >
+  <el-dialog :model-value="props.loginShow" :append-to-body="true" :width="400" :top="'30vh'"
+    ref="doalog" :destroy-on-close="true" :close-on-click-modal="false"
+    :close-on-press-escape="false" @close="emit('loginShowChange')">
     <template #title>
       <p class="text-[18px] black-font">{{ $t('head.loginDialogTitle') }}</p>
     </template>
@@ -26,24 +18,17 @@
         </el-icon>
         <p>{{ $t('head.installTipTwo') }}</p>
       </div>
-      <el-button
-        type="primary"
-        class="ml-110px w-140px h-40px rounded-[20px]"
-        @click="linkToMetamask"
-      >{{ $t('head.install') }}</el-button>
+      <el-button type="primary" class="ml-110px w-140px h-40px rounded-[20px]"
+        @click="linkToMetamask">{{ $t('head.install') }}</el-button>
     </div>
     <div v-else class="h-157px flex items-center justify-center flex-col">
-      <div
-        @click="login"
-        :class="{ 'cursor-not-allowed': !checked, 'cursor-pointer': checked }"
-        class="flex w-264px h-70px flex items-center justify-center rounded-4px bg-color-[#F7F8F9] border-1 border-solid border-[#EEEEEE]"
-      >
+      <div @click="login" :class="{ 'cursor-not-allowed': !checked, 'cursor-pointer': checked }"
+        class="flex w-264px h-70px flex items-center justify-center rounded-4px bg-color-[#F7F8F9] border-1 border-solid border-[#EEEEEE]">
         <img :src="metamask" class="w-43px h-43px mr-28px" />
         <span class="black-font text-[20px] text-color-[#333333]">MetaMask</span>
       </div>
       <div
-        class="agreement w-264px mt-19px flex items-flex-start text-[12px] text-color-[#999999] cursor-pointer"
-      >
+        class="agreement w-264px mt-19px flex items-flex-start text-[12px] text-color-[#999999] cursor-pointer">
         <el-checkbox class="checkbox" v-model="checked" size="large">&nbsp;</el-checkbox>
         <div @click="checked = !checked" class="flex">
           <span v-if="locale === 'zh'">
@@ -149,13 +134,16 @@ const login = async () => {
   color: #333333;
   line-height: 22px;
 }
+
 :global(.el-overlay) {
   background-color: rgba(0, 0, 0, 0.3) !important;
 }
+
 :global(.el-dialog) {
   border-radius: 12px !important;
   overflow: hidden;
 }
+
 .agreement {
   .checkbox {
     height: 16px;

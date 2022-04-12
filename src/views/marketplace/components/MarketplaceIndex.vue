@@ -75,35 +75,17 @@ onMounted(() => {
         <ComTabs :list="list" :activekey="activekey" @change="tabsChange" />
             </template>-->
         </Banner>
-        <div class="mt-30px max-w-1200px px-25px mx-auto">
-            <el-table
-                :header-cell-style="{ height: '50px' }"
-                :row-style="{ height: '70px' }"
-                :data="tableData"
-                highlight-current-row
-                style="width: 100%"
-            >
-                <el-table-column
-                    type="index"
-                    :label="$t('common.num')"
-                    :index="indexMethod"
-                    width="80"
-                />
-                <el-table-column
-                    show-overflow-tooltip
-                    prop="metaDataName"
-                    :label="$t('myData.dataName')"
-                />
-                <el-table-column
-                    show-overflow-tooltip
-                    prop="identityId"
-                    :label="$t('myData.dataProvider')"
-                />
-                <el-table-column
-                    show-overflow-tooltip
-                    prop="tokenName"
-                    :label="$t('myData.credentialName')"
-                />
+        <div class="mt-30px max-w-1200px px-25px mx-auto overflow-hidden">
+            <el-table :header-cell-style="{ height: '50px' }" :row-style="{ height: '70px' }"
+                :data="tableData" highlight-current-row style="width: 100%">
+                <el-table-column type="index" :label="$t('common.num')" :index="indexMethod"
+                    width="80" />
+                <el-table-column show-overflow-tooltip prop="metaDataName"
+                    :label="$t('myData.dataName')" />
+                <el-table-column show-overflow-tooltip prop="identityId"
+                    :label="$t('myData.dataProvider')" />
+                <el-table-column show-overflow-tooltip prop="tokenName"
+                    :label="$t('myData.credentialName')" />
                 <el-table-column prop="tokenPrice" :label="$t('common.credentialPrice')">
                     <template #default="{ row }">
                         <div>{{ row.tokenPrice }} LAT</div>
@@ -112,18 +94,14 @@ onMounted(() => {
                 <el-table-column :label="$t('common.actions')" width="280">
                     <template #default="{ row }">
                         <el-space :size="20">
-                            <span
-                                class="text-14px text-color-[#0052D9] leading-20px cursor-pointer"
-                                @click="purchase(row)"
-                            >{{ $t('common.purchase') }}</span>
-                            <span
-                                class="text-14px text-color-[#0052D9] leading-20px cursor-pointer"
-                                @click="linkToViewData(row)"
-                            >{{ $t('myData.viewData') }}</span>
-                            <span
-                                class="text-14px text-color-[#0052D9] leading-20px cursor-pointer"
-                                @click="linkToViewToken(row)"
-                            >{{ $t('myData.viewCredential') }}</span>
+                            <span class="text-14px text-color-[#0052D9] leading-20px cursor-pointer"
+                                @click="purchase(row)">{{ $t('common.purchase') }}</span>
+                            <span class="text-14px text-color-[#0052D9] leading-20px cursor-pointer"
+                                @click="linkToViewData(row)">{{ $t('myData.viewData') }}</span>
+                            <span class="text-14px text-color-[#0052D9] leading-20px cursor-pointer"
+                                @click="linkToViewToken(row)">{{
+                                    $t('myData.viewCredential')
+                                }}</span>
                         </el-space>
                     </template>
                 </el-table-column>
