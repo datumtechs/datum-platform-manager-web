@@ -303,8 +303,12 @@ const zh = {
     cancelAuth: "取消授权",
     networkIP: "网络节点IP",
     networkName: "网络节点名称",
-    quantityError: "当前数量不正确"
-
+    quantityError: "当前数量不正确",
+    cancelAuthTipBefore: "是否确认取消",
+    cancelAuthTipAfter: "取消后授权数量将会变更为0",
+    nodeAuthEnterBefore: "确认后",
+    nodeAuthEnterAfter: "的操作将视为您已授权凭证",
+    nodeCancelAuthEnterAfter: "的授权将取消"
   },
   industry: {
     bank: '金融业（银行）',

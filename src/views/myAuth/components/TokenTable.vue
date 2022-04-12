@@ -103,7 +103,7 @@ const submit = () => {
 
 const auth = () => {
     ElMessageBox.confirm(
-        'proxy will permanently delete the file. Continue?',
+        `${t('auth.cancelAuthTipBefore')}${'xxx'}${t('auth.auth')},${t('取消后授权数量将会变更为0')}`,
         t('auth.cancelAuth'), {
         confirmButtonText: t('common.submit'),
         cancelButtonText: t('common.cancel'),
@@ -113,12 +113,7 @@ const auth = () => {
             type: 'success',
             message: `Your email is:${value}`,
         })
-    }).catch(() => {
-        ElMessage({
-            type: 'info',
-            message: 'Input canceled',
-        })
-    })
+    }).catch(_ => _)
 }
 onMounted(() => {
     query()
