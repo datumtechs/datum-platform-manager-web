@@ -27,7 +27,4 @@ export const enums = {
     11: 'industry.mediaAdvertis',
     12: 'industry.otherIndustry',
   }
-
-
-
 }

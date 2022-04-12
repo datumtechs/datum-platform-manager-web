@@ -14,6 +14,11 @@ const nodeInfo: any = reactive({
   orgTotalBandwidth: '',
 })
 
+const pageObj = reactive({
+  current: 1,
+  size: 10,
+  total: 0
+})
 
 const activekey = ref(0)
 const list = reactive([
@@ -78,7 +83,7 @@ onMounted(() => {
         </div>
       </template>
     </DetailBanner>
-    <div class="mt-30px max-w-1200px px-25px mx-auto">
+    <div class="mt-30px max-w-1200px px-25px mx-auto overflow-hidden">
       <div class="inline-block h-50px">
         <ComTabs :list="list" :activekey="activekey" @change="tabsChange" />
       </div>
