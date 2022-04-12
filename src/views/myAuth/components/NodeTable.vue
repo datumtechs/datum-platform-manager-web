@@ -4,23 +4,20 @@
             <el-table-column type="index" width="100">
                 <template #header>{{ $t('common.num') }}</template>
             </el-table-column>
-            <el-table-column prop="nodeName" :label="$t('node.nodeName')" />
-            <el-table-column prop="identityIp" :label="$t('node.nodeIP')" />
-            <el-table-column prop="identityPort" :label="$t('node.nodePort')" />
+            <el-table-column prop="nodeName" :label="$t('auth.networkIP')" />
+            <el-table-column prop="identityIp" :label="$t('auth.networkName')" />
             <el-table-column :label="$t('common.actions')">
                 <template #default="scope">
-                    <el-button
-                        type="text"
-                        :disabled="!!(scope.row.publicFlag || scope.row.connectFlag)"
-                        circle
-                    >{{ $t('common.delete') }}</el-button>
+                    <el-button type="text" circle @click="submit">{{ $t('auth.auth') }}</el-button>
+                    <el-button type="text" circle @click="auth">{{ $t('auth.cancelAuth') }}</el-button>
                 </template>
             </el-table-column>
         </el-table>
     </div>
 </template>
 <script setup lang="ts">
-import { getUserOrgList, postJoinOrg, delNodeOrg } from '@/api/login'
+import { getUserOrgList } from '@/api/login'
+import { ElMessageBox, ElMessage } from 'element-plus'
 const { t } = useI18n()
 const tableData = ref([])
 
@@ -33,7 +30,35 @@ const query = () => {
         }
     })
 }
+const submit = () => {
+    ElMessageBox.confirm(
+        `${t('auth.nodeAuthEnterBefore')}${'xxx'}${t('auth.nodeAuthEnterAfter')}`,
+        t('auth.cancelAuth'), {
+        confirmButtonText: t('common.submit'),
+        cancelButtonText: t('common.cancel'),
+        type: 'warning',
+    }).then(({ value }) => {
+        ElMessage({
+            type: 'success',
+            message: `Your email is:${value}`,
+        })
+    }).catch(_ => _)
+}
 
+const auth = () => {
+    ElMessageBox.confirm(
+        `${t('auth.nodeAuthEnterBefore')}${'xxx'}${t('auth.nodeCancelAuthEnterAfter')}`,
+        t('auth.cancelAuth'), {
+        confirmButtonText: t('common.submit'),
+        cancelButtonText: t('common.cancel'),
+        type: 'warning',
+    }).then(({ value }) => {
+        ElMessage({
+            type: 'success',
+            message: `Your email is:${value}`,
+        })
+    }).catch(_ => _)
+}
 onMounted(() => {
     query()
 })

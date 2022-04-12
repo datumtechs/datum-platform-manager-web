@@ -303,7 +303,15 @@ const en = {
     cancelAuth: "Cancel Auth",
     networkIP: "Network IP",
     networkName: "Network Name",
-    quantityError: "The current quantity is incorrect"
+    quantityError: "The current quantity is incorrect",
+    cancelAuthTipBefore: "Are you sure you want to cancel",
+    cancelAuthTipAfter: "After cancellation, the authorized quantity will be changed to 0",
+    nodeAuthEnterBefore: "After confirmation",
+    nodeAuthEnterAfter: "operation will be regarded as your authorized certificate",
+    nodeCancelAuthEnterAfter: "authorization will be cancelled"
+
+
+
   },
   industry: {
     bank: 'Finance (bank)',
