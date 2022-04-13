@@ -1,22 +1,14 @@
 <template>
   <div
-    class="com-tabs relative h-full bg-color-[#E8E8E8] rounded-25px flex px-7px py-5px items-center justify-between cursor-pointer"
-  >
-    <div
-      :ref="setItemRef"
-      class="px-20px h-full flex-1 flex items-center justify-center z-1 text-16px text-color-[#a5a5a5]"
-      style="word-break: keep-all;white-space:nowrap"
-      :class="{ active: +index == activeIndex }"
-      v-for="(item, index) in props.list"
-      :key="index"
-      @click="tabsClick(index)"
-    >
+    class="com-tabs relative h-full bg-color-[#EEEEEE] rounded-25px flex px-7px py-5px items-center justify-between cursor-pointer">
+    <div :ref="setItemRef"
+      class="px-20px h-full flex-1 flex items-center justify-center z-1 text-16px text-color-[#666666]"
+      style="word-break: keep-all;white-space:nowrap" :class="{ active: + index === activeIndex }"
+      v-for="(item, index) in props.list" :key="index" @click="tabsClick(index)">
       <p>{{ $t(`${item.name}`) }}</p>
     </div>
-    <div
-      :style="{ width: sliderWidth + 'px', transform: `translateX(${translateX}px)` }"
-      class="absolute z-0 top-5px h-40px bg-color-[#fff] rounded-20px tabs-slider"
-    ></div>
+    <div :style="{ width: sliderWidth + 'px', transform: `translateX(${translateX}px)` }"
+      class="absolute z-0 top-5px h-40px bg-color-[#fff] rounded-20px tabs-slider"></div>
   </div>
 </template>
 <script lang="ts" setup>
@@ -54,8 +46,6 @@ onMounted(() => {
   })
 })
 
-
-
 const tabsClick = (index: string) => {
   handleTabs(+index)
   emit('change', +index)
@@ -74,17 +64,24 @@ const handleTabs = (index: number) => {
 </script>
 <style lang="scss">
 $tiems: 0.5s;
+
 .com-tabs {
   .tabs-slider {
     transition: transform $tiems;
-    -moz-transition: transform $tiems; /* Firefox 4 */
-    -webkit-transition: transform $tiems; /* Safari 和 Chrome */
-    -o-transition: transform $tiems; /* Opera */
+    -moz-transition: transform $tiems;
+    /* Firefox 4 */
+    -webkit-transition: transform $tiems;
+    /* Safari 和 Chrome */
+    -o-transition: transform $tiems;
+    /* Opera */
   }
+
   .active {
-    color: #393939;
+    color: #333333;
+    font-family: DINPro-Medium, Ali-Medium;
     font-weight: 600;
   }
 }
 </style>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+</style>

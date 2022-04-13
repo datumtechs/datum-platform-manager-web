@@ -124,7 +124,8 @@ const zh = {
     totalMemory: '总内存',
     totalBandwidth: '总带宽',
     capabilityInTask: '任务中的角色',
-    startTime: '开始时间'
+    startTime: '开始时间',
+    address: "发起账户"
   },
   task: {
     createTaskBriefInfo: "创建你需要的任务",

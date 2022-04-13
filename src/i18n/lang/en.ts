@@ -124,7 +124,8 @@ const en = {
     totalMemory: 'Total Memory',
     totalBandwidth: 'Total Bandwidth',
     capabilityInTask: 'Capability',
-    startTime: 'Start Time'
+    startTime: 'Start Time',
+    address: "Address"
   },
   task: {
     createTaskBriefInfo: "Create new task you need",

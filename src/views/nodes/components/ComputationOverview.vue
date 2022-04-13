@@ -5,8 +5,10 @@
                 <ComTabs :list="list" :activekey="activekey" @change="tabsChange" />
             </div>
             <BaseInfo v-if="activekey === 0" :tableData="baseData" type="task" />
-            <PartyInfo v-if="activekey === 1" />
-            <TaskEvents v-if="activekey === 2" :data="eventData" />
+            <PartyInfo v-if="activekey === 1" :taskSponsor="taskSponsor"
+                :resultConsumer="resultConsumer" :dataProvider="dataProvider"
+                :powerProvider="powerProvider" />
+            <TaskEvents v-if="activekey === 2" :data="eventList" />
         </div>
     </div>
 </template>
@@ -72,7 +74,11 @@ const tabsChange = (index: string) => {
     activekey.value = +index
 }
 
-const eventData = ref([])
+const taskSponsor: any = ref([])
+const eventList = ref([])
+const resultConsumer = ref([])
+const dataProvider = ref([])
+const powerProvider = ref([])
 
 const getTaskDetail = async () => {
     const { code, data } = await queryTaskDetails({
@@ -92,7 +98,12 @@ const getTaskDetail = async () => {
         baseData[3].lProp['memory'].value = useSize(data.requiredMemory)
         baseData[3].lProp['bandWidth'].value = useSize(data.requiredBandwidth) + 'P/S'
 
-        eventData.value = data.eventList
+        eventList.value = data.eventList
+
+        taskSponsor.value = new Array(data.sponsor)
+        resultConsumer.value = data.resultReceiverList
+        dataProvider.value = data.dataProviderList
+        powerProvider.value = data.powerProviderList
     }
 }
 

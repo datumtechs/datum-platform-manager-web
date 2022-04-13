@@ -41,10 +41,10 @@ const total = ref(0)
 const dataTotal = ref(0)
 
 const purchase = (obj: any) => { }
-const viewData = (obj: any) => {
+const viewData = (row: any) => {
   router.push({
     path: "/data/details", query: {
-      metaDataId: obj.metaDataId
+      metaDataId: row.metaDataId
     }
   })
 }

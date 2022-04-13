@@ -33,7 +33,10 @@ const purchase = (row: any) => {
 }
 const linkToViewData = (row: any) => {
     router.push({
-        name: 'marketDataOverview'
+        path: '/marketplace/dataOverview',
+        query: {
+            metaDataId: row.metaDataId,
+        }
     })
 }
 const linkToViewToken = (row: any) => {
