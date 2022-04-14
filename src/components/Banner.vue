@@ -1,17 +1,14 @@
 <template>
   <div
-    class="w-full h-167px flex justify-between relative border-bottom px-5vw py-42px com-main"
-    :style="{ background: `url(${bgUrl}) no-repeat right`, 'background-size': 'auto 100%' }"
-  >
+    class="max-w-1200px m-auto h-167px items-center flex justify-between relative border-bottom com-main"
+    :style="{ background: `url(${bgUrl}) no-repeat right`, 'background-size': 'auto 100%' }">
     <div class="w-full black-font text-48px text-color-[#393939] font-900 leading-58px">
       <el-icon v-if="backShow" class="cursor-pointer" @click="emit('back')">
         <back />
       </el-icon>
       {{ $t(`${$route.meta.label}`) }}
-      <div
-        class="text-14px font-medium font-400 text-color-[#999999] leading-20px"
-        :class="$slots.select ? 'mt-8px' : 'mt-14px'"
-      >
+      <div class="text-14px font-medium font-400 text-color-[#999999] leading-20px"
+        :class="$slots.select ? 'mt-8px' : 'mt-14px'">
         <slot name="briefInfo"></slot>
       </div>
     </div>
