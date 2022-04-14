@@ -7,17 +7,13 @@
             </template>
         </Banner>
         <div class="mt-30px max-w-1200px px-25px mx-auto overflow-hidden">
-            <NodeCard
-                v-for="(node, index) in nodeList"
-                :size="10"
-                :page="1"
-                :node="node"
-                :index="index"
-                :key="index"
-            />
+            <NodeCard v-for="(node, index) in nodeList" :size="10" :page="1" :node="node"
+                :index="index" :key="index" />
         </div>
         <div class="flex my-50px justify-center">
-            <el-pagination background layout="prev, pager, next" :total="total" />
+            <el-pagination background layout="prev, pager, next"
+                v-model:current-page="pageObj.current" v-model:page-size="pageObj.size"
+                :total="pageObj.total" />
         </div>
     </div>
 </template>
@@ -34,13 +30,23 @@ const current = ref(1)
 const total = ref(0)
 let nodeList: any = reactive([])
 
+const pageObj = reactive({
+    total: 0,
+    current: 1,
+    size: 10
+})
+
+watch(() => pageObj.current, (newValue, oldValue) => {
+    queryOrgList()
+});
+
 const queryOrgList = async () => {
     const { code, data } = await getOrgList({
         orderBy: orderBy.value, size: size.value, current: current.value
     })
     if (code === 10000) {
         nodeList.push(...data.items)
-        total.value = data.total
+        pageObj.total = data.total
     }
 }
 onMounted(() => {

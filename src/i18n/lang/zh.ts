@@ -43,7 +43,8 @@ const zh = {
     view: "查看",
     save: '保存',
     viewEvent: '查看日志',
-    noData: "暂无数据"
+    noData: "暂无数据",
+    confirm: '确认'
   },
   menu: {
     home: '首页',
@@ -173,7 +174,8 @@ const zh = {
     trainingResultReceivers: "请选择将训练任务结果发送到",
     predictionResultReceivers: "请选择将预测任务结果发送到",
     startTask: "启动任务",
-    PSI: "PSI训练"
+    PSI: "PSI训练",
+
   },
   myData: {
     tasksBriefInfoFirstParagraph: "全网共",
@@ -255,7 +257,8 @@ const zh = {
     eventType: "事件类型",
     eventMaker: "生成事件的参与方",
     generationTime: "生成时间",
-    eventContent: "事件内容"
+    eventContent: "事件内容",
+    taskStatus: '任务状态'
   },
   expert: {
     overview: '概览',
@@ -309,7 +312,11 @@ const zh = {
     cancelAuthTipAfter: "取消后授权数量将会变更为0",
     nodeAuthEnterBefore: "确认后",
     nodeAuthEnterAfter: "的操作将视为您已授权凭证",
-    nodeCancelAuthEnterAfter: "的授权将取消"
+    nodeCancelAuthEnterAfter: "的授权将取消",
+    feeToken: "手续费凭证",
+    dataToken: "数据凭证",
+    plzInputAuthTokenNumber: '请输入授权数量',
+    cancelTokenAuth: '取消凭证授权'
   },
   industry: {
     bank: '金融业（银行）',
@@ -324,6 +331,12 @@ const zh = {
     publicService: "公共服务业",
     mediaAdvertis: "传媒广告业",
     otherIndustry: "其他行业",
+  },
+  status: {
+    failed: '失败',
+    pending: '等待中',
+    running: '运行中',
+    succeed: '成功',
   }
 }
 

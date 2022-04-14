@@ -87,4 +87,8 @@ onMounted(() => {
 </script>
 
 <style scoped lang='scss'>
+:deep(.el-tabs__item) {
+  height: 60px;
+  line-height: 60px;
+}
 </style>

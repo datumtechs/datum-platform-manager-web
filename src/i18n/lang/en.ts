@@ -43,7 +43,8 @@ const en = {
     view: "View",
     save: 'Save',
     viewEvent: 'View Event',
-    noData: "No Data"
+    noData: "No Data",
+    confirm: 'Confirm'
   },
   menu: {
     home: 'Home',
@@ -173,7 +174,8 @@ const en = {
     trainingResultReceivers: "Select result receivers of the training task",
     predictionResultReceivers: "Select result receivers of the prediction task",
     startTask: "Start Task",
-    PSI: "PSI Train"
+    PSI: "PSI Train",
+
   },
   myData: {
     tasksBriefInfoFirstParagraph: " ",
@@ -255,7 +257,8 @@ const en = {
     eventType: "Event type",
     eventMaker: "Event maker",
     generationTime: "Generation time",
-    eventContent: "Event content"
+    eventContent: "Event content",
+    taskStatus: 'Task Status',
   },
   expert: {
     overview: 'Overview',
@@ -309,10 +312,11 @@ const en = {
     cancelAuthTipAfter: "After cancellation, the authorized quantity will be changed to 0",
     nodeAuthEnterBefore: "After confirmation",
     nodeAuthEnterAfter: "operation will be regarded as your authorized certificate",
-    nodeCancelAuthEnterAfter: "authorization will be cancelled"
-
-
-
+    nodeCancelAuthEnterAfter: "authorization will be cancelled",
+    feeToken: "Fee Token",
+    dataToken: "Data Token",
+    plzInputAuthTokenNumber: 'Enter authorized quantity',
+    cancelTokenAuth: 'Cancel credential authorization'
   },
   industry: {
     bank: 'Finance (bank)',
@@ -327,6 +331,12 @@ const en = {
     publicService: "Public Service Industry",
     mediaAdvertis: "Media Advertising Industry",
     otherIndustry: "Other Industry",
+  },
+  status: {
+    failed: 'failed',
+    pending: 'pending',
+    running: 'running',
+    succeed: 'succeed',
   }
 }
 

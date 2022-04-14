@@ -3,7 +3,7 @@
     :data="props.tableData"
     :span-Method="arraySpanMethod"
     border
-    class="mt-63px mb-30px"
+    class="my-30px"
     row-key="lName"
     :show-header="false"
   >

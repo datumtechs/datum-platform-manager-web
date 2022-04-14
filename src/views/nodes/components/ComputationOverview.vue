@@ -113,12 +113,4 @@ onMounted(() => {
 </script>
 
 <style scoped lang='scss'>
-.borderR:after {
-    content: "";
-    height: 48px;
-    width: 1px;
-    background: #eee;
-    position: absolute;
-    right: 0;
-}
 </style>
