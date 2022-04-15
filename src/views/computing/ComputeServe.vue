@@ -5,7 +5,7 @@
         <ComTabs :list="titleList" :activekey="activekey" @change="tabsChange" />
       </template>
     </Banner>
-    <div class="com-main-data-wrap mt-65px">
+    <div class="main-content com-main-data-wrap mt-60px">
       <div
         v-show="activekey == 0 ? list.privacy?.length : list.noPrivacy?.length"
         class="w-full mb-50px"

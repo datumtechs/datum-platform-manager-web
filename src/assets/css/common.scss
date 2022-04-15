@@ -1,5 +1,5 @@
-$calcWidth:calc(100vw - 219px);
-$calcHeight:calc(100vh - 70px);
+$calcWidth: calc(100vw - 219px);
+$calcHeight: calc(100vh - 70px);
 $minWidth: calc(1200px - 219px);
 
 .layout-mian-wrap {
@@ -16,12 +16,6 @@ $minWidth: calc(1200px - 219px);
 .com-main-data-wrap {
   max-width: 1200px;
   margin: 0 auto;
-}
-
-@media screen and (max-width: 1500px) {
-  .com-main-data-wrap {
-    margin: 0 50px;
-  }
 }
 
 .com-main {
@@ -51,7 +45,6 @@ $minWidth: calc(1200px - 219px);
 .rotate-180 {
   transform: rotate(180deg);
 }
-
 
 .com-border-eee {
   border: 1px solid #eeeeee;
@@ -115,5 +108,12 @@ $minWidth: calc(1200px - 219px);
   .el-table__header .el-table__cell {
     border-bottom: none !important;
     height: 50px;
+  }
+}
+@media screen and (max-width: 1435px) {
+  .main-banner,
+  .inner-banner,
+  .main-content {
+    padding: 0 30px;
   }
 }

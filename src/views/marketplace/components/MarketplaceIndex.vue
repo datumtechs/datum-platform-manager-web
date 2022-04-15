@@ -78,7 +78,7 @@ onMounted(() => {
         <ComTabs :list="list" :activekey="activekey" @change="tabsChange" />
             </template>-->
         </Banner>
-        <div class="mt-30px max-w-1200px px-25px mx-auto overflow-hidden">
+        <div class="main-content mt-30px max-w-1200px mx-auto overflow-hidden">
             <el-table :header-cell-style="{ height: '50px' }" :row-style="{ height: '70px' }"
                 :data="tableData" highlight-current-row style="width: 100%">
                 <el-table-column type="index" :label="$t('common.num')" :index="indexMethod"
@@ -115,3 +115,6 @@ onMounted(() => {
         </div>
     </div>
 </template>
+
+<style scoped lang='scss'>
+</style>

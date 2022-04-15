@@ -91,7 +91,7 @@ const linkToDetail = () => {
     color: #333;
     margin-top: 13px;
     line-height: 12px;
-    font-family: Montserrat-Black, DINPro-Bold;
+    font-family: Ali-Bold, DINPro-Bold;
 }
 
 .deep-title {

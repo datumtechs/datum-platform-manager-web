@@ -10,14 +10,14 @@
     <el-table-column class-name="h-100px">
       <template #default="{ row }">
         <div class="px-32px flex justify-between" v-if="row.last && type === 'task'">
-          <p v-for="item in row.lProp" class="text-color-[#393939] black-font">
+          <p v-for="item in row.lProp" class="text-color-[#393939] font-bold">
             <span >{{$t(`${item.label}`)}}:</span>
             <span>&nbsp;&nbsp;{{item.value}}</span>
           </p>
         </div>
         <div class="px-32px" v-else>
           <p class="text-color-[#999999]">{{ $t(`${row.lName}`) }}:</p>
-          <p class="text-color-[#393939] black-font">{{ row.lProp }}</p>
+          <p class="text-color-[#393939] font-bold">{{ row.lProp }}</p>
         </div>
       </template>
     </el-table-column>
@@ -25,7 +25,7 @@
       <template #default="{ row }">
         <div class="px-32px" v-if="!row.last">
           <p class="text-color-[#999999]">{{ $t(`${row.rName}`) }}:</p>
-          <p class="text-color-[#393939] black-font">{{ row.rProp }}</p>
+          <p class="text-color-[#393939] font-bold">{{ row.rProp }}</p>
         </div>
       </template>
     </el-table-column>

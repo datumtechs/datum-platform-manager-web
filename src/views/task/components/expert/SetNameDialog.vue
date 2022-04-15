@@ -9,7 +9,7 @@
             width="320px"
         >
             <div
-                class="font-black text-14px leading-18px text-color-[#333]"
+                class="font-bold text-14px leading-18px text-color-[#333]"
             >{{ $t('expert.inputNameTips') }}</div>
             <div class="mt-10px mb-20px h-50px">
                 <!-- <el-input v-model="workflowName" /> -->

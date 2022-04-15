@@ -9,7 +9,7 @@
         </p>
       </template>
     </Banner>
-    <div class="com-main-data-wrap">
+    <div class="com-main-data-wrap main-content">
       <DataTable :data="tableData" />
       <div class="flex my-50px justify-center">
         <el-pagination

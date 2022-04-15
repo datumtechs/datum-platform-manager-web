@@ -3,13 +3,13 @@
     <el-icon class="cursor-pointer text-48px pt-15px" @click="$router.go(-1)">
       <back />
     </el-icon>
-    <div class="black-font ml-21px flex-1">
+    <div class="font-bold ml-21px flex-1">
       <p class="text-22px text-color-[#393939] font-900 leading-27px">XXXXXX</p>
       <p
-        class="black-font text-color-[#666666] leading-20px mb-21px mt-9px"
+        class="font-bold text-color-[#666666] leading-20px mb-21px mt-9px"
       >{{ $t('common.address') }}: XXXXXX</p>
       <div
-        class="black-font text-color-[#0052D9] leading-20px mt-14px leading-20px"
+        class="font-bold text-color-[#0052D9] leading-20px mt-14px leading-20px"
       >{{ $t('credentials.viewExplorer') }}</div>
     </div>
     <div class="w-150px">
@@ -20,13 +20,13 @@
       <p class="text-color-[#999999]">{{ $t('credentials.numberHolders') }}</p>
       <p class="text-color-[#393939] font-900 mt-10px">XXXXXX</p>
     </div>
-    <div class="w-160px h-42px com-button rounded-21px black-font">{{ $t('myData.viewData') }}</div>
+    <div class="w-160px h-42px com-button rounded-21px font-bold">{{ $t('myData.viewData') }}</div>
   </div>
   <div class="com-main-data-wrap my-40px">
     <div class="flex items-center justify-between">
       <div>
         <p
-          class="font-900 text-color-[#333333] text-22px black-font"
+          class="font-900 text-color-[#333333] text-22px font-bold"
         >{{ $t('credentials.presentPrice') }}</p>
         <p class="text-color-[#666666] font-400 font-medium mt-12px">
           <span>1 LAT = 0.001 MTSTK-618</span>
@@ -82,18 +82,18 @@
   </div>
   <div class="com-main-data-wrap my-40px">
     <p
-      class="font-900 text-color-[#333333] text-22px black-font"
+      class="font-900 text-color-[#333333] text-22px font-bold"
     >{{ $t('credentials.credentialExchangePool') }}</p>
     <div class="flex items-center justify-between mt-19px">
       <div>
-        <p class="font-900 text-color-[#333333] black-font">{{ $t('myData.total') }}</p>
+        <p class="font-900 text-color-[#333333] font-bold">{{ $t('myData.total') }}</p>
         <p class="text-color-[#666666] font-400 font-medium mt-6px">
           <span class="mr-40px">12,333 MTSTK-618</span>
           <span>999,999 LAT</span>
         </p>
       </div>
       <div>
-        <p class="font-900 text-color-[#333333] black-font">
+        <p class="font-900 text-color-[#333333] font-bold">
           {{ $t('myData.myShare') }}：
           <span class="text-color-[#666666]">23%</span>
         </p>

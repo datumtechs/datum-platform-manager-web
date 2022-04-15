@@ -1,6 +1,6 @@
 <template>
     <div class="flex-1 h-full relative">
-        <div class="mt-30px max-w-1200px px-25px mx-auto overflow-hidden">
+        <div class="main-content mt-30px max-w-1200px mx-auto overflow-hidden">
             <div class="inline-block h-50px">
                 <ComTabs :list="list" :activekey="activekey" @change="tabsChange" />
             </div>

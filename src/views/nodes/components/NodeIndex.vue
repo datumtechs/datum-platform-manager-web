@@ -6,7 +6,7 @@
                 <p v-else>{{ totalNode }} participant nodes in the privacy computing network</p>
             </template>
         </Banner>
-        <div class="mt-30px max-w-1200px px-25px mx-auto overflow-hidden">
+        <div class="main-content mt-30px max-w-1200px mx-auto overflow-hidden">
             <NodeCard v-for="(node, index) in nodeList" :size="10" :page="1" :node="node"
                 :index="index" :key="index" />
         </div>

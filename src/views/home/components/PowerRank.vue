@@ -21,7 +21,7 @@
             class="w-174px h-200px rounded-8px p-20px gap-20px text-[#fff]"
             :class="`rank-box-${index + 1}`"
           >
-            <p class="text-[20px] leading-24px black-font">{{ box.title }}</p>
+            <p class="text-[20px] leading-24px font-bold">{{ box.title }}</p>
             <p class="mt-8px text-[16px] leading-19px opacity-80">
               <span>{{ $t('home.powerRatio') }}: &nbsp;&nbsp;</span>
               <span>{{ box.ratio }}</span>

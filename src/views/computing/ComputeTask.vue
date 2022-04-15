@@ -9,8 +9,8 @@
         </p>
       </template>
     </Banner>
-    <div class="com-main-data-wrap">
-      <el-table :data="tableData" class="mt-50px com-table _com_el-table-wrap">
+    <div class="main-content com-main-data-wrap">
+      <el-table :data="tableData" class="mt-30px com-table _com_el-table-wrap">
         <el-table-column type="index" width="100" :index="indexMethod">
           <template #header>{{ $t('common.num') }}</template>
         </el-table-column>

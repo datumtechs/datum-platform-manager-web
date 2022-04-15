@@ -3,7 +3,7 @@
     <Banner :bg-name="'newTask'">
       <template #briefInfo>{{ $t('task.createTaskBriefInfo') }}</template>
     </Banner>
-    <div class="com-main-data-wrap">
+    <div class="com-main-data-wrap main-content">
       <TaskMain />
     </div>
   </div>
@@ -14,7 +14,7 @@ import TaskMain from './components/TaskMain.vue';
 <style lang="scss">
 .task-wrap {
   .el-form .el-form-item__label {
-    // @extend .black-font;
+    // @extend .font-bold;
     font-size: 16px;
     font-weight: 600;
     color: #000000;

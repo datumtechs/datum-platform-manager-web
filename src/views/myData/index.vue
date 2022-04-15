@@ -11,7 +11,7 @@
         </p>
       </template>
     </Banner>
-    <div class="com-main-data-wrap">
+    <div class="main-content com-main-data-wrap">
       <DataTable
         :data="tableData"
         @purchase="purchase"

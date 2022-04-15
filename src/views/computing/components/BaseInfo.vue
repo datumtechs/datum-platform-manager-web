@@ -11,11 +11,11 @@
       <template #default="{ row }">
         <div class="pl-32px" v-if="!row.last">
           <p class="text-color-[#999999]">{{ $t(`${row.lName}`) }}:</p>
-          <p class="text-color-[#393939] black-font">{{ row.lProp }}</p>
+          <p class="text-color-[#393939] font-bold">{{ row.lProp }}</p>
         </div>
         <div class="pl-32px" v-else>
           <p class="text-color-[#999999]">{{ $t(`${row.lName}`) }}:</p>
-          <div class="text-color-[#393939] black-font flex justify-between">
+          <div class="text-color-[#393939] font-bold flex justify-between">
             <div class="flex-1">
               <span>{{ $t('common.cpu') }}</span>
               4
@@ -36,7 +36,7 @@
       <template #default="{ row }">
         <div class="pl-32px" v-if="!row.last">
           <p class="text-color-[#999999]">{{ $t(`${row.rName}`) }}:</p>
-          <p class="text-color-[#393939] black-font">{{ row.lProp }}</p>
+          <p class="text-color-[#393939] font-bold">{{ row.lProp }}</p>
         </div>
       </template>
     </el-table-column>

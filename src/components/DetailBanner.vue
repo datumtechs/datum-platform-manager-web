@@ -1,5 +1,6 @@
 <template>
-    <div class="w-full h-167px flex justify-between relative border-bottom px-50px py-42px">
+    <div
+        class="inner-banner max-w-1200px m-auto h-167px flex justify-between relative border-bottom py-42px">
         <div class="flex">
             <el-icon :size="40" v-if="backShow" class="cursor-pointer mr-30px"
                 @click="emit('back')">
@@ -8,7 +9,7 @@
             <div v-if="props.imgUrl" class="mr-14px h-36px">
                 <img class="w-40px h-40px rounded-1/2" :src="props.imgUrl" />
             </div>
-            <div class="w-full black-font text-48px text-color-[#393939] font-900 leading-58px">
+            <div class="w-full font-bold text-48px text-color-[#393939] font-900 leading-58px">
                 <p class="leading-40px">
                     <slot name="primaryInfo"></slot>
                 </p>

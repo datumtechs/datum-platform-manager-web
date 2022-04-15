@@ -1,8 +1,8 @@
 <template>
   <div
-    class="max-w-1200px m-auto h-167px items-center flex justify-between relative border-bottom com-main"
-    :style="{ background: `url(${bgUrl}) no-repeat right`, 'background-size': 'auto 100%' }">
-    <div class="w-full black-font text-48px text-color-[#393939] font-900 leading-58px">
+    class="main-banner max-w-1200px m-auto h-167px items-center flex justify-between relative border-bottom com-main"
+    :style="{ background: `url(${bgUrl}) no-repeat right`, 'background-size': '100% 100%' }">
+    <div class="w-full font-bold text-48px text-color-[#393939] font-900 leading-58px">
       <el-icon v-if="backShow" class="cursor-pointer" @click="emit('back')">
         <back />
       </el-icon>
