@@ -15,7 +15,9 @@ import { ElContainer, ElHeader } from 'element-plus';
       </el-aside>
       <div class="layout-mian-wrap">
         <router-view v-slot="{ Component }">
-          <component :is="Component" />
+          <transition name="slide">
+            <component :is="Component" />
+          </transition>
         </router-view>
       </div>
     </el-container>
@@ -27,8 +29,10 @@ import { ElContainer, ElHeader } from 'element-plus';
 <style scoped lang="scss">
 .layout-mian-wrap::-webkit-scrollbar {
   /*滚动条整体样式*/
-  width: 7px; /*高宽分别对应横竖滚动条的尺寸*/
+  width: 7px;
+  /*高宽分别对应横竖滚动条的尺寸*/
 }
+
 .layout-mian-wrap::-webkit-scrollbar-thumb {
   /*滚动条里面小方块*/
   height: 30px;
@@ -36,6 +40,7 @@ import { ElContainer, ElHeader } from 'element-plus';
   // box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
   background: #d8d8d8;
 }
+
 .layout-mian-wrap::-webkit-scrollbar-track {
   /*滚动条里面轨道*/
   // box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);

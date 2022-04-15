@@ -36,6 +36,7 @@ const linkToViewData = (row: any) => {
         path: '/marketplace/dataOverview',
         query: {
             metaDataId: row.metaDataId,
+            dataName: row.metaDataName
         }
     })
 }

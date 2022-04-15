@@ -56,9 +56,9 @@ import type { ElDialog } from 'element-plus';
 const emit = defineEmits(['loginShowChange'])
 const { locale } = useI18n()
 const checked = ref<any>(false)
-const islogin = ref(false)
+const isLogin = ref(false)
 const props = defineProps({ loginShow: { type: Boolean, default: false } })
-const doalog = ref<InstanceType<typeof ElDialog> | null>(null)
+const dialog = ref<InstanceType<typeof ElDialog> | null>(null)
 const web3: any = inject('web3')
 const walletStore = useWallet()
 const userInfoStore = useUsersInfo()
@@ -66,7 +66,7 @@ const isWallet = walletStore.getIsWallet
 
 const closeDialog = () => {
   checked.value = false
-  doalog.value?.close()
+  dialog.value?.close()
 }
 
 const linkToMetamask = () => {
@@ -83,10 +83,9 @@ const getLogin = async (params: any) => {
       userInfoStore.setUsers(data.userName)
       closeDialog()
     }
-    islogin.value = false
+    isLogin.value = false
   } catch (error) {
-    islogin.value = false
-    console.log(error)
+    isLogin.value = false
   }
 }
 
@@ -110,16 +109,16 @@ const getLoginNonce = async () => {
 }
 
 const login = async () => {
-  if (!checked.value || islogin.value) return
+  if (!checked.value || isLogin.value) return
   try {
-    islogin.value = true
+    isLogin.value = true
     await web3.connectWallet()
     await getLoginNonce()
     const res = await web3.signForWallet('login')
     res && getLogin(web3.loginParams())
   } catch (error) {
     console.log(error)
-    islogin.value = false
+    isLogin.value = false
   }
 }
 

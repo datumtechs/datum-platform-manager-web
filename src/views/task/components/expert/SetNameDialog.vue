@@ -53,7 +53,6 @@ const rules = reactive({
 })
 
 const submitForm = async (form: any) => {
-    console.log(form);
 
     if (!form) return
     await form.validate((valid: any, fields: any) => {

@@ -1,6 +1,7 @@
 <template>
   <div class="flex-1 task-wrap com-main">
-    <Banner :back-show="true" :bg-name="'arrow'" @back="router.go(-1)">
+    <Banner :back-show="true" :bg-name="'market'" @back="router.go(-1)" :detailName="dataName"
+      :showRouter="false">
       <template #select>
         <ComTabs :list="list" :activekey="activekey" @change="tabsChange" />
       </template>
@@ -18,6 +19,7 @@ import MetaData from './dataComponents/MetaData.vue';
 import TaskInvolved from './dataComponents/TaskInvolved.vue'
 import { type Router, useRouter, useRoute } from 'vue-router'
 import { useUsersInfo } from '@/stores'
+import { useFileType, useFormatTime } from '@/hooks'
 import { queryDataDetails } from '@/api/data'
 import { enums } from '@/utils/enum'
 
@@ -27,6 +29,9 @@ const store = useUsersInfo()
 const route = useRoute()
 const activekey = ref(0)
 const metaDataId: string | any = route.query.metaDataId || ''
+const dataName: string | any = route.query.dataName
+
+
 const list = ref([
   {
     name: 'myData.basicInfo'
@@ -53,13 +58,6 @@ const tabsChange = (index: string) => {
   activekey.value = +index
 }
 
-const filterDate = (time: number) => {
-  if (!time) return ''
-  return new Date(time).toLocaleString()
-
-}
-
-
 const query = () => {
   queryDataDetails({ metaDataId: metaDataId }).then(res => {
     const { data, code } = res
@@ -71,12 +69,12 @@ const query = () => {
         rProp: data.tokenSymbol,
       }, {
         lName: 'myData.launchTime',
-        lProp: filterDate(data.publishedAt),
+        lProp: useFormatTime(data.publishedAt),
         rName: 'myData.industryData',
         rProp: t(enums.industry[data.industry])// data.industry,
       }, {
         lName: 'myData.dataFormat',
-        lProp: data.fileType,
+        lProp: useFileType(data.fileType),
         rName: 'myData.dataSize',
         rProp: data.size,
       }, {
@@ -108,4 +106,5 @@ onMounted(() => {
 
 
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+</style>

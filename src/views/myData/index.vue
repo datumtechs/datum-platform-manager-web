@@ -1,5 +1,5 @@
 <template>
-  <div class="flex-1 task-wrap com-main">
+  <div class="task-wrap com-main">
     <Banner :bg-name="'myData'">
       <template #briefInfo>
         <p class="text-color-[#999999]">

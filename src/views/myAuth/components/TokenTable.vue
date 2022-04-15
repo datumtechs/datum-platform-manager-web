@@ -1,7 +1,7 @@
 <template>
     <div class="my-60px com-main-data-wrap main-content">
-        <DataToken type="fee" :tableData="feeTokenData" />
-        <DataToken type="data" :tableData="dataTokenData" />
+        <DataToken type="fee" :tableData="feeTokenData" :title="$t('auth.feeToken')" />
+        <DataToken type="data" :tableData="dataTokenData" :title="$t('auth.dataToken')" />
     </div>
 </template>
 <script setup lang="ts">

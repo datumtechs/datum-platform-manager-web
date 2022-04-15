@@ -61,7 +61,6 @@ const toLink = (type: string) => {
 const logout = async () => {
   try {
     const res: any = await Logout()
-    console.log(res)
     const { code } = res
     if (code === 10000) {
       emit('drawerShowchange')

@@ -1,5 +1,6 @@
 <template>
-  <el-table :data="props.data" class="my-63px table-header-bg-Grayscale" border>
+  <el-table :data="props.data" :class="isPathIncludeNode ? 'mt-30px' : 'my-60px'"
+    class="mb-50px table-header-bg-Grayscale" border>
     <el-table-column type="index" width="200" align="center">
       <template #header>{{ $t('common.num') }}</template>
     </el-table-column>
@@ -9,6 +10,9 @@
   </el-table>
 </template>
 <script lang="ts" setup>
+import { usePathIncludeNode } from '@/hooks'
+
+const isPathIncludeNode = usePathIncludeNode()
 const props = defineProps({
   data: {
     type: Array,

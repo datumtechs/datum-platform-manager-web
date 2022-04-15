@@ -1,11 +1,11 @@
 <template>
-  <div class="flex-1 task-wrap com-main">
+  <div class="task-wrap com-main">
     <Banner :bg-name="'computeServe'">
       <template #select>
         <ComTabs :list="titleList" :activekey="activekey" @change="tabsChange" />
       </template>
     </Banner>
-    <div class="main-content com-main-data-wrap mt-60px">
+    <div class="main-content com-main-data-wrap mt-55px">
       <div
         v-show="activekey == 0 ? list.privacy?.length : list.noPrivacy?.length"
         class="w-full mb-50px"

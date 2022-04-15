@@ -1,25 +1,14 @@
-$calcWidth: calc(100vw - 219px);
 $calcHeight: calc(100vh - 70px);
-$minWidth: calc(1200px - 219px);
 
 .layout-mian-wrap {
-  width: $calcWidth;
   height: $calcHeight;
-  min-width: $minWidth;
   overflow: auto;
-}
-
-.main-w {
-  width: $calcWidth;
+  flex: 1;
 }
 
 .com-main-data-wrap {
   max-width: 1200px;
   margin: 0 auto;
-}
-
-.com-main {
-  min-width: $minWidth;
 }
 
 .layout-home {
@@ -116,4 +105,8 @@ $minWidth: calc(1200px - 219px);
   .main-content {
     padding: 0 30px;
   }
+}
+.banner-wrapper {
+  width: 100%;
+  border-bottom: 1px solid #eeeeee;
 }

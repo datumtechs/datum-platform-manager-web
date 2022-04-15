@@ -1,5 +1,5 @@
 <template>
-  <div class="flex-1 task-wrap com-main">
+  <div class="task-wrap com-main">
     <Banner :bg-name="'globalTask'">
       <template #briefInfo>
         <p class="text-color-[#999999]">
@@ -18,7 +18,7 @@
         <el-table-column prop="status" :label="$t('computeTask.taskStatus')">
           <template #default="{ row }">
             <div>
-              {{ getStatus(row.status) }}
+              {{ useGlobalTaskMap(row.status) }}
             </div>
           </template>
         </el-table-column>
@@ -49,7 +49,7 @@
 <script lang="ts" setup>
 import { type Router, useRouter } from 'vue-router'
 import { queryTaskList } from '@/api/task'
-import { useFormatTime, useDuring, useTableIndex } from '@/hooks'
+import { useFormatTime, useDuring, useTableIndex, useGlobalTaskMap } from '@/hooks'
 const router: Router = useRouter()
 const { t } = useI18n()
 

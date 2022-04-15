@@ -1,5 +1,5 @@
 <template>
-    <div class="mt-40px">
+    <div class="mt-30px">
         <el-table :header-cell-style="{ height: '50px' }" :row-style="{ height: '70px' }"
             :data="tableData" highlight-current-row style="width: 100%">
             <el-table-column type="index" :label="$t('common.num')" :index="indexMethod"

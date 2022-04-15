@@ -2,7 +2,7 @@
   <div
     class="com-tabs relative h-full bg-color-[#EEEEEE] rounded-25px flex px-7px py-5px items-center justify-between cursor-pointer">
     <div :ref="setItemRef"
-      class="px-20px h-full flex-1 flex items-center justify-center z-1 text-16px text-color-[#666666]"
+      class="px-40px h-full flex-1 flex items-center justify-center z-1 text-16px text-color-[#666666]"
       style="word-break: keep-all;white-space:nowrap" :class="{ active: + index === activeIndex }"
       v-for="(item, index) in props.list" :key="index" @click="tabsClick(index)">
       <p>{{ $t(`${item.name}`) }}</p>

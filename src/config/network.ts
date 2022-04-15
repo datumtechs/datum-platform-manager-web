@@ -1,12 +1,12 @@
-interface Network { 
-    chainName:string;
-    chainId:number;
-    rpcUrl:string;
-    symbol:string;
-    blockExplorerUrl:string;
+interface Network {
+    chainName: string;
+    chainId: number;
+    rpcUrl: string;
+    symbol: string;
+    blockExplorerUrl: string;
 }
 
-const config :Network= {
+const config: Network = {
     chainName: 'PlatON开发网',
     chainId: 210309,
     rpcUrl: 'https://devnetopenapi.platon.network/rpc',
