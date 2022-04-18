@@ -31,7 +31,7 @@ const queryDataList = () => {
 const queryWLat = async () => {
     const { code, data } = await getUserMetisLatInfo({})
     if (code === 10000) {
-        feeTokenData.value = [Object.assign(data.token, data.tokenHolder)]
+        feeTokenData.value = [data]
     }
 }
 

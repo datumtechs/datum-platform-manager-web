@@ -314,7 +314,8 @@ const en = {
     cancelTokenAuth: 'Cancel credential authorization',
     authStatus: 'Status',
     authorized: 'Authorized',
-    unauthorized: 'Unauthorized'
+    unauthorized: 'Unauthorized',
+    cancelNodeAuth: 'Cancel node authorization',
   },
   industry: {
     bank: 'Finance (bank)',

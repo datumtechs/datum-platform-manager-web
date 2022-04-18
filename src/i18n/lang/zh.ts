@@ -314,7 +314,8 @@ const zh = {
     cancelTokenAuth: '取消凭证授权',
     authStatus: '授权状态',
     authorized: '已授权',
-    unauthorized: '未授权'
+    unauthorized: '未授权',
+    cancelNodeAuth: '取消节点授权'
   },
   industry: {
     bank: '金融业（银行）',

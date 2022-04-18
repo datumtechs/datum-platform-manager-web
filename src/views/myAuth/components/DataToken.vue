@@ -2,17 +2,19 @@
     <div class="mb-50px">
         <div class="text-20px font-bold text-color-[#333] flex">
             <p>{{ props.title }}</p>
-            <el-tooltip :content="props.titleContent" placement="right" effect="light">
+            <!-- <el-tooltip :content="props.titleContent" placement="right" effect="light">
                 <img class="w-20px h-20px ml-10px cursor-pointer"
                     src="@/assets/images/task/quest@2x.png" alt="">
-            </el-tooltip>
+            </el-tooltip> -->
+            <QuestionMark :content="props.titleContent">
+            </QuestionMark>
         </div>
         <el-table class="mt-20px" :data="props.tableData">
             <el-table-column type="index" width="100">
                 <template #header>{{ t('common.num') }}</template>
             </el-table-column>
-            <el-table-column prop="name" :label="t('myData.credentialName')" />
-            <el-table-column prop="symbol" :label="t('myData.credentialSymbol')" />
+            <el-table-column prop="tokenName" :label="t('myData.credentialName')" />
+            <el-table-column prop="tokenSymbol" :label="t('myData.credentialSymbol')" />
             <el-table-column :label="t('myData.dataName')">
                 <template #default="{ row }">
                     <p v-if="row.metaDataName">{{ row.metaDataName }}</p>
@@ -21,7 +23,7 @@
             </el-table-column>
             <el-table-column :label="t('auth.holdQuantity')">
                 <template #default="{ row }">
-                    <p v-if="row.balance">{{ row.balance }}</p>
+                    <p v-if="row.tokenBalance">{{ row.tokenBalance }}</p>
                     <p v-else>0</p>
                 </template>
             </el-table-column>
@@ -34,11 +36,11 @@
             <el-table-column :label="t('common.actions')">
                 <template #default="{ row }">
                     <el-button class="text-14px text-color-[#0052D9] cursor-pointer" type="text"
-                        circle @click="showAuthDialog = true; currentToken = row.name">{{
+                        circle @click="showAuthDialog = true; currentToken = row.tokenName">{{
                             t('auth.auth')
                         }}</el-button>
                     <el-button class="text-14px text-color-[#0052D9] cursor-pointer" type="text"
-                        circle @click="showCancelDialog = true">{{
+                        circle @click="showCancelDialog = true; currentToken = row.tokenName">{{
                             t('auth.cancelAuth')
                         }}
                     </el-button>
@@ -78,15 +80,17 @@
                 </div>
             </template>
             <div class="flex items-center mb-24px">
-                <p class="pl-32px break-word" v-if="locale === 'zh'"> 将取消&nbsp;{{
-                    currentToken
-                }}&nbsp;的授权,授权数量将会变更为0.
+                <p class="pl-32px break-word" v-if="locale === 'zh'"> 将&nbsp;
+                    <span class="text-color-[#2B60E9]">{{
+                        currentToken
+                    }}</span>
+                    &nbsp;的授权数量重置为0.
                 </p>
-                <p class="pl-32px break-word" v-else> The authorization of {{
-                    currentToken
-                }}
-                    will be
-                    cancelled, and the number of authorizations will be changed to 0.</p>
+                <p class="pl-32px break-word" v-else> Reset the authorized quantity of <span
+                        class="text-color-[#2B60E9]">{{
+                            currentToken
+                        }}</span>
+                    to 0.</p>
             </div>
             <template #footer>
                 <div>
@@ -157,9 +161,6 @@ const rules = ref(
         ]
     }
 )
-const emits = defineEmits({
-
-})
 </script>
 
 <style scoped lang='scss'>

@@ -27,7 +27,7 @@ body {
   min-height: 100vh;
   color: var(--color-text);
   background: var(--color-background);
-  font-family: DINPro-Regular, Ali-Regular, "Microsoft YaHei", Helvetica, sans-serif;
+  font-family: DINPro-Regular, Ali-Regular, Microsoft YaHei, Helvetica, sans-serif;
   font-size: 14px;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -41,6 +41,11 @@ li {
   padding: 0;
   margin: 0;
   list-style: none;
+}
+
+a {
+  color: #2B60E9 ;
+  text-decoration: none;
 }
 
 .min-height {

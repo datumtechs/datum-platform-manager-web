@@ -1,20 +1,11 @@
 <template>
-  <el-form
-    :ref="(el: any) => formRef = el"
-    :model="form"
-    class="account-form mx-50px my-67px"
-    :rules="rules"
-    :label-position="'left'"
-    :label-width="locale == 'zh' ? '80px' : '150px'"
-  >
+  <el-form :ref="(el: any) => formRef = el" :model="form" class="account-form mx-50px my-67px"
+    :rules="rules" :label-position="'left'" :label-width="locale == 'zh' ? '80px' : '150px'">
     <el-form-item :label="`${t('account.walletAddress')}:`">
       <p class="text-16px w-390px address leading-22px text-color-[#333333]">{{ store.address }}</p>
       <p class="text-16px ml-50px leading-22px text-color-[#0052D9] cursor-pointer">
-        <a
-          :href="`https://scan.platon.network/address-detail?address=${store.address}`"
-          target="_blank"
-          class="text-16px"
-        >
+        <a :href="`https://scan.platon.network/address-detail?address=${store.address}`"
+          target="_blank" class="text-16px">
           {{
             t('account.viewExplorer')
           }}
@@ -29,24 +20,17 @@
     </el-form-item>
     <el-form-item :label="`${t('head.nickname')}:`" prop="name">
       <div class="flex w-400px">
-        <el-input
-          v-model="form.name"
-          :disabled="disabled"
-          :minlength="3"
-          :maxlength="20"
-          :input-style="{ width: '390px' }"
-          class="w-390px"
-        ></el-input>
+        <el-input v-model="form.name" :disabled="disabled" :minlength="3" :maxlength="20"
+          :input-style="{ width: '390px' }" class="w-390px"></el-input>
         <span class="ml-49px w-1px"></span>
-        <el-button type="text" v-if="disabled" @click="disabled = !disabled">
-          <span class="text-16px">{{ t('common.edit') }}</span>
-        </el-button>
+        <div type="text" v-if="disabled" @click="disabled = !disabled">
+          <span class="text-16px cursor-pointer text-color-[#2B60E9]">{{ t('common.edit') }}</span>
+        </div>
         <div class="flex" v-else>
           <el-button type="primary" round @click="submit">{{ t('common.preservation') }}</el-button>
-          <el-button
-            round
-            @click="disabled = !disabled, formRef.clearValidate()"
-          >{{ t('common.cancel') }}</el-button>
+          <el-button round @click="disabled = !disabled, formRef.clearValidate()">{{
+            t('common.cancel')
+          }}</el-button>
         </div>
       </div>
     </el-form-item>
@@ -124,4 +108,5 @@ const submit = () => {
 }
 
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+</style>
