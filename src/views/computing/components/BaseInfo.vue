@@ -10,22 +10,22 @@
     <el-table-column class-name="h-100px">
       <template #default="{ row }">
         <div class="pl-32px" v-if="!row.last">
-          <p class="text-color-[#999999]">{{ $t(`${row.lName}`) }}:</p>
+          <p class="text-color-[#999999]">{{ t(`${row.lName}`) }}:</p>
           <p class="text-color-[#393939] font-bold">{{ row.lProp }}</p>
         </div>
         <div class="pl-32px" v-else>
-          <p class="text-color-[#999999]">{{ $t(`${row.lName}`) }}:</p>
+          <p class="text-color-[#999999]">{{ t(`${row.lName}`) }}:</p>
           <div class="text-color-[#393939] font-bold flex justify-between">
             <div class="flex-1">
-              <span>{{ $t('common.cpu') }}</span>
+              <span>{{ t('common.cpu') }}</span>
               4
             </div>
             <div class="flex-1">
-              <span>{{ $t('common.memory') }}</span>
+              <span>{{ t('common.memory') }}</span>
               123
             </div>
             <div class="flex-1">
-              <span>{{ $t('common.bandwidth') }}</span>
+              <span>{{ t('common.bandwidth') }}</span>
               123
             </div>
           </div>
@@ -35,7 +35,7 @@
     <el-table-column class-name="h-100px">
       <template #default="{ row }">
         <div class="pl-32px" v-if="!row.last">
-          <p class="text-color-[#999999]">{{ $t(`${row.rName}`) }}:</p>
+          <p class="text-color-[#999999]">{{ t(`${row.rName}`) }}:</p>
           <p class="text-color-[#393939] font-bold">{{ row.lProp }}</p>
         </div>
       </template>
@@ -44,6 +44,7 @@
 </template>
 <script lang="ts" setup>
 import type { TableColumnCtx } from 'element-plus/es/components/table/src/table-column/defaults'
+const { t } = useI18n()
 interface SpanMethodProps {
   row: any
   column: TableColumnCtx<any>

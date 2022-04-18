@@ -1,6 +1,6 @@
 <template>
     <div class="mt-60px">
-        <Title :text="$t('home.dataOverview')">
+        <Title :text="t('home.dataOverview')">
             <template #pic>
                 <img src="@assets/images/home/overview.png" />
             </template>

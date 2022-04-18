@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { queryDataList } from '@/api/data'
 import { useTableIndex } from '@/hooks'
-const { locale } = useI18n()
+const { t, locale } = useI18n()
 const total = ref(0)
 const router = useRouter()
 interface PageParams {
@@ -82,29 +82,29 @@ onMounted(() => {
         <div class="main-content mt-30px max-w-1200px mx-auto overflow-hidden">
             <el-table :header-cell-style="{ height: '50px' }" :row-style="{ height: '70px' }"
                 :data="tableData" highlight-current-row style="width: 100%">
-                <el-table-column type="index" :label="$t('common.num')" :index="indexMethod"
+                <el-table-column type="index" :label="t('common.num')" :index="indexMethod"
                     width="80" />
                 <el-table-column show-overflow-tooltip prop="metaDataName"
-                    :label="$t('myData.dataName')" />
+                    :label="t('myData.dataName')" />
                 <el-table-column show-overflow-tooltip prop="identityId"
-                    :label="$t('myData.dataProvider')" />
+                    :label="t('myData.dataProvider')" />
                 <el-table-column show-overflow-tooltip prop="tokenName"
-                    :label="$t('myData.credentialName')" />
-                <el-table-column prop="tokenPrice" :label="$t('common.credentialPrice')">
+                    :label="t('myData.credentialName')" />
+                <el-table-column prop="tokenPrice" :label="t('common.credentialPrice')">
                     <template #default="{ row }">
                         <div>{{ row.tokenPrice }} LAT</div>
                     </template>
                 </el-table-column>
-                <el-table-column :label="$t('common.actions')" width="280">
+                <el-table-column :label="t('common.actions')" width="280">
                     <template #default="{ row }">
                         <el-space :size="20">
                             <span class="text-14px text-color-[#0052D9] leading-20px cursor-pointer"
-                                @click="purchase(row)">{{ $t('common.purchase') }}</span>
+                                @click="purchase(row)">{{ t('common.purchase') }}</span>
                             <span class="text-14px text-color-[#0052D9] leading-20px cursor-pointer"
-                                @click="linkToViewData(row)">{{ $t('myData.viewData') }}</span>
+                                @click="linkToViewData(row)">{{ t('myData.viewData') }}</span>
                             <span class="text-14px text-color-[#0052D9] leading-20px cursor-pointer"
                                 @click="linkToViewToken(row)">{{
-                                    $t('myData.viewCredential')
+                                    t('myData.viewCredential')
                                 }}</span>
                         </el-space>
                     </template>

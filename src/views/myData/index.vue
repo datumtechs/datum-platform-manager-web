@@ -3,11 +3,11 @@
     <Banner :bg-name="'myData'">
       <template #briefInfo>
         <p class="text-color-[#999999]">
-          {{ $t('myData.tasksBriefInfoFirstParagraph') }}
+          {{ t('myData.tasksBriefInfoFirstParagraph') }}
           <span
             class="text-color-[#2B60E9] text-16px"
           >{{ dataTotal }}</span>
-          {{ $t('myData.tasksBriefInfoTwoParagraph') }}
+          {{ t('myData.tasksBriefInfoTwoParagraph') }}
         </p>
       </template>
     </Banner>
@@ -34,6 +34,7 @@
 <script lang="ts" setup>
 import { type Router, useRouter } from 'vue-router'
 import { queryUserDataList, queryDataStats } from '@/api/data'
+const { t } = useI18n()
 const router: Router = useRouter()
 const tableData = ref([])
 const current = ref(1)

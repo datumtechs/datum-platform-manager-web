@@ -1,6 +1,6 @@
 <template>
   <div class="mt-60px">
-    <Title :text="$t('home.globalPowerAndRank')">
+    <Title :text="t('home.globalPowerAndRank')">
       <template #pic>
         <img src="@assets/images/home/powerRank.png" />
       </template>
@@ -23,10 +23,10 @@
           >
             <p class="text-[20px] leading-24px font-bold">{{ box.title }}</p>
             <p class="mt-8px text-[16px] leading-19px opacity-80">
-              <span>{{ $t('home.powerRatio') }}: &nbsp;&nbsp;</span>
+              <span>{{ t('home.powerRatio') }}: &nbsp;&nbsp;</span>
               <span>{{ box.ratio }}</span>
             </p>
-            <p class="mt-52px text-[12px] opacity-80">{{ $t('home.nodeName') }}</p>
+            <p class="mt-52px text-[12px] opacity-80">{{ t('home.nodeName') }}</p>
             <p class="mt-4px text-[14px] font-bold leading-17px">{{ box.nodeName }}</p>
           </div>
         </div>

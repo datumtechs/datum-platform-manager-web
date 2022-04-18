@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import routePath from '@/router/routePath'
+const { t } = useI18n()
 const routeList = routePath.filter(v => {
   // @ts-ignore
   return v.meta.show.includes('home')
@@ -13,7 +14,7 @@ const routeList = routePath.filter(v => {
       v-for="item in routeList"
       :key="item.path"
       :to="item.path"
-    >{{ $t(`${item.meta.label}`) }}</router-link>
+    >{{ t(`${item.meta.label}`) }}</router-link>
   </div>
   <div v-show="$route.path !== '/'" id="search" class="pl-45px pr-25px flex-1 w-full h-40px"></div>
 </template>

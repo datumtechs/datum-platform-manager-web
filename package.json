@@ -13,6 +13,7 @@
     "@antv/g2": "^4.1.46",
     "@element-plus/icons-vue": "^0.2.7",
     "@types/qs": "^6.9.7",
+    "@types/webpack-env": "^1.16.4",
     "axios": "^0.26.0",
     "element-plus": "^2.0.2",
     "pinia": "^2.0.11",

@@ -1,10 +1,10 @@
 <template>
     <div class="p-30px env-box">
-        <p class="text-color-[#333] font-bold">{{ $t('expert.setAlgoEnv') }}</p>
+        <p class="text-color-[#333] font-bold">{{ t('expert.setAlgoEnv') }}</p>
         <div class="mt-40px">
-            <p>{{ $t('expert.minimumResource') }}</p>
+            <p>{{ t('expert.minimumResource') }}</p>
             <div class="mt-20px">
-                <p class="mb-10px">{{ $t('common.cpu') }}</p>
+                <p class="mb-10px">{{ t('common.cpu') }}</p>
                 <el-select
                     class="w-full"
                     v-model.trim="obj.cores"
@@ -20,7 +20,7 @@
                 </el-select>
             </div>
             <div class="mt-20px">
-                <p class="mb-10px">{{ $t('common.memory') }}</p>
+                <p class="mb-10px">{{ t('common.memory') }}</p>
                 <el-input
                     min="1"
                     type="number"
@@ -34,7 +34,7 @@
                 </el-input>
             </div>
             <div class="mt-20px">
-                <p class="mb-10px">{{ $t('common.bandwidth') }}</p>
+                <p class="mb-10px">{{ t('common.bandwidth') }}</p>
                 <el-input
                     min="1"
                     type="number"
@@ -49,7 +49,7 @@
             </div>
         </div>
         <div class="mt-30px">
-            <p class="mb-10px">{{ $t('expert.longestComputingTime') }}</p>
+            <p class="mb-10px">{{ t('expert.longestComputingTime') }}</p>
             <el-input
                 min="1"
                 type="number"
@@ -58,7 +58,7 @@
                 v-model.trim="obj.longestComputingTime"
             >
                 <template #suffix>
-                    <p class="font-14px leading-40px">{{ $t('common.minute') }}</p>
+                    <p class="font-14px leading-40px">{{ t('common.minute') }}</p>
                 </template>
             </el-input>
         </div>

@@ -1,7 +1,7 @@
 <template>
   <div class="flex-1 task-wrap com-main">
     <Banner :bg-name="'newTask'">
-      <template #briefInfo>{{ $t('task.createTaskBriefInfo') }}</template>
+      <template #briefInfo>{{ t('task.createTaskBriefInfo') }}</template>
     </Banner>
     <div class="com-main-data-wrap main-content">
       <TaskMain />
@@ -10,6 +10,7 @@
 </template>
 <script lang="ts" setup>
 import TaskMain from './components/TaskMain.vue';
+const { t } = useI18n()
 </script>
 <style lang="scss">
 .task-wrap {

@@ -1,25 +1,25 @@
 <template>
   <el-dialog :model-value="props.loginShow" :append-to-body="true" :width="400" :top="'30vh'"
-    ref="doalog" :destroy-on-close="true" :close-on-click-modal="false"
+    ref="dialog" :destroy-on-close="true" :close-on-click-modal="false"
     :close-on-press-escape="false" @close="emit('loginShowChange')">
     <template #title>
-      <p class="text-[18px] font-bold">{{ $t('head.loginDialogTitle') }}</p>
+      <p class="text-[18px] font-bold">{{ t('head.loginDialogTitle') }}</p>
     </template>
     <div v-if="!isWallet">
       <div class="flex mb-30px items-center gap-10px justify-center">
         <el-icon>
           <pointer />
         </el-icon>
-        <p class>{{ $t('head.installTipOne') }}</p>
+        <p class>{{ t('head.installTipOne') }}</p>
       </div>
       <div class="flex mb-30px items-center gap-10px justify-center">
         <el-icon>
           <cloudy />
         </el-icon>
-        <p>{{ $t('head.installTipTwo') }}</p>
+        <p>{{ t('head.installTipTwo') }}</p>
       </div>
       <el-button type="primary" class="ml-110px w-140px h-40px rounded-[20px]"
-        @click="linkToMetamask">{{ $t('head.install') }}</el-button>
+        @click="linkToMetamask">{{ t('head.install') }}</el-button>
     </div>
     <div v-else class="h-157px flex items-center justify-center flex-col">
       <div @click="login" :class="{ 'cursor-not-allowed': !checked, 'cursor-pointer': checked }"
@@ -53,8 +53,9 @@ import metamask from '@/assets/Images/header/metamask-fox.svg'
 import { useWallet, useUsersInfo } from '@/stores'
 import { Login, LoginNonceId } from '@/api/login'
 import type { ElDialog } from 'element-plus';
+
 const emit = defineEmits(['loginShowChange'])
-const { locale } = useI18n()
+const { t, locale } = useI18n()
 const checked = ref<any>(false)
 const isLogin = ref(false)
 const props = defineProps({ loginShow: { type: Boolean, default: false } })
@@ -111,7 +112,7 @@ const getLoginNonce = async () => {
 const login = async () => {
   if (!checked.value || isLogin.value) return
   try {
-    isLogin.value = true
+    // isLogin.value = true
     await web3.connectWallet()
     await getLoginNonce()
     const res = await web3.signForWallet('login')

@@ -301,22 +301,20 @@ const zh = {
   auth: {
     tokenAuth: '凭证授权',
     nodeAuth: '节点授权',
-    holdeQuantity: "持有数量",
+    holdQuantity: "持有数量",
     authQuantity: "授权数量",
     auth: "授权",
     cancelAuth: "取消授权",
     networkIP: "网络节点IP",
     networkName: "网络节点名称",
     quantityError: "当前数量不正确",
-    cancelAuthTipBefore: "是否确认取消",
-    cancelAuthTipAfter: "取消后授权数量将会变更为0",
-    nodeAuthEnterBefore: "确认后",
-    nodeAuthEnterAfter: "的操作将视为您已授权凭证",
-    nodeCancelAuthEnterAfter: "的授权将取消",
     feeToken: "手续费凭证",
     dataToken: "数据凭证",
     plzInputAuthTokenNumber: '请输入授权数量',
-    cancelTokenAuth: '取消凭证授权'
+    cancelTokenAuth: '取消凭证授权',
+    authStatus: '授权状态',
+    authorized: '已授权',
+    unauthorized: '未授权'
   },
   industry: {
     bank: '金融业（银行）',

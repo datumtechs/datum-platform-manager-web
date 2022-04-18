@@ -106,7 +106,12 @@ $calcHeight: calc(100vh - 70px);
     padding: 0 30px;
   }
 }
+
 .banner-wrapper {
   width: 100%;
   border-bottom: 1px solid #eeeeee;
+}
+
+.break-word {
+  word-break: break-word;
 }

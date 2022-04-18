@@ -5,21 +5,22 @@
             <p class="mt-10px text-color-[#999]">{{ obj.algorithmDesc }}</p>
         </div>
         <div class="mt-40px">
-            <p class="font-bold text-color-[#333] text-14px">{{ $t('expert.author') }}</p>
+            <p class="font-bold text-color-[#333] text-14px">{{ t('expert.author') }}</p>
             <p class="mt-10px text-color-[#999]">{{ obj.author }}</p>
         </div>
         <div class="mt-40px">
-            <p class="font-bold text-color-[#333] text-14px">{{ $t('expert.supportNum') }}</p>
+            <p class="font-bold text-color-[#333] text-14px">{{ t('expert.supportNum') }}</p>
             <p class="mt-10px text-color-[#999]">{{ obj.supportNum }}</p>
         </div>
         <div class="mt-40px">
-            <p class="font-bold text-color-[#333] text-14px">{{ $t('expert.supportLang') }}</p>
+            <p class="font-bold text-color-[#333] text-14px">{{ t('expert.supportLang') }}</p>
             <p class="mt-10px text-color-[#999]">{{ obj.supportLang }}</p>
         </div>
     </div>
 </template>
 
 <script setup lang='ts'>
+const { t } = useI18n()
 const obj = reactive({
     algorithmDesc: '用于跨组织的纵向联合分类模型训练',
     algorithmName: 'PSI',

@@ -3,32 +3,29 @@
     <Banner :bg-name="'workflow'">
       <template #briefInfo>
         <p class="text-color-[#999999]">
-          {{ $t('workflow.totalOf') }}
+          {{ t('workflow.totalOf') }}
           <span class="text-color-[#2B60E9] text-16px">{{ taskStats }}</span>
-          {{ $t('workflow.workTipsBriefInfoTwoParagraph') }}
+          {{ t('workflow.workTipsBriefInfoTwoParagraph') }}
         </p>
       </template>
     </Banner>
     <div class="com-main-data-wrap main-content">
       <DataTable :data="tableData" />
       <div class="flex my-50px justify-center">
-        <el-pagination
-          background
-          layout="prev, pager, next"
-          @current-change="(_) => {
-            current = _
-            query()
-          }"
-          :total="total"
-        />
+        <el-pagination background layout="prev, pager, next" @current-change="(_) => {
+          current = _
+          query()
+        }" :total="total" />
       </div>
     </div>
+    <Search></Search>
   </div>
-  <Search></Search>
+
 </template>
 <script lang="ts" setup>
 import DataTable from './components/DataTable.vue';
 import { queryTaskList, queryTaskStats } from '@/api/task'
+const { t } = useI18n()
 const current = ref(1)
 const total = ref(0)
 const tableData = ref([])

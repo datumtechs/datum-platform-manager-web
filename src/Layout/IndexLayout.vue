@@ -15,7 +15,7 @@ import { ElContainer, ElHeader } from 'element-plus';
       </el-aside>
       <div class="layout-mian-wrap">
         <router-view v-slot="{ Component }">
-          <transition name="slide">
+          <transition name="fade-main" mode="out-in">
             <component :is="Component" />
           </transition>
         </router-view>
@@ -46,5 +46,21 @@ import { ElContainer, ElHeader } from 'element-plus';
   // box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   background: #ffffff;
+}
+
+/* fade-main */
+.fade-main-leave-active,
+.fade-main-enter-active {
+  transition: all 0.5s;
+}
+
+.fade-main-enter {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+.fade-main-leave-to {
+  opacity: 0;
+  transform: translateY(10px);
 }
 </style>

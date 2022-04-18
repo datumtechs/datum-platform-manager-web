@@ -1,24 +1,45 @@
 <template>
     <div class="mb-50px">
-        <div class="text-20px font-bold text-color-[#333]">{{ props.title }}</div>
+        <div class="text-20px font-bold text-color-[#333] flex">
+            <p>{{ props.title }}</p>
+            <el-tooltip :content="props.titleContent" placement="right" effect="light">
+                <img class="w-20px h-20px ml-10px cursor-pointer"
+                    src="@/assets/images/task/quest@2x.png" alt="">
+            </el-tooltip>
+        </div>
         <el-table class="mt-20px" :data="props.tableData">
             <el-table-column type="index" width="100">
-                <template #header>{{ $t('common.num') }}</template>
+                <template #header>{{ t('common.num') }}</template>
             </el-table-column>
-            <el-table-column prop="nodeName" :label="$t('myData.credentialName')" />
-            <el-table-column prop="identityIp" :label="$t('myData.credentialSymbol')" />
-            <el-table-column prop="identityPort" :label="$t('myData.dataName')" />
-            <el-table-column prop="identityPort" :label="$t('auth.holdeQuantity')" />
-            <el-table-column prop="identityPort" :label="$t('auth.authQuantity')" />
-            <el-table-column :label="$t('common.actions')">
-                <template #default="scope">
+            <el-table-column prop="name" :label="t('myData.credentialName')" />
+            <el-table-column prop="symbol" :label="t('myData.credentialSymbol')" />
+            <el-table-column :label="t('myData.dataName')">
+                <template #default="{ row }">
+                    <p v-if="row.metaDataName">{{ row.metaDataName }}</p>
+                    <p v-else>-</p>
+                </template>
+            </el-table-column>
+            <el-table-column :label="t('auth.holdQuantity')">
+                <template #default="{ row }">
+                    <p v-if="row.balance">{{ row.balance }}</p>
+                    <p v-else>0</p>
+                </template>
+            </el-table-column>
+            <el-table-column prop="authorizeBalance" :label="t('auth.authQuantity')">
+                <template #default="{ row }">
+                    <p v-if="row.authorizeBalance">{{ row.authorizeBalance }}</p>
+                    <p v-else>0</p>
+                </template>
+            </el-table-column>
+            <el-table-column :label="t('common.actions')">
+                <template #default="{ row }">
                     <el-button class="text-14px text-color-[#0052D9] cursor-pointer" type="text"
-                        circle @click="showAuthDialog = true">{{
-                            $t('auth.auth')
+                        circle @click="showAuthDialog = true; currentToken = row.name">{{
+                            t('auth.auth')
                         }}</el-button>
                     <el-button class="text-14px text-color-[#0052D9] cursor-pointer" type="text"
                         circle @click="showCancelDialog = true">{{
-                            $t('auth.cancelAuth')
+                            t('auth.cancelAuth')
                         }}
                     </el-button>
                 </template>
@@ -29,11 +50,11 @@
                 v-model:current-page="pageObj.current" v-model:page-size="pageObj.size"
                 :total="pageObj.total" /> -->
         </div>
-        <el-dialog v-model="showAuthDialog" :title="$t('auth.plzInputAuthTokenNumber')" :width="480"
+        <el-dialog v-model="showAuthDialog" :title="t('auth.plzInputAuthTokenNumber')" :width="480"
             :destroy-on-close="true">
-            <el-form :model="form" :label-width="80" label-position="left" :rules="rules"
+            <el-form :model="form" :label-width="80" label-position="top" :rules="rules"
                 :ref="(e: any) => formRef = e">
-                <el-form-item :label="'TOKEN'" prop="quantity">
+                <el-form-item :label="currentToken" prop="quantity">
                     <el-input v-model="form.quantity" maxlength="20" />
                 </el-form-item>
             </el-form>
@@ -41,32 +62,40 @@
                 <div>
                     <el-button class="w-100px" style="height: 32px;" round
                         @click="showAuthDialog = false">{{
-                            $t('common.cancel')
+                            t('common.cancel')
                         }}</el-button>
                     <el-button class="w-100px" style="height: 32px;" round type="primary"
-                        @click="submit">{{ $t('common.confirm') }}</el-button>
+                        @click="authSumbit">{{ t('common.confirm') }}</el-button>
                 </div>
             </template>
         </el-dialog>
-        <el-dialog v-model="showCancelDialog" :title="$t('auth.cancelTokenAuth')" :width="480"
+        <el-dialog v-model="showCancelDialog" :title="t('auth.cancelTokenAuth')" :width="480"
             :destroy-on-close="true">
             <template #title>
                 <div class="flex items-center mb-24px">
                     <img class="w-24px h-24px" src="@/assets/images/auth/sigh.png" alt="">
-                    <p class="pl-8px"> {{ $t('auth.cancelTokenAuth') }}</p>
+                    <p class="pl-8px"> {{ t('auth.cancelTokenAuth') }}</p>
                 </div>
             </template>
             <div class="flex items-center mb-24px">
-                <p class="pl-32px"> 确认后,将取消XXXTOKEN的授权,授权数量将会变更为0.</p>
+                <p class="pl-32px break-word" v-if="locale === 'zh'"> 将取消&nbsp;{{
+                    currentToken
+                }}&nbsp;的授权,授权数量将会变更为0.
+                </p>
+                <p class="pl-32px break-word" v-else> The authorization of {{
+                    currentToken
+                }}
+                    will be
+                    cancelled, and the number of authorizations will be changed to 0.</p>
             </div>
             <template #footer>
                 <div>
                     <el-button class="w-100px" style="height: 32px;" round
                         @click="showCancelDialog = false">{{
-                            $t('common.cancel')
+                            t('common.cancel')
                         }}</el-button>
                     <el-button class="w-100px" style="height: 32px;" round type="primary"
-                        @click="submit">{{ $t('common.confirm') }}</el-button>
+                        @click="cancelConfirm">{{ t('common.confirm') }}</el-button>
                 </div>
             </template>
         </el-dialog>
@@ -74,9 +103,13 @@
 </template>
 
 <script setup lang='ts'>
-const { t } = useI18n()
+const { t, locale } = useI18n()
 const props = defineProps({
     title: {
+        type: String,
+        default: ''
+    },
+    titleContent: {
         type: String,
         default: ''
     },
@@ -93,9 +126,11 @@ const form = ref({
     quantity: undefined
 })
 
+const currentToken = ref('')
+
 const formRef = ref()
-const cancel = () => { }
-const submit = () => {
+const cancelConfirm = () => { }
+const authSumbit = () => {
     formRef.value?.validate((bol: boolean) => {
         if (bol) {
             console.log(form.value)
@@ -113,6 +148,7 @@ const rules = ref(
                     if (!value) {
                         callback(new Error(t('auth.quantityError')))
                     } else {
+                        /** TODO input overflow */
                         callback()
                     }
                 },

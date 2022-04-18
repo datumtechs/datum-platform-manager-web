@@ -10,7 +10,7 @@
                   :key="box.id"
                >
                   <p class="text-[16px] text-[#333]">{{ box.label }}</p>
-                  <p class="text-[16px] text-[#333]">{{ $t('common.success') }} !</p>
+                  <p class="text-[16px] text-[#333]">{{ t('common.success') }} !</p>
                   <p class="mt-40px text-[12px] text-[#999] leading-17px">35秒前</p>
                   <p class="mt-17px text-[#666] leading-20px">{{ box.orgName }}</p>
                </li>
@@ -21,7 +21,7 @@
       <div
          class="w-176px h-178px cursor-pointer border-1 border-solid border-[#EEEEEE] flex flex-col justify-center items-center"
       >
-         <p class="text-[#252525] font-bold">{{ $t('home.viewAllComputingTask') }}</p>
+         <p class="text-[#252525] font-bold">{{ t('home.viewAllComputingTask') }}</p>
          <img class="mt-6px" :src="arrow" />
       </div>
    </div>
@@ -29,6 +29,7 @@
 
 <script setup lang='ts'>
 import arrow from '@assets/images/home/slide-arrow.png'
+const { t } = useI18n()
 interface Task {
    id: number,
    label: string,

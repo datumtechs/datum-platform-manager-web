@@ -10,7 +10,7 @@
         >
             <div
                 class="font-bold text-14px leading-18px text-color-[#333]"
-            >{{ $t('expert.inputNameTips') }}</div>
+            >{{ t('expert.inputNameTips') }}</div>
             <div class="mt-10px mb-20px h-50px">
                 <!-- <el-input v-model="workflowName" /> -->
                 <el-form
@@ -26,10 +26,10 @@
                 </el-form>
             </div>
             <div class="mt20px mb-18px">
-                <p>1. {{ $t('expert.cannotModify') }}</p>
-                <p>2. {{ $t('expert.noLimitType') }}</p>
-                <p>3. {{ $t('expert.leastCharacter') }}</p>
-                <p>4. {{ $t('expert.mostCharacter') }}</p>
+                <p>1. {{ t('expert.cannotModify') }}</p>
+                <p>2. {{ t('expert.noLimitType') }}</p>
+                <p>3. {{ t('expert.leastCharacter') }}</p>
+                <p>4. {{ t('expert.mostCharacter') }}</p>
             </div>
             <span class="dialog-footer">
                 <el-button
@@ -37,13 +37,14 @@
                     type="primary"
                     round
                     @click="submitForm(nameFormRef)"
-                >{{ $t('common.submit') }}</el-button>
+                >{{ t('common.submit') }}</el-button>
             </span>
         </el-dialog>
     </div>
 </template>
 
 <script setup lang='ts'>
+const { t } = useI18n()
 const nameFormRef = ref<any>()
 const rules = reactive({
     name: [

@@ -33,7 +33,7 @@
                         <p
                             v-else
                             class="w-100px flex text-14px text-color-[#0052D9] leading-20px cursor-pointer"
-                        >{{ $t('expert.viewResult') }}</p>
+                        >{{ t('expert.viewResult') }}</p>
                     </div>
                 </div>
                 <div>
@@ -41,7 +41,7 @@
                     <el-tooltip
                         class="box-item"
                         effect="dark"
-                        :content="$t('expert.psiHint')"
+                        :content="t('expert.psiHint')"
                         placement="top-start"
                     >
                         <img src="@/assets/images/task/quest@2x.png" class="w-14px h-14px ml-6px" />

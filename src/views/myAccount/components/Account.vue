@@ -7,7 +7,7 @@
     :label-position="'left'"
     :label-width="locale == 'zh' ? '80px' : '150px'"
   >
-    <el-form-item :label="`${$t('account.walletAddress')}:`">
+    <el-form-item :label="`${t('account.walletAddress')}:`">
       <p class="text-16px w-390px address leading-22px text-color-[#333333]">{{ store.address }}</p>
       <p class="text-16px ml-50px leading-22px text-color-[#0052D9] cursor-pointer">
         <a
@@ -16,7 +16,7 @@
           class="text-16px"
         >
           {{
-            $t('account.viewExplorer')
+            t('account.viewExplorer')
           }}
         </a>
       </p>
@@ -27,7 +27,7 @@
       </span>
       <input :ref="(el) => addressRef = el" class="w-1 opacity-0" :value="store.address" />
     </el-form-item>
-    <el-form-item :label="`${$t('head.nickname')}:`" prop="name">
+    <el-form-item :label="`${t('head.nickname')}:`" prop="name">
       <div class="flex w-400px">
         <el-input
           v-model="form.name"
@@ -39,14 +39,14 @@
         ></el-input>
         <span class="ml-49px w-1px"></span>
         <el-button type="text" v-if="disabled" @click="disabled = !disabled">
-          <span class="text-16px">{{ $t('common.edit') }}</span>
+          <span class="text-16px">{{ t('common.edit') }}</span>
         </el-button>
         <div class="flex" v-else>
-          <el-button type="primary" round @click="submit">{{ $t('common.preservation') }}</el-button>
+          <el-button type="primary" round @click="submit">{{ t('common.preservation') }}</el-button>
           <el-button
             round
             @click="disabled = !disabled, formRef.clearValidate()"
-          >{{ $t('common.cancel') }}</el-button>
+          >{{ t('common.cancel') }}</el-button>
         </div>
       </div>
     </el-form-item>

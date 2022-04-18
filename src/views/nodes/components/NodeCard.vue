@@ -12,34 +12,35 @@
             </el-tooltip>
         </div>
         <div class="w-125px table-box">
-            <p class="title whitespace-nowrap">{{ $t('node.credentials') }}</p>
+            <p class="title whitespace-nowrap">{{ t('node.credentials') }}</p>
             <p class="text">{{ node.totalDataToken }}</p>
         </div>
         <div class="w-140px table-box">
-            <p class="title whitespace-nowrap">{{ $t('node.computations') }}</p>
+            <p class="title whitespace-nowrap">{{ t('node.computations') }}</p>
             <p class="text">{{ node.totalTask }}</p>
         </div>
         <div class="w-120px table-box">
-            <p class="title whitespace-nowrap">{{ $t('node.totalCpu') }}</p>
-            <p class="text">{{ node.orgTotalCore }}&nbsp;{{ $t('common.cores') }}</p>
+            <p class="title whitespace-nowrap">{{ t('node.totalCpu') }}</p>
+            <p class="text">{{ node.orgTotalCore }}&nbsp;{{ t('common.cores') }}</p>
         </div>
         <div class="w-140px table-box">
-            <p class="title whitespace-nowrap">{{ $t('node.totalMemory') }}</p>
+            <p class="title whitespace-nowrap">{{ t('node.totalMemory') }}</p>
             <p class="text">{{ useSize(node.orgTotalMemory) }}</p>
         </div>
         <div class="w-140px table-box">
-            <p class="title whitespace-nowrap">{{ $t('node.totalBandwidth') }}</p>
+            <p class="title whitespace-nowrap">{{ t('node.totalBandwidth') }}</p>
             <p class="text">{{ useSize(node.orgTotalBandwidth) + 'P/S' }}</p>
         </div>
         <div class="operate text-center flex-grow">
             <p class="font-medium text-14px leading-20px text-color-[#0052D9] cursor-pointer px-10px"
-                @click="linkToDetail">{{ $t('node.view') }}</p>
+                @click="linkToDetail">{{ t('node.view') }}</p>
         </div>
     </div>
 </template>
 
 <script setup lang='ts'>
 import { useSize, useTableIndex } from '@/hooks'
+const { t } = useI18n()
 const router = useRouter()
 const props = defineProps({
     index: {

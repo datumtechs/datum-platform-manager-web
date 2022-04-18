@@ -1,7 +1,7 @@
 <template>
   <div v-if="true" class="transfer mt-10px">
     <div class="columns-box">
-      <p class="text-12px text-color-[#999999] leading-17px">{{ $t('task.field') }}</p>
+      <p class="text-12px text-color-[#999999] leading-17px">{{ t('task.field') }}</p>
       <div class="columns mt-5px">
         <div
           v-for="(item, index) in list"
@@ -29,7 +29,7 @@
       </div>
     </div>
     <div class="result">
-      <p class="text-12px text-color-[#999999] leading-17px">{{ $t('task.idColumn') }}</p>
+      <p class="text-12px text-color-[#999999] leading-17px">{{ t('task.idColumn') }}</p>
       <div class="ids mt-5px w-160px h-40px">
         <div
           class="item"
@@ -40,18 +40,18 @@
         <p
           class="text-12px text-color-[#999999] leading-17px mt-10px mb-5px"
           v-if="!algorithms.inputModel"
-        >{{ $t('expert.labelRequired') }}</p>
+        >{{ t('expert.labelRequired') }}</p>
         <p
           class="text-12px text-color-[#999999] leading-17px mt-10px mb-5px"
           v-else
-        >{{ $t('expert.labelOptionals') }}</p>
+        >{{ t('expert.labelOptionals') }}</p>
         <div
           class="label-item"
           :class="{ 'view-model': viewModel === 'view' }"
         >{{ labels.length ? labels[0].columnName : '' }}</div>
       </div>
       <div class="feature">
-        <p class="text-12px text-color-[#999999] leading-17px mt-10px mb-5px">{{$t('task.feature')}}</p>
+        <p class="text-12px text-color-[#999999] leading-17px mt-10px mb-5px">{{t('task.feature')}}</p>
         <div
           class="features"
           :class="{ 'features-auto': !isLabels, 'view-model': viewModel === 'view' }"
@@ -70,7 +70,7 @@
 
 <script setup lang='ts'>
 interface Features { columnData: String }
-
+const { t } = useI18n()
 
 const ids = reactive([] as any[])
 const list = reactive([] as any[])

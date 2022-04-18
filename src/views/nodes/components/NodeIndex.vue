@@ -1,18 +1,22 @@
 <template>
-    <Banner :bg-name="'network'">
-        <template #briefInfo>
-            <p v-if="locale === 'zh'">全网共 {{ totalNode }} 个可参与隐私计算任务的节点</p>
-            <p v-else>{{ totalNode }} participant nodes in the privacy computing network</p>
-        </template>
-    </Banner>
-    <div class="main-content mt-30px max-w-1200px mx-auto overflow-hidden">
-        <NodeCard v-for="(node, index) in nodeList" :size="10" :page="1" :node="node" :index="index"
-            :key="index" />
+    <div class="decorate-wrapper">
+        <Banner :bg-name="'network'">
+            <template #briefInfo>
+                <p v-if="locale === 'zh'">全网共 {{ totalNode }} 个可参与隐私计算任务的节点</p>
+                <p v-else>{{ totalNode }} participant nodes in the privacy computing network</p>
+            </template>
+        </Banner>
+        <div class="main-content mt-30px max-w-1200px mx-auto overflow-hidden">
+            <NodeCard v-for="(node, index) in nodeList" :size="10" :page="1" :node="node"
+                :index="index" :key="index" />
+        </div>
+        <div class="flex my-50px justify-center">
+            <el-pagination background layout="prev, pager, next"
+                v-model:current-page="pageObj.current" v-model:page-size="pageObj.size"
+                :total="pageObj.total" />
+        </div>
     </div>
-    <div class="flex my-50px justify-center">
-        <el-pagination background layout="prev, pager, next" v-model:current-page="pageObj.current"
-            v-model:page-size="pageObj.size" :total="pageObj.total" />
-    </div>
+
 </template>
 
 <script setup lang='ts'>

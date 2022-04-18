@@ -1,9 +1,9 @@
 <template>
     <div class="p-30px">
-        <p class="text-color-[#333] font-bold">{{ $t('expert.configureOutput') }}</p>
-        <p class="mt-30px">{{ $t('expert.saveNotes') }}</p>
+        <p class="text-color-[#333] font-bold">{{ t('expert.configureOutput') }}</p>
+        <p class="mt-30px">{{ t('expert.saveNotes') }}</p>
         <div v-if="workflowNodeSenderIdentityId">
-            <p class="mt-30px text-color-[#333] font-bold">{{ $t('role.resultConsumer') }}</p>
+            <p class="mt-30px text-color-[#333] font-bold">{{ t('role.resultConsumer') }}</p>
             <el-checkbox-group
                 v-model="checkList"
                 :disabled="viewModel === 'view'"
@@ -21,12 +21,13 @@
             </el-checkbox-group>
         </div>
 
-        <p class="mt-30px text-color-[#333] font-bold">{{ $t('expert.storageForm') }}</p>
-        <p class="mt-10px">{{ $t('expert.plaintext') }}</p>
+        <p class="mt-30px text-color-[#333] font-bold">{{ t('expert.storageForm') }}</p>
+        <p class="mt-10px">{{ t('expert.plaintext') }}</p>
     </div>
 </template>
 
 <script setup lang='ts'>
+const { t } = useI18n()
 const workflowNodeSenderIdentityId = ''
 const viewModel = ''
 const checkList: any[] = []

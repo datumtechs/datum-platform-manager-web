@@ -3,39 +3,39 @@
     <Banner :bg-name="'globalTask'">
       <template #briefInfo>
         <p class="text-color-[#999999]">
-          {{ $t('myData.tasksBriefInfoFirstParagraph') }}
+          {{ t('myData.tasksBriefInfoFirstParagraph') }}
           <span class="text-color-[#2B60E9] text-16px">11990</span>
-          {{ $t('myData.tasksBriefInfoTwoParagraph') }}
+          {{ t('myData.tasksBriefInfoTwoParagraph') }}
         </p>
       </template>
     </Banner>
     <div class="main-content com-main-data-wrap">
       <el-table :data="tableData" class="mt-30px com-table _com_el-table-wrap">
         <el-table-column type="index" width="100" :index="indexMethod">
-          <template #header>{{ $t('common.num') }}</template>
+          <template #header>{{ t('common.num') }}</template>
         </el-table-column>
-        <el-table-column show-overflow-tooltip prop="id" :label="$t('computeTask.taskId')" />
-        <el-table-column prop="status" :label="$t('computeTask.taskStatus')">
+        <el-table-column show-overflow-tooltip prop="id" :label="t('computeTask.taskId')" />
+        <el-table-column prop="status" :label="t('computeTask.taskStatus')">
           <template #default="{ row }">
             <div>
               {{ useGlobalTaskMap(row.status) }}
             </div>
           </template>
         </el-table-column>
-        <el-table-column :label="$t('computeTask.startTime')">
+        <el-table-column :label="t('computeTask.startTime')">
           <template #default="{ row }">
             <div>{{ useFormatTime(row.createAt) }}</div>
           </template>
         </el-table-column>
-        <el-table-column show-overflow-tooltip :label="$t('computeTask.totalTime')">
+        <el-table-column show-overflow-tooltip :label="t('computeTask.totalTime')">
           <template #default="{ row }">
             <div>{{ useDuring(row.endAt - row.startAt) }}</div>
           </template>
         </el-table-column>
-        <el-table-column :label="$t('common.actions')" :fixed="'right'" :width="100">
+        <el-table-column :label="t('common.actions')" :fixed="'right'" :width="100">
           <template #default="scope">
             <el-button type="text" :disabled="!!(scope.row.publicFlag || scope.row.connectFlag)"
-              circle @click="viewData(scope.row)">{{ $t('common.view') }}</el-button>
+              circle @click="viewData(scope.row)">{{ t('common.view') }}</el-button>
           </template>
         </el-table-column>
       </el-table>

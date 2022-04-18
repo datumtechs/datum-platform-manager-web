@@ -9,7 +9,7 @@
             <back />
           </el-icon>
           <div v-if="showRouter">
-            {{ $t(`${$route.meta.label}`) }}
+            {{ t(`${$route.meta.label}`) }}
           </div>
           <div v-else class="detail-name">{{ detailName }}</div>
         </div>
@@ -37,6 +37,8 @@ import newTask from '@/assets/Images/banner/newTask.png'
 import myData from '@/assets/Images/banner/myData.png'
 import myAuth from '@/assets/Images/banner/myAuth.png'
 import myAccount from '@/assets/Images/banner/myAccount.png'
+
+const { t } = useI18n()
 const emit = defineEmits(['back'])
 const props = defineProps({
   bgName: {

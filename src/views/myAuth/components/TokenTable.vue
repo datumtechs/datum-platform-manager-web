@@ -1,54 +1,43 @@
 <template>
     <div class="my-60px com-main-data-wrap main-content">
-        <DataToken type="fee" :tableData="feeTokenData" :title="$t('auth.feeToken')" />
-        <DataToken type="data" :tableData="dataTokenData" :title="$t('auth.dataToken')" />
+        <DataToken type="fee" :tableData="feeTokenData" :title="t('auth.feeToken')" />
+        <DataToken type="data" :tableData="dataTokenData" :title="t('auth.dataToken')" />
     </div>
 </template>
 <script setup lang="ts">
 import DataToken from './DataToken.vue'
-import { queryUserDataList } from '@/api/data'
-import { ElMessageBox, ElMessage } from 'element-plus'
+import { queryUserDataList, getUserMetisLatInfo } from '@/api/data'
 const { t } = useI18n()
-const tableData = ref([])
 
-const feeTokenData = ref([{}])
-const dataTokenData = ref([{}])
+const feeTokenData: any = ref([])
+const dataTokenData = ref([])
 
 const current = ref(1)
 const size = ref(10)
 
 
 
-const query = () => {
+const queryDataList = () => {
     queryUserDataList({
         current: current.value,
         size: size.value,
     }).then(res => {
         const { data, code } = res
         if (code === 10000) {
-            console.log(data)
-            tableData.value = data
+            dataTokenData.value = data.items
         }
     })
 }
-
-
-const auth = () => {
-    ElMessageBox.confirm(
-        `${t('auth.cancelAuthTipBefore')}${'xxx'}${t('auth.auth')},${t('取消后授权数量将会变更为0')}`,
-        t('auth.cancelAuth'), {
-        confirmButtonText: t('common.submit'),
-        cancelButtonText: t('common.cancel'),
-        type: 'warning',
-    }).then(({ value }) => {
-        ElMessage({
-            type: 'success',
-            message: `Your email is:${value}`,
-        })
-    }).catch(_ => _)
+const queryWLat = async () => {
+    const { code, data } = await getUserMetisLatInfo({})
+    if (code === 10000) {
+        feeTokenData.value = [Object.assign(data.token, data.tokenHolder)]
+    }
 }
+
 onMounted(() => {
-    query()
+    queryDataList()
+    queryWLat()
 })
 
 

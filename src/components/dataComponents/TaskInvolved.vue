@@ -2,22 +2,22 @@
   <el-table :data="list" :class="isPathIncludeNode ? 'mt-30px' : 'my-60px'"
     class="mb-50px table-header-bg-Grayscale" border>
     <el-table-column type="index" width="80" align="center">
-      <template #header>{{ $t('common.num') }}</template>
+      <template #header>{{ t('common.num') }}</template>
     </el-table-column>
-    <el-table-column prop="id" align="center" :label="$t('myData.taskID')" />
-    <el-table-column align="center" :label="$t('computeTask.taskStatus')">
+    <el-table-column prop="id" align="center" :label="t('myData.taskID')" />
+    <el-table-column align="center" :label="t('computeTask.taskStatus')">
       <template #default="{ row }">
         {{ useGlobalTaskMap(row.status) }}
       </template>
     </el-table-column>
-    <!-- 接口无该字段返回 <el-table-column prop="TaskCategory" align="center" :label="$t('myData.TaskCategory')" />
-    <el-table-column prop="capability" align="center" :label="$t('myData.capability')" /> -->
-    <el-table-column prop="createAt" align="center" :label="$t('myData.createTime')">
+    <!-- 接口无该字段返回 <el-table-column prop="TaskCategory" align="center" :label="t('myData.TaskCategory')" />
+    <el-table-column prop="capability" align="center" :label="t('myData.capability')" /> -->
+    <el-table-column prop="createAt" align="center" :label="t('myData.createTime')">
       <template #default="{ row }">{{
         useFormatTime(row.createAt) || ''
       }}</template>
     </el-table-column>
-    <el-table-column prop="totalTime" align="center" :label="$t('myData.totalTime')">
+    <el-table-column prop="totalTime" align="center" :label="t('myData.totalTime')">
       <template #default="scope">{{ formatDuring(scope.row.endAt - scope.row.createAt) }}</template>
     </el-table-column>
   </el-table>
@@ -32,7 +32,7 @@
 import { queryTaskListByData } from '@/api/data'
 import { formatDuring } from '@/utils'
 import { usePathIncludeNode, useGlobalTaskMap, useFormatTime } from '@/hooks'
-
+const { t } = useI18n()
 const isPathIncludeNode = usePathIncludeNode()
 const list = ref([])
 const current = ref(1)

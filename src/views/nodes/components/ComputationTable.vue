@@ -2,27 +2,27 @@
     <div class="mt-40px">
         <el-table :header-cell-style="{ height: '50px' }" :row-style="{ height: '70px' }"
             :data="tableData" highlight-current-row >
-            <el-table-column type="index" :label="$t('common.num')" :index="indexMethod"
+            <el-table-column type="index" :label="t('common.num')" :index="indexMethod"
                 width="80" />
-            <el-table-column show-overflow-tooltip prop="id" :label="$t('myData.taskID')" />
-            <el-table-column :label="$t('node.capabilityInTask')">
+            <el-table-column show-overflow-tooltip prop="id" :label="t('myData.taskID')" />
+            <el-table-column :label="t('node.capabilityInTask')">
                 <template #default="{ row }">
-                    <p v-for=" role in useRole(row)" :key="role">{{ $t(`role.${role}`) }}</p>
+                    <p v-for=" role in useRole(row)" :key="role">{{ t(`role.${role}`) }}</p>
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('node.startTime')">
+            <el-table-column :label="t('node.startTime')">
                 <template #default="{ row }">
                     <div v-if="row.startAt === 0">-</div>
                     <div v-else>{{ useFormatTime(row.startAt) }}</div>
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('myData.totalTime')">
+            <el-table-column :label="t('myData.totalTime')">
                 <template #default="{ row }">{{ useDuring(row.endAt - row.startAt) }}</template>
             </el-table-column>
-            <el-table-column :label="$t('common.actions')">
+            <el-table-column :label="t('common.actions')">
                 <template #default="{ row }">
                     <span class="text-14px text-color-[#0052D9] cursor-pointer"
-                        @click="linkToViewComputations(row)">{{ $t('node.view') }}</span>
+                        @click="linkToViewComputations(row)">{{ t('node.view') }}</span>
                 </template>
             </el-table-column>
         </el-table>
@@ -37,6 +37,7 @@
 import { useTableIndex, useFormatTime, useDuring, useRole } from '@/hooks'
 import { getTaskListByOrg } from '@/api/task'
 const router = useRouter()
+const { t } = useI18n()
 const tableData = ref([])
 
 const props = defineProps({

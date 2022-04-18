@@ -5,13 +5,14 @@
       class="px-40px h-full flex-1 flex items-center justify-center z-1 text-16px text-color-[#666666]"
       style="word-break: keep-all;white-space:nowrap" :class="{ active: + index === activeIndex }"
       v-for="(item, index) in props.list" :key="index" @click="tabsClick(index)">
-      <p>{{ $t(`${item.name}`) }}</p>
+      <p>{{ t(`${item.name}`) }}</p>
     </div>
     <div :style="{ width: sliderWidth + 'px', transform: `translateX(${translateX}px)` }"
       class="absolute z-0 top-5px h-40px bg-color-[#fff] rounded-20px tabs-slider"></div>
   </div>
 </template>
 <script lang="ts" setup>
+const { t } = useI18n()
 const tabsItems = ref<any[]>([])
 const sliderWidth = ref(0)
 const translateX = ref(0)
@@ -28,7 +29,10 @@ const activeIndex = ref(props.activekey)
 const emit = defineEmits(['change'])
 const { locale } = useI18n()
 
-watch(locale, () => {
+watch(locale, (val, val1) => {
+  console.log(val);
+  console.log(val1);
+
   nextTick(() => {
     handleTabs(+activeIndex.value)
   })

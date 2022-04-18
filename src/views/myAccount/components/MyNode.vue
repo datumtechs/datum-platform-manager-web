@@ -2,37 +2,37 @@
   <div class="mx-24px my-57px account mb-100px relative">
     <el-table :data="tableData">
       <el-table-column type="index" width="100">
-        <template #header>{{ $t('common.num') }}</template>
+        <template #header>{{ t('common.num') }}</template>
       </el-table-column>
-      <el-table-column prop="nodeName" :label="$t('node.nodeName')" />
-      <el-table-column prop="identityIp" :label="$t('node.nodeIP')" />
-      <el-table-column prop="identityPort" :label="$t('node.nodePort')" />
-      <el-table-column :label="$t('common.actions')">
+      <el-table-column prop="nodeName" :label="t('node.nodeName')" />
+      <el-table-column prop="identityIp" :label="t('node.nodeIP')" />
+      <el-table-column prop="identityPort" :label="t('node.nodePort')" />
+      <el-table-column :label="t('common.actions')">
         <template #default="scope">
           <el-button
             type="text"
             :disabled="!!(scope.row.publicFlag || scope.row.connectFlag)"
             circle
             @click="del(scope.row, scope.index)"
-          >{{ $t('common.delete') }}</el-button>
+          >{{ t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>
     <div
       @click="dialogFormVisible = true"
       class="w-170px h-50px rounded-25px com-button my-40px absolute right-[0] cursor-pointer"
-    >{{ $t('node.addNode') }}</div>
+    >{{ t('node.addNode') }}</div>
     <el-dialog
       v-model="dialogFormVisible"
       :width="600"
-      :title="$t('node.addNode')"
+      :title="t('node.addNode')"
       :destroy-on-close="true"
     >
       <el-form :model="form" :label-width="80" :rules="rules" :ref="(e: any) => formRef = e">
-        <el-form-item :label="$t('node.nodeIP')" prop="nodeIP">
+        <el-form-item :label="t('node.nodeIP')" prop="nodeIP">
           <el-input v-model="form.nodeIP" maxlength="20" />
         </el-form-item>
-        <el-form-item :label="$t('node.nodePort')" prop="nodePort">
+        <el-form-item :label="t('node.nodePort')" prop="nodePort">
           <el-input v-model="form.nodePort" maxlength="8" />
         </el-form-item>
       </el-form>
@@ -43,14 +43,14 @@
             style="height: 40px;"
             round
             @click="cancel"
-          >{{ $t('common.cancel') }}</el-button>
+          >{{ t('common.cancel') }}</el-button>
           <el-button
             class="w-100px"
             style="height: 40px;"
             round
             type="primary"
             @click="addNode"
-          >{{ $t('common.submit') }}</el-button>
+          >{{ t('common.submit') }}</el-button>
         </div>
       </template>
     </el-dialog>

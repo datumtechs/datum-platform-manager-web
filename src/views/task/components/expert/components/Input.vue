@@ -1,15 +1,15 @@
 <template>
     <div class="p-30px input-box">
-        <p class="text-color-[#333] font-bold">{{ $t('expert.configureInput') }}</p>
+        <p class="text-color-[#333] font-bold">{{ t('expert.configureInput') }}</p>
         <div class="mt-40px">
-            <p class="text-color-[#333] font-medium">{{ $t('role.taskSponsor') }}</p>
+            <p class="text-color-[#333] font-medium">{{ t('role.taskSponsor') }}</p>
             <el-select
                 v-model="taskSender"
                 class="mt-10px w-full"
                 size="small"
                 :disabled="viewModel === 'view'"
                 filterable
-                :placeholder="$t('expert.selectModel')"
+                :placeholder="t('expert.selectModel')"
                 @change="handleSenderChange"
             >
                 <el-option
@@ -21,7 +21,7 @@
             </el-select>
         </div>
         <div v-if="showModel">
-            <p class="mt-40px text-color-[#333] font-medium">{{ $t('expert.model') }}</p>
+            <p class="mt-40px text-color-[#333] font-medium">{{ t('expert.model') }}</p>
             <p class="mt-10px">
                 <el-select
                     v-if="curNodeIndex !== 0"
@@ -30,7 +30,7 @@
                     size="small"
                     :disabled="viewModel === 'view'"
                     filterable
-                    :placeholder="$t('expert.selectModel')"
+                    :placeholder="t('expert.selectModel')"
                     @change="handleModelChange"
                 >
                     <el-option
@@ -67,7 +67,7 @@
         </div>
         <div v-for="(item, index) in selectLayout" :key="index" class="mt-40px">
             <p class="text-color-[#333] font-medium">
-                {{ `${$t('role.dataProvider')}-${index + 1}` }}
+                {{ `${t('role.dataProvider')}-${index + 1}` }}
                 <!-- TODO 改名称为数据提供方 -->
             </p>
             <p class>
@@ -113,6 +113,7 @@
 <script setup lang='ts'>
 import type { Ref } from 'vue';
 import Transfer from './Transfer.vue'
+const { t } = useI18n()
 const modelKey = ref('')
 const taskSender = ref('')
 const viewModel = ref('')

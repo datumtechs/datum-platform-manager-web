@@ -1,6 +1,6 @@
 <template>
     <div class="w-242px bg-[#F7F8F9]">
-        <p class="text-18px font-bold mt-16px pl-24px">{{ $t('common.algorithm') }}</p>
+        <p class="text-18px font-bold mt-16px pl-24px">{{ t('common.algorithm') }}</p>
         <div v-for="algo in algoList" class="flex flex-col items-center mt-24px">
             <p
                 class="h-36px w-230px text-14px leading-20px text-[#000] font-bold pl-18px flex items-center"

@@ -17,7 +17,7 @@
             <Environment v-show="currentTab === 'environment'" v-bind="$attrs" :env-obj="envObj" />
         </div>
         <div v-else class="px-50px pt-70px main-panel">
-            <p>{{ $t('expert.overviewTipForPanel') }}</p>
+            <p>{{ t('expert.overviewTipForPanel') }}</p>
         </div>
     </div>
 </template>

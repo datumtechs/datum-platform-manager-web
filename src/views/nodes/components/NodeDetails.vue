@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { queryOrgDetail } from '@/api/node'
 import { useSize } from '@/hooks'
-
+const { t } = useI18n()
 const router = useRouter()
 const route = useRoute()
 const nodeInfo: any = reactive({
@@ -61,19 +61,19 @@ onMounted(() => {
       <template #machineInfo class="flex">
         <div class="flex text-center">
           <div class="flex flex-col w-160px relative borderR">
-            <p class="text-14px text-color-[#999999] leading-20px">{{ $t('node.totalCpu') }}</p>
+            <p class="text-14px text-color-[#999999] leading-20px">{{ t('node.totalCpu') }}</p>
             <p class="text-14px text-color-[#333] mt-4px font-bold">{{
               nodeInfo.orgTotalCore
-            }}&nbsp;{{ $t('common.cores') }}</p>
+            }}&nbsp;{{ t('common.cores') }}</p>
           </div>
           <div class="flex flex-col w-160px relative borderR">
-            <p class="text-14px text-color-[#999999] leading-20px">{{ $t('node.totalMemory') }}</p>
+            <p class="text-14px text-color-[#999999] leading-20px">{{ t('node.totalMemory') }}</p>
             <p class="text-14px text-color-[#333] mt-4px font-bold">{{
               useSize(nodeInfo.orgTotalMemory)
             }}</p>
           </div>
           <div class="flex flex-col w-160px">
-            <p class="text-14px text-color-[#999999] leading-20px">{{ $t('node.totalBandwidth') }}
+            <p class="text-14px text-color-[#999999] leading-20px">{{ t('node.totalBandwidth') }}
             </p>
             <p class="text-14px text-color-[#333] mt-4px font-bold">{{
               useSize(nodeInfo.orgTotalBandwidth) + 'P/S'
