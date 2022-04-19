@@ -11,7 +11,7 @@ const config: Network = {
     chainId: 210309,
     rpcUrl: 'https://devnetopenapi.platon.network/rpc',
     symbol: 'LAT',
-    blockExplorerUrl: 'https://uatscan.platon.network:1443/'
+    blockExplorerUrl: 'https://devnetscan.platon.network/'
 }
 
 export default config
