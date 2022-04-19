@@ -54,7 +54,7 @@ const zh = {
     marketplaceDetails: '凭证市场详情',
     computing: '计算服务',
     computeTaskDetails: '计算任务详情',
-    createTask: "创建任务",
+    createTask: "新建工作流",
     data: "我的数据",
     dataDetails: "数据详情",
     dataCredentials: "数据凭证",

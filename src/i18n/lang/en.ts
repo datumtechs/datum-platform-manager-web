@@ -54,7 +54,7 @@ const en = {
     marketplaceDetails: 'Marketplace Details',
     computing: 'Computing Services',
     computeTaskDetails: 'Computing Task Details',
-    createTask: "Create Task",
+    createTask: "Create Workflow",
     data: "My Data",
     dataDetails: "Data Details",
     dataCredentials: "Data Credentials",

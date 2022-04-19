@@ -4,7 +4,7 @@
       <template #briefInfo>
         <p class="text-color-[#999999]">
           {{ t('workflow.totalOf') }}
-          <span class="text-color-[#2B60E9] text-16px">{{ taskStats }}</span>
+          <span class="text-color-[#2B60E9] text-16px">{{ flowStats || 0 }}</span>
           {{ t('workflow.workTipsBriefInfoTwoParagraph') }}
         </p>
       </template>
@@ -24,15 +24,15 @@
 </template>
 <script lang="ts" setup>
 import DataTable from './components/DataTable.vue';
-import { queryTaskList, queryTaskStats } from '@/api/task'
+import { queryWorkflowList, queryWorkflowStats } from '@/api/workflow'
 const { t } = useI18n()
 const current = ref(1)
 const total = ref(0)
 const tableData = ref([])
-const taskStats = ref(0)
+const flowStats = ref(0)
 
 const query = () => {
-  queryTaskList({ current: current.value, size: 10, taskStatus: 'ALL' }).then(res => {
+  queryWorkflowList({ current: current.value, size: 10, taskStatus: 'ALL' }).then(res => {
     const { data, code } = res
     if (code === 10000) {
       tableData.value = data.items
@@ -43,10 +43,10 @@ const query = () => {
 }
 
 const getTaskStats = () => {
-  queryTaskStats({}).then(res => {
+  queryWorkflowStats({}).then(res => {
     const { data, code } = res
     if (code === 10000) {
-      taskStats.value = data.taskCount
+      flowStats.value = data.taskCount
     }
   })
 }
