@@ -175,7 +175,7 @@ const zh = {
     predictionResultReceivers: "请选择将预测任务结果发送到",
     startTask: "启动任务",
     PSI: "PSI训练",
-
+    pleaseComments: "请输入备注（选填）",
   },
   myData: {
     tasksBriefInfoFirstParagraph: "全网共",
