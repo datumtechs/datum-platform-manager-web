@@ -6,7 +6,8 @@
                 <p v-else>{{ totalNode }} participant nodes in the privacy computing network</p>
             </template>
         </Banner>
-        <div class="main-content mt-30px max-w-1200px mx-auto overflow-hidden">
+        <div v-loading="nodeLoading"
+            class="main-content mt-30px max-w-1200px mx-auto overflow-hidden">
             <NodeCard v-for="(node, index) in nodeList" :size="10" :page="1" :node="node"
                 :index="index" :key="index" />
         </div>
@@ -30,6 +31,7 @@ const size = ref(10)
 const current = ref(1)
 const total = ref(0)
 let nodeList: any = reactive([])
+const nodeLoading = ref(false)
 
 const pageObj = reactive({
     total: 0,
@@ -37,14 +39,16 @@ const pageObj = reactive({
     size: 10
 })
 
-watch(() => pageObj.current, (newValue, oldValue) => {
+watch(() => pageObj.current, () => {
     queryOrgList()
 });
 
 const queryOrgList = async () => {
+    nodeLoading.value = true
     const { code, data } = await getOrgList({
         orderBy: orderBy.value, size: size.value, current: current.value
     })
+    nodeLoading.value = false
     if (code === 10000) {
         nodeList.push(...data.items)
         pageObj.total = data.total

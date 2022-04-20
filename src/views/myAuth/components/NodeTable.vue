@@ -5,7 +5,7 @@
             <QuestionMark :content="''">
             </QuestionMark>
         </div>
-        <el-table class="mt-20px" :data="tableData">
+        <el-table v-loading="nodeTableLoading" class="mt-20px" :data="tableData">
             <el-table-column type="index" width="80">
                 <template #header>{{ t('common.num') }}</template>
             </el-table-column>
@@ -29,6 +29,11 @@
                 </template>
             </el-table-column>
         </el-table>
+        <div class="flex my-50px justify-center">
+            <el-pagination background v-model:current-page="pageObj.current"
+                v-model:page-size="pageObj.size" layout="prev, pager, next"
+                :total="pageObj.total" />
+        </div>
         <el-dialog v-model="showDialog" :width="480" :destroy-on-close="true">
             <template #title>
                 <div class="flex items-center mb-24px">
@@ -38,8 +43,8 @@
             </template>
             <div v-if="dialogType === 'add'" class="ml-20px">
                 <p v-if="locale === 'zh'">
-                    请确认, 授权节点 <span class="text-color-[#2B60E9]">{{ currentNode.nodeName }}</span>
-                    为白名单
+                    确认授权节点 <span class="text-color-[#2B60E9]">{{ currentNode.nodeName }}</span>
+                    加入白名单
                 </p>
                 <p v-else>
                     Please confirm that the authorized node <span class="text-color-[#2B60E9]">{{
@@ -49,7 +54,7 @@
             </div>
             <div v-else class="ml-20px">
                 <p v-if="locale === 'zh'">
-                    请确认, 取消节点 <span class="text-color-[#2B60E9]">{{ currentNode.nodeName }}</span>
+                    确认取消节点 <span class="text-color-[#2B60E9]">{{ currentNode.nodeName }}</span>
                     的授权
                 </p>
                 <p v-else>
@@ -74,6 +79,7 @@
 </template>
 <script setup lang="ts">
 import { getUserOrgList } from '@/api/login'
+import { useNotice } from '@/hooks'
 interface OrgNode {
     identityId: string
     identityIp: string
@@ -87,41 +93,64 @@ interface OrgNode {
 }
 
 
+const chainConfig: any = inject('chainConfig')
 const web3: any = inject('web3')
-
 const { t, locale } = useI18n()
+
+const nodeTableLoading = ref(true)
 const tableData = ref([])
 const currentNode = ref<OrgNode>()
 const dialogType = ref('add')
 const showDialog = ref(false)
 const curTitle = ref('')
 
+const _close = (tx: string) => {
+    showDialog.value = false
+}
+const pageObj = reactive({
+    total: 0,
+    current: 1,
+    size: 10
+})
+
+watch(() => pageObj.current, () => {
+    queryOrgList()
+});
 
 const authSubmit = () => {
-
-
     if (dialogType.value === 'add') {
-        web3.authNode(currentNode.value?.observerProxyWalletAddress).then((res: any) => {
-
-        }).catch((error: any) => {
-
-        })
+        web3.authNode(currentNode.value?.observerProxyWalletAddress, _close)
+            .then((res: any) => {
+                if (res && res.transactionHash) {
+                    const content = `${t('auth.authorizeNode')}:${currentNode.value?.nodeName}`
+                    useNotice('success', content, chainConfig.value?.blockExplorerUrl, res.transactionHash)
+                }
+            }).catch((error: any) => {
+                useNotice('error', error)
+            })
     } else {
-        web3.revokeNode(currentNode.value?.observerProxyWalletAddress).then((res: any) => {
-
-        }).catch((error: any) => {
-
-        })
+        web3.revokeNode(currentNode.value?.observerProxyWalletAddress, _close)
+            .then((res: any) => {
+                if (res && res.transactionHash) {
+                    const content = `${t('auth.cancelNodeAuth')}:${currentNode.value?.nodeName}`
+                    useNotice('success', '', chainConfig.value?.blockExplorerUrl, res.transactionHash)
+                }
+            }).catch((error: any) => {
+                useNotice('error', error)
+            })
     }
-
 }
 
 const queryOrgList = (): void => {
+    nodeTableLoading.value = true
     getUserOrgList().then(res => {
         const { data, code } = res
+        nodeTableLoading.value = false
         if (code === 10000) {
             tableData.value = data
         }
+    }).catch((e: any) => {
+        nodeTableLoading.value = false
     })
 }
 

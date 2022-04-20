@@ -44,7 +44,8 @@ const en = {
     save: 'Save',
     viewEvent: 'View Event',
     noData: "No Data",
-    confirm: 'Confirm'
+    confirm: 'Confirm',
+    viewOnScan: 'View on PlatScan'
   },
   menu: {
     home: 'Home',
@@ -310,12 +311,16 @@ const en = {
     quantityError: "The current quantity is incorrect",
     feeToken: "Fee Token",
     dataToken: "Data Token",
-    plzInputAuthTokenNumber: 'Enter authorized quantity',
+    plzInputAuthTokenNumber: 'Set authorized quantity',
     cancelTokenAuth: 'Cancel credential authorization',
     authStatus: 'Status',
     authorized: 'Authorized',
     unauthorized: 'Unauthorized',
+    authorizeNode: 'Authorization node',
     cancelNodeAuth: 'Cancel node authorization',
+    transactionReceipt: 'Transaction Receipt',
+    transactionReject: 'Transaction Reject',
+    authorizeToken: 'Authorize token',
   },
   industry: {
     bank: 'Finance (bank)',

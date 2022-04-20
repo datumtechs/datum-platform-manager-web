@@ -4,11 +4,24 @@ import elementEnLocale from 'element-plus/lib/locale/lang/en'
 import { useLanguage } from '@/stores'
 import IndexLayout from '@/Layout/IndexLayout.vue'
 import Web3Service from '@/utils/Web3Service'
+import { queryCurrentChainInfo } from '@/api/chain'
 
 const web3 = new Web3Service()
+const chainConfig: any = ref({})
 provide('web3', web3)
-onMounted(() => {
+provide('chainConfig', chainConfig)
 
+
+const queryConfig = () => {
+  queryCurrentChainInfo().then(res => {
+    const { data } = res
+    if (data) chainConfig.value = data
+  })
+}
+
+
+onMounted(() => {
+  queryConfig()
 })
 
 </script>

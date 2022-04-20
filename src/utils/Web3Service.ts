@@ -39,14 +39,9 @@ class Web3Service {
       const chainId = await this._queryChainID()
       if (this._getDecimalChainID(chainId) !== config.chainId) await this._addNetwork()
 
-      const account = await this.eth.request({
-        method: 'eth_accounts'
-      })
-
       // 切换账号
       this.eth.on('accountsChanged', (account: any) => {
       })
-
       // 切换网络
       this.eth.on('chainChanged', async () => {
       })
@@ -57,6 +52,24 @@ class Web3Service {
       method: 'eth_chainId'
     })
   }
+
+  /**
+   * @description 判断当前是否锁定
+   * @returns Promise
+   */
+  _hasLogin() {
+    return this.eth.request({
+      method: 'eth_accounts'
+    }).then((accounts: any) => {
+      console.log('当前账号:', accounts);
+      if (accounts && accounts.length === 0) {
+        this.eth.request({
+          method: 'eth_requestAccounts'
+        })
+      }
+    })
+  }
+
   async _addNetwork() {
     const { data } = await queryCurrentChainInfo()
     return this.eth.request({
@@ -76,6 +89,7 @@ class Web3Service {
       ],
     })
   }
+
   _getAbiForLogin() {
     // const uuId = this.store.getters['app/nonceId']
     const uuId = this.useWallet.getNonceId
@@ -184,21 +198,6 @@ class Web3Service {
     }
   }
 
-  checkAddress() {
-    let address = this.useUsersInfo.getAddress
-    if (address) return true
-    if (this.eth && this.eth.selectedAddress) {
-      address = this.eth.selectedAddress
-      if (address) {
-        this.useUsersInfo.setAddress(address)
-        return true
-      } else {
-        return false
-      }
-    } else {
-      return false
-    }
-  }
 
   /**
    * @description 判断当前是否是目标链
@@ -219,19 +218,20 @@ class Web3Service {
    */
   async authERC20TOKEN(address: string, total: number, callback: any): Promise<any> {
     try {
-      if (!address) return Error('address is not found')
+      if (!address) return new Error('address is not found')
+      await this._hasLogin()
       await this._setTargetChain()
       const contract = await new this.web3.eth.Contract(Erc20ABI, address)
       const userAddress = useUsersInfo().getAddress
       const res = await contract.methods.approve(walletHelpAddress, total).send({
         from: userAddress
       }).on('transactionHash', (txHash: string) => {
-        console.log(txHash);
+        console.log('txHash:', txHash);
         callback(txHash)
       })
       return Promise.resolve(res)
     } catch (error: any) {
-      throw Error('Authorize Failed:', error)
+      throw new Error(`${error.message}`)
     }
   }
 
@@ -240,9 +240,10 @@ class Web3Service {
    * @param {string} address
    * @returns Promise 授权节点结果
    */
-  async authNode(address: string): Promise<any> {
+  async authNode(address: string, callback: any): Promise<any> {
     try {
-      if (!address) return Error('address is not found')
+      if (!address) return new Error('address is not found')
+      await this._hasLogin()
       await this._setTargetChain()
       const contract = await new this.web3.eth.Contract(MetisPayABI, address)
       const userAddress = useUsersInfo().getAddress
@@ -250,11 +251,11 @@ class Web3Service {
         from: userAddress
       }).on('transactionHash', (txHash: string) => {
         console.log(txHash);
-        // callback(txHash)
+        callback(txHash)
       })
       return Promise.resolve(res)
     } catch (error: any) {
-      throw Error('Authorize Failed:', error)
+      throw new Error(`${error.message}`)
     }
   }
 
@@ -263,19 +264,23 @@ class Web3Service {
    * @param {string} address
    * @returns Promise 取消授权节点结果
    */
-  async revokeNode(address: string): Promise<any> {
+  async revokeNode(address: string, callback: any): Promise<any> {
     try {
-      if (!address) return Error('address is not found')
+      if (!address) return new Error('address is not found')
+      await this._hasLogin()
       await this._setTargetChain()
       const contract = await new this.web3.eth.Contract(MetisPayABI, address)
       const userAddress = useUsersInfo().getAddress
       const res = await contract.methods.deleteWhitelist(address).send({
         from: userAddress
+      }).on('transactionHash', (txHash: string) => {
+        console.log('txHash:', txHash);
+        callback(txHash)
       })
 
       return Promise.resolve(res)
     } catch (error: any) {
-      throw Error('Authorize Failed:', error)
+      throw new Error(`${error.message}`)
     }
   }
 }

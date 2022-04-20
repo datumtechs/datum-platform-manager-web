@@ -6,7 +6,7 @@
       </template>
     </Banner>
     <div class="main-content com-main-data-wrap mt-55px">
-      <div v-show="activekey == 0 ? list.privacy?.length : list.noPrivacy?.length"
+      <div v-show="activekey === 0 ? list.privacy?.length : list.noPrivacy?.length"
         class="w-full mb-50px" v-for="(item, i) in (activekey == 0 ? list.privacy : list.noPrivacy)"
         :key="i">
         <h5 class="text-20px text-color-[#333333] mb-20px font-600">{{ item.name }}</h5>
@@ -27,7 +27,7 @@
         </div>
       </div>
       <el-empty :description="t('common.noData')"
-        v-show="activekey == 0 ? !list.privacy?.length : !list.noPrivacy?.length" />
+        v-show="activekey === 0 ? !list.privacy?.length : !list.noPrivacy?.length" />
       <!--
       <div class="w-full mt-50px">
         <h5
