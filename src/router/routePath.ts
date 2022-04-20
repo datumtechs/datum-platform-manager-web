@@ -1,4 +1,4 @@
-//show: ['home','side','login'],//1 首页展示 2 side展示 3 登录可见菜单
+//show: ['home','side','login'],//home 首页展示  side side展示 login 登录可见菜单
 
 export default [
   {
@@ -47,7 +47,7 @@ export default [
             meta: {
               label: 'menu.nodesDetail'
             },
-            component: () => import('@/views/nodes/components/nodeDetailIndex.vue')
+            component: () => import('@/views/nodes/components/NodeDetailIndex.vue')
           },
           {
             path: '/nodes/details/:identityId/dataOverview',
@@ -93,14 +93,14 @@ export default [
     }],
   },
   {
-    path: '/ComputeServe',
-    name: "ComputeServe",
+    path: '/computeServe',
+    name: "computeServe",
     meta: {
       show: ['home', 'side'],
       label: 'menu.computing',
       icon: "side-computing-icon"
     },
-    component: () => import('@/views/computing/ComputeServe.vue'),
+    component: () => import('@/views/computeServe/index.vue'),
   },
   {
     path: '/computeTask',
@@ -110,7 +110,7 @@ export default [
       label: 'menu.computeTask',
       icon: "side-computeTask-icon"
     },
-    component: () => import('@/views/computing/ComputeTask.vue'),
+    component: () => import('@/views/computeTask/index.vue')
   },
   {
     path: '/computeTask/details',
@@ -120,7 +120,7 @@ export default [
       label: 'menu.computeTaskDetails',
       icon: "side-computeTask-icon"
     },
-    component: () => import('@/views/computing/components/Details.vue'),
+    component: () => import('@/views/computeTask/components/Details.vue'),
   },
   {
     path: '/myAccount/:infoType',
@@ -176,7 +176,7 @@ export default [
       label: 'menu.workflow',
       icon: "side-my-task-icon"
     },
-    component: () => import('@/views/task/index.vue'),
+    component: () => import('@/views/workflow/MyWorkFlow.vue'),
   },
   {
     path: '/workflow/details/:id',
@@ -186,7 +186,7 @@ export default [
       label: 'menu.workflowDetails',
       icon: "side-my-task-icon"
     },
-    component: () => import('@/views/task/Details.vue'),
+    component: () => import('@/views/workflow/components/Details.vue'),
   },
   // {
   //   path: '/models',

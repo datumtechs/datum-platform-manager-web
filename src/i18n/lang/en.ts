@@ -55,7 +55,7 @@ const en = {
     marketplaceDetails: 'Marketplace Details',
     computing: 'Computing Services',
     computeTaskDetails: 'Computing Task Details',
-    createTask: "Create Task",
+    createTask: "Create Workflow",
     data: "My Data",
     dataDetails: "Data Details",
     dataCredentials: "Data Credentials",
@@ -176,7 +176,7 @@ const en = {
     predictionResultReceivers: "Select result receivers of the prediction task",
     startTask: "Start Task",
     PSI: "PSI Train",
-
+    pleaseComments: "Please enter comments (optional)",
   },
   myData: {
     tasksBriefInfoFirstParagraph: " ",
