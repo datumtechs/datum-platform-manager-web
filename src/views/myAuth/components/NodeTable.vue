@@ -2,10 +2,6 @@
     <div class="my-60px com-main-data-wrap">
         <div class="text-20px font-bold text-color-[#333] flex">
             <p>{{ t('auth.nodeAuth') }}</p>
-            <!-- <el-tooltip content="" placement="right" effect="light">
-                <img class="w-20px h-20px ml-10px cursor-pointer"
-                    src="@/assets/images/task/quest@2x.png" alt="">
-            </el-tooltip> -->
             <QuestionMark :content="''">
             </QuestionMark>
         </div>
@@ -42,22 +38,24 @@
             </template>
             <div v-if="dialogType === 'add'" class="ml-20px">
                 <p v-if="locale === 'zh'">
-                    请确认, 授权节点 <span class="text-color-[#2B60E9]">{{ currentNode }}</span> 为白名单
+                    请确认, 授权节点 <span class="text-color-[#2B60E9]">{{ currentNode.nodeName }}</span>
+                    为白名单
                 </p>
                 <p v-else>
                     Please confirm that the authorized node <span class="text-color-[#2B60E9]">{{
-                        currentNode
+                        currentNode.nodeName
                     }}</span> is a whitelist
                 </p>
             </div>
             <div v-else class="ml-20px">
                 <p v-if="locale === 'zh'">
-                    请确认, 取消节点 <span class="text-color-[#2B60E9]">{{ currentNode }}</span> 的授权
+                    请确认, 取消节点 <span class="text-color-[#2B60E9]">{{ currentNode.nodeName }}</span>
+                    的授权
                 </p>
                 <p v-else>
                     Please confirm and cancel the authorization of node <span
                         class="text-color-[#2B60E9]">{{
-                            currentNode
+                            currentNode.nodeName
                         }}</span>
                 </p>
             </div>
@@ -68,7 +66,7 @@
                             t('common.cancel')
                         }}</el-button>
                     <el-button class="w-100px" style="height: 32px;" round type="primary"
-                        @click="cancelConfirm">{{ t('common.confirm') }}</el-button>
+                        @click="authSubmit">{{ t('common.confirm') }}</el-button>
                 </div>
             </template>
         </el-dialog>
@@ -76,45 +74,69 @@
 </template>
 <script setup lang="ts">
 import { getUserOrgList } from '@/api/login'
+interface OrgNode {
+    identityId: string
+    identityIp: string
+    identityPort: number
+    isInWhitelist: boolean
+    nodeName: string
+    observerProxyWalletAddress: string
+    publicFlag: number
+    status: number
+    updateAt: number
+}
+
+
+const web3: any = inject('web3')
+
 const { t, locale } = useI18n()
 const tableData = ref([])
-const currentNode = ref('')
+const currentNode = ref<OrgNode>()
 const dialogType = ref('add')
 const showDialog = ref(false)
 const curTitle = ref('')
 
-const cancelConfirm = () => {
-
-}
 
 const authSubmit = () => {
 
+
+    if (dialogType.value === 'add') {
+        web3.authNode(currentNode.value?.observerProxyWalletAddress).then((res: any) => {
+
+        }).catch((error: any) => {
+
+        })
+    } else {
+        web3.revokeNode(currentNode.value?.observerProxyWalletAddress).then((res: any) => {
+
+        }).catch((error: any) => {
+
+        })
+    }
+
 }
 
-const queryOrgList = () => {
+const queryOrgList = (): void => {
     getUserOrgList().then(res => {
         const { data, code } = res
         if (code === 10000) {
-            console.log(data)
             tableData.value = data
         }
     })
 }
 
-const showAuth = (row: any) => {
+const showAuth = (row: OrgNode) => {
     dialogType.value = 'add'
     showDialog.value = true
     curTitle.value = t('auth.nodeAuth')
-    currentNode.value = row.nodeName
-
+    currentNode.value = row
 }
 
-const showCancel = (row: any) => {
+const showCancel = (row: OrgNode) => {
     dialogType.value = 'cancel'
     showDialog.value = true
     curTitle.value = t('auth.cancelNodeAuth')
-    currentNode.value = row.nodeName
-
+    currentNode.value = row
 }
 
 onMounted(() => {

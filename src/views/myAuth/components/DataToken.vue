@@ -23,27 +23,34 @@
             </el-table-column>
             <el-table-column :label="t('auth.holdQuantity')">
                 <template #default="{ row }">
-                    <p v-if="row.tokenBalance">{{ row.tokenBalance }}</p>
+                    <p v-if="row.tokenBalance">{{
+                        useExchangeFrom(row.tokenBalance, row.tokenDecimal)
+                    }}</p>
                     <p v-else>0</p>
                 </template>
             </el-table-column>
             <el-table-column prop="authorizeBalance" :label="t('auth.authQuantity')">
                 <template #default="{ row }">
-                    <p v-if="row.authorizeBalance">{{ row.authorizeBalance }}</p>
+                    <p v-if="row.authorizeBalance">{{
+                        useExchangeFrom(row.authorizeBalance,
+                            row.tokenDecimal)
+                    }}</p>
                     <p v-else>0</p>
                 </template>
             </el-table-column>
             <el-table-column :label="t('common.actions')">
                 <template #default="{ row }">
                     <el-button class="text-14px text-color-[#0052D9] cursor-pointer" type="text"
-                        circle @click="showAuthDialog = true; currentToken = row.tokenName">{{
+                        circle
+                        @click="showAuthDialog = true; currentToken = row; form.quantity = useExchangeFrom(row.tokenBalance, row.tokenDecimal)">
+                        {{
                             t('auth.auth')
                         }}</el-button>
-                    <el-button class="text-14px text-color-[#0052D9] cursor-pointer" type="text"
-                        circle @click="showCancelDialog = true; currentToken = row.tokenName">{{
+                    <!-- <el-button class="text-14px text-color-[#0052D9] cursor-pointer" type="text"
+                        circle @click="showCancelDialog = true; currentToken = row">{{
                             t('auth.cancelAuth')
                         }}
-                    </el-button>
+                    </el-button> -->
                 </template>
             </el-table-column>
         </el-table>
@@ -56,7 +63,7 @@
             :destroy-on-close="true">
             <el-form :model="form" :label-width="80" label-position="top" :rules="rules"
                 :ref="(e: any) => formRef = e">
-                <el-form-item :label="currentToken" prop="quantity">
+                <el-form-item :label="currentToken.tokenName" prop="quantity">
                     <el-input v-model="form.quantity" maxlength="20" />
                 </el-form-item>
             </el-form>
@@ -67,7 +74,7 @@
                             t('common.cancel')
                         }}</el-button>
                     <el-button class="w-100px" style="height: 32px;" round type="primary"
-                        @click="authSumbit">{{ t('common.confirm') }}</el-button>
+                        @click="authSubmit">{{ t('common.confirm') }}</el-button>
                 </div>
             </template>
         </el-dialog>
@@ -82,13 +89,13 @@
             <div class="flex items-center mb-24px">
                 <p class="pl-32px break-word" v-if="locale === 'zh'"> 将&nbsp;
                     <span class="text-color-[#2B60E9]">{{
-                        currentToken
+                        currentToken.tokenName
                     }}</span>
                     &nbsp;的授权数量重置为0.
                 </p>
                 <p class="pl-32px break-word" v-else> Reset the authorized quantity of <span
                         class="text-color-[#2B60E9]">{{
-                            currentToken
+                            currentToken.tokenName
                         }}</span>
                     to 0.</p>
             </div>
@@ -107,7 +114,19 @@
 </template>
 
 <script setup lang='ts'>
+import { useExchangeFrom, useExchangeTo } from '@/hooks'
 const { t, locale } = useI18n()
+const web3: any = inject('web3')
+
+interface token {
+    authorizeBalance: string
+    tokenAddress: string
+    tokenBalance: string
+    tokenDecimal: number
+    tokenName: string
+    tokenSymbol: string
+}
+
 const props = defineProps({
     title: {
         type: String,
@@ -126,18 +145,37 @@ const props = defineProps({
         default: () => []
     }
 })
-const form = ref({
-    quantity: undefined
+const form = reactive({
+    quantity: 0
 })
 
-const currentToken = ref('')
-
+const currentToken = ref<token>()
 const formRef = ref()
-const cancelConfirm = () => { }
-const authSumbit = () => {
-    formRef.value?.validate((bol: boolean) => {
+const _close = (tx: string) => {
+    console.log('txHash', tx);
+    showAuthDialog.value = false
+}
+
+const cancelConfirm = () => {
+    web3.authERC20TOKEN(currentToken.value?.tokenAddress, 0).then((res: any) => {
+        console.log('txHash', res);
+        showCancelDialog.value = false
+    }).catch((error: any) => {
+        console.log(error);
+    })
+}
+const authSubmit = () => {
+    formRef.value?.validate(async (bol: boolean) => {
         if (bol) {
-            console.log(form.value)
+            const res = await web3.authERC20TOKEN(
+                currentToken.value?.tokenAddress,
+                useExchangeTo(form.quantity, currentToken.value?.tokenDecimal), _close)
+                .then((res: any) => {
+                    console.log('txHash', res);
+                    showAuthDialog.value = false
+                }).catch((error: any) => {
+                    console.log(error);
+                })
         }
     })
 }

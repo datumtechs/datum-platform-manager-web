@@ -1,8 +1,12 @@
-import { useWallet, useUsersInfo, userNetwork } from '@/stores'
-import I18n from '../i18n/index'
-import { ElMessage } from 'element-plus'
+import { useWallet, useUsersInfo } from '@/stores'
+import I18n from '@/i18n/index'
 import Web3 from 'web3'
-import config from '../config/network.js'
+import config from '@/config/network.js'
+import { abi as Erc20ABI } from '@/config/abi/DataTokenTemplate.json'
+import { abi as MetisPayABI } from '@/config/abi/MetisPay.json'
+import walletHelpAddress from '@/config/walletHelpAddress'
+import { queryCurrentChainInfo } from '@/api/chain'
+
 
 
 class Web3Service {
@@ -53,20 +57,21 @@ class Web3Service {
       method: 'eth_chainId'
     })
   }
-  _addNetwork() {
+  async _addNetwork() {
+    const { data } = await queryCurrentChainInfo()
     return this.eth.request({
       method: 'wallet_addEthereumChain',
       params: [
         {
-          chainName: config.chainName,
-          chainId: '0x' + config.chainId.toString(16),
-          rpcUrls: [config.rpcUrl],
+          chainName: data.chainName || config.chainName,
+          chainId: '0x' + data.chainId.toString(16) || '0x' + config.chainId.toString(16),
+          rpcUrls: [data.rpcUrl || config.rpcUrl],
           nativeCurrency: {
             name: 'LAT',
-            symbol: config.symbol,
+            symbol: data.symbol || config.symbol,
             decimals: 18,
           },
-          blockExplorerUrls: [config.blockExplorerUrl],
+          blockExplorerUrls: [data.blockExplorerUrl || config.blockExplorerUrl],
         },
       ],
     })
@@ -192,6 +197,85 @@ class Web3Service {
       }
     } else {
       return false
+    }
+  }
+
+  /**
+   * @description 判断当前是否是目标链
+   * @param address 
+   * @param total 
+   * @returns void
+   */
+  async _setTargetChain() {
+    const chainId = await this._queryChainID()
+    if (this._getDecimalChainID(chainId) !== config.chainId) await this._addNetwork()
+  }
+
+  /**
+   * @description 授权Erc20币
+   * @param address 当前token合约的链上地址
+   * @param total 授权erc20数量
+   * @returns Promise 授权结果
+   */
+  async authERC20TOKEN(address: string, total: number, callback: any): Promise<any> {
+    try {
+      if (!address) return Error('address is not found')
+      await this._setTargetChain()
+      const contract = await new this.web3.eth.Contract(Erc20ABI, address)
+      const userAddress = useUsersInfo().getAddress
+      const res = await contract.methods.approve(walletHelpAddress, total).send({
+        from: userAddress
+      }).on('transactionHash', (txHash: string) => {
+        console.log(txHash);
+        callback(txHash)
+      })
+      return Promise.resolve(res)
+    } catch (error: any) {
+      throw Error('Authorize Failed:', error)
+    }
+  }
+
+  /**
+   * @description 授权节点白名单
+   * @param {string} address
+   * @returns Promise 授权节点结果
+   */
+  async authNode(address: string): Promise<any> {
+    try {
+      if (!address) return Error('address is not found')
+      await this._setTargetChain()
+      const contract = await new this.web3.eth.Contract(MetisPayABI, address)
+      const userAddress = useUsersInfo().getAddress
+      const res = await contract.methods.authorize(address).send({
+        from: userAddress
+      }).on('transactionHash', (txHash: string) => {
+        console.log(txHash);
+        // callback(txHash)
+      })
+      return Promise.resolve(res)
+    } catch (error: any) {
+      throw Error('Authorize Failed:', error)
+    }
+  }
+
+  /**
+   * @description 取消节点白名单授权
+   * @param {string} address
+   * @returns Promise 取消授权节点结果
+   */
+  async revokeNode(address: string): Promise<any> {
+    try {
+      if (!address) return Error('address is not found')
+      await this._setTargetChain()
+      const contract = await new this.web3.eth.Contract(MetisPayABI, address)
+      const userAddress = useUsersInfo().getAddress
+      const res = await contract.methods.deleteWhitelist(address).send({
+        from: userAddress
+      })
+
+      return Promise.resolve(res)
+    } catch (error: any) {
+      throw Error('Authorize Failed:', error)
     }
   }
 }
