@@ -12,5 +12,4 @@ import { ElLoading } from 'element-plus'
 
 const app = createApp(App)
 app.use(i18n).use(store).use(router).use(ElLoading)
-// app.config.globalProperties.$Web3Service = Web3Service
 app.mount('#app')

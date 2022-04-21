@@ -28,13 +28,17 @@ export default defineConfig({
         'vue-router',
         'vue-i18n',
         {
+          'element-plus/es': ['ElMessageBox','ElMessage','ElLoading'],
+        },
+        {
           '@vueuse/core': [
             // @vueuse
           ],
           axios: [
             // default imports
             ['default', 'axios'] // import { default as axios } from 'axios',
-          ]
+          ],
+
         }
       ],
       eslintrc: {

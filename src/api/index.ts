@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { useUsersInfo } from '@/stores'
 import { addRequest, removeRequest } from '@/utils/cancelToken'
-import { ElMessage } from 'element-plus'
+// import { ElMessage } from 'element-plus'
 import { getLanguage } from '@/utils/lang'
 let tokenAbnormal = false
 

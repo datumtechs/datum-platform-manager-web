@@ -55,7 +55,7 @@
   <NextButton @click="next" />
 </template>
 <script lang="ts" setup>
-import { getAlgTree, } from '@/api/algorithm'
+import { getAlgTree } from '@/api/algorithm'
 import { postCreateWorkflowWizard, getProcessList } from '@/api/workflow'
 import NextButton from './NextButton.vue'
 const { locale, t } = useI18n()

@@ -61,7 +61,6 @@
                     <p class="pl-8px"> {{ t('auth.plzInputAuthTokenNumber') }}</p>
                 </div>
             </template>
-            {{ currentToken.tokenBalance }}
             <el-form :model="authForm" :label-width="locale === 'zh' ? 100 : 120"
                 label-position="left" :rules="rules" :ref="(e: any) => formRef = e">
                 <el-form-item :label="t('myData.credentialName')" prop="name">
