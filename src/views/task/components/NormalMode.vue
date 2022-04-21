@@ -1,95 +1,110 @@
 <template>
   <div class="normal-wrap pt-40px pb-40px">
     <div class="flex item-center justify-between px-9px py-5px bg-color-[#F7F8F9] h-80px">
-      <div
-        @click="activeIndex = index"
-        class="w-max-220px flex-col flex pl-31px leading-24px justify-center font-800"
-        v-for="(item, index) in list"
-        :key="item.setp"
-        :style="{
+      <div @click="activeIndex = index, componentsType = item.type || null"
+        class="w-max-220px flex-col flex pl-31px leading-24px justify-center font-800" v-for="(item, index) in list"
+        :key="item.setp" :style="{
           flex: list.length <= 1 ? 'flex-230px' : 'flex-1'
-        }"
-        :class="{ active: activeIndex == index }"
-      >
+        }" :class="{ active: activeIndex == index }">
         <div class="setp-item-name text-22px font-medium font-800 text-color-[#CCCCCC]">
           {{ $t('task.step') }}
           <span class="ml-10px font-800">{{ item.setp }}</span>
-          <span
-            class="cover inline-block w-11px h-11px relative top-6px -left--6px bg-color-[#F7F8F9]"
-          ></span>
+          <span class="cover inline-block w-11px h-11px relative top-6px -left--6px bg-color-[#F7F8F9]"></span>
         </div>
-        <p
-          class="setp-item-info font-medium text-color-[#666666] text-16px font-500 mt-5px"
-        >{{ $t(`${item.info}`) }}</p>
+        <p class="setp-item-info font-medium text-color-[#666666] text-16px font-500 mt-5px">{{ $t(`${item.info}`) }}
+        </p>
       </div>
     </div>
     <div v-show="activeIndex == 0" class="mt-38px mb-42px ml-6px">
       <slot name="mode"></slot>
-      <StepOne
-        :taskParams="taskParams"
-        @next="activeIndex = 1, stepChange()"
-        @getParams="(params) => {
-          taskParams['StepOne'] = params
-        }"
-      />
+      <SelectionAlg @getStep="getStepInfo" @getAlgInfo="getAlgInfo" :taskParams="taskParams" @next="activeIndex = 1"
+        @getParams="(params) => { }" />
     </div>
-
-    <component
-      :is="{
-        'stepTwoInfo': StepTwo,
-        'stepThreeInfo': StepThree,
-        'stepFourInfo': Stepfour,
-        'stepFiveInfo': StepFive
-      }[list[activeIndex].components]"
-      :taskParams="taskParams"
-      @previous="previous"
-      @next="next"
-      @getParams="(params: any) => {
-        taskParams[list[activeIndex].components] = params
-      }"
-    />
+    <component v-if="comList.length" :is="componentList[componentsType]?.components" :taskParams="taskParams"
+      @previous="previous" @next="next" @getParams="(params: any) => {
+      }" />
   </div>
 </template>
 <script lang="ts" setup>
-import StepOne from './normal/StepOne.vue';
-import StepTwo from './normal/StepTwo.vue';
-import StepThree from './normal/StepThree.vue';
-import Stepfour from './normal/Stepfour.vue';
-import StepFive from './normal/StepFive.vue';
+import SelectionAlg from './normal/SelectionAlg.vue';
+import PSIInputData from './normal/PSIInputData.vue';//psi训练输入数据
+import TrainingInputData from './normal/TrainingInputData.vue';//训练输入数据
+import ForecastInputData from './normal/ForecastInputData.vue';//预测输入数据
+import ComputingEnvironment from './normal/ComputingEnvironment.vue';//计算环境
+import ResultReceiver from './normal/ResultReceiver.vue';//结果接收方
 const activeIndex = ref(0)
-const list = ref(
+const componentsType = ref(null)
+const comList = ref([])
+const componentList = markRaw<any[]>(
+  //0-选择训练输入数据, 
+  //1-选择预测输入数据,
+  // 2-选择PSI输入数据,
+  // 3-选择计算环境(通用), 
+  //4-选择计算环境(训练&预测), 
+  //5-选择结果接收方(通用), 
+  //6-选择结果接收方(训练&预测)
+  (() => {
+    return new Array(6).fill('').map((v, index) => {
+      let obj = {}
+      switch (index) {
+        case 0:
+          obj = {
+            components: TrainingInputData,//训练输入数据
+            i18Text: "selectTrainingInputData"
+          }; break;
+        case 1:
+          obj = {
+            components: ForecastInputData,//预测输入数据
+            i18Text: "selectForecastInputData"
+          }; break;
+        case 2:
+          obj = {
+            components: PSIInputData,//psi训练输入数据
+            i18Text: "selectPSIInputData"
+          }; break;
+        case 3:
+        case 4:
+          obj = {
+            components: ComputingEnvironment,//计算环境
+            i18Text: "selectComputingEnvironment"
+          }; break;
+        case 5:
+        case 6:
+          obj = {
+            components: ResultReceiver,//结果接收方
+            i18Text: "selectResultReceiver"
+          }; break;
+        default: break;
+      }
+      return obj
+    })
+  })()
+)
+const list = ref<any[]>(
   [
     {
       setp: '01',
-      info: 'task.stepOneInfo',
-      components: "stepOneInfo"
+      info: 'task.selectionAlg',
     }
   ]
 )
-const stepChange = () => {
-  const { procedure } = taskParams.value.StepOne
-  if (procedure == 1) {
 
-    list.value = ['stepOneInfo', 'stepTwoInfo', 'stepFourInfo', 'stepFiveInfo'].map((v, index) => ({
-      setp: `0${index + 1}`,
-      info: `task.${v}`,
-      components: v
-    }))
 
-  } else if (procedure == 2) {
-    list.value = ['stepOneInfo', 'stepThreeInfo', 'stepFourInfo', 'stepFiveInfo'].map((v, index) => ({
-      setp: `0${index + 1}`,
-      info: `task.${v}`,
-      components: v
-    }))
-  } else {
-    list.value = ['stepOneInfo', 'stepTwoInfo', 'stepThreeInfo', 'stepFourInfo', 'stepFiveInfo'].map((v, index) => ({
-      setp: `0${index + 1}`,
-      info: `task.${v}`,
-      components: v
-    }))
-  }
 
+const getAlgInfo = (data: any) => {
+
+}
+
+
+const getStepInfo = (data: any) => {
+  comList.value = data.list.map((v: any, index: number) => {
+    list.value.push({
+      setp: `0${index + 2}`,
+      info: `task.${componentList[v.type]?.i18Text}`,
+      type: v.type
+    })
+    return v
+  })
 }
 
 const taskParams: any = ref({
@@ -127,13 +142,16 @@ const previous = () => {
   .cover {
     transform: rotate(45deg);
   }
+
   .active {
     background: #2b60e9;
     border-radius: 8px;
+
     .setp-item-name,
     .setp-item-info {
       color: #ffffff !important;
     }
+
     .cover {
       background: #2b60e9;
       border-left: 1px solid #fff;

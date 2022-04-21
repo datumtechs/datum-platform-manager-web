@@ -11,19 +11,9 @@
     </div>
     <div class="flex items-center text-14px">
       <div class="mr-20px text-color-[#666666] font-medium w-130px">{{ $t('task.selectSponsor') }} ：</div>
-      <el-select
-        v-model="sponsorValue"
-        :suffix-icon="CaretBottom"
-        :placeholder="$t('task.selectSponsor')"
-        style="flex:0 0 440px"
-        class="h-40px rounded-20px border-1 basis-1/2 border-solid border-color-[#EEEEEE]"
-      >
-        <el-option
-          v-for="item in sponsorOptions"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-        ></el-option>
+      <el-select v-model="sponsorValue" :suffix-icon="CaretBottom" :placeholder="$t('task.selectSponsor')"
+        style="flex:0 0 440px" class="h-40px rounded-20px border-1 basis-1/2 border-solid border-color-[#EEEEEE]">
+        <el-option v-for="item in sponsorOptions" :key="item.value" :label="item.label" :value="item.value"></el-option>
       </el-select>
       <el-checkbox class="ml-26px mr-10px" v-model="psi" label="psi">{{ }}</el-checkbox>
       <span>{{ $t('task.PSI') }}</span>
@@ -98,6 +88,7 @@ const previous = () => {
 </script>
 <style lang="scss">
 .step-two-wrap {
+
   .el-cascader .el-input__inner,
   .el-select .el-input__inner {
     height: 40px;
@@ -105,10 +96,12 @@ const previous = () => {
     background: transparent;
     text-indent: 20px;
   }
+
   .el-cascader .el-input__suffix .el-icon,
   .el-select .el-input__suffix .el-icon {
     color: #333333;
   }
+
   .previous {
     border-radius: 25px;
     padding: 0 40px;
