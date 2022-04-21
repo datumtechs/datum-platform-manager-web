@@ -75,6 +75,7 @@
                 </div>
             </template>
         </el-dialog>
+        <GlobalPending :show="pending.show" :content="pending.content" :title="pending.title" />
     </div>
 </template>
 <script setup lang="ts">
@@ -104,8 +105,8 @@ const dialogType = ref('add')
 const showDialog = ref(false)
 const curTitle = ref('')
 
-const _close = (tx: string) => {
-    showDialog.value = false
+const _close = (tx?: string) => {
+    pending.show = false
 }
 const pageObj = reactive({
     total: 0,
@@ -113,30 +114,44 @@ const pageObj = reactive({
     size: 10
 })
 
+const pending = reactive({
+    show: false,
+    content: "",
+    title: ""
+})
+
 watch(() => pageObj.current, () => {
     queryOrgList()
 });
 
 const authSubmit = () => {
+    pending.show = true
+    showDialog.value = false
     if (dialogType.value === 'add') {
+        const content = `${t('auth.authorizeNode')}: ${currentNode.value?.nodeName}`
+        pending.title = t('auth.confirmAuth')
+        pending.content = content
         web3.authNode(currentNode.value?.observerProxyWalletAddress, _close)
             .then((res: any) => {
                 if (res && res.transactionHash) {
-                    const content = `${t('auth.authorizeNode')}:${currentNode.value?.nodeName}`
                     useNotice('success', content, chainConfig.value?.blockExplorerUrl, res.transactionHash)
                 }
             }).catch((error: any) => {
                 useNotice('error', error)
+                _close()
             })
     } else {
+        const content = `${t('auth.cancelNodeAuth')}: ${currentNode.value?.nodeName}`
+        pending.title = t('auth.confirmCancelAuth')
+        pending.content = content
         web3.revokeNode(currentNode.value?.observerProxyWalletAddress, _close)
             .then((res: any) => {
                 if (res && res.transactionHash) {
-                    const content = `${t('auth.cancelNodeAuth')}:${currentNode.value?.nodeName}`
                     useNotice('success', '', chainConfig.value?.blockExplorerUrl, res.transactionHash)
                 }
             }).catch((error: any) => {
                 useNotice('error', error)
+                _close()
             })
     }
 }
