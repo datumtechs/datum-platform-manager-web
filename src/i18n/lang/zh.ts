@@ -323,6 +323,11 @@ const zh = {
     transactionReceipt: '交易已经被接受',
     transactionReject: '交易异常',
     authorizeToken: '授权凭证',
+    exceedTotal: '授权金额超出持有金额',
+    waitForConfirm: '等待确认',
+    waitWalletConfirm: '在您的钱包中确认此笔交易',
+    confirmAuth: '确认授权',
+    confirmCancelAuth: '确认取消授权'
   },
   industry: {
     bank: '金融业（银行）',

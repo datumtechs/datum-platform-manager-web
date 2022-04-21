@@ -57,7 +57,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ElMessageBox, ElMessage } from 'element-plus'
+// import { ElMessageBox, ElMessage } from 'element-plus'
 import { getUserOrgList, postJoinOrg, delNodeOrg } from '@/api/login'
 const { t } = useI18n()
 const dialogFormVisible = ref(false)

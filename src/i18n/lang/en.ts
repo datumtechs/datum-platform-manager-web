@@ -323,6 +323,11 @@ const en = {
     transactionReceipt: 'Transaction Receipt',
     transactionReject: 'Transaction Reject',
     authorizeToken: 'Authorize token',
+    exceedTotal: 'Authorized amount exceeds holding amount',
+    waitForConfirm: 'Waiting For Confirmation',
+    waitWalletConfirm: 'Confirm this transaction in your wallet',
+    confirmAuth: 'Confirm authorization',
+    confirmCancelAuth: 'Confirm cancel authorization'
   },
   industry: {
     bank: 'Finance (bank)',

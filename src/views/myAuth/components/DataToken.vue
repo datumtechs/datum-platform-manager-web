@@ -37,10 +37,9 @@
             <el-table-column :label="t('common.actions')">
                 <template #default="{ row }">
                     <el-button class="text-14px text-color-[#0052D9] cursor-pointer" type="text"
-                        circle
-                        @click="showAuthDialog = true; currentToken = row; form.quantity = useExchangeFrom(row.tokenBalance, row.tokenDecimal)">
+                        circle @click="setBalance(row)">
                         {{
-                            t('auth.auth')
+                            t('auth.plzInputAuthTokenNumber')
                         }}</el-button>
                     <!-- <el-button class="text-14px text-color-[#0052D9] cursor-pointer" type="text"
                         circle @click="showCancelDialog = true; currentToken = row">{{
@@ -62,10 +61,13 @@
                     <p class="pl-8px"> {{ t('auth.plzInputAuthTokenNumber') }}</p>
                 </div>
             </template>
-            <el-form :model="form" :label-width="80" label-position="top" :rules="rules"
-                :ref="(e: any) => formRef = e">
-                <el-form-item :label="currentToken.tokenName" prop="quantity">
-                    <el-input v-model="form.quantity" maxlength="20" />
+            <el-form :model="authForm" :label-width="locale === 'zh' ? 100 : 120"
+                label-position="left" :rules="rules" :ref="(e: any) => formRef = e">
+                <el-form-item :label="t('myData.credentialName')" prop="name">
+                    <span>{{ currentToken.tokenName }}</span>
+                </el-form-item>
+                <el-form-item :label="t('auth.authQuantity')" prop="quantity">
+                    <el-input v-model="authForm.quantity" maxlength="20" />
                 </el-form-item>
             </el-form>
             <template #footer>
@@ -79,7 +81,7 @@
                 </div>
             </template>
         </el-dialog>
-        <el-dialog v-model="showCancelDialog" :title="t('auth.cancelTokenAuth')" :width="480"
+        <!-- <el-dialog v-model="showCancelDialog" :title="t('auth.cancelTokenAuth')" :width="480"
             :destroy-on-close="true">
             <template #title>
                 <div class="flex items-center mb-24px">
@@ -110,7 +112,8 @@
                         @click="cancelConfirm">{{ t('common.confirm') }}</el-button>
                 </div>
             </template>
-        </el-dialog>
+        </el-dialog> -->
+        <GlobalPending :show="pending.show" :content="pending.content" :title="pending.title" />
     </div>
 </template>
 
@@ -123,7 +126,7 @@ const web3: any = inject('web3')
 interface token {
     authorizeBalance: string
     tokenAddress: string
-    tokenBalance: string
+    tokenBalance: number
     tokenDecimal: number
     tokenName: string
     tokenSymbol: string
@@ -152,27 +155,47 @@ const props = defineProps({
     }
 })
 
-
-const authLoading = ref(true)
-const cancelLoading = ref(false)
-
-const form = reactive({
-    quantity: 0
+const pending = reactive({
+    show: false,
+    content: "",
+    title: ""
 })
 
-const currentToken = ref<token>()
+const cancelLoading = ref(false)
+
+const authForm = reactive({
+    name: '',
+    quantity: '0'
+})
+
+const currentToken = reactive<token>({
+    authorizeBalance: '0',
+    tokenAddress: '',
+    tokenBalance: 0,
+    tokenDecimal: 18,
+    tokenName: '',
+    tokenSymbol: ''
+})
 const formRef = ref()
-const _closeAuthDialog = (tx: string) => {
-    console.log('txHash', tx);
-    showAuthDialog.value = false
-    authLoading.value = false
+const _closeAuthDialog = (tx?: string) => {
+    pending.show = false
+}
+const setBalance = (row: any) => {
+    showAuthDialog.value = true;
+    currentToken.authorizeBalance = row.authorizeBalance;
+    currentToken.tokenAddress = row.tokenAddress;
+    currentToken.tokenBalance = row.tokenBalance;
+    currentToken.tokenDecimal = row.tokenDecimal;
+    currentToken.tokenName = row.tokenName;
+    currentToken.tokenSymbol = row.tokenSymbol;
+    authForm.quantity = useExchangeFrom(row.tokenBalance, row.tokenDecimal)
 }
 
 const cancelConfirm = () => {
-    web3.authERC20TOKEN(currentToken.value?.tokenAddress, 0)
+    web3.authERC20TOKEN(currentToken.tokenAddress, 0)
         .then((res: any) => {
             if (res && res.transactionHash) {
-                const content = `${t('auth.cancelAuth')}: ${currentToken.value?.tokenName}`
+                const content = `${t('auth.cancelAuth')}: ${currentToken.tokenName}`
                 useNotice('success', content, chainConfig.value?.blockExplorerUrl, res.transactionHash)
             }
         }).catch((error: any) => {
@@ -181,17 +204,21 @@ const cancelConfirm = () => {
 }
 const authSubmit = () => {
     formRef.value?.validate((bol: boolean) => {
-        authLoading.value = true
         if (bol) {
-            const unit = useExchangeTo(form.quantity, currentToken.value?.tokenDecimal)
+            const content = `${t('auth.auth')} ${+authForm.quantity} ${currentToken.tokenName}`
+            showAuthDialog.value = false
+            pending.show = true
+            pending.title = t('auth.confirmAuth')
+            pending.content = content
+            const unit = useExchangeTo(+authForm.quantity, currentToken.tokenDecimal)
             web3.authERC20TOKEN(
-                currentToken.value?.tokenAddress,
+                currentToken.tokenAddress,
                 unit,
                 _closeAuthDialog)
                 .then((res: any) => {
-                    const content = `${t('auth.auth')} ${form.quantity} ${currentToken.value?.tokenName}`
                     useNotice('success', content, chainConfig.value?.blockExplorerUrl, res.transactionHash)
                 }).catch((error: any) => {
+                    _closeAuthDialog()
                     useNotice('error', error)
                 })
         }
@@ -207,6 +234,8 @@ const rules = ref(
                 validator: ({ }, value: any, callback: any) => {
                     if (!value) {
                         callback(new Error(t('auth.quantityError')))
+                    } else if (value > useExchangeFrom(currentToken.tokenBalance, currentToken.tokenDecimal)) {
+                        callback(new Error(t('auth.exceedTotal')))
                     } else {
                         /** TODO input overflow */
                         callback()
@@ -234,5 +263,9 @@ const rules = ref(
 
     height:72px;
     padding: 28px 32px 20px;
+}
+
+:deep(.el-form-item--default) {
+    margin-bottom: 10px;
 }
 </style>
