@@ -9,7 +9,7 @@
                 <li class="h-36px w-230px drag-box cursor-pointer flex items-center pl-18px"
                     @dragstart="dragstart($event, item)" @dragend="dragend($event, item)"
                     :draggable="true" v-for="item in algo.childrenList" :key="item.id">{{
-                        item.name
+                            item.name
                     }}
                 </li>
             </ul>
@@ -20,19 +20,34 @@
 <script setup lang='ts'>
 import { getAlgTree } from '@/api/algorithm'
 import { useExpertMode } from '@/stores'
+import { MAX_NODES } from '@/config/constants'
+const { t } = useI18n()
 const dragstart = (e: any, item: any) => {
     // if (this.viewModel === 'view') return
     useExpertMode().setDotted(true)
 }
+
+const nodeList = computed(() => useExpertMode().getNodeList)
+
 const dragend = (e: any, item: any) => {
     useExpertMode().setDotted(false)
     const inBoxFlag = isBoxInStage(e)
     if (!inBoxFlag) return
-    const ids = useExpertMode().getNodeList.map((item: any) => item.algorithmId)
+    const ids = nodeList.value.map((item: any) => item.algorithmId)
     if (ids.includes(item.algorithmId)) {
-        // this.$message.warning(this.$t('projects.sameNodeTip'))
+        ElMessage.warning(t('task.repeatAlgo'))
     } else {
-
+        if (nodeList.value.length < MAX_NODES) {
+            const params = {
+                algorithmId: item.algorithmId,
+                nodeName: item.algorithmName,
+                nodeAlgorithmVo: item.algDetailsVo,
+                // workflowId: this.workflowId
+            }
+            useExpertMode().setNodeList(params)
+            return
+        }
+        ElMessage.warning(t('task.exceedMaxNode'))
     }
 
 }
@@ -51,7 +66,7 @@ const isBoxInStage = (event: any) => {
     }
 }
 
-const { t } = useI18n()
+
 const algoList: any = ref([
     // statisticList: {
     //     label: t('computing.privacyStatistics'),

@@ -178,6 +178,8 @@ const en = {
     startTask: "Start Task",
     PSI: "PSI Train",
     pleaseComments: "Please enter comments (optional)",
+    repeatAlgo: 'Duplicate algorithm nodes',
+    exceedMaxNode: "Maximum number of nodes exceeded"
   },
   myData: {
     tasksBriefInfoFirstParagraph: " ",
@@ -221,7 +223,8 @@ const en = {
     deleteWorkflow: "Delete",
     totalOf: " ",
     workTipsBriefInfoTwoParagraph: "privacy computing workflows",
-    recordWorkflow: "Record of this workflow"
+    recordWorkflow: "Record of this workflow",
+
   },
   credentials: {
     circulation: "Circulation",

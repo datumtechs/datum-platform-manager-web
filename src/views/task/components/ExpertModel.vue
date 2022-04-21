@@ -8,7 +8,7 @@
       <Flow />
       <Panel />
     </div>
-    <!-- <SetNameDialog v-model:show="showDialog" /> -->
+    <SetNameDialog v-model:show="showDialog" />
   </div>
 </template>
 <script lang="ts" setup>
@@ -17,7 +17,10 @@ import Panel from './expert/Panel.vue'
 import Flow from './expert/Flow.vue'
 import SetNameDialog from './expert/SetNameDialog.vue'
 
-const showDialog = ref(true)
+const route = useRoute()
+const showDialog = computed(() =>
+  route.query.workflowId ? true : false
+)
 
 </script>
 <style lang="scss" scoped>

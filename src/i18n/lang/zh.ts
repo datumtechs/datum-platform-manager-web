@@ -178,6 +178,8 @@ const zh = {
     startTask: "启动任务",
     PSI: "PSI训练",
     pleaseComments: "请输入备注（选填）",
+    repeatAlgo: "请勿添加重复的算法节点",
+    exceedMaxNode: "超过最大节点数"
   },
   myData: {
     tasksBriefInfoFirstParagraph: "全网共",
@@ -221,7 +223,8 @@ const zh = {
     deleteWorkflow: "删除工作流",
     totalOf: "共",
     workTipsBriefInfoTwoParagraph: "个隐私计算工作流",
-    recordWorkflow: "条 该工作流的运行记录"
+    recordWorkflow: "条 该工作流的运行记录",
+
   },
   credentials: {
     circulation: "总发布量",
