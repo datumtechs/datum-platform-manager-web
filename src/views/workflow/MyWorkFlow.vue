@@ -2,10 +2,14 @@
   <div class="flex-1 task-wrap com-main">
     <Banner :bg-name="'workflow'">
       <template #briefInfo>
-        <p class="text-color-[#999999]">
-          {{ t('workflow.totalOf') }}
+        <p class="text-color-[#999999]" v-if="locale === 'zh'">
+          共
           <span class="text-color-[#2B60E9] text-16px">{{ flowStats || 0 }}</span>
-          {{ t('workflow.workTipsBriefInfoTwoParagraph') }}
+          个隐私计算工作流
+        </p>
+        <p class="text-color-[#999999]" v-else>
+          <span class="text-color-[#2B60E9] text-16px">{{ flowStats || 0 }}</span>
+          privacy computing workflows
         </p>
       </template>
     </Banner>
@@ -24,8 +28,8 @@
 </template>
 <script lang="ts" setup>
 import DataTable from './components/DataTable.vue';
-import { queryWorkflowList, queryWorkflowStats } from '@/api/workflow'
-const { t } = useI18n()
+import { queryWorkflowList, queryWorkflowStats } from '@/api/workflow/index'
+const { t, locale } = useI18n()
 const current = ref(1)
 const total = ref(0)
 const tableData = ref([])
@@ -46,7 +50,7 @@ const getTaskStats = () => {
   queryWorkflowStats({}).then(res => {
     const { data, code } = res
     if (code === 10000) {
-      flowStats.value = data.taskCount
+      flowStats.value = data.workflowCount
     }
   })
 }

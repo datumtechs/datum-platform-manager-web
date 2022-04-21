@@ -221,10 +221,10 @@ const zh = {
     viewRecords: "查看记录",
     continueEditing: "继续编辑",
     deleteWorkflow: "删除工作流",
-    totalOf: "共",
-    workTipsBriefInfoTwoParagraph: "个隐私计算工作流",
-    recordWorkflow: "条 该工作流的运行记录",
-
+    // totalOf: "共",
+    // workTipsBriefInfoTwoParagraph: "个隐私计算工作流",
+    // recordWorkflow: "条 该工作流的运行记录",
+    operationRecord: "运行记录",
   },
   credentials: {
     circulation: "总发布量",

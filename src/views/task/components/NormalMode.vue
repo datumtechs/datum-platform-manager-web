@@ -16,7 +16,7 @@
       </div>
     </div>
     <div v-show="activeIndex == 0" class="mt-38px mb-42px ml-6px">
-      <slot name="mode"></slot>
+      <PrivateSwitch :mode="'normal'" @change="$router.push({ name: 'expertModel' })" />
       <SelectionAlg @getStep="getStepInfo" @getAlgInfo="getAlgInfo" :taskParams="taskParams" @next="activeIndex = 1"
         @getParams="(params) => { }" />
     </div>
@@ -26,6 +26,7 @@
   </div>
 </template>
 <script lang="ts" setup>
+import PrivateSwitch from './PrivateSwitch.vue'
 import SelectionAlg from './normal/SelectionAlg.vue';
 import PSIInputData from './normal/PSIInputData.vue';//psi训练输入数据
 import TrainingInputData from './normal/TrainingInputData.vue';//训练输入数据
@@ -97,6 +98,15 @@ const getAlgInfo = (data: any) => {
 
 
 const getStepInfo = (data: any) => {
+  data = {
+    list: [
+      { step: 1, type: 2 },
+      { step: 2, type: 3 },
+      { step: 3, type: 5 }
+    ],
+    algPSI: true
+  }
+
   comList.value = data.list.map((v: any, index: number) => {
     list.value.push({
       setp: `0${index + 2}`,
@@ -135,6 +145,15 @@ const previous = () => {
     activeIndex.value = 0
   }
 }
+
+const query = () => {
+
+}
+
+onMounted(() => {
+  //TODO 记得注释 getStepInfo 方法
+  getStepInfo()
+})
 
 </script>
 <style lang="scss" scoped>

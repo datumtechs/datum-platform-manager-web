@@ -3,17 +3,19 @@
     <el-table-column type="index" width="100">
       <template #header>{{ t('common.num') }}</template>
     </el-table-column>
-    <el-table-column prop="workflowVersionName" show-overflow-tooltip :label="t('workflow.workflowName')" />
-    <el-table-column show-overflow-tooltip prop="dataProvider" :label="t('workflow.workflowAlgorithm')" />
-    <el-table-column show-overflow-tooltip prop="credentialName" :label="t('workflow.workflowSteps')" />
-    <el-table-column show-overflow-tooltip prop="price" :label="t('workflow.latestRunningTime')" />
-    <el-table-column show-overflow-tooltip prop="createAt" :label="t('workflow.creationTime')" :width="180">
-      <template #default="scope">{{ new Date(scope.row.createAt).toLocaleString() || '' }}</template>
+    <el-table-column prop="workflowName" show-overflow-tooltip :label="t('workflow.workflowName')" />
+    <el-table-column show-overflow-tooltip prop="algorithmName" :label="t('workflow.workflowAlgorithm')" />
+    <el-table-column show-overflow-tooltip prop="calculationProcessName" :label="t('workflow.workflowSteps')" />
+    <el-table-column show-overflow-tooltip prop="lastRunTime" :label="t('workflow.latestRunningTime')">
+      <template #default="scope">{{ scope.row.lastRunTime && useFormatTime(scope.row.lastRunTime) || '--' }}</template>
+    </el-table-column>
+    <el-table-column show-overflow-tooltip prop="createTime" :label="t('workflow.creationTime')" :width="180">
+      <template #default="scope">{{ useFormatTime(scope.row.createTime) }}</template>
     </el-table-column>
     <el-table-column :label="t('common.actions')" :fixed="'right'" :width="330">
       <template #default="scope">
         <el-button type="text" :disabled="!!(scope.row.publicFlag || scope.row.connectFlag)" circle
-          @click="viewData(scope.row)">{{ t('workflow.viewRecords') }}</el-button>
+          @click="operationRecord(scope.row)">{{ t('workflow.operationRecord') }}</el-button>
         <el-button type="text" :disabled="!!(scope.row.publicFlag || scope.row.connectFlag)" circle
           @click="Edit(scope.row)">{{ t('workflow.continueEditing') }}</el-button>
         <el-button type="text" :disabled="!!(scope.row.publicFlag || scope.row.connectFlag)" circle
@@ -24,6 +26,7 @@
 </template>
 <script lang="ts" setup>
 import { type Router, useRouter } from 'vue-router'
+import { useFormatTime } from '@/hooks'
 const { t } = useI18n()
 const router: Router = useRouter()
 const props = defineProps({
@@ -34,10 +37,27 @@ const props = defineProps({
 })
 
 const Edit = (obj: any) => {
-  router.push({ path: '/createTask', query: { id: obj.id } })
+  // debugger
+  router.push({
+    name: 'wizardMode', query: {
+      workflowId: obj.workflowId,
+      workflowVersion: obj.workflowVersion,
+      createMode: obj.createMode,
+      algorithmId: obj.algorithmId,
+      calculationProcessId: obj.calculationProcessId
+    }
+  })
 }
-const viewData = (obj: any) => {
-  router.push({ name: 'workflowDetails', params: { id: obj.id } })
+const operationRecord = (obj: any) => {
+  router.push({
+    name: 'workflowDetails', params: {
+      workflowId: obj.workflowId,
+      workflowVersion: obj.workflowVersion,
+      createMode: obj.createMode,
+      algorithmId: obj.algorithmId,
+      calculationProcessId: obj.calculationProcessId
+    }
+  })
 }
 const del = (obj: any) => {
 

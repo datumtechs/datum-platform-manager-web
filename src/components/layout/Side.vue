@@ -1,8 +1,8 @@
 <template>
   <div class="side-menu-wrap flex flex-col text-14px">
     <el-menu router>
-      <el-menu-item class="h-63px" :key="item.path" :class="{ active: handActive(item.path) }"
-        :index="item.path" v-for="item in routeList">
+      <el-menu-item class="h-63px" :key="item.path" :class="{ active: handActive(item.path) }" :index="item.path"
+        v-for="item in routeList">
         <div class="pl-30px pr-15px flex items-center">
           <img class="w-22px mr-14px" v-if="item.meta.icon" :src="handIcon(item.meta.icon)" />
           <p class="whitespace-pre-line leading-18px text-14px text-color-[#393939]">{{
@@ -12,7 +12,7 @@
       </el-menu-item>
     </el-menu>
     <el-menu router class="flex-1 bg-color-[#F7F8F9] pt-26px">
-      <el-menu-item class="h-63px mb-16px" :index="'/createTask'"
+      <el-menu-item class="h-63px mb-16px" :index="'/createWorkFlow/wizardMode'"
         v-if="privateList.length && store.token">
         <!-- :class="{ active: handActive('createTask') }" -->
         <div
@@ -23,8 +23,8 @@
           {{ t('menu.createTask') }}
         </div>
       </el-menu-item>
-      <el-menu-item class="h-63px" :key="item.path" :class="{ active: handActive(item.path) }"
-        :index="item.path" v-show="store.token" v-for="item in privateList">
+      <el-menu-item class="h-63px" :key="item.path" :class="{ active: handActive(item.path) }" :index="item.path"
+        v-show="store.token" v-for="item in privateList">
         <div class="pl-30px pr-15px flex items-center">
           <img class="w-22px mr-14px" v-if="item.meta.icon" :src="handIcon(item.meta.icon)" />
           <p class="whitespace-pre-line leading-18px text-14px text-color-[#393939]">{{

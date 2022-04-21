@@ -221,10 +221,10 @@ const en = {
     viewRecords: "View Records",
     continueEditing: "Continue Edit",
     deleteWorkflow: "Delete",
-    totalOf: " ",
-    workTipsBriefInfoTwoParagraph: "privacy computing workflows",
-    recordWorkflow: "Record of this workflow",
-
+    // totalOf: " ",
+    // workTipsBriefInfoTwoParagraph: "privacy computing workflows",
+    // recordWorkflow: "Record of this workflow",
+    operationRecord: "Operation Record",
   },
   credentials: {
     circulation: "Circulation",

@@ -1,7 +1,7 @@
 <template>
   <div class="mt-46px">
     <div>
-      <slot name="mode"></slot>
+      <PrivateSwitch :mode="'expert'" @change="$router.push({ name: 'wizardMode' })" />
     </div>
     <div class="my-30px h-668px flex border-1 border-solid border-color-[#EEE] operation-box">
       <Algorithm />
@@ -16,6 +16,7 @@ import Algorithm from './expert/Algorithm.vue'
 import Panel from './expert/Panel.vue'
 import Flow from './expert/Flow.vue'
 import SetNameDialog from './expert/SetNameDialog.vue'
+import PrivateSwitch from './PrivateSwitch.vue'
 
 const route = useRoute()
 const showDialog = computed(() =>
