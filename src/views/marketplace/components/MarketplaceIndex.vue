@@ -25,6 +25,14 @@ const pageParams: PageParams = reactive({
     orderBy: 'PUBLISHED',
 })
 
+const pageObj = reactive({
+    total: 0,
+    current: 1,
+    size: 10
+})
+
+const marketLoading = ref(false)
+
 const indexMethod = (index: number) => useTableIndex(index, pageParams.current, pageParams.size)
 
 const tableData = ref([])
@@ -46,6 +54,7 @@ const linkToViewToken = (row: any) => {
 }
 
 const queryTableData = async () => {
+    marketLoading.value = true
     const { code, data } = await queryDataList({
         current: pageParams.current,
         size: pageParams.size,
@@ -56,13 +65,16 @@ const queryTableData = async () => {
         minSize: pageParams.minSize,
         orderBy: pageParams.orderBy,
     })
+    marketLoading.value = false
     if (code === 10000) {
         console.log(data);
         tableData.value = data.items
         total.value = data.total
     }
 }
-
+watch(() => pageObj.current, () => {
+    queryTableData()
+});
 onMounted(() => {
     queryTableData()
 })
@@ -80,8 +92,9 @@ onMounted(() => {
             </template>-->
         </Banner>
         <div class="main-content mt-30px max-w-1200px mx-auto overflow-hidden">
-            <el-table :header-cell-style="{ height: '50px' }" :row-style="{ height: '70px' }"
-                :data="tableData" highlight-current-row style="width: 100%">
+            <el-table v-loading="marketLoading" :header-cell-style="{ height: '50px' }"
+                :row-style="{ height: '70px' }" :data="tableData" highlight-current-row
+                style="width: 100%">
                 <el-table-column type="index" :label="t('common.num')" :index="indexMethod"
                     width="80" />
                 <el-table-column show-overflow-tooltip prop="metaDataName"
@@ -112,7 +125,9 @@ onMounted(() => {
             </el-table>
         </div>
         <div class="flex my-50px justify-center">
-            <el-pagination background layout="prev, pager, next" :total="total" />
+            <el-pagination background v-model:current-page="pageObj.current"
+                v-model:page-size="pageObj.size" layout="prev, pager, next"
+                :total="pageObj.total" />
         </div>
     </div>
 </template>

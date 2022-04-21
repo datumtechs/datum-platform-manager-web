@@ -2,14 +2,10 @@
     <div class="mb-50px">
         <div class="text-20px font-bold text-color-[#333] flex">
             <p>{{ props.title }}</p>
-            <!-- <el-tooltip :content="props.titleContent" placement="right" effect="light">
-                <img class="w-20px h-20px ml-10px cursor-pointer"
-                    src="@/assets/images/task/quest@2x.png" alt="">
-            </el-tooltip> -->
             <QuestionMark :content="props.titleContent">
             </QuestionMark>
         </div>
-        <el-table class="mt-20px" :data="props.tableData">
+        <el-table v-loading="props.loading" class="mt-20px" :data="props.tableData">
             <el-table-column type="index" width="100">
                 <template #header>{{ t('common.num') }}</template>
             </el-table-column>
@@ -59,8 +55,13 @@
                 v-model:current-page="pageObj.current" v-model:page-size="pageObj.size"
                 :total="pageObj.total" /> -->
         </div>
-        <el-dialog v-model="showAuthDialog" :title="t('auth.plzInputAuthTokenNumber')" :width="480"
-            :destroy-on-close="true">
+        <el-dialog v-model="showAuthDialog" :width="480" :destroy-on-close="true">
+            <template #title>
+                <div class="flex items-center mb-24px">
+                    <img class="w-24px h-24px" src="@/assets/images/auth/sigh.png" alt="">
+                    <p class="pl-8px"> {{ t('auth.plzInputAuthTokenNumber') }}</p>
+                </div>
+            </template>
             <el-form :model="form" :label-width="80" label-position="top" :rules="rules"
                 :ref="(e: any) => formRef = e">
                 <el-form-item :label="currentToken.tokenName" prop="quantity">
@@ -114,8 +115,9 @@
 </template>
 
 <script setup lang='ts'>
-import { useExchangeFrom, useExchangeTo } from '@/hooks'
+import { useExchangeFrom, useExchangeTo, useNotice } from '@/hooks'
 const { t, locale } = useI18n()
+const chainConfig: any = inject('chainConfig')
 const web3: any = inject('web3')
 
 interface token {
@@ -143,38 +145,54 @@ const props = defineProps({
     tableData: {
         type: Array,
         default: () => []
+    },
+    loading: {
+        type: Boolean,
+        default: false
     }
 })
+
+
+const authLoading = ref(true)
+const cancelLoading = ref(false)
+
 const form = reactive({
     quantity: 0
 })
 
 const currentToken = ref<token>()
 const formRef = ref()
-const _close = (tx: string) => {
+const _closeAuthDialog = (tx: string) => {
     console.log('txHash', tx);
     showAuthDialog.value = false
+    authLoading.value = false
 }
 
 const cancelConfirm = () => {
-    web3.authERC20TOKEN(currentToken.value?.tokenAddress, 0).then((res: any) => {
-        console.log('txHash', res);
-        showCancelDialog.value = false
-    }).catch((error: any) => {
-        console.log(error);
-    })
+    web3.authERC20TOKEN(currentToken.value?.tokenAddress, 0)
+        .then((res: any) => {
+            if (res && res.transactionHash) {
+                const content = `${t('auth.cancelAuth')}: ${currentToken.value?.tokenName}`
+                useNotice('success', content, chainConfig.value?.blockExplorerUrl, res.transactionHash)
+            }
+        }).catch((error: any) => {
+            useNotice('error', error)
+        })
 }
 const authSubmit = () => {
-    formRef.value?.validate(async (bol: boolean) => {
+    formRef.value?.validate((bol: boolean) => {
+        authLoading.value = true
         if (bol) {
-            const res = await web3.authERC20TOKEN(
+            const unit = useExchangeTo(form.quantity, currentToken.value?.tokenDecimal)
+            web3.authERC20TOKEN(
                 currentToken.value?.tokenAddress,
-                useExchangeTo(form.quantity, currentToken.value?.tokenDecimal), _close)
+                unit,
+                _closeAuthDialog)
                 .then((res: any) => {
-                    console.log('txHash', res);
-                    showAuthDialog.value = false
+                    const content = `${t('auth.auth')} ${form.quantity} ${currentToken.value?.tokenName}`
+                    useNotice('success', content, chainConfig.value?.blockExplorerUrl, res.transactionHash)
                 }).catch((error: any) => {
-                    console.log(error);
+                    useNotice('error', error)
                 })
         }
     })
@@ -203,7 +221,7 @@ const rules = ref(
 
 <style scoped lang='scss'>
 :deep(.el-dialog__body) {
-    padding: 0 32px;
+    padding: 0 32px !important;
 }
 
 :deep(.el-dialog__header) {

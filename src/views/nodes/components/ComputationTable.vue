@@ -1,7 +1,7 @@
 <template>
-    <div class="mt-40px">
-        <el-table :header-cell-style="{ height: '50px' }" :row-style="{ height: '70px' }"
-            :data="tableData" highlight-current-row >
+    <div class="mt-30px">
+        <el-table v-loading="computationsLoading" :header-cell-style="{ height: '50px' }"
+            :row-style="{ height: '70px' }" :data="tableData" highlight-current-row>
             <el-table-column type="index" :label="t('common.num')" :index="indexMethod"
                 width="80" />
             <el-table-column show-overflow-tooltip prop="id" :label="t('myData.taskID')" />
@@ -39,6 +39,7 @@ import { getTaskListByOrg } from '@/api/task'
 const router = useRouter()
 const { t } = useI18n()
 const tableData = ref([])
+const computationsLoading = ref(false)
 
 const props = defineProps({
     identityId: {
@@ -62,18 +63,20 @@ const pageObj = reactive({
     total: 0
 })
 
-watch(() => pageObj.current, (newValue, oldValue) => {
+watch(() => pageObj.current, () => {
     getTableData()
 });
 
 
 const indexMethod = (index: number) => useTableIndex(index, pageObj.current, pageObj.size)
 const getTableData = async () => {
+    computationsLoading.value = true
     const { code, data } = await getTaskListByOrg({
         current: pageObj.current,
         identityId: props.identityId,
         size: pageObj.size
     })
+    computationsLoading.value = false
     if (code === 10000) {
         tableData.value = data.items
         pageObj.total = data.total

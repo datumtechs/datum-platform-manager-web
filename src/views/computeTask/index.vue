@@ -14,8 +14,9 @@
         <el-table-column type="index" width="100" :index="indexMethod">
           <template #header>{{ t('common.num') }}</template>
         </el-table-column>
-        <el-table-column show-overflow-tooltip prop="id" :label="t('computeTask.taskId')" />
-        <el-table-column prop="status" :label="t('computeTask.taskStatus')">
+        <el-table-column width="300" show-overflow-tooltip prop="id"
+          :label="t('computeTask.taskId')" />
+        <el-table-column width="100" prop="status" :label="t('computeTask.taskStatus')">
           <template #default="{ row }">
             <div>
               {{ useGlobalTaskMap(row.status) }}
@@ -27,15 +28,15 @@
             <div>{{ useFormatTime(row.createAt) }}</div>
           </template>
         </el-table-column>
-        <el-table-column show-overflow-tooltip :label="t('computeTask.totalTime')">
+        <el-table-column :label="t('computeTask.totalTime')">
           <template #default="{ row }">
             <div>{{ useDuring(row.endAt - row.startAt) }}</div>
           </template>
         </el-table-column>
-        <el-table-column :label="t('common.actions')" :fixed="'right'" :width="100">
+        <el-table-column :label="t('common.actions')" :fixed="'right'">
           <template #default="scope">
-            <el-button type="text" :disabled="!!(scope.row.publicFlag || scope.row.connectFlag)"
-              circle @click="viewData(scope.row)">{{ t('common.view') }}</el-button>
+            <el-button type="text" circle @click="viewData(scope.row)">{{ t('common.view') }}
+            </el-button>
           </template>
         </el-table-column>
       </el-table>

@@ -1,7 +1,8 @@
 <template>
     <div class="mt-30px">
-        <el-table :header-cell-style="{ height: '50px' }" :row-style="{ height: '70px' }"
-            :data="tableData" highlight-current-row style="width: 100%">
+        <el-table v-loading="dataLoading" :header-cell-style="{ height: '50px' }"
+            :row-style="{ height: '70px' }" :data="tableData" highlight-current-row
+            style="width: 100%">
             <el-table-column type="index" :label="t('common.num')" :index="indexMethod"
                 width="80" />
             <el-table-column show-overflow-tooltip prop="metaDataName"
@@ -48,6 +49,8 @@ const props = defineProps({
         default: ''
     }
 })
+const dataLoading = ref(false)
+
 const indexMethod = (index: number) => useTableIndex(index, pageObj.current, pageObj.size)
 
 const pageObj = reactive({
@@ -58,11 +61,13 @@ const pageObj = reactive({
 
 
 const getTableData = async () => {
+    dataLoading.value = true
     const { code, data } = await getDataListByOrg({
         identityId: props.identityId,
         current: current.value,
         size: size.value
     })
+    dataLoading.value = false
     if (code === 10000) {
         tableData.value = data.items
         pageObj.total = data.total

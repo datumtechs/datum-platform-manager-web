@@ -44,7 +44,8 @@ const zh = {
     save: '保存',
     viewEvent: '查看日志',
     noData: "暂无数据",
-    confirm: '确认'
+    confirm: '确认',
+    viewOnScan: '在PlatScan上查看交易'
   },
   menu: {
     home: '首页',
@@ -311,12 +312,16 @@ const zh = {
     quantityError: "当前数量不正确",
     feeToken: "手续费凭证",
     dataToken: "数据凭证",
-    plzInputAuthTokenNumber: '请输入授权数量',
+    plzInputAuthTokenNumber: '设置授权数量',
     cancelTokenAuth: '取消凭证授权',
     authStatus: '授权状态',
     authorized: '已授权',
     unauthorized: '未授权',
-    cancelNodeAuth: '取消节点授权'
+    authorizeNode: '授权节点',
+    cancelNodeAuth: '取消节点授权',
+    transactionReceipt: '交易已经被接受',
+    transactionReject: '交易异常',
+    authorizeToken: '授权凭证',
   },
   industry: {
     bank: '金融业（银行）',
