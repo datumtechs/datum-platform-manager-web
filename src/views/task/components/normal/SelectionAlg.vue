@@ -29,13 +29,15 @@
     </el-form-item>
     <el-form-item v-if="form.calculationType == 1000" :label="`${$t('task.stepOneSelectAlgorithmTitle')}:`"
       prop="algorithmId">
-      <el-radio-group v-model="form.algorithmId" @change="algChange">
+
+      <el-radio-group v-model="form.algorithmId" @change="algChange, form.calculationProcessId = undefined">
         <el-radio :label="item.id" v-for="item in algTypelist[0].childrenList" :key="item.id">{{ item.name }}</el-radio>
       </el-radio-group>
     </el-form-item>
     <el-form-item v-if="form.calculationType == 2000" :label="`${t('task.stepOneSelectAIAlgorithmTitle')}:`"
       prop="algorithmId">
-      <el-radio-group v-model="form.algorithmId" @change="algChange">
+
+      <el-radio-group v-model="form.algorithmId" @change="algChange, form.calculationProcessId = undefined">
         <el-radio :label="item.id" v-for="item in algTypelist[0].childrenList" :key="item.id">{{ item.name }}
         </el-radio>
       </el-radio-group>
@@ -97,17 +99,8 @@ const rules = ref({
 })
 
 const next = () => {
-  emit('getStep', {
-    list: [
-      { step: 1, type: 2 },
-      { step: 2, type: 3 },
-      { step: 3, type: 5 }
-    ],
-    algPSI: true
-  })
-  return
-
-  // console.log(formRef.value.validate)
+  console.log(form)
+  debugger
   // emit('getParams', Object.assign({}, form.value))
   // console.log(Object.assign({}, form.value))
   formRef.value.validate().then((v: any) => {
@@ -141,6 +134,13 @@ const queryAlgTree = () => {
     const { data, code } = res
     if (code === 10000) {
       algList.value = data?.childrenList[0]?.childrenList
+      form.workflowName = "create_task_name"
+      form.calculationType = 2000
+      form.algorithmId = 2010
+      form.calculationProcessId = 3
+      if (true) {
+        algChange()
+      }
     }
   })
 }
@@ -149,9 +149,7 @@ const algChange = () => {
   getProcessList({ algorithmId: form.algorithmId }).then(res => {
     const { data, code } = res
     if (code === 10000) {
-      form.calculationProcessId = undefined
       processList.value = data
-      // processShow.value = data.length ? true : false
     }
   })
 }

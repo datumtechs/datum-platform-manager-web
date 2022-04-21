@@ -4,13 +4,16 @@
       <template #briefInfo>{{ t('task.createTaskBriefInfo') }}</template>
     </Banner>
     <div class="com-main-data-wrap main-content">
-      <TaskMain />
+      <NormalMode />
     </div>
   </div>
 </template>
 <script lang="ts" setup>
-import TaskMain from './components/TaskMain.vue';
+import NormalMode from './components/NormalMode.vue'
 const { t } = useI18n()
+const props = defineProps(['workflowId'])
+console.log(props)
+
 </script>
 <style lang="scss">
 .task-wrap {
@@ -21,6 +24,7 @@ const { t } = useI18n()
     color: #000000;
     line-height: 22px;
   }
+
   .el-form .el-form-item--default {
     margin-bottom: 38px;
   }

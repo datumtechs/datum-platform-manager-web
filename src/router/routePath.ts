@@ -132,13 +132,30 @@ export default [
     component: () => import('@/views/myAccount/index.vue')
   },
   {
-    path: '/createTask',
-    name: "createTask",
+    path: '/createWorkFlow',
+    redirect: 'createWorkFlow',
     meta: {
       show: [],
       label: 'menu.createTask'
     },
-    component: () => import('@/views/task/CreateTask.vue')
+    props: (route: any) => ({ ...route.query }),
+    // component: () => import('@/views/task/CreateTask.vue'),
+    component: () => import('@/views/task/index.vue'),
+    children: [{
+      path: '/createWorkFlow/wizardMode',
+      name: "wizardMode",
+      meta: {
+        label: 'menu.createTask',
+      },
+      component: () => import('@/views/task/WizardMode.vue'),
+    }, {
+      path: '/createWorkFlow/expertModel',
+      name: "expertModel",
+      meta: {
+        label: 'menu.createTask'
+      },
+      component: () => import('@/views/task/ExpertModel.vue')
+    }],
   },
   {
     path: '/data',
