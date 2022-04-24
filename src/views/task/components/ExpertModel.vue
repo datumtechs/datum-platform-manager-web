@@ -5,7 +5,7 @@
     </div>
     <div class="my-30px h-668px flex border-1 border-solid border-color-[#EEE] operation-box">
       <Algorithm />
-      <Flow />
+      <Flow :status-list="statusList" :workflow-status="workflowStatus" />
       <Panel />
     </div>
     <SetNameDialog v-model:show="showDialog" />
@@ -17,11 +17,36 @@ import Panel from './expert/Panel.vue'
 import Flow from './expert/Flow.vue'
 import SetNameDialog from './expert/SetNameDialog.vue'
 import PrivateSwitch from './PrivateSwitch.vue'
+import { getWorkflowStatusOfExpertMode } from '@/api/expert'
 
 const route = useRoute()
 const showDialog = computed(() =>
-  route.query.workflowId ? true : false
+  route.query.workflowId ? false : true
 )
+
+const workflowId = computed(() => route.query.workflowId)
+const workflowVersion = computed(() => route.query.workflowVersion)
+
+const workflowStatus = ref(0)
+
+const statusList = ref([])
+const queryStatus = () => {
+  getWorkflowStatusOfExpertMode({
+    workflowId: workflowId.value,
+    workflowVersion: workflowVersion.value
+  }).then(res => {
+    const { code, data } = res
+    if (code === 10000) {
+      workflowStatus.value = data.runStatus
+      statusList.value = data.workflowNodeStatusList
+    }
+  })
+}
+
+onMounted(() => {
+  queryStatus()
+})
+
 
 </script>
 <style lang="scss" scoped>

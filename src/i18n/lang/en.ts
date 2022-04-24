@@ -294,6 +294,7 @@ const en = {
     psiHint: 'If checked, the PSI operation will be performed before the current task is executed',
     labelRequired: 'labels（required)',
     labelOptionals: 'labels（optional)',
+    deleteNode: 'Delete the node'
   },
   role: {
     taskSponsor: 'Task sponsor',

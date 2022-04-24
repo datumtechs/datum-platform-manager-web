@@ -1,25 +1,14 @@
 <template>
     <div class="nameDialog">
-        <el-dialog
-            draggable
-            v-model="props.show"
-            :show-close="false"
-            :close-on-click-modal="false"
-            destroy-on-close
-            width="320px"
-        >
-            <div
-                class="font-bold text-14px leading-18px text-color-[#333]"
-            >{{ t('expert.inputNameTips') }}</div>
+        <el-dialog v-model="props.show" :show-close="false" :close-on-click-modal="false"
+            destroy-on-close width="320px">
+            <div class="font-bold text-14px leading-18px text-color-[#333]">{{
+                    t('expert.inputNameTips')
+            }}</div>
             <div class="mt-10px mb-20px h-50px">
                 <!-- <el-input v-model="workflowName" /> -->
-                <el-form
-                    ref="nameFormRef"
-                    @submit.prevent
-                    :rules="rules"
-                    :model="nameForm"
-                    style="max-width: 460px"
-                >
+                <el-form ref="nameFormRef" @submit.prevent :rules="rules" :model="nameForm"
+                    style="max-width: 460px">
                     <el-form-item prop="name">
                         <el-input v-model="nameForm.name" />
                     </el-form-item>
@@ -32,19 +21,19 @@
                 <p>4. {{ t('expert.mostCharacter') }}</p>
             </div>
             <span class="dialog-footer">
-                <el-button
-                    class="w-full h-40px"
-                    type="primary"
-                    round
-                    @click="submitForm(nameFormRef)"
-                >{{ t('common.submit') }}</el-button>
+                <el-button class="w-full h-40px" type="primary" round
+                    @click="submitForm(nameFormRef)">
+                    {{ t('common.submit') }}</el-button>
             </span>
         </el-dialog>
     </div>
+
 </template>
 
 <script setup lang='ts'>
+import { createWorkflowOfExpertMode } from '@/api/expert'
 const { t } = useI18n()
+const router = useRouter()
 const nameFormRef = ref<any>()
 const rules = reactive({
     name: [
@@ -53,12 +42,27 @@ const rules = reactive({
     ]
 })
 
-const submitForm = async (form: any) => {
 
+const submitForm = async (form: any) => {
     if (!form) return
     await form.validate((valid: any, fields: any) => {
         if (valid) {
-            console.log('submit!')
+            createWorkflowOfExpertMode({
+                workflowName: nameForm.name
+            }).then(res => {
+                console.log(res);
+                const { code, data } = res
+                if (code === 10000) {
+                    router.push({
+                        name: 'expertModel',
+                        query: {
+                            workflowId: data.workflowId,
+                            workflowVersion: data.workflowVersion
+                            // TODO type edit / view / add
+                        }
+                    })
+                }
+            })
         } else {
             console.log('error submit!', fields)
         }
@@ -74,8 +78,6 @@ const props = defineProps({
     }
 })
 
-const handleClose = () => { }
-
 </script>
 
 <style scoped lang='scss'>
@@ -83,9 +85,11 @@ const handleClose = () => { }
     :deep(.el-dialog__header) {
         display: none;
     }
+
     :deep(.el-dialog__body) {
         padding: 36px 30px 25px;
     }
+
     :deep(.el-input__inner) {
         height: 50px;
     }

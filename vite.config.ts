@@ -13,6 +13,7 @@ export default defineConfig({
   plugins: [
     vue(),
     ElementPlus({
+      importStyle: 'sass',
       useSource: true,
     }),
     WindiCSS(),
@@ -27,9 +28,9 @@ export default defineConfig({
         'vue',
         'vue-router',
         'vue-i18n',
-        {
-          'element-plus/es': ['ElMessageBox','ElMessage','ElLoading'],
-        },
+        // {
+        //   'element-plus/es': ['ElMessageBox', 'ElMessage', 'ElLoading'],
+        // },
         {
           '@vueuse/core': [
             // @vueuse

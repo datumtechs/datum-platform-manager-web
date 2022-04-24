@@ -4,21 +4,26 @@
             <el-button v-for="item in btnList" round>{{ item.label }}</el-button>
         </div>
         <div id="mainStage" class="mainStage" :class="{ showDot: showDot }">
-            <div v-for="(node, index) in nodeList" :key="node.id" class="node-box mb-100px"
-                :class="{ 'node-arrow': index < nodeList.length - 1, 'active-node': curNodeId === node.algorithmId }">
-                <div class="node cursor-pointer">
+            <div v-for="(node, index) in nodeListWithStatus" :key="node.id"
+                class="node-box mb-100px" :class="{ 'node-arrow': index < nodeList.length - 1 }">
+                <div class="node cursor-pointer" @click="selectNode(node, index)"
+                    :class="{ 'active-node': curNodeId === node.algorithmId }">
                     <div class="status">
-                        <img src="@/assets/images/task/finish@2x.png" />
+                        <!-- <img src="@/assets/images/task/finish@2x.png" />
                         <img src="@/assets/images/task/failed@2x.png" />
-                        <img src="@/assets/images/task/loading@2x.gif" />
+                        <img src="@/assets/images/task/loading@2x.gif" /> -->
                     </div>
                     <div class="node-label">
-                        <el-tooltip class="box-item" effect="dark" :content="node.nodeLabel"
-                            placement="top-start">{{ node?.nodeLabel }}</el-tooltip>
+                        <el-tooltip class="box-item" effect="dark" :content="node.nodeName"
+                            placement="top-start">{{ node?.nodeName }}</el-tooltip>
                     </div>
                     <div class="btn">
-                        <img v-if="true" src="@/assets/images/task/delete@2x.png"
-                            class="cursor-pointer" />
+                        <el-tooltip v-if="true" class="box-item" effect="dark"
+                            :content="t('expert.deleteNode')" placement="top-start"><img
+                                @click.stop="deleteNode(node, index)"
+                                src="@/assets/images/task/delete@2x.png" class="cursor-pointer" />
+                        </el-tooltip>
+
                         <p v-else
                             class="w-100px flex text-14px text-color-[#0052D9] leading-20px cursor-pointer">
                             {{ t('expert.viewResult') }}</p>
@@ -41,22 +46,23 @@ import { useExpertMode } from '@/stores'
 const dragStatus = ref<boolean>(true)
 const { t } = useI18n()
 
+const props = defineProps({
+    statusList: {
+        type: Object,
+        default: () => []
+    },
+    workflowStatus: {
+        type: Number,
+        default: 0
+    }
+
+})
+
+const curNodeId = computed(() => useExpertMode().getCurNodeId)
 const showDot = computed(() => useExpertMode().getDotted)
 
 let hasPSI = ref<boolean>(true)
-const curNodeId = ref('1')
-const nodeList: any = reactive([
-    // {
-    //     id: '1',
-    //     nodeLabel: '逻辑回归训练啊啊啊啊啊啊啊啊啊',
-    //     algorithmId: '1'
-    // },
-    // {
-    //     id: '2',
-    //     nodeLabel: '逻辑回归预测',
-    //     algorithmId: '2'
-    // },
-])
+const nodeList: any = useExpertMode().getNodeList
 const btnList = computed(() => [
     {
         id: 1,
@@ -69,6 +75,29 @@ const btnList = computed(() => [
         label: t('common.viewEvent')
     }
 ])
+
+const deleteNode = (node: any, index: number) => {
+    useExpertMode().deleteNode(index)
+}
+
+const selectNode = (node: any, index: number) => {
+    useExpertMode().setCurrentIndex(index)
+    useExpertMode().setCurNodeId(node.algorithmId)
+    useExpertMode().setCurData(node)
+}
+const nodeListWithStatus: any = computed(() => {
+    console.log(props.statusList);
+    if (props.statusList.length === 0) return nodeList
+    // if(props.runStatus.)
+    return nodeList.map((node: any, index: any) => {
+        node.status = props.statusList[index] ? props.statusList[index].runStatus : 0
+        node.statusMsg = props.statusList[index] ? props.statusList[index].runMsg : ''
+        node.taskId = props.statusList[index] ? props.statusList[index].taskId : '0'
+        node.isEdit = false
+        return { ...node }
+    })
+})
+
 // watch([dragStatus], ([val]) => showDot.value = val, { immediate: true })
 
 </script>
@@ -76,6 +105,7 @@ const btnList = computed(() => [
 <style scoped lang='scss'>
 .mainStage {
     width: 400px;
+    overflow: hidden;
     height: calc(100% - 90px);
     margin: 30px auto;
 
@@ -105,12 +135,17 @@ const btnList = computed(() => [
             position: relative;
             width: 183px;
             height: 50px;
-            background: #0052d9;
-            color: #fff;
+            background: #E1E9F7;
+            color: #0052D9;
             border-radius: 25px;
             display: flex;
             align-items: center;
             justify-content: center;
+
+            &.active-node {
+                background-color: #0052D9;
+                color: #fff;
+            }
 
             .node-label {
                 text-align: center;
@@ -119,7 +154,6 @@ const btnList = computed(() => [
                 overflow: hidden;
                 white-space: nowrap;
                 font-size: 14px;
-                color: #ffffff;
                 line-height: 20px;
             }
 

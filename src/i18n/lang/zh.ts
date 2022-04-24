@@ -293,7 +293,8 @@ const zh = {
     viewResult: '查看结果',
     psiHint: '勾选后,将在当前任务执行前进行PSI运算',
     labelRequired: '因变量（标签，必选)',
-    labelOptionals: '因变量（标签，选填)'
+    labelOptionals: '因变量（标签，选填)',
+    deleteNode: '删除节点'
   },
   role: {
     taskSponsor: '任务发起方',

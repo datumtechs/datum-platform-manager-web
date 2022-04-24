@@ -18,9 +18,11 @@
 </template>
 
 <script setup lang='ts'>
-import { getAlgTree } from '@/api/algorithm'
+import { queryAlgoDetail } from '@/api/algorithm'
 import { useExpertMode } from '@/stores'
 import { MAX_NODES } from '@/config/constants'
+
+const route = useRoute()
 const { t } = useI18n()
 const dragstart = (e: any, item: any) => {
     // if (this.viewModel === 'view') return
@@ -29,25 +31,30 @@ const dragstart = (e: any, item: any) => {
 
 const nodeList = computed(() => useExpertMode().getNodeList)
 
-const dragend = (e: any, item: any) => {
+const workflowId = computed(() => route.query.workflowId)
+
+const workflowVersion = computed(() => route.query.workflowVersion)
+
+const dragend = async (e: any, item: any) => {
     useExpertMode().setDotted(false)
     const inBoxFlag = isBoxInStage(e)
     if (!inBoxFlag) return
-    const ids = nodeList.value.map((item: any) => item.algorithmId)
-    if (ids.includes(item.algorithmId)) {
-        ElMessage.warning(t('task.repeatAlgo'))
+    const ids = nodeList.value.map((item: any) => item.id)
+    if (ids.includes(item.id)) {
+        ElMessage.error(t('task.repeatAlgo'))
     } else {
         if (nodeList.value.length < MAX_NODES) {
             const params = {
-                algorithmId: item.algorithmId,
-                nodeName: item.algorithmName,
-                nodeAlgorithmVo: item.algDetailsVo,
-                // workflowId: this.workflowId
+                algorithmId: item.id,
+                nodeName: item.name,
+                nodeAlgorithmVo: item.alg,
+                workflowId: workflowId || '',
+                workflowVersion: workflowVersion || ''
             }
             useExpertMode().setNodeList(params)
             return
         }
-        ElMessage.warning(t('task.exceedMaxNode'))
+        ElMessage.error(t('task.exceedMaxNode'))
     }
 
 }
@@ -66,43 +73,38 @@ const isBoxInStage = (event: any) => {
     }
 }
 
+const algoList: any = ref([])
 
-const algoList: any = ref([
-    // statisticList: {
-    //     label: t('computing.privacyStatistics'),
-    //     children: [
-    //         {
-    //             id: 1,
-    //             label: '隐私加权求和'
-    //         },
-    //         {
-    //             id: 2,
-    //             label: '隐私求交集(PSI)'
-    //         },
-    //     ]
-    // },
-    // AIList: {
-    //     label: t('computing.privacyAIComputing'),
-    //     children: [
-    //         {
-    //             id: 1,
-    //             label: '线性回归训练'
-    //         },
-    //         {
-    //             id: 2,
-    //             label: '线性回归预测'
-    //         },
-    //     ]
-    // }
-])
+let target: any = []
+const filterTree = (arr: any, newArray: any = []) => {
+    target.concat(newArray)
+    arr.forEach((son: any) => {
+        if (Array.isArray(son.childrenList)) {
+            filterTree(son.childrenList, target)
+        } else {
+            if (son.isAlgorithm && son.isExistAlgorithm) {
+                target.push(son);
+            }
+        }
+    })
+    return target
+}
 
 const queryAlgoList = () => {
-    getAlgTree().then(result => {
+    queryAlgoDetail().then(result => {
         const { data, code } = result
         if (code === 10000) {
+            const arr = filterTree(data.childrenList)
+            data.childrenList.forEach((item: any) => {
+                if (item.id === 2) {
+                    item.childrenList = arr
+                }
+            })
             algoList.value = data.childrenList
         }
-    }).catch(err => { })
+    }).catch(err => {
+        console.log(err);
+    })
 }
 
 onMounted(() => {
