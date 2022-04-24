@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 
 const WorkerFlowName = 'workerFlow'
-const Step = 'workerFlow'
+const Step = 'step'
 export default defineStore('workFlow', {
     state: () => ({
         mode: 'normal', // 工作流默认展示是引导模式

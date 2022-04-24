@@ -33,3 +33,12 @@ export const postCreateWorkflowWizard = (data: {}): Promise<any> => {
     data
   })
 }
+
+//c查询进度
+export const getWorkflowSettingOfWizardMode = (params: {}): Promise<any> => {
+  return http({
+    method: 'GET',
+    url: '/flow/workflow/wizard/getWorkflowSettingOfWizardMode',
+    params
+  })
+}

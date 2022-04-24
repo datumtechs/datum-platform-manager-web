@@ -1,9 +1,8 @@
 <template>
   <div class="normal-wrap pt-40px pb-40px">
     <div class="flex item-center justify-between px-9px py-5px bg-color-[#F7F8F9] h-80px">
-      <div @click="activeIndex = index, componentsType = item.type || null"
-        class="w-max-220px flex-col flex pl-31px leading-24px justify-center font-800" v-for="(item, index) in list"
-        :key="item.setp" :style="{
+      <div @click="activeStep(index)" class="w-max-220px flex-col flex pl-31px leading-24px justify-center font-800"
+        v-for="(item, index) in list" :key="item.setp" :style="{
           flex: list.length <= 1 ? 'flex-230px' : 'flex-1'
         }" :class="{ active: activeIndex == index }">
         <div class="setp-item-name text-22px font-medium font-800 text-color-[#CCCCCC]">
@@ -16,16 +15,19 @@
       </div>
     </div>
     <div v-show="activeIndex == 0" class="mt-38px mb-42px ml-6px">
-      <PrivateSwitch :mode="'normal'" @change="$router.push({ name: 'expertModel' })" />
-      <SelectionAlg @getStep="getStepInfo" @getAlgInfo="getAlgInfo" :taskParams="taskParams" @next="activeIndex = 1"
-        @getParams="(params) => { }" />
+      <PrivateSwitch :mode="'normal'" v-if="!route.params.workflowId" @change="$router.push({ name: 'expertModel' })" />
+      <SelectionAlg @getStep="getStepInfo" @getNoticeText="getNoticeText" @activeStep="activeStep"
+        :taskParams="selectionAlgParams" @next="next" @getParams="(params) => { }" />
     </div>
-    <component v-if="comList.length" :is="componentList[componentsType]?.components" :taskParams="taskParams"
-      @previous="previous" @next="next" @getParams="(params: any) => {
-      }" />
+    <transition name="fade-main" mode="out-in">
+      <component v-if="comList.length" :is="componentList[list[activeIndex]?.type]?.components" :taskParams="taskParams"
+        :noticeText="noticeText" @previous="previous" @next="next" @getParams="(params: any) => {
+        }" />
+    </transition>
   </div>
 </template>
 <script lang="ts" setup>
+import { getWorkflowSettingOfWizardMode } from '@/api/workflow'
 import PrivateSwitch from './PrivateSwitch.vue'
 import SelectionAlg from './normal/SelectionAlg.vue';
 import PSIInputData from './normal/PSIInputData.vue';//psi训练输入数据
@@ -34,15 +36,31 @@ import ForecastInputData from './normal/ForecastInputData.vue';//预测输入数
 import ComputingEnvironment from './normal/ComputingEnvironment.vue';//计算环境
 import ResultReceiver from './normal/ResultReceiver.vue';//结果接收方
 import { useWorkFlow } from '@/stores'
+import { onBeforeRouteLeave } from 'vue-router';
+import { ElMessage } from 'element-plus';
+const { t } = useI18n()
 const store = useWorkFlow()
 const route = useRoute()
+const router = useRouter()
 const activeIndex = ref(0)
-const componentsType = ref(null)
+// const componentsType = ref(null)
 const comList = ref([])
+const noticeText = ref({})
 const workflowInfo = reactive<any>({
   workflowId: '',
   workflowVersion: ''
 })
+const selectionAlgParams = ref<any>({})
+const taskParams: any = reactive({
+  selectionAlg: {},
+  selectTrainingInputData: {},
+  selectForecastInputData: {},
+  selectPSIInputData: {},
+  selectComputingEnvironment: {},
+  selectResultReceiver: {},
+})
+
+
 const componentList = markRaw<any[]>(
   //0-选择训练输入数据, 
   //1-选择预测输入数据,
@@ -101,22 +119,11 @@ watch(activeIndex, () => {
   store.setStep(activeIndex.value)
 })
 
-
-const getAlgInfo = (data: any) => {
-
+const getNoticeText = (obj: any) => {
+  noticeText.value = obj
 }
 
-
 const getStepInfo = (data: any) => {
-  data = {
-    list: [
-      { step: 1, type: 2 },
-      { step: 2, type: 3 },
-      { step: 3, type: 5 }
-    ],
-    algPSI: true
-  }
-
   comList.value = data.list.map((v: any, index: number) => {
     list.value.push({
       setp: `0${index + 2}`,
@@ -125,63 +132,83 @@ const getStepInfo = (data: any) => {
     })
     return v
   })
+  console.log(comList)
 }
-
-const taskParams: any = ref({
-  stepOneInfo: { procedure: null },
-  stepTwoInfo: {},
-  stepThreeInfo: {},
-  stepFourInfo: {},
-  stepFiveInfo: {}
-})
-
 
 const submit = () => {
   console.log('submit')
+}
+
+const activeStep = (index: number, auth?: Boolean) => {
+  const { step } = selectionAlgParams?.value?.calculationProcessStep
+  if (+step < index && !auth) {
+    ElMessage.warning(t('workflow.dataNotPerfect'))
+    return
+  }
+  activeIndex.value = index
 }
 
 const next = () => {
   if (activeIndex.value >= list.value.length - 1) {
     submit()
   } else {
-    activeIndex.value = activeIndex.value + 1
+    activeStep(activeIndex.value + 1)
+    store.setStep(activeIndex.value)
   }
 }
 const previous = () => {
   if (activeIndex.value > 0) {
-    activeIndex.value = activeIndex.value - 1
+    activeStep(activeIndex.value - 1)
   } else {
-    activeIndex.value = 0
+    activeStep(0)
   }
 }
 
-const query = () => {
+const initQuery = () => {
+  if (!workflowInfo.workflowId) return
+  getWorkflowSettingOfWizardMode({
+    workflowId: workflowInfo.workflowId,
+    workflowVersion: workflowInfo.workflowVersion,
+    step: 1
+  }).then(res => {
+    const { data, code } = res
+    if (code === 10000) {
+      selectionAlgParams.value = { ...data }
+      activeIndex.value = data?.calculationProcessStep?.step || 1
+    }
+  })
 
 }
 
-onMounted(() => {
-  //TODO 记得注释 getStepInfo 方法
-  getStepInfo()
-  initParams()
-})
-
 const initParams = () => {
-  const { workflowId, workflowVersion } = route.params
-  if (workflowId && workflowVersion) {
+  const { workflowId, workflowVersion } = route.params,
+    workerFlowInfo = store.getWorkerFlow
+  if (workflowId) {
     workflowInfo.workflowId = workflowId
     workflowInfo.workflowVersion = workflowVersion
     store.setWorkerFlow({
       workflowId: workflowId,
       workflowVersion: workflowVersion,
     })
+  } else if (workerFlowInfo.workflowId) {
+    workflowInfo.workflowId = workerFlowInfo.workflowId
+    workflowInfo.workflowVersion = workerFlowInfo.workflowVersion
   }
-  nextTick(() => {
-    console.log(store.getStep)
-    activeIndex.value = +store.getStep
-    componentsType.value = list.value[activeIndex.value].type
-  })
+  initQuery()
 }
 
+onMounted(() => {
+  initParams()
+})
+
+
+onBeforeRouteLeave((to, form) => {
+  store.setStep(0)
+  store.setWorkerFlow({
+    workflowId: null,
+    workflowVersion: null,
+  })
+})
 </script>
 <style lang="scss" scoped>
 .normal-wrap {

@@ -225,6 +225,7 @@ const en = {
     // workTipsBriefInfoTwoParagraph: "privacy computing workflows",
     // recordWorkflow: "Record of this workflow",
     operationRecord: "Operation Record",
+    dataNotPerfect: "The current data is not perfect"
   },
   credentials: {
     circulation: "Circulation",

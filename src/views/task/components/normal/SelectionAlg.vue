@@ -29,15 +29,13 @@
     </el-form-item>
     <el-form-item v-if="form.calculationType == 1000" :label="`${$t('task.stepOneSelectAlgorithmTitle')}:`"
       prop="algorithmId">
-
-      <el-radio-group v-model="form.algorithmId" @change="algChange, form.calculationProcessId = undefined">
+      <el-radio-group v-model="form.algorithmId" @change="(algChange(), form.calculationProcessId = undefined)">
         <el-radio :label="item.id" v-for="item in algTypelist[0].childrenList" :key="item.id">{{ item.name }}</el-radio>
       </el-radio-group>
     </el-form-item>
     <el-form-item v-if="form.calculationType == 2000" :label="`${t('task.stepOneSelectAIAlgorithmTitle')}:`"
       prop="algorithmId">
-
-      <el-radio-group v-model="form.algorithmId" @change="algChange, form.calculationProcessId = undefined">
+      <el-radio-group v-model="form.algorithmId" @change="(algChange(), form.calculationProcessId = undefined)">
         <el-radio :label="item.id" v-for="item in algTypelist[0].childrenList" :key="item.id">{{ item.name }}
         </el-radio>
       </el-radio-group>
@@ -60,17 +58,25 @@
 import { getAlgTree } from '@/api/algorithm'
 import { postCreateWorkflowWizard, getProcessList } from '@/api/workflow'
 import NextButton from './NextButton.vue'
+import { useWorkFlow } from '@/stores'
 const { locale, t } = useI18n()
-const emit = defineEmits(["getParams", 'next', 'getStep'])
-
+const store = useWorkFlow()
 const algList: any = ref<any[]>([])//算法列表 //最外层
-//具体算法
-const algTypelist = computed(() => algList.value.filter((v: any) => v.id == form.calculationType))
+const algTypelist = computed(() => algList.value.filter((v: any) => v.id == form.calculationType))//具体算法
 const processList = ref<any[]>([])//计算流程列表
-
+const emit = defineEmits(["getParams", 'next', 'getStep', 'getNoticeText', 'activeStep'])
+const props = defineProps({
+  taskParams: { type: Object, default: () => ({}) }
+})
 watch(locale, () => {
   formRef.value.clearValidate()
 })
+watch(algList, () => {
+  if (props.taskParams?.algorithmId) {
+    setTaskParams()
+  }
+})
+
 
 const form: any = reactive({
   workflowName: "",
@@ -99,15 +105,16 @@ const rules = ref({
 })
 
 const next = () => {
-  console.log(form)
-  // debugger
-  // emit('getParams', Object.assign({}, form.value))
-  // console.log(Object.assign({}, form.value))
   formRef.value.validate().then((v: any) => {
-    // console.log(v, form)
     submit()
-    // emit('getParams', Object.assign({}, form))
-    // emit('next')
+  })
+}
+
+const setStepList = () => {
+  processList.value.forEach(v => {
+    if (v.calculationProcessId == form.calculationProcessId) {
+      emit('getStep', { list: v.stepItem, algPSI: v.name.indexOf('PSI') > -1 })
+    }
   })
 }
 
@@ -120,39 +127,78 @@ const submit = () => {
   }).then(res => {
     const { data, code } = res
     if (code == 10000) {
-      processList.value.forEach(v => {
-        if (v.calculationProcessId == form.calculationProcessId) {
-          emit('getStep', { list: v.stepItem, algPSI: v.name.indexOf('PSI') > -1 })
-        }
+      store.setWorkerFlow({
+        workflowId: data.workflowId,
+        workflowVersion: data.workflowVersion,
       })
+      setStepList()
+      getNoticeText()
+      emit('next')
     }
   })
 }
+
 
 const queryAlgTree = () => {
   getAlgTree().then(res => {
     const { data, code } = res
     if (code === 10000) {
       algList.value = data?.childrenList[0]?.childrenList
-      form.workflowName = "create_task_name"
-      form.calculationType = 2000
-      form.algorithmId = 2010
-      form.calculationProcessId = 3
-      if (true) {
-        algChange()
+    }
+  })
+}
+
+const algChange = (type?: any) => {
+  processList.value = []
+  getProcessList({ algorithmId: form.algorithmId }).then(res => {
+    const { data, code } = res
+    if (code === 10000) {
+      processList.value = data
+      getNoticeText()
+      setStepList()
+      if (type == 'notice') {
+        emit('activeStep', props.taskParams.calculationProcessStep.step, true)
       }
     }
   })
 }
 
-const algChange = () => {
-  getProcessList({ algorithmId: form.algorithmId }).then(res => {
-    const { data, code } = res
-    if (code === 10000) {
-      processList.value = data
+const setTaskParams = () => {
+  if (algList.value.length) {
+    algList.value.forEach((v: any) => {
+      if (v.childrenList.some((item: any) => item.id == props.taskParams.algorithmId)) {
+        form.calculationType = v.id //选择算法大分类
+      }
+    })
+  }
+  form.workflowName = "create_task_name"
+  form.algorithmId = props.taskParams.algorithmId
+  form.calculationProcessId = props.taskParams.calculationProcessId
+  algChange('notice')
+}
+
+const getNoticeText = () => {
+  const paramsText = {
+    calculationTypeText: '',
+    algorithmText: '',
+    calculationProcessText: ''
+  }
+  algList.value.forEach((v: any) => {
+    if (v.id == form.calculationType) {
+      paramsText.calculationTypeText = v.name
+      v.childrenList.forEach((item: any) => {
+        if (item.id == form.algorithmId) paramsText.algorithmText = v.name
+      })
     }
   })
+  processList.value.forEach((v: any) => {
+    if (v.calculationProcessId == form.calculationProcessId) {
+      paramsText.calculationProcessText = v.name
+    }
+  })
+  emit('getNoticeText', paramsText)
 }
+
 
 onMounted(() => {
   queryAlgTree()

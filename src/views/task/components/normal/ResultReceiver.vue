@@ -3,25 +3,20 @@
     <div class="flex items-center mb-36px text-14px step-two-wrap">
       <div class="mr-20px text-color-[#666666]">{{ $t('task.selection') }} ：</div>
       <div class="flex items-center justify-center text-color-[#333333]">
-        <span>{{ props.taskParams.stepOneInfo.name || "ai" }}</span>
+        <span>{{ props.noticeText || "ai" }}</span>
         <el-icon class="rotate-180 mx-5px">
           <back />
         </el-icon>
       </div>
     </div>
     <div class="flex receivers justify-between">
-      <el-form
-        v-for="item in 2"
-        :key="item"
-        class="w-530px com-border-eee rounded-8px border-b-1px border"
-        :style="{ 'margin-right': item == 1 ? '20px' : '' }"
-        label-position="top"
-        :model="form"
-      >
+      <el-form v-for="item in 2" :key="item" class="w-530px com-border-eee rounded-8px border-b-1px border"
+        :style="{ 'margin-right': item == 1 ? '20px' : '' }" label-position="top" :model="form">
         <div class="p-30px">
-          <div
-            class="pb-20px text-color-[#333333] text-16px font-medium font-600"
-          >{{ item == 1 ? $t('task.trainingResultReceivers') : $t('task.predictionResultReceivers') }}</div>
+          <div class="pb-20px text-color-[#333333] text-16px font-medium font-600">{{
+            item == 1 ?
+            $t('task.trainingResultReceivers') : $t('task.predictionResultReceivers')
+          }}</div>
           <el-form-item>
             <el-radio-group v-model="form.radio">
               <el-radio :label="1">Option A</el-radio>
@@ -37,11 +32,9 @@
     <div class="flex items-center pt-20px relative">
       <el-button round class="h-50px previous" @click="previous">{{ $t('common.previous') }}</el-button>
       <el-button round class="h-50px previous ml-20px">{{ $t('common.saveAndReturn') }}</el-button>
-      <el-button
-        round
-        @click="next"
-        class="h-50px absolute right-0px com-button previous ml-20px"
-      >{{ $t('task.startTask') }}</el-button>
+      <el-button round @click="next" class="h-50px absolute right-0px com-button previous ml-20px">{{
+        $t('task.startTask')
+      }}</el-button>
     </div>
   </div>
 </template>
@@ -49,9 +42,9 @@
 import { Back } from '@element-plus/icons-vue'
 const emit = defineEmits(['previous', 'getParams', 'next'])
 const props = defineProps({
-  taskParams: {
+  noticeText: {
     type: Object,
-    default: () => ({ stepOneInfo: {} })
+    default: () => ({})
   }
 })
 
@@ -78,6 +71,7 @@ const previous = () => {
   .el-form {
     .el-form-item__content .el-radio-group {
       display: block;
+
       .el-radio__label {
         margin-left: 12px;
         color: #333333;

@@ -3,7 +3,7 @@
     <div class="flex items-center mb-36px text-14px">
       <div class="mr-20px text-color-[#666666]">{{ $t('task.selection') }} ：</div>
       <div class="flex items-center justify-center text-color-[#333333]">
-        <span>{{ props.taskParams.stepOneInfo.name || "ai" }}</span>
+        <span>{{ props.noticeText || "ai" }}</span>
         <el-icon class="rotate-180 mx-5px">
           <back />
         </el-icon>
@@ -11,19 +11,9 @@
     </div>
     <div class="flex items-center text-14px">
       <div class="text-color-[#666666] font-medium w-150px">{{ $t('task.selectModel') }}：</div>
-      <el-select
-        v-model="sponsorValue"
-        :suffix-icon="CaretBottom"
-        :placeholder="$t('task.selectSponsor')"
-        style="flex:0 0 440px"
-        class="h-40px rounded-20px border-1 basis-1/2 border-solid border-color-[#EEEEEE]"
-      >
-        <el-option
-          v-for="item in sponsorOptions"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-        ></el-option>
+      <el-select v-model="sponsorValue" :suffix-icon="CaretBottom" :placeholder="$t('task.selectSponsor')"
+        style="flex:0 0 440px" class="h-40px rounded-20px border-1 basis-1/2 border-solid border-color-[#EEEEEE]">
+        <el-option v-for="item in sponsorOptions" :key="item.value" :label="item.label" :value="item.value"></el-option>
       </el-select>
     </div>
     <TaskParamsTransfer :num="1" />
@@ -51,9 +41,9 @@ import { Back, CaretBottom, Plus } from '@element-plus/icons-vue'
 import NextButton from './NextButton.vue'
 const emit = defineEmits(['previous', 'getParams', 'next'])
 const props = defineProps({
-  taskParams: {
+  noticeText: {
     type: Object,
-    default: () => ({ stepOneInfo: {} })
+    default: () => ({})
   }
 })
 
@@ -90,9 +80,11 @@ const previous = () => {
     background: transparent;
     text-indent: 20px;
   }
+
   .el-select .el-input__suffix .el-icon {
     color: #333333;
   }
+
   .previous {
     border-radius: 25px;
     padding: 0 40px;

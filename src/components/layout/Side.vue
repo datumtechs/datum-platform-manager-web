@@ -12,8 +12,8 @@
       </el-menu-item>
     </el-menu>
     <el-menu router class="flex-1 bg-color-[#F7F8F9] pt-26px">
-      <el-menu-item class="h-63px mb-16px" :index="'/createWorkFlow/wizardMode'"
-        v-if="privateList.length && store.token">
+      <el-menu-item class="h-63px mb-16px" index="createWorkFlow/wizardMode"
+        @click="() => { $router.push({ name: 'wizardMode' }) }" v-if="privateList.length && store.token">
         <!-- :class="{ active: handActive('createTask') }" -->
         <div
           class="mx-15px h-50px w-full flex items-center justify-center bg-color-[#2B60E9] rounded-[25px] text-color-[#fff]">
