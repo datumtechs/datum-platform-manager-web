@@ -29,8 +29,9 @@
                             {{ t('expert.viewResult') }}</p>
                     </div>
                 </div>
-                <div>
-                    <el-checkbox v-model="hasPSI" label="PSI" />
+                <div v-if="node.nodeAlgorithmVo.supportDefaultPsi">
+                    <el-checkbox @change="handleVoPsi($event, index)"
+                        v-model="node.nodeAlgorithmVo.isPsi" label="PSI" />
                     <el-tooltip class="box-item" effect="dark" :content="t('expert.psiHint')"
                         placement="top-start">
                         <img src="@/assets/images/task/quest@2x.png" class="w-14px h-14px ml-6px" />
@@ -59,9 +60,11 @@ const props = defineProps({
 })
 
 const curNodeId = computed(() => useExpertMode().getCurNodeId)
+const curNodeIndex = computed(() => useExpertMode().getCurNodeIndex)
+console.log(curNodeIndex.value);
+
 const showDot = computed(() => useExpertMode().getDotted)
 
-let hasPSI = ref<boolean>(true)
 const nodeList: any = useExpertMode().getNodeList
 const btnList = computed(() => [
     {
@@ -76,6 +79,13 @@ const btnList = computed(() => [
     }
 ])
 
+const handleVoPsi = (flag: boolean, index: number) => {
+    console.log(index, flag);
+    useExpertMode().setCurNodePsiStatus({
+        index, flag
+    })
+}
+
 const deleteNode = (node: any, index: number) => {
     useExpertMode().deleteNode(index)
 }
@@ -86,7 +96,6 @@ const selectNode = (node: any, index: number) => {
     useExpertMode().setCurData(node)
 }
 const nodeListWithStatus: any = computed(() => {
-    console.log(props.statusList);
     if (props.statusList.length === 0) return nodeList
     // if(props.runStatus.)
     return nodeList.map((node: any, index: any) => {
@@ -97,6 +106,13 @@ const nodeListWithStatus: any = computed(() => {
         return { ...node }
     })
 })
+
+watch(nodeListWithStatus.value, () => {
+    nodeListWithStatus.value.length &&
+        nodeListWithStatus.value[curNodeIndex.value] &&
+        selectNode(nodeListWithStatus.value[curNodeIndex.value], +curNodeIndex.value)
+})
+
 
 // watch([dragStatus], ([val]) => showDot.value = val, { immediate: true })
 

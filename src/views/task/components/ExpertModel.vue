@@ -26,9 +26,15 @@ const showDialog = computed(() =>
 
 const workflowId = computed(() => route.query.workflowId)
 const workflowVersion = computed(() => route.query.workflowVersion)
+const isInEdit = computed(() => !!workflowId.value && !!workflowVersion.value)
+
+watch(isInEdit, () => {
+  if (isInEdit) {
+    queryStatus()
+  }
+})
 
 const workflowStatus = ref(0)
-
 const statusList = ref([])
 const queryStatus = () => {
   getWorkflowStatusOfExpertMode({
@@ -44,7 +50,9 @@ const queryStatus = () => {
 }
 
 onMounted(() => {
-  queryStatus()
+  if (isInEdit.value) {
+    queryStatus()
+  }
 })
 
 

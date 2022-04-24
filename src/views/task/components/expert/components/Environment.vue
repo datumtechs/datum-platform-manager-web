@@ -5,29 +5,17 @@
             <p>{{ t('expert.minimumResource') }}</p>
             <div class="mt-20px">
                 <p class="mb-10px">{{ t('common.cpu') }}</p>
-                <el-select
-                    class="w-full"
-                    v-model.trim="obj.cores"
-                    placeholder="Select"
-                    size="large"
-                >
-                    <el-option
-                        v-for="item in cpuOptions"
-                        :key="item.value"
-                        :label="item.label"
-                        :value="item.value"
-                    />
+                <el-select class="w-full" v-model="props.envObj.costCpu" @change="handleCpuChangeFn"
+                    placeholder="Select" size="large">
+                    <el-option v-for="item in cpuOptions" :key="item.value" :label="item.label"
+                        :value="item.value" />
                 </el-select>
             </div>
             <div class="mt-20px">
                 <p class="mb-10px">{{ t('common.memory') }}</p>
-                <el-input
-                    min="1"
-                    type="number"
-                    class="no-number"
-                    oninput="value=value.replace(/[^0-9]/g,'')"
-                    v-model.trim="obj.memory"
-                >
+                <el-input min="1" type="number" class="no-number"
+                    oninput="value=value.replace(/[^0-9]/g,'')" @change="handleMemoryChangeFn"
+                    v-model.trim="props.envObj.costMem">
                     <template #suffix>
                         <p class="font-14px leading-40px">MB</p>
                     </template>
@@ -35,13 +23,10 @@
             </div>
             <div class="mt-20px">
                 <p class="mb-10px">{{ t('common.bandwidth') }}</p>
-                <el-input
-                    min="1"
-                    type="number"
-                    class="no-number"
-                    oninput="value=value.replace(/[^0-9]/g,'')"
-                    v-model.trim="obj.bandwidth"
-                >
+                <el-input min="1" type="number" class="no-number"
+                    oninput="value=value.replace(/[^0-9]/g,'')" @change="handleBandwidthChangeFn"
+                    v-model.trim="props.envObj.costBandwidth">
+
                     <template #suffix>
                         <p class="font-14px leading-40px">Mbps</p>
                     </template>
@@ -50,13 +35,9 @@
         </div>
         <div class="mt-30px">
             <p class="mb-10px">{{ t('expert.longestComputingTime') }}</p>
-            <el-input
-                min="1"
-                type="number"
-                class="no-number"
-                oninput="value=value.replace(/[^0-9]/g,'')"
-                v-model.trim="obj.longestComputingTime"
-            >
+            <el-input min="1" type="number" class="no-number"
+                oninput="value=value.replace(/[^0-9]/g,'')" @change="handleRuntimeChangeFn"
+                v-model.trim="props.envObj.runTime">
                 <template #suffix>
                     <p class="font-14px leading-40px">{{ t('common.minute') }}</p>
                 </template>
@@ -66,7 +47,16 @@
 </template>
 
 <script setup lang='ts'>
+import { useExpertMode } from '@/stores'
 const { t } = useI18n()
+
+const props = defineProps({
+    envObj: {
+        type: Object,
+        default: () => { }
+    }
+})
+
 const cpuOptions = computed(() => [
     {
         id: 1,
@@ -95,15 +85,34 @@ const cpuOptions = computed(() => [
     },
 ])
 
-const obj = reactive({
-    cores: '1',
-    memory: 32,
-    bandwidth: 32,
-    longestComputingTime: 1
-});
+const handleCpuChangeFn = (cpu: string) => {
+    useExpertMode().setEnvByType({
+        type: 'costCpu',
+        data: cpu
+    })
+}
+const handleMemoryChangeFn = (costMem: string) => {
+    useExpertMode().setEnvByType({
+        type: 'costMem',
+        data: costMem
+    })
+}
+const handleBandwidthChangeFn = (costBandwidth: string) => {
+    useExpertMode().setEnvByType({
+        type: 'costBandwidth',
+        data: costBandwidth
+    })
+}
+const handleRuntimeChangeFn = (runTime: string) => {
+    useExpertMode().setEnvByType({
+        type: 'runTime',
+        data: runTime
+    })
+}
+
+
 </script>
 
 <style scoped lang='scss'>
-.env-box {
-}
+.env-box {}
 </style>
