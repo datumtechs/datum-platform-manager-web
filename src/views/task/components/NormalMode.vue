@@ -33,9 +33,16 @@ import TrainingInputData from './normal/TrainingInputData.vue';//训练输入数
 import ForecastInputData from './normal/ForecastInputData.vue';//预测输入数据
 import ComputingEnvironment from './normal/ComputingEnvironment.vue';//计算环境
 import ResultReceiver from './normal/ResultReceiver.vue';//结果接收方
+import { useWorkFlow } from '@/stores'
+const store = useWorkFlow()
+const route = useRoute()
 const activeIndex = ref(0)
 const componentsType = ref(null)
 const comList = ref([])
+const workflowInfo = reactive<any>({
+  workflowId: '',
+  workflowVersion: ''
+})
 const componentList = markRaw<any[]>(
   //0-选择训练输入数据, 
   //1-选择预测输入数据,
@@ -90,6 +97,9 @@ const list = ref<any[]>(
   ]
 )
 
+watch(activeIndex, () => {
+  store.setStep(activeIndex.value)
+})
 
 
 const getAlgInfo = (data: any) => {
@@ -135,7 +145,6 @@ const next = () => {
     submit()
   } else {
     activeIndex.value = activeIndex.value + 1
-    console.log(activeIndex.value)
   }
 }
 const previous = () => {
@@ -153,7 +162,25 @@ const query = () => {
 onMounted(() => {
   //TODO 记得注释 getStepInfo 方法
   getStepInfo()
+  initParams()
 })
+
+const initParams = () => {
+  const { workflowId, workflowVersion } = route.params
+  if (workflowId && workflowVersion) {
+    workflowInfo.workflowId = workflowId
+    workflowInfo.workflowVersion = workflowVersion
+    store.setWorkerFlow({
+      workflowId: workflowId,
+      workflowVersion: workflowVersion,
+    })
+  }
+  nextTick(() => {
+    console.log(store.getStep)
+    activeIndex.value = +store.getStep
+    componentsType.value = list.value[activeIndex.value].type
+  })
+}
 
 </script>
 <style lang="scss" scoped>

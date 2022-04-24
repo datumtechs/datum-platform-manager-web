@@ -11,14 +11,11 @@
 <script lang="ts" setup>
 import NormalMode from './components/NormalMode.vue'
 const { t } = useI18n()
-const props = defineProps(['workflowId'])
-console.log(props)
 
 </script>
 <style lang="scss">
 .task-wrap {
   .el-form .el-form-item__label {
-    // @extend .font-bold;
     font-size: 16px;
     font-weight: 600;
     color: #000000;

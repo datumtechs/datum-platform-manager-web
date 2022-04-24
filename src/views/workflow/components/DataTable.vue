@@ -37,14 +37,12 @@ const props = defineProps({
 })
 
 const Edit = (obj: any) => {
-  // debugger
+  let urlName = obj.createMode == 2 ? 'wizardMode' : 'expertModel'
   router.push({
-    name: 'wizardMode', query: {
+    name: urlName, params: {
       workflowId: obj.workflowId,
       workflowVersion: obj.workflowVersion,
-      createMode: obj.createMode,
-      algorithmId: obj.algorithmId,
-      calculationProcessId: obj.calculationProcessId
+      workflowName: obj.workflowName,
     }
   })
 }

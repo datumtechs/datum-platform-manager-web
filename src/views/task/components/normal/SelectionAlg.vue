@@ -100,7 +100,7 @@ const rules = ref({
 
 const next = () => {
   console.log(form)
-  debugger
+  // debugger
   // emit('getParams', Object.assign({}, form.value))
   // console.log(Object.assign({}, form.value))
   formRef.value.validate().then((v: any) => {
