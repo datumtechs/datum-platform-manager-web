@@ -32,28 +32,40 @@ const dragstart = (e: any, item: any) => {
 const nodeList = computed(() => useExpertMode().getNodeList)
 
 const workflowId = computed(() => route.query.workflowId)
-
 const workflowVersion = computed(() => route.query.workflowVersion)
+const isInEdit = computed(() => !!workflowId.value && !!workflowVersion.value)
+
+watch(isInEdit, () => {
+    if (isInEdit.value) {
+        queryAlgoList()
+    }
+})
 
 const dragend = async (e: any, item: any) => {
     useExpertMode().setDotted(false)
     const inBoxFlag = isBoxInStage(e)
     if (!inBoxFlag) return
-    const ids = nodeList.value.map((item: any) => item.id)
+    const ids = nodeList.value.map((item: any) => item.algorithmId)
     if (ids.includes(item.id)) {
+        // 是否重复的算法
         ElMessage.error(t('task.repeatAlgo'))
     } else {
+        // 是否超过算法长度 psi单独做只有一个
+        // if (nodeList.value[0]) {
         if (nodeList.value.length < MAX_NODES) {
+            const alg: any = { ...item.alg, isPsi: true }
             const params = {
                 algorithmId: item.id,
                 nodeName: item.name,
-                nodeAlgorithmVo: item.alg,
+                nodeAlgorithmVo: alg,
                 workflowId: workflowId || '',
                 workflowVersion: workflowVersion || ''
             }
             useExpertMode().setNodeList(params)
             return
+            // }
         }
+
         ElMessage.error(t('task.exceedMaxNode'))
     }
 
@@ -108,7 +120,9 @@ const queryAlgoList = () => {
 }
 
 onMounted(() => {
-    queryAlgoList()
+    if (isInEdit.value) {
+        queryAlgoList()
+    }
 })
 </script>
 

@@ -7,13 +7,14 @@ export default defineStore('expertMode', {
         curNodeIndex: 0,
         nodeList: <any>[],
         curNodeId: '',
-        curNodeData: {}
+        curNodeData: {},
     }),
     getters: {
         getStatus: state => state.status,
         getDotted: state => state.showDotted,
         getNodeList: state => state.nodeList,
-        getCurNodeId: state => state.curNodeId
+        getCurNodeId: state => state.curNodeId,
+        getCurNodeIndex: state => state.curNodeIndex
     },
     actions: {
         setStatus(str: string) {
@@ -36,6 +37,15 @@ export default defineStore('expertMode', {
         },
         setCurData(data: any) {
             this.curNodeData = data
+        },
+        setEnvByType(data: any) {
+            this.nodeList[this.curNodeIndex].nodeAlgorithmVo[data.type] = data.data
+        },
+        setVariableByIndex(data: any) {
+            this.nodeList[this.curNodeIndex].nodeAlgorithmVo.algorithmVariableList[data.index].varValue = data.data
+        },
+        setCurNodePsiStatus(data: any) {
+            this.nodeList[data.index].nodeAlgorithmVo.isPsi = data.flag
         }
     }
 })
