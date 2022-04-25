@@ -286,7 +286,7 @@ const zh = {
     longestComputingTime: '最长运行时间',
     configureOutput: "请设置算法输出 :",
     configureInput: "请设置算法输入 :",
-    saveNotes: '已默认保存至数据发起方',
+    saveNotes: '任务输出已默认保存至数据发起方',
     storageForm: '存储形式',
     plaintext: '明文',
     model: '模型',
@@ -295,7 +295,9 @@ const zh = {
     psiHint: '勾选后,将在当前节点任务执行前进行PSI运算',
     labelRequired: '因变量（标签，必选)',
     labelOptionals: '因变量（标签，选填)',
-    deleteNode: '删除节点'
+    deleteNode: '删除节点',
+    algoVariable: '算法变量',
+    algoCode: '算法代码'
   },
   role: {
     taskSponsor: '任务发起方',
@@ -331,7 +333,7 @@ const zh = {
     waitForConfirm: '等待确认',
     waitWalletConfirm: '在您的钱包中确认此笔交易',
     confirmAuth: '确认授权',
-    confirmCancelAuth: '确认取消授权'
+    confirmCancelAuth: '确认取消授权',
   },
   industry: {
     bank: '金融业（银行）',

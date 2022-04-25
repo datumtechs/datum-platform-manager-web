@@ -24,6 +24,7 @@ import Input from './components/Input.vue'
 import Output from './components/Output.vue'
 import Code from './components/Code.vue'
 import Environment from './components/Environment.vue'
+import { getUserOrgList } from '@/api/login'
 import { useExpertMode } from '@/stores'
 const { t } = useI18n()
 const viewKey = ref(0)
@@ -48,7 +49,16 @@ const codeObj = reactive({
     algorithmVariableList: []
 })
 
-
+const queryOrgList = (): void => {
+    getUserOrgList().then((res: any) => {
+        const { data, code } = res
+        if (code === 10000) {
+            useExpertMode().setOrgList(data)
+        }
+    }).catch((e: any) => {
+        console.log(e);
+    })
+}
 const loading = ref(true)
 
 const curNodeId = computed(() => useExpertMode().getCurNodeId)
@@ -109,6 +119,10 @@ const tabList = computed(() => [{
     value: "environment",
     label: t('expert.environment')
 }])
+
+onMounted(() => {
+    queryOrgList()
+})
 
 </script>
 

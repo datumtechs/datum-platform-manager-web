@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-46px">
+  <div class="mt-20px">
     <div>
       <PrivateSwitch :mode="'expert'" @change="$router.push({ name: 'wizardMode' })" />
     </div>
@@ -18,20 +18,24 @@ import Flow from './expert/Flow.vue'
 import SetNameDialog from './expert/SetNameDialog.vue'
 import PrivateSwitch from './PrivateSwitch.vue'
 import { getWorkflowStatusOfExpertMode } from '@/api/expert'
-
+import { useExpertMode } from '@/stores'
 const route = useRoute()
 const showDialog = computed(() =>
-  route.query.workflowId ? false : true
+  route.params.workflowId ? false : true
 )
 
-const workflowId = computed(() => route.query.workflowId)
-const workflowVersion = computed(() => route.query.workflowVersion)
+const workflowId = computed(() => route.params.workflowId)
+const workflowVersion = computed(() => route.params.workflowVersion)
 const isInEdit = computed(() => !!workflowId.value && !!workflowVersion.value)
 
 watch(isInEdit, () => {
   if (isInEdit) {
     queryStatus()
   }
+})
+
+onBeforeUnmount(() => {
+  useExpertMode().resetWorkflow()
 })
 
 const workflowStatus = ref(0)

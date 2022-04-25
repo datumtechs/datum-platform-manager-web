@@ -31,8 +31,8 @@ const dragstart = (e: any, item: any) => {
 
 const nodeList = computed(() => useExpertMode().getNodeList)
 
-const workflowId = computed(() => route.query.workflowId)
-const workflowVersion = computed(() => route.query.workflowVersion)
+const workflowId = computed(() => route.params.workflowId)
+const workflowVersion = computed(() => route.params.workflowVersion)
 const isInEdit = computed(() => !!workflowId.value && !!workflowVersion.value)
 
 watch(isInEdit, () => {

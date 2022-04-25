@@ -54,7 +54,7 @@ const submitForm = async (form: any) => {
                 if (code === 10000) {
                     router.push({
                         name: 'expertModel',
-                        query: {
+                        params: {
                             workflowId: data.workflowId,
                             workflowVersion: data.workflowVersion
                             // TODO type edit / view / add

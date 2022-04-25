@@ -20,7 +20,7 @@
             <el-table-column :label="t('auth.holdQuantity')">
                 <template #default="{ row }">
                     <p v-if="row.tokenBalance">{{
-                        useExchangeFrom(row.tokenBalance, row.tokenDecimal)
+                            useExchangeFrom(row.tokenBalance, row.tokenDecimal)
                     }}</p>
                     <p v-else>0</p>
                 </template>
@@ -28,8 +28,8 @@
             <el-table-column prop="authorizeBalance" :label="t('auth.authQuantity')">
                 <template #default="{ row }">
                     <p v-if="row.authorizeBalance">{{
-                        useExchangeFrom(row.authorizeBalance,
-                            row.tokenDecimal)
+                            useExchangeFrom(row.authorizeBalance,
+                                row.tokenDecimal)
                     }}</p>
                     <p v-else>0</p>
                 </template>
@@ -39,7 +39,7 @@
                     <el-button class="text-14px text-color-[#0052D9] cursor-pointer" type="text"
                         circle @click="setBalance(row)">
                         {{
-                            t('auth.plzInputAuthTokenNumber')
+                                t('auth.plzInputAuthTokenNumber')
                         }}</el-button>
                     <!-- <el-button class="text-14px text-color-[#0052D9] cursor-pointer" type="text"
                         circle @click="showCancelDialog = true; currentToken = row">{{
@@ -74,7 +74,7 @@
                 <div>
                     <el-button class="w-100px" style="height: 32px;" round
                         @click="showAuthDialog = false">{{
-                            t('common.cancel')
+                                t('common.cancel')
                         }}</el-button>
                     <el-button class="w-100px" style="height: 32px;" round type="primary"
                         @click="authSubmit">{{ t('common.confirm') }}</el-button>
@@ -113,7 +113,8 @@
                 </div>
             </template>
         </el-dialog> -->
-        <GlobalPending :show="pending.show" :content="pending.content" :title="pending.title" />
+        <GlobalPending :show="pending.show" :content="pending.content" :title="pending.title"
+            @close-pending="pending.show = false" />
     </div>
 </template>
 
