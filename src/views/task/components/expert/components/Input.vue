@@ -4,7 +4,7 @@
         <div class="mt-40px">
             <p class="text-color-[#333] font-medium">{{ t('role.taskSponsor') }}</p>
             <el-select v-model="taskSender" class="mt-10px w-full" size="small"
-                :disabled="viewModel === 'view'" filterable :placeholder="t('expert.selectModel')"
+                :disabled="viewModel === 'view'" filterable :placeholder="t('task.selectSponsor')"
                 @change="handleSenderChange">
                 <el-option v-for="item in orgList" :key="item.identityId" :label="item.nodeName"
                     :value="item.identityId"></el-option>
@@ -28,11 +28,7 @@
                         lazyLoad: (node, resolve) => {
                             modelLazyLoad(node, resolve)
                         }
-                    }" @change="
-    e => {
-        changeModelValue(e)
-    }
-"></el-cascader>
+                    }" @change="e => { changeModelValue(e) }"></el-cascader>
             </p>
         </div>
         <div v-for="(item, index) in selectLayout" :key="index" class="mt-40px">
@@ -54,11 +50,7 @@
                         lazyLoad: (node, resolve) => {
                             inputLazyLoad(node, resolve, index)
                         }
-                    }" @change="
-    e => {
-        changeInputValue(e, index)
-    }
-"></el-cascader>
+                    }" @change="e => { changeInputValue(e, index) }"></el-cascader>
                 <Transfer :ref="setRef" :view-model="viewModel" :column-data="columnsList[index]"
                     :transfer-index="index" :algorithms="algorithms" @saveToStore="saveToStore">
                 </Transfer>
@@ -70,21 +62,26 @@
 
 <script setup lang='ts'>
 import type { Ref } from 'vue';
+import { useExpertMode } from '@/stores'
 import Transfer from './Transfer.vue'
+import { queryUserDataList, queryDataDetails } from '@/api/data'
+
 const { t } = useI18n()
 const modelKey = ref('')
 const taskSender = ref('')
 const viewModel = ref('')
-const showModel = ref(false)
+const algorithm: any = computed(() => useExpertMode().getAlgorithm)
+const orgList: any = computed(() => useExpertMode().getOrgList)
+const showModel: any = computed(() => algorithm.value.inputModel)
 let selectLayout: any = ref([{ item: '111', value: '111', }])
 const minLen = 2
 
-const cascaderKey = ref('')
+const cascaderKey: any = ref([])
 const inputValue: Ref<any[]> = ref([] as any[])
 
 const algorithms = ref([])
 
-const columnsList = ref([])
+const columnsList: any = ref([])
 
 const columnsRef = ref([] as any[])
 
@@ -116,26 +113,114 @@ const saveToStore = (transferIndex: any) => {
 }
 
 const initInputPanel = () => {
-    selectLayout.value = Array(minLen).fill({ item: '111', value: '111', })
+    selectLayout.value = Array(minLen).fill({})
 }
 
-const changeInputValue = (e: any, index: number) => { }
+const changeInputValue = (item: any, index: number) => {
+    console.log('item', item);
+    console.log('index', index);
 
+    if (item && item.length === 0) {
+        return columnsList.value[index] = []
+    }
 
-const inputLazyLoad = (e: any, resolve: any, index: number) => {
+    const ids = getIdentity(inputValue.value)
+    useExpertMode().setDisableOrg(ids)
 
+    // 更新key，渲染el-cascader组件，使用options最新的值
+    const upList: any = []
+    // cascaderKey.map((item, i) => {
+    //     if (index !== i) {
+    //         upList.push(i)
+    //     }
+    // })
+    // upList.map(i => {
+    //     this.cascaderKey[i] = this.cascaderKey[i] + 1
+    // })
+    // // 获取列的数据
+    if (item && item.length === 2) {
+        getColumnList(item[item.length - 1], index)
+    }
+}
+const getColumnList = async (metaDataId: string, index: number, params?: any) => {
+    const { code, data } = await queryDataDetails({ metaDataId })
+    if (code === 10000) {
+        columnsList.value[index] = data.columnsList
+    }
+    // this.columnsList.splice(index, 1, data)
+    // that.columnsList[index] = data
+    // this.$forceUpdate()
+    // 回显
+    if (params) {
+        nextTick(() => {
+            // that.$refs[`Columns${index}`][0].handleEcho(params)
+        })
+    }
 }
 
-const handleSenderChange = () => { }
+const getIdentity = (list: any) => {
+    if (!list) return []
+    return list.map((item: any) => item[0])
+}
+
+
+const inputValueOrg = computed(() => inputValue.value.map((item: any) => item[0]))
+
+const inputLazyLoad = async (node: any, resolve: any, index: number) => {
+    const { level, data } = node
+    try {
+        let nodes
+        if (level === 0) {
+            setTimeout(() => {
+                if (inputValue.value.length) {
+                    // 已做了选择
+                    const isDisabled = (item: any) => {
+                        if (inputValueOrg[index] === item.identityId) {
+                            return false
+                        } else {
+                            return item.disabled
+                        }
+                    }
+                    nodes = orgList.value.map((org: any) => ({
+                        code: org.identityId,
+                        name: org.nodeName,
+                        leaf: level >= 2,
+                        disabled: isDisabled(org)
+                    }))
+                } else {
+                    nodes = orgList.value.map((org: any) => ({
+                        code: org.identityId,
+                        name: org.nodeName,
+                        leaf: level >= 2,
+                        disabled: org.disabled
+                    }))
+                }
+                resolve(nodes)
+            }, 300);
+        } else if (level === 1) {
+            const params = { current: 1, size: 1000, identityId: node.data.code }
+            const { code, data } = await queryUserDataList(params)
+            const nextNodes = data.items.map((item: any) => ({
+                code: item.metaDataId,
+                name: item.metaDataName,
+                leaf: level >= 1 // >=2： 展示3级 >= 1： 展示2级
+            }))
+            resolve(nextNodes)
+        }
+
+    } catch (error) {
+
+    }
+}
+
+const handleSenderChange = (value: any) => {
+    useExpertMode().setSender(value)
+}
 const modelLazyLoad = async (node: any, resolve: any) => {
 
 }
 const changeModelValue = (e: any) => { }
-const orgList: any[] = [{
-    identityId: '',
-    nodeName: '',
-    value: "item.identityId"
-}]
+
 
 const handleModelChange = () => { }
 const curNodeIndex = ref(1)
@@ -145,10 +230,17 @@ const modelOptions = reactive([{
     modelId: ''
 }])
 
-onMounted(() => {
-    initInputPanel()
-    console.log(selectLayout);
+const saveOrgs = () => {
 
+}
+
+
+onMounted(async () => {
+    // await saveOrgs() 使用当前用户的组织信息
+    initInputPanel()
+    // 回显
+    // handleInputValue()
+    // handleCascaderKey()
 })
 
 

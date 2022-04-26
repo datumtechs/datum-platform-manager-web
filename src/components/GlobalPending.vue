@@ -13,6 +13,7 @@
 
 <script setup lang='ts'>
 const { t } = useI18n()
+const emits = defineEmits(['closePending'])
 const props = defineProps({
     show: {
         type: Boolean,
@@ -29,7 +30,7 @@ const props = defineProps({
 })
 
 const handleClose = () => {
-
+    emits('closePending')
 }
 </script>
 

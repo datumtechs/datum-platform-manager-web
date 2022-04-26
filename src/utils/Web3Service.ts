@@ -242,7 +242,7 @@ class Web3Service {
    */
   async authNode(address: string, callback: any): Promise<any> {
     try {
-      if (!address) return new Error('address is not found')
+      if (!address) throw new Error('ObserverWallet address was not found')
       await this._hasLogin()
       await this._setTargetChain()
       const contract = await new this.web3.eth.Contract(MetisPayABI, address)

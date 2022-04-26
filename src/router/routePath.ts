@@ -149,7 +149,7 @@ export default [
       },
       component: () => import('@/views/task/WizardMode.vue'),
     }, {
-      path: '/createWorkFlow/expertModel',
+      path: '/createWorkFlow/expertModel/:workflowId?/:workflowVersion?',
       name: "expertModel",
       meta: {
         label: 'menu.createTask'

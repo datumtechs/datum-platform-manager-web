@@ -114,7 +114,6 @@ watch(nodeListWithStatus.value, () => {
 })
 
 
-// watch([dragStatus], ([val]) => showDot.value = val, { immediate: true })
 
 </script>
 

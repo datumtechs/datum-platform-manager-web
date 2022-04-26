@@ -23,7 +23,7 @@
                     <el-button type="text" circle @click="showAuth(row)">{{ t('auth.auth') }}
                     </el-button>
                     <el-button type="text" circle @click="showCancel(row)">{{
-                        t('auth.cancelAuth')
+                            t('auth.cancelAuth')
                     }}
                     </el-button>
                 </template>
@@ -48,7 +48,7 @@
                 </p>
                 <p v-else>
                     Please confirm that the authorized node <span class="text-color-[#2B60E9]">{{
-                        currentNode.nodeName
+                            currentNode.nodeName
                     }}</span> is a whitelist
                 </p>
             </div>
@@ -60,7 +60,7 @@
                 <p v-else>
                     Please confirm and cancel the authorization of node <span
                         class="text-color-[#2B60E9]">{{
-                            currentNode.nodeName
+                                currentNode.nodeName
                         }}</span>
                 </p>
             </div>
@@ -68,14 +68,15 @@
                 <div>
                     <el-button class="w-100px" style="height: 32px;" round
                         @click="showDialog = false">{{
-                            t('common.cancel')
+                                t('common.cancel')
                         }}</el-button>
                     <el-button class="w-100px" style="height: 32px;" round type="primary"
                         @click="authSubmit">{{ t('common.confirm') }}</el-button>
                 </div>
             </template>
         </el-dialog>
-        <GlobalPending :show="pending.show" :content="pending.content" :title="pending.title" />
+        <GlobalPending :show="pending.show" :content="pending.content" :title="pending.title"
+            @close-pending="pending.show = false" />
     </div>
 </template>
 <script setup lang="ts">
@@ -100,7 +101,17 @@ const { t, locale } = useI18n()
 
 const nodeTableLoading = ref(true)
 const tableData = ref([])
-const currentNode = ref<OrgNode>()
+const currentNode = ref<OrgNode>({
+    identityId: '',
+    identityIp: '',
+    identityPort: 0,
+    isInWhitelist: false,
+    nodeName: '',
+    observerProxyWalletAddress: '',
+    publicFlag: 0,
+    status: 0,
+    updateAt: 0
+})
 const dialogType = ref('add')
 const showDialog = ref(false)
 const curTitle = ref('')

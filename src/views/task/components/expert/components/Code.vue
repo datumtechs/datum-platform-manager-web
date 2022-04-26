@@ -1,6 +1,8 @@
 <template>
     <div class="code-box">
-        <div class="code-variable-box py-20px">
+        <div v-if="props.codeObj?.algorithmVariableList.length > 0"
+            class="code-variable-box py-20px">
+            <p class="text-color-[#333] font-bold px-20px pb-10px">{{ t('expert.algoVariable') }}</p>
             <el-space class="mb-10px px-20px"
                 v-for="(item, index) in props.codeObj.algorithmVariableList" :key="item.varKey">
                 <p class="w-140px">{{ item.varKey }}</p>
@@ -9,6 +11,7 @@
             </el-space>
         </div>
         <div class="w-340px bg-primary m-20px code-context-box">
+            <p class="text-color-[#333] font-bold pb-20px">{{ t('expert.algoCode') }}</p>
             <div v-html="props.codeObj.code"></div>
         </div>
     </div>
@@ -16,6 +19,7 @@
 
 <script setup lang='ts'>
 import { useExpertMode } from '@/stores'
+const { t } = useI18n()
 const props = defineProps({
     codeObj: {
         type: Object,

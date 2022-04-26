@@ -3,13 +3,9 @@
     <div class="columns-box">
       <p class="text-12px text-color-[#999999] leading-17px">{{ t('task.field') }}</p>
       <div class="columns mt-5px">
-        <div
-          v-for="(item, index) in list"
-          :key="index"
-          class="columns-item"
+        <div v-for="(item, index) in props.columnData" :key="index" class="columns-item"
           :class="{ 'columns-item-active': columnIndex === index, 'view-model': viewModel === 'view' }"
-          @click="handleColumn(index)"
-        >{{ item.columnName }}</div>
+          @click="handleColumn(index)">{{ item.columnName }}</div>
       </div>
     </div>
     <div class="arrow">
@@ -31,37 +27,29 @@
     <div class="result">
       <p class="text-12px text-color-[#999999] leading-17px">{{ t('task.idColumn') }}</p>
       <div class="ids mt-5px w-160px h-40px">
-        <div
-          class="item"
-          :class="{ 'view-model': viewModel === 'view' }"
-        >{{ ids.length ? ids[0].columnName : '' }}</div>
+        <div class="item" :class="{ 'view-model': viewModel === 'view' }">{{ ids.length ?
+            ids[0].columnName : ''
+        }}</div>
       </div>
       <div v-if="isLabels" class="result-label">
-        <p
-          class="text-12px text-color-[#999999] leading-17px mt-10px mb-5px"
-          v-if="!algorithms.inputModel"
-        >{{ t('expert.labelRequired') }}</p>
-        <p
-          class="text-12px text-color-[#999999] leading-17px mt-10px mb-5px"
-          v-else
-        >{{ t('expert.labelOptionals') }}</p>
-        <div
-          class="label-item"
-          :class="{ 'view-model': viewModel === 'view' }"
-        >{{ labels.length ? labels[0].columnName : '' }}</div>
+        <p class="text-12px text-color-[#999999] leading-17px mt-10px mb-5px"
+          v-if="!algorithms.inputModel">{{ t('expert.labelRequired') }}</p>
+        <p class="text-12px text-color-[#999999] leading-17px mt-10px mb-5px" v-else>{{
+            t('expert.labelOptionals')
+        }}</p>
+        <div class="label-item" :class="{ 'view-model': viewModel === 'view' }">{{ labels.length ?
+            labels[0].columnName : ''
+        }}</div>
       </div>
       <div class="feature">
-        <p class="text-12px text-color-[#999999] leading-17px mt-10px mb-5px">{{t('task.feature')}}</p>
-        <div
-          class="features"
-          :class="{ 'features-auto': !isLabels, 'view-model': viewModel === 'view' }"
-        >
-          <div
-            v-for="(item, index) in features"
-            :key="index"
+        <p class="text-12px text-color-[#999999] leading-17px mt-10px mb-5px">{{ t('task.feature')
+        }}
+        </p>
+        <div class="features"
+          :class="{ 'features-auto': !isLabels, 'view-model': viewModel === 'view' }">
+          <div v-for="(item, index) in features" :key="index"
             :class="['features-item', featureIndex === index ? 'features-item-active' : '']"
-            @click="handleFeature(index)"
-          >{{ item.columnName }}</div>
+            @click="handleFeature(index)">{{ item.columnName }}</div>
         </div>
       </div>
     </div>
@@ -79,11 +67,11 @@ const features = reactive([] as any[])
 let columnIndex = ref(0)
 let featureIndex = ref(0)
 
-
+// columnData, transferIndex, algorithms, viewModel
 const showTransfer = computed(() => ids.length || labels.length || features.length || list.length)
 const isLabels = true; // computed(() => transferIndex === 0 && !algorithms.inputModel)
 const emit = defineEmits(['saveToStore'])
-const { columnData, transferIndex, algorithms, viewModel } = defineProps({
+const props: any = defineProps({
   columnData: {
     type: Array,
     default: () => []
@@ -104,6 +92,9 @@ const { columnData, transferIndex, algorithms, viewModel } = defineProps({
   }
 })
 
+console.log('数据有了', props.columnData.value);
+
+
 const handleColumn = (index: number) => {
   columnIndex.value = index
 }
@@ -120,7 +111,7 @@ const handleTransfer = (type: any, methods?: any) => {
      0: push
      1: delete
    */
-  if (viewModel === 'view') return
+  if (props.viewModel.value === 'view') return
   const types = [{ 'ids': ids }, { 'labels': labels }, { 'features': features }, { 'features': features }]
   if (!list[columnIndex.value]) {
     columnIndex.value = 0
@@ -149,7 +140,7 @@ const handleTransfer = (type: any, methods?: any) => {
       labelList.splice(featureIndex.value, 1)
     }
   }
-  emit('saveToStore', transferIndex)
+  emit('saveToStore', props.transferIndex.value)
 }
 
 
@@ -158,21 +149,40 @@ const handleTransfer = (type: any, methods?: any) => {
 <style scoped lang='scss'>
 .transfer {
   display: flex;
+
   .columns-box {
     .columns {
-      width: 105px;
+      width: 125px;
       height: 295px;
       height: 295px;
       background: #eeeeee;
       border-radius: 4px;
+      overflow-y: auto;
+
+      .columns-item {
+        padding: 4px;
+        cursor: pointer;
+        font-size: 12px;
+
+        &.columns-item-active {
+          background: #dcdfe6;
+        }
+      }
+
+      .columns-item:hover {
+        background: #dcdfe6;
+        overflow: visible;
+      }
     }
   }
+
   .arrow {
     height: 100%;
     width: 40px;
     display: flex;
     flex-direction: column;
     margin-top: 20px;
+
     .arrow-icon {
       padding-top: 14px;
       margin-bottom: 32px;
@@ -185,6 +195,7 @@ const handleTransfer = (type: any, methods?: any) => {
       cursor: pointer;
     }
   }
+
   .result {
     .ids {
       width: 160px;
@@ -192,6 +203,7 @@ const handleTransfer = (type: any, methods?: any) => {
       background: #eeeeee;
       border-radius: 4px;
     }
+
     .result-label {
       .label-item {
         width: 160px;
@@ -202,6 +214,7 @@ const handleTransfer = (type: any, methods?: any) => {
     }
 
     .feature {
+
       .features,
       .features-auto {
         width: 160px;
@@ -209,9 +222,11 @@ const handleTransfer = (type: any, methods?: any) => {
         background: #eeeeee;
         border-radius: 4px;
       }
+
       .features {
         height: 150px;
       }
+
       .features-auto {
         height: 222px;
       }

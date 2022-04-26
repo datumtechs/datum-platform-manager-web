@@ -297,7 +297,9 @@ const en = {
     psiHint: 'If checked, the PSI operation will be performed before the current task is executed',
     labelRequired: 'labels（required)',
     labelOptionals: 'labels（optional)',
-    deleteNode: 'Delete the node'
+    deleteNode: 'Delete the node',
+    algoVariable: 'Algorithm Variable',
+    algoCode: 'Algorithm Code'
   },
   role: {
     taskSponsor: 'Task sponsor',
@@ -333,7 +335,7 @@ const en = {
     waitForConfirm: 'Waiting For Confirmation',
     waitWalletConfirm: 'Confirm this transaction in your wallet',
     confirmAuth: 'Confirm authorization',
-    confirmCancelAuth: 'Confirm cancel authorization'
+    confirmCancelAuth: 'Confirm cancel authorization',
   },
   industry: {
     bank: 'Finance (bank)',
