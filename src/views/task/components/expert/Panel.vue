@@ -7,7 +7,7 @@
         </div>
         <div v-if="curNodeId" :key="viewKey" class="main-panel">
             <Overview v-show="currentTab === 'overview'" :overview-obj="overviewObj" />
-            <Input v-show="currentTab === 'input'" v-bind="$attrs" />
+            <Input v-if="currentTab === 'input'" v-bind="$attrs" />
             <Output v-show="currentTab === 'output'" v-bind="$attrs" />
             <Code v-show="currentTab === 'code'" :codeObj="codeObj" />
             <Environment v-show="currentTab === 'environment'" v-bind="$attrs" :env-obj="envObj" />
@@ -59,18 +59,15 @@ const queryOrgList = (): void => {
         console.log(e);
     })
 }
-const loading = ref(true)
 
 const curNodeId = computed(() => useExpertMode().getCurNodeId)
-const code = ref('')
 const currentTab = ref('overview')
 
-
-watch(curNodeId, (newV, oldV) => {
-    if (newV) {
-        getPanelData(newV)
-    }
-})
+// watch(curNodeId, (newV, oldV) => {
+//     if (newV) {
+//         getPanelData(newV)
+//     }
+// })
 
 const getPanelData = (id: string) => {
     const nodeList = useExpertMode().getNodeList
@@ -121,7 +118,7 @@ const tabList = computed(() => [{
 }])
 
 onMounted(() => {
-    queryOrgList()
+    // queryOrgList()
 })
 
 </script>

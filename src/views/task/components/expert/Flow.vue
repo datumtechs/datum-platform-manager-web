@@ -95,6 +95,7 @@ const selectNode = (node: any, index: number) => {
     useExpertMode().setCurNodeId(node.algorithmId)
     useExpertMode().setCurData(node)
 }
+
 const nodeListWithStatus: any = computed(() => {
     if (props.statusList.length === 0) return nodeList
     // if(props.runStatus.)
@@ -108,9 +109,10 @@ const nodeListWithStatus: any = computed(() => {
 })
 
 watch(nodeListWithStatus.value, () => {
-    nodeListWithStatus.value.length &&
-        nodeListWithStatus.value[curNodeIndex.value] &&
-        selectNode(nodeListWithStatus.value[curNodeIndex.value], +curNodeIndex.value)
+    if (nodeListWithStatus.value.length &&
+        nodeListWithStatus.value[curNodeIndex.value]) {
+        selectNode(nodeListWithStatus.value[curNodeIndex.value], curNodeIndex.value)
+    }
 })
 
 

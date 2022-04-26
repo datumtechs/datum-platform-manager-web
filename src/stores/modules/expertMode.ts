@@ -1,14 +1,75 @@
 import { defineStore } from "pinia";
 
+
+interface Algorithm {
+    algorithmCode: {
+        calculateContractCode: String | null,
+        editType: String | null,
+    },
+    algorithmDesc: String | null,
+    algorithmId: String | null,
+    algorithmImageUrl: String | null,
+    algorithmName: String | null,
+    algorithmVariableList: [],
+    author: String | null,
+    costBandwidth: String | null,
+    costCpu: String | null,
+    costGpu: String | null,
+    costMem: Number,
+    inputModel: Boolean,
+    isPsi: Boolean,
+    maxNumbers: Number,
+    minNumbers: Number,
+    runTime: Number,
+    storePattern: Number,
+    supportDefaultPsi: Boolean,
+    supportLanguage: String | null,
+    supportOsSystem: String | null,
+}
+
+interface NodeEle {
+    "algorithmId": Number,
+    "nodeName": String,
+    "nodeAlgorithmVo": Algorithm,
+    "workflowId": String,
+    "workflowVersion": String
+}
+
 export default defineStore('expertMode', {
     state: () => ({
         status: '',
         showDotted: false,
         curNodeIndex: 0,
         nodeList: <any>[],
+        fakeNodeList: <any>[],
         curNodeId: '',
         curModel: '',
-        algorithm: {},
+        algorithm: {
+            algorithmCode: {
+                calculateContractCode: '',
+                editType: null,
+            },
+            algorithmDesc: '',
+            algorithmId: null,
+            algorithmImageUrl: null,
+            algorithmName: '',
+            algorithmVariableList: [],
+            author: '',
+            costBandwidth: null,
+            costCpu: 1,
+            costGpu: null,
+            costMem: 32,
+            inputModel: false,
+            isPsi: false,
+            maxNumbers: 3,
+            minNumbers: 2,
+            runTime: 3,
+            storePattern: 1,
+            supportDefaultPsi: false,
+            supportLanguage: '',
+            supportOsSystem: '',
+
+        },
         // curNodeData: {},
         workflowNodeSenderIdentityId: '',
         orgList: <any>[],
@@ -36,6 +97,7 @@ export default defineStore('expertMode', {
             this.showDotted = flag
         },
         setNodeList(node: any) {
+            // this.fakeNodeList.push(node)
             this.nodeList.push(node)
         },
         deleteNode(index: number) {
@@ -88,7 +150,31 @@ export default defineStore('expertMode', {
             this.workflowNodeInputVoList = []
             this.workflowNodeOutputVoList = []
             this.workflowNodeSenderIdentityId = ''
-            this.algorithm = {}
+            this.algorithm = {
+                algorithmCode: {
+                    calculateContractCode: '',
+                    editType: null,
+                },
+                algorithmDesc: '',
+                algorithmId: null,
+                algorithmImageUrl: null,
+                algorithmName: '',
+                algorithmVariableList: [],
+                author: '',
+                costBandwidth: null,
+                costCpu: 1,
+                costGpu: null,
+                costMem: 32,
+                inputModel: false,
+                isPsi: false,
+                maxNumbers: 3,
+                minNumbers: 2,
+                runTime: 3,
+                storePattern: 1,
+                supportDefaultPsi: false,
+                supportLanguage: '',
+                supportOsSystem: '',
+            }
         },
         setDisableOrg(data: Array<any>) {
             this.orgList.map((item: any) => {
@@ -98,6 +184,12 @@ export default defineStore('expertMode', {
                     item.disabled = false
                 }
             })
+        },
+        setVoList(data: any) {
+            if (!this.nodeList[this.curNodeIndex].workflowNodeInputVoList) {
+                this.nodeList[this.curNodeIndex].workflowNodeInputVoList = []
+            }
+            this.nodeList[this.curNodeIndex].workflowNodeInputVoList[data.transferIndex] = data.params
         }
     }
 })

@@ -36,26 +36,27 @@
                 {{ `${t('role.dataProvider')}-${index + 1}` }}
                 <!-- TODO 改名称为数据提供方 -->
             </p>
-            <p class>
-                <!-- <el-select size="mini">
+            <!-- <p class> -->
+            <!-- <el-select size="mini">
             <option v-for="item in orgs" :key="item.identityId" :label="item.label" :value="item.value"></option>
                 </el-select>-->
-                <el-cascader class="w-full mt-10px" :key="cascaderKey[index]"
-                    v-model="inputValue[index]" :disabled="viewModel === 'view'" size="small"
-                    :span="12" :props="{
-                        // checkStrictly: true,
-                        label: 'name', // label value
-                        value: 'code', // 指定选项的值为选项对象的某个属性值
-                        lazy: true,
-                        lazyLoad: (node, resolve) => {
-                            inputLazyLoad(node, resolve, index)
-                        }
-                    }" @change="e => { changeInputValue(e, index) }"></el-cascader>
-                <Transfer :ref="setRef" :view-model="viewModel" :column-data="columnsList[index]"
-                    :transfer-index="index" :algorithms="algorithms" @saveToStore="saveToStore">
-                </Transfer>
-                <!-- <i v-if="index > minLen - 1" class="el-icon-delete delete-input-btn pointer" @click="delToInput(index)"></i> -->
-            </p>
+            <el-cascader class="w-full mt-10px" :key="cascaderKey[index]"
+                v-model="inputValue[index]" :disabled="viewModel === 'view'" size="small" :span="12"
+                :props="{
+                    // checkStrictly: true,
+                    label: 'name', // label value
+                    value: 'code', // 指定选项的值为选项对象的某个属性值
+                    lazy: true,
+                    lazyLoad: (node, resolve) => {
+                        inputLazyLoad(node, resolve, index)
+                    }
+                }" @change="e => { changeInputValue(e, index) }"></el-cascader>
+            <Transfer :ref="setItemRef" :view-model="viewModel" :key="index"
+                :column-data="columnsList[index]" :transferIndex="index" :algorithm="algorithm"
+                @saveToStore="saveToStore">
+            </Transfer>
+            <!-- <i v-if="index > minLen - 1" class="el-icon-delete delete-input-btn pointer" @click="delToInput(index)"></i> -->
+            <!-- </p> -->
         </div>
     </div>
 </template>
@@ -79,36 +80,35 @@ const minLen = 2
 const cascaderKey: any = ref([])
 const inputValue: Ref<any[]> = ref([] as any[])
 
-const algorithms = ref([])
-
 const columnsList: any = ref([])
 
-const columnsRef = ref([] as any[])
+let columnsRef: any = []
 
+onBeforeUpdate(() => {
+    columnsRef = []
+})
 
-const setRef = (el: any) => {
-    columnsRef.value.push(el)
+const setItemRef = (el: any) => {
+    console.log(el);
+    el && columnsRef.push(el)
 }
-nextTick(() => {
-    console.dir(columnsRef.value);
-});
-
 
 const saveToStore = (transferIndex: any) => {
-    const columnObj = columnsRef.value[transferIndex][0].getList()
+    const columnObj = columnsRef[transferIndex].getList()
     const columnLists = Array(2).fill({})
     columnLists[transferIndex] = columnObj
 
     const params = {
         keyColumn: Number(columnLists[transferIndex].keyColumn),
         dataColumnIds: columnLists[transferIndex].dataColumnIds,
-        dataTableId: inputValue[transferIndex][1],
-        identityId: inputValue[transferIndex][0],
+        dataTableId: inputValue.value[transferIndex][1],
+        identityId: inputValue.value[transferIndex][0],
         dependentVariable: 0
     }
     if (transferIndex === 0) {
         params.dependentVariable = Number(columnLists[transferIndex].dependentVariable)
     }
+    useExpertMode().setVoList({ params, transferIndex })
     // this.SET_VO_LIST({ params, transferIndex }) TODO
 }
 
