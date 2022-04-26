@@ -2,12 +2,7 @@
   <div class="mt-50px step-two-wrap">
     <div class="flex items-center mb-36px text-14px">
       <div class="mr-20px text-color-[#666666]">{{ $t('task.selection') }} ：</div>
-      <div class="flex items-center justify-center text-color-[#333333]">
-        <span>{{ props.noticeText || "ai" }}</span>
-        <el-icon class="rotate-180 mx-5px">
-          <back />
-        </el-icon>
-      </div>
+      <NoticeText :noticeText="props.noticeText" />
     </div>
     <div class="flex items-center text-14px">
       <div class="mr-20px text-color-[#666666] font-medium w-130px">{{ $t('task.selectSponsor') }} ：</div>
@@ -38,8 +33,10 @@
   </div>
 </template>
 <script lang="ts" setup>
+import NoticeText from './NoticeText.vue';
 import TaskParamsTransfer from '@/components/TaskParamsTransfer.vue';
 import { Back, CaretBottom, Plus } from '@element-plus/icons-vue'
+import { getUserOrgList } from '@/api/login'
 import NextButton from './NextButton.vue'
 const emit = defineEmits(['previous', 'getParams', 'next'])
 const props = defineProps({
@@ -84,6 +81,17 @@ const previous = () => {
   emit('previous')
 }
 
+const query = () => {
+  getUserOrgList().then(res => {
+    const { data, code } = res
+    if (code === 10000) {
+      sponsorOptions.value = data
+    }
+  })
+}
+onMounted(() => {
+  query()
+})
 
 </script>
 <style lang="scss">

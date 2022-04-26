@@ -2,19 +2,14 @@
   <div class="mt-50px step-two-wrap">
     <div class="flex items-center mb-36px text-14px">
       <div class="mr-20px text-color-[#666666]">{{ $t('task.selection') }} ：</div>
-      <div class="flex items-center justify-center text-color-[#333333]">
-        <span>{{ props.noticeText || "ai" }}</span>
-        <el-icon class="rotate-180 mx-5px">
-          <back />
-        </el-icon>
-      </div>
+      <NoticeText :noticeText="props.noticeText" />
     </div>
     <div class="flex environment justify-between">
       <el-form v-for="item in 2" :key="item" class="w-530px com-border-eee rounded-8px border-b-1px border"
         label-position="top" :style="{ 'margin-right': item == 1 ? '20px' : '' }" :model="form">
         <div class="p-30px border-bottom text-color-[#333333] text-16px font-medium font-600">{{
-          item == 1 ?
-          $t('task.environmentTraining') : $t('task.environmentPrediction')
+            item == 1 ?
+              $t('task.environmentTraining') : $t('task.environmentPrediction')
         }}</div>
         <div class="p-30px">
           <div class="pb-20px text-color-[#333333] font-medium font-600">{{ $t('task.lowestNeed') }}</div>
@@ -70,6 +65,7 @@
   </div>
 </template>
 <script lang="ts" setup>
+import NoticeText from './NoticeText.vue';
 import { Back } from '@element-plus/icons-vue'
 import NextButton from './NextButton.vue'
 const emit = defineEmits(['previous', 'getParams', 'next'])

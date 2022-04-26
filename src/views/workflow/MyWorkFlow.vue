@@ -14,7 +14,7 @@
       </template>
     </Banner>
     <div class="com-main-data-wrap main-content">
-      <DataTable :data="tableData" />
+      <DataTable :data="tableData" @query="query" />
       <div class="flex my-50px justify-center">
         <el-pagination background layout="prev, pager, next" @current-change="(_) => {
           current = _

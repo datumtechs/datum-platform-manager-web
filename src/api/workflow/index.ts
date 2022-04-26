@@ -15,6 +15,14 @@ export const queryWorkflowStats = (params: {}): Promise<any> => {
     params
   })
 }
+//删除
+export const deleteWorkflow = (data: {}): Promise<any> => {
+  return http({
+    method: 'POST',
+    url: '/flow/workflow/deleteWorkflow',
+    data
+  })
+}
 
 //查询算法对应计算流程
 export const getProcessList = (params: {}): Promise<any> => {
@@ -34,11 +42,20 @@ export const postCreateWorkflowWizard = (data: {}): Promise<any> => {
   })
 }
 
-//c查询进度
+//查询进度
 export const getWorkflowSettingOfWizardMode = (params: {}): Promise<any> => {
   return http({
     method: 'GET',
     url: '/flow/workflow/wizard/getWorkflowSettingOfWizardMode',
     params
+  })
+}
+
+//设置工作流
+export const setWorkflowOfWizardMode = (data: {}): Promise<any> => {
+  return http({
+    method: 'POST',
+    url: '/flow/workflow/wizard/settingWorkflowOfWizardMode',
+    data
   })
 }

@@ -25,8 +25,11 @@
   </el-table>
 </template>
 <script lang="ts" setup>
+import { ElMessageBox, ElMessage } from 'element-plus'
 import { type Router, useRouter } from 'vue-router'
+import { deleteWorkflow } from '@/api/workflow/index'
 import { useFormatTime } from '@/hooks'
+const emit = defineEmits(['query'])
 const { t } = useI18n()
 const router: Router = useRouter()
 const props = defineProps({
@@ -58,7 +61,25 @@ const operationRecord = (obj: any) => {
   })
 }
 const del = (obj: any) => {
-
+  ElMessageBox.confirm(
+    t('workflow.deleteWorkflowTips'),
+    t('account.tips'),
+    {
+      confirmButtonText: t('common.confirm'),
+      cancelButtonText: t('common.cancel'),
+      type: 'warning',
+    }
+  )
+    .then(() => {
+      deleteWorkflow({ workflowId: obj.workflowId }).then(res => {
+        const { data, code } = res
+        if (code === 10000) {
+          ElMessage.success(t('common.success'))
+          emit('query')
+        }
+      })
+    })
+    .catch(() => { })
 }
 </script>
 <style lang="scss" scoped>

@@ -2,34 +2,20 @@
   <div class="mt-50px step-two-wrap">
     <div class="flex items-center mb-36px text-14px">
       <div class="mr-20px text-color-[#666666]">{{ $t('task.selection') }} ：</div>
-      <div class="flex items-center justify-center text-color-[#333333]">
-        <span>{{ props.noticeText || "ai" }}</span>
-        <el-icon class="rotate-180 mx-5px">
-          <back />
-        </el-icon>
-      </div>
+      <NoticeText :noticeText="props.noticeText" />
     </div>
     <div class="flex items-center text-14px">
       <div class="mr-20px text-color-[#666666] font-medium w-130px">{{ $t('task.selectSponsor') }} ：</div>
       <el-select v-model="sponsorValue" :suffix-icon="CaretBottom" :placeholder="$t('task.selectSponsor')"
         style="flex:0 0 440px" class="h-40px rounded-20px border-1 basis-1/2 border-solid border-color-[#EEEEEE]">
-        <el-option v-for="item in sponsorOptions" :key="item.value" :label="item.label" :value="item.value"></el-option>
+        <el-option v-for="item in sponsorList" :key="item.identityId" :label="item.nodeName" :value="item.identityId">
+        </el-option>
       </el-select>
-      <el-checkbox class="ml-26px mr-10px" v-model="psi" label="psi">{{ }}</el-checkbox>
-      <span>{{ $t('task.PSI') }}</span>
     </div>
-    <TaskParamsTransfer :num="1" :sponsorOptions="sponsorOptions" />
+    <TaskParamsTransfer :key="'input'" @update:psiInputOne="psiInputOne = $event" :num="1" :sponsorList="sponsorList" />
     <div class="h-30px"></div>
-    <TaskParamsTransfer :num="2" :sponsorOptions="sponsorOptions" />
-    <!--    <div
-      class="flex items-center justify-center w-full h-50px rounded-25px border-1px border-solid border-color-[#EEE] text-color-[#2B60E9]"
-    >
-      <el-icon>
-        <plus />
-      </el-icon>
-      <span class="ml-10px mr-5px">{{ $t('common.add') }}</span>
-      {{ $t('common.data') }}
-    </div>-->
+    <TaskParamsTransfer :key="'output'" @update:psiInputTwo="psiInputTwo = $event" :num="2"
+      :sponsorList="sponsorList" />
     <div class="flex items-center pt-20px">
       <el-button round class="h-50px previous" @click="previous">{{ $t('common.previous') }}</el-button>
       <el-button round class="h-50px previous ml-20px">{{ $t('common.saveAndReturn') }}</el-button>
@@ -38,43 +24,35 @@
   </div>
 </template>
 <script lang="ts" setup>
+import NoticeText from './NoticeText.vue';
 import TaskParamsTransfer from '@/components/TaskParamsTransfer.vue';
 import { Back, CaretBottom, Plus } from '@element-plus/icons-vue'
 import NextButton from './NextButton.vue'
+import { getUserOrgList } from '@/api/login'
+import { getWorkflowSettingOfWizardMode, setWorkflowOfWizardMode } from '@/api/workflow'
 const emit = defineEmits(['previous', 'getParams', 'next'])
+const sponsorList = ref<any[]>([])
 const props = defineProps({
   noticeText: {
+    type: Object,
+    default: () => ({})
+  },
+  step: {
+    type: Number,
+    default: 1
+  },
+  workflowInfo: {
     type: Object,
     default: () => ({})
   }
 })
 
-
-const sponsorOptions = ref<{ value: string, label: string, children: any[] }[]>([{
-  value: 'resource',
-  label: 'Resource',
-  children: [
-    {
-      value: 'axure',
-      label: 'Axure Components',
-    },
-    {
-      value: 'sketch',
-      label: 'Sketch Templates',
-    },
-    {
-      value: 'docs',
-      label: 'Design Documentation',
-    },
-  ]
-}])
-
-const psi = ref(false)
+const psiInputOne = ref({})
+const psiInputTwo = ref({})
 const sponsorValue = ref('')
 
 
 const next = () => {
-  console.log(2)
   emit('getParams')
   emit('next')
 }
@@ -84,6 +62,47 @@ const previous = () => {
   emit('previous')
 }
 
+const query = () => {
+  getUserOrgList().then(res => {
+    const { data, code } = res
+    if (code === 10000) {
+      sponsorList.value = data
+    }
+  })
+}
+
+const queryStepInfo = () => {
+  getWorkflowSettingOfWizardMode({
+    workflowId: props.workflowInfo?.workflowId,
+    workflowVersion: props.workflowInfo?.workflowVersion,
+    step: props.step
+  }).then(res => {
+    const { data, code } = res
+    if (code === 10000) {
+
+    }
+  })
+}
+
+const submit = () => {
+  setWorkflowOfWizardMode({
+    workflowDetailsOfWizardModeDtoReq: {
+      psiInput: {},
+      workflowId: props.workflowInfo.workflowId,
+      workflowVersion: props.workflowInfo.workflowVersion
+    }
+  }).then(res => {
+    const { data, code } = res
+    if (code === 10000) {
+
+    }
+  })
+}
+
+onMounted(() => {
+  query()
+  queryStepInfo()
+})
 
 </script>
 <style lang="scss">

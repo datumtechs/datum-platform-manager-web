@@ -20,9 +20,9 @@
         :taskParams="selectionAlgParams" @next="next" @getParams="(params) => { }" />
     </div>
     <transition name="fade-main" mode="out-in">
-      <component v-if="comList.length" :is="componentList[list[activeIndex]?.type]?.components" :taskParams="taskParams"
-        :noticeText="noticeText" @previous="previous" @next="next" @getParams="(params: any) => {
-        }" />
+      <component v-if="comList.length" :is="componentList[list[activeIndex]?.type]?.components"
+        :workflowInfo="{ ...workflowInfo }" :step="activeIndex" :taskParams="taskParams" :noticeText="noticeText"
+        @previous="previous" @next="next" @getParams="(params: any) => { }" />
     </transition>
   </div>
 </template>
@@ -37,7 +37,6 @@ import ComputingEnvironment from './normal/ComputingEnvironment.vue';//计算环
 import ResultReceiver from './normal/ResultReceiver.vue';//结果接收方
 import { useWorkFlow } from '@/stores'
 import { onBeforeRouteLeave } from 'vue-router';
-import { ElMessage } from 'element-plus';
 const { t } = useI18n()
 const store = useWorkFlow()
 const route = useRoute()
@@ -70,7 +69,7 @@ const componentList = markRaw<any[]>(
   //5-选择结果接收方(通用), 
   //6-选择结果接收方(训练&预测)
   (() => {
-    return new Array(6).fill('').map((v, index) => {
+    return new Array(7).fill('').map((v, index) => {
       let obj = {}
       switch (index) {
         case 0:
@@ -132,7 +131,6 @@ const getStepInfo = (data: any) => {
     })
     return v
   })
-  console.log(comList)
 }
 
 const submit = () => {
@@ -140,11 +138,11 @@ const submit = () => {
 }
 
 const activeStep = (index: number, auth?: Boolean) => {
-  const { step } = selectionAlgParams?.value?.calculationProcessStep
-  if (+step < index && !auth) {
-    ElMessage.warning(t('workflow.dataNotPerfect'))
-    return
-  }
+  // const { step } = selectionAlgParams?.value?.calculationProcessStep
+  // if (+step < index && !auth) {
+  //   ElMessage.warning(t('workflow.dataNotPerfect'))
+  //   return
+  // }
   activeIndex.value = index
 }
 
@@ -177,7 +175,6 @@ const initQuery = () => {
       activeIndex.value = data?.calculationProcessStep?.step || 1
     }
   })
-
 }
 
 const initParams = () => {
