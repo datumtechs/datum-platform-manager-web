@@ -51,7 +51,6 @@ const dragend = async (e: any, item: any) => {
         ElMessage.error(t('task.repeatAlgo'))
     } else {
         // 是否超过算法长度 psi单独做只有一个
-        // if (nodeList.value[0]) {
         if (nodeList.value.length < MAX_NODES) {
             const alg: any = { ...item.alg, isPsi: true }
             const params = {
@@ -63,12 +62,9 @@ const dragend = async (e: any, item: any) => {
             }
             useExpertMode().setNodeList(params)
             return
-            // }
         }
-
         ElMessage.error(t('task.exceedMaxNode'))
     }
-
 }
 const isBoxInStage = (event: any) => {
     const box: any = document.getElementById('mainStage')

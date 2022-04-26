@@ -3,37 +3,38 @@
     <div class="columns-box">
       <p class="text-12px text-color-[#999999] leading-17px">{{ t('task.field') }}</p>
       <div class="columns mt-5px">
-        <div v-for="(item, index) in props.columnData" :key="index" class="columns-item"
+        <div v-for="(item, index) in list" :key="index" class="columns-item"
           :class="{ 'columns-item-active': columnIndex === index, 'view-model': viewModel === 'view' }"
           @click="handleColumn(index)">{{ item.columnName }}</div>
       </div>
     </div>
     <div class="arrow">
-      <div class="arrow-icon" @click="handleTransfer(0, ids.length)">
+      <div class="arrow-icon" @click="handleTransfer('ids', ids.length)">
         <img v-if="ids.length" src="@/assets/images/task/left-arrow.png" class="normal-arrow" />
         <img v-else src="@/assets/images/task/right-arrow.png" class="normal-arrow" />
       </div>
-      <div v-if="isLabels" class="arrow-icon" @click="handleTransfer(1, labels.length)">
+      <div v-if="isLabels" class="arrow-icon" @click="handleTransfer('labels', labels.length)">
         <img v-if="labels.length" src="@/assets/images/task/left-arrow.png" class="normal-arrow" />
         <img v-else src="@/assets/images/task/right-arrow.png" class="normal-arrow" />
       </div>
-      <div class="arrow-icon-auto" @click="handleTransfer(2)">
+      <div class="arrow-icon-auto" @click="handleTransfer('features')">
         <img src="@/assets/images/task/right-arrow.png" class="normal-arrow" />
       </div>
-      <div class="arrow-icon-auto" @click="handleTransfer(3, 1)">
+      <div class="arrow-icon-auto" @click="handleTransfer('features', 1)">
         <img src="@/assets/images/task/left-arrow.png" class="normal-arrow" />
       </div>
     </div>
     <div class="result">
       <p class="text-12px text-color-[#999999] leading-17px">{{ t('task.idColumn') }}</p>
       <div class="ids mt-5px w-160px h-40px">
-        <div class="item" :class="{ 'view-model': viewModel === 'view' }">{{ ids.length ?
-            ids[0].columnName : ''
+        <div class="item text-12px p-4px" :class="{ 'view-model': viewModel === 'view' }">{{
+            ids.length ?
+              ids[0].columnName : ''
         }}</div>
       </div>
       <div v-if="isLabels" class="result-label">
         <p class="text-12px text-color-[#999999] leading-17px mt-10px mb-5px"
-          v-if="!algorithms.inputModel">{{ t('expert.labelRequired') }}</p>
+          v-if="!algorithm.inputModel">{{ t('expert.labelRequired') }}</p>
         <p class="text-12px text-color-[#999999] leading-17px mt-10px mb-5px" v-else>{{
             t('expert.labelOptionals')
         }}</p>
@@ -47,7 +48,7 @@
         </p>
         <div class="features"
           :class="{ 'features-auto': !isLabels, 'view-model': viewModel === 'view' }">
-          <div v-for="(item, index) in features" :key="index"
+          <div v-for="(item, index) in features" :key="index" class="text-12px"
             :class="['features-item', featureIndex === index ? 'features-item-active' : '']"
             @click="handleFeature(index)">{{ item.columnName }}</div>
         </div>
@@ -60,16 +61,16 @@
 interface Features { columnData: String }
 const { t } = useI18n()
 
-const ids = reactive([] as any[])
-const list = reactive([] as any[])
-const labels = reactive([] as any[])
-const features = reactive([] as any[])
+const ids = ref([] as any[])
+const list = ref([] as any[])
+const labels = ref([] as any[])
+const features = ref([] as any[])
 let columnIndex = ref(0)
 let featureIndex = ref(0)
 
-// columnData, transferIndex, algorithms, viewModel
-const showTransfer = computed(() => ids.length || labels.length || features.length || list.length)
-const isLabels = true; // computed(() => transferIndex === 0 && !algorithms.inputModel)
+// columnData, transferIndex, algorithm, viewModel
+const showTransfer = computed(() => ids.value.length || labels.value.length || features.value.length || list.value.length)
+const isLabels = computed(() => props.transferIndex === 0 && !props.algorithm.inputModel)
 const emit = defineEmits(['saveToStore'])
 const props: any = defineProps({
   columnData: {
@@ -80,11 +81,9 @@ const props: any = defineProps({
     type: Number,
     default: 0
   },
-  algorithms: {
+  algorithm: {
     type: Object,
-    default: () => {
-      return {}
-    }
+    default: () => { }
   },
   viewModel: {
     type: String,
@@ -92,55 +91,90 @@ const props: any = defineProps({
   }
 })
 
-console.log('数据有了', props.columnData.value);
+watch(() => props.columnData, (newV, oldV) => {
+  setList(newV)
+})
 
+const setList = (arr: Array<any>) => {
+  arr.map((item: any, index: number) => {
+    item.index = index
+  })
+  list.value = JSON.parse(JSON.stringify(arr))
+  initData()
+}
+
+const getList = (): any => {
+  const handleString = (arr: any) => {
+    const columnName = arr.map((item: any) => item.columnIdx)
+    return columnName.join(',')
+  }
+  return {
+    keyColumn: handleString(ids.value),
+    dependentVariable: handleString(labels.value),
+    dataColumnIds: handleString(features.value)
+  }
+}
+
+defineExpose({
+  getList,
+});
+
+const initData = () => {
+  columnIndex.value = 0
+  ids.value = []
+  labels.value = []
+  features.value = []
+  featureIndex.value = 0
+}
 
 const handleColumn = (index: number) => {
   columnIndex.value = index
 }
-const handleFeature = (index: number) => { }
+const handleFeature = (index: number) => {
+  featureIndex.value = index
+}
+
+const types = reactive({
+  ids, labels, features
+})
 
 const handleTransfer = (type: any, methods?: any) => {
-  /*
-     type：number
-     0: 增加 删除 id列
-     1: 增加 删除 因变量
-     2: 增加 自变量
-     3: 删除 自变量
-     methods: ?: number
-     0: push
-     1: delete
-   */
   if (props.viewModel.value === 'view') return
-  const types = [{ 'ids': ids }, { 'labels': labels }, { 'features': features }, { 'features': features }]
-  if (!list[columnIndex.value]) {
+  if (!list.value[columnIndex.value]) {
     columnIndex.value = 0
   }
-  const item = list[columnIndex.value]
-  const labelList = Object.values(types[type])
+  const item = list.value[columnIndex.value]
+  const labelList = types[type]
+  console.log(labelList);
+
+  // 增加逻辑
   if (!methods) {
-    if (!list.length) return
+    if (!list.value.length) return
     labelList.push(item)
-    list.splice(columnIndex.value, 1)
+    list.value.splice(columnIndex.value, 1)
+    console.log('list', list);
+    console.log('labelList', labelList);
   }
+  // 删除逻辑
   if (methods === 1) {
     // 删除id列和因变量
-    if (type !== 3) {
+    if (type !== 'features') {
       const currentItem = labelList[0]
-      list.splice(currentItem.index, 0, currentItem)
+      list.value.splice(currentItem.index, 0, currentItem)
       labelList.splice(0, 1)
     } else {
       // 删除自变量
-      if (!list.length) return
-      if (!list[featureIndex.value]) {
+      if (!labelList.length) return
+      if (!labelList[featureIndex.value]) {
         featureIndex.value = 0
       }
       const currentItem = labelList[featureIndex.value]
-      list.splice(currentItem.index, 0, currentItem)
+      list.value.splice(currentItem.index, 0, currentItem)
       labelList.splice(featureIndex.value, 1)
     }
   }
-  emit('saveToStore', props.transferIndex.value)
+
+  emit('saveToStore', props.transferIndex)
 }
 
 
@@ -152,7 +186,7 @@ const handleTransfer = (type: any, methods?: any) => {
 
   .columns-box {
     .columns {
-      width: 125px;
+      width: 140px;
       height: 295px;
       height: 295px;
       background: #eeeeee;
@@ -163,6 +197,7 @@ const handleTransfer = (type: any, methods?: any) => {
         padding: 4px;
         cursor: pointer;
         font-size: 12px;
+        line-height: 17px;
 
         &.columns-item-active {
           background: #dcdfe6;
@@ -198,18 +233,21 @@ const handleTransfer = (type: any, methods?: any) => {
 
   .result {
     .ids {
-      width: 160px;
+      width: 140px;
       height: 40px;
       background: #eeeeee;
       border-radius: 4px;
+      display: flex;
+      align-items: center;
     }
 
     .result-label {
       .label-item {
-        width: 160px;
+        width: 140px;
         height: 40px;
         background: #eeeeee;
         border-radius: 4px;
+        line-height: 17px;
       }
     }
 
@@ -217,14 +255,27 @@ const handleTransfer = (type: any, methods?: any) => {
 
       .features,
       .features-auto {
-        width: 160px;
-
+        width: 140px;
         background: #eeeeee;
         border-radius: 4px;
       }
 
       .features {
         height: 150px;
+
+        .features-item {
+          padding: 4px;
+          cursor: pointer;
+          line-height: 17px;
+
+          &:hover {
+            background: #dcdfe6;
+          }
+
+          &.features-item-active {
+            background: #dcdfe6;
+          }
+        }
       }
 
       .features-auto {
