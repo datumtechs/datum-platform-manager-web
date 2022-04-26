@@ -59,3 +59,11 @@ export const setWorkflowOfWizardMode = (data: {}): Promise<any> => {
     data
   })
 }
+//启动
+export const startWorkFlow = (data: {}): Promise<any> => {
+  return http({
+    method: 'POST',
+    url: '/flow//workflow/start',
+    data
+  })
+}

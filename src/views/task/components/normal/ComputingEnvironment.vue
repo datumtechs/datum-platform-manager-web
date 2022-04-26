@@ -5,49 +5,51 @@
       <NoticeText :noticeText="props.noticeText" />
     </div>
     <div class="flex environment justify-between">
-      <el-form v-for="item in 2" :key="item" class="w-530px com-border-eee rounded-8px border-b-1px border"
-        label-position="top" :style="{ 'margin-right': item == 1 ? '20px' : '' }" :model="form">
+      <el-form v-for="(item, i) in listLength" :key="item" :rules="rules[i]"
+        class="w-530px com-border-eee rounded-8px border-b-1px border" :ref="(e: any) => formRef[i] = e"
+        label-position="top" ref:style="{ 'margin-right': item == 1 ? '20px' : '' }" :model="form[i]">
         <div class="p-30px border-bottom text-color-[#333333] text-16px font-medium font-600">{{
             item == 1 ?
               $t('task.environmentTraining') : $t('task.environmentPrediction')
         }}</div>
         <div class="p-30px">
           <div class="pb-20px text-color-[#333333] font-medium font-600">{{ $t('task.lowestNeed') }}</div>
-          <el-form-item :label="`${$t('common.cpu')}：`">
-            <el-input v-model="form.cpu" :placeholder="`${$t('task.pleaseEnter')}${$t('common.cpu')}`"
+          <el-form-item :label="`${$t('common.cpu')}：`" prop="cpu">
+            <el-input v-model="form[i].cpu" :placeholder="`${$t('task.pleaseEnter')}${$t('common.cpu')}`"
               class="input-with-select">
               <template #append>
                 <div class="w-70px flex justify-center">{{ $t('common.cores') }}</div>
               </template>
             </el-input>
           </el-form-item>
-          <el-form-item :label="`${$t('common.memory')}：`">
-            <el-input v-model="form.memory" :placeholder="`${$t('task.pleaseEnter')}${$t('common.memory')}`"
+
+          <el-form-item :label="`${$t('common.memory')}：`" prop="memory">
+            <el-input v-model="form[i].memory" :placeholder="`${$t('task.pleaseEnter')}${$t('common.memory')}`"
               class="input-with-select">
               <template #append>
-                <el-select v-model="form.memorySymbol" style="width: 110px">
+                <el-select v-model="form[i].memorySymbol" style="width: 110px">
                   <el-option v-for="item in companyList" :label="`${item}`" :key="item" :value="item"></el-option>
                 </el-select>
               </template>
             </el-input>
           </el-form-item>
-          <el-form-item :label="`${$t('common.bandwidth')}：`">
-            <el-input v-model="form.bandwidth" :placeholder="`${$t('task.pleaseEnter')}${$t('common.bandwidth')}`"
+          <el-form-item :label="`${$t('common.bandwidth')}：`" prop="bandwidth">
+            <el-input v-model="form[i].bandwidth" :placeholder="`${$t('task.pleaseEnter')}${$t('common.bandwidth')}`"
               class="input-with-select">
               <template #append>
-                <el-select v-model="form.bandwidthSymbol" style="width: 110px">
-                  <el-option v-for="item in companyList" :label="`${item}`" :key="item" :value="item"></el-option>
+                <el-select v-model="form[i].bandwidthSymbol" style="width: 110px">
+                  <el-option v-for="item in companyList" :label="`${item}ps`" :key="item" :value="item"></el-option>
                 </el-select>
               </template>
             </el-input>
           </el-form-item>
           <div class="text-color-[#333333] text-16px font-medium font-600 pt-46px pb-20px">{{ $t('task.longestTime') }}
           </div>
-          <el-form-item>
-            <el-input v-model="form.time" :placeholder="`${$t('task.pleaseEnter')}${$t('task.longestTime')}`"
+          <el-form-item prop="time">
+            <el-input v-model="form[i].time" :placeholder="`${$t('task.pleaseEnter')}${$t('task.longestTime')}`"
               class="input-with-select">
               <template #append>
-                <el-select v-model="form.timeSymbol" style="width: 110px">
+                <el-select v-model="form[i].timeSymbol" style="width: 110px">
                   <el-option v-for="item in timeCompanyList" :label="$t(`${item.label}`)" :key="item.value"
                     :value="item.value"></el-option>
                 </el-select>
@@ -66,50 +68,177 @@
 </template>
 <script lang="ts" setup>
 import NoticeText from './NoticeText.vue';
-import { Back } from '@element-plus/icons-vue'
+import { getWorkflowSettingOfWizardMode, setWorkflowOfWizardMode } from '@/api/workflow'
 import NextButton from './NextButton.vue'
-const emit = defineEmits(['previous', 'getParams', 'next'])
+const { t } = useI18n()
+const emit = defineEmits(['previous', 'next'])
 const props = defineProps({
   noticeText: {
     type: Object,
     default: () => ({})
+  },
+  step: {
+    type: Number,
+    default: 1
+  },
+  type: {
+    type: Number,
+    default: 0
+  },
+  workflowInfo: {
+    type: Object,
+    default: () => ({})
+  },
+  // taskParams: {
+  //   type: Object,
+  //   default: () => ({})
+  // }
+})
+// 3-选择计算环境(通用), 
+//4-选择计算环境(训练&预测), 
+const listLength = ref(props.type == 4 ? 2 : 1)
+const formRef = ref<any>([])
+const taskParams = ref<any>({})
+const form = reactive({
+  0: {
+    cpu: '',
+    memory: '',
+    memorySymbol: 'MB',
+    bandwidth: '',
+    bandwidthSymbol: 'MB',
+    time: '',
+    timeSymbol: 'minute'
+  },
+  1: {
+    cpu: '',
+    memory: '',
+    memorySymbol: 'MB',
+    bandwidth: '',
+    bandwidthSymbol: 'MB',
+    time: '',
+    timeSymbol: 'minute'
   }
 })
 
-const form = ref({
-  cpu: '',
-  memory: '',
-  memorySymbol: 'MB',
-  bandwidth: '',
-  bandwidthSymbol: 'MB',
-  time: '',
-  timeSymbol: 'minute'
+const rules = reactive({
+  0: {
+    cpu: [{ required: true, message: `${t('task.pleaseEnter')}${t('task.taskName')}` }],
+    memory: [{ required: true, message: t('task.stepOneSelectComputingTitle') }],
+    bandwidth: [{ required: true, message: t('task.stepOneSelectAlgorithmTitle') }],
+    time: [{ required: true, message: t('task.stepOneSelectProcedureTitle') }]
+  },
+  1: {
+    cpu: [{ required: true, message: `${t('task.pleaseEnter')}${t('task.taskName')}` },],
+    memory: [{ required: true, message: t('task.stepOneSelectComputingTitle') }],
+    bandwidth: [{ required: true, message: t('task.stepOneSelectAlgorithmTitle') }],
+    time: [{ required: true, message: t('task.stepOneSelectProcedureTitle') }]
+  }
 })
 
-const companyList = ref(['KB', 'MB', 'GB'])
-const timeCompanyList = ref([{
-  label: 'common.second',
-  value: 'second'
-},
-{
-  label: 'common.minute',
-  value: 'minute'
-},
-{
-  label: 'common.hours',
-  value: 'hours'
-}])
+// const timeCompanyList = ref([{
+//   label: 'common.second',
+//   value: 'second'
+// },
+// {
+//   label: 'common.minute',
+//   value: 'minute'
+// },
+// {
+//   label: 'common.hours',
+//   value: 'hours'
+// }])
 
-const next = () => {
-  emit('getParams')
-  emit('next')
+// const companyList = ref(['KB', 'MB', 'GB'])
+const companyList = ref(['MB'])
+const timeCompanyList = ref([
+  {
+    label: 'common.minute',
+    value: 'minute'
+  },
+])
+
+const next = async () => {
+  //@ts-ignore
+  const validate: any[] = new Array(listLength.value).fill(false)
+  // const data: any[] = []
+  let resource = {}
+  if (listLength.value <= 1) {
+    resource = taskParams.value?.commonResource.costGpu
+  } else {
+    resource = taskParams.value?.trainingAndPredictionResource.costGpu
+  }
+  await validate.forEach(async (v, i) => {
+    const result = await formRef.value[i].validate()
+    if (result) {
+      validate[i] = {
+        costCpu: +form[i].cpu,
+        costGpu: resource,
+        costBandwidth: +form[i].bandwidth,
+        costMem: +form[i].memory,
+        runTime: +form[i].time,
+      }
+    }
+  })
+
+
+  if (validate.some(v => v == false)) return
+  const params = listLength.value <= 1 ? {
+    commonResource: { ...validate[0] }
+  } : {
+    trainingAndPredictionResource: {
+      training: { ...validate[1] },
+      prediction: { ...validate[0] }
+    }
+  }
+
+
+  setWorkflowOfWizardMode({
+    calculationProcessStep: {
+      step: props.step,
+      type: props.type
+    },
+    ...params,
+    workflowId: taskParams.value.workflowId,
+    workflowVersion: taskParams.value.workflowVersion,
+    algorithmId: taskParams.value.algorithmId,
+    calculationProcessId: taskParams.value.calculationProcessId
+    // }
+  }).then(res => {
+    const { data, code } = res
+    if (code === 10000) {
+      emit('next')
+    }
+  })
 }
 
+const queryStepInfo = () => {
+  getWorkflowSettingOfWizardMode({
+    workflowId: props.workflowInfo?.workflowId,
+    workflowVersion: props.workflowInfo?.workflowVersion,
+    step: props.step
+  }).then(res => {
+    const { data, code } = res
+    if (code === 10000) {
+      taskParams.value = data
+      const list = data?.calculationProcessStep?.type == 3 ?
+        [data.commonResource] : [{ ...data.trainingAndPredictionResource.prediction }, { ...data.trainingAndPredictionResource.training }]
+      list.forEach((v, i) => {
+        form[i].cpu = v.costCpu
+        form[i].memory = v.costMem
+        form[i].bandwidth = v.costBandwidth
+        form[i].time = v.runTime
+      })
+    }
+  })
+}
 
 const previous = () => {
   emit('previous')
 }
 
+onMounted(() => {
+  queryStepInfo()
+})
 
 </script>
 <style lang="scss">

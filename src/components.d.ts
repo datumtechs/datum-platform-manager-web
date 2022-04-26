@@ -34,7 +34,6 @@ declare module 'vue' {
     ElTable: typeof import('element-plus/es')['ElTable']
     ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
-    GlobalNotification: typeof import('./components/GlobalNotification.vue')['default']
     GlobalPending: typeof import('./components/GlobalPending.vue')['default']
     Header: typeof import('./components/layout/Header.vue')['default']
     Login: typeof import('./components/login/index.vue')['default']

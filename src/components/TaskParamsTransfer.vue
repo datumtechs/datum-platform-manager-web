@@ -7,7 +7,7 @@
       }} {{
     locale == 'zh' ? props.num : ''
 }}：</div>
-      <el-cascader v-if="sponsorList.length" @change="cascaderChange"
+      <el-cascader v-if="sponsorList.length" @change="cascaderChange" clearable
         class="h-40px rounded-20px border-1 w-395px border-solid border-color-[#EEEEEE]" :suffix-icon="CaretBottom"
         v-model="form.metaData" :options="sponsorList" :props="cascaderProps" />
     </div>
@@ -18,9 +18,10 @@
         <ul class="fields-main w-full h-330px overflow-auto mt-40px pr-25px" v-if="fieldsList.length">
           <li v-show="item.show"
             class="cursor-pointer border-1px border-solid border-color-[#eeeeee] rounded-26px mb-10px h-40px w-full flex items-center justify-center"
-            v-for="(item, index) in fieldsList" @click="handFields(item)" :key="index">{{
+            v-for="(item, index) in fieldsList" @click="activeItem = item" :key="index">{{
                 item.columnName
             }}</li>
+          <!--@click="handFields(item)"-->
         </ul>
         <el-empty :description="t('common.noData')" v-else />
       </div>
@@ -35,7 +36,7 @@
         </div>
         <div>
           <span class="inline-block w-100px text-color-[#333333] mb-10px">{{ t('task.setTo') }}</span>
-          <div v-for="item in fieldType" :key="item.type" @click="fieldActive(item)"
+          <div v-for="item in fieldType" :key="item.type" @click="handFields(activeItem)" v-show="item.show"
             class="border-1px cursor-pointer border-solid border-color-[#eeeeee] rounded-26px mb-10px h-40px w-full flex items-center justify-center"
             :class="{ 'com-button': fieldTypeActive == item.type }">{{ t(`${item.name}`) }}</div>
         </div>
@@ -55,7 +56,7 @@
             </el-icon>
           </div>
         </div>
-        <div>
+        <div v-if="!sellectionAlgPsi">
           <span class="inline-block w-100px text-color-[#333333] mb-10px">{{
               t('task.label')
           }}</span>
@@ -69,7 +70,7 @@
             </el-icon>
           </div>
         </div>
-        <div>
+        <div v-if="!sellectionAlgPsi">
           <span class="inline-block w-100px text-color-[#333333] mb-10px">{{
               t('task.feature')
           }}</span>
@@ -95,7 +96,9 @@ import { CaretBottom, Remove } from '@element-plus/icons-vue'
 import { getDataListByOrg, queryDataDetails } from '@/api/data'
 import type { CascaderOption } from 'element-plus/lib/components/cascader-panel/src/node';
 const { t, locale } = useI18n()
-const emit = defineEmits(['update:psiInputOne'])
+const emit = defineEmits(['update:params'])
+const fieldTypeActive = ref('idColumn')
+const activeItem = ref<any>({})
 const props = defineProps({
   num: {
     type: Number,
@@ -103,8 +106,36 @@ const props = defineProps({
   },
   sponsorList: {
     default: (): CascaderOption[] => []
+  },
+  sellectionAlgPsi: {
+    type: Boolean,
+    default: false
+  },
+  disabledData: {
+    type: Array,
+    default: () => []
+  },
+  params: {
+    type: Object,
+    default: () => ({})
   }
 })
+
+
+const fieldType = ref<any[]>([{
+  name: "task.idColumn",
+  type: "idColumn",
+  show: true
+}, {
+  name: "task.label",
+  type: "label",
+  show: !props.sellectionAlgPsi
+}, {
+  name: "task.feature",
+  type: "feature",
+  show: !props.sellectionAlgPsi
+}])
+
 
 const form = reactive<any>({
   metaData: [],
@@ -114,14 +145,21 @@ const form = reactive<any>({
 })
 
 watch(form, () => {
-  emit('update:psiInputOne', form)
+  emit('update:params', form)
+})
+
+watch(() => props.params, (e) => {
+  const { metaDataId, identityId } = e
+  form.metaData = [identityId, metaDataId]
+  cascaderChange('init')
 })
 
 const fieldsList = ref<any[]>([])
 const sponsorList = computed(() => props.sponsorList.map(v => {
   return {
     value: v.identityId,
-    label: v.nodeName
+    label: v.nodeName,
+    disabled: props.disabledData[0] == v.identityId
   }
 }))
 
@@ -150,36 +188,41 @@ const cascaderProps = reactive({
 
 
 
-const cascaderChange = () => {
+const cascaderChange = (e: any) => {
+  if (!e) {
+    form.metaData = []
+    fieldsList.value = []
+    clearableCascader()
+    return
+  }
   queryDataDetails({ metaDataId: form.metaData[1] }).then(res => {
     const { data, code } = res
     if (code == 10000) {
+      clearableCascader()
+      const { keyColumn } = props.params
       fieldsList.value = data.columnsList.map((v: any) => {
-        return {
+        const obj = {
           ...v,
           show: true
         }
+        if (e == 'init' && obj.columnIdx == keyColumn) {
+          fieldTypeActive.value = 'idColumn'
+          activeItem.value = obj
+          handFields(activeItem.value)
+        }
+        return obj
       })
     }
   })
 }
 
-
-const fieldTypeActive = ref('idColumn')
-const activeItem = ref({ columnName: '' })
-
-
-
-const fieldType = ref([{
-  name: "task.idColumn",
-  type: "idColumn"
-}, {
-  name: "task.label",
-  type: "label"
-}, {
-  name: "task.feature",
-  type: "feature"
-}])
+const clearableCascader = () => {
+  form.idColumn = {}
+  form.label = {}
+  form.feature = []
+  fieldTypeActive.value = 'idColumn'
+  activeItem.value = fieldsList.value[0]
+}
 
 
 const handFields = (item: any) => {
@@ -203,7 +246,6 @@ const handFields = (item: any) => {
       break;
   }
   item.show = false
-  activeItem.value = item
 }
 
 const fieldActive = (item?: any) => {
