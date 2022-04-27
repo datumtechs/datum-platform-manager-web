@@ -94,6 +94,7 @@ const selectNode = (node: any, index: number) => {
     useExpertMode().setCurrentIndex(index)
     useExpertMode().setCurNodeId(node.algorithmId)
     useExpertMode().setCurData(node)
+    useExpertMode().setShowPanel(true)
 }
 
 const nodeListWithStatus: any = computed(() => {

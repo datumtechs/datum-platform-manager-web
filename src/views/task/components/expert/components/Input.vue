@@ -74,6 +74,10 @@ const viewModel = ref('')
 const algorithm: any = computed(() => useExpertMode().getAlgorithm)
 const orgList: any = computed(() => useExpertMode().getOrgList)
 const showModel: any = computed(() => algorithm.value.inputModel)
+const inputVoList: any = computed(() => useExpertMode().getInputVoList)
+const outputVoList: any = computed(() => useExpertMode().getOutputVoList)
+const workflowNodeSenderIdentityId: any = computed(() => useExpertMode().getWorkflowNodeSender)
+
 let selectLayout: any = ref([{ item: '111', value: '111', }])
 const minLen = 2
 
@@ -108,7 +112,7 @@ const saveToStore = (transferIndex: any) => {
     if (transferIndex === 0) {
         params.dependentVariable = Number(columnLists[transferIndex].dependentVariable)
     }
-    useExpertMode().setVoList({ params, transferIndex })
+    useExpertMode().setInputVoList({ params, transferIndex })
     // this.SET_VO_LIST({ params, transferIndex }) TODO
 }
 
@@ -117,9 +121,6 @@ const initInputPanel = () => {
 }
 
 const changeInputValue = (item: any, index: number) => {
-    console.log('item', item);
-    console.log('index', index);
-
     if (item && item.length === 0) {
         return columnsList.value[index] = []
     }
@@ -153,7 +154,7 @@ const getColumnList = async (metaDataId: string, index: number, params?: any) =>
     // 回显
     if (params) {
         nextTick(() => {
-            // that.$refs[`Columns${index}`][0].handleEcho(params)
+            columnsRef[index].handleEcho(params)
         })
     }
 }
@@ -209,7 +210,7 @@ const inputLazyLoad = async (node: any, resolve: any, index: number) => {
         }
 
     } catch (error) {
-
+        console.log(error);
     }
 }
 
@@ -230,31 +231,83 @@ const modelOptions = reactive([{
     modelId: ''
 }])
 
-const saveOrgs = () => {
-
-}
-
-
 onMounted(async () => {
-    // await saveOrgs() 使用当前用户的组织信息
+    console.log('重新init');
     initInputPanel()
     // 回显
-    // handleInputValue()
+    handleInputValue()
     // handleCascaderKey()
 })
 
+const handleInputValue = async () => {
+    const res: any = []
+    taskSender.value = workflowNodeSenderIdentityId.value
+    if (inputVoList.value && inputVoList.value.length) {
+        console.log('inputVoList', inputVoList.value);
+        selectLayout = inputVoList
+        const orgs = orgList.value.map((item: any) => item.identityId)
+        inputVoList.value.map((item: any, index: number) => {
+            if (orgs.includes(item.identityId)) {
+                res[index] = [
+                    item.identityId,
+                    item.dataTableId
+                ]
+                getColumnList(item.dataTableId, index, {
+                    keyColumn: item.keyColumn,
+                    dependentVariable: item.dependentVariable,
+                    dataColumnIds: item.dataColumnIds
+                })
+            }
+        })
+        // 反选model
+        //     that.selectLayout = workflowNodeInputVoList
+        //     const organizations = that.orgs.map(item => item.identityId)
+        //     workflowNodeInputVoList.map((item, index) => {
+        //         // 需要检测已选组织id，是否存在组织列表里面
+        //         if (organizations.includes(item.identityId)) {
+        //             res[index] = [
+        //                 item.identityId,
+        //                 item.dataTableId
+        //                 // item.dataColumnIds
+        //             ]
+        //             // 回显穿梭框
+        //             that.getColumnList(item.dataTableId, index, {
+        //                 keyColumn: item.keyColumn,
+        //                 dependentVariable: item.dependentVariable,
+        //                 dataColumnIds: item.dataColumnIds
+        //             })
+        //         }
+        //     })
+        // }
+        // if (that.showModel) {
+        //     if (curModel === undefined) {
+        //         that.modelValue = ''
+        //     } else if (curModel && Object.keys(curModel).length > 0) {
+        //         that.modelValue = [curModel.identityId, curModel.modelId]
+        //     } else {
+        //         that.modelValue = 0
+        //     }
+        // } else {
+        //     that.modelValue = 0
+        // }
 
+        inputValue.value = res
+        // that.SET_INPUT_LEN(that.inputValue.length)
+        // that.upCascaderKeys()
+    }
+}
 </script>
 
 <style scoped lang='scss'>
 .input-box {
-    height: calc(100% - 40px);
-    overflow-y: scroll;
+    height: calc(100% - 0px);
+    overflow-y: auto;
 
     :deep(.el-input__inner) {
         height: 40px;
         background: #eeeeee;
         border-radius: 20px;
+        padding-left: 14px;
     }
 }
 </style>

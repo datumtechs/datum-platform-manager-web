@@ -1,8 +1,8 @@
 <template>
   <div class="flex-1 task-wrap com-main">
-    <Banner :bg-name="'newTask'">
+    <!-- <Banner :bg-name="'newTask'">
       <template #briefInfo>{{ t('task.createTaskBriefInfo') }}</template>
-    </Banner>
+    </Banner> -->
     <div class="com-main-data-wrap main-content">
       <ExpertModel />
     </div>

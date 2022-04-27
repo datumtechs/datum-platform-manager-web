@@ -3,7 +3,7 @@
     <div>
       <PrivateSwitch :mode="'expert'" @change="$router.push({ name: 'wizardMode' })" />
     </div>
-    <div class="my-30px h-668px flex border-1 border-solid border-color-[#EEE] operation-box">
+    <div class="my-30px flex border-1 border-solid border-color-[#EEE] operation-box">
       <Algorithm />
       <Flow :status-list="statusList" :workflow-status="workflowStatus" />
       <Panel />
@@ -36,6 +36,7 @@ watch(isInEdit, () => {
 
 onBeforeUnmount(() => {
   useExpertMode().resetWorkflow()
+  useExpertMode().setShowPanel(false)
 })
 
 const workflowStatus = ref(0)
@@ -63,6 +64,6 @@ onMounted(() => {
 </script>
 <style lang="scss" scoped>
 .operation-box {
-  // height: calc(100vh - 406px);
+  height: calc(100vh - 191px);
 }
 </style>

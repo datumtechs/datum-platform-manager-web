@@ -1,40 +1,5 @@
 import { defineStore } from "pinia";
 
-
-interface Algorithm {
-    algorithmCode: {
-        calculateContractCode: String | null,
-        editType: String | null,
-    },
-    algorithmDesc: String | null,
-    algorithmId: String | null,
-    algorithmImageUrl: String | null,
-    algorithmName: String | null,
-    algorithmVariableList: [],
-    author: String | null,
-    costBandwidth: String | null,
-    costCpu: String | null,
-    costGpu: String | null,
-    costMem: Number,
-    inputModel: Boolean,
-    isPsi: Boolean,
-    maxNumbers: Number,
-    minNumbers: Number,
-    runTime: Number,
-    storePattern: Number,
-    supportDefaultPsi: Boolean,
-    supportLanguage: String | null,
-    supportOsSystem: String | null,
-}
-
-interface NodeEle {
-    "algorithmId": Number,
-    "nodeName": String,
-    "nodeAlgorithmVo": Algorithm,
-    "workflowId": String,
-    "workflowVersion": String
-}
-
 export default defineStore('expertMode', {
     state: () => ({
         status: '',
@@ -45,29 +10,29 @@ export default defineStore('expertMode', {
         curNodeId: '',
         curModel: '',
         algorithm: {
-            algorithmCode: {
-                calculateContractCode: '',
-                editType: null,
-            },
-            algorithmDesc: '',
-            algorithmId: null,
-            algorithmImageUrl: null,
-            algorithmName: '',
-            algorithmVariableList: [],
-            author: '',
-            costBandwidth: null,
-            costCpu: 1,
-            costGpu: null,
-            costMem: 32,
-            inputModel: false,
-            isPsi: false,
-            maxNumbers: 3,
-            minNumbers: 2,
-            runTime: 3,
-            storePattern: 1,
-            supportDefaultPsi: false,
-            supportLanguage: '',
-            supportOsSystem: '',
+            // algorithmCode: {
+            //     calculateContractCode: '',
+            //     editType: null,
+            // },
+            // algorithmDesc: '',
+            // algorithmId: null,
+            // algorithmImageUrl: null,
+            // algorithmName: '',
+            // algorithmVariableList: [],
+            // author: '',
+            // costBandwidth: null,
+            // costCpu: 1,
+            // costGpu: null,
+            // costMem: 32,
+            // inputModel: false,
+            // isPsi: false,
+            // maxNumbers: 3,
+            // minNumbers: 2,
+            // runTime: 3,
+            // storePattern: 1,
+            // supportDefaultPsi: false,
+            // supportLanguage: '',
+            // supportOsSystem: '',
 
         },
         // curNodeData: {},
@@ -77,7 +42,8 @@ export default defineStore('expertMode', {
         workflowNodeInputVoList: [],
         // 输出
         workflowNodeOutputVoList: [],
-        disableOrg: []
+        disableOrg: [],
+        showPanel: false
     }),
     getters: {
         getStatus: state => state.status,
@@ -87,7 +53,10 @@ export default defineStore('expertMode', {
         getCurNodeIndex: state => state.curNodeIndex,
         getWorkflowNodeSender: state => state.workflowNodeSenderIdentityId,
         getOrgList: state => state.orgList,
-        getAlgorithm: state => state.algorithm
+        getAlgorithm: state => state.algorithm,
+        getShowPanel: state => state.showPanel,
+        getInputVoList: state => state.workflowNodeInputVoList,
+        getOutputVoList: state => state.workflowNodeOutputVoList
     },
     actions: {
         setStatus(str: string) {
@@ -133,7 +102,7 @@ export default defineStore('expertMode', {
         setOrgList(data: any) {
             this.orgList = data
         },
-        setOutput(data: Array<any>) {
+        setOutputVoList(data: Array<any>) {
             const output: any = []
             this.orgList.map((item: any) => {
                 if (data.length && data.includes(item.identityId)) {
@@ -151,31 +120,10 @@ export default defineStore('expertMode', {
             this.workflowNodeOutputVoList = []
             this.workflowNodeSenderIdentityId = ''
             this.algorithm = {
-                algorithmCode: {
-                    calculateContractCode: '',
-                    editType: null,
-                },
-                algorithmDesc: '',
-                algorithmId: null,
-                algorithmImageUrl: null,
-                algorithmName: '',
-                algorithmVariableList: [],
-                author: '',
-                costBandwidth: null,
-                costCpu: 1,
-                costGpu: null,
-                costMem: 32,
-                inputModel: false,
-                isPsi: false,
-                maxNumbers: 3,
-                minNumbers: 2,
-                runTime: 3,
-                storePattern: 1,
-                supportDefaultPsi: false,
-                supportLanguage: '',
-                supportOsSystem: '',
+
             }
         },
+
         setDisableOrg(data: Array<any>) {
             this.orgList.map((item: any) => {
                 if (data.includes(item.identityId)) {
@@ -185,11 +133,16 @@ export default defineStore('expertMode', {
                 }
             })
         },
-        setVoList(data: any) {
+
+        setInputVoList(data: any) {
             if (!this.nodeList[this.curNodeIndex].workflowNodeInputVoList) {
                 this.nodeList[this.curNodeIndex].workflowNodeInputVoList = []
             }
             this.nodeList[this.curNodeIndex].workflowNodeInputVoList[data.transferIndex] = data.params
-        }
+        },
+
+        setShowPanel(data: boolean) {
+            this.showPanel = data
+        },
     }
 })

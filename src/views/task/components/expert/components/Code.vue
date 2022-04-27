@@ -2,7 +2,8 @@
     <div class="code-box">
         <div v-if="props.codeObj?.algorithmVariableList.length > 0"
             class="code-variable-box py-20px">
-            <p class="text-color-[#333] font-bold px-20px pb-10px">{{ t('expert.algoVariable') }}</p>
+            <p class="text-color-[#333] font-bold px-20px pb-10px">{{ t('expert.algoVariable') }}
+            </p>
             <el-space class="mb-10px px-20px"
                 v-for="(item, index) in props.codeObj.algorithmVariableList" :key="item.varKey">
                 <p class="w-140px">{{ item.varKey }}</p>
@@ -49,8 +50,14 @@ const handleVariable = (text: any, index: number) => {
         font-size: 14px;
         line-height: 20px;
         color: #333;
-        overflow-y: scroll;
-        height: calc(100% - 231px);
+        overflow-y: auto;
+        height: calc(100% - 34px);
+    }
+
+    ::-webkit-scrollbar {
+        width: 0px;
+        height: 10px;
+        background-color: #f5f5f5;
     }
 }
 </style>

@@ -25,7 +25,7 @@
                     <p v-else>0</p>
                 </template>
             </el-table-column>
-            <el-table-column prop="authorizeBalance" :label="t('auth.authQuantity')">
+            <el-table-column prop="authorizeBalance" :label="t('auth.authorizedQuantity')">
                 <template #default="{ row }">
                     <p v-if="row.authorizeBalance">{{
                             useExchangeFrom(row.authorizeBalance,

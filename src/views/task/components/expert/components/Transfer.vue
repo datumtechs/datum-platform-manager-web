@@ -38,9 +38,10 @@
         <p class="text-12px text-color-[#999999] leading-17px mt-10px mb-5px" v-else>{{
             t('expert.labelOptionals')
         }}</p>
-        <div class="label-item" :class="{ 'view-model': viewModel === 'view' }">{{ labels.length ?
-            labels[0].columnName : ''
-        }}</div>
+        <div class="label-item item text-12px p-4px"
+          :class="{ 'view-model': viewModel === 'view' }">{{ labels.length ?
+              labels[0].columnName : ''
+          }}</div>
       </div>
       <div class="feature">
         <p class="text-12px text-color-[#999999] leading-17px mt-10px mb-5px">{{ t('task.feature')
@@ -115,9 +116,7 @@ const getList = (): any => {
   }
 }
 
-defineExpose({
-  getList,
-});
+
 
 const initData = () => {
   columnIndex.value = 0
@@ -125,6 +124,35 @@ const initData = () => {
   labels.value = []
   features.value = []
   featureIndex.value = 0
+}
+const handleEcho = (params: any) => {
+  const { keyColumn, dependentVariable, dataColumnIds } = params
+  nextTick(() => {
+    if (keyColumn) {
+      const item = removeList(keyColumn)
+      ids.value = item
+    }
+    if (isLabels) {
+      if (dependentVariable) {
+        const item = removeList(dependentVariable)
+        labels.value = item
+      }
+    }
+    if (dataColumnIds) {
+      const columnIds = dataColumnIds.split(',')
+      columnIds.map((item: any) => {
+        const columnItem = removeList(Number(item))
+        features.value.push(...columnItem)
+      })
+    }
+  })
+}
+
+const removeList = (id: any) => {
+  // 查询对应的元素
+  const item = list.value.filter(item => item.columnIdx === id)
+  list.value.splice(list.value.findIndex(item => item.columnIdx === id), 1)
+  return item
 }
 
 const handleColumn = (index: number) => {
@@ -177,6 +205,9 @@ const handleTransfer = (type: any, methods?: any) => {
   emit('saveToStore', props.transferIndex)
 }
 
+defineExpose({
+  getList, handleEcho
+});
 
 </script>
 
@@ -243,6 +274,9 @@ const handleTransfer = (type: any, methods?: any) => {
 
     .result-label {
       .label-item {
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
         width: 140px;
         height: 40px;
         background: #eeeeee;
@@ -262,6 +296,7 @@ const handleTransfer = (type: any, methods?: any) => {
 
       .features {
         height: 150px;
+        overflow-y: auto;
 
         .features-item {
           padding: 4px;

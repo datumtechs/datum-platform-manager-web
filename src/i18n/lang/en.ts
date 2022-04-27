@@ -314,6 +314,7 @@ const en = {
     nodeAuth: 'Node authorization',
     holdQuantity: "Hold Quantity",
     authQuantity: "Auth Quantity",
+    authorizedQuantity: 'Authorized quantity',
     auth: "Authorize",
     cancelAuth: "Revoke",
     networkIP: "Network IP",

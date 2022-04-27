@@ -5,9 +5,9 @@
                 :class="{ active: currentTab === tab.value }" @click="currentTab = tab.value"
                 v-for="tab in tabList" :key="tab.id">{{ tab.label }}</div>
         </div>
-        <div v-if="curNodeId" :key="viewKey" class="main-panel">
+        <div v-if="showPanel" :key="viewKey" class="main-panel">
             <Overview v-show="currentTab === 'overview'" :overview-obj="overviewObj" />
-            <Input v-if="currentTab === 'input'" v-bind="$attrs" />
+            <Input v-show="currentTab === 'input'" v-bind="$attrs" />
             <Output v-show="currentTab === 'output'" v-bind="$attrs" />
             <Code v-show="currentTab === 'code'" :codeObj="codeObj" />
             <Environment v-show="currentTab === 'environment'" v-bind="$attrs" :env-obj="envObj" />
@@ -27,6 +27,7 @@ import Environment from './components/Environment.vue'
 import { getUserOrgList } from '@/api/login'
 import { useExpertMode } from '@/stores'
 const { t } = useI18n()
+
 const viewKey = ref(0)
 const overviewObj = reactive({
     algorithmDesc: '用于跨组织的纵向联合分类模型训练',
@@ -61,13 +62,23 @@ const queryOrgList = (): void => {
 }
 
 const curNodeId = computed(() => useExpertMode().getCurNodeId)
+
+const showPanel = computed(() => useExpertMode().getShowPanel)
+
+const curNodeIndex = computed(() => useExpertMode().getCurNodeIndex)
+
 const currentTab = ref('overview')
 
-// watch(curNodeId, (newV, oldV) => {
-//     if (newV) {
-//         getPanelData(newV)
-//     }
-// })
+watch(curNodeId, (newV, oldV) => {
+    if (newV) {
+        currentTab.value = 'overview'
+        getPanelData(newV)
+    }
+})
+
+watch(curNodeIndex, () => {
+    viewKey.value++
+})
 
 const getPanelData = (id: string) => {
     const nodeList = useExpertMode().getNodeList
@@ -118,7 +129,7 @@ const tabList = computed(() => [{
 }])
 
 onMounted(() => {
-    // queryOrgList()
+    queryOrgList()
 })
 
 </script>

@@ -314,6 +314,7 @@ const zh = {
     nodeAuth: '节点授权',
     holdQuantity: "持有数量",
     authQuantity: "授权数量",
+    authorizedQuantity: '已授权数量',
     auth: "授权",
     cancelAuth: "取消授权",
     networkIP: "网络节点IP",

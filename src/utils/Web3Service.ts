@@ -41,9 +41,16 @@ class Web3Service {
 
       // 切换账号
       this.eth.on('accountsChanged', (account: any) => {
+        console.log('accountsChanged');
+        useUsersInfo().clean()
       })
       // 切换网络
-      this.eth.on('chainChanged', async () => {
+      this.eth.on('chainChanged', () => {
+        console.log('chainChanged');
+      })
+      this.eth.on('disconnect', () => {
+        console.log('user disconnect');
+        useUsersInfo().clean()
       })
     }
   }
