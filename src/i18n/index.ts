@@ -30,6 +30,7 @@ export const getLocale = () => {
 const i18n = createI18n<[MessageSchema], 'en' | 'zh'>({
   globalInjection: true,
   fallbackLocale: 'zh',
+  legacy: false,
   locale: getLocale(),
   messages
 })

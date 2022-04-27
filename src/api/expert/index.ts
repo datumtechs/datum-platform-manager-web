@@ -8,7 +8,7 @@ export const createWorkflowOfExpertMode = (data: {}): Promise<any> => {
     })
 }
 
-export const getWorkflowStatusOfExpertMode = (params): Promise<any> => {
+export const getWorkflowStatusOfExpertMode = (params:any): Promise<any> => {
     return http({
         method: 'GET',
         url: '/flow/workflow/expert/getWorkflowStatusOfExpertMode',
