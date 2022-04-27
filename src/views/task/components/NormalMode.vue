@@ -21,13 +21,15 @@
     </div>
     <transition name="fade-main" mode="out-in">
       <component v-if="comList.length" :is="componentList[list[activeIndex]?.type]?.components"
-        :workflowInfo="{ ...workflowInfo }" :step="activeIndex" :taskParams="taskParams" :noticeText="noticeText"
-        @previous="previous" @next="next" @getParams="(params: any) => { }" />
+        :workflowInfo="{ ...workflowInfo }" :step="activeIndex" :type="list[activeIndex]?.type"
+        :taskParams="selectionAlgParams" :orgList="orgList" :noticeText="noticeText" @previous="previous" @next="next"
+        @getParams="(params: any) => { }" />
     </transition>
   </div>
 </template>
 <script lang="ts" setup>
-import { getWorkflowSettingOfWizardMode } from '@/api/workflow'
+import { getUserOrgList } from '@/api/login'
+import { getWorkflowSettingOfWizardMode, startWorkFlow } from '@/api/workflow'
 import PrivateSwitch from './PrivateSwitch.vue'
 import SelectionAlg from './normal/SelectionAlg.vue';
 import PSIInputData from './normal/PSIInputData.vue';//psi训练输入数据
@@ -42,7 +44,7 @@ const store = useWorkFlow()
 const route = useRoute()
 const router = useRouter()
 const activeIndex = ref(0)
-// const componentsType = ref(null)
+const orgList = ref<any[]>([])
 const comList = ref([])
 const noticeText = ref({})
 const workflowInfo = reactive<any>({
@@ -50,14 +52,14 @@ const workflowInfo = reactive<any>({
   workflowVersion: ''
 })
 const selectionAlgParams = ref<any>({})
-const taskParams: any = reactive({
-  selectionAlg: {},
-  selectTrainingInputData: {},
-  selectForecastInputData: {},
-  selectPSIInputData: {},
-  selectComputingEnvironment: {},
-  selectResultReceiver: {},
-})
+// const taskParams: any = reactive({
+//   selectionAlg: {},
+//   selectTrainingInputData: {},
+//   selectForecastInputData: {},
+//   selectPSIInputData: {},
+//   selectComputingEnvironment: {},
+//   selectResultReceiver: {},
+// })
 
 
 const componentList = markRaw<any[]>(
@@ -135,6 +137,17 @@ const getStepInfo = (data: any) => {
 
 const submit = () => {
   console.log('submit')
+  startWorkFlow({
+    "address": "",
+    "sign": "",
+    "workflowId": 0,
+    "workflowVersion": 0
+  }).then(res => {
+    const { data, code } = res
+    if (code == 10000) {
+      router.push({ name: 'workflow' })
+    }
+  })
 }
 
 const activeStep = (index: number, auth?: Boolean) => {
@@ -194,8 +207,19 @@ const initParams = () => {
   initQuery()
 }
 
+const queryOrgList = () => {
+  getUserOrgList().then(res => {
+    const { data, code } = res
+    if (code === 10000) {
+      orgList.value = data
+    }
+  })
+}
+
+
 onMounted(() => {
   initParams()
+  queryOrgList()
 })
 
 

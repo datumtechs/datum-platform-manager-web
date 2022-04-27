@@ -5,21 +5,21 @@
       <NoticeText :noticeText="props.noticeText" />
     </div>
     <div class="flex receivers justify-between">
-      <el-form v-for="item in 2" :key="item" class="w-530px com-border-eee rounded-8px border-b-1px border"
-        :style="{ 'margin-right': item == 1 ? '20px' : '' }" label-position="top" :model="form">
+      <el-form v-for="(item, i) in listLength" :rules="rules[i]" :ref="(e: any) => formRef[i] = e" :model="form[i]"
+        :key="item" class="w-530px com-border-eee rounded-8px border-b-1px border"
+        :style="{ 'margin-right': item == 1 ? '20px' : '' }" label-position="top">
         <div class="p-30px">
           <div class="pb-20px text-color-[#333333] text-16px font-medium font-600">{{
               item == 1 ?
                 $t('task.trainingResultReceivers') : $t('task.predictionResultReceivers')
           }}</div>
-          <el-form-item>
-            <el-radio-group v-model="form.radio">
-              <el-radio :label="1">Option A</el-radio>
-              <br />
-              <el-radio :label="2">Option B</el-radio>
-              <br />
-              <el-radio :label="3">Option C</el-radio>
-            </el-radio-group>
+          <el-form-item prop="checkList">
+            <el-checkbox-group v-model="form[i].checkList">
+              <template v-for="item in orgList" :key="item.identityId">
+                <el-checkbox :label="item.identityId">{{ item.nodeName }}</el-checkbox>
+                <br />
+              </template>
+            </el-checkbox-group>
           </el-form-item>
         </div>
       </el-form>
@@ -35,31 +35,123 @@
 </template>
 <script lang="ts" setup>
 import NoticeText from './NoticeText.vue';
-import { Back } from '@element-plus/icons-vue'
-const emit = defineEmits(['previous', 'getParams', 'next'])
+import { getWorkflowSettingOfWizardMode, setWorkflowOfWizardMode } from '@/api/workflow'
+const emit = defineEmits(['previous', 'next'])
 const props = defineProps({
   noticeText: {
     type: Object,
     default: () => ({})
+  },
+  step: {
+    type: Number,
+    default: 1
+  },
+  type: {
+    type: Number,
+    default: 0
+  },
+  workflowInfo: {
+    type: Object,
+    default: () => ({})
+  },
+  orgList: {
+    type: Array,
+    default: (): any[] => ([])
+  },
+})
+const { t } = useI18n()
+//5-选择结果接收方(通用), 
+//6-选择结果接收方(训练&预测)
+const listLength = ref(props.type == 6 ? 2 : 1)
+const formRef = ref<any>([])
+const taskParams = ref<any>({})
+const form = reactive({
+  0: { checkList: [] },
+  1: { checkList: [] }
+})
+const rules = reactive({
+  0: {
+    checkList: [{ required: true, message: `${t('task.selectResultReceiver')}` }]
+  },
+  1: {
+    checkList: [{ required: true, message: `${t('task.selectResultReceiver')}` }]
   }
 })
 
-const form = ref({
-  radio: ''
-})
+
+const next = async () => {
+  //@ts-ignore
+  const validate: any[] = new Array(listLength.value).fill(false)
+  // const data: any[] = []
+  let resource = 1
+  if (listLength.value <= 1) {
+    resource = taskParams.value?.commonOutput.storePattern
+  } else {
+    resource = taskParams.value?.trainingAndPredictionOutput.prediction.storePattern
+  }
+  await validate.forEach(async (v, i) => {
+    const result = await formRef.value[i].validate()
+    if (result) {
+      validate[i] = {
+        storePattern: resource,
+        identityId: form[i].checkList
+      }
+    }
+  })
 
 
+  if (validate.some(v => v == false)) return
+  const params = listLength.value <= 1 ? {
+    commonOutput: { ...validate[0] }
+  } : {
+    trainingAndPredictionOutput: {
+      prediction: { ...validate[0] },
+      training: { ...validate[1] }
+    }
+  }
 
-const next = () => {
-  emit('getParams')
-  emit('next')
+
+  setWorkflowOfWizardMode({
+    calculationProcessStep: {
+      step: props.step,
+      type: props.type
+    },
+    ...params,
+    workflowId: taskParams.value.workflowId,
+    workflowVersion: taskParams.value.workflowVersion,
+    algorithmId: taskParams.value.algorithmId,
+    calculationProcessId: taskParams.value.calculationProcessId
+    // }
+  }).then(res => {
+    const { data, code } = res
+    if (code === 10000) {
+      // emit('next')
+    }
+  })
 }
 
+const queryStepInfo = () => {
+  getWorkflowSettingOfWizardMode({
+    workflowId: props.workflowInfo?.workflowId,
+    workflowVersion: props.workflowInfo?.workflowVersion,
+    step: props.step
+  }).then(res => {
+    const { data, code } = res
+    if (code === 10000) {
+      // console.log(data)
+      taskParams.value = data
+    }
+  })
+}
 
 const previous = () => {
   emit('previous')
 }
 
+
+onMounted(() => {
+  queryStepInfo()
+})
 
 </script>
 <style lang="scss">
