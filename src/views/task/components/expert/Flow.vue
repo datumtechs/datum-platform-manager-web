@@ -1,7 +1,8 @@
 <template>
     <div class="flex-1 py-20px px-30px">
         <div class="btn-group">
-            <el-button v-for="item in btnList" round>{{ item.label }}</el-button>
+            <el-button v-for="btn in btnList" round @click="handleClick(btn.value)">{{ btn.label }}
+            </el-button>
         </div>
         <div id="mainStage" class="mainStage" :class="{ showDot: showDot }">
             <div v-for="(node, index) in nodeListWithStatus" :key="node.id"
@@ -43,7 +44,12 @@
 </template>
 
 <script setup lang='ts'>
+import { ElMessage } from 'element-plus'
 import { useExpertMode } from '@/stores'
+import { saveWorkflowInExpert } from '@/api/expert'
+import { useRoute } from 'vue-router';
+
+const route = useRoute()
 const dragStatus = ref<boolean>(true)
 const { t } = useI18n()
 
@@ -61,11 +67,12 @@ const props = defineProps({
 
 const curNodeId = computed(() => useExpertMode().getCurNodeId)
 const curNodeIndex = computed(() => useExpertMode().getCurNodeIndex)
-console.log(curNodeIndex.value);
+const workflowId = computed(() => route.params.workflowId)
+const workflowVersion = computed(() => route.params.workflowVersion)
 
 const showDot = computed(() => useExpertMode().getDotted)
 
-const nodeList: any = useExpertMode().getNodeList
+const nodeList: any = computed(() => useExpertMode().getNodeList)
 const btnList = computed(() => [
     {
         id: 1,
@@ -74,10 +81,158 @@ const btnList = computed(() => [
     },
     {
         id: 2,
-        value: 'delete',
+        value: 'view',
         label: t('common.viewEvent')
     }
 ])
+
+const judgeMentParams = () => {
+    console.log(nodeList.value.length);
+    console.log(nodeList.value);
+    console.log(nodeList);
+
+    let flag = true
+    if (!nodeList.value.length) {
+        ElMessage.error('请拖动左侧算法组合工作流并完善输入/输出等信息')
+        flag = false
+    } else {
+        for (let i = 1; i < nodeList.value.length; i++) {
+            console.log(i);
+
+            if (!nodeList.value[i].workflowNodeInputVoList) { //不存在input 数据方未进行选择
+                ElMessage.error('请完善算法任务的数据提供方信息')
+                flag = false
+                return
+            }
+            if (!nodeList.value[i].workflowNodeSenderIdentityId) {
+                ElMessage.error('请选择算法的任务发起方')
+                flag = false
+                return
+            }
+
+            if (nodeList.value[i].workflowNodeInputVoList && nodeList.value[i].workflowNodeInputVoList.length === 0) {
+                ElMessage.error('请完善算法任务的数据提供方信息')
+                flag = false
+                return
+            } else {
+                const input = nodeList.value[i].workflowNodeInputVoList
+                for (let j = 1; j < input.length; j++) {
+                    if (input[j].dataColumnIds && input[j].dataColumnIds.length === 0) {
+                        ElMessage.error('请选择数据提供方的自变量')
+                        flag = false
+                        return
+                    }
+                    if (nodeList.value[i].nodeAlgorithmVo.inputModel && j === 0 && !input[j].dependentVariable) {
+                        ElMessage.error('请选择数据提供方的因变量')
+                        flag = false
+                        return
+                    }
+                    if (!input[j].keyColumn) {
+                        ElMessage.error('请选择数据提供方的ID列')
+                        flag = false
+                        return
+                    }
+                }
+            }
+        }
+    }
+    return flag
+    // else {
+    //     for (let i = 1; i < nodeList.value.length; i++) {
+    //         if (!nodeList.value[i].workflowNodeInputVoList) { //不存在input 数据方未进行选择
+    //             ElMessage.error('请完善算法任务的数据提供方信息')
+    //             flag = false
+    //             break
+    //         }
+    //         if (!nodeList.value[i].workflowNodeSenderIdentityId) {
+    //             ElMessage.error('请选择算法的任务发起方')
+    //             flag = false
+    //             break
+    //         }
+
+    //         if (nodeList.value[i].workflowNodeInputVoList && nodeList.value[i].workflowNodeInputVoList.length === 0) {
+    //             ElMessage.error('请完善算法任务的数据提供方信息')
+    //             flag = false
+    //             break
+    //         } else {
+    //             const input = nodeList.value[i].workflowNodeInputVoList
+    //             for (let j = 1; j < input.length; j++) {
+    //                 if (input[j].dataColumnIds && input[j].dataColumnIds.length === 0) {
+    //                     ElMessage.error('请选择数据提供方的自变量')
+    //                     flag = false
+    //                     break
+    //                 }
+    //                 if (nodeList.value[i].nodeAlgorithmVo.inputModel && j === 0 && !input[j].dependentVariable) {
+    //                     ElMessage.error('请选择数据提供方的因变量')
+    //                     flag = false
+    //                     break
+    //                 }
+    //                 if (!input[j].keyColumn) {
+    //                     ElMessage.error('请选择数据提供方的ID列')
+    //                     flag = false
+    //                     break
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
+}
+
+const handleClick = (value: string) => {
+    if (value === 'save') {
+        saveWorkflow()
+    }
+}
+
+const saveWorkflow = async () => {
+    const params = getSaveParams()
+    const { code } = await saveWorkflowInExpert(params)
+    if (code === 10000) {
+        ElMessage.success('保存工作流成功,跳转工作流记录页面')
+    }
+}
+
+const getSaveParams = () => {
+    if (!workflowId || !workflowVersion) return ElMessage.error('当前状态不正确, 无法保存,请重试')
+    const params: any = {
+        workflowId: workflowId.value,
+        workflowVersion: workflowVersion.value,
+        workflowNodeList: []
+    }
+    nodeList.value.map((node: any, index: number) => {
+        const obj: any = {}
+        obj.algorithmId = node.nodeAlgorithmVo.algorithmId
+        obj.nodeName = node.nodeName
+        obj.nodeStep = ++index
+        obj.nodeInput = {
+            dataInputList: node.workflowNodeInputVoList,
+            isPsi: node.nodeAlgorithmVo.isPsi,
+            inputModel: node.nodeAlgorithmVo.inputModel,
+            identityId: node.workflowNodeSenderIdentityId,
+            model: {
+
+            }
+        }
+        const ids = node.workflowNodeOutputVoList.map((out: any) => out.identityId)
+        obj.nodeOutput = {
+            identityId: [...ids],
+            "storePattern": 1
+        }
+        obj.nodeCode = {
+            variableList: node.nodeAlgorithmVo.algorithmVariableList
+        }
+        obj.resource = {
+            costBandwidth: node.nodeAlgorithmVo.costBandwidth,
+            costCpu: node.nodeAlgorithmVo.costCpu,
+            costGpu: node.nodeAlgorithmVo.costGpu,
+            costMem: node.nodeAlgorithmVo.costMem,
+            runTime: node.nodeAlgorithmVo.runTime,
+        }
+        params.workflowNodeList.push(obj)
+    })
+    return params
+}
+
 
 const handleVoPsi = (flag: boolean, index: number) => {
     console.log(index, flag);
@@ -98,9 +253,9 @@ const selectNode = (node: any, index: number) => {
 }
 
 const nodeListWithStatus: any = computed(() => {
-    if (props.statusList.length === 0) return nodeList
+    if (props.statusList.length === 0) return nodeList.value
     // if(props.runStatus.)
-    return nodeList.map((node: any, index: any) => {
+    return nodeList.value.map((node: any, index: any) => {
         node.status = props.statusList[index] ? props.statusList[index].runStatus : 0
         node.statusMsg = props.statusList[index] ? props.statusList[index].runMsg : ''
         node.taskId = props.statusList[index] ? props.statusList[index].taskId : '0'

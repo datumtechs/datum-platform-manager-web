@@ -54,7 +54,7 @@ const queryOrgList = (): void => {
     getUserOrgList().then((res: any) => {
         const { data, code } = res
         if (code === 10000) {
-            useExpertMode().setOrgList(data)
+            useExpertMode().setUserOrgList(data)
         }
     }).catch((e: any) => {
         console.log(e);
@@ -129,7 +129,7 @@ const tabList = computed(() => [{
 }])
 
 onMounted(() => {
-    queryOrgList()
+    // queryOrgList()
 })
 
 </script>
