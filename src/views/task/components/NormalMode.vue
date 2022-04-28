@@ -1,7 +1,7 @@
 <template>
   <div class="normal-wrap pt-40px pb-40px">
     <div class="flex item-center justify-between px-9px py-5px bg-color-[#F7F8F9] h-80px">
-      <div @click="activeStep(index)" class="w-max-220px flex-col flex pl-31px leading-24px justify-center font-800"
+      <div @click="setActiveStep(index)" class="w-max-220px flex-col flex pl-31px leading-24px justify-center font-800"
         v-for="(item, index) in list" :key="item.setp" :style="{
           flex: list.length <= 1 ? 'flex-230px' : 'flex-1'
         }" :class="{ active: activeIndex == index }">
@@ -17,14 +17,12 @@
     <div v-show="activeIndex == 0" class="mt-38px mb-42px ml-6px">
       <PrivateSwitch :mode="'normal'" v-if="!route.params.workflowId" @change="$router.push({ name: 'expertModel' })" />
       <SelectionAlg @getStep="getStepInfo" @getNoticeText="getNoticeText" @activeStep="activeStep"
-        :taskParams="selectionAlgParams" @next="next" @getParams="(params) => { }" />
+        :taskParams="workfolwParams" @next="next" @getParams="(params) => { }" />
     </div>
-    <transition name="fade-main" mode="out-in">
-      <component v-if="comList.length" :is="componentList[list[activeIndex]?.type]?.components"
-        :workflowInfo="{ ...workflowInfo }" :step="activeIndex" :type="list[activeIndex]?.type"
-        :taskParams="selectionAlgParams" :orgList="orgList" :noticeText="noticeText" @previous="previous" @next="next"
-        @getParams="(params: any) => { }" />
-    </transition>
+    <component v-if="comList.length" :is="componentList[list[activeIndex]?.type]?.components"
+      :workflowInfo="{ ...workflowInfo }" :step="activeIndex" :type="list[activeIndex]?.type" :fieldType="fieldType"
+      :taskParams="workfolwParams" :orgList="orgList" :noticeText="noticeText" @previous="previous" @next="next"
+      @getParams="(params: any) => { }" />
   </div>
 </template>
 <script lang="ts" setup>
@@ -39,27 +37,21 @@ import ComputingEnvironment from './normal/ComputingEnvironment.vue';//计算环
 import ResultReceiver from './normal/ResultReceiver.vue';//结果接收方
 import { useWorkFlow } from '@/stores'
 import { onBeforeRouteLeave } from 'vue-router';
+const loading = ref(true)
 const { t } = useI18n()
 const store = useWorkFlow()
 const route = useRoute()
 const router = useRouter()
 const activeIndex = ref(0)
-const orgList = ref<any[]>([])
+const orgList: any = ref<any>([])
 const comList = ref([])
 const noticeText = ref({})
+const workfolwParams = ref<any>({})
+const processStep = ref(1)
 const workflowInfo = reactive<any>({
   workflowId: '',
   workflowVersion: ''
 })
-const selectionAlgParams = ref<any>({})
-// const taskParams: any = reactive({
-//   selectionAlg: {},
-//   selectTrainingInputData: {},
-//   selectForecastInputData: {},
-//   selectPSIInputData: {},
-//   selectComputingEnvironment: {},
-//   selectResultReceiver: {},
-// })
 
 
 const componentList = markRaw<any[]>(
@@ -116,6 +108,17 @@ const list = ref<any[]>(
   ]
 )
 
+const fieldType = ref<any[]>([{
+  name: "task.idColumn",//id列
+  type: "idColumn",
+}, {
+  name: "task.label",//应变量
+  type: "label",
+}, {
+  name: "task.feature",//自变量
+  type: "feature"
+}])
+
 watch(activeIndex, () => {
   store.setStep(activeIndex.value)
 })
@@ -136,7 +139,6 @@ const getStepInfo = (data: any) => {
 }
 
 const submit = () => {
-  console.log('submit')
   startWorkFlow({
     "address": "",
     "sign": "",
@@ -150,12 +152,7 @@ const submit = () => {
   })
 }
 
-const activeStep = (index: number, auth?: Boolean) => {
-  // const { step } = selectionAlgParams?.value?.calculationProcessStep
-  // if (+step < index && !auth) {
-  //   ElMessage.warning(t('workflow.dataNotPerfect'))
-  //   return
-  // }
+const activeStep = (index: number) => {
   activeIndex.value = index
 }
 
@@ -175,24 +172,33 @@ const previous = () => {
   }
 }
 
-const initQuery = () => {
+const setActiveStep = (index: number) => {
+  query(index)
+}
+
+const query = (index?: number) => {
   if (!workflowInfo.workflowId) return
   getWorkflowSettingOfWizardMode({
     workflowId: workflowInfo.workflowId,
     workflowVersion: workflowInfo.workflowVersion,
-    step: 1
+    step: store.getStep == 0 ? 1 : store.getStep
   }).then(res => {
     const { data, code } = res
     if (code === 10000) {
-      selectionAlgParams.value = { ...data }
-      activeIndex.value = data?.calculationProcessStep?.step || 1
+      if (index && index >= 0 || index == 0) {
+        activeStep(index)
+      } else {
+        activeIndex.value = data?.completedCalculationProcessStep || 1
+      }
+      workfolwParams.value = { ...data }
+      processStep.value = data?.completedCalculationProcessStep || 1
     }
   })
 }
 
-const initParams = () => {
-  const { workflowId, workflowVersion } = route.params,
-    workerFlowInfo = store.getWorkerFlow
+const init = () => {
+  const workflowId = route.params.workflowId || store.getWorkerFlow.workflowId
+  const workflowVersion = route.params.workflowVersion || store.getWorkerFlow.workflowVersion
   if (workflowId) {
     workflowInfo.workflowId = workflowId
     workflowInfo.workflowVersion = workflowVersion
@@ -200,14 +206,11 @@ const initParams = () => {
       workflowId: workflowId,
       workflowVersion: workflowVersion,
     })
-  } else if (workerFlowInfo.workflowId) {
-    workflowInfo.workflowId = workerFlowInfo.workflowId
-    workflowInfo.workflowVersion = workerFlowInfo.workflowVersion
+    query()
   }
-  initQuery()
 }
 
-const queryOrgList = () => {
+const queryOrgList = () => {//查询组织列表
   getUserOrgList().then(res => {
     const { data, code } = res
     if (code === 10000) {
@@ -218,7 +221,7 @@ const queryOrgList = () => {
 
 
 onMounted(() => {
-  initParams()
+  init()
   queryOrgList()
 })
 

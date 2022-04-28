@@ -7,9 +7,9 @@
       }} {{
     locale == 'zh' ? props.num : ''
 }}：</div>
-      <el-cascader v-if="sponsorList.length" @change="cascaderChange" clearable
+      <el-cascader v-if="orgList.length" @change="cascaderChange" clearable
         class="h-40px rounded-20px border-1 w-395px border-solid border-color-[#EEEEEE]" :suffix-icon="CaretBottom"
-        v-model="form.metaData" :options="sponsorList" :props="cascaderProps" />
+        v-model="form.metaData" :options="orgList" :props="cascaderProps" />
     </div>
     <div class="transfer flex h-411px min-w-600px">
       <!--左面-->
@@ -36,9 +36,9 @@
         </div>
         <div>
           <span class="inline-block w-100px text-color-[#333333] mb-10px">{{ t('task.setTo') }}</span>
-          <div v-for="item in fieldType" :key="item.type" @click="handFields(activeItem)" v-show="item.show"
+          <div v-for="v in props.fieldType" :key="v.type" @click="handFields(activeItem)"
             class="border-1px cursor-pointer border-solid border-color-[#eeeeee] rounded-26px mb-10px h-40px w-full flex items-center justify-center"
-            :class="{ 'com-button': fieldTypeActive == item.type }">{{ t(`${item.name}`) }}</div>
+            :class="{ 'com-button': fieldTypeActive == v.type }">{{ t(`${v.name}`) }}</div>
         </div>
       </div>
       <!--右面-->
@@ -104,8 +104,8 @@ const props = defineProps({
     type: Number,
     default: 1
   },
-  sponsorList: {
-    default: (): CascaderOption[] => []
+  orgList: {
+    default: (): CascaderOption[] | any[] => []
   },
   sellectionAlgPsi: {
     type: Boolean,
@@ -118,23 +118,12 @@ const props = defineProps({
   params: {
     type: Object,
     default: () => ({})
+  },
+  fieldType: {
+    type: Array,
+    default: (): any[] => []
   }
 })
-
-
-const fieldType = ref<any[]>([{
-  name: "task.idColumn",
-  type: "idColumn",
-  show: true
-}, {
-  name: "task.label",
-  type: "label",
-  show: !props.sellectionAlgPsi
-}, {
-  name: "task.feature",
-  type: "feature",
-  show: !props.sellectionAlgPsi
-}])
 
 
 const form = reactive<any>({
@@ -150,12 +139,12 @@ watch(form, () => {
 
 watch(() => props.params, (e) => {
   const { metaDataId, identityId } = e
-  form.metaData = [identityId, metaDataId]
+  form.metaData = identityId && metaDataId ? [identityId, metaDataId] : []
   cascaderChange('init')
 })
 
 const fieldsList = ref<any[]>([])
-const sponsorList = computed(() => props.sponsorList.map(v => {
+const orgList = computed(() => props.orgList.map(v => {
   return {
     value: v.identityId,
     label: v.nodeName,
@@ -199,7 +188,7 @@ const cascaderChange = (e: any) => {
     const { data, code } = res
     if (code == 10000) {
       clearableCascader()
-      const { keyColumn } = props.params
+      const { keyColumn } = props.params || {}
       fieldsList.value = data.columnsList.map((v: any) => {
         const obj = {
           ...v,
@@ -208,10 +197,11 @@ const cascaderChange = (e: any) => {
         if (e == 'init' && obj.columnIdx == keyColumn) {
           fieldTypeActive.value = 'idColumn'
           activeItem.value = obj
-          handFields(activeItem.value)
         }
         return obj
       })
+      activeItem.value = fieldsList.value[0]
+      handFields(activeItem.value)
     }
   })
 }
@@ -221,7 +211,6 @@ const clearableCascader = () => {
   form.label = {}
   form.feature = []
   fieldTypeActive.value = 'idColumn'
-  activeItem.value = fieldsList.value[0]
 }
 
 

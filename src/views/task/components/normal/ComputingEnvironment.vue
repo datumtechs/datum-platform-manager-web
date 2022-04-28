@@ -89,10 +89,10 @@ const props = defineProps({
     type: Object,
     default: () => ({})
   },
-  // taskParams: {
-  //   type: Object,
-  //   default: () => ({})
-  // }
+  taskParams: {
+    type: Object,
+    default: () => ({})
+  }
 })
 // 3-选择计算环境(通用), 
 //4-选择计算环境(训练&预测), 
@@ -135,18 +135,7 @@ const rules = reactive({
   }
 })
 
-// const timeCompanyList = ref([{
-//   label: 'common.second',
-//   value: 'second'
-// },
-// {
-//   label: 'common.minute',
-//   value: 'minute'
-// },
-// {
-//   label: 'common.hours',
-//   value: 'hours'
-// }])
+
 
 // const companyList = ref(['KB', 'MB', 'GB'])
 const companyList = ref(['MB'])

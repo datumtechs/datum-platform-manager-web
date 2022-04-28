@@ -164,16 +164,23 @@ const algChange = (type?: any) => {
 }
 
 const setTaskParams = () => {
+  const {
+    workflowName,
+    algorithmId,
+    workflowDesc,
+    calculationProcessId
+  } = props.taskParams
   if (algList.value.length) {
     algList.value.forEach((v: any) => {
-      if (v.childrenList.some((item: any) => item.id == props.taskParams.algorithmId)) {
+      if (v.childrenList.some((item: any) => item.id == algorithmId)) {
         form.calculationType = v.id //选择算法大分类
       }
     })
   }
-  form.workflowName = "create_task_name"
-  form.algorithmId = props.taskParams.algorithmId
-  form.calculationProcessId = props.taskParams.calculationProcessId
+  form.workflowName = workflowName
+  form.algorithmId = algorithmId
+  form.calculationProcessId = calculationProcessId
+  form.workflowDesc = workflowDesc
   algChange('notice')
 }
 
