@@ -15,8 +15,8 @@
           }}</div>
           <el-form-item prop="checkList">
             <el-checkbox-group v-model="form[i].checkList">
-              <template v-for="item in orgList" :key="item.identityId">
-                <el-checkbox :label="item.identityId">{{ item.nodeName }}</el-checkbox>
+              <template v-for="v in orgList" :key="item.identityId">
+                <el-checkbox :label="v.identityId">{{ v.nodeName }}</el-checkbox>
                 <br />
               </template>
             </el-checkbox-group>
@@ -58,13 +58,16 @@ const props = defineProps({
     type: Array,
     default: (): any[] => ([])
   },
+  taskParams: {
+    type: Object,
+    default: () => ({})
+  }
 })
 const { t } = useI18n()
 //5-选择结果接收方(通用), 
 //6-选择结果接收方(训练&预测)
 const listLength = ref(props.type == 6 ? 2 : 1)
 const formRef = ref<any>([])
-const taskParams = ref<any>({})
 const form = reactive({
   0: { checkList: [] },
   1: { checkList: [] }
@@ -85,9 +88,9 @@ const next = async () => {
   // const data: any[] = []
   let resource = 1
   if (listLength.value <= 1) {
-    resource = taskParams.value?.commonOutput.storePattern
+    resource = props.taskParams.value?.commonOutput.storePattern
   } else {
-    resource = taskParams.value?.trainingAndPredictionOutput.prediction.storePattern
+    resource = props.taskParams.value?.trainingAndPredictionOutput.prediction.storePattern
   }
   await validate.forEach(async (v, i) => {
     const result = await formRef.value[i].validate()
@@ -117,31 +120,28 @@ const next = async () => {
       type: props.type
     },
     ...params,
-    workflowId: taskParams.value.workflowId,
-    workflowVersion: taskParams.value.workflowVersion,
-    algorithmId: taskParams.value.algorithmId,
-    calculationProcessId: taskParams.value.calculationProcessId
+    workflowId: props.taskParams.workflowId,
+    workflowVersion: props.taskParams.workflowVersion,
+    algorithmId: props.taskParams.algorithmId,
+    calculationProcessId: props.taskParams.calculationProcessId
     // }
   }).then(res => {
     const { data, code } = res
     if (code === 10000) {
-      // emit('next')
+      emit('next')
     }
   })
 }
 
-const queryStepInfo = () => {
-  getWorkflowSettingOfWizardMode({
-    workflowId: props.workflowInfo?.workflowId,
-    workflowVersion: props.workflowInfo?.workflowVersion,
-    step: props.step
-  }).then(res => {
-    const { data, code } = res
-    if (code === 10000) {
-      // console.log(data)
-      taskParams.value = data
-    }
-  })
+const init = () => {
+  const data = props.taskParams
+  if (data?.calculationProcessStep?.type == 5 || data?.calculationProcessStep?.type == 6) {
+    const list = data?.calculationProcessStep?.type == 5 ?
+      [data.commonOutput] : [{ ...data.trainingAndPredictionOutput.prediction }, { ...data.trainingAndPredictionOutput.training }]
+    list.forEach((v, i) => {
+      form[i].checkList = v.identityId
+    })
+  }
 }
 
 const previous = () => {
@@ -149,8 +149,8 @@ const previous = () => {
 }
 
 
-onMounted(() => {
-  queryStepInfo()
+watch(() => props.taskParams, () => {
+  init()
 })
 
 </script>

@@ -13,11 +13,11 @@
       </el-select>
     </div>
     <TaskParamsTransfer :fieldType="[props.fieldType[0]]" :sellectionAlgPsi="true" :disabledData="psiInputTwo?.metaData"
-      :key="'input'" @update:params="psiInputOne = $event" :params="psiInputParams[0]" :num="1"
+      :key="'input'" @update:params="psiInputOne = $event" :params="psiInputParams.one" :num="1"
       :orgList="props.orgList" />
     <div class="h-30px"></div>
     <TaskParamsTransfer :fieldType="[props.fieldType[0]]" :sellectionAlgPsi="true" :disabledData="psiInputOne?.metaData"
-      :key="'output'" @update:params="psiInputTwo = $event" :params="psiInputParams[1]" :num="2"
+      :key="'output'" @update:params="psiInputTwo = $event" :params="psiInputParams.two" :num="2"
       :orgList="props.orgList" />
     <div class="flex items-center pt-20px">
       <el-button round class="h-50px previous" @click="previous">{{ $t('common.previous') }}</el-button>
@@ -65,7 +65,7 @@ const props = defineProps({
   }
 })
 
-const psiInputParams = ref<any[]>([])
+const psiInputParams = reactive({ one: [], two: [] })
 const psiInputOne = ref<any>({})
 const psiInputTwo = ref<any>({})
 const identityId = ref('')
@@ -125,15 +125,21 @@ const submit = async () => {
   })
 }
 
-onMounted(() => {
-  reverseSelection()
-})
+// onMounted(() => {
+//   reverseSelection()
+// })
 
-const reverseSelection = () => {
+const init = () => {
   const { psiInput } = props.taskParams
   identityId.value = psiInput?.identityId
-  psiInputParams.value = psiInput?.item && [...psiInput?.item] || []
+  psiInputParams.one = psiInput?.item[0] || []
+  psiInputParams.two = psiInput?.item[1] || []
 }
+
+watch(() => props.taskParams, () => {
+  init()
+})
+
 
 
 </script>

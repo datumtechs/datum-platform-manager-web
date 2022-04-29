@@ -1,13 +1,12 @@
 <template>
   <div class="border-1 border-solid border-color-[#EEEEEE] w-full my-20px">
     <div class="w-full flex items-center py-20px px-30px">
-      <div class="text-color-[#666666] w-150px mr-11px font-medium">{{
-          locale == 'zh' ?
+      <div class="text-color-[#666666] w-150px mr-11px font-medium">
+        {{ locale == 'zh' ?
             t('task.selectData') : `${t('task.select')} ${props.num}st ${t('task.selectData')}`
-      }} {{
-    locale == 'zh' ? props.num : ''
-}}：</div>
-      <el-cascader v-if="orgList.length" @change="cascaderChange" clearable
+        }}
+        {{ locale == 'zh' ? props.num : '' }}：</div>
+      <el-cascader @change="cascaderChange" clearable
         class="h-40px rounded-20px border-1 w-395px border-solid border-color-[#EEEEEE]" :suffix-icon="CaretBottom"
         v-model="form.metaData" :options="orgList" :props="cascaderProps" />
     </div>
@@ -18,10 +17,9 @@
         <ul class="fields-main w-full h-330px overflow-auto mt-40px pr-25px" v-if="fieldsList.length">
           <li v-show="item.show"
             class="cursor-pointer border-1px border-solid border-color-[#eeeeee] rounded-26px mb-10px h-40px w-full flex items-center justify-center"
-            v-for="(item, index) in fieldsList" @click="activeItem = item" :key="index">{{
+            v-for="(item, index) in fieldsList" @click="activeIndex = index" :key="index">{{
                 item.columnName
             }}</li>
-          <!--@click="handFields(item)"-->
         </ul>
         <el-empty :description="t('common.noData')" v-else />
       </div>
@@ -31,12 +29,12 @@
           <span class="inline-block w-100px text-color-[#333333]">{{ t('task.selectField') }}
             ：</span>
           <div class="flex flex-1 items-center justify-center text-color-[#999999]">{{
-              activeItem?.columnName || undefined
+              fieldsList[activeIndex]?.columnName || undefined
           }}</div>
         </div>
         <div>
           <span class="inline-block w-100px text-color-[#333333] mb-10px">{{ t('task.setTo') }}</span>
-          <div v-for="v in props.fieldType" :key="v.type" @click="handFields(activeItem)"
+          <div v-for="v in props.fieldType" :key="v.type" @click="handFields(v)"
             class="border-1px cursor-pointer border-solid border-color-[#eeeeee] rounded-26px mb-10px h-40px w-full flex items-center justify-center"
             :class="{ 'com-button': fieldTypeActive == v.type }">{{ t(`${v.name}`) }}</div>
         </div>
@@ -50,27 +48,28 @@
           <div
             class="relative border-1px cursor-pointer border-solid border-color-[#eeeeee] rounded-26px mb-10px h-40px w-full flex items-center justify-center">
             {{ form.idColumn?.columnName }}
-            <el-icon v-if="form.idColumn?.columnName" class="absolute right-10px text-19px text-color-[#565656]"
-              @click="form.idColumn.show = true, form.idColumn = {}, fieldTypeActive = 'idColumn'">
+            <el-icon v-if="form.idColumn?.columnName" @click="removeFormParams('idColumn')"
+              class="absolute right-10px text-19px text-color-[#565656]">
+              <!--@click="remove('idColumn')"-->
               <remove />
             </el-icon>
           </div>
         </div>
-        <div v-if="!sellectionAlgPsi">
+        <div v-if="props.fieldType.some(v => v.type == 'label')">
           <span class="inline-block w-100px text-color-[#333333] mb-10px">{{
               t('task.label')
           }}</span>
           <div
             class="relative border-1px cursor-pointer border-solid border-color-[#eeeeee] rounded-26px mb-10px h-40px w-full flex items-center justify-center">
             {{ form.label?.columnName }}
-            <el-icon v-if="form.label?.columnName"
-              @click="form.label.show = true, form.label = {}, fieldTypeActive = 'idColumn'"
+            <!---->
+            <el-icon v-if="form.label?.columnName" @click="removeFormParams('label')"
               class="absolute right-10px text-19px text-color-[#565656]">
               <remove />
             </el-icon>
           </div>
         </div>
-        <div v-if="!sellectionAlgPsi">
+        <div v-if="props.fieldType.some(v => v.type == 'feature')">
           <span class="inline-block w-100px text-color-[#333333] mb-10px">{{
               t('task.feature')
           }}</span>
@@ -98,7 +97,7 @@ import type { CascaderOption } from 'element-plus/lib/components/cascader-panel/
 const { t, locale } = useI18n()
 const emit = defineEmits(['update:params'])
 const fieldTypeActive = ref('idColumn')
-const activeItem = ref<any>({})
+const activeIndex = ref<any>({})
 const props = defineProps({
   num: {
     type: Number,
@@ -138,9 +137,14 @@ watch(form, () => {
 })
 
 watch(() => props.params, (e) => {
-  const { metaDataId, identityId } = e
-  form.metaData = identityId && metaDataId ? [identityId, metaDataId] : []
+  const metaDataId = e.metaDataId,
+    identityId = e.identityId
+  if (!identityId || !metaDataId) return
+  form.metaData = [identityId, metaDataId]
   cascaderChange('init')
+})
+const nextActiveIndex = computed(() => {
+  return fieldsList.value.find(v => v.show == true) || {}
 })
 
 const fieldsList = ref<any[]>([])
@@ -152,10 +156,14 @@ const orgList = computed(() => props.orgList.map(v => {
   }
 }))
 
-const cascaderProps = reactive({
+const cascaderProps = ref({
   lazy: true,
   lazyLoad(node: any, resolve: any) {
     const { value, level } = node
+    if (!value) {
+      resolve([])
+      return
+    }
     getDataListByOrg({
       current: 1,
       size: 20,
@@ -184,26 +192,47 @@ const cascaderChange = (e: any) => {
     clearableCascader()
     return
   }
+
   queryDataDetails({ metaDataId: form.metaData[1] }).then(res => {
     const { data, code } = res
     if (code == 10000) {
       clearableCascader()
-      const { keyColumn } = props.params || {}
-      fieldsList.value = data.columnsList.map((v: any) => {
-        const obj = {
+      fieldsList.value = data.columnsList.map((v: any, index: number) => {
+        return {
           ...v,
-          show: true
+          show: true,
+          index
         }
-        if (e == 'init' && obj.columnIdx == keyColumn) {
-          fieldTypeActive.value = 'idColumn'
-          activeItem.value = obj
-        }
-        return obj
       })
-      activeItem.value = fieldsList.value[0]
-      handFields(activeItem.value)
+      if (e !== 'init') activeIndex.value = 0
+      if (e == 'init') initParams()
     }
   })
+}
+
+const initParams = () => {
+  const { keyColumn, dependentVariable, dataColumnIds } = props.params || {}
+  form.feature = []
+  fieldsList.value.forEach(item => {
+    if (item.columnIdx == keyColumn) {
+      item.show = false
+      form.idColumn = item
+    }
+    if (item.columnIdx == dependentVariable) {
+      item.show = false
+      form.label = item
+    }
+    if (dataColumnIds) {
+      const list: any = dataColumnIds.split(',')
+      if (list.includes(String(item.columnIdx))) {
+        item.show = false
+        form.feature.push(item)
+      }
+    }
+  })
+  //@ts-ignore
+  fieldTypeActive.value = props.fieldType[props.fieldType.length - 1].type
+  activeIndex.value = nextActiveIndex.value.index || null
 }
 
 const clearableCascader = () => {
@@ -214,51 +243,53 @@ const clearableCascader = () => {
 }
 
 
-const handFields = (item: any) => {
-
-  switch (fieldTypeActive.value) {
-    case 'idColumn':
-      if (!form.label?.columnName) {
-        fieldTypeActive.value = 'label'
-      } else {
+const handFields = (v: any) => {
+  if (activeIndex.value || activeIndex.value == 0) {
+    switch (v.type) {
+      case 'idColumn':
+        if (!form.label?.columnName) {
+          fieldTypeActive.value = 'label'
+        } else {
+          fieldTypeActive.value = 'feature'
+        }
+        if (form.idColumn.columnName) return
+        form.idColumn = fieldsList.value[activeIndex.value]; break;
+      case 'label':
+        if (form.label?.columnName) {
+          fieldTypeActive.value = 'feature'
+          return
+        }
         fieldTypeActive.value = 'feature'
-      }
-      form.idColumn = item; break;
-    case 'label':
-      fieldTypeActive.value = 'feature'
-      form.label = item; break;
-    case 'feature':
-      //@ts-ignore
-      form.feature?.push(item); break;
-    default:
-      console.log("错误")
-      break;
-  }
-  item.show = false
-}
-
-const fieldActive = (item?: any) => {
-  if (item.type == 'idColumn' && !form.idColumn?.columnName
-    || item.type == 'label' && !form.label?.columnName
-    || item.type == 'feature'
-  ) {
-    fieldTypeActive.value = item.type
-  } else {
-    ElMessage.warning(t('task.reselectLater'))
+        form.label = fieldsList.value[activeIndex.value]; break;
+      case 'feature':
+        //@ts-ignore
+        form.feature?.push(fieldsList.value[activeIndex.value]); break;
+      default:
+        console.log("错误")
+        break;
+    }
+    fieldsList.value[activeIndex.value].show = false
+    activeIndex.value = nextActiveIndex.value.index || null
   }
 }
 
 const handfeatureList = (item: any, index: number) => {
-  console.log(item, index)
   form.feature.splice(index, 1)
-  fieldsList.value.forEach(v => {
+  fieldsList.value.forEach((v, i) => {
     if (v.columnIdx == item.columnIdx) {
       v.show = true
+      activeIndex.value = i
     }
   })
 }
 
-
+const removeFormParams = (name: string) => {
+  console.log(name, form[name])
+  activeIndex.value = form[name]?.index
+  fieldsList.value[activeIndex.value].show = true
+  form[name] = {}
+  fieldTypeActive.value = name
+}
 
 
 </script>
