@@ -65,14 +65,14 @@
 import type { Ref } from 'vue';
 import { useExpertMode } from '@/stores'
 import Transfer from './Transfer.vue'
-import { queryUserDataList, queryDataDetails } from '@/api/data'
+import { queryUserDataList, queryDataDetails, getUserModelList } from '@/api/data'
 
 const { t } = useI18n()
 const modelKey = ref('')
 const taskSender = ref('')
 const viewModel = ref('')
 const algorithm: any = computed(() => useExpertMode().getAlgorithm)
-const orgList: any = computed(() => useExpertMode().getOrgList)
+const orgList: any = computed(() => useExpertMode().getUserOrgList)
 const showModel: any = computed(() => algorithm.value.inputModel)
 const inputVoList: any = computed(() => useExpertMode().getInputVoList)
 const outputVoList: any = computed(() => useExpertMode().getOutputVoList)
@@ -105,7 +105,7 @@ const saveToStore = (transferIndex: any) => {
     const params = {
         keyColumn: Number(columnLists[transferIndex].keyColumn),
         dataColumnIds: columnLists[transferIndex].dataColumnIds,
-        dataTableId: inputValue.value[transferIndex][1],
+        metaDataId: inputValue.value[transferIndex][1],
         identityId: inputValue.value[transferIndex][0],
         dependentVariable: 0
     }
@@ -113,7 +113,6 @@ const saveToStore = (transferIndex: any) => {
         params.dependentVariable = Number(columnLists[transferIndex].dependentVariable)
     }
     useExpertMode().setInputVoList({ params, transferIndex })
-    // this.SET_VO_LIST({ params, transferIndex }) TODO
 }
 
 const initInputPanel = () => {
@@ -124,38 +123,23 @@ const changeInputValue = (item: any, index: number) => {
     if (item && item.length === 0) {
         return columnsList.value[index] = []
     }
-
     const ids = getIdentity(inputValue.value)
     useExpertMode().setDisableOrg(ids)
-
-    // 更新key，渲染el-cascader组件，使用options最新的值
     const upList: any = []
-    // cascaderKey.map((item, i) => {
-    //     if (index !== i) {
-    //         upList.push(i)
-    //     }
-    // })
-    // upList.map(i => {
-    //     this.cascaderKey[i] = this.cascaderKey[i] + 1
-    // })
-    // // 获取列的数据
     if (item && item.length === 2) {
         getColumnList(item[item.length - 1], index)
+
     }
 }
 const getColumnList = async (metaDataId: string, index: number, params?: any) => {
     const { code, data } = await queryDataDetails({ metaDataId })
     if (code === 10000) {
         columnsList.value[index] = data.columnsList
-    }
-    // this.columnsList.splice(index, 1, data)
-    // that.columnsList[index] = data
-    // this.$forceUpdate()
-    // 回显
-    if (params) {
-        nextTick(() => {
-            columnsRef[index].handleEcho(params)
-        })
+        if (params) {
+            nextTick(() => {
+                columnsRef[index].handleEcho(params)
+            })
+        }
     }
 }
 
@@ -217,11 +201,42 @@ const inputLazyLoad = async (node: any, resolve: any, index: number) => {
 const handleSenderChange = (value: any) => {
     useExpertMode().setSender(value)
 }
+
 const modelLazyLoad = async (node: any, resolve: any) => {
-
+    const { level } = node
+    let nodes
+    try {
+        if (level === 0) {
+            setTimeout(() => {
+                nodes = orgList.value.map((org: any) => ({
+                    code: org.identityId,
+                    name: org.nodeName,
+                    leaf: level >= 2
+                }))
+                resolve(nodes)
+            }, 200)
+        } else if (level === 1) {
+            const params = { algorithmId: algorithm.value.algorithmId, identityId: node.data.code }
+            const { data } = await getUserModelList(params)
+            const nextNodes = data.map((item: any) => ({
+                code: item.modelId,
+                name: item.fileName,
+                leaf: level >= 1 //  >=2： 展示3级 >= 1： 展示2级
+            }))
+            resolve(nextNodes)
+        }
+        resolve(nodes)
+    } catch (error) {
+        console.log(error)
+    }
 }
-const changeModelValue = (e: any) => { }
 
+const changeModelValue = (e: any) => {
+    // modelKey++
+    // if (Array.isArray(e)) {
+    //     this.SET_CUR_MODEL(e[1])
+    // }
+}
 
 const handleModelChange = () => { }
 const curNodeIndex = ref(1)
@@ -233,6 +248,7 @@ const modelOptions = reactive([{
 
 onMounted(async () => {
     console.log('重新init');
+    await useExpertMode().queryUserOrgList()
     initInputPanel()
     // 回显
     handleInputValue()
@@ -243,16 +259,15 @@ const handleInputValue = async () => {
     const res: any = []
     taskSender.value = workflowNodeSenderIdentityId.value
     if (inputVoList.value && inputVoList.value.length) {
-        console.log('inputVoList', inputVoList.value);
         selectLayout = inputVoList
         const orgs = orgList.value.map((item: any) => item.identityId)
         inputVoList.value.map((item: any, index: number) => {
             if (orgs.includes(item.identityId)) {
                 res[index] = [
                     item.identityId,
-                    item.dataTableId
+                    item.metaDataId
                 ]
-                getColumnList(item.dataTableId, index, {
+                getColumnList(item.metaDataId, index, {
                     keyColumn: item.keyColumn,
                     dependentVariable: item.dependentVariable,
                     dataColumnIds: item.dataColumnIds
@@ -293,8 +308,19 @@ const handleInputValue = async () => {
 
         inputValue.value = res
         // that.SET_INPUT_LEN(that.inputValue.length)
-        // that.upCascaderKeys()
+        upInputKeys()
     }
+}
+const handleCascaderKey = () => {
+    cascaderKey.value = []
+    selectLayout.map((item: any, index: any) => {
+        cascaderKey.value[index] = String(index)
+    })
+}
+
+const upInputKeys = () => {
+    changeInputValue(true, -1)
+    changeModelValue(true)
 }
 </script>
 

@@ -4,7 +4,6 @@
         <p class="mt-30px">{{ t('expert.saveNotes') }}</p>
         <div v-if="workflowNodeSenderIdentityId">
             <p class="mt-30px text-color-[#333] font-bold">{{ t('role.resultConsumer') }}</p>
-            {{ checkList }}
             <el-checkbox-group v-model="checkList" :disabled="viewModel === 'view'"
                 class="mt-10px flex flex-col" @change="handleCheckboxChange">
                 <el-checkbox v-for="(item, index) in orgList" :key="index" :label="item.identityId"
@@ -28,7 +27,7 @@ const checkList: any = ref([])
 const workflowNodeSenderIdentityId = computed(() => useExpertMode().getWorkflowNodeSender)
 const workflowNodeOutputVoList = computed(() => useExpertMode().workflowNodeOutputVoList)
 
-const orgList: any = computed(() => useExpertMode().getOrgList)
+const orgList: any = computed(() => useExpertMode().getUserOrgList)
 
 watch(() => workflowNodeSenderIdentityId.value, (newV, oldV) => {
     console.log('触发了watch,oldV:', oldV);
@@ -60,7 +59,9 @@ const checkValue = (list: any) => {
     })
     useExpertMode().setOutputVoList(checkList.value)
 }
-const handleCheckboxChange = () => { }
+const handleCheckboxChange = () => {
+    useExpertMode().setOutputVoList(checkList.value)
+}
 
 onMounted(() => {
     console.log('重新渲染了output');

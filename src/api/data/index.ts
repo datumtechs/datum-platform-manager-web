@@ -55,3 +55,11 @@ export const getUserMetisLatInfo = (params: any): Promise<any> => {
   })
 }
 
+export const getUserModelList = (params: any): Promise<any> => {
+  return http({
+    method: 'GET',
+    url: '/flow/data/getUserModelList',
+    params
+  })
+}
+

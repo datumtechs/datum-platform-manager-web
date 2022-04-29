@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import { getUserOrgList } from '@/api/login'
 
 export default defineStore('expertMode', {
     state: () => ({
@@ -9,32 +10,7 @@ export default defineStore('expertMode', {
         fakeNodeList: <any>[],
         curNodeId: '',
         curModel: '',
-        algorithm: {
-            // algorithmCode: {
-            //     calculateContractCode: '',
-            //     editType: null,
-            // },
-            // algorithmDesc: '',
-            // algorithmId: null,
-            // algorithmImageUrl: null,
-            // algorithmName: '',
-            // algorithmVariableList: [],
-            // author: '',
-            // costBandwidth: null,
-            // costCpu: 1,
-            // costGpu: null,
-            // costMem: 32,
-            // inputModel: false,
-            // isPsi: false,
-            // maxNumbers: 3,
-            // minNumbers: 2,
-            // runTime: 3,
-            // storePattern: 1,
-            // supportDefaultPsi: false,
-            // supportLanguage: '',
-            // supportOsSystem: '',
-
-        },
+        algorithm: {},
         // curNodeData: {},
         workflowNodeSenderIdentityId: '',
         orgList: <any>[],
@@ -52,7 +28,7 @@ export default defineStore('expertMode', {
         getCurNodeId: state => state.curNodeId,
         getCurNodeIndex: state => state.curNodeIndex,
         getWorkflowNodeSender: state => state.workflowNodeSenderIdentityId,
-        getOrgList: state => state.orgList,
+        getUserOrgList: state => state.orgList,
         getAlgorithm: state => state.algorithm,
         getShowPanel: state => state.showPanel,
         getInputVoList: state => state.workflowNodeInputVoList,
@@ -99,7 +75,7 @@ export default defineStore('expertMode', {
             this.workflowNodeSenderIdentityId = data
             this.nodeList[this.curNodeIndex].workflowNodeSenderIdentityId = data
         },
-        setOrgList(data: any) {
+        setUserOrgList(data: any) {
             this.orgList = data
         },
         setOutputVoList(data: Array<any>) {
@@ -144,5 +120,12 @@ export default defineStore('expertMode', {
         setShowPanel(data: boolean) {
             this.showPanel = data
         },
+        
+        async queryUserOrgList() {
+            const { code, data } = await getUserOrgList()
+            if (code === 10000) {
+                this.setUserOrgList(data)
+            }
+        }
     }
 })

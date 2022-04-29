@@ -24,7 +24,7 @@
     <div v-else class="h-157px flex items-center justify-center flex-col">
       <div @click="login" :class="{ 'cursor-not-allowed': !checked, 'cursor-pointer': checked }"
         class="flex w-264px h-70px flex items-center justify-center rounded-4px bg-color-[#F7F8F9] border-1 border-solid border-[#EEEEEE]">
-        <img :src="metamask" class="w-43px h-43px mr-28px" />
+        <img :src="metamaskImg" class="w-43px h-43px mr-28px" />
         <span class="font-bold text-[20px] text-color-[#333333]">MetaMask</span>
       </div>
       <div
@@ -49,17 +49,15 @@
 
 <script lang="ts" setup>
 import { Pointer, Cloudy } from '@element-plus/icons-vue'
-import metamask from '@/assets/Images/header/metamask-fox.svg'
+import metamaskImg from '@/assets/Images/header/metamask-fox.svg'
 import { useWallet, useUsersInfo } from '@/stores'
 import { Login, LoginNonceId } from '@/api/login'
-import type { ElDialog } from 'element-plus';
 
 const emit = defineEmits(['loginShowChange'])
 const { t, locale } = useI18n()
 const checked = ref<any>(false)
-const isLogin = ref(false)
+const isLoginIng = ref(false)
 const props = defineProps({ loginShow: { type: Boolean, default: false } })
-const dialog:any = ref<InstanceType<typeof ElDialog> | null>(null)
 const web3: any = inject('web3')
 const walletStore = useWallet()
 const userInfoStore = useUsersInfo()
@@ -67,7 +65,7 @@ const isWallet = walletStore.getIsWallet
 
 const closeDialog = () => {
   checked.value = false
-  dialog.value?.close()
+  emit('loginShowChange')
 }
 
 const linkToMetamask = () => {
@@ -82,11 +80,11 @@ const getLogin = async (params: any) => {
     if (code === 10000) {
       userInfoStore.setToken(data.token)
       userInfoStore.setUsers(data.userName)
-      closeDialog()
     }
-    isLogin.value = false
+    isLoginIng.value = false
+    closeDialog()
   } catch (error) {
-    isLogin.value = false
+    isLoginIng.value = false
   }
 }
 
@@ -110,16 +108,16 @@ const getLoginNonce = async () => {
 }
 
 const login = async () => {
-  if (!checked.value || isLogin.value) return
+  if (!checked.value || isLoginIng.value) return
   try {
-    // isLogin.value = true
+    isLoginIng.value = true
     await web3.connectWallet()
     await getLoginNonce()
     const res = await web3.signForWallet('login')
     res && getLogin(web3.loginParams())
   } catch (error) {
+    isLoginIng.value = false
     console.log(error)
-    isLogin.value = false
   }
 }
 

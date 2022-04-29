@@ -28,8 +28,8 @@ const workflowId = computed(() => route.params.workflowId)
 const workflowVersion = computed(() => route.params.workflowVersion)
 const isInEdit = computed(() => !!workflowId.value && !!workflowVersion.value)
 
-watch(isInEdit, () => {
-  if (isInEdit) {
+watch(() => isInEdit.value, (newV, oldV) => {
+  if (newV) {
     queryStatus()
   }
 })
