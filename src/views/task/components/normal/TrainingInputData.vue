@@ -131,6 +131,7 @@ const submit = async () => {
 
 const init = () => {
   const { trainingInput } = props.taskParams
+  psi.value = trainingInput.isPsi || undefined
   identityId.value = trainingInput?.identityId
   psiInputParams.one = trainingInput?.item[0] || []
   psiInputParams.two = trainingInput?.item[1] || []

@@ -67,3 +67,12 @@ export const startWorkFlow = (data: {}): Promise<any> => {
     data
   })
 }
+
+//查询工作流版本列表
+export const getWorkflowVersionList = (params: {}): Promise<any> => {
+  return http({
+    method: 'GET',
+    url: '/flow//workflow/getWorkflowVersionList',
+    params
+  })
+}

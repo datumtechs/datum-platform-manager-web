@@ -227,7 +227,11 @@ const zh = {
     // workTipsBriefInfoTwoParagraph: "个隐私计算工作流",
     // recordWorkflow: "条 该工作流的运行记录",
     operationRecord: "运行记录",
-    dataNotPerfect: "当前资料不完善"
+    dataNotPerfect: "当前资料不完善",
+    workflowVersionName: "工作流版本名称",
+    state: "状态",
+    timeUse: "用时",
+    viewDetails: "查看详情"
   },
   credentials: {
     circulation: "总发布量",
