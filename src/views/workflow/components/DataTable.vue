@@ -52,11 +52,8 @@ const Edit = (obj: any) => {
 const operationRecord = (obj: any) => {
   router.push({
     name: 'workflowDetails', params: {
-      workflowId: obj.workflowId,
-      workflowVersion: obj.workflowVersion,
-      createMode: obj.createMode,
-      algorithmId: obj.algorithmId,
-      calculationProcessId: obj.calculationProcessId
+      id: obj.workflowId,
+      workflowName: obj.workflowName,
     }
   })
 }

@@ -130,6 +130,8 @@ const submit = async () => {
 
 const init = () => {
   const { predictionInput } = props.taskParams
+  psi.value = predictionInput.isPsi || undefined
+  // de
   identityId.value = predictionInput?.identityId
   psiInputParams.one = predictionInput?.item[0] || []
   psiInputParams.two = predictionInput?.item[1] || []
