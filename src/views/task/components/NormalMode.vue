@@ -1,5 +1,5 @@
 <template>
-  <div class="normal-wrap pt-40px pb-40px">
+  <div class="normal-wrap pt-40px pb-40px" v-loading="loading">
     <div class="flex item-center justify-between px-9px py-5px bg-color-[#F7F8F9] h-80px">
       <div @click="setActiveStep(index)" class="w-max-220px flex-col flex pl-31px leading-24px justify-center font-800"
         v-for="(item, index) in list" :key="item.setp" :style="{
@@ -15,19 +15,19 @@
       </div>
     </div>
     <div v-show="activeIndex == 0" class="mt-38px mb-42px ml-6px">
-      <PrivateSwitch :mode="'normal'" v-if="!route.params.workflowId" @change="$router.push({ name: 'expertModel' })" />
-      <SelectionAlg @getStep="getStepInfo" @getNoticeText="getNoticeText" @activeStep="activeStep"
-        :taskParams="workfolwParams" @next="next" @getParams="(params) => { }" />
+      <PrivateSwitch :mode="'normal'" v-if="!workfolwParams.workflowId"
+        @change="$router.push({ name: 'expertModel' })" />
+      <SelectionAlg @getNoticeText="getNoticeText" :taskParams="workfolwParams" @init="init" :processList="processList"
+        @getParams="slectionAlgParams" />
     </div>
-    <component v-if="comList.length" :is="componentList[list[activeIndex]?.type]?.components"
-      :workflowInfo="{ ...workflowInfo }" :step="activeIndex" :type="list[activeIndex]?.type" :fieldType="fieldType"
-      :taskParams="workfolwParams" :orgList="orgList" :noticeText="noticeText" @previous="previous" @next="next"
-      @getParams="(params: any) => { }" />
+    <component :is="componentList[list[activeIndex]?.type]?.components" :workflowInfo="{ ...workflowInfo }"
+      :step="activeIndex" :type="list[activeIndex]?.type" :fieldType="fieldType" :taskParams="workfolwParams"
+      :orgList="orgList" :noticeText="noticeText" @previous="previous" @next="next" @getParams="(params: any) => { }" />
   </div>
 </template>
 <script lang="ts" setup>
 import { getUserOrgList } from '@/api/login'
-import { getWorkflowSettingOfWizardMode, startWorkFlow } from '@/api/workflow'
+import { getWorkflowSettingOfWizardMode, startWorkFlow, getProcessList } from '@/api/workflow'
 import PrivateSwitch from './PrivateSwitch.vue'
 import SelectionAlg from './normal/SelectionAlg.vue';
 import PSIInputData from './normal/PSIInputData.vue';//psi训练输入数据
@@ -37,7 +37,12 @@ import ComputingEnvironment from './normal/ComputingEnvironment.vue';//计算环
 import ResultReceiver from './normal/ResultReceiver.vue';//结果接收方
 import { useWorkFlow } from '@/stores'
 import { onBeforeRouteLeave } from 'vue-router';
-const loading = ref(true)
+import { LoginNonceId } from '@/api/login'
+import { useWallet, useUsersInfo } from '@/stores'
+const userInfoStore = useUsersInfo()
+const walletStore = useWallet()
+const web3: any = inject('web3')
+const loading = ref(false)
 const { t } = useI18n()
 const store = useWorkFlow()
 const route = useRoute()
@@ -47,7 +52,8 @@ const orgList: any = ref<any>([])
 const comList = ref([])
 const noticeText = ref({})
 const workfolwParams = ref<any>({})
-const processStep = ref(1)
+const processStep = ref(1)//
+const processList = ref([])//流程列表
 const workflowInfo = reactive<any>({
   workflowId: '',
   workflowVersion: ''
@@ -68,7 +74,7 @@ const componentList = markRaw<any[]>(
       switch (index) {
         case 0:
           obj = {
-            components: TrainingInputData,//训练输入数据
+            components: TrainingInputData,//训练输入数据 
             i18Text: "selectTrainingInputData"
           }; break;
         case 1:
@@ -128,7 +134,8 @@ const getNoticeText = (obj: any) => {
 }
 
 const getStepInfo = (data: any) => {
-  comList.value = data.list.map((v: any, index: number) => {
+  if (list.value.length > 1) return
+  comList.value = data.map((v: any, index: number) => {
     list.value.push({
       setp: `0${index + 2}`,
       info: `task.${componentList[v.type]?.i18Text}`,
@@ -138,18 +145,51 @@ const getStepInfo = (data: any) => {
   })
 }
 
-const submit = () => {
-  startWorkFlow({
-    "address": "",
-    "sign": "",
-    "workflowId": 0,
-    "workflowVersion": 0
-  }).then(res => {
-    const { data, code } = res
-    if (code == 10000) {
-      router.push({ name: 'workflow' })
+const slectionAlgParams = (params: any) => {
+  queryProcessList(params.algorithmId)
+}
+
+const getLoginNonce = async () => {
+  try {
+    const address: string | null = userInfoStore.getAddress
+    if (address) {
+      const {
+        data, code
+      } = await LoginNonceId(address)
+      if (code !== 10000) {
+        return new Error('Wallet address exception')
+      }
+      walletStore.setNonceId(data.nonce)
+    } else {
+      console.log('get address error');
     }
-  })
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+
+const submit = async () => {
+  try {
+    // isLogin.value = true
+    await web3.connectWallet()
+    await getLoginNonce()
+    const res = await web3.signForWallet('sign')
+    startWorkFlow({
+      // "address": userInfoStore.getAddress,
+      "sign": res,
+      "workflowId": workflowInfo.workflowId,
+      "workflowVersion": workflowInfo.workflowVersion
+    }).then(res => {
+      const { data, code } = res
+      if (code == 10000) {
+        router.push({ name: 'workflow' })
+      }
+    })
+  } catch (error) {
+    console.log(error)
+  }
+
 }
 
 const activeStep = (index: number) => {
@@ -157,12 +197,13 @@ const activeStep = (index: number) => {
 }
 
 const next = () => {
-  if (activeIndex.value >= list.value.length - 1) {
+  if (activeIndex.value >= list.value.length - 1 && list.value.length > 1) {
     submit()
   } else {
     activeStep(activeIndex.value + 1)
     store.setStep(activeIndex.value)
   }
+  query()
 }
 const previous = () => {
   if (activeIndex.value > 0) {
@@ -173,32 +214,54 @@ const previous = () => {
 }
 
 const setActiveStep = (index: number) => {
+  activeIndex.value = index
   query(index)
 }
 
 const query = (index?: number) => {
   if (!workflowInfo.workflowId) return
+  loading.value = true
   getWorkflowSettingOfWizardMode({
     workflowId: workflowInfo.workflowId,
     workflowVersion: workflowInfo.workflowVersion,
-    step: store.getStep == 0 ? 1 : store.getStep
+    step: index ? index : store.getStep == 0 ? 1 : store.getStep
   }).then(res => {
     const { data, code } = res
     if (code === 10000) {
-      if (index && index >= 0 || index == 0) {
-        activeStep(index)
-      } else {
-        activeIndex.value = data?.completedCalculationProcessStep || 1
-      }
       workfolwParams.value = { ...data }
       processStep.value = data?.completedCalculationProcessStep || 1
+    }
+    loading.value = false
+  }).catch((e) => {
+    console.log('接口报错', e)
+    loading.value = false
+  })
+}
+
+const queryProcessList = (algorithmId: number) => {//流程列表
+  processList.value = []
+  getProcessList({ algorithmId }).then(res => {
+    const { data, code } = res
+    if (code === 10000) {
+      processList.value = data
+      setProces()
     }
   })
 }
 
+const setProces = () => {//设置流程
+  processList.value.forEach((v: any) => {
+    if (v.calculationProcessId == workfolwParams.value.calculationProcessId) {
+      getStepInfo(v.stepItem)
+    }
+  })
+}
+
+
 const init = () => {
   const workflowId = route.params.workflowId || store.getWorkerFlow.workflowId
   const workflowVersion = route.params.workflowVersion || store.getWorkerFlow.workflowVersion
+  console.log(store.getWorkerFlow)
   if (workflowId) {
     workflowInfo.workflowId = workflowId
     workflowInfo.workflowVersion = workflowVersion
@@ -210,7 +273,9 @@ const init = () => {
   }
 }
 
+
 const queryOrgList = () => {//查询组织列表
+  if (orgList.value.length) return
   getUserOrgList().then(res => {
     const { data, code } = res
     if (code === 10000) {

@@ -2,7 +2,7 @@ import axios from 'axios'
 import qs from 'qs'
 const pendingMap = new Map()
 
-const ignoreUrl = ['/flow/workflow/getWorkflowStatus', '/flow/sys/getPlatONChainConfig', '/flow/workflow/getLog']
+const ignoreUrl = ['/flow/workflow/getWorkflowStatus', '/flow/sys/getPlatONChainConfig', '/flow/workflow/getLog', '/flow/data/getDataListByOrg']
 let ignoreFlag = false
 
 export const removeRequest = (config: any) => {

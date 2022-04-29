@@ -94,44 +94,42 @@ const props = defineProps({
     default: () => ({})
   }
 })
+
+
 // 3-选择计算环境(通用), 
 //4-选择计算环境(训练&预测), 
 const listLength = ref(props.type == 4 ? 2 : 1)
 const formRef = ref<any>([])
-const taskParams = ref<any>({})
+const paramsItem = {
+  cpu: '',
+  memory: '',
+  memorySymbol: 'MB',
+  bandwidth: '',
+  bandwidthSymbol: 'MB',
+  time: '',
+  timeSymbol: 'minute'
+}
+const rulesItem = {
+  cpu: [{ required: true, message: `${t('task.pleaseEnter')}${t('task.taskName')}` }],
+  memory: [{ required: true, message: t('task.stepOneSelectComputingTitle') }],
+  bandwidth: [{ required: true, message: t('task.stepOneSelectAlgorithmTitle') }],
+  time: [{ required: true, message: t('task.stepOneSelectProcedureTitle') }]
+}
 const form = reactive({
   0: {
-    cpu: '',
-    memory: '',
-    memorySymbol: 'MB',
-    bandwidth: '',
-    bandwidthSymbol: 'MB',
-    time: '',
-    timeSymbol: 'minute'
+    ...paramsItem
   },
   1: {
-    cpu: '',
-    memory: '',
-    memorySymbol: 'MB',
-    bandwidth: '',
-    bandwidthSymbol: 'MB',
-    time: '',
-    timeSymbol: 'minute'
+    ...paramsItem
   }
 })
 
 const rules = reactive({
   0: {
-    cpu: [{ required: true, message: `${t('task.pleaseEnter')}${t('task.taskName')}` }],
-    memory: [{ required: true, message: t('task.stepOneSelectComputingTitle') }],
-    bandwidth: [{ required: true, message: t('task.stepOneSelectAlgorithmTitle') }],
-    time: [{ required: true, message: t('task.stepOneSelectProcedureTitle') }]
+    ...rulesItem
   },
   1: {
-    cpu: [{ required: true, message: `${t('task.pleaseEnter')}${t('task.taskName')}` },],
-    memory: [{ required: true, message: t('task.stepOneSelectComputingTitle') }],
-    bandwidth: [{ required: true, message: t('task.stepOneSelectAlgorithmTitle') }],
-    time: [{ required: true, message: t('task.stepOneSelectProcedureTitle') }]
+    ...rulesItem
   }
 })
 
@@ -152,9 +150,9 @@ const next = async () => {
   // const data: any[] = []
   let resource = {}
   if (listLength.value <= 1) {
-    resource = taskParams.value?.commonResource.costGpu
+    resource = props.taskParams.value?.commonResource.costGpu
   } else {
-    resource = taskParams.value?.trainingAndPredictionResource.costGpu
+    resource = props.taskParams.value?.trainingAndPredictionResource.costGpu
   }
   await validate.forEach(async (v, i) => {
     const result = await formRef.value[i].validate()
@@ -187,10 +185,10 @@ const next = async () => {
       type: props.type
     },
     ...params,
-    workflowId: taskParams.value.workflowId,
-    workflowVersion: taskParams.value.workflowVersion,
-    algorithmId: taskParams.value.algorithmId,
-    calculationProcessId: taskParams.value.calculationProcessId
+    workflowId: props.taskParams.workflowId,
+    workflowVersion: props.taskParams.workflowVersion,
+    algorithmId: props.taskParams.algorithmId,
+    calculationProcessId: props.taskParams.calculationProcessId
     // }
   }).then(res => {
     const { data, code } = res
@@ -200,34 +198,30 @@ const next = async () => {
   })
 }
 
-const queryStepInfo = () => {
-  getWorkflowSettingOfWizardMode({
-    workflowId: props.workflowInfo?.workflowId,
-    workflowVersion: props.workflowInfo?.workflowVersion,
-    step: props.step
-  }).then(res => {
-    const { data, code } = res
-    if (code === 10000) {
-      taskParams.value = data
-      const list = data?.calculationProcessStep?.type == 3 ?
-        [data.commonResource] : [{ ...data.trainingAndPredictionResource.prediction }, { ...data.trainingAndPredictionResource.training }]
-      list.forEach((v, i) => {
-        form[i].cpu = v.costCpu
-        form[i].memory = v.costMem
-        form[i].bandwidth = v.costBandwidth
-        form[i].time = v.runTime
-      })
-    }
-  })
+
+
+const init = () => {
+  const data = props.taskParams
+  if (data?.calculationProcessStep?.type == 3 || data?.calculationProcessStep?.type == 4) {
+    const list = data?.calculationProcessStep?.type == 3 ?
+      [data.commonResource] : [{ ...data.trainingAndPredictionResource.prediction }, { ...data.trainingAndPredictionResource.training }]
+    list.forEach((v, i) => {
+      form[i].cpu = v.costCpu
+      form[i].memory = v.costMem
+      form[i].bandwidth = v.costBandwidth
+      form[i].time = v.runTime
+    })
+  }
 }
 
 const previous = () => {
   emit('previous')
 }
 
-onMounted(() => {
-  queryStepInfo()
+watch(() => props.taskParams, () => {
+  init()
 })
+
 
 </script>
 <style lang="scss">

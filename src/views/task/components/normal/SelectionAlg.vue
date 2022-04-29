@@ -18,41 +18,41 @@
           </template>
         </question-mark>
       </div>
-      <el-input :input-style="{ borderColor: '#EEEEEE', height: '50px' }" :minlength="8" :maxlength="64"
-        v-model="form.workflowName"></el-input>
+      <el-input :disabled="disabled" :input-style="{ borderColor: '#EEEEEE', height: '50px' }" :minlength="8"
+        :maxlength="64" v-model="form.workflowName"></el-input>
     </el-form-item>
     <el-form-item :label="`${t('task.stepOneSelectComputingTitle')}:`" prop="calculationType">
-      <el-radio-group v-model="form.calculationType"
+      <el-radio-group v-model="form.calculationType" :disabled="disabled"
         @change="form.algorithmId = undefined, form.calculationProcessId = undefined">
         <el-radio :label="item.id" v-for="item in algList" :key="item.id">{{ item.name }}</el-radio>
       </el-radio-group>
     </el-form-item>
     <el-form-item v-if="form.calculationType == 1000" :label="`${$t('task.stepOneSelectAlgorithmTitle')}:`"
       prop="algorithmId">
-      <el-radio-group v-model="form.algorithmId" @change="(algChange(), form.calculationProcessId = undefined)">
+      <el-radio-group v-model="form.algorithmId" @change="algChange" :disabled="disabled">
         <el-radio :label="item.id" v-for="item in algTypelist[0].childrenList" :key="item.id">{{ item.name }}</el-radio>
       </el-radio-group>
     </el-form-item>
     <el-form-item v-if="form.calculationType == 2000" :label="`${t('task.stepOneSelectAIAlgorithmTitle')}:`"
       prop="algorithmId">
-      <el-radio-group v-model="form.algorithmId" @change="(algChange(), form.calculationProcessId = undefined)">
+      <el-radio-group v-model="form.algorithmId" @change="algChange" :disabled="disabled">
         <el-radio :label="item.id" v-for="item in algTypelist[0].childrenList" :key="item.id">{{ item.name }}
         </el-radio>
       </el-radio-group>
     </el-form-item>
-    <el-form-item v-if="processList.length" :label="`${$t('task.stepOneSelectProcedureTitle')}:`"
+    <el-form-item v-if="props.processList.length" :label="`${$t('task.stepOneSelectProcedureTitle')}:`"
       prop="calculationProcessId">
-      <el-radio-group v-model="form.calculationProcessId">
-        <el-radio :label="item.calculationProcessId" v-for="item in processList" :key="item.id">{{ item.name }}
+      <el-radio-group v-model="form.calculationProcessId" :disabled="disabled">
+        <el-radio :label="item.calculationProcessId" v-for="item in props.processList" :key="item.id">{{ item.name }}
         </el-radio>
       </el-radio-group>
     </el-form-item>
     <el-form-item :label="`${t('task.pleaseComments')}:`">
-      <el-input :input-style="{ borderColor: '#EEEEEE', height: '50px' }" show-word-limit type="textarea" :rows="4"
-        v-model="form.workflowDesc"></el-input>
+      <el-input :disabled="disabled" :input-style="{ borderColor: '#EEEEEE', height: '50px' }" show-word-limit
+        type="textarea" :rows="4" v-model="form.workflowDesc"></el-input>
     </el-form-item>
   </el-form>
-  <NextButton @click="next" />
+  <NextButton v-if="!disabled" @click="next" />
 </template>
 <script lang="ts" setup>
 import { getAlgTree } from '@/api/algorithm'
@@ -63,16 +63,23 @@ const { locale, t } = useI18n()
 const store = useWorkFlow()
 const algList: any = ref<any[]>([])//算法列表 //最外层
 const algTypelist = computed(() => algList.value.filter((v: any) => v.id == form.calculationType))//具体算法
-const processList = ref<any[]>([])//计算流程列表
-const emit = defineEmits(["getParams", 'next', 'getStep', 'getNoticeText', 'activeStep'])
+const disabled = ref(false)
+const emit = defineEmits(["getParams", 'init', 'getNoticeText'])
 const props = defineProps({
-  taskParams: { type: Object, default: () => ({}) }
+  taskParams: { type: Object, default: () => ({}) },
+  processList: { type: Array, default: (): any[] => [] }//计算流程列表
 })
 watch(locale, () => {
   formRef.value.clearValidate()
 })
-watch(algList, () => {
+watch(() => algList.value, () => {
   if (props.taskParams?.algorithmId) {
+    setTaskParams()
+  }
+})
+watch(() => props.taskParams, (e) => {
+  if (e.workflowId) disabled.value = true
+  if (algList.value.length) {
     setTaskParams()
   }
 })
@@ -110,13 +117,12 @@ const next = () => {
   })
 }
 
-const setStepList = () => {
-  processList.value.forEach(v => {
-    if (v.calculationProcessId == form.calculationProcessId) {
-      emit('getStep', { list: v.stepItem, algPSI: v.name.indexOf('PSI') > -1 })
-    }
-  })
+
+const algChange = (type?: any) => {
+  if (type !== 'notice') form.calculationProcessId = undefined
+  emit('getParams', form)
 }
+
 
 const submit = () => {
   postCreateWorkflowWizard({
@@ -127,13 +133,13 @@ const submit = () => {
   }).then(res => {
     const { data, code } = res
     if (code == 10000) {
+      // emit('getParams', form)
       store.setWorkerFlow({
         workflowId: data.workflowId,
         workflowVersion: data.workflowVersion,
       })
-      setStepList()
       getNoticeText()
-      emit('next')
+      emit('init')
     }
   })
 }
@@ -148,20 +154,7 @@ const queryAlgTree = () => {
   })
 }
 
-const algChange = (type?: any) => {
-  processList.value = []
-  getProcessList({ algorithmId: form.algorithmId }).then(res => {
-    const { data, code } = res
-    if (code === 10000) {
-      processList.value = data
-      getNoticeText()
-      setStepList()
-      if (type == 'notice') {
-        emit('activeStep', props.taskParams.calculationProcessStep.step, true)
-      }
-    }
-  })
-}
+
 
 const setTaskParams = () => {
   const {
@@ -170,13 +163,12 @@ const setTaskParams = () => {
     workflowDesc,
     calculationProcessId
   } = props.taskParams
-  if (algList.value.length) {
-    algList.value.forEach((v: any) => {
-      if (v.childrenList.some((item: any) => item.id == algorithmId)) {
-        form.calculationType = v.id //选择算法大分类
-      }
-    })
-  }
+
+  algList.value.forEach((v: any) => {
+    if (v.childrenList.some((item: any) => item.id == algorithmId)) {
+      form.calculationType = v.id //选择算法大分类
+    }
+  })
   form.workflowName = workflowName
   form.algorithmId = algorithmId
   form.calculationProcessId = calculationProcessId
@@ -198,7 +190,7 @@ const getNoticeText = () => {
       })
     }
   })
-  processList.value.forEach((v: any) => {
+  props.processList.forEach((v: any) => {
     if (v.calculationProcessId == form.calculationProcessId) {
       paramsText.calculationProcessText = v.name
     }
