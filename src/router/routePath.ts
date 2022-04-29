@@ -154,7 +154,7 @@ export default [
       meta: {
         label: 'menu.createTask'
       },
-      component: () => import('@/views/task/ExpertModel.vue')
+      component: () => import('@/views/task/ExpertIndex.vue')
     }],
   },
   {

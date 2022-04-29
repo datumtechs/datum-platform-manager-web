@@ -299,7 +299,9 @@ const zh = {
     labelOptionals: '因变量（标签，选填)',
     deleteNode: '删除节点',
     algoVariable: '算法变量',
-    algoCode: '算法代码'
+    algoCode: '算法代码',
+    frontModel: '前置节点输出模型',
+    exceedPsiLimit: '超过PSI节点数量'
   },
   role: {
     taskSponsor: '任务发起方',

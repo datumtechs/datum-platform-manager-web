@@ -4,12 +4,12 @@
       <template #briefInfo>{{ t('task.createTaskBriefInfo') }}</template>
     </Banner> -->
     <div class="com-main-data-wrap main-content">
-      <ExpertModel />
+      <ExpertMode />
     </div>
   </div>
 </template>
 <script lang="ts" setup>
-import ExpertModel from './components/ExpertModel.vue'
+import ExpertMode from './components/ExpertMode.vue'
 const { t } = useI18n()
 
 </script>

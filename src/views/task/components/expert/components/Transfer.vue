@@ -13,14 +13,16 @@
         <img v-if="ids.length" src="@/assets/images/task/left-arrow.png" class="normal-arrow" />
         <img v-else src="@/assets/images/task/right-arrow.png" class="normal-arrow" />
       </div>
-      <div v-if="isLabels" class="arrow-icon" @click="handleTransfer('labels', labels.length)">
+
+      <div v-if="isLabels && !isPSIModel" class="arrow-icon"
+        @click="handleTransfer('labels', labels.length)">
         <img v-if="labels.length" src="@/assets/images/task/left-arrow.png" class="normal-arrow" />
         <img v-else src="@/assets/images/task/right-arrow.png" class="normal-arrow" />
       </div>
-      <div class="arrow-icon-auto" @click="handleTransfer('features')">
+      <div v-if="!isPSIModel" class="arrow-icon-auto" @click="handleTransfer('features')">
         <img src="@/assets/images/task/right-arrow.png" class="normal-arrow" />
       </div>
-      <div class="arrow-icon-auto" @click="handleTransfer('features', 1)">
+      <div v-if="!isPSIModel" class="arrow-icon-auto" @click="handleTransfer('features', 1)">
         <img src="@/assets/images/task/left-arrow.png" class="normal-arrow" />
       </div>
     </div>
@@ -32,7 +34,7 @@
               ids[0].columnName : ''
         }}</div>
       </div>
-      <div v-if="isLabels" class="result-label">
+      <div v-if="isLabels && !isPSIModel" class="result-label">
         <p class="text-12px text-color-[#999999] leading-17px mt-10px mb-5px"
           v-if="!algorithm.inputModel">{{ t('expert.labelRequired') }}</p>
         <p class="text-12px text-color-[#999999] leading-17px mt-10px mb-5px" v-else>{{
@@ -43,7 +45,7 @@
               labels[0].columnName : ''
           }}</div>
       </div>
-      <div class="feature">
+      <div v-if="!isPSIModel" class="feature">
         <p class="text-12px text-color-[#999999] leading-17px mt-10px mb-5px">{{ t('task.feature')
         }}
         </p>
@@ -59,7 +61,7 @@
 </template>
 
 <script setup lang='ts'>
-interface Features { columnData: String }
+import { useExpertMode } from '@/stores'
 const { t } = useI18n()
 
 const ids = ref([] as any[])
@@ -72,6 +74,7 @@ let featureIndex = ref(0)
 // columnData, transferIndex, algorithm, viewModel
 const showTransfer = computed(() => ids.value.length || labels.value.length || features.value.length || list.value.length)
 const isLabels = computed(() => props.transferIndex === 0 && !props.algorithm.inputModel)
+const isPSIModel = computed(() => useExpertMode().getIsPSIModel)
 const emit = defineEmits(['saveToStore'])
 const props: any = defineProps({
   columnData: {

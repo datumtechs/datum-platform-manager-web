@@ -299,7 +299,9 @@ const en = {
     labelOptionals: 'labels（optional)',
     deleteNode: 'Delete the node',
     algoVariable: 'Algorithm Variable',
-    algoCode: 'Algorithm Code'
+    algoCode: 'Algorithm Code',
+    frontModel: 'Front node output model',
+    exceedPsiLimit: 'Number of PSI nodes exceeded'
   },
   role: {
     taskSponsor: 'Task sponsor',
