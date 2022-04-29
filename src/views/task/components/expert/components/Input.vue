@@ -76,6 +76,7 @@ const orgList: any = computed(() => useExpertMode().getUserOrgList)
 const showModel: any = computed(() => algorithm.value.inputModel)
 const inputVoList: any = computed(() => useExpertMode().getInputVoList)
 const outputVoList: any = computed(() => useExpertMode().getOutputVoList)
+const nodeList: any = computed(() => useExpertMode().getNodeList)
 const workflowNodeSenderIdentityId: any = computed(() => useExpertMode().getWorkflowNodeSender)
 
 let selectLayout: any = ref([{ item: '111', value: '111', }])
@@ -219,7 +220,7 @@ const modelLazyLoad = async (node: any, resolve: any) => {
             const params = { algorithmId: algorithm.value.algorithmId, identityId: node.data.code }
             const { data } = await getUserModelList(params)
             const nextNodes = data.map((item: any) => ({
-                code: item.modelId,
+                code: item.metaDataId,
                 name: item.fileName,
                 leaf: level >= 1 //  >=2： 展示3级 >= 1： 展示2级
             }))
@@ -231,19 +232,25 @@ const modelLazyLoad = async (node: any, resolve: any) => {
     }
 }
 
-const changeModelValue = (e: any) => {
-    // modelKey++
-    // if (Array.isArray(e)) {
-    //     this.SET_CUR_MODEL(e[1])
-    // }
+const changeModelValue = (item: any) => {
+    if (Array.isArray(item)) {
+        useExpertMode().setCurModel({
+            metaDataId: item[1]
+        })
+    }
 }
 
-const handleModelChange = () => { }
-const curNodeIndex = ref(1)
+const handleModelChange = (val: any) => {
+    useExpertMode().setCurModel({
+        metaDataId: val
+    })
+}
+
+const curNodeIndex = computed(() => useExpertMode().getCurNodeIndex)
 const modelValue = ref('')
 const modelOptions = reactive([{
-    fileName: '',
-    modelId: ''
+    fileName: t('expert.frontModel'),
+    modelId: 'frontNodeOutput'
 }])
 
 onMounted(async () => {
@@ -274,40 +281,12 @@ const handleInputValue = async () => {
                 })
             }
         })
-        // 反选model
-        //     that.selectLayout = workflowNodeInputVoList
-        //     const organizations = that.orgs.map(item => item.identityId)
-        //     workflowNodeInputVoList.map((item, index) => {
-        //         // 需要检测已选组织id，是否存在组织列表里面
-        //         if (organizations.includes(item.identityId)) {
-        //             res[index] = [
-        //                 item.identityId,
-        //                 item.dataTableId
-        //                 // item.dataColumnIds
-        //             ]
-        //             // 回显穿梭框
-        //             that.getColumnList(item.dataTableId, index, {
-        //                 keyColumn: item.keyColumn,
-        //                 dependentVariable: item.dependentVariable,
-        //                 dataColumnIds: item.dataColumnIds
-        //             })
-        //         }
-        //     })
-        // }
-        // if (that.showModel) {
-        //     if (curModel === undefined) {
-        //         that.modelValue = ''
-        //     } else if (curModel && Object.keys(curModel).length > 0) {
-        //         that.modelValue = [curModel.identityId, curModel.modelId]
-        //     } else {
-        //         that.modelValue = 0
-        //     }
-        // } else {
-        //     that.modelValue = 0
-        // }
+        console.log('showModel', showModel);
 
+        if (showModel.value) {
+            modelValue.value = nodeList.value[curNodeIndex.value].model
+        }
         inputValue.value = res
-        // that.SET_INPUT_LEN(that.inputValue.length)
         upInputKeys()
     }
 }

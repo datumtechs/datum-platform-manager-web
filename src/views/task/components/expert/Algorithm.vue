@@ -33,6 +33,7 @@ const dragstart = (e: any, item: any) => {
 }
 
 const nodeList = computed(() => useExpertMode().getNodeList)
+const isPSIModel = computed(() => useExpertMode().getIsPSIModel)
 
 const workflowId = computed(() => route.params.workflowId)
 const workflowVersion = computed(() => route.params.workflowVersion)
@@ -53,8 +54,14 @@ const dragend = async (e: any, item: any) => {
         // 是否重复的算法
         ElMessage.error(t('task.repeatAlgo'))
     } else {
-        // 是否超过算法长度 psi单独做只有一个
-        if (nodeList.value.length < MAX_NODES) {
+
+        // 是否是PSI 暂定1001是PSI PSI的长度只有一个 且PSI没有自变量和因变量
+
+        if ((item.id === 1001 && nodeList.value.length > 0) || nodeList.value.length >= MAX_NODES) {
+            return ElMessage.error(t('task.exceedMaxNode'))
+        } else if (!!isPSIModel.value) {
+            return ElMessage.error(t('expert.exceedPsiLimit'))
+        } else {
             const alg: any = { ...item.alg, isPsi: true }
             const params = {
                 algorithmId: item.id,
@@ -63,10 +70,11 @@ const dragend = async (e: any, item: any) => {
                 workflowId: workflowId || '',
                 workflowVersion: workflowVersion || ''
             }
+            if (item.id === 1001) {
+                useExpertMode().setIsPSIModel(true)
+            }
             useExpertMode().setNodeList(params)
-            return
         }
-        ElMessage.error(t('task.exceedMaxNode'))
     }
 }
 const isBoxInStage = (event: any) => {

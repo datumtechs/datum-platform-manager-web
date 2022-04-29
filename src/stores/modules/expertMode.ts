@@ -3,7 +3,6 @@ import { getUserOrgList } from '@/api/login'
 
 export default defineStore('expertMode', {
     state: () => ({
-        status: '',
         showDotted: false,
         curNodeIndex: 0,
         nodeList: <any>[],
@@ -19,10 +18,10 @@ export default defineStore('expertMode', {
         // 输出
         workflowNodeOutputVoList: [],
         disableOrg: [],
-        showPanel: false
+        showPanel: false,
+        isPSIModel: false
     }),
     getters: {
-        getStatus: state => state.status,
         getDotted: state => state.showDotted,
         getNodeList: state => state.nodeList,
         getCurNodeId: state => state.curNodeId,
@@ -32,12 +31,10 @@ export default defineStore('expertMode', {
         getAlgorithm: state => state.algorithm,
         getShowPanel: state => state.showPanel,
         getInputVoList: state => state.workflowNodeInputVoList,
-        getOutputVoList: state => state.workflowNodeOutputVoList
+        getOutputVoList: state => state.workflowNodeOutputVoList,
+        getIsPSIModel: state => state.isPSIModel
     },
     actions: {
-        setStatus(str: string) {
-            this.status = str
-        },
         setDotted(flag: boolean) {
             this.showDotted = flag
         },
@@ -88,7 +85,9 @@ export default defineStore('expertMode', {
                     })
                 }
             })
-            this.nodeList[this.curNodeIndex].workflowNodeOutputVoList = output
+            if (this.nodeList[this.curNodeIndex]) {
+                this.nodeList[this.curNodeIndex].workflowNodeOutputVoList = output
+            }
         },
         resetWorkflow() {
             this.nodeList = []
@@ -96,8 +95,14 @@ export default defineStore('expertMode', {
             this.workflowNodeOutputVoList = []
             this.workflowNodeSenderIdentityId = ''
             this.algorithm = {
-
             }
+            this.isPSIModel = false
+            this.curNodeIndex = 0
+            this.curNodeId = ''
+            this.curModel = ''
+
+            this.disableOrg = []
+            this.showPanel = false
         },
 
         setDisableOrg(data: Array<any>) {
@@ -120,12 +125,19 @@ export default defineStore('expertMode', {
         setShowPanel(data: boolean) {
             this.showPanel = data
         },
-        
+
         async queryUserOrgList() {
             const { code, data } = await getUserOrgList()
             if (code === 10000) {
                 this.setUserOrgList(data)
             }
+        },
+
+        setCurModel(data: any) {
+            this.nodeList[this.curNodeIndex]['model'] = data
+        },
+        setIsPSIModel(data: boolean) {
+            this.isPSIModel = data
         }
     }
 })

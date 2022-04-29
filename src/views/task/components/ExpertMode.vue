@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-20px">
+  <div class="mt-30px">
     <div>
       <PrivateSwitch :mode="'expert'" @change="$router.push({ name: 'wizardMode' })" />
     </div>

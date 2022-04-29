@@ -50,6 +50,7 @@ import { saveWorkflowInExpert } from '@/api/expert'
 import { useRoute } from 'vue-router';
 
 const route = useRoute()
+const router = useRouter()
 const dragStatus = ref<boolean>(true)
 const { t } = useI18n()
 
@@ -189,6 +190,9 @@ const saveWorkflow = async () => {
     const { code } = await saveWorkflowInExpert(params)
     if (code === 10000) {
         ElMessage.success('保存工作流成功,跳转工作流记录页面')
+        router.push({
+            name: 'workflow'
+        })
     }
 }
 
@@ -209,9 +213,7 @@ const getSaveParams = () => {
             isPsi: node.nodeAlgorithmVo.isPsi,
             inputModel: node.nodeAlgorithmVo.inputModel,
             identityId: node.workflowNodeSenderIdentityId,
-            model: {
-
-            }
+            model: node.model
         }
         const ids = node.workflowNodeOutputVoList.map((out: any) => out.identityId)
         obj.nodeOutput = {
@@ -242,7 +244,20 @@ const handleVoPsi = (flag: boolean, index: number) => {
 }
 
 const deleteNode = (node: any, index: number) => {
+
     useExpertMode().deleteNode(index)
+    if (node.algorithmId) {
+        useExpertMode().setIsPSIModel(false)
+    }
+    // 更新序号 1. 获取id 2 reset
+    const id = useExpertMode().getCurNodeId
+    const newIndex = nodeList.value.findIndex((node: any) => node.algorithmId === id)
+    const realIndex = newIndex && newIndex > 0 ? newIndex : 0
+    if (nodeList.value.length > 0) {
+        selectNode(nodeList.value[realIndex], realIndex)
+    } else {
+        useExpertMode().setShowPanel(false)
+    }
 }
 
 const selectNode = (node: any, index: number) => {
