@@ -310,7 +310,7 @@ const upInputKeys = () => {
 
     :deep(.el-input__inner) {
         height: 40px;
-        background: #eeeeee;
+        background: #fff;
         border-radius: 20px;
         padding-left: 14px;
     }

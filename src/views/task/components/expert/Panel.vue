@@ -147,7 +147,7 @@ onMounted(() => {
 :deep(.el-input__inner) {
     padding: 0 15px;
     height: 40px;
-    background: #eeeeee;
+    background: #fff;
     border-radius: 20px;
 }
 </style>
