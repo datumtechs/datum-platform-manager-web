@@ -1,11 +1,11 @@
 <template>
   <div class="flex-1">
-    <Banner :bg-name="'clocksWatches'" :backShow="true" @back="$router.go(-1)">
+    <Banner :bg-name="'clocksWatches'" :showRouter="false" :detailName="workFlowName" :backShow="true"
+      @back="$router.go(-1)">
       <template #briefInfo>
         <p class="text-color-[#999999]">
-          {{ t('workflow.totalOf') }}
-          <span class="text-color-[#2B60E9] text-16px">11990</span>
-          {{ t('workflow.recordWorkflow') }}
+          {{ locale == 'zh' ? `共${total}条该工作流的运行记录` : `${total}
+          operation records of this workflow in total`}}
         </p>
       </template>
     </Banner>
@@ -67,13 +67,17 @@ const route = useRoute()
 const workflowId = route.params.id
 const current = ref(1)
 const total = ref(0)
+const workFlowName = ref('')
 const tableData = ref([])
-const { t } = useI18n()
+const { t, locale } = useI18n()
 const query = () => {
   getWorkflowVersionList({ current: current.value, size: 10, workflowId }).then(res => {
     const { data, code }: any = res
     if (code === 10000) {
       tableData.value = data.items
+      const str = data.items[0]?.workflowVersionName
+      const index = str.lastIndexOf("-v")
+      workFlowName.value = str.substring(0, index)
       current.value = data.current
       total.value = data.total
     }
