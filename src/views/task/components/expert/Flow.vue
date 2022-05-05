@@ -4,7 +4,8 @@
             <el-button v-for="btn in btnList" round @click="handleClick(btn.value)">{{ btn.label }}
             </el-button>
         </div>
-        <div id="mainStage" class="mainStage" :class="{ showDot: showDot }">
+        <div id="mainStage" @dragover.stop="dragover($event)" class="mainStage"
+            :class="{ showDot: showDot }">
             <div v-for="(node, index) in nodeListWithStatus" :key="node.id"
                 class="node-box mb-100px" :class="{ 'node-arrow': index < nodeList.length - 1 }">
                 <div class="node cursor-pointer" @click="selectNode(node, index)"
@@ -65,6 +66,11 @@ const props = defineProps({
     }
 
 })
+
+const dragover = (e: any) => {
+    e.dataTransfer.effectAllowed = 'copy'
+    console.log('dragover,', e);
+}
 
 const curNodeId = computed(() => useExpertMode().getCurNodeId)
 const curNodeIndex = computed(() => useExpertMode().getCurNodeIndex)

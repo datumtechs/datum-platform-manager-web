@@ -8,15 +8,15 @@
                     {{ algo.name }}</p>
                 <ul class="mt-4px">
                     <li class="h-36px w-230px drag-box cursor-pointer flex items-center pl-18px"
-                        @dragstart="dragstart($event, item)" @dragend="dragend($event, item)"
-                        :draggable="true" v-for="item in algo.childrenList" :key="item.id">{{
+                        @dragstart.stop="dragstart($event, item)"
+                        @dragend.stop="dragend($event, item)" :draggable="true"
+                        v-for="item in algo.childrenList" :key="item.id">{{
                                 item.name
                         }}
                     </li>
                 </ul>
             </div>
         </div>
-
     </div>
 </template>
 
@@ -27,6 +27,7 @@ import { MAX_NODES } from '@/config/constants'
 
 const route = useRoute()
 const { t } = useI18n()
+
 const dragstart = (e: any, item: any) => {
     // if (this.viewModel === 'view') return
     useExpertMode().setDotted(true)
