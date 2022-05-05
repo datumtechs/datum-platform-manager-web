@@ -24,7 +24,7 @@ export const enums = {
     8: 'industry.transportation',
     9: 'industry.medical',
     10: 'industry.publicService',
-    11: 'industry.mediaAdvertis',
+    11: 'industry.mediaAdvertise',
     12: 'industry.otherIndustry',
   }
 }

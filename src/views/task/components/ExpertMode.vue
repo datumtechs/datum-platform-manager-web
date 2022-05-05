@@ -19,6 +19,10 @@ import SetNameDialog from './expert/SetNameDialog.vue'
 import PrivateSwitch from './PrivateSwitch.vue'
 import { getWorkflowStatusOfExpertMode } from '@/api/expert'
 import { useExpertMode } from '@/stores'
+
+// 1. unset 2. unSave 3. paramsEdit
+const mode = ref('')
+
 const route = useRoute()
 const showDialog = computed(() =>
   route.params.workflowId ? false : true

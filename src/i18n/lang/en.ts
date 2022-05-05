@@ -231,7 +231,9 @@ const en = {
     WorkflowVersionName: "workflow Version Name",
     state: "state",
     timeUse: "Time Use",
-    viewDetails: "View Details"
+    viewDetails: "View Details",
+    tokenNum: '剩余',
+    authorizeBalance: 'Authorized quantity'
   },
   credentials: {
     circulation: "Circulation",
@@ -355,7 +357,7 @@ const en = {
     transportation: "Transportation Industry",
     medical: "Medical And Health Industry",
     publicService: "Public Service Industry",
-    mediaAdvertis: "Media Advertising Industry",
+    mediaAdvertise: "Media Advertising Industry",
     otherIndustry: "Other Industry",
   },
   status: {

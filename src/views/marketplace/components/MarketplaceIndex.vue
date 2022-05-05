@@ -117,7 +117,7 @@ onMounted(() => {
                                 @click="linkToViewData(row)">{{ t('myData.viewData') }}</span>
                             <span class="text-14px text-color-[#0052D9] leading-20px cursor-pointer"
                                 @click="linkToViewToken(row)">{{
-                                    t('myData.viewCredential')
+                                        t('myData.viewCredential')
                                 }}</span>
                         </el-space>
                     </template>

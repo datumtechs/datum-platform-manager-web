@@ -1,28 +1,36 @@
 <template>
   <el-table :data="props.data" class="mt-30px com-table _com_el-table-wrap">
-    <el-table-column type="index" width="100">
+    <el-table-column type="index" width="80">
       <template #header>{{ t('common.num') }}</template>
     </el-table-column>
-    <el-table-column prop="workflowName" show-overflow-tooltip :label="t('workflow.workflowName')" />
-    <el-table-column show-overflow-tooltip prop="algorithmName" :label="t('workflow.workflowAlgorithm')" />
-    <el-table-column show-overflow-tooltip prop="calculationProcessName" :label="t('workflow.workflowSteps')" />
-    <el-table-column show-overflow-tooltip prop="lastRunTime" :label="t('workflow.latestRunningTime')">
+    <el-table-column prop="workflowName" show-overflow-tooltip
+      :label="t('workflow.workflowName')" />
+    <el-table-column show-overflow-tooltip prop="algorithmName"
+      :label="t('workflow.workflowAlgorithm')" />
+    <el-table-column show-overflow-tooltip prop="calculationProcessName"
+      :label="t('workflow.workflowSteps')" />
+    <el-table-column show-overflow-tooltip prop="lastRunTime"
+      :label="t('workflow.latestRunningTime')">
       <template #default="scope">{{ scope.row.lastRunTime && useFormatTime(scope.row.lastRunTime) ||
-          '--'
+          '-'
       }}</template>
     </el-table-column>
-    <el-table-column show-overflow-tooltip prop="createTime" :label="t('workflow.creationTime')" :width="180">
+    <el-table-column show-overflow-tooltip prop="createTime" :label="t('workflow.creationTime')"
+      :width="180">
       <template #default="scope">{{ useFormatTime(scope.row.createTime) }}</template>
     </el-table-column>
-    <el-table-column :label="t('common.actions')" :fixed="'right'" :width="330">
-      <template #default="scope">
-        <el-button type="text" circle @click="operationRecord(scope.row)">{{
-            t('workflow.operationRecord')
-        }}</el-button>
-        <el-button type="text" v-if="!scope.row.isSettingCompleted" circle @click="Edit(scope.row)">
-          {{ t('workflow.continueEditing') }}</el-button>
-        <el-button type="text" circle @click="del(scope.row)">{{ t('workflow.deleteWorkflow') }}
-        </el-button>
+    <el-table-column :label="t('common.actions')" :fixed="'right'">
+      <template #default="{ row }">
+
+        <div v-if="!row.isSettingCompleted">
+          <el-button type="text" @click="Edit(row)">{{ t('workflow.continueEditing') }}</el-button>
+          <el-button type="text" @click="del(row)">{{ t('workflow.deleteWorkflow') }}
+          </el-button>
+        </div>
+        <div v-else>
+          <el-button type="text" @click="operationRecord(row)">{{ t('workflow.operationRecord') }}
+          </el-button>
+        </div>
       </template>
     </el-table-column>
   </el-table>

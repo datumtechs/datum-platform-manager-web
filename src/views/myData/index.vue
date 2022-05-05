@@ -4,34 +4,24 @@
       <template #briefInfo>
         <p class="text-color-[#999999]">
           {{ t('myData.tasksBriefInfoFirstParagraph') }}
-          <span
-            class="text-color-[#2B60E9] text-16px"
-          >{{ dataTotal }}</span>
+          <span class="text-color-[#2B60E9] text-16px">{{ dataTotal }}</span>
           {{ t('myData.tasksBriefInfoTwoParagraph') }}
         </p>
       </template>
     </Banner>
     <div class="main-content com-main-data-wrap">
-      <DataTable
-        :data="tableData"
-        @purchase="purchase"
-        @viewData="viewData"
-        @viewCredential="viewCredential"
-      />
+      <DataTable :data="tableData" @purchase="purchase" @viewData="viewData"
+        @viewCredential="viewCredential" />
       <div class="flex my-50px justify-center">
-        <el-pagination
-          background
-          layout="prev, pager, next"
-          @current-change="(_) => {
-            current = _
-          }"
-          :total="total"
-        />
+        <el-pagination background layout="prev, pager, next" @current-change="(_) => {
+          current = _
+        }" :total="total" />
       </div>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
+import DataTable from './components/DataTable.vue'
 import { type Router, useRouter } from 'vue-router'
 import { queryUserDataList, queryDataStats } from '@/api/data'
 const { t } = useI18n()

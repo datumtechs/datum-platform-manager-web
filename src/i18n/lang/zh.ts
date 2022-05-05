@@ -231,7 +231,9 @@ const zh = {
     workflowVersionName: "工作流版本名称",
     state: "状态",
     timeUse: "用时",
-    viewDetails: "查看详情"
+    viewDetails: "查看详情",
+    tokenNum: '剩余',
+    authorizeBalance: '已授权数量'
   },
   credentials: {
     circulation: "总发布量",
@@ -355,7 +357,7 @@ const zh = {
     transportation: "交通运输业",
     medical: "医疗健康业",
     publicService: "公共服务业",
-    mediaAdvertis: "传媒广告业",
+    mediaAdvertise: "传媒广告业",
     otherIndustry: "其他行业",
   },
   status: {
