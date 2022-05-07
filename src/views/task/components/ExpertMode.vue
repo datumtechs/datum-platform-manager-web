@@ -4,9 +4,10 @@
       <PrivateSwitch :mode="'expert'" @change="$router.push({ name: 'wizardMode' })" />
     </div>
     <div class="my-30px flex border-1 border-solid border-color-[#EEE] operation-box">
-      <Algorithm />
-      <Flow :status-list="statusList" :workflow-status="workflowStatus" />
-      <Panel />
+      <Algorithm :isSettingCompleted="isSettingCompleted ? true : false" />
+      <Flow :status-list="statusList" :workflow-status="workflowStatus"
+        :isSettingCompleted="isSettingCompleted ? true : false" />
+      <Panel :isSettingCompleted="isSettingCompleted ? true : false" />
     </div>
     <SetNameDialog v-model:show="showDialog" />
   </div>
@@ -17,7 +18,7 @@ import Panel from './expert/Panel.vue'
 import Flow from './expert/Flow.vue'
 import SetNameDialog from './expert/SetNameDialog.vue'
 import PrivateSwitch from './PrivateSwitch.vue'
-import { getWorkflowStatusOfExpertMode } from '@/api/expert'
+import { getWorkflowStatusOfExpertMode, getWorkflowSettingOfExpertMode } from '@/api/expert'
 import { useExpertMode } from '@/stores'
 
 // 1. unset 2. unSave 3. paramsEdit
@@ -31,6 +32,7 @@ const showDialog = computed(() =>
 const workflowId = computed(() => route.params.workflowId)
 const workflowVersion = computed(() => route.params.workflowVersion)
 const isInEdit = computed(() => !!workflowId.value && !!workflowVersion.value)
+const isSettingCompleted = computed(() => route.params.isSettingCompleted)
 
 watch(() => isInEdit.value, (newV, oldV) => {
   if (newV) {
@@ -58,9 +60,23 @@ const queryStatus = () => {
   })
 }
 
+const queryNodeSetting = () => {
+  getWorkflowSettingOfExpertMode({
+    workflowId: workflowId.value,
+    workflowVersion: workflowVersion.value
+  }).then(res => {
+    const { code, data } = res
+    if (code === 10000) {
+      useExpertMode().setNodeList(data.workflowNodeList)
+    }
+  })
+}
+
+
 onMounted(() => {
-  if (isInEdit.value) {
+  if (isInEdit.value && isSettingCompleted.value) {
     queryStatus()
+    queryNodeSetting()
   }
 })
 

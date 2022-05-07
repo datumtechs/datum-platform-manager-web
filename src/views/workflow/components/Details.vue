@@ -82,6 +82,7 @@ import { startWorkFlow } from '@/api/workflow'
 const web3: any = inject('web3')
 
 const route = useRoute()
+const router = useRouter()
 const workflowId = route.params.id
 const current = ref(1)
 const total = ref(0)
@@ -105,9 +106,29 @@ const queryVersionList = () => {
 }
 
 const view = () => { }
-const edit = (row: any) => {
 
+const edit = (row: any) => {
+  let urlName = 'wizardMode'
+  let params = {
+    workflowId: row.workflowId,
+    workflowVersion: row.workflowVersion,
+    workflowName: row.workflowName,
+  }
+  if (row.createMode === 1) {
+    urlName = 'expertModel'
+    params = Object.assign(params, {
+      isSettingCompleted: 1
+    })
+  } else {
+    urlName = 'wizardMode'
+  }
+
+  router.push({
+    name: urlName,
+    params
+  })
 }
+
 const start = async (row: any) => {
   const sign = await web3.signForWallet({ type: 'tx' })
   if (sign) {

@@ -10,9 +10,7 @@
                     <li class="h-36px w-230px drag-box cursor-pointer flex items-center pl-18px"
                         @dragstart.stop="dragstart($event, item)"
                         @dragend.stop="dragend($event, item)" :draggable="true"
-                        v-for="item in algo.childrenList" :key="item.id">{{
-                                item.name
-                        }}
+                        v-for="item in algo.childrenList" :key="item.id">{{ item.name }}
                     </li>
                 </ul>
             </div>
@@ -27,8 +25,15 @@ import { MAX_NODES } from '@/config/constants'
 
 const route = useRoute()
 const { t } = useI18n()
+const props = defineProps({
+    isSettingCompleted: {
+        type: Boolean,
+        default: false
+    }
+})
 
 const dragstart = (e: any, item: any) => {
+    if (props.isSettingCompleted) return
     // if (this.viewModel === 'view') return
     useExpertMode().setDotted(true)
 }
@@ -47,6 +52,7 @@ watch(isInEdit, () => {
 })
 
 const dragend = async (e: any, item: any) => {
+    if (props.isSettingCompleted) return
     useExpertMode().setDotted(false)
     const inBoxFlag = isBoxInStage(e)
     if (!inBoxFlag) return
@@ -63,18 +69,39 @@ const dragend = async (e: any, item: any) => {
         } else if (!!isPSIModel.value) {
             return ElMessage.error(t('expert.exceedPsiLimit'))
         } else {
-            const alg: any = { ...item.alg, isPsi: true }
             const params = {
+                // TODO input output env varParams 都需要单独存放 不采用Vo内部元素
                 algorithmId: item.id,
                 nodeName: item.name,
-                nodeAlgorithmVo: alg,
+                nodeInput: {
+                    dataInputList: [],
+                    inputModel: item.alg.inputModel,
+                    model: {},
+                    isPsi: true
+                },
+                nodeOutput: {
+                    identityId: [],
+                    storePattern: 1
+                },
+                resource: {
+                    costCpu: item.alg.costCpu,
+                    costGpu: item.alg.costGpu,
+                    costMem: item.alg.costMem,
+                    costBandwidth: item.alg.costBandwidth,
+                    runTime: item.alg.runTime,
+                },
+                nodeCode: {
+                    code: item.alg.algorithmCode,
+                    variableList: item.alg.algorithmVariableList
+                },
+                alg: item.alg,
                 workflowId: workflowId || '',
                 workflowVersion: workflowVersion || ''
             }
             if (item.id === 1001) {
                 useExpertMode().setIsPSIModel(true)
             }
-            useExpertMode().setNodeList(params)
+            useExpertMode().addNodeList(params)
         }
     }
 }

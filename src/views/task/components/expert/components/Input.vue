@@ -4,7 +4,7 @@
         <div class="mt-40px">
             <p class="text-color-[#333] font-medium">{{ t('role.taskSponsor') }}</p>
             <el-select v-model="taskSender" class="mt-10px w-full" size="small"
-                :disabled="viewModel === 'view'" filterable :placeholder="t('task.selectSponsor')"
+                :disabled="isSettingCompleted" filterable :placeholder="t('task.selectSponsor')"
                 @change="handleSenderChange">
                 <el-option v-for="item in orgList" :key="item.identityId" :label="item.nodeName"
                     :value="item.identityId"></el-option>
@@ -14,13 +14,13 @@
             <p class="mt-40px text-color-[#333] font-medium">{{ t('expert.model') }}</p>
             <p class="mt-10px">
                 <el-select v-if="curNodeIndex !== 0" class="w-full" v-model="modelValue"
-                    size="small" :disabled="viewModel === 'view'" filterable
+                    size="small" :disabled="isSettingCompleted" filterable
                     :placeholder="t('expert.selectModel')" @change="handleModelChange">
                     <el-option v-for="(item, index) in modelOptions" :key="index"
                         :label="item.fileName" :value="item.modelId"></el-option>
                 </el-select>
                 <el-cascader v-else class="w-full" :key="modelKey" v-model="modelValue"
-                    :disabled="viewModel === 'view'" size="small" :span="12" :props="{
+                    :disabled="isSettingCompleted" size="small" :span="12" :props="{
                         // checkStrictly: true,
                         label: 'name', // label value
                         value: 'code', // 指定选项的值为选项对象的某个属性值
@@ -41,7 +41,7 @@
             <option v-for="item in orgs" :key="item.identityId" :label="item.label" :value="item.value"></option>
                 </el-select>-->
             <el-cascader class="w-full mt-10px" :key="cascaderKey[index]"
-                v-model="inputValue[index]" :disabled="viewModel === 'view'" size="small" :span="12"
+                v-model="inputValue[index]" :disabled="isSettingCompleted" size="small" :span="12"
                 :props="{
                     // checkStrictly: true,
                     label: 'name', // label value
@@ -88,6 +88,13 @@ const inputValue: Ref<any[]> = ref([] as any[])
 const columnsList: any = ref([])
 
 let columnsRef: any = []
+
+const props = defineProps({
+    isSettingCompleted: {
+        type: Boolean,
+        default: false
+    }
+})
 
 onBeforeUpdate(() => {
     columnsRef = []
@@ -254,8 +261,6 @@ const modelOptions = reactive([{
 }])
 
 onMounted(async () => {
-    console.log('重新init');
-    await useExpertMode().queryUserOrgList()
     initInputPanel()
     // 回显
     handleInputValue()

@@ -38,7 +38,10 @@ export default defineStore('expertMode', {
         setDotted(flag: boolean) {
             this.showDotted = flag
         },
-        setNodeList(node: any) {
+        setNodeList(nodeList: any) {
+            this.nodeList = nodeList
+        },
+        addNodeList(node: any) {
             // this.fakeNodeList.push(node)
             this.nodeList.push(node)
         },
@@ -53,24 +56,24 @@ export default defineStore('expertMode', {
         },
         setCurData(data: any) {
             // this.curNodeData = data
-            this.algorithm = this.nodeList[this.curNodeIndex]['nodeAlgorithmVo']
+            this.algorithm = this.nodeList[this.curNodeIndex].alg || {}
             this.curModel = this.nodeList[this.curNodeIndex]['model'] || ''
-            this.workflowNodeSenderIdentityId = this.nodeList[this.curNodeIndex]['workflowNodeSenderIdentityId'] || ''
-            this.workflowNodeInputVoList = this.nodeList[this.curNodeIndex]['workflowNodeInputVoList'] || []
-            this.workflowNodeOutputVoList = this.nodeList[this.curNodeIndex]['workflowNodeOutputVoList'] || []
+            this.workflowNodeSenderIdentityId = this.nodeList[this.curNodeIndex].nodeInput.identityId || ''
+            this.workflowNodeInputVoList = this.nodeList[this.curNodeIndex].nodeInput.dataInputList || []
+            this.workflowNodeOutputVoList = this.nodeList[this.curNodeIndex].nodeOutput.identityId || []
         },
         setEnvByType(data: any) {
-            this.nodeList[this.curNodeIndex].nodeAlgorithmVo[data.type] = data.data
+            this.nodeList[this.curNodeIndex].resource[data.type] = data.data
         },
         setVariableByIndex(data: any) {
-            this.nodeList[this.curNodeIndex].nodeAlgorithmVo.algorithmVariableList[data.index].varValue = data.value
+            this.nodeList[this.curNodeIndex].nodeCode.variableList[data.index].varValue = data.value
         },
         setCurNodePsiStatus(data: any) {
-            this.nodeList[data.index].nodeAlgorithmVo.isPsi = data.flag
+            this.nodeList[data.index].nodeInput.isPsi = data.flag
         },
         setSender(data: any) {
             this.workflowNodeSenderIdentityId = data
-            this.nodeList[this.curNodeIndex].workflowNodeSenderIdentityId = data
+            this.nodeList[this.curNodeIndex].nodeInput.identityId = data
         },
         setUserOrgList(data: any) {
             this.orgList = data
@@ -79,14 +82,14 @@ export default defineStore('expertMode', {
             const output: any = []
             this.orgList.map((item: any) => {
                 if (data.length && data.includes(item.identityId)) {
-                    output.push({
-                        identityId: item.identityId,
-                        storePattern: 1
-                    })
+                    // output.push({
+                    //     identityId: item.identityId,
+                    // })
+                    output.push(item.identityId)
                 }
             })
             if (this.nodeList[this.curNodeIndex]) {
-                this.nodeList[this.curNodeIndex].workflowNodeOutputVoList = output
+                this.nodeList[this.curNodeIndex].nodeOutput.identityId = output
             }
         },
         resetWorkflow() {
@@ -116,10 +119,7 @@ export default defineStore('expertMode', {
         },
 
         setInputVoList(data: any) {
-            if (!this.nodeList[this.curNodeIndex].workflowNodeInputVoList) {
-                this.nodeList[this.curNodeIndex].workflowNodeInputVoList = []
-            }
-            this.nodeList[this.curNodeIndex].workflowNodeInputVoList[data.transferIndex] = data.params
+            this.nodeList[this.curNodeIndex].nodeInput.dataInputList[data.transferIndex] = data.params
         },
 
         setShowPanel(data: boolean) {
@@ -134,7 +134,7 @@ export default defineStore('expertMode', {
         },
 
         setCurModel(data: any) {
-            this.nodeList[this.curNodeIndex]['model'] = data
+            this.nodeList[this.curNodeIndex].nodeInput.model = data
         },
         setIsPSIModel(data: boolean) {
             this.isPSIModel = data

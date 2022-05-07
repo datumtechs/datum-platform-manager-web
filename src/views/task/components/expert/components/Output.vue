@@ -4,7 +4,7 @@
         <p class="mt-30px">{{ t('expert.saveNotes') }}</p>
         <div v-if="workflowNodeSenderIdentityId">
             <p class="mt-30px text-color-[#333] font-bold">{{ t('role.resultConsumer') }}</p>
-            <el-checkbox-group v-model="checkList" :disabled="viewModel === 'view'"
+            <el-checkbox-group v-model="checkList" :disabled="isSettingCompleted"
                 class="mt-10px flex flex-col" @change="handleCheckboxChange">
                 <el-checkbox v-for="(item, index) in orgList" :key="index" :label="item.identityId"
                     :disabled="item.identityId === workflowNodeSenderIdentityId">
@@ -29,6 +29,13 @@ const workflowNodeOutputVoList = computed(() => useExpertMode().workflowNodeOutp
 
 const orgList: any = computed(() => useExpertMode().getUserOrgList)
 
+const props = defineProps({
+    isSettingCompleted: {
+        type: Boolean,
+        default: false
+    }
+})
+
 watch(() => workflowNodeSenderIdentityId.value, (newV, oldV) => {
     console.log('触发了watch,oldV:', oldV);
     initData(oldV);
@@ -36,7 +43,7 @@ watch(() => workflowNodeSenderIdentityId.value, (newV, oldV) => {
 
 const initData = (id?: string) => {
     checkList.value = []
-    const list = Array.from(new Set(workflowNodeOutputVoList.value.map((item: any) => item.identityId)))
+    const list: any = workflowNodeOutputVoList.value //Array.from(new Set(workflowNodeOutputVoList.value.map((item: any) => item.identityId)))
     if (!list.includes(workflowNodeSenderIdentityId.value)) {
         list.push(workflowNodeSenderIdentityId.value)
     }

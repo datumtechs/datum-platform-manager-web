@@ -1,6 +1,6 @@
 <template>
-  <el-table :data="props.data" class="mt-30px com-table _com_el-table-wrap">
-    <el-table-column type="index" width="80">
+  <el-table :data="props.data" class="mt-40px com-table _com_el-table-wrap">
+    <el-table-column type="index" width="80" :index="indexMethod">
       <template #header>{{ t('common.num') }}</template>
     </el-table-column>
     <el-table-column prop="workflowName" show-overflow-tooltip
@@ -39,27 +39,36 @@
 import { ElMessageBox, ElMessage } from 'element-plus'
 import { type Router, useRouter } from 'vue-router'
 import { deleteWorkflow } from '@/api/workflow/index'
-import { useFormatTime } from '@/hooks'
+import { useFormatTime, useTableIndex } from '@/hooks'
 const emit = defineEmits(['query'])
+const indexMethod = (index: number) => useTableIndex(index, props.current, props.size)
 const { t } = useI18n()
 const router: Router = useRouter()
 const props = defineProps({
   data: {
     type: Array,
     default: () => ([])
+  },
+  current: {
+    type: Number,
+    default: 1,
+  },
+  size: {
+    type: Number,
+    default: 10
   }
 })
 
 const Edit = (obj: any) => {
-  let urlName = obj.createMode == 2 ? 'wizardMode' : 'expertModel'
   router.push({
-    name: urlName, params: {
+    name: 'wizardMode', params: {
       workflowId: obj.workflowId,
       workflowVersion: obj.workflowVersion,
       workflowName: obj.workflowName,
     }
   })
 }
+
 const operationRecord = (obj: any) => {
   router.push({
     name: 'workflowDetails', params: {
@@ -67,6 +76,7 @@ const operationRecord = (obj: any) => {
     }
   })
 }
+
 const del = (obj: any) => {
   ElMessageBox.confirm(
     t('workflow.deleteWorkflowTips'),

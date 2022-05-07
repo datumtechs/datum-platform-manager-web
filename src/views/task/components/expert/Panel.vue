@@ -9,7 +9,7 @@
             <Overview v-show="currentTab === 'overview'" :overview-obj="overviewObj" />
             <Input v-show="currentTab === 'input'" v-bind="$attrs" />
             <Output v-show="currentTab === 'output'" v-bind="$attrs" />
-            <Code v-show="currentTab === 'code'" :codeObj="codeObj" />
+            <Code v-show="currentTab === 'code'" v-bind="$attrs" :codeObj="codeObj" />
             <Environment v-show="currentTab === 'environment'" v-bind="$attrs" :env-obj="envObj" />
         </div>
         <div v-else class="px-50px pt-70px main-panel">
@@ -24,7 +24,6 @@ import Input from './components/Input.vue'
 import Output from './components/Output.vue'
 import Code from './components/Code.vue'
 import Environment from './components/Environment.vue'
-import { getUserOrgList } from '@/api/login'
 import { useExpertMode } from '@/stores'
 const { t } = useI18n()
 
@@ -47,19 +46,19 @@ const envObj = reactive({
 
 const codeObj = reactive({
     code: '',
-    algorithmVariableList: []
+    variableList: <any>[]
 })
 
-const queryOrgList = (): void => {
-    getUserOrgList().then((res: any) => {
-        const { data, code } = res
-        if (code === 10000) {
-            useExpertMode().setUserOrgList(data)
-        }
-    }).catch((e: any) => {
-        console.log(e);
-    })
-}
+// const queryOrgList = (): void => {
+//     getUserOrgList().then((res: any) => {
+//         const { data, code } = res
+//         if (code === 10000) {
+//             useExpertMode().setUserOrgList(data)
+//         }
+//     }).catch((e: any) => {
+//         console.log(e);
+//     })
+// }
 
 const curNodeId = computed(() => useExpertMode().getCurNodeId)
 
@@ -84,19 +83,20 @@ const getPanelData = (id: string) => {
     const nodeList = useExpertMode().getNodeList
     nodeList.forEach((node: any) => {
         if (id === node.algorithmId) {
-            const data = node.nodeAlgorithmVo
+            const data = node.alg
             overviewObj.algorithmName = data.algorithmName
             overviewObj.algorithmDesc = data.algorithmDesc
             overviewObj.author = data.author
             overviewObj.maxNumbers = data.maxNumbers
             overviewObj.minNumbers = data.minNumbers
             overviewObj.supportLanguage = data.supportLanguage
-            codeObj.code = data.algorithmCode?.calculateContractCode // TODO psi has code?
-            codeObj.algorithmVariableList = data.algorithmVariableList
-            envObj.costCpu = data.costCpu
-            envObj.costMem = data.costMem
-            envObj.costBandwidth = data.costBandwidth
-            envObj.runTime = data.runTime
+
+            codeObj.code = node.nodeCode.code // TODO psi has code?
+            codeObj.variableList = node.nodeCode.variableList
+            envObj.costCpu = node.resource.costCpu
+            envObj.costMem = node.resource.costMem
+            envObj.costBandwidth = node.resource.costBandwidth
+            envObj.runTime = node.resource.runTime
         }
     })
 }
@@ -130,6 +130,7 @@ const tabList = computed(() => [{
 
 onMounted(() => {
     // queryOrgList()
+    useExpertMode().queryUserOrgList()
 })
 
 </script>

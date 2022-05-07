@@ -132,6 +132,7 @@ const en = {
   task: {
     createTaskBriefInfo: "Create new task you need",
     expertMode: "Expert Mode",
+    wizardMode: "Wizard Mode",
     step: "Step",
     selectionAlg: "Select algorithm",
     selectTrainingInputData: "Select Training Input Data  ",

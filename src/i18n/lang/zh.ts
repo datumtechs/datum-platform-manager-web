@@ -132,6 +132,7 @@ const zh = {
   task: {
     createTaskBriefInfo: "创建你需要的任务",
     expertMode: "专家模式",
+    wizardMode: "向导模式",
     step: "步骤",
     selectionAlg: "选择算法",
     selectTrainingInputData: "选择训练输入数据",

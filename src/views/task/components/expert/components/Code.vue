@@ -1,32 +1,44 @@
 <template>
     <div class="code-box flex flex-col">
-        <div v-if="props.codeObj?.algorithmVariableList.length > 0" ref="variable"
+        <div v-if="props.codeObj?.variableList.length > 0" ref="variable"
             class="code-variable-box py-20px">
-            <p class="text-color-[#333] font-bold px-20px pb-10px">{{ t('expert.algoVariable') }}
+            <p class="text-color-[#333] font-bold px-20px pb-10px">
+                {{ t('expert.algoVariable') }}
             </p>
-            <el-space class="mb-10px px-20px"
-                v-for="(item, index) in props.codeObj.algorithmVariableList" :key="item.varKey">
+            <el-space class="mb-10px px-20px" v-for="(item, index) in props.codeObj.variableList"
+                :key="item.varKey">
                 <p class="w-140px">{{ item.varKey }}</p>
                 <el-input class="round-input" @change="handleVariable($event, index)"
                     v-model="item.varValue" />
             </el-space>
         </div>
-        <div v-if="props.codeObj?.algorithmVariableList.length > 0" class="h-20px mobile-bar"
+        <div v-if="props.codeObj?.variableList.length > 0" class="h-20px mobile-bar"
             @mousedown.prevent="mousedown">
             <i></i>
             <i></i>
         </div>
         <div class="w-340px bg-primary m-20px code-context-box">
-            <p class="text-color-[#333] font-bold pb-20px">{{ t('expert.algoCode') }}</p>
-            <div v-html="props.codeObj.code"></div>
+            <p class="text-color-[#333] font-bold pb-20px code-context-box-title">
+                <span>{{ t('expert.algoCode') }}</span>
+                <el-icon @click="zoomToDialog" class="cursor-pointer">
+                    <full-screen />
+                </el-icon>
+            </p>
+            <div v-html="props.codeObj.code?.calculateContractCode"></div>
         </div>
+        <el-dialog v-model="zoomShow" top="5vh" :title="t('expert.algoCode')" width="40%">
+            <div class="code-dialog-content" v-html="props.codeObj.code?.calculateContractCode">
+            </div>
+        </el-dialog>
     </div>
 </template>
 
 <script setup lang='ts'>
 import { useExpertMode } from '@/stores'
+import { FullScreen } from '@element-plus/icons-vue'
 const { t } = useI18n()
 const variable: any = ref(null)
+const zoomShow = ref(false)
 
 const isDragIng = ref(false)
 const props = defineProps({
@@ -71,6 +83,11 @@ const mousemove = (event: any) => {
     }
 }
 
+const zoomToDialog = () => {
+    zoomShow.value = true
+}
+
+
 </script>
 
 <style scoped lang='scss'>
@@ -84,6 +101,18 @@ const mousemove = (event: any) => {
         overflow: auto;
     }
 
+
+
+    .code-dialog-content {
+        height: calc(100vh - 25vh);
+        white-space: pre-line;
+        font-size: 14px;
+        line-height: 20px;
+        color: #333;
+        overflow: auto;
+        padding: 0 10px;
+    }
+
     .code-context-box {
         background-color: #f5f8fa;
         white-space: pre-line;
@@ -93,6 +122,14 @@ const mousemove = (event: any) => {
         overflow: auto;
         height: calc(100% - 34px);
         flex: 1;
+
+        .code-context-box-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .code-context-box-content {}
 
         &::-webkit-scrollbar {
             width: 0px;

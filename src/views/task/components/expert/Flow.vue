@@ -5,7 +5,7 @@
             </el-button>
         </div>
         <div id="mainStage" @dragover.stop="dragover($event)" class="mainStage"
-            :class="{ showDot: showDot }">
+            :class="{ showDot }">
             <div v-for="(node, index) in nodeListWithStatus" :key="node.id"
                 class="node-box mb-100px" :class="{ 'node-arrow': index < nodeList.length - 1 }">
                 <div class="node cursor-pointer" @click="selectNode(node, index)"
@@ -19,7 +19,7 @@
                         <el-tooltip class="box-item" effect="dark" :content="node.nodeName"
                             placement="top-start">{{ node?.nodeName }}</el-tooltip>
                     </div>
-                    <div class="btn">
+                    <div v-if="!props.isSettingCompleted" class="btn">
                         <el-tooltip v-if="true" class="box-item" effect="dark"
                             :content="t('expert.deleteNode')" placement="top-start"><img
                                 @click.stop="deleteNode(node, index)"
@@ -31,9 +31,10 @@
                             {{ t('expert.viewResult') }}</p>
                     </div>
                 </div>
-                <div v-if="node.nodeAlgorithmVo.supportDefaultPsi">
-                    <el-checkbox @change="handleVoPsi($event, index)"
-                        v-model="node.nodeAlgorithmVo.isPsi" label="PSI" />
+                <div v-if="node.alg.supportDefaultPsi">
+                    <el-checkbox :disabled="props.isSettingCompleted"
+                        @change="handleVoPsi($event, index)" v-model="node.nodeInput.isPsi"
+                        label="PSI" />
                     <el-tooltip class="box-item" effect="dark" :content="t('expert.psiHint')"
                         placement="top-start">
                         <img src="@/assets/images/task/quest@2x.png" class="w-14px h-14px ml-6px" />
@@ -52,7 +53,6 @@ import { useRoute } from 'vue-router';
 
 const route = useRoute()
 const router = useRouter()
-const dragStatus = ref<boolean>(true)
 const { t } = useI18n()
 
 const props = defineProps({
@@ -63,12 +63,17 @@ const props = defineProps({
     workflowStatus: {
         type: Number,
         default: 0
+    },
+    isSettingCompleted: {
+        type: Boolean,
+        default: false
     }
-
 })
 
 const dragover = (e: any) => {
-    e.dataTransfer.effectAllowed = 'copy'
+    // e.dataTransfer.effectAllowed = 'copy'
+    e.preventDefault()
+    e.dataTransfer.dropEffect = 'copy'
     console.log('dragover,', e);
 }
 
@@ -129,7 +134,7 @@ const judgeMentParams = () => {
                         flag = false
                         return
                     }
-                    if (nodeList.value[i].nodeAlgorithmVo.inputModel && j === 0 && !input[j].dependentVariable) {
+                    if (nodeList.value[i].alg.inputModel && j === 0 && !input[j].dependentVariable) {
                         ElMessage.error('请选择数据提供方的因变量')
                         flag = false
                         return
@@ -211,30 +216,29 @@ const getSaveParams = () => {
     }
     nodeList.value.map((node: any, index: number) => {
         const obj: any = {}
-        obj.algorithmId = node.nodeAlgorithmVo.algorithmId
+        obj.algorithmId = node.alg.algorithmId
         obj.nodeName = node.nodeName
         obj.nodeStep = ++index
-        obj.nodeInput = {
-            dataInputList: node.workflowNodeInputVoList,
-            isPsi: node.nodeAlgorithmVo.isPsi,
-            inputModel: node.nodeAlgorithmVo.inputModel,
-            identityId: node.workflowNodeSenderIdentityId,
-            model: node.model
-        }
-        const ids = node.workflowNodeOutputVoList.map((out: any) => out.identityId)
+        obj.nodeInput = node.nodeInput
+        //  {
+        //     dataInputList: node.nodeInput.dataInputList,
+        //     isPsi: node.nodeInput.isPsi,
+        //     inputModel: node.nodeInput.inputModel,
+        //     identityId: node.nodeInput.identityId,
+        //     model: node.nodeInput.model
+        // }
         obj.nodeOutput = {
-            identityId: [...ids],
+            identityId: node.nodeOutput.identityId,
             "storePattern": 1
         }
         obj.nodeCode = {
-            variableList: node.nodeAlgorithmVo.algorithmVariableList
+            variableList: node.nodeCode.variableList
         }
         obj.resource = {
-            costBandwidth: node.nodeAlgorithmVo.costBandwidth,
-            costCpu: node.nodeAlgorithmVo.costCpu,
-            costGpu: node.nodeAlgorithmVo.costGpu,
-            costMem: node.nodeAlgorithmVo.costMem,
-            runTime: node.nodeAlgorithmVo.runTime,
+            costBandwidth: node.resource.costBandwidth,
+            costCpu: node.resource.costCpu,
+            costMem: node.resource.costMem,
+            runTime: node.resource.runTime,
         }
         params.workflowNodeList.push(obj)
     })

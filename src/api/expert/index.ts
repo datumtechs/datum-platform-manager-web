@@ -23,3 +23,12 @@ export const saveWorkflowInExpert = (data: any): Promise<any> => {
         data
     })
 }
+
+// 专家模式下查询工作流设置 /flow/workflow/expert/getWorkflowSettingOfExpertMode
+export const getWorkflowSettingOfExpertMode = (params: any): Promise<any> => {
+    return http({
+        method: 'GET',
+        url: '/flow/workflow/expert/getWorkflowSettingOfExpertMode',
+        params
+    })
+}
