@@ -28,7 +28,7 @@
 </template>
 <script lang="ts" setup>
 import { Back } from '@element-plus/icons-vue'
-import top1bg from '@/assets/Images/home/top1bg.png'
+import top1bg from '@/assets/images/home/top1bg.png'
 const emit = defineEmits(['back'])
 const props = defineProps({
     bgName: {

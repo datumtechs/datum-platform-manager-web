@@ -28,15 +28,15 @@
 </template>
 <script lang="ts" setup>
 import { Back } from '@element-plus/icons-vue'
-import network from '@/assets/Images/banner/network.png'
-import market from '@/assets/Images/banner/market.png'
-import workflow from '@/assets/Images/banner/workflow.png'
-import computeServe from '@/assets/Images/banner/computeServe.png'
-import globalTask from '@/assets/Images/banner/globalTask.png'
-import newTask from '@/assets/Images/banner/newTask.png'
-import myData from '@/assets/Images/banner/myData.png'
-import myAuth from '@/assets/Images/banner/myAuth.png'
-import myAccount from '@/assets/Images/banner/myAccount.png'
+import network from '@/assets/images/banner/network.png'
+import market from '@/assets/images/banner/market.png'
+import workflow from '@/assets/images/banner/workflow.png'
+import computeServe from '@/assets/images/banner/computeServe.png'
+import globalTask from '@/assets/images/banner/globalTask.png'
+import newTask from '@/assets/images/banner/newTask.png'
+import myData from '@/assets/images/banner/myData.png'
+import myAuth from '@/assets/images/banner/myAuth.png'
+import myAccount from '@/assets/images/banner/myAccount.png'
 
 const { t } = useI18n()
 const emit = defineEmits(['back'])
