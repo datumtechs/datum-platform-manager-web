@@ -65,7 +65,7 @@ const algList: any = ref<any[]>([])//算法列表 //最外层
 const algTypelist = computed(() => algList.value.filter((v: any) => v.id == form.calculationType))//具体算法
 const disabled = ref(false)
 const emit = defineEmits(["getParams", 'init', 'getNoticeText'])
-const props = defineProps({
+const props: any = defineProps({
   taskParams: { type: Object, default: () => ({}) },
   processList: { type: Array, default: (): any[] => [] }//计算流程列表
 })

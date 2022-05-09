@@ -55,7 +55,7 @@
             </el-icon>
           </div>
         </div>
-        <div v-if="props.fieldType.some(v => v.type == 'label')">
+        <div v-if="props.fieldType.some((v: { type: string }) => v.type == 'label')">
           <span class="inline-block w-100px text-color-[#333333] mb-10px">{{
               t('task.label')
           }}</span>
@@ -69,7 +69,7 @@
             </el-icon>
           </div>
         </div>
-        <div v-if="props.fieldType.some(v => v.type == 'feature')">
+        <div v-if="props.fieldType.some((v: { type: string }) => v.type == 'feature')">
           <span class="inline-block w-100px text-color-[#333333] mb-10px">{{
               t('task.feature')
           }}</span>
@@ -98,7 +98,7 @@ const { t, locale } = useI18n()
 const emit = defineEmits(['update:params'])
 const fieldTypeActive = ref('idColumn')
 const activeIndex = ref<any>({})
-const props = defineProps({
+const props: any = defineProps({
   num: {
     type: Number,
     default: 1
@@ -148,7 +148,7 @@ const nextActiveIndex = computed(() => {
 })
 
 const fieldsList = ref<any[]>([])
-const orgList = computed(() => props.orgList.map(v => {
+const orgList = computed(() => props.orgList.map((v: any) => {
   return {
     value: v.identityId,
     label: v.nodeName,

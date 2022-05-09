@@ -1,3 +1,4 @@
+//@ts-ignore
 import Big from 'big.js';
 
 /**
