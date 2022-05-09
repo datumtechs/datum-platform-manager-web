@@ -1,16 +1,29 @@
 <template>
   <div class="flex-1 task-wrap com-main">
-    <Banner :bg-name="'newTask'">
-      <template #briefInfo>{{ t('task.createTaskBriefInfo') }}</template>
+    <Banner :bg-name="'newTask'" :showRouter="isRouterWorkFlow" @back="$router.go(-1)" :back-show="!isRouterWorkFlow"
+      :detailName="workflowName">
+      <template #briefInfo v-if="isRouterWorkFlow">{{ t('task.createTaskBriefInfo') }}</template>
     </Banner>
     <div class="com-main-data-wrap main-content">
-      <NormalMode />
+      <NormalMode :key="normalTimeKey" @getWorkName="getWorkName" />
     </div>
   </div>
 </template>
 <script lang="ts" setup>
 import NormalMode from './components/NormalMode.vue'
 const { t } = useI18n()
+const route: any = useRoute()
+const isRouterWorkFlow = computed(() => route.params?.workflowId ? false : true)
+const workflowName = ref('')
+const getWorkName = (str: string) => {
+  workflowName.value = str
+}
+
+const normalTimeKey = ref(Date.now())
+
+watch(route, () => {
+  normalTimeKey.value = Date.now()
+})
 
 </script>
 <style lang="scss">

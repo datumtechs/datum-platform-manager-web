@@ -7,21 +7,22 @@
     <div class="flex items-center text-14px">
       <div class="mr-20px text-color-[#666666] font-medium w-130px">{{ $t('task.selectSponsor') }} ：</div>
       <el-select v-model="identityId" :suffix-icon="CaretBottom" :placeholder="$t('task.selectSponsor')"
-        style="flex:0 0 440px" class="h-40px rounded-20px border-1 basis-1/2 border-solid border-color-[#EEEEEE]">
+        :disabled="taskParams.isSettingCompleted" style="flex:0 0 440px"
+        class="h-40px rounded-20px border-1 basis-1/2 border-solid border-color-[#EEEEEE]">
         <el-option v-for="(v) in props.orgList" :label="v.nodeName" :value="v.identityId">
         </el-option>
       </el-select>
     </div>
     <TaskParamsTransfer :fieldType="[props.fieldType[0]]" :sellectionAlgPsi="true" :disabledData="psiInputTwo?.metaData"
-      :key="'input'" @update:params="psiInputOne = $event" :params="psiInputParams.one" :num="1"
-      :orgList="props.orgList" />
+      :taskParams="props.taskParams" :key="'input'" @update:params="psiInputOne = $event" :params="psiInputParams.one"
+      :num="1" :orgList="props.orgList" />
     <div class="h-30px"></div>
     <TaskParamsTransfer :fieldType="[props.fieldType[0]]" :sellectionAlgPsi="true" :disabledData="psiInputOne?.metaData"
-      :key="'output'" @update:params="psiInputTwo = $event" :params="psiInputParams.two" :num="2"
-      :orgList="props.orgList" />
+      :taskParams="props.taskParams" :key="'output'" @update:params="psiInputTwo = $event" :params="psiInputParams.two"
+      :num="2" :orgList="props.orgList" />
     <div class="flex items-center pt-20px">
       <el-button round class="h-50px previous" @click="previous">{{ $t('common.previous') }}</el-button>
-      <el-button round class="h-50px previous ml-20px">{{ $t('common.saveAndReturn') }}</el-button>
+      <el-button round class="h-50px previous ml-20px" @click="preserv">{{ $t('common.saveAndReturn') }}</el-button>
       <NextButton @click="submit" />
     </div>
   </div>
@@ -32,7 +33,7 @@ import TaskParamsTransfer from '@/components/TaskParamsTransfer.vue';
 import { CaretBottom } from '@element-plus/icons-vue'
 import NextButton from './NextButton.vue'
 import { setWorkflowOfWizardMode } from '@/api/workflow'
-
+const router: any = useRouter()
 const emit = defineEmits(['previous', 'getParams', 'next'])
 const props: any = defineProps({
   noticeText: {
@@ -97,7 +98,11 @@ const handParams = (obj: any) => {
   })
 }
 
-const submit = async () => {
+const preserv = () => {
+  submit('preserv')
+}
+
+const submit = async (str?: string) => {
   const data = await handParams(psiInputOne.value)
   const data2 = await handParams(psiInputTwo.value)
 
@@ -120,6 +125,10 @@ const submit = async () => {
   }).then(res => {
     const { code } = res
     if (code === 10000) {
+      if (str == 'preserv') {
+        router.go(-1)
+        return
+      }
       next()
     }
   })
@@ -158,10 +167,10 @@ watch(() => props.taskParams, () => {
   .el-select .el-input__suffix .el-icon {
     color: #333333;
   }
+}
 
-  .previous {
-    border-radius: 25px;
-    padding: 0 40px;
-  }
+.previous {
+  border-radius: 25px !important;
+  padding: 20px 40px !important;
 }
 </style>

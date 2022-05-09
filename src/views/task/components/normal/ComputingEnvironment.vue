@@ -61,15 +61,16 @@
     </div>
     <div class="flex items-center pt-20px">
       <el-button round class="h-50px previous" @click="previous">{{ $t('common.previous') }}</el-button>
-      <el-button round class="h-50px previous ml-20px">{{ $t('common.saveAndReturn') }}</el-button>
-      <NextButton @click="next" />
+      <el-button round class="h-50px previous ml-20px" @click="preserv">{{ $t('common.saveAndReturn') }}</el-button>
+      <NextButton @click="submit" />
     </div>
   </div>
 </template>
 <script lang="ts" setup>
 import NoticeText from './NoticeText.vue';
-import { getWorkflowSettingOfWizardMode, setWorkflowOfWizardMode } from '@/api/workflow'
+import { setWorkflowOfWizardMode } from '@/api/workflow'
 import NextButton from './NextButton.vue'
+const router: any = useRouter()
 const { t } = useI18n()
 const emit = defineEmits(['previous', 'next'])
 const props = defineProps({
@@ -144,7 +145,12 @@ const timeCompanyList = ref([
   },
 ])
 
-const next = async () => {
+const preserv = () => {
+  submit('preserv')
+}
+
+
+const submit = async (str?: string) => {
   //@ts-ignore
   const validate: any[] = new Array(listLength.value).fill(false)
   // const data: any[] = []
@@ -193,6 +199,10 @@ const next = async () => {
   }).then(res => {
     const { data, code } = res
     if (code === 10000) {
+      if (str == 'preserv') {
+        router.go(-1)
+        return
+      }
       emit('next')
     }
   })
@@ -256,5 +266,10 @@ watch(() => props.taskParams, () => {
       }
     }
   }
+}
+
+.previous {
+  border-radius: 25px !important;
+  padding: 0 40px !important;
 }
 </style>
