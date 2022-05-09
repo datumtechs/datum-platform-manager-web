@@ -49,7 +49,7 @@
 
 <script lang="ts" setup>
 import { Pointer, Cloudy } from '@element-plus/icons-vue'
-import metamaskImg from '@/assets/Images/header/metamask-fox.svg'
+import metamaskImg from '@/assets/images/header/metamask-fox.svg'
 import { useWallet, useUsersInfo } from '@/stores'
 import { Login, LoginNonceId } from '@/api/login'
 

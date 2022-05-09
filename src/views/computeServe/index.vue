@@ -52,7 +52,7 @@
 <script lang="ts" setup>
 import { type Router, useRouter } from 'vue-router'
 import { getAlgTree } from '@/api/algorithm'
-import xgBoost from '@/assets/Images/computeServe/XGBoost.png'
+import xgBoost from '@/assets/images/computeServe/XGBoost.png'
 const router: Router = useRouter()
 const { t } = useI18n()
 const activekey = ref(0)

@@ -3,8 +3,8 @@
     popper-class="_el-popover" :width="140" trigger="hover">
     <template #reference>
       <!-- <img v-if="popoverShow" class="langue rounded-1/2 w-40px h-40px"
-        src="@/assets/Images/header/langue_active.png" /> -->
-      <img class="langue rounded-1/2 w-40px h-40px" src="@/assets/Images/header/langue.png" />
+        src="@/assets/images/header/langue_active.png" /> -->
+      <img class="langue rounded-1/2 w-40px h-40px" src="@/assets/images/header/langue.png" />
     </template>
     <div class="popover flex flex-col justify-between">
       <p class="mb-24px text-l font-normal cursor-pointer" :class="{ active: store.langue == 'zh' }"
@@ -29,7 +29,7 @@ const popoverShow = ref(false)
 <style lang="scss" scoped>
 .langue {
   &:hover {
-    content: url("@/assets/Images/header/langue_active.png")
+    content: url("@/assets/images/header/langue_active.png")
   }
 }
 

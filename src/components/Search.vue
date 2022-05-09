@@ -17,7 +17,7 @@
             content="this is content, this is content, this is content"
           >
             <template #reference>
-              <img class="w-24px cursor-pointer" src="@/assets/Images/header/select.png" />
+              <img class="w-24px cursor-pointer" src="@/assets/images/header/select.png" />
             </template>
           </el-popover>
         </template>

@@ -7,7 +7,7 @@ import PersonalCenter from './components/PersonalCenter.vue'
     <img
       class="logo w-164px h-26px ml-37px cursor-pointer"
       @click="$router.push('/')"
-      src="@/assets/Images/header/logo.png"
+      src="@/assets/images/header/logo.png"
     />
     <Menu />
     <PersonalCenter />
