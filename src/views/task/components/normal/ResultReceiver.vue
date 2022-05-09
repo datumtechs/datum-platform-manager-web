@@ -15,7 +15,7 @@
           }}</div>
           <el-form-item prop="checkList">
             <el-checkbox-group v-model="form[i].checkList">
-              <template v-for="v in orgList" :key="item.identityId">
+              <template v-for="v in props.orgList" :key="item.identityId">
                 <el-checkbox :label="v.identityId">{{ v.nodeName }}</el-checkbox>
                 <br />
               </template>
@@ -37,7 +37,7 @@
 import NoticeText from './NoticeText.vue';
 import { getWorkflowSettingOfWizardMode, setWorkflowOfWizardMode } from '@/api/workflow'
 const emit = defineEmits(['previous', 'next'])
-const props = defineProps({
+const props: any | { orgList: any } = defineProps({
   noticeText: {
     type: Object,
     default: () => ({})
@@ -56,7 +56,7 @@ const props = defineProps({
   },
   orgList: {
     type: Array,
-    default: (): any[] => ([])
+    default: (): any => ([])
   },
   taskParams: {
     type: Object,

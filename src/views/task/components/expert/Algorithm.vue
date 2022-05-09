@@ -3,14 +3,12 @@
         <p class="text-18px font-bold mt-16px pl-24px">{{ t('common.algorithm') }}</p>
         <div class="algo-wrapper">
             <div v-for="algo in algoList" class="flex flex-col items-center mt-24px">
-                <p
-                    class="h-36px w-230px text-14px leading-20px text-[#000] font-bold pl-18px flex items-center">
+                <p class="h-36px w-230px text-14px leading-20px text-[#000] font-bold pl-18px flex items-center">
                     {{ algo.name }}</p>
                 <ul class="mt-4px">
                     <li class="h-36px w-230px drag-box cursor-pointer flex items-center pl-18px"
-                        @dragstart.stop="dragstart($event, item)"
-                        @dragend.stop="dragend($event, item)" :draggable="true"
-                        v-for="item in algo.childrenList" :key="item.id">{{ item.name }}
+                        @dragstart.stop="dragstart($event, item)" @dragend.stop="dragend($event, item)"
+                        :draggable="true" v-for="item in algo.childrenList" :key="item.id">{{ item.name }}
                     </li>
                 </ul>
             </div>
@@ -22,7 +20,7 @@
 import { queryAlgoDetail } from '@/api/algorithm'
 import { useExpertMode } from '@/stores'
 import { MAX_NODES } from '@/config/constants'
-
+import { ElMessage } from 'element-plus'
 const route = useRoute()
 const { t } = useI18n()
 const props = defineProps({

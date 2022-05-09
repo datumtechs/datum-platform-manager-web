@@ -36,7 +36,7 @@ import NextButton from './NextButton.vue'
 import { setWorkflowOfWizardMode } from '@/api/workflow'
 
 const emit = defineEmits(['previous', 'getParams', 'next'])
-const props = defineProps({
+const props: any | { orgList: any } = defineProps({
   noticeText: {
     type: Object,
     default: () => ({})
