@@ -26,16 +26,18 @@
     </div>
     <div class="flex items-center pt-20px relative">
       <el-button round class="h-50px previous" @click="previous">{{ $t('common.previous') }}</el-button>
-      <el-button round class="h-50px previous ml-20px">{{ $t('common.saveAndReturn') }}</el-button>
-      <el-button round @click="next" class="h-50px absolute right-0px com-button previous ml-20px">{{
+      <el-button round class="h-50px previous ml-20px" @click="preserv">{{ $t('common.saveAndReturn') }}</el-button>
+      <!-- <el-button round @click="next" class="h-50px absolute right-0px com-button previous ml-20px">{{
           $t('task.startTask')
       }}</el-button>
+    -->
     </div>
   </div>
 </template>
 <script lang="ts" setup>
 import NoticeText from './NoticeText.vue';
-import { getWorkflowSettingOfWizardMode, setWorkflowOfWizardMode } from '@/api/workflow'
+import { setWorkflowOfWizardMode } from '@/api/workflow'
+const router: any = useRouter()
 const emit = defineEmits(['previous', 'next'])
 const props: any | { orgList: any } = defineProps({
   noticeText: {
@@ -81,11 +83,13 @@ const rules = reactive({
   }
 })
 
+const preserv = () => {
+  next('preserv')
+}
 
-const next = async () => {
+const next = async (str?: string) => {
   //@ts-ignore
   const validate: any[] = new Array(listLength.value).fill(false)
-  // const data: any[] = []
   let resource = 1
   if (listLength.value <= 1) {
     resource = props.taskParams.value?.commonOutput.storePattern
@@ -128,7 +132,10 @@ const next = async () => {
   }).then(res => {
     const { data, code } = res
     if (code === 10000) {
-      emit('next')
+      if (str == 'preserv') {
+        router.go(-1)
+        // emit('next')
+      }
     }
   })
 }
@@ -166,5 +173,10 @@ watch(() => props.taskParams, () => {
       }
     }
   }
+}
+
+.previous {
+  border-radius: 25px !important;
+  padding: 20px 40px !important;
 }
 </style>

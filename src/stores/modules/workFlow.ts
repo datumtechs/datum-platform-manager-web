@@ -39,7 +39,7 @@ export default defineStore('workFlow', {
                 workflowId: workerFlowobj.workflowId,
                 workflowVersion: workerFlowobj.workflowVersion,
             }
-            console.log('store', workerFlowobj)
+            // console.log('store', workerFlowobj)
         },
     }
 })

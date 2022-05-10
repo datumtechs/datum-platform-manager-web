@@ -181,7 +181,8 @@ const en = {
     pleaseComments: "Please enter comments (optional)",
     repeatAlgo: 'Duplicate algorithm nodes',
     exceedMaxNode: "Maximum number of nodes exceeded",
-    reselectLater: "Please delete first and reselect later"
+    reselectLater: "Please delete first and reselect later",
+    pleaseCompleteStep: "Please complete the current step information"
   },
   myData: {
     tasksBriefInfoFirstParagraph: " ",

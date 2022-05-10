@@ -39,6 +39,7 @@ import { useWorkFlow } from '@/stores'
 import { onBeforeRouteLeave } from 'vue-router';
 import { LoginNonceId } from '@/api/login'
 import { useWallet, useUsersInfo } from '@/stores'
+import { ElMessage } from 'element-plus';
 const userInfoStore = useUsersInfo()
 const walletStore = useWallet()
 const web3: any = inject('web3')
@@ -52,13 +53,13 @@ const orgList: any = ref<any>([])
 const comList = ref([])
 const noticeText = ref({})
 const workfolwParams = ref<any>({})
-const processStep = ref(1)//
+// const processStep = ref(1)//
 const processList = ref([])//流程列表
 const workflowInfo = reactive<any>({
   workflowId: '',
   workflowVersion: ''
 })
-
+const emit = defineEmits(['getWorkName'])
 
 const componentList = markRaw<any[]>(
   //0-选择训练输入数据, 
@@ -211,9 +212,16 @@ const previous = () => {
   } else {
     activeStep(0)
   }
+  query()
+
 }
 
 const setActiveStep = (index: number) => {
+  // console.log(index, workfolwParams.value?.completedCalculationProcessStep + 1)
+  if (workfolwParams.value?.completedCalculationProcessStep + 1 < index) {
+    ElMessage.warning(t('task.pleaseCompleteStep'))
+    return
+  }
   activeIndex.value = index
   query(index)
 }
@@ -229,7 +237,11 @@ const query = (index?: number) => {
     const { data, code } = res
     if (code === 10000) {
       workfolwParams.value = { ...data }
-      processStep.value = data?.completedCalculationProcessStep || 1
+      // activeIndex.value = data?.completedCalculationProcessStep || 1
+      // // processStep.value = data?.completedCalculationProcessStep || 2
+      // // console.log(processStep.value)
+      // // debugger
+      emit('getWorkName', data.workflowName)
     }
     loading.value = false
   }).catch((e) => {
@@ -261,7 +273,7 @@ const setProces = () => {//设置流程
 const init = () => {
   const workflowId = route.params.workflowId || store.getWorkerFlow.workflowId
   const workflowVersion = route.params.workflowVersion || store.getWorkerFlow.workflowVersion
-  console.log(store.getWorkerFlow)
+  // console.log(store.getWorkerFlow)
   if (workflowId) {
     workflowInfo.workflowId = workflowId
     workflowInfo.workflowVersion = workflowVersion

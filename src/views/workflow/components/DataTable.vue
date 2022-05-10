@@ -3,20 +3,15 @@
     <el-table-column type="index" width="80" :index="indexMethod">
       <template #header>{{ t('common.num') }}</template>
     </el-table-column>
-    <el-table-column prop="workflowName" show-overflow-tooltip
-      :label="t('workflow.workflowName')" />
-    <el-table-column show-overflow-tooltip prop="algorithmName"
-      :label="t('workflow.workflowAlgorithm')" />
-    <el-table-column show-overflow-tooltip prop="calculationProcessName"
-      :label="t('workflow.workflowSteps')" />
-    <el-table-column show-overflow-tooltip prop="lastRunTime"
-      :label="t('workflow.latestRunningTime')">
+    <el-table-column prop="workflowName" show-overflow-tooltip :label="t('workflow.workflowName')" />
+    <el-table-column show-overflow-tooltip prop="algorithmName" :label="t('workflow.workflowAlgorithm')" />
+    <el-table-column show-overflow-tooltip prop="calculationProcessName" :label="t('workflow.workflowSteps')" />
+    <el-table-column show-overflow-tooltip prop="lastRunTime" :label="t('workflow.latestRunningTime')">
       <template #default="scope">{{ scope.row.lastRunTime && useFormatTime(scope.row.lastRunTime) ||
           '-'
       }}</template>
     </el-table-column>
-    <el-table-column show-overflow-tooltip prop="createTime" :label="t('workflow.creationTime')"
-      :width="180">
+    <el-table-column show-overflow-tooltip prop="createTime" :label="t('workflow.creationTime')" :width="180">
       <template #default="scope">{{ useFormatTime(scope.row.createTime) }}</template>
     </el-table-column>
     <el-table-column :label="t('common.actions')" :fixed="'right'">

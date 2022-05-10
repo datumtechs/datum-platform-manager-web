@@ -181,7 +181,8 @@ const zh = {
     pleaseComments: "请输入备注（选填）",
     repeatAlgo: "请勿添加重复的算法节点",
     exceedMaxNode: "超过最大节点数",
-    reselectLater: "请先删除后在重新选择"
+    reselectLater: "请先删除后在重新选择",
+    pleaseCompleteStep: "请完善当前步骤信息"
   },
   myData: {
     tasksBriefInfoFirstParagraph: "全网共",

@@ -6,7 +6,7 @@
             t('task.selectData') : `${t('task.select')} ${props.num}st ${t('task.selectData')}`
         }}
         {{ locale == 'zh' ? props.num : '' }}：</div>
-      <el-cascader @change="cascaderChange" clearable
+      <el-cascader @change="cascaderChange" clearable :disabled="taskParams.isSettingCompleted"
         class="h-40px rounded-20px border-1 w-395px border-solid border-color-[#EEEEEE]" :suffix-icon="CaretBottom"
         v-model="form.metaData" :options="orgList" :props="cascaderProps" />
     </div>
@@ -115,6 +115,10 @@ const props: any = defineProps({
     default: () => []
   },
   params: {
+    type: Object,
+    default: () => ({})
+  },
+  taskParams: {
     type: Object,
     default: () => ({})
   },

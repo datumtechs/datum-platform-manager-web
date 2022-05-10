@@ -121,6 +121,7 @@ const next = () => {
 const algChange = (type?: any) => {
   if (type !== 'notice') form.calculationProcessId = undefined
   emit('getParams', form)
+  getNoticeText()
 }
 
 
@@ -186,7 +187,7 @@ const getNoticeText = () => {
     if (v.id == form.calculationType) {
       paramsText.calculationTypeText = v.name
       v.childrenList.forEach((item: any) => {
-        if (item.id == form.algorithmId) paramsText.algorithmText = v.name
+        if (item.id == form.algorithmId) paramsText.algorithmText = item.name
       })
     }
   })
