@@ -8,8 +8,8 @@
       <el-input :prefix-icon="Search" class="w-668px mt-35px search-input" type="text">
         <template #suffix>
           <div
-            class="w-110px bg-bg-main text-[#fff] leading-50px font-medium rounded-25px cursor-pointer text-[16px] -mr-11px"
-          >{{ t('common.search') }}</div>
+            class="w-110px bg-bg-main text-[#fff] leading-50px font-medium rounded-25px cursor-pointer text-[16px] -mr-11px">
+            {{ t('common.search') }}</div>
         </template>
       </el-input>
     </div>
@@ -19,6 +19,7 @@
 <script setup lang='ts'>
 import mainLogo from '@assets/images/home/mainLogo.png'
 import { Search } from '@element-plus/icons-vue'
+
 const { t } = useI18n()
 </script>
 
@@ -26,6 +27,7 @@ const { t } = useI18n()
 .banner {
   background: url("@/assets/images/home/banner.png") no-repeat;
   background-size: 100% 100%;
+
   .search-input {
     :deep(.el-input__inner) {
       height: 50px;
@@ -33,11 +35,13 @@ const { t } = useI18n()
       border-radius: 25px;
       padding-left: 60px;
     }
+
     :deep(.el-icon) {
       font-size: 24px;
       margin-left: 15px;
       color: #333;
     }
+
     ::after {
       width: 110px;
       height: 50px;

@@ -1,6 +1,6 @@
 <template>
     <div class="nameDialog">
-        <el-dialog v-model="props.show" :modal="false" destroy-on-close width="320px">
+        <el-dialog v-model="props.show" destroy-on-close width="320px">
             <div class="font-bold text-14px leading-18px text-color-[#333]">{{
                     t('expert.inputNameTips')
             }}</div>

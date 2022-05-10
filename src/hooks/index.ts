@@ -10,10 +10,16 @@ import useFileType from './useFileType'
 import useAddressDisplay from './useAddressDisplay'
 import { useExchangeFrom, useExchangeTo } from './useDecimal'
 import useNotice from './useNotice'
+import useObserver from './useObserver'
+import useThousand from './useThousand'
+import useSizeWithUnit from './useSizeWithUnit'
 
 // const context = require.context('./', false, /\.ts$/)
 
 export {
+    useSizeWithUnit,
+    useThousand,
+    useObserver,
     useNotice,
     useSize,
     useTableIndex,

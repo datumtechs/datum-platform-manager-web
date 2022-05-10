@@ -1,4 +1,6 @@
 
+import useThousand from './useThousand'
+
 export default function useSize(input: number): string {
     if (!input) return '0B'
     let size = ''

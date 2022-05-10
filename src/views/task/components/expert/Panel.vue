@@ -1,7 +1,7 @@
 <template>
-    <div class="w-380px bg-[#F7F8F9]">
-        <div class="flex h-40px bg-[#fff]">
-            <div class="flex flex-auto text-center text-[#333] font-medium text-14px items-center justify-center cursor-pointer"
+    <div class="w-380px  panel-box">
+        <div class="flex h-40px bg-[#fff] tab-box">
+            <div class="flex flex-auto text-center text-[#333] font-medium text-14px items-center justify-center cursor-pointer tab"
                 :class="{ active: currentTab === tab.value }" @click="currentTab = tab.value"
                 v-for="tab in tabList" :key="tab.id">{{ tab.label }}</div>
         </div>
@@ -136,8 +136,22 @@ onMounted(() => {
 </script>
 
 <style scoped lang='scss'>
-.active {
-    background: #f7f8f9;
+.panel-box {
+    border-left: 1px solid #eeeeee;
+
+    .tab-box {
+        .tab {
+            border-bottom: 1px solid #eeeeee;
+
+            &:not(:last-child) {
+                border-right: 1px solid #eeeeee;
+            }
+
+            &.active {
+                border-bottom: none;
+            }
+        }
+    }
 }
 
 .main-panel {
