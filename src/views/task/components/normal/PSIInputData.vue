@@ -102,7 +102,7 @@ const preserv = () => {
   submit('preserv')
 }
 
-const submit = async (str?: string) => {
+const submit = async (str?: string | any) => {
   const data = await handParams(psiInputOne.value)
   const data2 = await handParams(psiInputTwo.value)
 

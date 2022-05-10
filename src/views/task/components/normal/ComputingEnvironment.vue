@@ -150,7 +150,7 @@ const preserv = () => {
 }
 
 
-const submit = async (str?: string) => {
+const submit = async (str?: string | any) => {
   //@ts-ignore
   const validate: any[] = new Array(listLength.value).fill(false)
   // const data: any[] = []
