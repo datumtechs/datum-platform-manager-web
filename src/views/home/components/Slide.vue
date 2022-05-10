@@ -4,11 +4,8 @@
          <ul class="whitespace-nowrap w-1176px h-178px">
             <transition-group name="slide">
                <!-- 1176px -->
-               <li
-                  class="p-20px w-176px h-178px mr-20px cursor-pointer float-left cursor-pointer border-1 border-solid border-[#EEEEEE]"
-                  v-for="box in taskList"
-                  :key="box.id"
-               >
+               <li class="p-20px w-176px h-178px mr-20px cursor-pointer float-left cursor-pointer border-1 border-solid border-[#EEEEEE]"
+                  v-for="box in taskList" :key="box.id">
                   <p class="text-[16px] text-[#333]">{{ box.label }}</p>
                   <p class="text-[16px] text-[#333]">{{ t('common.success') }} !</p>
                   <p class="mt-40px text-[12px] text-[#999] leading-17px">35秒前</p>
@@ -19,8 +16,7 @@
       </div>
       <!-- <div class="w-176px h-178px bg-[#ff0000] mr-20px" v-for="box in taskList" :key="box.id"></div> -->
       <div
-         class="w-176px h-178px cursor-pointer border-1 border-solid border-[#EEEEEE] flex flex-col justify-center items-center"
-      >
+         class="w-176px h-178px cursor-pointer border-1 border-solid border-[#EEEEEE] flex flex-col justify-center items-center">
          <p class="text-[#252525] font-bold">{{ t('home.viewAllComputingTask') }}</p>
          <img class="mt-6px" :src="arrow" />
       </div>
@@ -29,6 +25,8 @@
 
 <script setup lang='ts'>
 import arrow from '@assets/images/home/slide-arrow.png'
+import { useObserver } from '@/hooks'
+import { queryTaskList } from '@/api/task'
 const { t } = useI18n()
 interface Task {
    id: number,
@@ -38,42 +36,42 @@ interface Task {
 
 }
 let taskList: Array<Task> = reactive([
-   {
-      id: 1,
-      label: '逻辑回归模型训练',
-      endAt: '',
-      orgName: '中国银行'
-   },
-   {
-      id: 2,
-      label: '逻辑回归模型训练',
-      endAt: '',
-      orgName: '中国银行'
-   },
-   {
-      id: 3,
-      label: '逻辑回归模型训练',
-      endAt: '',
-      orgName: '中国银行'
-   },
-   {
-      id: 4,
-      label: '逻辑回归模型训练',
-      endAt: '',
-      orgName: '中国银行'
-   },
-   {
-      id: 5,
-      label: '逻辑回归模型训练',
-      endAt: '',
-      orgName: '中国银行'
-   },
-   {
-      id: 6,
-      label: '逻辑回归模型训练',
-      endAt: '',
-      orgName: '中国银行'
-   }
+   // {
+   //    id: 1,
+   //    label: '逻辑回归模型训练',
+   //    endAt: '',
+   //    orgName: '中国银行'
+   // },
+   // {
+   //    id: 2,
+   //    label: '逻辑回归模型训练',
+   //    endAt: '',
+   //    orgName: '中国银行'
+   // },
+   // {
+   //    id: 3,
+   //    label: '逻辑回归模型训练',
+   //    endAt: '',
+   //    orgName: '中国银行'
+   // },
+   // {
+   //    id: 4,
+   //    label: '逻辑回归模型训练',
+   //    endAt: '',
+   //    orgName: '中国银行'
+   // },
+   // {
+   //    id: 5,
+   //    label: '逻辑回归模型训练',
+   //    endAt: '',
+   //    orgName: '中国银行'
+   // },
+   // {
+   //    id: 6,
+   //    label: '逻辑回归模型训练',
+   //    endAt: '',
+   //    orgName: '中国银行'
+   // }
 
 ])
 let count = ref(6)
@@ -89,10 +87,29 @@ const mockAdd = () => {
       taskList.pop()
       mockAdd()
    }, 3000);
-
 }
+
+const getGlobalTask = () => {
+   queryTaskList({
+      size: 6,
+      current: 1,
+      taskStatus: 'ALL'
+   }).then((res: any) => {
+      const { code, data } = res
+      if (code === 10000) {
+         taskList = res.data
+      }
+   })
+}
+
+watchEffect(() => {
+   setTimeout(() => {
+      getGlobalTask()
+   }, 3000)
+})
+
 onMounted(() => {
-   mockAdd()
+   // mockAdd()
 })
 
 </script>
@@ -110,17 +127,20 @@ onMounted(() => {
       transform: scaleX(0);
       opacity: 0;
    }
+
    50% {
       -webkit-transform: scaleX(0);
       transform: scaleX(0);
       opacity: 0;
    }
+
    99% {
       width: 178px;
       -webkit-transform: scaleX(1);
       transform: scaleX(1);
       opacity: 1;
    }
+
    100% {
       width: 178px;
    }

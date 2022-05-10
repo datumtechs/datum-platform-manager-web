@@ -8,14 +8,14 @@
       </Title>
       <DataRankTable />
     </div>
-    <div class="flex-1 w-570px">
+    <!-- <div class="flex-1 w-570px">
       <Title :text="t('home.modelUseTop10')">
         <template #pic>
           <img src="@assets/images/home/dataRankLogo2.png" />
         </template>
       </Title>
       <DataRankTable />
-    </div>
+    </div> -->
   </div>
 </template>
 

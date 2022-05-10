@@ -220,10 +220,11 @@ defineExpose({
 
   .columns-box {
     .columns {
+      border: 1px solid #eeeeee;
       width: 140px;
       height: 295px;
       height: 295px;
-      background: #eeeeee;
+      // background: #eeeeee;
       border-radius: 4px;
       overflow-y: auto;
 
@@ -267,9 +268,9 @@ defineExpose({
 
   .result {
     .ids {
+      border: 1px solid #eeeeee;
       width: 140px;
       height: 40px;
-      background: #eeeeee;
       border-radius: 4px;
       display: flex;
       align-items: center;
@@ -293,8 +294,8 @@ defineExpose({
       .features,
       .features-auto {
         width: 140px;
-        background: #eeeeee;
         border-radius: 4px;
+        border: 1px solid #eeeeee;
       }
 
       .features {

@@ -85,5 +85,6 @@ onMounted(() => {
 <style lang="scss" scoped>
 .operation-box {
   height: calc(100vh - 191px);
+  border-radius: 8px;
 }
 </style>
