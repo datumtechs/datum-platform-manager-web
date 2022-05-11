@@ -1,67 +1,92 @@
 <template>
-    <div class="py-40px" id="container"></div>
+    <div class="p-20px" id="container"></div>
 </template>
 
 <script setup lang='ts'>
 import { Chart } from '@antv/g2';
 import { getTaskTrend } from '@/api/home'
+import { useFormatDay } from '@/hooks'
 
-// const chart = new Chart({
-//     container: 'container',
-//     autoFit: true,
-//     width: 600,
-//     height: 300,
-// });
 
+const chartData = ref([])
 const initCharts = (data: any) => {
-    if (data.length === 0) return
+    const data1 = [
+        {
+            statsTime: 1,
+            statsValue: 1
+        },
+        {
+            statsTime: 2,
+            statsValue: 2
+        },
+        {
+            statsTime: 3,
+            statsValue: 3
+        },
+        {
+            statsTime: 4,
+            statsValue: 4
+        },
+        {
+            statsTime: 5,
+            statsValue: 5
+        },
+        {
+            statsTime: 6,
+            statsValue: 6
+        },
+        {
+            statsTime: 7,
+            statsValue: 7
+        },
+        {
+            statsTime: 8,
+            statsValue: 8
+        },
+    ];
+
     const chart = new Chart({
         container: 'container',
         autoFit: true,
         width: 755,
-        height: 355,
-    });
-    chart.data(data);
-    chart.scale({
-        Date: {
-            tickCount: 100
-        },
-        Close: {
-            nice: true,
-        }
-    });
-    chart.axis('Date', {
-        label: {
-            formatter: text => {
-                const dataStrings = text.split('.');
-                return dataStrings[2] + '-' + dataStrings[1] + '-' + dataStrings[0];
-            }
-        }
+        height: 500,
+        padding: 40,
     });
 
-    chart.line().position('Date*Close');
-    // // annotation
-    // const { min, max } = findMaxMin(data);
-    // chart.annotation().dataMarker({
-    //     top: true,
-    //     position: [max.Date, max.Close],
-    //     text: {
-    //         content: '全部峰值：' + max.Close,
+    chart.data(data);
+    chart.scale(
+        {
+            statsTime: {
+                type: 'time',
+                tickCount: 15,
+                mask: 'MM-DD'
+            },
+            statsValue: {
+                nice: true,
+                min: 0
+            }
+        }
+    );
+
+    chart.tooltip({
+        showCrosshairs: true,
+        shared: true,
+    });
+
+    // chart.axis('statsTime', {
+    //     label: {
+    //         formatter: (val) => {
+    //             return useFormatDay(+val)
+    //         },
     //     },
-    //     line: {
-    //         length: 30,
-    //     }
     // });
-    // chart.annotation().dataMarker({
-    //     top: true,
-    //     position: [min.Date, min.Close],
-    //     text: {
-    //         content: '全部谷值：' + min.Close,
-    //     },
-    //     line: {
-    //         length: 50,
-    //     }
-    // });
+
+    chart
+        .line()
+        .position('statsTime*statsValue')
+        .shape('smooth');
+
+
     chart.render();
 }
 
@@ -69,11 +94,12 @@ const initCharts = (data: any) => {
 const queryData = () => {
     getTaskTrend({}).then((res: any) => {
         const { code, data } = res
-
         if (code === 10000) {
+            // chartData.value = data
             initCharts(data)
         }
     })
+
 }
 
 function findMaxMin(data: any) {
@@ -93,61 +119,9 @@ function findMaxMin(data: any) {
     }
     return { max: maxObj, min: minObj };
 }
-watchEffect(() => {
+onMounted(() => {
     queryData()
 })
-// fetch('https://gw.alipayobjects.com/os/antvdemo/assets/data/nintendo.json')
-//     .then(res => res.json())
-//     .then(data => {
-//         const chart = new Chart({
-//             container: 'container',
-//             autoFit: true,
-//             width: 755,
-//             height: 355,
-//         });
-//         chart.data(data);
-//         chart.scale({
-//             Date: {
-//                 tickCount: 100
-//             },
-//             Close: {
-//                 nice: true,
-//             }
-//         });
-//         chart.axis('Date', {
-//             label: {
-//                 formatter: text => {
-//                     const dataStrings = text.split('.');
-//                     return dataStrings[2] + '-' + dataStrings[1] + '-' + dataStrings[0];
-//                 }
-//             }
-//         });
-
-//         chart.line().position('Date*Close');
-//         // // annotation
-//         // const { min, max } = findMaxMin(data);
-//         // chart.annotation().dataMarker({
-//         //     top: true,
-//         //     position: [max.Date, max.Close],
-//         //     text: {
-//         //         content: '全部峰值：' + max.Close,
-//         //     },
-//         //     line: {
-//         //         length: 30,
-//         //     }
-//         // });
-//         // chart.annotation().dataMarker({
-//         //     top: true,
-//         //     position: [min.Date, min.Close],
-//         //     text: {
-//         //         content: '全部谷值：' + min.Close,
-//         //     },
-//         //     line: {
-//         //         length: 50,
-//         //     }
-//         // });
-//         chart.render();
-//     });
 
 </script>
 

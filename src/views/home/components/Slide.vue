@@ -2,8 +2,7 @@
    <div class="flex mt-57px h-178px">
       <div class="w-980px overflow-hidden">
          <ul class="whitespace-nowrap w-1176px h-178px">
-            <transition-group name="slide">
-               <!-- 1176px -->
+            <!-- <transition-group name="slide">
                <li class="p-20px w-176px h-178px mr-20px cursor-pointer float-left cursor-pointer border-1 border-solid border-[#EEEEEE]"
                   v-for="box in taskList" :key="box.id">
                   <p class="text-[16px] text-[#333]">{{ box.label }}</p>
@@ -11,7 +10,18 @@
                   <p class="mt-40px text-[12px] text-[#999] leading-17px">35秒前</p>
                   <p class="mt-17px text-[#666] leading-20px">{{ box.orgName }}</p>
                </li>
-            </transition-group>
+            </transition-group> -->
+            <!-- <el-carousel :interval="2000" type="card">
+               <el-carousel-item v-for="box in taskList" :key="box.id">
+                  <li class="p-20px w-176px h-178px mr-20px cursor-pointer float-left cursor-pointer border-1 border-solid border-[#EEEEEE]"
+                     v-for="box in taskList" :key="box.id">
+                     <p class="text-[16px] text-[#333]">{{ box.label }}</p>
+                     <p class="text-[16px] text-[#333]">{{ t('common.success') }} !</p>
+                     <p class="mt-40px text-[12px] text-[#999] leading-17px">35秒前</p>
+                     <p class="mt-17px text-[#666] leading-20px">{{ box.orgName }}</p>
+                  </li>
+               </el-carousel-item>
+            </el-carousel> -->
          </ul>
       </div>
       <!-- <div class="w-176px h-178px bg-[#ff0000] mr-20px" v-for="box in taskList" :key="box.id"></div> -->
@@ -36,42 +46,42 @@ interface Task {
 
 }
 let taskList: Array<Task> = reactive([
-   // {
-   //    id: 1,
-   //    label: '逻辑回归模型训练',
-   //    endAt: '',
-   //    orgName: '中国银行'
-   // },
-   // {
-   //    id: 2,
-   //    label: '逻辑回归模型训练',
-   //    endAt: '',
-   //    orgName: '中国银行'
-   // },
-   // {
-   //    id: 3,
-   //    label: '逻辑回归模型训练',
-   //    endAt: '',
-   //    orgName: '中国银行'
-   // },
-   // {
-   //    id: 4,
-   //    label: '逻辑回归模型训练',
-   //    endAt: '',
-   //    orgName: '中国银行'
-   // },
-   // {
-   //    id: 5,
-   //    label: '逻辑回归模型训练',
-   //    endAt: '',
-   //    orgName: '中国银行'
-   // },
-   // {
-   //    id: 6,
-   //    label: '逻辑回归模型训练',
-   //    endAt: '',
-   //    orgName: '中国银行'
-   // }
+   {
+      id: 1,
+      label: '逻辑回归模型训练',
+      endAt: '',
+      orgName: '中国银行'
+   },
+   {
+      id: 2,
+      label: '逻辑回归模型训练',
+      endAt: '',
+      orgName: '中国银行'
+   },
+   {
+      id: 3,
+      label: '逻辑回归模型训练',
+      endAt: '',
+      orgName: '中国银行'
+   },
+   {
+      id: 4,
+      label: '逻辑回归模型训练',
+      endAt: '',
+      orgName: '中国银行'
+   },
+   {
+      id: 5,
+      label: '逻辑回归模型训练',
+      endAt: '',
+      orgName: '中国银行'
+   },
+   {
+      id: 6,
+      label: '逻辑回归模型训练',
+      endAt: '',
+      orgName: '中国银行'
+   }
 
 ])
 let count = ref(6)
@@ -102,14 +112,14 @@ const getGlobalTask = () => {
    })
 }
 
-watchEffect(() => {
-   setTimeout(() => {
-      getGlobalTask()
-   }, 3000)
-})
+// watchEffect(() => {
+//    setTimeout(() => {
+//       getGlobalTask()
+//    }, 1000)
+// })
 
 onMounted(() => {
-   // mockAdd()
+   mockAdd()
 })
 
 </script>

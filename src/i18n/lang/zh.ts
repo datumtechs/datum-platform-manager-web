@@ -99,10 +99,13 @@ const zh = {
     powerRatio: '算力占比',
     ranking: '排名',
     viewAllNode: '查看所有节点',
+    viewAllToken: '查看所有凭证',
     dataUseTop10: '数据凭证任务使用TOP10',
     modelUseTop10: '模型凭证任务使用TOP10',
     explorer: '浏览器',
-    viewAllComputingTask: '查看所有计算任务'
+    viewAllComputingTask: '查看所有计算任务',
+    usage: '使用量',
+    explorerHint: '输入任务ID或者组织ID'
   },
   account: {
     walletAddress: '钱包地址',

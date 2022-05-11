@@ -1,6 +1,6 @@
 <template>
-  <div class="mt-60px flex h-724px">
-    <div class="flex-1 w-570px mr-20px">
+  <div class="mt-60px flex">
+    <div class="w-570px mr-20px">
       <Title :text="t('home.dataUseTop10')">
         <template #pic>
           <img src="@assets/images/home/dataRankLogo1.png" />

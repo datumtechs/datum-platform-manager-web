@@ -1,3 +1,3 @@
-export default function useFormatTime(time: number): string | void {
+export default function useFormatTime(time: number): string {
     return new Date(time).toLocaleString()
 }

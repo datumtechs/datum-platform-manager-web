@@ -14,7 +14,7 @@
               <!-- <p class="w-140px ellipse" v-if="box.title === 'totalCore'">{{ box.value }}</p> -->
               <CountUp v-if="box.title !== 'totalCore'" class="w-150px ellipse" :options="{
                 decimalPlaces: 2, useGrouping: true
-              }" :end-val="useSizeWithUnit(box.value).value">
+              }" :end-val="Number(useSizeWithUnit(box.value).value)">
                 <template #suffix>
                   <span>{{
                       useSizeWithUnit(box.value).unit
@@ -22,14 +22,14 @@
                 </template>
               </CountUp>
               <CountUp v-else class="w-150px ellipse" :options="{ useGrouping: true }"
-                :end-val="box.value" />
+                :end-val="Number(box.value)" />
             </div>
             <p class="mt-7px text-[14px] text-shallow">{{ box.label }}</p>
           </div>
         </div>
         <div class="flex mt-30px h-437px bg-color-[#F7F8F9] rounded-8px px-27px">
           <div v-for="(box, index) in rankList" :key="box.id"
-            class="w-174px h-200px rounded-8px p-20px gap-20px text-[#fff]"
+            class="w-174px h-200px rounded-8px p-20px gap-20px text-[#fff] cursor-pointer"
             :class="`rank-box-${index + 1}`">
             <p class="text-[20px] leading-24px font-bold">{{ box.title }}</p>
             <p class="mt-8px text-[16px] leading-19px opacity-80">
