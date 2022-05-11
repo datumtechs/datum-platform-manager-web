@@ -97,7 +97,7 @@ import type { CascaderOption } from 'element-plus/lib/components/cascader-panel/
 const { t, locale } = useI18n()
 const emit = defineEmits(['update:params'])
 const fieldTypeActive = ref('idColumn')
-const activeIndex = ref<any>({})
+const activeIndex = ref<any>()
 const props: any = defineProps({
   num: {
     type: Number,
@@ -248,7 +248,7 @@ const clearableCascader = () => {
 
 
 const handFields = (v: any) => {
-  if (activeIndex.value || activeIndex.value == 0) {
+  if (!activeIndex.value && activeIndex.value !== 0) return
     switch (v.type) {
       case 'idColumn':
         if (!form.label?.columnName) {
@@ -274,7 +274,6 @@ const handFields = (v: any) => {
     }
     fieldsList.value[activeIndex.value].show = false
     activeIndex.value = nextActiveIndex.value.index || null
-  }
 }
 
 const handfeatureList = (item: any, index: number) => {

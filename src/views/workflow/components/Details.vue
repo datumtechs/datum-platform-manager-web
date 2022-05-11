@@ -51,8 +51,8 @@
             <!-- 0 - 待运行 1 - 运行中 2 - 运行成功 3 - 运行失败 -->
             <!-- 已运行 -->
             <div v-if="row.status !== 0">
-              <el-button type="text" circle @click="copy">{{ t('common.copy') }}</el-button>
-              <el-button v-if="row.status !== 1" type="text" circle @click="view">{{
+              <el-button type="text" circle @click="copy(row)">{{ t('common.copy') }}</el-button>
+              <el-button v-if="row.status !== 1" type="text" circle @click="view(row)">{{
                   t('workflow.viewDetails')
               }}
               </el-button>
@@ -73,14 +73,17 @@
         }" :total="total" />
       </div>
     </div>
+    <SetNameDialog v-model:show="showDialog" @submit="copySubmit" />
   </div>
 </template>
 <script lang="ts" setup>
-import { getWorkflowVersionList } from '@/api/workflow'
+import SetNameDialog from './SetNameDialog.vue'
+import { getWorkflowVersionList,copyWorkflow } from '@/api/workflow'
 import { useFormatTime, useDuring, useGlobalTaskMap } from '@/hooks'
 import { startWorkFlow } from '@/api/workflow'
+import { ElMessage } from 'element-plus';
 const web3: any = inject('web3')
-
+const showDialog = ref(false)
 const route = useRoute()
 const router = useRouter()
 const workflowId = route.params.id
@@ -89,7 +92,7 @@ const total = ref(0)
 const workFlowName = ref('')
 const tableData = ref([])
 const { t, locale } = useI18n()
-
+const activeRow = ref<any>({})
 
 const queryVersionList = () => {
   getWorkflowVersionList({ current: current.value, size: 10, workflowId }).then(res => {
@@ -105,7 +108,7 @@ const queryVersionList = () => {
   })
 }
 
-const view = () => { }
+const view = (row:any) => { }
 
 const edit = (row: any) => {
   let urlName = 'wizardMode'
@@ -147,7 +150,25 @@ onMounted(() => {
 })
 
 
-const copy = () => { }
+const copy = (row:any) => {
+    showDialog.value = true
+    activeRow.value = row
+}
+const copySubmit = (name:string)=>{
+  copyWorkflow({
+      workflowVersionName:name,
+      workflowId: activeRow.value.workflowId,
+      workflowVersion: activeRow.value.workflowVersion,
+    }).then(res=>{
+         const {code} = res
+         if(code  == 10000){
+           ElMessage.success(t('common.success'))
+            showDialog.value = false
+            queryVersionList()
+         }
+    })
+}
+
 const payment = () => { }
 const startUp = () => { }
 </script>

@@ -76,3 +76,12 @@ export const getWorkflowVersionList = (params: {}): Promise<any> => {
     params
   })
 }
+
+//复制
+export const copyWorkflow = (data: any): Promise<any> => {
+  return http({
+    method: 'POST',
+    url: '/flow/workflow/copyWorkflow',
+    data
+  })
+}
