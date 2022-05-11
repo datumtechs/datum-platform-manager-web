@@ -19,7 +19,7 @@
       :key="'input'" @update:params="psiInputOne = $event" :params="psiInputParams.one" :num="1"
       :taskParams="props.taskParams" :orgList="props.orgList" />
     <div class="h-30px"></div>
-    <TaskParamsTransfer :fieldType="[props.fieldType[0], props.fieldType[1]]" :sellectionAlgPsi="true"
+    <TaskParamsTransfer :fieldType="[props.fieldType[0], props.fieldType[2]]" :sellectionAlgPsi="true"
       :disabledData="psiInputOne?.metaData" :key="'output'" @update:params="psiInputTwo = $event"
       :taskParams="props.taskParams" :params="psiInputParams.two" :num="2" :orgList="props.orgList" />
     <div class="flex items-center pt-20px">

@@ -20,7 +20,7 @@
       <SelectionAlg @getNoticeText="getNoticeText" :taskParams="workfolwParams" @init="init" :processList="processList"
         @getParams="slectionAlgParams" />
     </div>
-    <component :is="componentList[list[activeIndex]?.type]?.components" :workflowInfo="{ ...workflowInfo }"
+       <component :is="componentList[list[activeIndex]?.type]?.components" :workflowInfo="{ ...workflowInfo }"
       :step="activeIndex" :type="list[activeIndex]?.type" :fieldType="fieldType" :taskParams="workfolwParams"
       :orgList="orgList" :noticeText="noticeText" @previous="previous" @next="next" @getParams="(params: any) => { }" />
   </div>
