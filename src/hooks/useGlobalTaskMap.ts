@@ -15,7 +15,7 @@ export default function useGlobalTaskMap(status: number) {
     }
 }
 
-export function useGlobalWorkflowDetailsMap(status: number) {
+export function useWorkflowDetailsMap(status: number) {
     switch (status) {
         case 0:
             return i18n.global.t('status.pending')

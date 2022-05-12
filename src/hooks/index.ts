@@ -5,7 +5,7 @@ import useDuring from './useDuring'
 import useFormatTime from './useFormatTime'
 import useRole from './useRole'
 import usePathIncludeNode from './usePathIncludeNode'
-import useGlobalTaskMap,{useGlobalWorkflowDetailsMap} from './useGlobalTaskMap'
+import useGlobalTaskMap,{useWorkflowDetailsMap} from './useGlobalTaskMap'
 import useFileType from './useFileType'
 import useAddressDisplay from './useAddressDisplay'
 import { useExchangeFrom, useExchangeTo } from './useDecimal'
@@ -32,5 +32,5 @@ export {
     useAddressDisplay,
     useExchangeFrom,
     useExchangeTo,
-    useGlobalWorkflowDetailsMap
+    useWorkflowDetailsMap
 }

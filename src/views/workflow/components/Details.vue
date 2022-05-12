@@ -22,7 +22,7 @@
         </el-table-column>
         <el-table-column show-overflow-tooltip prop="status" :label="t('workflow.state')">
           <template #default="{ row }">
-            {{ useGlobalWorkflowDetailsMap(row.status) || '-' }}
+            {{ useWorkflowDetailsMap(row.status) || '-' }}
           </template>
         </el-table-column>
         <el-table-column show-overflow-tooltip prop="beginTime" :label="t('computeTask.startTime')">
@@ -73,13 +73,13 @@
         }" :total="total" />
       </div>
     </div>
-    <SetNameDialog v-model:show="showDialog" @submit="copySubmit" />
+    <SetNameDialog v-model:show="showDialog" v-if="showDialog" @submit="copySubmit" @update="showDialog=false"/>
   </div>
 </template>
 <script lang="ts" setup>
 import SetNameDialog from './SetNameDialog.vue'
 import { getWorkflowVersionList,copyWorkflow } from '@/api/workflow'
-import { useFormatTime, useDuring, useGlobalWorkflowDetailsMap } from '@/hooks'
+import { useFormatTime, useDuring, useWorkflowDetailsMap } from '@/hooks'
 import { startWorkFlow } from '@/api/workflow'
 import { ElMessage } from 'element-plus';
 const web3: any = inject('web3')

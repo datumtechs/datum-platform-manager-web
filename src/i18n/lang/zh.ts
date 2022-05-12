@@ -130,7 +130,8 @@ const zh = {
     address: "发起账户"
   },
   task: {
-    createTaskBriefInfo: "创建你需要的任务",
+    goTo:"前往",
+    createTaskBriefInfo: "创建你需要的工作流",
     expertMode: "专家模式",
     wizardMode: "向导模式",
     step: "步骤",
@@ -141,9 +142,9 @@ const zh = {
     selectComputingEnvironment: "选择计算环境",
     selectResultReceiver: "选择结果接收方",
     modeIntroductionTips: "专家模式适合熟悉AI算法的开发者，支持AI算法的超参数修改等一系列复杂操作。",
-    taskName: "任务名称",
+    taskName: "工作流名称",
     pleaseEnter: "请输入",
-    taskNameRules: "任务名称命名规则",
+    taskNameRules: "工作流名称命名规则",
     taskNameRulesOne: "设置后无法修改",
     taskNameRulesTwo: "输入的字符类型无限制",
     taskNameRulesThree: "最少输入8个字符",
