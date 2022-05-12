@@ -27,23 +27,17 @@
         <el-radio :label="item.id" v-for="item in algList" :key="item.id">{{ item.name }}</el-radio>
       </el-radio-group>
     </el-form-item>
-    <el-form-item v-if="form.calculationType == 1000" :label="`${$t('task.stepOneSelectAlgorithmTitle')}:`"
+    <el-form-item v-if="algTypelist[0]?.childrenList" :label="`${form.calculationType == 2000 ? t('task.stepOneSelectAIAlgorithmTitle') :t('task.stepOneSelectAlgorithmTitle')}:`"
       prop="algorithmId">
       <el-radio-group v-model="form.algorithmId" @change="algChange" :disabled="disabled">
-        <el-radio :label="item.id" v-for="item in algTypelist[0].childrenList" :key="item.id">{{ item.name }}</el-radio>
-      </el-radio-group>
-    </el-form-item>
-    <el-form-item v-if="form.calculationType == 2000" :label="`${t('task.stepOneSelectAIAlgorithmTitle')}:`"
-      prop="algorithmId">
-      <el-radio-group v-model="form.algorithmId" @change="algChange" :disabled="disabled">
-        <el-radio :label="item.id" v-for="item in algTypelist[0].childrenList" :key="item.id">{{ item.name }}
+        <el-radio :label="item.id" v-for="item in algTypelist[0]?.childrenList" :key="item.id">{{ item.name }}
         </el-radio>
       </el-radio-group>
     </el-form-item>
-    <el-form-item v-if="props.processList.length" :label="`${$t('task.stepOneSelectProcedureTitle')}:`"
+    <el-form-item v-if="props.processList.length && form.algorithmId && form.calculationType !== 1000" :label="`${$t('task.stepOneSelectProcedureTitle')}:`"
       prop="calculationProcessId">
       <el-radio-group v-model="form.calculationProcessId" :disabled="disabled">
-        <el-radio :label="item.calculationProcessId" v-for="item in props.processList" :key="item.id">{{ item.name }}
+        <el-radio :label="item.calculationProcessId" v-for="item in props.processList" :key="item.calculationProcessId">{{ item.name }}
         </el-radio>
       </el-radio-group>
     </el-form-item>
@@ -84,6 +78,12 @@ watch(() => props.taskParams, (e) => {
   }
 })
 
+watch(() => props.processList, (e) => {
+  if(form.calculationType == 1000){
+   form.calculationProcessId = e[0]?.calculationProcessId
+  }
+})
+
 
 const form: any = reactive({
   workflowName: "",
@@ -121,7 +121,7 @@ const next = () => {
 const algChange = (type?: any) => {
   if (type !== 'notice') form.calculationProcessId = undefined
   emit('getParams', form)
-  getNoticeText()
+  getNoticeText() 
 }
 
 

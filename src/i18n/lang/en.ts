@@ -133,7 +133,8 @@ const en = {
     address: "Address"
   },
   task: {
-    createTaskBriefInfo: "Create new task you need",
+    goTo:"Go To ",
+    createTaskBriefInfo: "Create new Workflow you need",
     expertMode: "Expert Mode",
     wizardMode: "Wizard Mode",
     step: "Step",
@@ -144,7 +145,7 @@ const en = {
     selectComputingEnvironment: "Select Computing Environment",
     selectResultReceiver: "Select Result Receiver",
     modeIntroductionTips: "Expert mode is suitable for developers who are familiar with AI algorithms, and supports a series of complex operations such as hyperparameter modification of AI algorithms.",
-    taskName: "Task Name",
+    taskName: "Workflow Name",
     pleaseEnter: "Please Enter",
     taskNameRules: "Naming rules",
     taskNameRulesOne: "cannot be modified after submitting",

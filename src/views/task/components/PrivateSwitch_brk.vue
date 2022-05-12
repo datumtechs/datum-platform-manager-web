@@ -1,14 +1,13 @@
 <template>
   <div class="flex items-center private-switch-wrap cursor-pointer">
-    <!-- <div
+    <div
       class="text-16px font-600 leading-22px mr-10px text-color-[#333333]"
-    >{{ $t('task.expertMode') }}</div> -->
-
-    <!-- <div> -->
-    <el-button class="h-40px" plain type="primary" @click="change" round>
-      {{$t('task.goTo')}}{{ isExpertMode? $t('task.wizardMode') :$t('task.expertMode') }}
-    </el-button>
-      <!-- <div
+    >{{ $t('task.expertMode') }}</div>
+    <div
+      class="w-70px h-28px rounded-14px overflow-hidden border-1 border-solid border-[#cccccc]"
+      @click="change"
+    >
+      <div
         class="bg-color-[#fff] w-full h-full flex items-center px-7px"
         :style="{ background: isExpertMode ? '#2B60E9' : '#fff' }"
       >
@@ -19,14 +18,13 @@
           }"
           class="w-14px h-14px bg-color-[#666666] rounded-7px private-switch-transform"
         ></div>
-      </div> -->
-    <!-- </div> -->
+      </div>
+    </div>
     <question-mark />
   </div>
 </template>
 <script lang="ts" setup>
 const switchValue = ref(false)
-const {locale} = useI18n()
 const emit = defineEmits(['change'])
 const props = defineProps(['mode'])
 const isExpertMode = computed(() => props.mode === 'expert')
