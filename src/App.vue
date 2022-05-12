@@ -7,9 +7,9 @@ import Web3Service from '@/utils/Web3Service'
 import { queryCurrentChainInfo } from '@/api/chain'
 
 const web3 = new Web3Service()
-const chainConfig: any = ref({})
+const chainCfg: any = ref({})
 provide('web3', web3)
-provide('chainConfig', chainConfig)
+provide('chainCfg', chainCfg)
 
 
 
@@ -17,7 +17,7 @@ provide('chainConfig', chainConfig)
 const queryConfig = () => {
   queryCurrentChainInfo().then(res => {
     const { data } = res
-    if (data) chainConfig.value = data
+    if (data) chainCfg.value = data
   })
 }
 

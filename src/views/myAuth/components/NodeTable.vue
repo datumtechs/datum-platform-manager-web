@@ -96,7 +96,7 @@ interface OrgNode {
 }
 
 
-const chainConfig: any = inject('chainConfig')
+const chainCfg: any = inject('chainCfg')
 const web3: any = inject('web3')
 const { t, locale } = useI18n()
 
@@ -143,10 +143,10 @@ const authSubmit = () => {
         const content = `${t('auth.authorizeNode')}: ${currentNode.value?.nodeName}`
         pending.title = t('auth.confirmAuth')
         pending.content = content
-        web3.authNode(currentNode.value?.observerProxyWalletAddress, chainConfig.value.metisPayAddress, _close)
+        web3.authNode(currentNode.value?.observerProxyWalletAddress, chainCfg.value.metisPayAddress, _close)
             .then((res: any) => {
                 if (res && res.transactionHash) {
-                    useNotice('success', content, chainConfig.value?.blockExplorerUrl, res.transactionHash)
+                    useNotice('success', content, chainCfg.value?.blockExplorerUrl, res.transactionHash)
                 }
             }).catch((error: any) => {
                 useNotice('error', error)
@@ -156,10 +156,10 @@ const authSubmit = () => {
         const content = `${t('auth.cancelNodeAuth')}: ${currentNode.value?.nodeName}`
         pending.title = t('auth.confirmCancelAuth')
         pending.content = content
-        web3.revokeNode(currentNode.value?.observerProxyWalletAddress, chainConfig.value.metisPayAddress, _close)
+        web3.revokeNode(currentNode.value?.observerProxyWalletAddress, chainCfg.value.metisPayAddress, _close)
             .then((res: any) => {
                 if (res && res.transactionHash) {
-                    useNotice('success', '', chainConfig.value?.blockExplorerUrl, res.transactionHash)
+                    useNotice('success', '', chainCfg.value?.blockExplorerUrl, res.transactionHash)
                 }
             }).catch((error: any) => {
                 useNotice('error', error)

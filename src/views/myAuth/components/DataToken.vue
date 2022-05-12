@@ -121,8 +121,11 @@
 <script setup lang='ts'>
 import { useExchangeFrom, useExchangeTo, useNotice } from '@/hooks'
 const { t, locale } = useI18n()
-const chainConfig: any = inject('chainConfig')
+const chainCfg: any = inject('chainCfg')
+console.log('chainCfg in data Token', chainCfg);
+
 const web3: any = inject('web3')
+console.log('web3 in data Token', web3);
 
 interface token {
     authorizeBalance: string
@@ -197,7 +200,7 @@ const cancelConfirm = () => {
         .then((res: any) => {
             if (res && res.transactionHash) {
                 const content = `${t('auth.cancelAuth')}: ${currentToken.tokenName}`
-                useNotice('success', content, chainConfig.value?.blockExplorerUrl, res.transactionHash)
+                useNotice('success', content, chainCfg.value?.blockExplorerUrl, res.transactionHash)
             }
         }).catch((error: any) => {
             useNotice('error', error)
@@ -214,11 +217,11 @@ const authSubmit = () => {
             const unit = useExchangeTo(+authForm.quantity, currentToken.tokenDecimal)
             web3.authERC20TOKEN(
                 currentToken.tokenAddress,
-                chainConfig.value.metisPayAddress,
+                chainCfg.value.metisPayAddress,
                 unit,
                 _closeAuthDialog)
                 .then((res: any) => {
-                    useNotice('success', content, chainConfig.value?.blockExplorerUrl, res.transactionHash)
+                    useNotice('success', content, chainCfg.value?.blockExplorerUrl, res.transactionHash)
                 }).catch((error: any) => {
                     _closeAuthDialog()
                     useNotice('error', error)
@@ -236,7 +239,7 @@ const rules = ref(
                 validator: ({ }, value: any, callback: any) => {
                     if (!value) {
                         callback(new Error(t('auth.quantityError')))
-                    } else if (value > useExchangeFrom(currentToken.tokenBalance, currentToken.tokenDecimal)) {
+                    } else if (Number(value) > Number(useExchangeFrom(currentToken.tokenBalance, currentToken.tokenDecimal))) {
                         callback(new Error(t('auth.exceedTotal')))
                     } else {
                         /** TODO input overflow */

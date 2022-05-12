@@ -4,6 +4,10 @@ import { useTableIndex } from '@/hooks'
 const { t, locale } = useI18n()
 const total = ref(0)
 const router = useRouter()
+
+const chainCfg: any = inject('chainCfg')
+
+
 interface PageParams {
     current: number,
     size: number,
@@ -37,7 +41,9 @@ const indexMethod = (index: number) => useTableIndex(index, pageParams.current, 
 
 const tableData = ref([])
 const purchase = (row: any) => {
-
+    let dexUrl = `${chainCfg.value.dexUrl}swap?outputCurrency=${row.tokenAddress}&exactField=OUTPUT&exactAmount=1`
+    //TODO dex
+    window.open(dexUrl, "_blank");
 }
 const linkToViewData = (row: any) => {
     router.push({
@@ -47,10 +53,6 @@ const linkToViewData = (row: any) => {
             dataName: row.metaDataName
         }
     })
-}
-const linkToViewToken = (row: any) => {
-    //TODO dex
-
 }
 
 const queryTableData = async () => {
@@ -67,7 +69,6 @@ const queryTableData = async () => {
     })
     marketLoading.value = false
     if (code === 10000) {
-        console.log(data);
         tableData.value = data.items
         total.value = data.total
     }
@@ -108,17 +109,17 @@ onMounted(() => {
                         <div>{{ row.tokenPrice }} LAT</div>
                     </template>
                 </el-table-column>
-                <el-table-column :label="t('common.actions')" width="280">
+                <el-table-column :label="t('common.actions')" width="200">
                     <template #default="{ row }">
                         <el-space :size="20">
                             <span class="text-14px text-color-[#0052D9] leading-20px cursor-pointer"
                                 @click="purchase(row)">{{ t('common.purchase') }}</span>
                             <span class="text-14px text-color-[#0052D9] leading-20px cursor-pointer"
                                 @click="linkToViewData(row)">{{ t('myData.viewData') }}</span>
-                            <span class="text-14px text-color-[#0052D9] leading-20px cursor-pointer"
+                            <!-- <span class="text-14px text-color-[#0052D9] leading-20px cursor-pointer"
                                 @click="linkToViewToken(row)">{{
                                         t('myData.viewCredential')
-                                }}</span>
+                                }}</span> -->
                         </el-space>
                     </template>
                 </el-table-column>
