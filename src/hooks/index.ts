@@ -13,10 +13,12 @@ import useNotice from './useNotice'
 import useObserver from './useObserver'
 import useThousand from './useThousand'
 import useSizeWithUnit from './useSizeWithUnit'
+import useFormatDay from './useFormatDay'
 
 // const context = require.context('./', false, /\.ts$/)
 
 export {
+    useFormatDay,
     useSizeWithUnit,
     useThousand,
     useObserver,

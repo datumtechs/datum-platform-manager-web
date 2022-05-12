@@ -17,7 +17,8 @@ const getOverviewData = () => {
   })
 }
 
-watchEffect(() => {
+
+onMounted(() => {
   getOverviewData()
 })
 
@@ -29,7 +30,7 @@ watchEffect(() => {
       <Slide />
       <Overview :globalStats="globalStats" />
       <PowerRank :globalStats="globalStats" />
-      <!-- <DataRank :globalStats="globalStats" /> -->
+      <DataRank />
     </section>
   </section>
 </template>

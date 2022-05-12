@@ -99,10 +99,13 @@ const en = {
     powerRatio: 'Power Ratio',
     ranking: 'Ranking',
     viewAllNode: 'View All Nodes',
+    viewAllToken: 'View All Tokens',
     dataUseTop10: 'Data Credential Use TOP10',
     modelUseTop10: 'Model Credential Use TOP10',
     explorer: 'Explorer',
-    viewAllComputingTask: 'View all computing tasks'
+    viewAllComputingTask: 'View all computing tasks',
+    usage: 'Usage',
+    explorerHint: 'Enter task ID or organization ID'
   },
   account: {
     walletAddress: 'Wallet Address',

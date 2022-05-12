@@ -13,7 +13,7 @@
                     <div class="leading-29px text-[24px] text-deep mt-18px font-bold">
                         <CountUp v-if="item.title === 'dataSize'" class="w-150px ellipse" :options="{
                             decimalPlaces: 2, useGrouping: true
-                        }" :end-val="useSizeWithUnit(item.value).value">
+                        }" :end-val="Number(useSizeWithUnit(item.value).value)">
                             <template #suffix>
                                 <span>{{
                                         useSizeWithUnit(item.value).unit
@@ -22,7 +22,7 @@
                         </CountUp>
 
                         <CountUp v-else class="w-150px ellipse" :options="{ useGrouping: true }"
-                            :end-val="item.value" />
+                            :end-val="Number(item.value)" />
                     </div>
                 </div>
             </div>
