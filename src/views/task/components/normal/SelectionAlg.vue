@@ -50,7 +50,7 @@
 </template>
 <script lang="ts" setup>
 import { getAlgTree } from '@/api/algorithm'
-import { postCreateWorkflowWizard, getProcessList } from '@/api/workflow'
+import { postCreateWorkflowWizard } from '@/api/workflow'
 import NextButton from './NextButton.vue'
 import { useWorkFlow } from '@/stores'
 const { locale, t } = useI18n()

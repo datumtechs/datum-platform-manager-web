@@ -118,12 +118,15 @@ const list = ref<any[]>(
 const fieldType = ref<any[]>([{
   name: "task.idColumn",//id列
   type: "idColumn",
+  tips:"task.idColumnTips"
 }, {
-  name: "task.label",//应变量
+  name: "task.label",//标签
   type: "label",
+  tips:"task.labelTips"
 }, {
-  name: "task.feature",//自变量
-  type: "feature"
+  name: "task.feature",//特征
+  type: "feature",
+  tips:"task.featureTips"
 }])
 
 watch(activeIndex, () => {

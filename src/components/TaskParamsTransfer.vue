@@ -17,26 +17,30 @@
         <ul class="fields-main w-full h-330px overflow-auto mt-40px pr-25px" v-if="fieldsList.length">
           <li v-show="item.show"
             class="cursor-pointer border-1px border-solid border-color-[#eeeeee] rounded-26px mb-10px h-40px w-full flex items-center justify-center"
+            :class="{'border-color-[#2B60E9] text-color-[#2B60E9]': activeIndex == index}"
             v-for="(item, index) in fieldsList" @click="activeIndex = index" :key="index">{{
                 item.columnName
             }}</li>
+             <!--  -->
         </ul>
         <el-empty :description="t('common.noData')" v-else />
       </div>
       <!--中间-->
       <div class="border-l-r flex-1 pt-20px px-30px">
-        <div class="flex mb-30px items-center">
-          <span class="inline-block w-100px text-color-[#333333]">{{ t('task.selectField') }}
-            ：</span>
-          <div class="flex flex-1 items-center justify-center text-color-[#999999]">{{
-              fieldsList[activeIndex]?.columnName || undefined
-          }}</div>
-        </div>
         <div>
-          <span class="inline-block w-100px text-color-[#333333] mb-10px">{{ t('task.setTo') }}</span>
-          <div v-for="v in props.fieldType" :key="v.type" @click="handFields(v)"
-            class="border-1px cursor-pointer border-solid border-color-[#eeeeee] rounded-26px mb-10px h-40px w-full flex items-center justify-center"
-            :class="{ 'com-button': fieldTypeActive == v.type }">{{ t(`${v.name}`) }}</div>
+          <span class="inline-block w-100px text-color-[#333333] mb-10px font-medium">{{ t('task.setTo') }}</span>
+          <div v-waves  v-for="v in props.fieldType" :key="v.type" @click="handFields(v)"
+            class="border-1px cursor-pointer border-solid border-color-[#eeeeee] text-color-[#999999] rounded-26px mb-10px h-40px w-full flex items-center justify-center"
+            :class="{ 'com-button': handActiveClass(v),'no-click': !handActiveClass(v)}">
+            {{ t(`${v.name}`) }}
+            <el-tooltip effect="light" :content="t(v.tips)" placement="right">
+              <img class="w-20px h-20px ml-10px cursor-pointer" :src="handActiveClass(v)? questWhite:questbg"
+                alt="">
+              <template #content>
+                <slot name="content"></slot>
+              </template>
+            </el-tooltip>
+          </div>
         </div>
       </div>
       <!--右面-->
@@ -46,11 +50,11 @@
               t('task.idColumn')
           }}</span>
           <div
+           :style="{backgroundColor:form.idColumn?.columnName? 'rgba(238, 238, 238, .2)':'#fff'}"
             class="relative border-1px cursor-pointer border-solid border-color-[#eeeeee] rounded-26px mb-10px h-40px w-full flex items-center justify-center">
             {{ form.idColumn?.columnName }}
             <el-icon v-if="form.idColumn?.columnName" @click="removeFormParams('idColumn')"
               class="absolute right-10px text-19px text-color-[#565656]">
-              <!--@click="remove('idColumn')"-->
               <remove />
             </el-icon>
           </div>
@@ -60,6 +64,7 @@
               t('task.label')
           }}</span>
           <div
+           :style="{backgroundColor:form.label?.columnName? 'rgba(238, 238, 238, .2)':'#fff'}"
             class="relative border-1px cursor-pointer border-solid border-color-[#eeeeee] rounded-26px mb-10px h-40px w-full flex items-center justify-center">
             {{ form.label?.columnName }}
             <!---->
@@ -75,7 +80,8 @@
           }}</span>
           <ul
             class="relative fields-main w-full h-200px overflow-auto px-10px pt-10px border-1px border-solid border-color-[#eeeeee]">
-            <li
+            <li 
+            :style="{backgroundColor:form.label?.columnName? 'rgba(238, 238, 238, .2)':'#fff'}"
               class="cursor-pointer border-1px border-solid border-color-[#eeeeee] rounded-26px mb-10px h-40px w-full flex items-center justify-center"
               v-for="(item, index) in form.feature" :key="index">
               {{ item.columnName }}
@@ -94,6 +100,8 @@
 import { CaretBottom, Remove } from '@element-plus/icons-vue'
 import { getDataListByOrg, queryDataDetails } from '@/api/data'
 import type { CascaderOption } from 'element-plus/lib/components/cascader-panel/src/node';
+import questbg from '@/assets/Images/task/questBgfff.png'
+import questWhite from '@/assets/Images/task/questWhite.png'
 const { t, locale } = useI18n()
 const emit = defineEmits(['update:params'])
 const fieldTypeActive = ref('idColumn')
@@ -187,7 +195,14 @@ const cascaderProps = ref({
   }
 })
 
-
+const handActiveClass=(v:any)=>{
+  if(v.type == 'idColumn' && !form.idColumn?.columnName)return true
+  if(v.type == 'label' && !form.label?.columnName)return true
+  if(v.type == 'feature' && !fieldsList.value.length) return true
+  if(v.type == 'feature' && fieldsList.value.length &&  (nextActiveIndex.value?.index > -1)) return true
+  // if(v.type == 'feature') return true
+  return false
+}
 
 const cascaderChange = (e: any) => {
   if (!e) {
@@ -249,6 +264,7 @@ const clearableCascader = () => {
 
 const handFields = (v: any) => {
   if (!activeIndex.value && activeIndex.value !== 0) return
+  if (!fieldsList.value[activeIndex.value].show) return
     switch (v.type) {
       case 'idColumn':
         if (!form.label?.columnName) {
@@ -273,7 +289,7 @@ const handFields = (v: any) => {
         break;
     }
     fieldsList.value[activeIndex.value].show = false
-    activeIndex.value = nextActiveIndex.value.index || null
+    activeIndex.value = nextActiveIndex.value.index || 0
 }
 
 const handfeatureList = (item: any, index: number) => {
@@ -311,24 +327,11 @@ const removeFormParams = (name: string) => {
   border-right: 1px solid #eeeeee;
 }
 
-// .fields-main::-webkit-scrollbar {
-//   /*滚动条整体样式*/
-//   width: 7px;
-//   /*高宽分别对应横竖滚动条的尺寸*/
-// }
-
-// .fields-main::-webkit-scrollbar-thumb {
-//   /*滚动条里面小方块*/
-//   height: 30px;
-//   border-radius: 10px;
-//   // box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-//   background: #d8d8d8;
-// }
-
-// .fields-main::-webkit-scrollbar-track {
-//   /*滚动条里面轨道*/
-//   // box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-//   border-radius: 10px;
-//   background: #ffffff;
-// }
+.no-click{
+  cursor: no-drop;
+  background: rgba(238, 238, 238, .5);
+}
+.com-button{
+  color: #fff;
+}
 </style>

@@ -11,7 +11,7 @@
 </template>
 <script lang="ts" setup>
 import NormalMode from './components/NormalMode.vue'
-const { t } = useI18n()
+const { t,locale } = useI18n()
 const route: any = useRoute()
 const isRouterWorkFlow = computed(() => route.params?.workflowId ? false : true)
 const workflowName = ref('')
@@ -19,9 +19,13 @@ const getWorkName = (str: string) => {
   workflowName.value = str
 }
 
+
 const normalTimeKey = ref(Date.now())
 
 watch(route, () => {
+  normalTimeKey.value = Date.now()
+})
+watch(locale, () => {
   normalTimeKey.value = Date.now()
 })
 

@@ -181,12 +181,16 @@ const en = {
     trainingResultReceivers: "Select result receivers of the training task",
     predictionResultReceivers: "Select result receivers of the prediction task",
     startTask: "Start Task",
-    PSI: "PSI Train",
+    PSI: "Enable data alignment",
     pleaseComments: "Please enter comments (optional)",
     repeatAlgo: 'Duplicate algorithm nodes',
     exceedMaxNode: "Maximum number of nodes exceeded",
     reselectLater: "Please delete first and reselect later",
-    pleaseCompleteStep: "Please complete the current step information"
+    pleaseCompleteStep: "Please complete the current step information",
+    idColumnTips: "Used for multi-party data sample alignment",
+    labelTips: "In supervised learning, the relationship between feature (x) and actual label (y) is found to predict y when x is provided.",
+    featureTips: "In supervised learning, the relationship between feature (x) and actual label (y) is found to predict y when x is provided.",
+    resultReceiverTips:"The result receiver is a trusted node used to store the calculation result file, and the node can provide users with the function of viewing / downloading the results later."
   },
   myData: {
     tasksBriefInfoFirstParagraph: " ",

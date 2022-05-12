@@ -4,6 +4,10 @@
       <div class="mr-20px text-color-[#666666]">{{ $t('task.selection') }} ：</div>
       <NoticeText :noticeText="props.noticeText" />
     </div>
+    <div class="my-30px w-full pl-24px text-color-[#0052D9] flex flex items-center h-36px bg-color-[#EEF4FF] rounded-[4px] text-14px">
+        <img class="w-20px h-20px mr-8px" src="@/assets/images/auth/sigh.png"/>
+        <span>{{t('task.resultReceiverTips')}}</span>
+    </div>
     <div class="flex receivers justify-between">
       <el-form v-for="(item, i) in listLength" :rules="rules[i]" :ref="(e: any) => formRef[i] = e" :model="form[i]"
         :key="item" class="w-530px com-border-eee rounded-8px border-b-1px border"
