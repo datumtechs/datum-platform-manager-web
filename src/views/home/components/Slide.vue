@@ -1,32 +1,27 @@
 <template>
    <div class="flex mt-57px h-178px">
-      <div class="w-980px overflow-hidden">
-         <ul class="whitespace-nowrap w-1176px h-178px">
-            <!-- <transition-group name="slide">
-               <li class="p-20px w-176px h-178px mr-20px cursor-pointer float-left cursor-pointer border-1 border-solid border-[#EEEEEE]"
-                  v-for="box in taskList" :key="box.id">
-                  <p class="text-[16px] text-[#333]">{{ box.label }}</p>
-                  <p class="text-[16px] text-[#333]">{{ t('common.success') }} !</p>
-                  <p class="mt-40px text-[12px] text-[#999] leading-17px">35秒前</p>
-                  <p class="mt-17px text-[#666] leading-20px">{{ box.orgName }}</p>
-               </li>
-            </transition-group> -->
-            <!-- <el-carousel :interval="2000" type="card">
-               <el-carousel-item v-for="box in taskList" :key="box.id">
-                  <li class="p-20px w-176px h-178px mr-20px cursor-pointer float-left cursor-pointer border-1 border-solid border-[#EEEEEE]"
-                     v-for="box in taskList" :key="box.id">
-                     <p class="text-[16px] text-[#333]">{{ box.label }}</p>
-                     <p class="text-[16px] text-[#333]">{{ t('common.success') }} !</p>
-                     <p class="mt-40px text-[12px] text-[#999] leading-17px">35秒前</p>
-                     <p class="mt-17px text-[#666] leading-20px">{{ box.orgName }}</p>
-                  </li>
-               </el-carousel-item>
-            </el-carousel> -->
-         </ul>
+      <div class="w-980px h-178px">
+         <Swiper :modules="[A11y, Autoplay]" :autoplay="{ delay: 3000, disableOnInteraction: false }"
+            :loop="true" @swiper="onSwiper" @slideChange="onSlideChange" class="mySwiper h-178px"
+            :space-between="10" :slides-per-view="5">
+            <SwiperSlide
+               class="slide p-20px w-176px h-178px mr-20px border-1 border-solid border-[#EEEEEE]"
+               v-for="box in taskList" :key="box.id">
+               <p class="text-[16px] text-[#333]">{{ box.algo }}</p>
+               <p class="mt-20px text-[12px] text-[#333]">{{ box.label }}</p>
+               <p class="mt-30px text-[12px] text-[#999] leading-17px">{{ useFormatTime(box.endAt)
+               }}</p>
+               <p class="mt-17px text-[#666] leading-20px">
+                  <img class="w-22px h-22px org-img mr-8px" :src="box.imageUrl" alt="">
+                  <span class="ellipse w-110px org-name text-14px text-color-[#666] leading-20px">{{
+                        box.nodeName
+                  }}</span>
+               </p>
+            </SwiperSlide>
+         </Swiper>
       </div>
-      <!-- <div class="w-176px h-178px bg-[#ff0000] mr-20px" v-for="box in taskList" :key="box.id"></div> -->
       <div
-         class="w-176px h-178px cursor-pointer border-1 border-solid border-[#EEEEEE] flex flex-col justify-center items-center">
+         class="w-156px ml-20px h-178px cursor-pointer border-1 border-solid border-[#EEEEEE] flex flex-col justify-center items-center">
          <p class="text-[#252525] font-bold">{{ t('home.viewAllComputingTask') }}</p>
          <img class="mt-6px" :src="arrow" />
       </div>
@@ -36,8 +31,17 @@
 <script setup lang='ts'>
 import arrow from '@assets/images/home/slide-arrow.png'
 import { useObserver } from '@/hooks'
-import { queryTaskList } from '@/api/task'
+import { Swiper, SwiperSlide, useSwiper } from 'swiper/vue';
+import { A11y, Autoplay } from 'swiper';
+import 'swiper/css'
+import { getLatestTaskList } from '@/api/home'
+import { useFormatTime } from '@/hooks'
+
 const { t } = useI18n()
+
+const swiper = useSwiper()
+console.log('swiper =========================>', swiper);
+
 interface Task {
    id: number,
    label: string,
@@ -45,73 +49,33 @@ interface Task {
    orgName: string
 
 }
-let taskList: Array<Task> = reactive([
-   {
-      id: 1,
-      label: '逻辑回归模型训练',
-      endAt: '',
-      orgName: '中国银行'
-   },
-   {
-      id: 2,
-      label: '逻辑回归模型训练',
-      endAt: '',
-      orgName: '中国银行'
-   },
-   {
-      id: 3,
-      label: '逻辑回归模型训练',
-      endAt: '',
-      orgName: '中国银行'
-   },
-   {
-      id: 4,
-      label: '逻辑回归模型训练',
-      endAt: '',
-      orgName: '中国银行'
-   },
-   {
-      id: 5,
-      label: '逻辑回归模型训练',
-      endAt: '',
-      orgName: '中国银行'
-   },
-   {
-      id: 6,
-      label: '逻辑回归模型训练',
-      endAt: '',
-      orgName: '中国银行'
-   }
-
-])
+let taskList: any = ref([])
 let count = ref(6)
-const mockAdd = () => {
-   setTimeout(() => {
-      taskList.unshift({
-         id: count.value++,
-         label: 'Ti12夺冠',
-         endAt: '',
-         orgName: '中华小当家'
-      })
-
-      taskList.pop()
-      mockAdd()
-   }, 3000);
-}
-
 const getGlobalTask = () => {
-   queryTaskList({
-      size: 6,
+   getLatestTaskList({
+      size: 10,
       current: 1,
       taskStatus: 'ALL'
    }).then((res: any) => {
       const { code, data } = res
       if (code === 10000) {
-         taskList = res.data
+         const arr = JSON.parse(JSON.stringify(data));
+         arr.forEach((item: any) => {
+            const nameArr = item.taskName.split('_')
+            item.algo = nameArr[2]
+            item.label = nameArr[3]
+
+         })
+         taskList.value = arr
       }
    })
 }
-
+const onSwiper = (swiper: any) => {
+   console.log('swiper =========================>', swiper);
+};
+const onSlideChange = () => {
+   console.log('slide change');
+};
 // watchEffect(() => {
 //    setTimeout(() => {
 //       getGlobalTask()
@@ -119,12 +83,18 @@ const getGlobalTask = () => {
 // })
 
 onMounted(() => {
-   mockAdd()
+   getGlobalTask()
 })
 
 </script>
 
 <style scoped lang='scss'>
+.org-img,
+.org-name {
+   vertical-align: middle;
+   display: inline-block
+}
+
 .slide-enter-active,
 .slide-leave-active {
    animation: slide-in ease 0.8s;

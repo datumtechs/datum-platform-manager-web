@@ -10,41 +10,6 @@ import { useFormatDay } from '@/hooks'
 
 const chartData = ref([])
 const initCharts = (data: any) => {
-    const data1 = [
-        {
-            statsTime: 1,
-            statsValue: 1
-        },
-        {
-            statsTime: 2,
-            statsValue: 2
-        },
-        {
-            statsTime: 3,
-            statsValue: 3
-        },
-        {
-            statsTime: 4,
-            statsValue: 4
-        },
-        {
-            statsTime: 5,
-            statsValue: 5
-        },
-        {
-            statsTime: 6,
-            statsValue: 6
-        },
-        {
-            statsTime: 7,
-            statsValue: 7
-        },
-        {
-            statsTime: 8,
-            statsValue: 8
-        },
-    ];
-
     const chart = new Chart({
         container: 'container',
         autoFit: true,
