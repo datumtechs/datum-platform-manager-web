@@ -223,12 +223,12 @@ class Web3Service {
    * @param total 授权erc20数量
    * @returns Promise 授权结果
    */
-  async authERC20TOKEN(address: string, total: number, callback: any): Promise<any> {
+  async authERC20TOKEN(ERC20address: string, walletHelpAddress: string, total: number, callback: any): Promise<any> {
     try {
-      if (!address) return new Error('address is not found')
+      if (!ERC20address || !walletHelpAddress) return new Error('address is not found')
       await this._hasLogin()
       await this._setTargetChain()
-      const contract = await new this.web3.eth.Contract(Erc20ABI, address)
+      const contract = await new this.web3.eth.Contract(Erc20ABI, ERC20address)
       const userAddress = useUsersInfo().getAddress
       const res = await contract.methods.approve(walletHelpAddress, total).send({
         from: userAddress
@@ -247,14 +247,14 @@ class Web3Service {
    * @param {string} address
    * @returns Promise 授权节点结果
    */
-  async authNode(address: string, callback: any): Promise<any> {
+  async authNode(observerProxyWalletAddress: string, metisPayAddress: string, callback: any): Promise<any> {
     try {
-      if (!address) throw new Error('ObserverWallet address was not found')
+      if (!observerProxyWalletAddress || !metisPayAddress) throw new Error('ObserverWallet address was not found')
       await this._hasLogin()
       await this._setTargetChain()
-      const contract = await new this.web3.eth.Contract(MetisPayABI, address)
+      const contract = await new this.web3.eth.Contract(MetisPayABI, metisPayAddress)
       const userAddress = useUsersInfo().getAddress
-      const res = await contract.methods.authorize(address).send({
+      const res = await contract.methods.addWhitelist(observerProxyWalletAddress).send({
         from: userAddress
       }).on('transactionHash', (txHash: string) => {
         console.log(txHash);
@@ -271,14 +271,14 @@ class Web3Service {
    * @param {string} address
    * @returns Promise 取消授权节点结果
    */
-  async revokeNode(address: string, callback: any): Promise<any> {
+  async revokeNode(observerProxyWalletAddress: string, metisPayAddress: string, callback: any): Promise<any> {
     try {
-      if (!address) return new Error('address is not found')
+      if (!observerProxyWalletAddress || !metisPayAddress) return new Error('address is not found')
       await this._hasLogin()
       await this._setTargetChain()
-      const contract = await new this.web3.eth.Contract(MetisPayABI, address)
+      const contract = await new this.web3.eth.Contract(MetisPayABI, metisPayAddress)
       const userAddress = useUsersInfo().getAddress
-      const res = await contract.methods.deleteWhitelist(address).send({
+      const res = await contract.methods.deleteWhitelist(observerProxyWalletAddress).send({
         from: userAddress
       }).on('transactionHash', (txHash: string) => {
         console.log('txHash:', txHash);

@@ -82,6 +82,7 @@
 <script setup lang="ts">
 import { getUserOrgList } from '@/api/login'
 import { useNotice } from '@/hooks'
+
 interface OrgNode {
     identityId: string
     identityIp: string
@@ -142,7 +143,7 @@ const authSubmit = () => {
         const content = `${t('auth.authorizeNode')}: ${currentNode.value?.nodeName}`
         pending.title = t('auth.confirmAuth')
         pending.content = content
-        web3.authNode(currentNode.value?.observerProxyWalletAddress, _close)
+        web3.authNode(currentNode.value?.observerProxyWalletAddress, chainConfig.value.metisPayAddress, _close)
             .then((res: any) => {
                 if (res && res.transactionHash) {
                     useNotice('success', content, chainConfig.value?.blockExplorerUrl, res.transactionHash)
@@ -155,7 +156,7 @@ const authSubmit = () => {
         const content = `${t('auth.cancelNodeAuth')}: ${currentNode.value?.nodeName}`
         pending.title = t('auth.confirmCancelAuth')
         pending.content = content
-        web3.revokeNode(currentNode.value?.observerProxyWalletAddress, _close)
+        web3.revokeNode(currentNode.value?.observerProxyWalletAddress, chainConfig.value.metisPayAddress, _close)
             .then((res: any) => {
                 if (res && res.transactionHash) {
                     useNotice('success', '', chainConfig.value?.blockExplorerUrl, res.transactionHash)

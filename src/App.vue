@@ -12,6 +12,8 @@ provide('web3', web3)
 provide('chainConfig', chainConfig)
 
 
+
+
 const queryConfig = () => {
   queryCurrentChainInfo().then(res => {
     const { data } = res
