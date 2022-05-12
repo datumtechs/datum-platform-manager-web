@@ -1,10 +1,11 @@
 <template>
    <div class="flex mt-57px h-178px">
       <div class="w-980px h-178px">
-         <Swiper :modules="[A11y, Autoplay]" :autoplay="{ delay: 3000 }" :loop="true"
-            class="mySwiper h-178px" :space-between="10" :slides-per-view="5">
+         <Swiper :modules="[A11y, Autoplay]" :autoplay="{ delay: 3000, disableOnInteraction: false }"
+            :loop="true" @swiper="onSwiper" @slideChange="onSlideChange" class="mySwiper h-178px"
+            :space-between="10" :slides-per-view="5">
             <SwiperSlide
-               class="slide p-20px w-176px h-178px mr-20px  border-1 border-solid border-[#EEEEEE]"
+               class="slide p-20px w-176px h-178px mr-20px border-1 border-solid border-[#EEEEEE]"
                v-for="box in taskList" :key="box.id">
                <p class="text-[16px] text-[#333]">{{ box.algo }}</p>
                <p class="mt-20px text-[12px] text-[#333]">{{ box.label }}</p>
@@ -20,7 +21,7 @@
          </Swiper>
       </div>
       <div
-         class="w-176px h-178px cursor-pointer border-1 border-solid border-[#EEEEEE] flex flex-col justify-center items-center">
+         class="w-156px ml-20px h-178px cursor-pointer border-1 border-solid border-[#EEEEEE] flex flex-col justify-center items-center">
          <p class="text-[#252525] font-bold">{{ t('home.viewAllComputingTask') }}</p>
          <img class="mt-6px" :src="arrow" />
       </div>
@@ -30,7 +31,7 @@
 <script setup lang='ts'>
 import arrow from '@assets/images/home/slide-arrow.png'
 import { useObserver } from '@/hooks'
-import { Swiper, SwiperSlide, } from 'swiper/vue';
+import { Swiper, SwiperSlide, useSwiper } from 'swiper/vue';
 import { A11y, Autoplay } from 'swiper';
 import 'swiper/css'
 import { getLatestTaskList } from '@/api/home'
@@ -38,6 +39,8 @@ import { useFormatTime } from '@/hooks'
 
 const { t } = useI18n()
 
+const swiper = useSwiper()
+console.log('swiper =========================>', swiper);
 
 interface Task {
    id: number,
@@ -67,7 +70,12 @@ const getGlobalTask = () => {
       }
    })
 }
-
+const onSwiper = (swiper: any) => {
+   console.log('swiper =========================>', swiper);
+};
+const onSlideChange = () => {
+   console.log('slide change');
+};
 // watchEffect(() => {
 //    setTimeout(() => {
 //       getGlobalTask()
