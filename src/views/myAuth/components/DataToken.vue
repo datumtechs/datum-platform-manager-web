@@ -9,9 +9,11 @@
             <el-table-column type="index" width="100">
                 <template #header>{{ t('common.num') }}</template>
             </el-table-column>
-            <el-table-column prop="tokenName" :label="t('myData.credentialName')" />
-            <el-table-column prop="tokenSymbol" :label="t('myData.credentialSymbol')" />
-            <el-table-column :label="t('myData.dataName')">
+            <el-table-column show-overflow-tooltip prop="tokenName"
+                :label="t('myData.credentialName')" />
+            <el-table-column show-overflow-tooltip prop="tokenSymbol"
+                :label="t('myData.credentialSymbol')" />
+            <el-table-column show-overflow-tooltip :label="t('myData.dataName')">
                 <template #default="{ row }">
                     <p v-if="row.metaDataName">{{ row.metaDataName }}</p>
                     <p v-else>-</p>
@@ -66,7 +68,7 @@
                 <el-form-item :label="t('myData.credentialName')" prop="name">
                     <span>{{ currentToken.tokenName }}</span>
                 </el-form-item>
-                <el-form-item :label="t('auth.authQuantity')" prop="quantity">
+                <el-form-item :label="t('auth.authQuantity')" prop="quantity" class="require-icon">
                     <el-input v-model="authForm.quantity" maxlength="20" />
                 </el-form-item>
             </el-form>

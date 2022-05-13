@@ -275,6 +275,11 @@ const selectNode = (node: any, index: number) => {
     useExpertMode().setCurNodeId(node.algorithmId)
     useExpertMode().setCurData(node)
     useExpertMode().setShowPanel(true)
+    if (node.algorithmId === 1001) {
+        useExpertMode().setIsPSIModel(true)
+    } else {
+        useExpertMode().setIsPSIModel(false)
+    }
 }
 
 const nodeListWithStatus: any = computed(() => {
@@ -289,12 +294,12 @@ const nodeListWithStatus: any = computed(() => {
     })
 })
 
-watch(nodeListWithStatus.value, () => {
+watch(nodeListWithStatus, () => {
     if (nodeListWithStatus.value.length &&
         nodeListWithStatus.value[curNodeIndex.value]) {
         selectNode(nodeListWithStatus.value[curNodeIndex.value], curNodeIndex.value)
     }
-})
+}, { deep: true })
 
 
 

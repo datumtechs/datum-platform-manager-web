@@ -282,8 +282,8 @@ defineExpose({
         display: flex;
         align-items: center;
         width: 140px;
+        border: 1px solid #eeeeee;
         height: 40px;
-        background: #eeeeee;
         border-radius: 4px;
         line-height: 17px;
       }

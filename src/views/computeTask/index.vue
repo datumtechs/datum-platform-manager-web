@@ -10,7 +10,7 @@
       </template>
     </Banner>
     <div class="main-content com-main-data-wrap">
-      <el-table :data="tableData" class="mt-30px com-table _com_el-table-wrap">
+      <el-table v-loading="loading" :data="tableData" class="mt-30px com-table _com_el-table-wrap">
         <el-table-column type="index" width="100" :index="indexMethod">
           <template #header>{{ t('common.num') }}</template>
         </el-table-column>
@@ -54,6 +54,7 @@ import { useFormatTime, useDuring, useTableIndex, useGlobalTaskMap } from '@/hoo
 const router: Router = useRouter()
 const { t } = useI18n()
 
+const loading = ref(false)
 const tableData = ref([])
 
 const pageObj = reactive({
@@ -83,12 +84,16 @@ const getStatus = (status: number) => {
 }
 
 const queryList = () => {
+  loading.value = true
   queryTaskList({ current: pageObj.current, size: pageObj.size, taskStatus: 'ALL' }).then(res => {
+    loading.value = false
     const { data, code } = res
     if (code === 10000) {
       tableData.value = data.items
       pageObj.total = data.total
     }
+  }).catch(error => {
+    loading.value = false
   })
 }
 
