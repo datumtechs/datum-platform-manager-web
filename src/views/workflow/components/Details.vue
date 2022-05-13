@@ -108,7 +108,13 @@ const queryVersionList = () => {
   })
 }
 
-const view = (row:any) => { }
+const view = (row:any) => { 
+ router.push({
+    name: 'workflowSubtask', params: {
+      id: row.workflowRunId
+    }
+  })
+}
 
 const edit = (row: any) => {
   let urlName = 'wizardMode'

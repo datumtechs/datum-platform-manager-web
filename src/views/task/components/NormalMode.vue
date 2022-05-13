@@ -17,7 +17,7 @@
     <div v-show="activeIndex == 0" class="mt-38px mb-42px ml-6px">
       <PrivateSwitch :mode="'normal'" v-if="!workfolwParams.workflowId"
         @change="$router.push({ name: 'expertModel' })" />
-      <SelectionAlg @getNoticeText="getNoticeText" :taskParams="workfolwParams" @init="init" :processList="processList"
+      <SelectionAlg @getNoticeText="getNoticeText" :taskParams="workfolwParams" @init="init(),activeIndex=1" :processList="processList"
         @getParams="slectionAlgParams" />
     </div>
        <component :is="componentList[list[activeIndex]?.type]?.components" :workflowInfo="{ ...workflowInfo }"
@@ -53,7 +53,6 @@ const orgList: any = ref<any>([])
 const comList = ref([])
 const noticeText = ref({})
 const workfolwParams = ref<any>({})
-// const processStep = ref(1)//
 const processList = ref([])//流程列表
 const workflowInfo = reactive<any>({
   workflowId: '',
@@ -175,12 +174,10 @@ const getLoginNonce = async () => {
 
 const submit = async () => {
   try {
-    // isLogin.value = true
     await web3.connectWallet()
     await getLoginNonce()
     const res = await web3.signForWallet('sign')
     startWorkFlow({
-      // "address": userInfoStore.getAddress,
       "sign": res,
       "workflowId": workflowInfo.workflowId,
       "workflowVersion": workflowInfo.workflowVersion
