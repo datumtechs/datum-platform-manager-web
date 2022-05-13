@@ -13,6 +13,18 @@
         </el-option>
       </el-select>
     </div>
+    <div class="flex items-center text-14px mt-20px" v-if="props.type == 1 && props.step == 1">
+      <div class="mr-20px text-color-[#666666] font-medium w-130px">{{ $t('task.selectModel') }} ：</div>
+     <el-cascader clearable :disabled="taskParams.isSettingCompleted"
+        class="h-40px rounded-20px border-1 w-395px border-solid border-color-[#EEEEEE]" :suffix-icon="CaretBottom"
+        v-model="model" :options="optionsList" :props="cascaderProps" />
+    <!-- <el-select v-model="model" :suffix-icon="CaretBottom" :placeholder="$t('task.selectModel')"
+        :disabled="taskParams.isSettingCompleted" style="flex:0 0 440px"
+        class="h-40px rounded-20px border-1 basis-1/2 border-solid border-color-[#EEEEEE]">
+        <el-option v-for="(v) in props.orgList" :label="v.nodeName" :value="v.identityId">
+        </el-option>
+      </el-select> -->
+    </div>
     <div class="flex items-center text-14px mt-20px">
       <div class="mr-20px text-color-[#666666] font-medium w-130px">{{ $t('task.PSI') }} ：</div>
       <el-switch v-model="psi" :disabled="taskParams.isSettingCompleted" />
@@ -37,6 +49,8 @@ import TaskParamsTransfer from '@/components/TaskParamsTransfer.vue';
 import { CaretBottom } from '@element-plus/icons-vue'
 import NextButton from './NextButton.vue'
 import { setWorkflowOfWizardMode } from '@/api/workflow'
+import { getUserModelList } from '@/api/task'
+import { queryAlgoDetail } from '@/api/algorithm'
 const router: any = useRouter()
 const emit = defineEmits(['previous', 'getParams', 'next'])
 const props: any = defineProps({
@@ -74,7 +88,17 @@ const psiInputParams = reactive({ one: [], two: [] })
 const psiInputOne = ref<any>({})
 const psiInputTwo = ref<any>({})
 const identityId = ref('')
+const model = ref('')
 const psi = ref(false)
+// const algoList = ref([])
+const optionsList = ref<any[]>([])
+// const orgList = computed(() => props.orgList.map((v: any) => {
+//   return {
+//     value: v.identityId,
+//     label: v.nodeName
+//   }
+// }))
+
 
 const next = () => {
   emit('getParams')
@@ -142,15 +166,89 @@ const submit = async (str?: string | any) => {
 const init = () => {
   const { predictionInput } = props.taskParams
   psi.value = predictionInput.isPsi || undefined
-  // de
   identityId.value = predictionInput?.identityId
   psiInputParams.one = predictionInput?.item[0] || []
   psiInputParams.two = predictionInput?.item[1] || []
 }
 
+
+const cascaderProps = ref({
+  lazy: true,
+  lazyLoad(node: any, resolve: any) {
+    const { value, level,pathValues } = node
+    if (!value) {
+      resolve([])
+      return
+    }
+    getUserModelList({
+      algorithmId:pathValues[1],
+      identityId:pathValues[0]
+    }).then(res=>{
+      const {code,data} = res
+      if(code == 10000){
+          resolve(data.map((v: any) => ({
+            value: v.metaDataId,
+            label: v.metaDataId,
+            leaf: true
+          })))
+      } else {
+        resolve([])
+      }
+    })
+  }
+})
+
+let target: any = []
+const filterTree = (arr: any, newArray: any = []) => {
+    target.concat(newArray)
+    arr.forEach((son: any) => {
+        if (Array.isArray(son.childrenList)) {
+            filterTree(son.childrenList, target)
+        } else {
+            if (son.isAlgorithm && son.isExistAlgorithm) {
+                target.push({
+                    value: son.id,
+                    label: son.name,
+                });
+            }
+        }
+    })
+    return target
+}
+
+
+const queryAlgoList = () => {
+    if(props.type == 1 && props.step == 1){
+      queryAlgoDetail().then(result => {
+            const { data, code } = result
+            if (code === 10000) {
+                const arr = filterTree(data.childrenList)
+                // algoList.value = arr
+                optionsList.value = props.orgList.map((v:any)=>{
+                  return {
+                    value: v.identityId,
+                    label: v.nodeName,
+                    children:[
+                      ...arr
+                    ]
+                  }
+                })
+                console.log(optionsList.value)
+            }
+        }).catch(err => {
+            console.log(err);
+        })
+    }
+}
+
+
+
 watch(() => props.taskParams, () => {
   init()
 })
+
+onMounted(queryAlgoList)
+
 
 
 

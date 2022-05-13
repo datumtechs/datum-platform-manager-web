@@ -45,7 +45,10 @@ const zh = {
     viewEvent: '查看日志',
     noData: "暂无数据",
     confirm: '确认',
-    viewOnScan: '在PlatScan上查看交易'
+    viewOnScan: '在PlatScan上查看交易',
+    to: "至",
+    endTime: "结束时间",
+    timeFrame:"时间范围"
   },
   menu: {
     home: '首页',
@@ -243,7 +246,8 @@ const zh = {
     timeUse: "用时",
     viewDetails: "查看详情",
     tokenNum: '剩余',
-    authorizeBalance: '已授权数量'
+    authorizeBalance: '已授权数量',
+    placeholder:"搜索工作流ID、名称关键字"
   },
   credentials: {
     circulation: "总发布量",

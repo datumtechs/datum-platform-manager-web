@@ -220,7 +220,6 @@ const previous = () => {
 }
 
 const setActiveStep = (index: number) => {
-  // console.log(index, workfolwParams.value?.completedCalculationProcessStep + 1)
   if (workfolwParams.value?.completedCalculationProcessStep + 1 < index) {
     ElMessage.warning(t('task.pleaseCompleteStep'))
     return
@@ -240,10 +239,6 @@ const query = (index?: number) => {
     const { data, code } = res
     if (code === 10000) {
       workfolwParams.value = { ...data }
-      // activeIndex.value = data?.completedCalculationProcessStep || 1
-      // // processStep.value = data?.completedCalculationProcessStep || 2
-      // // console.log(processStep.value)
-      // // debugger
       emit('getWorkName', data.workflowName)
     }
     loading.value = false
@@ -276,7 +271,6 @@ const setProces = () => {//设置流程
 const init = () => {
   const workflowId = route.params.workflowId || store.getWorkerFlow.workflowId
   const workflowVersion = route.params.workflowVersion || store.getWorkerFlow.workflowVersion
-  // console.log(store.getWorkerFlow)
   if (workflowId) {
     workflowInfo.workflowId = workflowId
     workflowInfo.workflowVersion = workflowVersion
