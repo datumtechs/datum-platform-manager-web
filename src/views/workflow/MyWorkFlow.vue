@@ -28,19 +28,35 @@
         }" :total="total" />
       </div>
     </div>
-    <Search :placeholder="'关键字'" @search="search">
+    <Search :placeholder="t('workflow.placeholder')" @search="search">
       <template #content>
-        <div class="flex items-center">
+        <div>
+          <div class="search-label  mt-20px mb-10px font-900">{{t('myData.TaskCategory')}}</div>
+          <el-select class="w-full picker-rounded" clearable v-model="algValue" :placeholder="t('task.select')">
+            <el-option-group
+              v-for="group in algList"
+              :key="group.id"
+              :label="group.name"
+            >
+              <el-option
+                v-for="item in group.childrenList"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id"
+              />
+            </el-option-group>
+          </el-select>
+        </div>
+        <div>
+          <div class="search-label mt-20px mb-10px font-900">{{t('common.timeFrame')}}</div>
           <el-date-picker
-           key="start"
-           v-model="dateStart"
-            type="dates"
-          />
-          <div class="w-20px">to</div>
-          <el-date-picker
-            key="end"
-           v-model="dateEnd"
-            type="dates"
+            class="picker-rounded"
+            v-model="date"
+            type="daterange"
+            value-format="YYYY-MM-DD"
+            :range-separator="t('common.to')"
+            :start-placeholder="t('node.startTime')"
+            :end-placeholder="t('common.endTime')"
           />
         </div>
       </template>
@@ -49,6 +65,7 @@
 
 </template>
 <script lang="ts" setup>
+import { getAlgTree } from '@/api/algorithm'
 import DataTable from './components/DataTable.vue';
 import ExpertTable from './components/ExpertTable.vue';
 import { queryWorkflowList, queryWorkflowStats } from '@/api/workflow/index'
@@ -61,9 +78,10 @@ const flowStats = ref(0)
 const activekey = ref(0)
 const createMode = ref(2)
 const loading = ref(false)
-const dateStart = ref()
-const dateEnd = ref()
-
+const date = ref()
+const algList = ref<any[]>([])
+const algValue = ref('')
+const keyword = ref('')
 
 const list = ref([
   {
@@ -78,18 +96,36 @@ watch(() => createMode.value, () => {
   query()
 })
 
-const search = ()=>{}
+const search = (str:string)=>{
+   keyword.value = str
+   query()
+}
 
 const tabsChange = (index: string) => {
   activekey.value = +index
   createMode.value = index == '0' ? 2 : 1
+  keyword.value = ''
 }
+
+const transferTimestamp = (str:string|undefined)=>{
+  if(!str) return ''
+  try{
+     return new Date(str).getTime()
+  }catch(e:any){
+    console.log(e)
+  }
+}
+
 
 const query = () => {
   loading.value = true
   queryWorkflowList({
     createMode: createMode.value,
-    current: current.value, size: 10, taskStatus: 'ALL'
+    current: current.value, size: 10, taskStatus: 'ALL',
+    keyword:keyword.value,
+    algorithmId: algValue.value,
+    begin: transferTimestamp(date.value && date.value[0]) || null,
+    end: transferTimestamp(date.value && date.value[1])|| null,
   }).then(res => {
     loading.value = false
     const { data, code } = res
@@ -115,8 +151,29 @@ const getTaskStats = () => {
 onMounted(() => {
   query()
   getTaskStats()
+  queryAlg()
 })
 
+const queryAlg =()=>{
+  getAlgTree().then(res => {
+    const { data, code } = res
+    if (code === 10000) {
+      algList.value = data?.childrenList[0]?.childrenList
+    }
+  })
+}
+
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
+.picker-rounded{
+    border-radius: 20px;
+    height: 40px;
+    .select-trigger{
+      .el-input__inner{
+        border-radius: 20px;
+         height: 40px;
+         text-indent: 20px;
+      }
+    }
+}
 </style>

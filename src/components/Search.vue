@@ -4,23 +4,26 @@
       <el-input
         class="flex"
         v-model="input1"
+        clearable
         @blur="submit"
+        @clear="submit"
         :prefix-icon="Search"
         :placeholder="props.placeholder"
       >
         <template #suffix>
           <el-popover
+            :ref="(e:any)=>popoverRef = e"
             placement="bottom"
             :width="428"
-            trigger="click"
+            v-model:visible="visible"
           >
             <template #reference>
-              <img class="w-24px cursor-pointer" src="@/assets/images/header/select.png" />
+              <img class="w-24px cursor-pointer" @click="visible=true" src="@/assets/images/header/select.png" />
             </template>
             <div class="content p-28px pt-18px">
-              <slot name="content"></slot>
+              <slot v-if="asyncVisible" name="content"></slot>
               <div class="popver-footer text-right pt-30px">              
-                  <el-button class="w-140px" style="height:40px" round>{{t('common.cancel')}}</el-button>
+                  <el-button class="w-140px" style="height:40px" round @click="cancel">{{t('common.cancel')}}</el-button>
                   <el-button class="w-140px" style="height:40px" type="primary" round @click="submit">{{t('common.submit')}}</el-button>
               </div>
             </div>
@@ -32,8 +35,11 @@
 </template>
 <script setup lang="ts">
 import { Search } from '@element-plus/icons-vue'
-const input1 = ref('')
+const input1 = ref('') 
+const visible = ref(false) 
+const asyncVisible = ref(false) 
 const {t} = useI18n()
+// const popoverKey = ref(Date.now())
 const props = defineProps({
   placeholder:{
     type:String,
@@ -44,15 +50,28 @@ const props = defineProps({
 const emit = defineEmits(['search'])
 
 const submit =()=>{
-  emit('search',input1)
+  emit('search',input1.value)
+  popoverRefHide()
 }
 
-// const popoverRef = ref()
-// const buttonRef = ref()
+const popoverRef = ref()
 
-// const onClickOutside = () => {
-//   unref(popoverRef).popperRef?.delayHide?.()
-// }
+const cancel = ()=>{
+  popoverRefHide()
+}
+
+const popoverRefHide = () => {
+  // unref(popoverRef).hide()
+  visible.value = false
+}
+
+
+onMounted(()=>{
+  setTimeout(()=>{
+     asyncVisible.value =true
+  })
+})
+
 </script>
 <style lang="scss" scoped>
 .input-wrap {
@@ -80,6 +99,12 @@ const submit =()=>{
       right: 23px;
       .el-input__suffix-inner {
         align-items: center;
+      position: relative;
+        .el-icon{
+          position: absolute;
+          right: 40px;
+          font-size: 20px;
+        }
       }
     }
   }

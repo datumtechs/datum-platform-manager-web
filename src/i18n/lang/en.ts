@@ -45,7 +45,10 @@ const en = {
     viewEvent: 'View Event',
     noData: "No Data",
     confirm: 'Confirm',
-    viewOnScan: 'View on PlatScan'
+    viewOnScan: 'View on PlatScan',
+    to: "to",
+    endTime: "End Time",
+    timeFrame:"time Frame"
   },
   menu: {
     home: 'Home',
@@ -243,7 +246,8 @@ const en = {
     timeUse: "Time Use",
     viewDetails: "View Details",
     tokenNum: '剩余',
-    authorizeBalance: 'Authorized quantity'
+    authorizeBalance: 'Authorized quantity',
+    placeholder:"Search workflow ID, name keyword"
   },
   credentials: {
     circulation: "Circulation",

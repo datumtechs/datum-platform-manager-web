@@ -29,3 +29,11 @@ export const getTaskListByOrg = (params: {}): Promise<any> => {
     params
   })
 }
+
+export const getUserModelList = (params: {}): Promise<any> => {
+  return http({
+    method: 'GET',
+    url: '/flow/data/getUserModelList',
+    params
+  })
+}
