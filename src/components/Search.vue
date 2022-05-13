@@ -3,22 +3,27 @@
     <div class="input-wrap w-full h-full">
       <el-input
         class="flex"
-        v-show="$route.meta.search"
         v-model="input1"
+        @blur="submit"
         :prefix-icon="Search"
-        placeholder="Please input"
+        :placeholder="props.placeholder"
       >
         <template #suffix>
           <el-popover
             placement="bottom"
-            title="Title"
             :width="428"
             trigger="click"
-            content="this is content, this is content, this is content"
           >
             <template #reference>
               <img class="w-24px cursor-pointer" src="@/assets/images/header/select.png" />
             </template>
+            <div class="content p-28px pt-18px">
+              <slot name="content"></slot>
+              <div class="popver-footer text-right pt-30px">              
+                  <el-button class="w-140px" style="height:40px" round>{{t('common.cancel')}}</el-button>
+                  <el-button class="w-140px" style="height:40px" type="primary" round @click="submit">{{t('common.submit')}}</el-button>
+              </div>
+            </div>
           </el-popover>
         </template>
       </el-input>
@@ -26,9 +31,22 @@
   </teleport>
 </template>
 <script setup lang="ts">
-// import { unref } from 'vue'
 import { Search } from '@element-plus/icons-vue'
 const input1 = ref('')
+const {t} = useI18n()
+const props = defineProps({
+  placeholder:{
+    type:String,
+    default:''
+  }
+})
+
+const emit = defineEmits(['search'])
+
+const submit =()=>{
+  emit('search',input1)
+}
+
 // const popoverRef = ref()
 // const buttonRef = ref()
 

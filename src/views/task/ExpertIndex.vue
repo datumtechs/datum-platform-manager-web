@@ -19,7 +19,7 @@ const { t } = useI18n()
     // @extend .font-bold;
     font-size: 16px;
     font-weight: 600;
-    color: #000000;
+    color: #333333;
     line-height: 22px;
   }
 

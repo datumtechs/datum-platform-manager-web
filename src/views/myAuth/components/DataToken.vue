@@ -260,7 +260,7 @@ const rules = ref(
 
 :deep(.el-dialog__header) {
     .el-dialog__title {
-        color: #000000;
+        color: #333333;
         font-size: 16px;
         font-family: DINPro-Medium, Ali-Medium;
         line-height: 24px;
