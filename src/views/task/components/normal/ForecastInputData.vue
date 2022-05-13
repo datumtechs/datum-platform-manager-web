@@ -12,8 +12,10 @@
         <el-option v-for="(v) in props.orgList" :label="v.nodeName" :value="v.identityId">
         </el-option>
       </el-select>
-      <el-checkbox class="ml-26px mr-10px" v-model="psi" label="psi">{{ }}</el-checkbox>
-      <span>{{ $t('task.PSI') }}</span>
+    </div>
+    <div class="flex items-center text-14px mt-20px">
+      <div class="mr-20px text-color-[#666666] font-medium w-130px">{{ $t('task.PSI') }} ：</div>
+      <el-switch v-model="psi" :disabled="taskParams.isSettingCompleted" />
     </div>
     <TaskParamsTransfer :fieldType="[props.fieldType[0], props.fieldType[1]]" :sellectionAlgPsi="true"
       :disabledData="psiInputTwo?.metaData" :key="'input'" @update:params="psiInputOne = $event"

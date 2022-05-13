@@ -28,7 +28,23 @@
         }" :total="total" />
       </div>
     </div>
-    <Search></Search>
+    <Search :placeholder="'关键字'" @search="search">
+      <template #content>
+        <div class="flex items-center">
+          <el-date-picker
+           key="start"
+           v-model="dateStart"
+            type="dates"
+          />
+          <div class="w-20px">to</div>
+          <el-date-picker
+            key="end"
+           v-model="dateEnd"
+            type="dates"
+          />
+        </div>
+      </template>
+    </Search>
   </div>
 
 </template>
@@ -45,6 +61,9 @@ const flowStats = ref(0)
 const activekey = ref(0)
 const createMode = ref(2)
 const loading = ref(false)
+const dateStart = ref()
+const dateEnd = ref()
+
 
 const list = ref([
   {
@@ -59,6 +78,7 @@ watch(() => createMode.value, () => {
   query()
 })
 
+const search = ()=>{}
 
 const tabsChange = (index: string) => {
   activekey.value = +index

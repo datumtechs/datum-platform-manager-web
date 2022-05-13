@@ -1,26 +1,10 @@
 <template>
   <div class="flex items-center private-switch-wrap cursor-pointer">
-    <!-- <div
-      class="text-16px font-600 leading-22px mr-10px text-color-[#333333]"
-    >{{ $t('task.expertMode') }}</div> -->
-
-    <!-- <div> -->
-    <el-button class="h-40px" plain type="primary" @click="change" round>
+    <div :class="locale == 'en' ? 'w-161px':'w-142px'">
+      <el-button class="h-40px" plain type="primary" @click="change" round>
       {{$t('task.goTo')}}{{ isExpertMode? $t('task.wizardMode') :$t('task.expertMode') }}
     </el-button>
-      <!-- <div
-        class="bg-color-[#fff] w-full h-full flex items-center px-7px"
-        :style="{ background: isExpertMode ? '#2B60E9' : '#fff' }"
-      >
-        <div
-          :style="{
-            backgroundColor: isExpertMode ? '#fff' : '#666666',
-            transform: `translateX(${isExpertMode ? 40 : 0}px)`
-          }"
-          class="w-14px h-14px bg-color-[#666666] rounded-7px private-switch-transform"
-        ></div>
-      </div> -->
-    <!-- </div> -->
+    </div>
     <question-mark />
   </div>
 </template>
