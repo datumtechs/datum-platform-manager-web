@@ -136,7 +136,7 @@ const zh = {
     address: "发起账户"
   },
   task: {
-    goTo:"前往",
+    goTo: "前往",
     createTaskBriefInfo: "创建你需要的工作流",
     expertMode: "专家模式",
     wizardMode: "向导模式",
@@ -315,8 +315,8 @@ const zh = {
     selectModel: '请选择模型',
     viewResult: '查看结果',
     psiHint: '勾选后,将在当前节点任务执行前进行PSI运算',
-    labelRequired: '因变量（标签，必选)',
-    labelOptionals: '因变量（标签，选填)',
+    labelRequired: '标签（必选)',
+    labelOptionals: '标签（选填)',
     deleteNode: '删除节点',
     algoVariable: '算法变量',
     algoCode: '算法代码',

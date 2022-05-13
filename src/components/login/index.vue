@@ -21,13 +21,13 @@
       <el-button type="primary" class="ml-110px w-140px h-40px rounded-[20px]"
         @click="linkToMetamask">{{ t('head.install') }}</el-button>
     </div>
-    <div v-else class="h-157px flex items-center justify-center flex-col">
+    <div v-else class="flex items-center mt-10px mb-40px flex-col">
       <div @click="login" :class="{ 'cursor-not-allowed': !checked, 'cursor-pointer': checked }"
         class="flex w-264px h-70px flex items-center justify-center rounded-4px bg-color-[#F7F8F9] border-1 border-solid border-[#EEEEEE]">
         <img :src="metamaskImg" class="w-43px h-43px mr-28px" />
         <span class="font-bold text-[20px] text-color-[#333333]">MetaMask</span>
       </div>
-      <div
+      <!--  暂无条款以阅读 <div
         class="agreement w-264px mt-19px flex items-flex-start text-[12px] text-color-[#999999] cursor-pointer">
         <el-checkbox class="checkbox" v-model="checked" size="large">&nbsp;</el-checkbox>
         <div @click="checked = !checked" class="flex">
@@ -42,7 +42,7 @@
             <i class="text-color-[#0052D9]">Privacy Policy</i>
           </span>
         </div>
-      </div>
+      </div> -->
     </div>
   </el-dialog>
 </template>
@@ -55,7 +55,7 @@ import { Login, LoginNonceId } from '@/api/login'
 
 const emit = defineEmits(['loginShowChange'])
 const { t, locale } = useI18n()
-const checked = ref<any>(false)
+const checked = ref<any>(true)
 const isLoginIng = ref(false)
 const props = defineProps({ loginShow: { type: Boolean, default: false } })
 const web3: any = inject('web3')

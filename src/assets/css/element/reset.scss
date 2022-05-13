@@ -29,3 +29,11 @@
 .el-button > span {
     font-family: DINPro-Regular, Ali-Regular;
 }
+
+.el-form-item__label:before {
+    display: none;
+}
+
+.el-form-item .is-required {
+    position: relative;
+}

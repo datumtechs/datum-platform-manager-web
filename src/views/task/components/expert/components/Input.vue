@@ -101,7 +101,6 @@ onBeforeUpdate(() => {
 })
 
 const setItemRef = (el: any) => {
-    console.log(el);
     el && columnsRef.push(el)
 }
 

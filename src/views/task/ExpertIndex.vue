@@ -16,11 +16,9 @@ const { t } = useI18n()
 <style lang="scss">
 .task-wrap {
   .el-form .el-form-item__label {
-    // @extend .font-bold;
     font-size: 16px;
     font-weight: 600;
     color: #333333;
-    line-height: 22px;
   }
 
   .el-form .el-form-item--default {

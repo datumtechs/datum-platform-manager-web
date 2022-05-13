@@ -3,7 +3,8 @@
         <el-table :row-style="{ height: '50px' }" class="home-data-table" :data="tableData"
             style="width: 100%">
             <el-table-column type="index" :label="t('home.ranking')" width="80" />
-            <el-table-column prop="tokenName" :label="t('myData.credentialName')" />
+            <el-table-column show-overflow-tooltip prop="tokenName"
+                :label="t('myData.credentialName')" />
             <el-table-column prop="tokenUsed" :label="t('home.usage')" width="100" />
         </el-table>
         <div type="primary" class="mt-30px bg-main h-50px rounded-25px">
