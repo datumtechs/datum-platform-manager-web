@@ -56,7 +56,8 @@ const submitForm = async (form: any) => {
                         name: 'expertModel',
                         params: {
                             workflowId: data.workflowId,
-                            workflowVersion: data.workflowVersion
+                            workflowVersion: data.workflowVersion,
+                            workflowName: nameForm.name
                             // TODO type edit / view / add
                         }
                     })

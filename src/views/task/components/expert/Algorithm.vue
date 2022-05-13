@@ -1,7 +1,7 @@
 <template>
     <div class="w-242px algo-box">
         <p class="text-18px font-bold mt-16px pl-24px">{{ t('common.algorithm') }}</p>
-        <div class="algo-wrapper">
+        <div class="algo-wrapper" v-if="workflowId && workflowVersion">
             <div v-for="algo in algoList" class="flex flex-col items-center mt-24px">
                 <p
                     class="h-36px w-230px text-14px leading-20px text-[#333] font-bold pl-18px flex items-center">
@@ -24,7 +24,8 @@ import { useExpertMode } from '@/stores'
 import { MAX_NODES } from '@/config/constants'
 import { ElMessage } from 'element-plus'
 const route = useRoute()
-const { t } = useI18n()
+const { t, locale } = useI18n()
+
 const props = defineProps({
     isSettingCompleted: {
         type: Boolean,
@@ -40,6 +41,7 @@ const dragstart = (e: any, item: any) => {
 
 const nodeList = computed(() => useExpertMode().getNodeList)
 const isPSIModel = computed(() => useExpertMode().getIsPSIModel)
+
 
 const workflowId = computed(() => route.params.workflowId)
 const workflowVersion = computed(() => route.params.workflowVersion)
