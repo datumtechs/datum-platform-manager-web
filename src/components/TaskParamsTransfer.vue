@@ -98,7 +98,7 @@
 </template>
 <script lang="ts" setup>
 import { CaretBottom, Remove } from '@element-plus/icons-vue'
-import { getDataListByOrg, queryDataDetails } from '@/api/data'
+import { queryUserDataList, queryDataDetails } from '@/api/data'
 import type { CascaderOption } from 'element-plus/lib/components/cascader-panel/src/node';
 import questbg from '@/assets/Images/task/questBgfff.png'
 import questWhite from '@/assets/Images/task/questWhite.png'
@@ -176,7 +176,7 @@ const cascaderProps = ref({
       resolve([])
       return
     }
-    getDataListByOrg({
+    queryUserDataList({
       current: 1,
       size: 20,
       identityId: value,

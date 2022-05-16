@@ -24,7 +24,7 @@
           :input-style="{ width: '390px' }" class="w-390px"></el-input>
         <span class="ml-49px w-1px"></span>
         <div type="text w-30px" v-if="disabled" @click="disabled = !disabled">
-          <span class="text-16px cursor-pointer text-color-[#2B60E9]">{{ t('common.edit') }}</span>
+          <span class="text-16px inline-block w-50px cursor-pointer text-color-[#2B60E9]">{{ t('common.edit') }}</span>
         </div>
         <div class="flex" v-else>
           <el-button type="primary" round @click="submit">{{ t('common.preservation') }}</el-button>

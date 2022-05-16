@@ -28,11 +28,11 @@
         }" :total="total" />
       </div>
     </div>
-    <Search :placeholder="t('workflow.placeholder')" @search="search">
+    <Search :placeholder="t('workflow.placeholder')" @search="search" @reset="date = [],algValue = ''">
       <template #content>
         <div>
           <div class="search-label  mt-20px mb-10px font-900">{{t('myData.TaskCategory')}}</div>
-          <el-select class="w-full picker-rounded" clearable v-model="algValue" :placeholder="t('task.select')">
+          <el-select class="w-full picker-rounded" clearable v-model="algValue" :placeholder="t('task.select')" :teleported="false">
             <el-option-group
               v-for="group in algList"
               :key="group.id"
@@ -53,6 +53,7 @@
             class="picker-rounded"
             v-model="date"
             type="daterange"
+            :teleported="false"
             value-format="YYYY-MM-DD"
             :range-separator="t('common.to')"
             :start-placeholder="t('node.startTime')"

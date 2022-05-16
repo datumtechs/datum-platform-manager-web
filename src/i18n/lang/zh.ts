@@ -48,7 +48,8 @@ const zh = {
     viewOnScan: '在PlatScan上查看交易',
     to: "至",
     endTime: "结束时间",
-    timeFrame:"时间范围"
+    timeFrame: "时间范围",
+    reset: "重置"
   },
   menu: {
     home: '首页',
@@ -136,7 +137,7 @@ const zh = {
     address: "发起账户"
   },
   task: {
-    goTo: "前往",
+    goTo: "切换",
     createTaskBriefInfo: "创建你需要的工作流",
     expertMode: "专家模式",
     wizardMode: "向导模式",

@@ -48,7 +48,8 @@ const en = {
     viewOnScan: 'View on PlatScan',
     to: "to",
     endTime: "End Time",
-    timeFrame:"time Frame"
+    timeFrame: "time Frame",
+    reset: "Reset"
   },
   menu: {
     home: 'Home',
@@ -136,7 +137,7 @@ const en = {
     address: "Address"
   },
   task: {
-    goTo:"Go To ",
+    goTo:"Switch ",
     createTaskBriefInfo: "Create new Workflow you need",
     expertMode: "Expert Mode",
     wizardMode: "Wizard Mode",
