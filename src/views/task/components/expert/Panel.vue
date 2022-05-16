@@ -68,14 +68,14 @@ const curNodeIndex = computed(() => useExpertMode().getCurNodeIndex)
 
 const currentTab = ref('overview')
 
-watch(curNodeId, (newV, oldV) => {
+watch(() => curNodeId.value, (newV, oldV) => {
     if (newV) {
         currentTab.value = 'overview'
         getPanelData(newV)
     }
 })
 
-watch(curNodeIndex, () => {
+watch(() => curNodeIndex.value, () => {
     viewKey.value++
 })
 
