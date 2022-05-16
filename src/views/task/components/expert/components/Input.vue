@@ -130,13 +130,24 @@ const changeInputValue = (item: any, index: number) => {
     if (item && item.length === 0) {
         return columnsList.value[index] = []
     }
-    const ids = getIdentity(inputValue.value)
-    useExpertMode().setDisableOrg(ids)
-    const upList: any = []
-    if (item && item.length === 2) {
-        getColumnList(item[item.length - 1], index)
+    if (item) {
+        const ids = getIdentity(inputValue.value)
+        useExpertMode().setDisableOrg(ids)
 
+        const upList: any = []
+        cascaderKey.value.map((item: any, i: number) => {
+            if (index !== i) {
+                upList.push(i)
+            }
+        })
+        upList.map((i: any) => {
+            cascaderKey[i] = cascaderKey.value[i] + 1
+        })
+        if (item && item.length === 2) {
+            getColumnList(item[item.length - 1], index)
+        }
     }
+
 }
 const getColumnList = async (metaDataId: string, index: number, params?: any) => {
     const { code, data } = await queryDataDetails({ metaDataId })
@@ -260,10 +271,11 @@ const modelOptions = reactive([{
 }])
 
 onMounted(async () => {
+    await useExpertMode().queryUserOrgList()
     initInputPanel()
     // 回显
     handleInputValue()
-    // handleCascaderKey()
+    handleCascaderKey()
 })
 
 const handleInputValue = async () => {
@@ -296,7 +308,7 @@ const handleInputValue = async () => {
 }
 const handleCascaderKey = () => {
     cascaderKey.value = []
-    selectLayout.map((item: any, index: any) => {
+    selectLayout.value.map((item: any, index: any) => {
         cascaderKey.value[index] = String(index)
     })
 }
