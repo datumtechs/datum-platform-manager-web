@@ -13,7 +13,7 @@ import ExpertMode from './components/ExpertMode.vue'
 const { t } = useI18n()
 
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .task-wrap {
   .el-form .el-form-item__label {
     font-size: 16px;
