@@ -13,27 +13,21 @@
         </el-option>
       </el-select>
     </div>
-    <div class="flex items-center text-14px mt-20px" v-if="props.type == 1 && props.step == 1">
+    <div class="flex items-center text-14px mt-20px" v-if="taskParams?.predictionInput?.inputModel">
       <div class="mr-20px text-color-[#666666] font-medium w-130px">{{ $t('task.selectModel') }} ：</div>
      <el-cascader clearable :disabled="taskParams.isSettingCompleted"
-        class="h-40px rounded-20px border-1 w-395px border-solid border-color-[#EEEEEE]" :suffix-icon="CaretBottom"
+        class="h-40px rounded-20px border-1 w-440px border-solid  border-color-[#EEEEEE]" :suffix-icon="CaretBottom"
         v-model="model" :options="optionsList" :props="cascaderProps" />
-    <!-- <el-select v-model="model" :suffix-icon="CaretBottom" :placeholder="$t('task.selectModel')"
-        :disabled="taskParams.isSettingCompleted" style="flex:0 0 440px"
-        class="h-40px rounded-20px border-1 basis-1/2 border-solid border-color-[#EEEEEE]">
-        <el-option v-for="(v) in props.orgList" :label="v.nodeName" :value="v.identityId">
-        </el-option>
-      </el-select> -->
     </div>
     <div class="flex items-center text-14px mt-20px">
       <div class="mr-20px text-color-[#666666] font-medium w-130px">{{ $t('task.PSI') }} ：</div>
       <el-switch v-model="psi" :disabled="taskParams.isSettingCompleted" />
     </div>
-    <TaskParamsTransfer :fieldType="[props.fieldType[0], props.fieldType[1]]" :sellectionAlgPsi="true"
+    <TaskParamsTransfer :fieldType="[props.fieldType[0], props.fieldType[2]]" :sellectionAlgPsi="true"
       :disabledData="psiInputTwo?.metaData" :key="'input'" @update:params="psiInputOne = $event"
       :taskParams="props.taskParams" :params="psiInputParams.one" :num="1" :orgList="props.orgList" />
     <div class="h-30px"></div>
-    <TaskParamsTransfer :fieldType="[props.fieldType[0], props.fieldType[1]]" :sellectionAlgPsi="true"
+    <TaskParamsTransfer :fieldType="[props.fieldType[0], props.fieldType[2]]" :sellectionAlgPsi="true"
       :taskParams="props.taskParams" :disabledData="psiInputOne?.metaData" :key="'output'"
       @update:params="psiInputTwo = $event" :params="psiInputParams.two" :num="2" :orgList="props.orgList" />
     <div class="flex items-center pt-20px">
@@ -52,6 +46,7 @@ import { setWorkflowOfWizardMode } from '@/api/workflow'
 import { getUserModelList } from '@/api/task'
 import { queryAlgoDetail } from '@/api/algorithm'
 const router: any = useRouter()
+const {t} = useI18n()
 const emit = defineEmits(['previous', 'getParams', 'next'])
 const props: any = defineProps({
   noticeText: {
@@ -88,16 +83,9 @@ const psiInputParams = reactive({ one: [], two: [] })
 const psiInputOne = ref<any>({})
 const psiInputTwo = ref<any>({})
 const identityId = ref('')
-const model = ref('')
+const model = ref<any[]>([])
 const psi = ref(false)
-// const algoList = ref([])
 const optionsList = ref<any[]>([])
-// const orgList = computed(() => props.orgList.map((v: any) => {
-//   return {
-//     value: v.identityId,
-//     label: v.nodeName
-//   }
-// }))
 
 
 const next = () => {
@@ -139,13 +127,18 @@ const submit = async (str?: string | any) => {
     workflowVersion: props.workflowInfo.workflowVersion,
     algorithmId: props.taskParams.algorithmId,
     calculationProcessId: props.taskParams.calculationProcessId,
-    isPsi: psi.value || false,
     predictionInput: {
       identityId: identityId.value,
+      isPsi: psi.value || false,
+      inputModel: props.taskParams.inputModel || true,
+      algorithmId:model.value[1] || '',
       item: [
         data,
         data2
-      ]
+      ],
+      model:{
+        metaDataId: model.value[2] || '',
+      }
     },
     calculationProcessStep: {
       step: props.step,
@@ -208,6 +201,7 @@ const filterTree = (arr: any, newArray: any = []) => {
             if (son.isAlgorithm && son.isExistAlgorithm) {
                 target.push({
                     value: son.id,
+                    // value: son.name,
                     label: son.name,
                 });
             }
@@ -222,7 +216,7 @@ const queryAlgoList = () => {
       queryAlgoDetail().then(result => {
             const { data, code } = result
             if (code === 10000) {
-                const arr = filterTree(data.childrenList)
+                const arr = filterTree(data.childrenList)//算法列表
                 // algoList.value = arr
                 optionsList.value = props.orgList.map((v:any)=>{
                   return {
@@ -233,11 +227,25 @@ const queryAlgoList = () => {
                     ]
                   }
                 })
-                console.log(optionsList.value)
+                if(props.taskParams.predictionInput?.model?.metaDataId){
+                    model.value = [
+                      props.taskParams.predictionInput?.model?.identityId,
+                      props.taskParams.predictionInput?.algorithmId,
+                      props.taskParams.predictionInput?.model?.metaDataId
+                    ]
+                }
             }
         }).catch(err => {
             console.log(err);
         })
+    }else{
+      optionsList.value = [
+          { value: '',
+            label: t('expert.frontModel'),
+            leaf: true
+          }
+      ]
+        model.value = ['']
     }
 }
 
