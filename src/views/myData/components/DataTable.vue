@@ -34,6 +34,7 @@
 <script lang="ts" setup>
 import { type Router, useRouter } from 'vue-router'
 import { useExchangeFrom } from '@/hooks'
+const chainCfg: any = inject('chainCfg')
 const router: Router = useRouter()
 const { t } = useI18n()
 const emit = defineEmits(['purchase', 'viewData', 'viewCredential'])
@@ -44,7 +45,11 @@ const props = defineProps({
   }
 })
 
-const purchase = (obj: any) => { }
+const purchase = (obj: any) => { 
+    const dexUrl = `${chainCfg.value.dexUrl}swap?outputCurrency=${obj.tokenAddress}&exactField=OUTPUT&exactAmount=1`
+    //TODO dex
+    window.open(dexUrl, "_blank");
+}
 const viewData = (obj: any) => {
   emit('viewData', obj)
 }

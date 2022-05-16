@@ -1,9 +1,14 @@
 <template>
     <div class="mb-50px">
-        <div class="text-20px font-bold text-color-[#333] flex">
-            <p>{{ props.title }}</p>
-            <QuestionMark :content="props.titleContent">
-            </QuestionMark>
+        <div class="text-20px font-bold text-color-[#333] flex justify-between">
+            <div class="flex items-center">
+                <p>{{ props.title }}</p>
+                <QuestionMark :content="props.titleContent">
+                </QuestionMark>
+            </div>
+            <div v-if="props.type === 'data'" class="w-300px">
+                <el-input></el-input>
+            </div>
         </div>
         <el-table v-loading="props.loading" class="mt-20px" :data="props.tableData">
             <el-table-column type="index" width="100">
@@ -43,19 +48,18 @@
                         {{
                                 t('auth.plzInputAuthTokenNumber')
                         }}</el-button>
-                    <!-- <el-button class="text-14px text-color-[#0052D9] cursor-pointer" type="text"
-                        circle @click="showCancelDialog = true; currentToken = row">{{
-                            t('auth.cancelAuth')
+                    <el-button v-if="props.type === 'fee'"
+                        class="text-14px text-color-[#0052D9] cursor-pointer" type="text" circle
+                        @click="purchaseWLat(row)">{{
+                                t('common.purchase')
                         }}
-                    </el-button> -->
+                    </el-button>
                 </template>
             </el-table-column>
         </el-table>
-        <div v-if="props.type === 'data'">
-            <!-- <el-pagination background layout="prev, pager, next"
+        <!-- <el-pagination background layout="prev, pager, next"
                 v-model:current-page="pageObj.current" v-model:page-size="pageObj.size"
                 :total="pageObj.total" /> -->
-        </div>
         <el-dialog v-model="showAuthDialog" :width="480" :destroy-on-close="true">
             <template #title>
                 <div class="flex items-center mb-24px">
@@ -79,7 +83,8 @@
                                 t('common.cancel')
                         }}</el-button>
                     <el-button class="w-100px" style="height: 32px;" round type="primary"
-                        @click="authSubmit">{{ t('common.confirm') }}</el-button>
+                        @click="authSubmit">{{ t('common.confirm') }}
+                    </el-button>
                 </div>
             </template>
         </el-dialog>
@@ -124,10 +129,8 @@
 import { useExchangeFrom, useExchangeTo, useNotice } from '@/hooks'
 const { t, locale } = useI18n()
 const chainCfg: any = inject('chainCfg')
-console.log('chainCfg in data Token', chainCfg);
 
 const web3: any = inject('web3')
-console.log('web3 in data Token', web3);
 
 interface token {
     authorizeBalance: string
@@ -137,6 +140,8 @@ interface token {
     tokenName: string
     tokenSymbol: string
 }
+
+const emit = defineEmits(['updateData'])
 
 const props = defineProps({
     title: {
@@ -197,6 +202,12 @@ const setBalance = (row: any) => {
     authForm.quantity = useExchangeFrom(row.tokenBalance, row.tokenDecimal)
 }
 
+const purchaseWLat = (row: any) => {
+    const dexUrl = `${chainCfg.value.dexUrl}swap?outputCurrency=${row.tokenAddress}&exactField=OUTPUT&exactAmount=1`
+    //TODO dex
+    window.open(dexUrl, "_blank");
+}
+
 const cancelConfirm = () => {
     web3.authERC20TOKEN(currentToken.tokenAddress, 0)
         .then((res: any) => {
@@ -224,6 +235,7 @@ const authSubmit = () => {
                 _closeAuthDialog)
                 .then((res: any) => {
                     useNotice('success', content, chainCfg.value?.blockExplorerUrl, res.transactionHash)
+                    emit('updateData')
                 }).catch((error: any) => {
                     _closeAuthDialog()
                     useNotice('error', error)
@@ -232,7 +244,6 @@ const authSubmit = () => {
     })
 }
 const showAuthDialog = ref(false)
-const showCancelDialog = ref(false)
 const rules = ref(
     {
         quantity: [

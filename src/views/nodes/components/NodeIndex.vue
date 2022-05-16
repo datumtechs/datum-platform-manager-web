@@ -16,6 +16,17 @@
                 v-model:current-page="pageObj.current" v-model:page-size="pageObj.size"
                 :total="pageObj.total" />
         </div>
+        <Search :placeholder="t('node.placeholder')" @search="search">
+            <template #content>
+                <p class="search-label mb-10px">
+                    {{ t('node.sortBy') }}
+                </p>
+                <el-select class="w-full" size="large" v-model="orderBy">
+                    <el-option v-for="item in sortList" :key="item.id" :label="t(item.label)"
+                        :value="item.orderBy" />
+                </el-select>
+            </template>
+        </Search>
     </div>
 
 </template>
@@ -23,15 +34,48 @@
 <script setup lang='ts'>
 import NodeCard from './NodeCard.vue'
 import { getOrgList } from '@/api/node'
-const { locale } = useI18n()
+const { t, locale } = useI18n()
 const totalNode = ref(1876)
-
 const orderBy = ref('')
 const size = ref(10)
 const current = ref(1)
-const total = ref(0)
-let nodeList: any = reactive([])
+let nodeList: any = ref([])
 const nodeLoading = ref(false)
+const keyword = ref('')
+
+
+const sortList = ref([
+    {
+        id: 1,
+        orderBy: 'CORE',
+        label: 'node.totalCpu'
+    },
+    {
+        id: 2,
+        orderBy: 'MEMORY',
+        label: 'node.totalMemory'
+    },
+    {
+        id: 3,
+        orderBy: 'BANDWIDTH',
+        label: 'node.totalBandwidth'
+    },
+    {
+        id: 4,
+        orderBy: 'NAME',
+        label: 'common.name'
+    },
+    {
+        id: 5,
+        orderBy: 'TASK_COUNT',
+        label: 'node.computations'
+    },
+    {
+        id: 6,
+        orderBy: 'TOKEN_COUNT',
+        label: 'node.credentials'
+    }
+])
 
 const pageObj = reactive({
     total: 0,
@@ -41,16 +85,21 @@ const pageObj = reactive({
 
 watch(() => pageObj.current, () => {
     queryOrgList()
-});
+})
+
+const search = (text: string) => {
+    keyword.value = text
+    queryOrgList()
+}
 
 const queryOrgList = async () => {
     nodeLoading.value = true
     const { code, data } = await getOrgList({
-        orderBy: orderBy.value, size: size.value, current: current.value
+        orderBy: orderBy.value, size: size.value, current: current.value, keyword: keyword.value
     })
     nodeLoading.value = false
     if (code === 10000) {
-        nodeList.push(...data.items)
+        nodeList.value = data.items
         pageObj.total = data.total
     }
 }
