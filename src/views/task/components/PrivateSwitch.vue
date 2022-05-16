@@ -1,9 +1,15 @@
 <template>
   <div class="flex items-center private-switch-wrap cursor-pointer">
-    <el-button class="h-40px" plain type="primary" @click="change" round>
-      {{ $t('task.goTo') }}{{ isExpertMode ? $t('task.wizardMode') : $t('task.expertMode') }}
-    </el-button>
-    <question-mark />
+    <div class="flex items-center">
+          <img src="@/assets/Images/task/switch.png" class="w-20px h-20px"/>
+        <span class="text-color-[#2B60E9] mx-6px">
+          {{ $t('task.goTo') }}{{ isExpertMode ? $t('task.wizardMode') : $t('task.expertMode') }}
+        </span>
+    </div>
+    <!-- <el-button class="h-40px" plain type="primary" @click="change" round>
+     
+    </el-button> -->
+    <question-mark class="w-14px font-14px ml-0px" />
   </div>
 </template>
 <script lang="ts" setup>
@@ -18,7 +24,7 @@ const change = () => {
 
 
 </script>
-<style lang="scss">
+<!-- <style lang="scss">
 $tiems: 0.5s;
 
 .private-switch-wrap {
@@ -32,4 +38,4 @@ $tiems: 0.5s;
     /* Opera */
   }
 }
-</style>
+</style> -->

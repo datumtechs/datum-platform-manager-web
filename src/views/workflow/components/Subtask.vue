@@ -70,7 +70,7 @@ const query = ()=>{
     })
 }
 
-const details = ()=>{
+const details = (row:any)=>{
   
 }
 

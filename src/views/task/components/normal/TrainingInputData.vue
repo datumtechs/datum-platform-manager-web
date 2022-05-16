@@ -116,9 +116,9 @@ const submit = async (str?: string | any) => {
     workflowVersion: props.workflowInfo.workflowVersion,
     algorithmId: props.taskParams.algorithmId,
     calculationProcessId: props.taskParams.calculationProcessId,
-    isPsi: psi.value || false,
     trainingInput: {
       identityId: identityId.value,
+      isPsi: psi.value || false,
       item: [
         data,
         data2
