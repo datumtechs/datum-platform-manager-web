@@ -1,10 +1,17 @@
 <template>
   <div class="mt-30px">
-    <div>
+    <div class="flex items-center">
+      <el-icon v-if="workflowName" :size="40" class="cursor-pointer mr-10px"
+        @click="$router.go(-1)">
+        <back />
+      </el-icon>
+      <p v-if="workflowName" class="mr-30px text-[32px] font-color-[#333] ellipse max-w-500px">{{
+          workflowName
+      }}</p>
       <PrivateSwitch :mode="'expert'" @change="$router.push({ name: 'wizardMode' })" />
     </div>
     <div class="my-30px flex border-1 border-solid border-color-[#EEE] operation-box">
-      <Algorithm :isSettingCompleted="isSettingCompleted ? true : false" />
+      <Algorithm :key="refreshTag" :isSettingCompleted="isSettingCompleted ? true : false" />
       <Flow :status-list="statusList" :workflow-status="workflowStatus"
         :isSettingCompleted="isSettingCompleted ? true : false" />
       <Panel :isSettingCompleted="isSettingCompleted ? true : false" />
@@ -20,24 +27,29 @@ import SetNameDialog from './expert/SetNameDialog.vue'
 import PrivateSwitch from './PrivateSwitch.vue'
 import { getWorkflowStatusOfExpertMode, getWorkflowSettingOfExpertMode } from '@/api/expert'
 import { useExpertMode } from '@/stores'
-
+import { Back } from '@element-plus/icons-vue'
 // 1. unset 2. unSave 3. paramsEdit
-const mode = ref('')
+const { locale } = useI18n()
 
 const route = useRoute()
 const showDialog = computed(() =>
   route.params.workflowId ? false : true
 )
-
+const refreshTag = ref(Date.now())
 const workflowId = computed(() => route.params.workflowId)
 const workflowVersion = computed(() => route.params.workflowVersion)
 const isInEdit = computed(() => !!workflowId.value && !!workflowVersion.value)
 const isSettingCompleted = computed(() => route.params.isSettingCompleted)
+const workflowName = computed(() => route.params.workflowName)
 
 watch(() => isInEdit.value, (newV, oldV) => {
   if (newV) {
     queryStatus()
   }
+})
+
+watch(locale, () => {
+  refreshTag.value = Date.now()
 })
 
 onBeforeUnmount(() => {
