@@ -247,7 +247,9 @@ const en = {
     viewDetails: "View Details",
     tokenNum: '剩余',
     authorizeBalance: 'Authorized quantity',
-    placeholder:"Search workflow ID, name keyword"
+    placeholder: "Search workflow ID, name keyword",
+    taskSteps: "Task Steps",
+    viewTaskResults:"View Task Results"
   },
   credentials: {
     circulation: "Circulation",
