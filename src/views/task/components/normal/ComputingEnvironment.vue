@@ -234,7 +234,7 @@ watch(() => props.taskParams, () => {
 
 
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .environment .el-form {
   .el-form-item .el-form-item__label {
     font-size: 14px;

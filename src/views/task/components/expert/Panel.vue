@@ -130,7 +130,7 @@ const tabList = computed(() => [{
 
 onMounted(() => {
     // queryOrgList()
-    useExpertMode().queryUserOrgList()
+   
 })
 
 </script>

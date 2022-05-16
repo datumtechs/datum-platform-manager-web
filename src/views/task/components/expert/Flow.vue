@@ -1,7 +1,8 @@
 <template>
     <div class="flex-1 py-20px px-30px">
         <div class="btn-group">
-            <el-button v-for="btn in btnList" round @click="handleClick(btn.value)">{{ btn.label }}
+            <el-button :disabled="btn.value === 'view' && !props.isSettingCompleted"
+                v-for="btn in btnList" round @click="handleClick(btn.value)">{{ btn.label }}
             </el-button>
         </div>
         <div id="mainStage" @dragover.stop="dragover($event)" class="mainStage"
@@ -71,10 +72,8 @@ const props = defineProps({
 })
 
 const dragover = (e: any) => {
-    // e.dataTransfer.effectAllowed = 'copy'
     e.preventDefault()
     e.dataTransfer.dropEffect = 'copy'
-    console.log('dragover,', e);
 }
 
 const curNodeId = computed(() => useExpertMode().getCurNodeId)
@@ -193,6 +192,10 @@ const judgeMentParams = () => {
 const handleClick = (value: string) => {
     if (value === 'save') {
         saveWorkflow()
+    } else {
+        router.push({
+            name: ''
+        })
     }
 }
 

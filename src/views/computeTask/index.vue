@@ -16,7 +16,7 @@
         </el-table-column>
         <el-table-column width="300" show-overflow-tooltip prop="id"
           :label="t('computeTask.taskId')" />
-        <el-table-column width="100" prop="status" :label="t('computeTask.taskStatus')">
+        <el-table-column :label="t('computeTask.taskStatus')">
           <template #default="{ row }">
             <div>
               {{ useGlobalTaskMap(row.status) }}
@@ -33,7 +33,7 @@
             <div>{{ useDuring(row.endAt - row.startAt) }}</div>
           </template>
         </el-table-column>
-        <el-table-column :label="t('common.actions')" :fixed="'right'">
+        <el-table-column :label="t('common.actions')">
           <template #default="scope">
             <el-button type="text" circle @click="viewData(scope.row)">{{ t('common.view') }}
             </el-button>
@@ -47,35 +47,24 @@
     </div>
     <Search :placeholder="t('workflow.placeholder')" @search="search">
       <template #content>
-        <div>
-          <div class="search-label  mt-20px mb-10px font-900">{{t('myData.TaskCategory')}}</div>
-          <el-select class="w-full picker-rounded" clearable v-model="algValue" :placeholder="t('task.select')">
-            <el-option-group
-              v-for="group in algList"
-              :key="group.id"
-              :label="group.name"
-            >
-              <el-option
-                v-for="item in group.childrenList"
-                :key="item.id"
-                :label="item.name"
-                :value="item.id"
-              />
-            </el-option-group>
-          </el-select>
-        </div>
-        <div>
-          <div class="search-label mt-20px mb-10px font-900">{{t('common.timeFrame')}}</div>
-          <el-date-picker
-            class="picker-rounded"
-            v-model="date"
-            type="daterange"
-            value-format="YYYY-MM-DD"
-            :range-separator="t('common.to')"
-            :start-placeholder="t('node.startTime')"
-            :end-placeholder="t('common.endTime')"
-          />
-        </div>
+        <!-- <div class="search-label  mt-20px mb-10px font-900">{{ t('myData.TaskCategory') }}</div>
+        <el-select class="w-full picker-rounded" clearable v-model="algValue"
+          :placeholder="t('task.select')">
+          <el-option-group v-for="group in algList" :key="group.id" :label="group.name">
+            <el-option v-for="item in group.childrenList" :key="item.id" :label="item.name"
+              :value="item.id" />
+          </el-option-group>
+        </el-select> -->
+        <div class="search-label ont-bold mt-20px mb-10px">{{ t('computeTask.taskStatus') }}</div>
+        <el-radio-group v-model="taskStatus">
+          <el-radio label="ALL">{{ t('common.all') }}</el-radio>
+          <el-radio label="SUCCESS">{{ t('common.success') }}</el-radio>
+          <el-radio label="FAIL">{{ t('status.failed') }}</el-radio>
+        </el-radio-group>
+        <div class="search-label mt-20px mb-10px font-bold">{{ t('common.timeFrame') }}</div>
+        <el-date-picker class="picker-rounded" v-model="date" type="daterange"
+          value-format="YYYY-MM-DD" :range-separator="t('common.to')"
+          :start-placeholder="t('node.startTime')" :end-placeholder="t('common.endTime')" />
       </template>
     </Search>
   </div>
@@ -99,6 +88,7 @@ const date = ref()
 const algList = ref<any[]>([])
 const algValue = ref('')
 const keyword = ref('')
+const taskStatus = ref('ALL')
 
 
 const indexMethod = (index: number) => useTableIndex(index, pageObj.current, pageObj.size)
@@ -106,9 +96,9 @@ watch(() => pageObj.current, (newValue, oldValue) => {
   queryList()
 });
 
-const search = (str:string)=>{
-   keyword.value = str
-   queryList()
+const search = (str: string) => {
+  keyword.value = str
+  queryList()
 }
 
 
@@ -128,22 +118,22 @@ const search = (str:string)=>{
 //   }
 // }
 
-const transferTimestamp = (str:string|undefined)=>{
-  if(!str) return ''
-  try{
-     return new Date(str).getTime()
-  }catch(e:any){
+const transferTimestamp = (str: string | undefined) => {
+  if (!str) return ''
+  try {
+    return new Date(str).getTime()
+  } catch (e: any) {
     console.log(e)
   }
 }
 
 const queryList = () => {
   queryTaskList({
-      current: pageObj.current, size: pageObj.size, taskStatus: 'ALL' ,
-      keyword:keyword.value,
-      algorithmId: algValue.value,
-      begin: transferTimestamp(date.value && date.value[0]) || null,
-      end: transferTimestamp(date.value && date.value[1])|| null,
+    current: pageObj.current, size: pageObj.size, taskStatus: taskStatus.value,
+    keyword: keyword.value,
+    algorithmId: algValue.value,
+    begin: transferTimestamp(date.value && date.value[0]) || null,
+    end: transferTimestamp(date.value && date.value[1]) || null,
   }).then(res => {
     const { data, code } = res
     if (code === 10000) {
@@ -163,7 +153,7 @@ const viewData = (obj: any) => {
   })
 }
 
-const queryAlg =()=>{
+const queryAlg = () => {
   getAlgTree().then(res => {
     const { data, code } = res
     if (code === 10000) {
@@ -179,15 +169,16 @@ onMounted(() => {
 })
 </script>
 <style lang="scss">
-.picker-rounded{
-    border-radius: 20px;
-    height: 40px;
-    .select-trigger{
-      .el-input__inner{
-        border-radius: 20px;
-         height: 40px;
-         text-indent: 20px;
-      }
+.picker-rounded {
+  border-radius: 20px;
+  height: 40px;
+
+  .select-trigger {
+    .el-input__inner {
+      border-radius: 20px;
+      height: 40px;
+      text-indent: 20px;
     }
+  }
 }
 </style>

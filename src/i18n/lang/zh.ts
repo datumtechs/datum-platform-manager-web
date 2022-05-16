@@ -134,7 +134,9 @@ const zh = {
     totalBandwidth: '总带宽',
     capabilityInTask: '任务中的角色',
     startTime: '开始时间',
-    address: "发起账户"
+    address: "发起账户",
+    placeholder: "搜索节点身份标识,名称关键字",
+    sortBy: "排列方式"
   },
   task: {
     goTo: "切换",
@@ -194,7 +196,7 @@ const zh = {
     idColumnTips: "用于多方进行数据样本对齐",
     labelTips: "监督学习中，通过寻找特征(X)与实际标签(Y)之间的关系，以实现当提供X时能预测Y。",
     featureTips: "监督学习中，通过寻找特征(X)与实际标签(Y)之间的关系，以实现当提供X时能预测Y。",
-    resultReceiverTips:"结果接收方是用于存储本次计算结果文件的可信任节点，节点后续可提供给用户查看/下载结果的功能。"
+    resultReceiverTips: "结果接收方是用于存储本次计算结果文件的可信任节点，节点后续可提供给用户查看/下载结果的功能。"
   },
   myData: {
     tasksBriefInfoFirstParagraph: "全网共",
@@ -226,6 +228,9 @@ const zh = {
     capability: "任务中角色",
     createTime: "发起时间",
     totalTime: "任务用时",
+    marketPlaceholder: "搜索凭证、数据关键字",
+    priceAsc: '价格升序',
+    priceDesc: '价格降序'
   },
   workflow: {
     workflowName: "工作流名称",
@@ -250,7 +255,7 @@ const zh = {
     authorizeBalance: '已授权数量',
     placeholder: "搜索工作流ID、名称关键字",
     taskSteps: "任务步骤",
-    viewTaskResults:"查看任务结果"
+    viewTaskResults: "查看任务结果"
   },
   credentials: {
     circulation: "总发布量",

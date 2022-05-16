@@ -134,7 +134,9 @@ const en = {
     totalBandwidth: 'Total Bandwidth',
     capabilityInTask: 'Capability',
     startTime: 'Start Time',
-    address: "Address"
+    address: "Address",
+    placeholder: "Search node ID, name keyword",
+    sortBy: "Sort By"
   },
   task: {
     goTo:"Switch ",
@@ -194,7 +196,7 @@ const en = {
     idColumnTips: "Used for multi-party data sample alignment",
     labelTips: "In supervised learning, the relationship between feature (x) and actual label (y) is found to predict y when x is provided.",
     featureTips: "In supervised learning, the relationship between feature (x) and actual label (y) is found to predict y when x is provided.",
-    resultReceiverTips:"The result receiver is a trusted node used to store the calculation result file, and the node can provide users with the function of viewing / downloading the results later."
+    resultReceiverTips: "The result receiver is a trusted node used to store the calculation result file, and the node can provide users with the function of viewing / downloading the results later."
   },
   myData: {
     tasksBriefInfoFirstParagraph: " ",
@@ -226,6 +228,9 @@ const en = {
     capability: "Capability",
     createTime: "Create Time",
     totalTime: "Total Time",
+    marketPlaceholder: "Search token, data keywords",
+    priceAsc: 'Price ascending ',
+    priceDesc: 'Price descending'
   },
   workflow: {
     workflowName: "Workflow Name",
@@ -250,7 +255,7 @@ const en = {
     authorizeBalance: 'Authorized quantity',
     placeholder: "Search workflow ID, name keyword",
     taskSteps: "Task Steps",
-    viewTaskResults:"View Task Results"
+    viewTaskResults: "View Task Results"
   },
   credentials: {
     circulation: "Circulation",

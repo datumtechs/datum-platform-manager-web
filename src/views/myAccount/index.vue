@@ -37,7 +37,7 @@ const tabsChange = (index: string) => {
 
 
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .account-form {
   .el-form-item__label {
     font-size: 16px;
