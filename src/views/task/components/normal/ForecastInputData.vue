@@ -46,6 +46,7 @@ import { setWorkflowOfWizardMode } from '@/api/workflow'
 import { getUserModelList } from '@/api/task'
 import { queryAlgoDetail } from '@/api/algorithm'
 const router: any = useRouter()
+const {t} = useI18n()
 const emit = defineEmits(['previous', 'getParams', 'next'])
 const props: any = defineProps({
   noticeText: {
@@ -237,6 +238,14 @@ const queryAlgoList = () => {
         }).catch(err => {
             console.log(err);
         })
+    }else{
+      optionsList.value = [
+          { value: '',
+            label: t('expert.frontModel'),
+            leaf: true
+          }
+      ]
+        model.value = ['']
     }
 }
 

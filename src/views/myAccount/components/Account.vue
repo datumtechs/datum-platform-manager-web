@@ -23,7 +23,7 @@
         <el-input v-model="form.name" :disabled="disabled" :minlength="3" :maxlength="20"
           :input-style="{ width: '390px' }" class="w-390px"></el-input>
         <span class="ml-49px w-1px"></span>
-        <div type="text" v-if="disabled" @click="disabled = !disabled">
+        <div type="text w-30px" v-if="disabled" @click="disabled = !disabled">
           <span class="text-16px cursor-pointer text-color-[#2B60E9]">{{ t('common.edit') }}</span>
         </div>
         <div class="flex" v-else>
