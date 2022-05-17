@@ -11,86 +11,100 @@ export default [
     },
     component: () => import('@/views/home/index.vue'),
   },
+
+  // path: '/nodes',
+  // name: 'nodes',
+  // redirect: {
+  //   name: 'nodesIndex'
+  // },
+  // meta: {
+  //   show: ['home', 'side'],
+  //   label: 'menu.nodes',
+  //   icon: "side-node-icon"
+  // },
+  // component: () => import('@/views/nodes/index.vue'),
+  // children: [
   {
     path: '/nodes',
-    redirect: 'nodesIndex',
-    // name: "nodes",
+    name: "nodes",
     meta: {
       show: ['home', 'side'],
       label: 'menu.nodes',
       icon: "side-node-icon"
     },
-    component: () => import('@/views/nodes/index.vue'),
+    component: () => import('@/views/nodes/components/NodeIndex.vue'),
+  },
+  {
+    path: '/nodes/details/:identityId',
+    name: "nodeDetails",
+    redirect: {
+      name: "nodeDetailIndex"
+    },
+    meta: {
+      show: [],
+      label: 'menu.nodesDetail',
+      icon: "side-node-icon"
+    },
+    component: () => import('@/views/nodes/components/NodeDetails.vue'),
     children: [
       {
-        path: '/nodes',
-        name: "nodesIndex",
-        meta: {
-          label: 'menu.nodes',
-        },
-        component: () => import('@/views/nodes/components/NodeIndex.vue'),
-      },
-      {
-        path: '/nodes/details/:identityId',
-        name: "nodeDetails",
-        redirect: {
-          name: "nodeDetailIndex"
-        },
+        path: '/nodes/details/:identityId/index',
+        name: "nodeDetailIndex",
         meta: {
           label: 'menu.nodesDetail'
         },
-        component: () => import('@/views/nodes/components/NodeDetails.vue'),
-        children: [
-          {
-            path: '/nodes/details/:identityId/index',
-            name: "nodeDetailIndex",
-            meta: {
-              label: 'menu.nodesDetail'
-            },
-            component: () => import('@/views/nodes/components/NodeDetailIndex.vue')
-          },
-          {
-            path: '/nodes/details/:identityId/dataOverview',
-            name: "dataOverview",
-            meta: {
-              label: 'menu.nodesDetail'
-            },
-            component: () => import('@/views/nodes/components/DataOverview.vue')
-          }, {
-            path: '/nodes/details/:identityId/computationOverview',
-            name: "computationOverview",
-            meta: {
-              label: 'menu.nodesDetail'
-            },
-            component: () => import('@/views/nodes/components/ComputationOverview.vue')
-          }
-        ]
-      },],
+        component: () => import('@/views/nodes/components/NodeDetailIndex.vue')
+      },
+      {
+        path: '/nodes/details/:identityId/dataOverview',
+        name: "dataOverview",
+        meta: {
+          label: 'menu.nodesDetail'
+        },
+        component: () => import('@/views/nodes/components/DataOverview.vue')
+      }, {
+        path: '/nodes/details/:identityId/computationOverview',
+        name: "computationOverview",
+        meta: {
+          label: 'menu.nodesDetail'
+        },
+        component: () => import('@/views/nodes/components/ComputationOverview.vue')
+      }
+    ]
   },
+  // ],
+
   {
+    // path: '/marketplace',
+    // name: 'marketplace',
+    // redirect: {
+    //   name: 'marketplaceIndex'
+    // },
+    // meta: {
+    //   show: ['home', 'side'],
+    //   label: 'menu.marketplace',
+    //   icon: "side-marketplace-icon",
+    // },
+    // component: () => import('@/views/marketplace/index.vue'),
+    // children: [],
+
     path: '/marketplace',
-    redirect: 'marketplaceIndex',
+    name: "marketplace",
     meta: {
-      show: ['home', 'side'],
       label: 'menu.marketplace',
+      show: ['home', 'side'],
       icon: "side-marketplace-icon",
     },
-    component: () => import('@/views/marketplace/index.vue'),
-    children: [{
-      path: '/marketplace',
-      name: "marketplaceIndex",
-      meta: {
-        label: 'menu.marketplace',
-      },
-      component: () => import('@/views/marketplace/components/MarketplaceIndex.vue'),
-    }, {
-      path: '/marketplace/dataOverview',
-      name: "marketDataOverview",
-      meta: {
-        label: 'menu.marketplace'
-      },
-      component: () => import('@/components/DataDetails.vue')
-    }],
+    component: () => import('@/views/marketplace/components/MarketplaceIndex.vue'),
+  }, {
+    path: '/marketplace/dataOverview',
+    name: "marketDataOverview",
+    meta: {
+      label: 'menu.marketplace',
+      show: [],
+      icon: "side-marketplace-icon",
+    },
+    component: () => import('@/components/DataDetails.vue')
   },
   {
     path: '/computeServe',

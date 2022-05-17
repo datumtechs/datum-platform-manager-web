@@ -1,7 +1,7 @@
 <template>
   <div class="side-menu-wrap flex flex-col text-14px">
     <el-menu router>
-      <el-menu-item class="h-63px" :key="item.path" :class="{ active: handActive(item.path) }" :index="item.path"
+      <el-menu-item class="h-63px" :key="item.path" :class="{ active: handActive(item.path) }" :index="item.path" 
         v-for="item in routeList">
         <div class="pl-30px pr-15px flex items-center">
           <img class="w-22px mr-14px" v-if="item.meta.icon" :src="handIcon(item.meta.icon)" />
@@ -12,7 +12,7 @@
       </el-menu-item>
     </el-menu>
     <el-menu router class="flex-1 bg-color-[#F7F8F9] pt-26px">
-      <el-menu-item class="h-63px mb-16px" index="createWorkFlow/wizardMode" @click="createWoekflow"
+      <el-menu-item class="h-63px mb-16px" index="createWorkFlow/wizardMode" @click="createWorkflow"
         v-if="privateList.length && store.token">
         <!-- :class="{ active: handActive('createTask') }" -->
         <div
@@ -58,6 +58,8 @@ const route: RouteLocationNormalizedLoaded = useRoute()
 const router = useRouter()
 //@ts-ignore
 const routeList = routePath.filter(v => v.meta.show.includes('side'))
+console.log(routeList);
+
 //@ts-ignore
 const privateList: any = routePath.filter(v => v.meta.show.includes('login')) || []
 
@@ -93,7 +95,7 @@ const handActive = (path: string) => {
   return routeList.includes(pathList[1])
 }
 
-const createWoekflow = () => {
+const createWorkflow = () => {
   workStore.setStep(0)
   workStore.setWorkerFlow({
     workflowId: null,
@@ -101,6 +103,7 @@ const createWoekflow = () => {
   })
   router.push({ name: 'wizardMode' })
 }
+
 const clicks = (item:any)=>{
    keepAliveStamp.setKeepAliveStamp()
 }

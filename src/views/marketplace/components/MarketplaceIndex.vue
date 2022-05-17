@@ -94,6 +94,8 @@ const queryTableData = async () => {
         maxSize: pageParams.maxSize,
         minSize: pageParams.minSize,
         orderBy: pageParams.orderBy,
+    }).catch(err => {
+        marketLoading.value = false
     })
     marketLoading.value = false
     if (code === 10000) {
@@ -101,9 +103,11 @@ const queryTableData = async () => {
         total.value = data.total
     }
 }
+
 watch(() => pageObj.current, () => {
     queryTableData()
 });
+
 onMounted(() => {
     queryTableData()
 })
@@ -116,9 +120,6 @@ onMounted(() => {
                 <p v-if="locale === 'zh'">全网共 {{ total }} 可参与隐私计算的有效数据</p>
                 <p v-else>{{ total }} participant data in the privacy computing network</p>
             </template>
-            <!-- <template #select>
-        <ComTabs :list="list" :activekey="activekey" @change="tabsChange" />
-            </template>-->
         </Banner>
         <div class="main-content mt-30px max-w-1200px mx-auto overflow-hidden">
             <el-table v-loading="marketLoading" :header-cell-style="{ height: '50px' }"

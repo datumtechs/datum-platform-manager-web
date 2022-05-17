@@ -4,7 +4,6 @@ import Side from '@/components/layout/Side.vue'
 import { ElContainer, ElHeader } from 'element-plus';
 import { usekeepAliveStamp } from '@/stores'
 const keepAliveStamp = usekeepAliveStamp()
-const datass = ref('123123')
 
 </script>
 <template>
@@ -17,13 +16,13 @@ const datass = ref('123123')
         <Side />
       </el-aside>
       <div class="layout-main-wrap">
-          <router-view v-slot="{ Component }">
-            <transition name="fade-main" mode="out-in">
-                <keep-alive :key="keepAliveStamp.getStamp">
-                  <component :is="Component" />
-                </keep-alive>
-            </transition>
-          </router-view>
+        <router-view v-slot="{ Component }">
+          <transition name="fade-main" mode="out-in">
+            <keep-alive :key="keepAliveStamp.getStamp">
+              <component :is="Component" />
+            </keep-alive>
+          </transition>
+        </router-view>
       </div>
     </el-container>
     <div class="layout-home" v-else>
