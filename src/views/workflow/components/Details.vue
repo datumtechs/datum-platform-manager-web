@@ -73,7 +73,8 @@
         }" :total="total" />
       </div>
     </div>
-    <SetNameDialog v-model:show="showDialog" v-if="showDialog" @submit="copySubmit" />
+    <SetNameDialog v-model:show="showDialog" v-if="showDialog" @submit="copySubmit"
+      @update="showDialog = false" />
   </div>
 </template>
 <script lang="ts" setup>
