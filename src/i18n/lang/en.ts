@@ -136,7 +136,8 @@ const en = {
     startTime: 'Start Time',
     address: "Address",
     placeholder: "Search node ID, name keyword",
-    sortBy: "Sort By"
+    sortBy: "Sort By",
+    viewTask: "View Task"
   },
   task: {
     goTo:"Switch ",

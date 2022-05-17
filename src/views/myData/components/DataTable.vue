@@ -1,5 +1,5 @@
 <template>
-  <el-table :data="props.data" class="mt-30px com-table">
+  <el-table v-loading="dataLoading" :data="props.data" class="mt-30px com-table">
     <el-table-column type="index" width="100">
       <template #header>{{ t('common.num') }}</template>
     </el-table-column>
@@ -19,14 +19,12 @@
       </template>
     </el-table-column>
     <!-- <el-table-column show-overflow-tooltip prop="tokenPrice" :label="t('myData.price')" /> -->
-    <el-table-column :label="t('common.actions')" :fixed="'right'" :width="300">
+    <el-table-column :label="t('common.actions')" :width="300">
       <template #default="scope">
-        <el-button type="text" :disabled="!!(scope.row.publicFlag || scope.row.connectFlag)" circle
-          @click="purchase(scope.row)">{{ t('myData.purchase') }}</el-button>
-        <el-button type="text" :disabled="!!(scope.row.publicFlag || scope.row.connectFlag)" circle
-          @click="viewData(scope.row)">{{ t('myData.viewData') }}</el-button>
-        <el-button type="text" :disabled="!!(scope.row.publicFlag || scope.row.connectFlag)" circle
-          @click="viewCredential(scope.row)">{{ t('myData.viewCredential') }}</el-button>
+        <el-button type="text" circle @click="purchase(scope.row)">{{ t('myData.purchase') }}
+        </el-button>
+        <el-button type="text" circle @click="viewData(scope.row)">{{ t('myData.viewData') }}
+        </el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -42,13 +40,17 @@ const props = defineProps({
   data: {
     type: Array,
     default: () => ([])
+  },
+  dataLoading: {
+    type: Boolean,
+    default: false
   }
 })
 
-const purchase = (obj: any) => { 
-    const dexUrl = `${chainCfg.value.dexUrl}swap?outputCurrency=${obj.tokenAddress}&exactField=OUTPUT&exactAmount=1`
-    //TODO dex
-    window.open(dexUrl, "_blank");
+const purchase = (obj: any) => {
+  const dexUrl = `${chainCfg.value.dexUrl}swap?outputCurrency=${obj.tokenAddress}&exactField=OUTPUT&exactAmount=1`
+  //TODO dex
+  window.open(dexUrl, "_blank");
 }
 const viewData = (obj: any) => {
   emit('viewData', obj)

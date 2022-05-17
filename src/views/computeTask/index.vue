@@ -4,14 +4,14 @@
       <template #briefInfo>
         <p class="text-color-[#999999]">
           {{ t('myData.tasksBriefInfoFirstParagraph') }}
-          <span class="text-color-[#2B60E9] text-16px">11990</span>
+          <span class="text-color-[#2B60E9] text-16px">{{ pageObj.total }}</span>
           {{ t('myData.tasksBriefInfoTwoParagraph') }}
         </p>
       </template>
     </Banner>
     <div class="main-content com-main-data-wrap">
       <el-table v-loading="loading" :data="tableData" class="mt-30px com-table _com_el-table-wrap">
-        <el-table-column type="index" width="100" :index="indexMethod">
+        <el-table-column type="index" width="80" :index="indexMethod">
           <template #header>{{ t('common.num') }}</template>
         </el-table-column>
         <el-table-column width="300" show-overflow-tooltip prop="id"
@@ -35,7 +35,7 @@
         </el-table-column>
         <el-table-column :label="t('common.actions')">
           <template #default="scope">
-            <el-button type="text" circle @click="viewData(scope.row)">{{ t('common.view') }}
+            <el-button type="text" circle @click="viewData(scope.row)">{{ t('node.viewTask') }}
             </el-button>
           </template>
         </el-table-column>

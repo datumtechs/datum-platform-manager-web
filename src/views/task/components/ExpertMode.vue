@@ -16,7 +16,7 @@
         :isSettingCompleted="isSettingCompleted ? true : false" />
       <Panel :isSettingCompleted="isSettingCompleted ? true : false" />
     </div>
-    <SetNameDialog v-model:show="showDialog" />
+    <SetNameDialog v-model:show="showDialog" v-if="showDialog" />
   </div>
 </template>
 <script lang="ts" setup>
