@@ -23,7 +23,7 @@
           {{ t('menu.createTask') }}
         </div>
       </el-menu-item>
-      <el-menu-item class="h-63px" :key="item.path" :class="{ active: handActive(item.path) }" :index="item.path"
+      <el-menu-item class="h-63px" :key="item.path" :class="{ active: handActive(item.path) }" :index="item.path"  @click="clicks(item)"
         v-show="store.token" v-for="item in privateList">
         <div class="pl-30px pr-15px flex items-center">
           <img class="w-22px mr-14px" v-if="item.meta.icon" :src="handIcon(item.meta.icon)" />
@@ -36,6 +36,7 @@
   </div>
 </template>
 <script setup lang="ts">
+import { getCurrentInstance } from 'vue'
 import routePath from '@/router/routePath'
 import { HelpFilled, Plus } from '@element-plus/icons-vue'
 import nodeIcon from '@/assets/images/side/side-node-icon.png'
@@ -47,10 +48,12 @@ import myAuth from '@/assets/images/side/side-my-auth-icon.png'
 import myModelsIcon from '@/assets/images/side/side-my-models-icon.png'
 import computeTask from '@/assets/images/side/side-computeTask-icon.png'
 import { type RouteLocationNormalizedLoaded, useRoute, useRouter } from 'vue-router'
-import { useUsersInfo, useWorkFlow } from '@/stores'
+import { useUsersInfo, useWorkFlow,usekeepAliveStamp } from '@/stores'
 const { t } = useI18n()
+const internalInstance:any = getCurrentInstance()
 const store = useUsersInfo()
 const workStore = useWorkFlow()
+const keepAliveStamp = usekeepAliveStamp()
 const route: RouteLocationNormalizedLoaded = useRoute()
 const router = useRouter()
 //@ts-ignore
@@ -98,6 +101,14 @@ const createWoekflow = () => {
   })
   router.push({ name: 'wizardMode' })
 }
+const clicks = (item:any)=>{
+   keepAliveStamp.setKeepAliveStamp()
+}
+
+// watch(route,(to,from)=>{
+//    console.log(unref(internalInstance.parent.parent))
+  
+// })
 
 </script>
 <style lang="scss" scoped>

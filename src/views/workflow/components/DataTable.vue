@@ -59,7 +59,6 @@ const Edit = (obj: any) => {
     name: 'wizardMode', params: {
       workflowId: obj.workflowId,
       workflowVersion: obj.workflowVersion,
-      workflowName: obj.workflowName,
     }
   })
 }

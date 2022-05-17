@@ -1,7 +1,7 @@
 <template>
   <el-form v-bind="$attrs" :label-position="'top'" :rules="rules" :ref="(el: any) => formRef = el" :model="form"
     class="mt-38px">
-    <el-form-item :label="`${t('task.taskName')}:`" prop="workflowName">
+    <el-form-item :label="`${t('task.taskName')}:`" prop="workflowName" class="select-alg-require-icon">
       <div class="absolute -top-30px cursor-pointer" :style="{ left: locale === 'zh' ? '142px' : '161px' }">
         <question-mark>
           <template #content>
@@ -21,20 +21,20 @@
       <el-input :disabled="disabled" :input-style="{ borderColor: '#EEEEEE', height: '50px' }" :minlength="8"
         :maxlength="64" v-model="form.workflowName"></el-input>
     </el-form-item>
-    <el-form-item :label="`${t('task.stepOneSelectComputingTitle')}:`" prop="calculationType">
+    <el-form-item :label="`${t('task.stepOneSelectComputingTitle')}:`" prop="calculationType" class="select-alg-require-icon">
       <el-radio-group v-model="form.calculationType" :disabled="disabled"
         @change="form.algorithmId = undefined, form.calculationProcessId = undefined">
         <el-radio :label="item.id" v-for="item in algList" :key="item.id">{{ item.name }}</el-radio>
       </el-radio-group>
     </el-form-item>
-    <el-form-item v-if="algTypelist[0]?.childrenList" :label="`${form.calculationType == 2000 ? t('task.stepOneSelectAIAlgorithmTitle') :t('task.stepOneSelectAlgorithmTitle')}:`"
+    <el-form-item v-if="algTypelist[0]?.childrenList" class="select-alg-require-icon" :label="`${form.calculationType == 2000 ? t('task.stepOneSelectAIAlgorithmTitle') :t('task.stepOneSelectAlgorithmTitle')}:`"
       prop="algorithmId">
       <el-radio-group v-model="form.algorithmId" @change="algChange" :disabled="disabled">
         <el-radio :label="item.id" v-for="item in algTypelist[0]?.childrenList" :key="item.id">{{ item.name }}
         </el-radio>
       </el-radio-group>
     </el-form-item>
-    <el-form-item v-if="props.processList.length && form.algorithmId && form.calculationType !== 1000" :label="`${$t('task.stepOneSelectProcedureTitle')}:`"
+    <el-form-item v-if="props.processList.length && form.algorithmId && form.calculationType !== 1000" class="select-alg-require-icon" :label="`${$t('task.stepOneSelectProcedureTitle')}:`"
       prop="calculationProcessId">
       <el-radio-group v-model="form.calculationProcessId" :disabled="disabled">
         <el-radio :label="item.calculationProcessId" v-for="item in props.processList" :key="item.calculationProcessId">{{ item.name }}
@@ -205,5 +205,16 @@ onMounted(() => {
 })
 
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
+.select-alg-require-icon {
+  position: relative;
+  &:before {
+    content: "*";
+    color: var(--el-color-danger);
+    position: absolute;
+    left: -12px;
+    top: 6px;
+    width: 20px;
+  }
+}
 </style>

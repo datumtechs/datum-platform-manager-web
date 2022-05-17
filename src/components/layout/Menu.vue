@@ -9,13 +9,6 @@ const routeList = routePath.filter(v => {
   return v.meta.show.includes('home')
 })
 
-const refreshKey = ref(Date.now()) 
-watch(route,(e)=>{
-  console.log(route)
-  // refreshKey.value = Date.now()
-})
-
-
 </script>
 <template>
   <div v-if="$route.path == '/'" class="menu flex flex-1 justify-center pr-50px pl-50px">

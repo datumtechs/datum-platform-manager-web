@@ -1,5 +1,5 @@
 <template>
-  <div class="flex-1 task-wrap com-main">
+  <div class="flex-1 task-wrap com-main workflow-normal">
     <Banner :bg-name="'newTask'" :showRouter="isRouterWorkFlow" @back="$router.go(-1)" :back-show="!isRouterWorkFlow"
       :detailName="workflowName">
       <template #briefInfo v-if="isRouterWorkFlow">{{ t('task.createTaskBriefInfo') }}</template>
@@ -31,16 +31,18 @@ watch(locale, () => {
 
 </script>
 <style lang="scss" scoped>
-.task-wrap {
-  .el-form .el-form-item__label {
-    font-size: 16px;
-    font-weight: 600;
-    color: #333333;
-    line-height: 22px;
+.workflow-normal {
+  :deep(.el-form) {
+    .el-form-item__label {
+      font-size: 16px;
+      font-weight: 600;
+      color: #333333;
+      line-height: 22px;
+    }
+    .el-form-item--default {
+      margin-bottom: 38px;
+    }
   }
 
-  .el-form .el-form-item--default {
-    margin-bottom: 38px;
-  }
 }
 </style>

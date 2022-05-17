@@ -5,6 +5,7 @@ import usersInfo from './modules/usersInfo'
 import workFlow from './modules/workFlow'
 import expertMode from './modules/expertMode'
 import network from './modules/network'
+import keepAliveStamp from './modules/keeyAlive'
 
 export default createPinia();
 export const useLanguage = language
@@ -13,3 +14,4 @@ export const useUsersInfo = usersInfo
 export const useWorkFlow = workFlow
 export const useExpertMode = expertMode
 export const userNetwork = network
+export const usekeepAliveStamp = keepAliveStamp

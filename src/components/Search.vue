@@ -1,6 +1,6 @@
 <template>
   <teleport to="#search">
-    <div class="input-wrap w-full h-full">
+    <div class="input-wrap w-full h-full" v-show="visible">
       <el-input class="flex" v-model="input1" clearable @clear="submit" :prefix-icon="Search"
         :placeholder="props.placeholder">
         <template #suffix>
@@ -27,13 +27,17 @@
     </div>
   </teleport>
 </template>
+
 <script setup lang="ts">
+
 import { Search } from '@element-plus/icons-vue'
 import { useDebounceFn } from '@vueuse/core'
+import { onBeforeRouteLeave } from 'vue-router';
 const input1 = ref('')
 const visible = ref(false)
 const asyncVisible = ref(false)
 const { t } = useI18n()
+const route = useRoute()
 // const popoverKey = ref(Date.now())
 const props = defineProps({
   placeholder: {
@@ -52,6 +56,25 @@ watch(() => input1.value, () => {
   submit()
 })
 
+// onBeforeRouteLeave((to:any,form:any)=>{
+//   console.log(22222,to,form)
+//   const fromPath = form.path.split('/')
+//   const toPath = to.path.split('/')
+//   if(toPath[1] == fromPath[1]) return
+//   //@ts-ignore
+//   window.document.getElementById('search').innerHTML = ''
+// })
+
+onActivated(()=>{
+  visible.value = true
+})
+
+onDeactivated(()=>{
+  visible.value = false
+})
+
+
+
 
 const submit = useDebounceFn(() => {
   emit('search', input1.value)
@@ -67,7 +90,6 @@ const reset = () => {
   input1.value = ''
   emit('reset')
   emit('search', input1.value)
-  console.log(unref(popoverRef))
   unref(popoverRef).afterLeave(() => {
     console.log(123)
   })
@@ -79,7 +101,9 @@ const popoverRefHide = () => {
 }
 
 
+
 onMounted(() => {
+  visible.value = true
   setTimeout(() => {
     asyncVisible.value = true
   })
