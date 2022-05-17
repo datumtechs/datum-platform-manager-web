@@ -12,7 +12,7 @@ const routeList = routePath.filter(v => {
 const refreshKey = ref(Date.now()) 
 watch(route,(e)=>{
   console.log(route)
-  refreshKey.value = Date.now()
+  // refreshKey.value = Date.now()
 })
 
 

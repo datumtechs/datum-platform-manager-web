@@ -1,6 +1,6 @@
 <template>
   <teleport to="#search">
-    <div class="input-wrap w-full h-full" :key="refreshKey">
+    <div class="input-wrap w-full h-full">
       <el-input class="flex" v-model="input1" clearable @clear="submit" :prefix-icon="Search"
         :placeholder="props.placeholder">
         <template #suffix>
