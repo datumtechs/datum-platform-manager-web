@@ -14,11 +14,13 @@ import { ElContainer, ElHeader } from 'element-plus';
         <Side />
       </el-aside>
       <div class="layout-main-wrap">
-        <router-view v-slot="{ Component }">
-          <transition name="fade-main" mode="out-in">
-            <component :is="Component" />
-          </transition>
-        </router-view>
+          <router-view v-slot="{ Component }">
+            <transition name="fade-main" mode="out-in">
+                <keep-alive>
+                  <component :is="Component" />
+                </keep-alive>
+            </transition>
+          </router-view>
       </div>
     </el-container>
     <div class="layout-home" v-else>

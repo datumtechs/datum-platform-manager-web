@@ -212,7 +212,7 @@ const previous = () => {
   } else {
     activeStep(0)
   }
-  query()
+  query(activeIndex.value)
 
 }
 
