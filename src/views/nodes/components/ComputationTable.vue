@@ -22,7 +22,7 @@
             <el-table-column :label="t('common.actions')">
                 <template #default="{ row }">
                     <span class="text-14px text-color-[#0052D9] cursor-pointer"
-                        @click="linkToViewComputations(row)">{{ t('node.view') }}</span>
+                        @click="linkToViewComputations(row)">{{ t('node.viewTask') }}</span>
                 </template>
             </el-table-column>
         </el-table>

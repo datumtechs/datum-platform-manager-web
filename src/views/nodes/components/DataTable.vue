@@ -20,8 +20,8 @@
                     <el-space :size="20">
                         <span class="text-14px text-color-[#0052D9] leading-23px cursor-pointer"
                             @click="linkToViewData(row)">{{ t('myData.viewData') }}</span>
-                        <span class="text-14px text-color-[#0052D9] leading-23px cursor-pointer"
-                            @click="linkToViewToken(row)">{{ t('myData.viewCredential') }}</span>
+                        <!-- <span class="text-14px text-color-[#0052D9] leading-23px cursor-pointer"
+                            @click="linkToViewToken(row)">{{ t('myData.viewCredential') }}</span> -->
                     </el-space>
                 </template>
             </el-table-column>

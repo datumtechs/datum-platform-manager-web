@@ -135,7 +135,8 @@ const zh = {
     startTime: '开始时间',
     address: "发起账户",
     placeholder: "搜索节点身份标识,名称关键字",
-    sortBy: "排列方式"
+    sortBy: "排列方式",
+    viewTask: "查看任务"
   },
   task: {
     goTo: "前往",

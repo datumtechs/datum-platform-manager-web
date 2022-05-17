@@ -46,7 +46,7 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column :label="t('common.actions')" :fixed="'right'">
+        <el-table-column :label="t('common.actions')">
           <template #default="{ row }">
             <!-- 0 - 待运行 1 - 运行中 2 - 运行成功 3 - 运行失败 -->
             <!-- 已运行 -->
@@ -73,12 +73,12 @@
         }" :total="total" />
       </div>
     </div>
-    <SetNameDialog v-model:show="showDialog" v-if="showDialog" @submit="copySubmit" @update="showDialog=false"/>
+    <SetNameDialog v-model:show="showDialog" v-if="showDialog" @submit="copySubmit" />
   </div>
 </template>
 <script lang="ts" setup>
 import SetNameDialog from './SetNameDialog.vue'
-import { getWorkflowVersionList,copyWorkflow } from '@/api/workflow'
+import { getWorkflowVersionList, copyWorkflow } from '@/api/workflow'
 import { useFormatTime, useDuring, useWorkflowDetailsMap } from '@/hooks'
 import { startWorkFlow } from '@/api/workflow'
 import { ElMessage } from 'element-plus';
@@ -108,8 +108,8 @@ const queryVersionList = () => {
   })
 }
 
-const view = (row:any) => { 
- router.push({
+const view = (row: any) => {
+  router.push({
     name: 'workflowSubtask', params: {
       id: row.workflowRunId
     }
@@ -156,23 +156,23 @@ onMounted(() => {
 })
 
 
-const copy = (row:any) => {
-    showDialog.value = true
-    activeRow.value = row
+const copy = (row: any) => {
+  showDialog.value = true
+  activeRow.value = row
 }
-const copySubmit = (name:string)=>{
+const copySubmit = (name: string) => {
   copyWorkflow({
-      workflowVersionName:name,
-      workflowId: activeRow.value.workflowId,
-      workflowVersion: activeRow.value.workflowVersion,
-    }).then(res=>{
-         const {code} = res
-         if(code  == 10000){
-           ElMessage.success(t('common.success'))
-            showDialog.value = false
-            queryVersionList()
-         }
-    })
+    workflowVersionName: name,
+    workflowId: activeRow.value.workflowId,
+    workflowVersion: activeRow.value.workflowVersion,
+  }).then(res => {
+    const { code } = res
+    if (code == 10000) {
+      ElMessage.success(t('common.success'))
+      showDialog.value = false
+      queryVersionList()
+    }
+  })
 }
 
 const payment = () => { }
