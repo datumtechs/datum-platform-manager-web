@@ -15,7 +15,11 @@
           <template #header>{{ t('common.num') }}</template>
         </el-table-column>
         <el-table-column show-overflow-tooltip prop="workflowVersionName"
-          :label="t('workflow.workflowVersionName')" />
+          :label="t('workflow.workflowVersionName')" >
+              <template #default="scope">
+                  <el-button type="text" circle @click="details(scope.row)">{{scope.row.workflowVersionName }}</el-button>
+              </template>
+          </el-table-column>
         <el-table-column show-overflow-tooltip prop="createTime"
           :label="t('workflow.creationTime')">
           <template #default="scope">{{ useFormatTime(scope.row.createTime) }}</template>
@@ -151,6 +155,25 @@ const start = async (row: any) => {
   }
 
 }
+
+const details = (row:any)=>{
+  if(row.createMode == 2){
+    router.push({
+        name: 'wizardMode', params: {
+          workflowId: row.workflowId,
+          workflowVersion: row.workflowVersion,
+        }
+      })
+      return
+  }
+  router.push({
+    name: 'expertModel', params: {
+        workflowId: row.workflowId,
+        workflowVersion: row.workflowVersion,
+    }
+  })
+}
+
 
 onMounted(() => {
   queryVersionList()

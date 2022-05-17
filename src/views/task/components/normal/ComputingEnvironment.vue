@@ -235,8 +235,9 @@ watch(() => props.taskParams, () => {
 
 </script>
 <style lang="scss" scoped>
-.environment .el-form {
-  .el-form-item .el-form-item__label {
+.environment  {
+  :deep(.el-form){
+   .el-form-item .el-form-item__label {
     font-size: 14px;
     font-weight: 400;
     font-family: DINPro-Medium, Ali-Medium;
@@ -265,6 +266,7 @@ watch(() => props.taskParams, () => {
         border: none;
       }
     }
+  }
   }
 }
 

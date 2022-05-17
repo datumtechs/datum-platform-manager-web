@@ -5,7 +5,7 @@
         <ComTabs :list="list" :activekey="activekey" @change="tabsChange" />
       </template>
     </Banner>
-    <div class="com-main-data-wrap">
+    <div class="com-main-data-wrap account-form">
       <MyNode v-if="activekey == 1" />
       <Account v-else />
     </div>
@@ -39,11 +39,14 @@ const tabsChange = (index: string) => {
 </script>
 <style lang="scss" scoped>
 .account-form {
-  .el-form-item__label {
-    font-size: 16px;
-    font-weight: 900;
-    color: #333333;
-    font-family: DINPro-Bold, Ali-Bold;
+  :deep(.el-form){
+      .el-form-item__label {
+        font-size: 16px;
+        font-weight: 900;
+        color: #333333;
+        font-family: DINPro-Bold, Ali-Bold;
+      }
   }
+
 }
 </style>
