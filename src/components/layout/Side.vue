@@ -99,7 +99,6 @@ const createWoekflow = () => {
   router.push({ name: 'wizardMode' })
 }
 
-
 </script>
 <style lang="scss" scoped>
 .side-menu-wrap {

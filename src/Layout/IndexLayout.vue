@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import Header from '@/components/layout/Header.vue'
-// import Home from '@/views/home/index.vue'
 import Side from '@/components/layout/Side.vue'
 import { ElContainer, ElHeader } from 'element-plus';
+
+
+
 </script>
 <template>
   <el-container class="min-w-1200px">
@@ -16,7 +18,7 @@ import { ElContainer, ElHeader } from 'element-plus';
       <div class="layout-main-wrap">
           <router-view v-slot="{ Component }">
             <transition name="fade-main" mode="out-in">
-                <keep-alive>
+                <keep-alive :include="[]">
                   <component :is="Component" />
                 </keep-alive>
             </transition>

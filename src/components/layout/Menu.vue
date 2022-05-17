@@ -1,10 +1,20 @@
 <script setup lang="ts">
 import routePath from '@/router/routePath'
 const { t } = useI18n()
+const route = useRoute()
+
+
 const routeList = routePath.filter(v => {
   // @ts-ignore
   return v.meta.show.includes('home')
 })
+
+const refreshKey = ref(Date.now()) 
+watch(route,(e)=>{
+  console.log(route)
+  refreshKey.value = Date.now()
+})
+
 
 </script>
 <template>

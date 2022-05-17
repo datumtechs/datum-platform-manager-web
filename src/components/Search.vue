@@ -1,6 +1,6 @@
 <template>
   <teleport to="#search">
-    <div class="input-wrap w-full h-full">
+    <div class="input-wrap w-full h-full" :key="refreshKey">
       <el-input class="flex" v-model="input1" clearable @clear="submit" :prefix-icon="Search"
         :placeholder="props.placeholder">
         <template #suffix>
@@ -50,6 +50,7 @@ const emit = defineEmits(['search','reset'])
 watch(() => input1.value, () => {
   submit()
 })
+
 
 const submit = useDebounceFn(() => {
   emit('search', input1.value)

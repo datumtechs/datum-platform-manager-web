@@ -66,6 +66,7 @@ const query = ()=>{
          const {code,data} = res
          if(code  == 10000){
              tableData.value = data
+             workFlowName.value = data[0]?.workflowVersionName
          }
     })
 }
