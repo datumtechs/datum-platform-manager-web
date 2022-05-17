@@ -7,7 +7,9 @@
                 </QuestionMark>
             </div>
             <div v-if="props.type === 'data'" class="w-300px">
-                <el-input></el-input>
+                <el-input size="large" v-model="searchText" class="rounded-3xl"
+                    :prefix-icon="Search" clearable @clear="emit('updateData', searchText)">
+                </el-input>
             </div>
         </div>
         <el-table v-loading="props.loading" class="mt-20px" :data="props.tableData">
@@ -120,12 +122,14 @@
                 </div>
             </template>
         </el-dialog> -->
-        <GlobalPending :show="pending.show" :content="pending.content" :title="pending.title"
-            @close-pending="pending.show = false" />
+        <GlobalPending v-model:show="pending.show" :content="pending.content"
+            :title="pending.title" />
     </div>
 </template>
 
 <script setup lang='ts'>
+import { Search } from '@element-plus/icons-vue'
+import { useDebounceFn } from '@vueuse/core'
 import { useExchangeFrom, useExchangeTo, useNotice } from '@/hooks'
 const { t, locale } = useI18n()
 const chainCfg: any = inject('chainCfg')
@@ -142,6 +146,13 @@ interface token {
 }
 
 const emit = defineEmits(['updateData'])
+
+const searchText = ref('')
+
+watch(() => searchText.value, useDebounceFn(() => {
+    emit('updateData', searchText.value)
+}, 500))
+
 
 const props = defineProps({
     title: {
@@ -171,8 +182,6 @@ const pending = reactive({
     content: "",
     title: ""
 })
-
-const cancelLoading = ref(false)
 
 const authForm = reactive({
     name: '',
@@ -285,5 +294,9 @@ const rules = ref(
 
 :deep(.el-form-item--default) {
     margin-bottom: 10px;
+}
+
+:deep(.el-input__inner) {
+    border-radius: 24px;
 }
 </style>

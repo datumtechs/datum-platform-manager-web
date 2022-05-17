@@ -45,7 +45,8 @@
       <el-pagination background layout="prev, pager, next" v-model:current-page="pageObj.current"
         v-model:page-size="pageObj.size" :total="pageObj.total" />
     </div>
-    <Search :placeholder="t('workflow.placeholder')" @search="search">
+    <Search :placeholder="t('computeTask.placeholder')" @search="search"
+      @reset="taskStatus = 'ALL', keyword = ''">
       <template #content>
         <!-- <div class="search-label  mt-20px mb-10px font-900">{{ t('myData.TaskCategory') }}</div>
         <el-select class="w-full picker-rounded" clearable v-model="algValue"

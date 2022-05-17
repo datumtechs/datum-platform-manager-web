@@ -4,24 +4,21 @@
       <el-input class="flex" v-model="input1" clearable @clear="submit" :prefix-icon="Search"
         :placeholder="props.placeholder">
         <template #suffix>
-          <el-popover
-            :ref="(e:any)=>popoverRef = e"
-            placement="bottom"
-            :width="428"
-            trigger="click"
-          >
+          <el-popover :ref="(e: any) => popoverRef = e" placement="bottom" :width="428"
+            trigger="click">
             <!-- v-model:visible="visible" -->
-          <!-- > -->
             <template #reference>
-              <img class="w-24px cursor-pointer" src="@/assets/images/header/select.png" />
-              <!-- <img class="w-24px cursor-pointer" @click="visible=true" src="@/assets/images/header/select.png" /> -->
+              <img v-if="showFilter" class="w-24px cursor-pointer"
+                src="@/assets/images/header/select.png" />
             </template>
             <div class="content p-28px pt-18px">
               <slot v-if="asyncVisible" name="content"></slot>
-              <div class="popver-footer text-right pt-30px">              
-                  <!-- <el-button class="w-140px" style="height:40px" round @click="cancel">{{t('common.cancel')}}</el-button> -->
-                  <el-button class="w-140px" style="height:40px" round @click="reset">{{t('common.reset')}}</el-button>
-                  <el-button class="w-140px" style="height:40px" type="primary" round @click="submit">{{t('common.submit')}}</el-button>
+              <div class="popver-footer text-right pt-30px">
+                <!-- <el-button class="w-140px" style="height:40px" round @click="cancel">{{t('common.cancel')}}</el-button> -->
+                <el-button class="w-140px" style="height:40px" round @click="reset">
+                  {{ t('common.reset') }}</el-button>
+                <el-button class="w-140px" style="height:40px" type="primary" round @click="submit">
+                  {{ t('common.submit') }}</el-button>
               </div>
             </div>
           </el-popover>
@@ -42,10 +39,14 @@ const props = defineProps({
   placeholder: {
     type: String,
     default: ''
+  },
+  showFilter: {
+    type: Boolean,
+    default: true
   }
 })
 
-const emit = defineEmits(['search','reset'])
+const emit = defineEmits(['search', 'reset'])
 
 watch(() => input1.value, () => {
   submit()
@@ -62,12 +63,12 @@ const popoverRef = ref()
 const cancel = () => {
   popoverRefHide()
 }
-const reset = ()=>{
+const reset = () => {
   input1.value = ''
   emit('reset')
-  emit('search',input1.value)
+  emit('search', input1.value)
   console.log(unref(popoverRef))
-  unref(popoverRef).afterLeave(()=>{
+  unref(popoverRef).afterLeave(() => {
     console.log(123)
   })
 }

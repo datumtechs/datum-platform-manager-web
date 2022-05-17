@@ -18,6 +18,8 @@
         }" :total="total" />
       </div>
     </div>
+    <Search :showFilter="false" @search="search" @reset="keyword = ''"
+      :placeholder="t('myData.marketPlaceholder')"></Search>
   </div>
 </template>
 <script lang="ts" setup>
@@ -31,6 +33,7 @@ const tableData = ref([])
 const current = ref(1)
 const total = ref(0)
 const dataTotal = ref(0)
+const keyword = ref('')
 
 const dataLoading = ref(false)
 const purchase = (row: any) => {
@@ -51,9 +54,14 @@ const viewCredential = (obj: any) => {
 }
 
 
+const search = (str: string) => {
+  keyword.value = str
+  query()
+}
+
 const query = () => {
   dataLoading.value = true
-  queryUserDataList({ current: current.value, size: 10 }).then(res => {
+  queryUserDataList({ current: current.value, size: 10, keyword: keyword.value }).then(res => {
     const { data, code } = res
     dataLoading.value = false
     if (code === 10000) {

@@ -14,24 +14,23 @@
         <el-table-column type="index" width="80">
           <template #header>{{ t('common.num') }}</template>
         </el-table-column>
-        <el-table-column show-overflow-tooltip prop="taskId"
-          :label="t('myData.taskID')" />
+        <el-table-column show-overflow-tooltip prop="taskId" :label="t('myData.taskID')" />
         <el-table-column show-overflow-tooltip prop="status" :label="t('workflow.state')">
           <template #default="{ row }">
             {{ useWorkflowDetailsMap(row.status) || '-' }}
           </template>
         </el-table-column>
-        <el-table-column show-overflow-tooltip prop="taskType"
-          :label="t('workflow.taskSteps')">
+        <el-table-column show-overflow-tooltip prop="taskType" :label="t('workflow.taskSteps')">
         </el-table-column>
         <el-table-column show-overflow-tooltip prop="createTime"
           :label="t('computeTask.taskStartTime')">
           <template #default="scope">{{ useFormatTime(scope.row.createTime) }}</template>
         </el-table-column>
-   
+
         <el-table-column :label="t('common.actions')" :fixed="'right'">
           <template #default="{ row }">
-              <el-button type="text" circle @click="details(row)">{{ t('workflow.viewTaskResults') }}</el-button>
+            <el-button type="text" circle @click="details(row)">{{ t('workflow.viewTaskResults') }}
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -59,20 +58,26 @@ const tableData = ref([])
 const { t, locale } = useI18n()
 
 
-const query = ()=>{
+const query = () => {
   getWorkflowRunTaskList({
-      workflowRunId: workflowRunId
-    }).then(res=>{
-         const {code,data} = res
-         if(code  == 10000){
-             tableData.value = data
-             workFlowName.value = data[0]?.workflowVersionName
-         }
-    })
+    workflowRunId: workflowRunId
+  }).then(res => {
+    const { code, data } = res
+    if (code == 10000) {
+      tableData.value = data
+      workFlowName.value = data[0]?.workflowVersionName
+    }
+  })
 }
 
-const details = (row:any)=>{
-  
+const details = (row: any) => {
+  router.push({
+    name: 'TaskResult', query: {
+      hasModel: 1,
+    }, params: {
+      taskId: row.taskId
+    }
+  })
 }
 
 onMounted(() => {

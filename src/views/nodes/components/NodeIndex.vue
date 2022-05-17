@@ -16,12 +16,12 @@
                 v-model:current-page="pageObj.current" v-model:page-size="pageObj.size"
                 :total="pageObj.total" />
         </div>
-        <Search :placeholder="t('node.placeholder')" @search="search">
+        <Search :placeholder="t('node.placeholder')" @search="search" @reset="orderBy = ''">
             <template #content>
                 <p class="search-label mb-10px">
                     {{ t('node.sortBy') }}
                 </p>
-                <el-select class="w-full" size="large" v-model="orderBy">
+                <el-select class="w-full" size="large" v-model="orderBy" :teleported="false">
                     <el-option v-for="item in sortList" :key="item.id" :label="t(item.label)"
                         :value="item.orderBy" />
                 </el-select>

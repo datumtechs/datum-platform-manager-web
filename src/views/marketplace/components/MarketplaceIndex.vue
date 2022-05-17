@@ -26,7 +26,7 @@ const pageParams: PageParams = reactive({
     keyword: '',
     maxSize: '',
     minSize: '',
-    orderBy: '',
+    orderBy: 'PUBLISHED',
 })
 
 const pageObj = reactive({
@@ -38,6 +38,11 @@ const pageObj = reactive({
 const marketLoading = ref(false)
 
 const sortList = ref([
+    {
+        id: 0,
+        orderBy: 'PUBLISHED',
+        label: 'myData.launchTime'
+    },
     {
         id: 1,
         orderBy: 'TOKEN_NAME',
@@ -55,8 +60,9 @@ const sortList = ref([
     }
 ])
 
-const search = () => {
-
+const search = (str: string) => {
+    pageParams.keyword = str
+    queryTableData()
 }
 
 const indexMethod = (index: number) => useTableIndex(index, pageParams.current, pageParams.size)
@@ -152,16 +158,18 @@ onMounted(() => {
                 v-model:page-size="pageObj.size" layout="prev, pager, next"
                 :total="pageObj.total" />
         </div>
-        <Search :placeholder="t('myData.marketPlaceholder')" @search="search">
+        <Search :placeholder="t('myData.marketPlaceholder')" @search="search"
+            @reset="pageParams.orderBy = 'PUBLISHED'">
             <template #content>
                 <p class="search-label mb-10px">
                     {{ t('node.sortBy') }}
                 </p>
-                <el-select class="w-full" size="large" v-model="pageParams.orderBy">
+                <el-select class="w-full" size="large" v-model="pageParams.orderBy"
+                    :teleported="false">
                     <el-option v-for="item in sortList" :key="item.id" :label="t(item.label)"
                         :value="item.orderBy" />
                 </el-select>
-                <p class="search-label mb-10px mt-20px">
+                <!-- <p class="search-label mb-10px mt-20px">
                     {{ t('myData.industryData') }}
                 </p>
                 <el-select class="w-full" size="large" v-model="pageParams.orderBy">
@@ -174,10 +182,7 @@ onMounted(() => {
                 <el-select class="w-full" size="large" v-model="pageParams.orderBy">
                     <el-option v-for="item in sortList" :key="item.id" :label="t(item.label)"
                         :value="item.orderBy" />
-                </el-select>
-                <p class="search-label mb-10px mt-20px">
-                    {{ t('myData.dataSize') }}
-                </p>
+                </el-select> -->
             </template>
         </Search>
     </div>

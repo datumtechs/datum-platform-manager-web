@@ -215,6 +215,16 @@ export default [
     },
     component: () => import('@/views/workflow/components/Subtask.vue'),
   },
+  {
+    path: '/workflow/details/subtask/:id/taskResult/:taskId',
+    name: "TaskResult",
+    meta: {
+      show: [],
+      label: 'menu.workflowDetails',
+      icon: "side-my-task-icon"
+    },
+    component: () => import('@/views/workflow/components/TaskResult.vue'),
+  },
   // {
   //   path: '/models',
   //   name: "models",

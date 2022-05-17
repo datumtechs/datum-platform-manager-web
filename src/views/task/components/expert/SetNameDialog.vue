@@ -1,6 +1,7 @@
 <template>
     <div class="nameDialog">
-        <el-dialog v-model="props.show" destroy-on-close width="320px">
+        <el-dialog v-model="props.show" destroy-on-close width="320px"
+            @close="emit('update:show', false)">
             <div class="font-bold text-14px leading-18px text-color-[#333]">{{
                     t('expert.inputNameTips')
             }}</div>
@@ -33,6 +34,7 @@
 import { createWorkflowOfExpertMode } from '@/api/expert'
 const { t } = useI18n()
 const router = useRouter()
+const emit = defineEmits(['update:show'])
 const nameFormRef = ref<any>()
 const rules = reactive({
     name: [

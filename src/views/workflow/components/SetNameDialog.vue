@@ -1,6 +1,7 @@
 <template>
     <div class="nameDialog">
-        <el-dialog v-model="props.show" destroy-on-close width="320px" @close="emit('update')">
+        <el-dialog v-model="props.show" destroy-on-close width="320px"
+            @close="emit('update:show', false)">
             <div class="font-bold text-14px leading-18px text-color-[#333]">{{
                     t('expert.inputNameTips')
             }}</div>
@@ -31,7 +32,7 @@
 
 <script setup lang='ts'>
 const { t } = useI18n()
-const emit = defineEmits(['submit','update'])
+const emit = defineEmits(['submit', 'update:show'])
 const nameFormRef = ref<any>()
 const rules = reactive({
     name: [
@@ -45,7 +46,7 @@ const submitForm = async (form: any) => {
     if (!form) return
     await form.validate((valid: any, fields: any) => {
         if (valid) {
-          emit('submit',nameForm.name)
+            emit('submit', nameForm.name)
         }
     })
 }

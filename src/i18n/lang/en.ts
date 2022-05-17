@@ -140,7 +140,7 @@ const en = {
     viewTask: "View Task"
   },
   task: {
-    goTo:"Switch ",
+    goTo: "Switch ",
     createTaskBriefInfo: "Create new Workflow you need",
     expertMode: "Expert Mode",
     wizardMode: "Wizard Mode",
@@ -229,7 +229,7 @@ const en = {
     capability: "Capability",
     createTime: "Create Time",
     totalTime: "Total Time",
-    marketPlaceholder: "Search token, data keywords",
+    marketPlaceholder: "Search token, data name",
     priceAsc: 'Price ascending ',
     priceDesc: 'Price descending'
   },
@@ -243,9 +243,6 @@ const en = {
     continueEditing: "Continue Edit",
     deleteWorkflow: "Delete",
     deleteWorkflowTips: "Please confirm whether to delete the workflow",
-    // totalOf: " ",
-    // workTipsBriefInfoTwoParagraph: "privacy computing workflows",
-    // recordWorkflow: "Record of this workflow",
     operationRecord: "Operation Record",
     dataNotPerfect: "The current data is not perfect",
     WorkflowVersionName: "workflow Version Name",
@@ -254,7 +251,7 @@ const en = {
     viewDetails: "View Details",
     tokenNum: '剩余',
     authorizeBalance: 'Authorized quantity',
-    placeholder: "Search workflow ID, name keyword",
+    placeholder: "Search workflow name",
     taskSteps: "Task Steps",
     viewTaskResults: "View Task Results"
   },
@@ -296,6 +293,8 @@ const en = {
     generationTime: "Generation time",
     eventContent: "Event content",
     taskStatus: 'Task Status',
+    placeholder: 'Search task ID',
+    modelEvaluation: 'Model Evaluation',
   },
   expert: {
     overview: 'Overview',

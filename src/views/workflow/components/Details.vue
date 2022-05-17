@@ -52,7 +52,7 @@
             <!-- 已运行 -->
             <div v-if="row.status !== 0">
               <el-button type="text" circle @click="copy(row)">{{ t('common.copy') }}</el-button>
-              <el-button v-if="row.status !== 1" type="text" circle @click="view(row)">{{
+              <el-button type="text" circle @click="view(row)">{{
                   t('workflow.viewDetails')
               }}
               </el-button>
@@ -73,8 +73,7 @@
         }" :total="total" />
       </div>
     </div>
-    <SetNameDialog v-model:show="showDialog" v-if="showDialog" @submit="copySubmit"
-      @update="showDialog = false" />
+    <SetNameDialog v-model:show="showDialog" v-if="showDialog" @submit="copySubmit" />
   </div>
 </template>
 <script lang="ts" setup>

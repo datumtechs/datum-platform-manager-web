@@ -229,9 +229,9 @@ const zh = {
     capability: "任务中角色",
     createTime: "发起时间",
     totalTime: "任务用时",
-    marketPlaceholder: "搜索凭证、数据关键字",
+    marketPlaceholder: "搜索凭证、数据名称",
     priceAsc: '价格升序',
-    priceDesc: '价格降序'
+    priceDesc: '价格降序',
   },
   workflow: {
     workflowName: "工作流名称",
@@ -243,9 +243,6 @@ const zh = {
     continueEditing: "继续编辑",
     deleteWorkflow: "删除工作流",
     deleteWorkflowTips: "请确认是否该删除工作流",
-    // totalOf: "共",
-    // workTipsBriefInfoTwoParagraph: "个隐私计算工作流",
-    // recordWorkflow: "条 该工作流的运行记录",
     operationRecord: "运行记录",
     dataNotPerfect: "当前资料不完善",
     workflowVersionName: "工作流版本名称",
@@ -254,7 +251,7 @@ const zh = {
     viewDetails: "查看详情",
     tokenNum: '剩余',
     authorizeBalance: '已授权数量',
-    placeholder: "搜索工作流ID、名称关键字",
+    placeholder: "搜索工作流名称",
     taskSteps: "任务步骤",
     viewTaskResults: "查看任务结果"
   },
@@ -295,7 +292,9 @@ const zh = {
     eventMaker: "生成事件的参与方",
     generationTime: "生成时间",
     eventContent: "事件内容",
-    taskStatus: '任务状态'
+    taskStatus: '任务状态',
+    placeholder: '搜索任务ID',
+    modelEvaluation: '模型评估'
   },
   expert: {
     overview: '概览',

@@ -3,7 +3,7 @@
         <DataToken type="fee" :tableData="feeTokenData" :title="t('auth.feeToken')"
             @updateData="queryWLat()" :loading="feeLoading" />
         <DataToken type="data" :tableData="dataTokenData" :title="t('auth.dataToken')"
-            @updateData="queryDataList()" :loading="dataLoading" />
+            @updateData="queryDataList" :loading="dataLoading" />
         <div class="flex my-50px justify-center">
             <el-pagination v-model:current-page="pageObj.current" v-model:page-size="pageObj.size"
                 background layout="prev, pager, next" :total="pageObj.total" />
@@ -26,22 +26,21 @@ const dataLoading = ref(false)
 const pageObj = reactive({
     total: 0,
     current: 1,
-    size: 10
+    size: 10,
+    keyword: ''
 })
 
 watch(() => pageObj.current, (newValue, oldValue) => {
     queryDataList()
 });
 
-const search = (str: string) => {
-
-}
-
-const queryDataList = () => {
+const queryDataList = (str?: string) => {
+    pageObj.keyword = str || ''
     dataLoading.value = true
     queryUserDataList({
-        current: current.value,
-        size: size.value,
+        current: pageObj.current,
+        size: pageObj.size,
+        keyword: pageObj.keyword
     }).then(res => {
         dataLoading.value = false
         const { data, code } = res
