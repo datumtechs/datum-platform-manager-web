@@ -12,15 +12,15 @@
                 </el-input>
             </div>
         </div>
-        <el-table v-loading="props.loading" class="mt-20px" :data="props.tableData">
+        <el-table v-tableTooltip v-loading="props.loading" class="mt-20px" :data="props.tableData">
             <el-table-column type="index" width="100">
                 <template #header>{{ t('common.num') }}</template>
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="tokenName"
+            <el-table-column :class-name="'show-ellipsis-tooltip'" prop="tokenName"
                 :label="t('myData.credentialName')" />
-            <el-table-column show-overflow-tooltip prop="tokenSymbol"
+            <el-table-column :class-name="'show-ellipsis-tooltip'" prop="tokenSymbol"
                 :label="t('myData.credentialSymbol')" />
-            <el-table-column show-overflow-tooltip :label="t('myData.dataName')">
+            <el-table-column :class-name="'show-ellipsis-tooltip'" :label="t('myData.dataName')">
                 <template #default="{ row }">
                     <p v-if="row.metaDataName">{{ row.metaDataName }}</p>
                     <p v-else>-</p>

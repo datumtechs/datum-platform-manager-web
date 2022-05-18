@@ -5,11 +5,11 @@
             <QuestionMark :content="$t('auth.authOrgHint')">
             </QuestionMark>
         </div>
-        <el-table v-loading="nodeTableLoading" class="mt-20px" :data="tableData">
+        <el-table v-tableTooltip  v-loading="nodeTableLoading" class="mt-20px" :data="tableData">
             <el-table-column type="index" width="80">
                 <template #header>{{ t('common.num') }}</template>
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="nodeName" :label="t('auth.networkName')" />
+            <el-table-column :class-name="'show-ellipsis-tooltip'" prop="nodeName" :label="t('auth.networkName')" />
             <el-table-column prop="identityIp" :label="t('auth.networkIP')" />
             <el-table-column prop="identityPort" :label="t('node.nodePort')" />
             <el-table-column :label="t('auth.authStatus')">

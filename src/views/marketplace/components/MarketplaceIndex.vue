@@ -122,16 +122,16 @@ onMounted(() => {
             </template>
         </Banner>
         <div class="main-content mt-30px max-w-1200px mx-auto overflow-hidden">
-            <el-table v-loading="marketLoading" :header-cell-style="{ height: '50px' }"
+            <el-table v-tableTooltip v-loading="marketLoading" :header-cell-style="{ height: '50px' }"
                 :row-style="{ height: '70px' }" :data="tableData" highlight-current-row
                 style="width: 100%">
                 <el-table-column type="index" :label="t('common.num')" :index="indexMethod"
                     width="80" />
-                <el-table-column show-overflow-tooltip prop="metaDataName"
+                <el-table-column :class-name="'show-ellipsis-tooltip'" prop="metaDataName"
                     :label="t('myData.dataName')" />
-                <el-table-column show-overflow-tooltip prop="nodeName"
+                <el-table-column :class-name="'show-ellipsis-tooltip'" prop="nodeName"
                     :label="t('myData.dataProvider')" />
-                <el-table-column show-overflow-tooltip prop="tokenName"
+                <el-table-column :class-name="'show-ellipsis-tooltip'" prop="tokenName"
                     :label="t('myData.credentialName')" />
                 <el-table-column prop="tokenPrice" :label="t('common.credentialPrice')">
                     <template #default="{ row }">

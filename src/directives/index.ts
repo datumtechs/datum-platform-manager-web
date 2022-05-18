@@ -1,3 +1,4 @@
+import {ElTooltip} from 'element-plus'
 
 export const waves = {
   bind(el:any, binding:any) {
@@ -42,5 +43,62 @@ export const waves = {
         return false
       }
     }, false)
+  }
+}
+
+
+export const tableTooltip = {
+  updated(el:any, binding:any) {
+    if (el.querySelectorAll) {
+      const label:any[] = el.querySelectorAll('.show-ellipsis-tooltip')
+      label.forEach(v => {
+        const childNode = v.childNodes[0]
+        const dom = document.createElement('div')
+        const app: any = createApp( {
+              template: `<el-tooltip
+                      effect="light"
+                      v-model:visible="visible"
+                      content="${childNode.innerText}"
+                      placement="top"
+                    >
+                      <div class="tooltip-ellipsis-content" @mouseenter="mouseenter" @mouseleave="mouseleave" @dblclick="copy">${childNode.innerText} </div>
+                    </el-tooltip>` ,
+              data: ()=>{
+                return {
+                  visible:false
+                }
+              },
+          methods: {
+                mouseenter(e:any) {
+                  const box = e.target
+                  if (box.scrollWidth > box.offsetWidth) {
+                    this.visible= true
+                  } else {
+                    console.log("没有出现省略号")
+                  }
+                },
+                mouseleave (){this.visible = false},
+                copy(e: any) {
+                  const text: string = e.target.innerText
+                    e.target.style.backgroundColor="颜色值"
+                    const input = document.createElement('input');
+                    document.body.appendChild(input);
+                    input.setAttribute('value', text);
+                    input.value = text
+                    input.select();
+                    if (document.execCommand('copy')) {
+                        document.execCommand('copy');
+                    }
+                    document.body.removeChild(input)
+                }
+              }
+           
+        }).component('el-tooltip', ElTooltip)
+        childNode.innerText = ''
+        app.mount(dom)
+        childNode.appendChild(dom)
+      })
+      //更新思路直接获取  el-tooltip 标签 缺陷导致重复
+    }
   }
 }

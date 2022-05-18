@@ -1,13 +1,13 @@
 <template>
     <div class="mt-30px">
-        <el-table v-loading="dataLoading" :header-cell-style="{ height: '50px' }"
+        <el-table v-tableTooltip v-loading="dataLoading" :header-cell-style="{ height: '50px' }"
             :row-style="{ height: '70px' }" :data="tableData" highlight-current-row
             style="width: 100%">
             <el-table-column type="index" :label="t('common.num')" :index="indexMethod"
                 width="80" />
-            <el-table-column show-overflow-tooltip prop="metaDataName"
+            <el-table-column :class-name="'show-ellipsis-tooltip'" prop="metaDataName"
                 :label="t('myData.dataName')" />
-            <el-table-column show-overflow-tooltip prop="tokenName"
+            <el-table-column :class-name="'show-ellipsis-tooltip'" prop="tokenName"
                 :label="t('myData.credentialName')" />
             <el-table-column prop="tokenSymbol" :label="t('myData.credentialSymbol')" />
             <el-table-column prop="launchTime" :label="t('myData.launchTime')">

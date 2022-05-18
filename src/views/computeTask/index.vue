@@ -10,11 +10,11 @@
       </template>
     </Banner>
     <div class="main-content com-main-data-wrap">
-      <el-table v-loading="loading" :data="tableData" class="mt-30px com-table _com_el-table-wrap">
+      <el-table v-tableTooltip v-loading="loading" :data="tableData" class="mt-30px com-table _com_el-table-wrap">
         <el-table-column type="index" width="80" :index="indexMethod">
           <template #header>{{ t('common.num') }}</template>
         </el-table-column>
-        <el-table-column width="300" show-overflow-tooltip prop="id"
+        <el-table-column width="300" :class-name="'show-ellipsis-tooltip'" prop="id"
           :label="t('computeTask.taskId')" />
         <el-table-column :label="t('computeTask.taskStatus')">
           <template #default="{ row }">

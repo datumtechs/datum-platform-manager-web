@@ -252,7 +252,7 @@ const en = {
     timeUse: "Time Use",
     viewDetails: "View Details",
     authorizeBalance: 'Authorized quantity',
-    placeholder: "Search workflow name",
+    placeholder: "Search workflow ID, name keyword",
     taskSteps: "Task Steps",
     viewTaskResults: "View Task Results",
     resultUrl: "Result address",

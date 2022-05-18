@@ -14,15 +14,18 @@
         </p>
       </div>
     </div>
-    <div v-show="activeIndex == 0" class="mt-38px mb-42px ml-6px">
-      <PrivateSwitch :mode="'normal'" v-if="!workfolwParams.workflowId"
-        @change="$router.push({ name: 'expertModel' })" />
-      <SelectionAlg @getNoticeText="getNoticeText" :taskParams="workfolwParams" @init="init(),activeIndex=1" :processList="processList"
-        @getParams="slectionAlgParams" />
-    </div>
+    <div style="pointer-events:none">
+      <div v-show="activeIndex == 0" class="mt-38px mb-42px ml-6px">
+        <PrivateSwitch :mode="'normal'" v-if="!workfolwParams.workflowId"
+          @change="$router.push({ name: 'expertModel' })" />
+        <SelectionAlg @getNoticeText="getNoticeText" :taskParams="workfolwParams" @init="init(),activeIndex=1" :processList="processList"
+          @getParams="slectionAlgParams" />
+      </div>
        <component :is="componentList[list[activeIndex]?.type]?.components" :workflowInfo="{ ...workflowInfo }"
       :step="activeIndex" :type="list[activeIndex]?.type" :fieldType="fieldType" :taskParams="workfolwParams"
-      :orgList="orgList" :noticeText="noticeText" @previous="previous" @next="next" @getParams="(params: any) => { }" />
+      :orgList="orgList" :views="views"
+       :noticeText="noticeText" @previous="previous" @next="next" @getParams="(params: any) => { }" />
+    </div>
   </div>
 </template>
 <script lang="ts" setup>
@@ -59,6 +62,7 @@ const workflowInfo = reactive<any>({
   workflowVersion: ''
 })
 const emit = defineEmits(['getWorkName'])
+const views = ref(false)
 
 const componentList = markRaw<any[]>(
   //0-选择训练输入数据, 
@@ -134,6 +138,11 @@ watch(activeIndex, () => {
 
 const getNoticeText = (obj: any) => {
   noticeText.value = obj
+}
+const aa = (event:any)=>{
+  event.preventDefault()
+  event.stopPropagation()
+
 }
 
 const getStepInfo = (data: any) => {
@@ -268,6 +277,7 @@ const setProces = () => {//设置流程
 const init = () => {
   const workflowId = route.params.workflowId || store.getWorkerFlow.workflowId
   const workflowVersion = route.params.workflowVersion || store.getWorkerFlow.workflowVersion
+  views.value = route.params.views  == 'view'
   if (workflowId) {
     workflowInfo.workflowId = workflowId
     workflowInfo.workflowVersion = workflowVersion

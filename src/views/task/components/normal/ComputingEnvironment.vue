@@ -59,7 +59,7 @@
         </div>
       </el-form>
     </div>
-    <div class="flex items-center pt-20px">
+    <div class="flex items-center pt-20px" v-if="!views">
       <el-button round class="h-50px previous" @click="previous">{{ $t('common.previous') }}</el-button>
       <el-button round class="h-50px previous ml-20px" @click="preserv">{{ $t('common.saveAndReturn') }}</el-button>
       <NextButton @click="submit" />
@@ -93,6 +93,10 @@ const props = defineProps({
   taskParams: {
     type: Object,
     default: () => ({})
+  },
+    views: {
+    type: Boolean,
+    default: false
   }
 })
 
