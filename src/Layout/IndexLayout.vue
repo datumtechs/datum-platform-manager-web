@@ -2,8 +2,8 @@
 import Header from '@/components/layout/Header.vue'
 import Side from '@/components/layout/Side.vue'
 import { ElContainer, ElHeader } from 'element-plus';
-import { usekeepAliveStamp } from '@/stores'
-const keepAliveStamp = usekeepAliveStamp()
+// import { usekeepAliveStamp } from '@/stores'
+// const keepAliveStamp = usekeepAliveStamp()
 
 </script>
 <template>
@@ -18,9 +18,9 @@ const keepAliveStamp = usekeepAliveStamp()
       <div class="layout-main-wrap">
         <router-view v-slot="{ Component }">
           <transition name="fade-main" mode="out-in">
-            <keep-alive :key="keepAliveStamp.getStamp">
+            <!-- <keep-alive > -->
               <component :is="Component" />
-            </keep-alive>
+            <!-- </keep-alive> -->
           </transition>
         </router-view>
       </div>

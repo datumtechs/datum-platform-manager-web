@@ -30,7 +30,7 @@
     <TaskParamsTransfer :fieldType="[props.fieldType[0], props.fieldType[2]]" :sellectionAlgPsi="true"
       :taskParams="props.taskParams" :disabledData="psiInputOne?.metaData" :key="'output'"
       @update:params="psiInputTwo = $event" :params="psiInputParams.two" :num="2" :orgList="props.orgList" />
-    <div class="flex items-center pt-20px">
+    <div class="flex items-center pt-20px" v-if="!views">
       <el-button round class="h-50px previous" @click="previous">{{ $t('common.previous') }}</el-button>
       <el-button round class="h-50px previous ml-20px" @click="preserv">{{ $t('common.saveAndReturn') }}</el-button>
       <NextButton @click="submit" />
@@ -76,6 +76,10 @@ const props: any = defineProps({
   taskParams: {
     type: Object,
     default: () => ({})
+  },
+   views: {
+    type: Boolean,
+    default: false
   }
 })
 

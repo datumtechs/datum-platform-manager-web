@@ -10,19 +10,19 @@
       </template>
     </Banner>
     <div class="com-main-data-wrap">
-      <el-table :data="tableData" class="mt-30px com-table">
+      <el-table v-tableTooltip :data="tableData" class="mt-30px com-table">
         <el-table-column type="index" width="80">
           <template #header>{{ t('common.num') }}</template>
         </el-table-column>
-        <el-table-column show-overflow-tooltip prop="taskId" :label="t('myData.taskID')" />
-        <el-table-column show-overflow-tooltip prop="status" :label="t('workflow.state')">
+        <el-table-column :class-name="'show-ellipsis-tooltip'" prop="taskId" :label="t('myData.taskID')" />
+        <el-table-column :class-name="'show-ellipsis-tooltip'" prop="status" :label="t('workflow.state')">
           <template #default="{ row }">
             {{ useWorkflowDetailsMap(row.status) || '-' }}
           </template>
         </el-table-column>
-        <el-table-column show-overflow-tooltip prop="taskType" :label="t('workflow.taskSteps')">
+        <el-table-column :class-name="'show-ellipsis-tooltip'" prop="taskType" :label="t('workflow.taskSteps')">
         </el-table-column>
-        <el-table-column show-overflow-tooltip prop="createTime"
+        <el-table-column :class-name="'show-ellipsis-tooltip'" prop="createTime"
           :label="t('computeTask.taskStartTime')">
           <template #default="scope">{{ useFormatTime(scope.row.createTime) }}</template>
         </el-table-column>

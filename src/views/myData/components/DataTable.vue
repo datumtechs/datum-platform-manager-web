@@ -1,24 +1,24 @@
 <template>
-  <el-table v-loading="dataLoading" :data="props.data" class="mt-30px com-table">
+  <el-table v-tableTooltip v-loading="dataLoading" :data="props.data" class="mt-30px com-table">
     <el-table-column type="index" width="100">
       <template #header>{{ t('common.num') }}</template>
     </el-table-column>
-    <el-table-column show-overflow-tooltip prop="metaDataName" :label="t('myData.dataName')" />
-    <el-table-column show-overflow-tooltip prop="nodeName" :label="t('myData.dataProvider')" />
-    <el-table-column show-overflow-tooltip prop="tokenName" :label="t('myData.credentialName')" />
-    <el-table-column show-overflow-tooltip :label="t('auth.holdQuantity')">
+    <el-table-column :class-name="'show-ellipsis-tooltip'" prop="metaDataName" :label="t('myData.dataName')" />
+    <el-table-column :class-name="'show-ellipsis-tooltip'" prop="nodeName" :label="t('myData.dataProvider')" />
+    <el-table-column :class-name="'show-ellipsis-tooltip'" prop="tokenName" :label="t('myData.credentialName')" />
+    <el-table-column :class-name="'show-ellipsis-tooltip'" :label="t('auth.holdQuantity')">
       <template #default="{ row }">
         <div v-if="row.authorizeBalance">{{ useExchangeFrom(row.tokenBalance) }}</div>
         <div v-else>-</div>
       </template>
     </el-table-column>
-    <el-table-column show-overflow-tooltip :label="t('workflow.authorizeBalance')">
+    <el-table-column :class-name="'show-ellipsis-tooltip'" :label="t('workflow.authorizeBalance')">
       <template #default="{ row }">
         <div v-if="row.authorizeBalance">{{ useExchangeFrom(row.authorizeBalance) }}</div>
         <div v-else>-</div>
       </template>
     </el-table-column>
-    <!-- <el-table-column show-overflow-tooltip prop="tokenPrice" :label="t('myData.price')" /> -->
+    <!-- <el-table-column :class-name="'show-ellipsis-tooltip'" prop="tokenPrice" :label="t('myData.price')" /> -->
     <el-table-column :label="t('common.actions')" :width="300">
       <template #default="scope">
         <el-button type="text" circle @click="purchase(scope.row)">{{ t('myData.purchase') }}

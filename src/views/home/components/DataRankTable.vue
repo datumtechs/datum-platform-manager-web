@@ -1,9 +1,9 @@
 <template>
     <div class="mt-20px flex-1 border-1 border-solid border-[#EEEEEE] px-40px pt-27px pb-43px">
-        <el-table :row-style="{ height: '50px' }" class="home-data-table" :data="tableData"
+        <el-table v-tableTooltip :row-style="{ height: '50px' }" class="home-data-table" :data="tableData"
             style="width: 100%">
             <el-table-column type="index" :label="t('home.ranking')" width="80" />
-            <el-table-column show-overflow-tooltip prop="tokenName"
+            <el-table-column :class-name="'show-ellipsis-tooltip'" prop="tokenName"
                 :label="t('myData.credentialName')" />
             <el-table-column prop="tokenUsed" :label="t('home.usage')" width="100" />
         </el-table>

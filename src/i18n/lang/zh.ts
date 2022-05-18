@@ -251,7 +251,7 @@ const zh = {
     viewDetails: "查看详情",
     tokenNum: '剩余',
     authorizeBalance: '已授权数量',
-    placeholder: "搜索工作流名称",
+    placeholder: "搜索工作流ID、名称关键字",
     taskSteps: "任务步骤",
     viewTaskResults: "查看任务结果"
   },

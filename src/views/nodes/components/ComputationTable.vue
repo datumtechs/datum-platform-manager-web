@@ -1,10 +1,10 @@
 <template>
     <div class="mt-30px">
-        <el-table v-loading="computationsLoading" :header-cell-style="{ height: '50px' }"
+        <el-table v-tableTooltip v-loading="computationsLoading" :header-cell-style="{ height: '50px' }"
             :row-style="{ height: '70px' }" :data="tableData" highlight-current-row>
             <el-table-column type="index" :label="t('common.num')" :index="indexMethod"
                 width="80" />
-            <el-table-column show-overflow-tooltip prop="id" :label="t('myData.taskID')" />
+            <el-table-column :class-name="'show-ellipsis-tooltip'" prop="id" :label="t('myData.taskID')" />
             <el-table-column :label="t('node.capabilityInTask')">
                 <template #default="{ row }">
                     <p v-for=" role in useRole(row)" :key="role">{{ t(`role.${role}`) }}</p>

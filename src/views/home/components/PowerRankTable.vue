@@ -1,8 +1,8 @@
 <template>
     <div class="flex-1 ml-60px">
-        <el-table size="large" :data="props.tableData" style="width: 100%">
+        <el-table v-tableTooltip size="large" :data="props.tableData" style="width: 100%">
             <el-table-column type="index" :label="t('home.ranking')" :index="indexMethod" width="80" />
-            <el-table-column show-overflow-tooltip prop="nodeName" :label="t('home.nodeName')" />
+            <el-table-column :class-name="'show-ellipsis-tooltip'" prop="nodeName" :label="t('home.nodeName')" />
             <el-table-column prop="computingPowerRatio" :label="t('home.powerRatio')" width="100">
                 <template #default="{ row }">
                     <div>

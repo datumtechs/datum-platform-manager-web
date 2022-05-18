@@ -1,18 +1,18 @@
 <template>
-    <el-table :data="props.data" class="mt-40px com-table _com_el-table-wrap">
+    <el-table v-tableTooltip :data="props.data" class="mt-40px com-table _com_el-table-wrap">
         <el-table-column type="index" width="80" :index="indexMethod">
             <template #header>{{ t('common.num') }}</template>
         </el-table-column>
-        <el-table-column prop="workflowName" show-overflow-tooltip
+        <el-table-column prop="workflowName" :class-name="'show-ellipsis-tooltip'"
             :label="t('workflow.workflowName')" />
-        <el-table-column show-overflow-tooltip prop="lastRunTime"
+        <el-table-column :class-name="'show-ellipsis-tooltip'" prop="lastRunTime"
             :label="t('workflow.latestRunningTime')">
             <template #default="scope">{{ scope.row.lastRunTime &&
                     useFormatTime(scope.row.lastRunTime) ||
                     '-'
             }}</template>
         </el-table-column>
-        <el-table-column show-overflow-tooltip prop="createTime" :label="t('workflow.creationTime')"
+        <el-table-column :class-name="'show-ellipsis-tooltip'" prop="createTime" :label="t('workflow.creationTime')"
             :width="180">
             <template #default="scope">{{ useFormatTime(scope.row.createTime) }}</template>
         </el-table-column>

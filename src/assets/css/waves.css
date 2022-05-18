@@ -25,3 +25,10 @@
   transition: opacity .6s ease-out, transform .3s ease-out;
   transition: opacity .6s ease-out, transform .3s ease-out, -webkit-transform .3s ease-out;
 }
+
+.tooltip-ellipsis-content{
+  width: 100%;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+}

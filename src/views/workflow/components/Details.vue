@@ -10,26 +10,26 @@
       </template>
     </Banner>
     <div class="com-main-data-wrap">
-      <el-table :data="tableData" class="mt-30px com-table">
+      <el-table v-tableTooltip :data="tableData" class="mt-30px com-table">
         <el-table-column type="index" width="80">
           <template #header>{{ t('common.num') }}</template>
         </el-table-column>
-        <el-table-column show-overflow-tooltip prop="workflowVersionName"
+        <el-table-column :class-name="'show-ellipsis-tooltip'" prop="workflowVersionName"
           :label="t('workflow.workflowVersionName')" >
               <template #default="scope">
                   <el-button type="text" circle @click="details(scope.row)">{{scope.row.workflowVersionName }}</el-button>
               </template>
           </el-table-column>
-        <el-table-column show-overflow-tooltip prop="createTime"
+        <el-table-column :class-name="'show-ellipsis-tooltip'" prop="createTime"
           :label="t('workflow.creationTime')">
           <template #default="scope">{{ useFormatTime(scope.row.createTime) }}</template>
         </el-table-column>
-        <el-table-column show-overflow-tooltip prop="status" :label="t('workflow.state')">
+        <el-table-column :class-name="'show-ellipsis-tooltip'" prop="status" :label="t('workflow.state')">
           <template #default="{ row }">
             {{ useWorkflowDetailsMap(row.status) || '-' }}
           </template>
         </el-table-column>
-        <el-table-column show-overflow-tooltip prop="beginTime" :label="t('computeTask.startTime')">
+        <el-table-column :class-name="'show-ellipsis-tooltip'" prop="beginTime" :label="t('computeTask.startTime')">
           <template #default="{ row }">
             <div v-if="row.beginTime">
               {{ useFormatTime(row.beginTime) }}
@@ -39,7 +39,7 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column show-overflow-tooltip prop="endTime" :label="t('workflow.timeUse')"
+        <el-table-column :class-name="'show-ellipsis-tooltip'" prop="endTime" :label="t('workflow.timeUse')"
           :width="180">
           <template #default="{ row }">
             <div v-if="row.beginTime">
@@ -161,6 +161,7 @@ const details = (row:any)=>{
         name: 'wizardMode', params: {
           workflowId: row.workflowId,
           workflowVersion: row.workflowVersion,
+          views:'view'
         }
       })
       return
@@ -169,6 +170,7 @@ const details = (row:any)=>{
     name: 'expertModel', params: {
         workflowId: row.workflowId,
         workflowVersion: row.workflowVersion,
+        views:'view'
     }
   })
 }

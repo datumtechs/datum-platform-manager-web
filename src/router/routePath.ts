@@ -156,14 +156,14 @@ export default [
     // component: () => import('@/views/task/CreateTask.vue'),
     component: () => import('@/views/task/index.vue'),
     children: [{
-      path: '/createWorkFlow/wizardMode/:workflowId?/:workflowVersion?/:views?',
+      path: '/createWorkFlow/wizardMode/:views?/:workflowId?/:workflowVersion?',
       name: "wizardMode",
       meta: {
         label: 'menu.createTask',
       },
       component: () => import('@/views/task/WizardMode.vue'),
     }, {
-      path: '/createWorkFlow/expertModel/:workflowId?/:workflowVersion?/:workflowName?/:isSettingCompleted?/:views?',
+      path: '/createWorkFlow/expertModel/:views?/:workflowId?/:workflowVersion?/:workflowName?/:isSettingCompleted?',
       name: "expertModel",
       meta: {
         label: 'menu.createTask'

@@ -1,13 +1,13 @@
 <template>
-  <el-table :data="props.data" class="mt-30px com-table _com_el-table-wrap">
+  <el-table v-tableTooltip :data="props.data" class="mt-30px com-table _com_el-table-wrap">
     <el-table-column type="index" width="100">
       <template #header>{{ t('common.num') }}</template>
     </el-table-column>
-    <el-table-column show-overflow-tooltip prop="metaDataName" :label="t('myData.dataName')" />
-    <el-table-column show-overflow-tooltip prop="nodeName" :label="t('myData.dataProvider')" />
-    <el-table-column show-overflow-tooltip prop="tokenName" :label="t('myData.credentialName')" />
-    <el-table-column show-overflow-tooltip prop="tokenPrice" :label="t('myData.price')" />
-    <el-table-column show-overflow-tooltip prop="Trading" :label="t('myData.Trading')"
+    <el-table-column :class-name="'show-ellipsis-tooltip'" prop="metaDataName" :label="t('myData.dataName')" />
+    <el-table-column :class-name="'show-ellipsis-tooltip'" prop="nodeName" :label="t('myData.dataProvider')" />
+    <el-table-column :class-name="'show-ellipsis-tooltip'" prop="tokenName" :label="t('myData.credentialName')" />
+    <el-table-column :class-name="'show-ellipsis-tooltip'" prop="tokenPrice" :label="t('myData.price')" />
+    <el-table-column :class-name="'show-ellipsis-tooltip'" prop="Trading" :label="t('myData.Trading')"
       :width="180" />
     <el-table-column :label="t('common.actions')" :fixed="'right'" :width="330">
       <template #default="scope">
