@@ -29,7 +29,8 @@
 
         <el-table-column :label="t('common.actions')" :fixed="'right'">
           <template #default="{ row }">
-            <el-button type="text" circle @click="details(row)">{{ t('workflow.viewTaskResults') }}
+            <el-button type="text" v-if="row.status === 2 || row.status === 3" circle
+              @click="details(row)">{{ t('workflow.viewTaskResults') }}
             </el-button>
           </template>
         </el-table-column>
@@ -45,8 +46,7 @@
 </template>
 <script lang="ts" setup>
 import { getWorkflowRunTaskList } from '@/api/workflow'
-import { useFormatTime, useDuring, useWorkflowDetailsMap } from '@/hooks'
-import { startWorkFlow } from '@/api/workflow'
+import { useFormatTime, useWorkflowDetailsMap } from '@/hooks'
 const showDialog = ref(false)
 const route = useRoute()
 const router = useRouter()
@@ -73,7 +73,7 @@ const query = () => {
 const details = (row: any) => {
   router.push({
     name: 'TaskResult', query: {
-      hasModel: 1,
+      hasModel: row.outputModel,
     }, params: {
       taskId: row.taskId
     }

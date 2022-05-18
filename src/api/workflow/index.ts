@@ -86,11 +86,18 @@ export const copyWorkflow = (data: any): Promise<any> => {
   })
 }
 
-
 export const getWorkflowRunTaskList = (params: any): Promise<any> => {
   return http({
     method: 'GET',
     url: '/flow/workflow/getWorkflowRunTaskList',
+    params
+  })
+}
+
+export const getWorkflowRunTaskResult = (params: any): Promise<any> => {
+  return http({
+    method: 'GET',
+    url: '/flow/workflow/getWorkflowRunTaskResult',
     params
   })
 }

@@ -4,14 +4,16 @@
       <p class="text-12px text-color-[#999999] leading-17px">{{ t('task.field') }}</p>
       <div class="columns mt-5px">
         <div v-for="(item, index) in list" :key="index" class="columns-item"
-          :class="{ 'columns-item-active': columnIndex === index, 'view-model': viewModel === 'view' }"
+          :class="{ 'columns-item-active': columnIndex === index, 'view-model': isReadonly }"
           @click="handleColumn(index)">{{ item.columnName }}</div>
       </div>
     </div>
     <div class="arrow">
       <div class="arrow-icon" @click="handleTransfer('ids', ids.length)">
-        <img v-if="ids.length" src="@/assets/images/task/left-arrow.png" class="normal-arrow" />
-        <img v-else src="@/assets/images/task/right-arrow.png" class="normal-arrow" />
+        <img v-if="ids.length" src="@/assets/images/task/left-arrow.png" class="normal-arrow"
+          :class="{ 'view-model': isReadonly }" />
+        <img v-else src="@/assets/images/task/right-arrow.png" class="normal-arrow"
+          :class="{ 'view-model': isReadonly }" />
       </div>
 
       <div v-if="isLabels && !isPSIModel" class="arrow-icon"
@@ -29,7 +31,7 @@
     <div class="result">
       <p class="text-12px text-color-[#999999] leading-17px">{{ t('task.idColumn') }}</p>
       <div class="ids mt-5px w-160px h-40px">
-        <div class="item text-12px p-4px" :class="{ 'view-model': viewModel === 'view' }">{{
+        <div class="item text-12px p-4px" :class="{ 'view-model': isReadonly }">{{
             ids.length ?
               ids[0].columnName : ''
         }}</div>
@@ -40,17 +42,16 @@
         <p class="text-12px text-color-[#999999] leading-17px mt-10px mb-5px" v-else>{{
             t('expert.labelOptionals')
         }}</p>
-        <div class="label-item item text-12px p-4px"
-          :class="{ 'view-model': viewModel === 'view' }">{{ labels.length ?
+        <div class="label-item item text-12px p-4px" :class="{ 'view-model': isReadonly }">{{
+            labels.length ?
               labels[0].columnName : ''
-          }}</div>
+        }}</div>
       </div>
       <div v-if="!isPSIModel" class="feature">
         <p class="text-12px text-color-[#999999] leading-17px mt-10px mb-5px">{{ t('task.feature')
         }}
         </p>
-        <div class="features"
-          :class="{ 'features-auto': !isLabels, 'view-model': viewModel === 'view' }">
+        <div class="features" :class="{ 'features-auto': !isLabels, 'view-model': isReadonly }">
           <div v-for="(item, index) in features" :key="index" class="text-12px"
             :class="['features-item', featureIndex === index ? 'features-item-active' : '']"
             @click="handleFeature(index)">{{ item.columnName }}</div>
@@ -89,9 +90,9 @@ const props: any = defineProps({
     type: Object,
     default: () => { }
   },
-  viewModel: {
-    type: String,
-    default: 'edit'
+  isReadonly: {
+    type: Boolean,
+    default: false
   }
 })
 
@@ -170,7 +171,8 @@ const types = reactive({
 })
 
 const handleTransfer = (type: any, methods?: any) => {
-  if (props.viewModel.value === 'view') return
+  if (props.isReadonly) return
+  if (props.viewModel === 'view') return
   if (!list.value[columnIndex.value]) {
     columnIndex.value = 0
   }
@@ -237,6 +239,8 @@ defineExpose({
         &.columns-item-active {
           background: #dcdfe6;
         }
+
+
       }
 
       .columns-item:hover {
@@ -321,6 +325,11 @@ defineExpose({
         height: 222px;
       }
     }
+  }
+
+  .view-model {
+    cursor: not-allowed !important;
+    color: #c0c4cc !important;
   }
 }
 </style>

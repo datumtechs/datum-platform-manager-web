@@ -18,9 +18,9 @@ const keepAliveStamp = usekeepAliveStamp()
       <div class="layout-main-wrap">
         <router-view v-slot="{ Component }">
           <transition name="fade-main" mode="out-in">
-            <keep-alive :key="keepAliveStamp.getStamp">
-              <component :is="Component" />
-            </keep-alive>
+            <!-- <keep-alive> -->
+            <component :is="Component" />
+            <!-- </keep-alive> -->
           </transition>
         </router-view>
       </div>

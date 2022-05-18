@@ -49,7 +49,8 @@ const zh = {
     to: "至",
     endTime: "结束时间",
     timeFrame: "时间范围",
-    reset: "重置"
+    reset: "重置",
+    computeTimes: "计算次数"
   },
   menu: {
     home: '首页',
@@ -109,7 +110,8 @@ const zh = {
     explorer: '浏览器',
     viewAllComputingTask: '查看所有计算任务',
     usage: '使用量',
-    explorerHint: '输入任务ID或者组织ID'
+    explorerHint: '输入任务ID或者组织ID',
+    dayTrend: "15天隐私计算走势"
   },
   account: {
     walletAddress: '钱包地址',
@@ -249,11 +251,15 @@ const zh = {
     state: "状态",
     timeUse: "用时",
     viewDetails: "查看详情",
-    tokenNum: '剩余',
     authorizeBalance: '已授权数量',
     placeholder: "搜索工作流名称",
     taskSteps: "任务步骤",
-    viewTaskResults: "查看任务结果"
+    viewTaskResults: "查看任务结果",
+    resultUrl: "结果地址",
+    taskCreationTime: "任务创建时间",
+    orgName: '组织名称',
+    orgID: "组织ID",
+    fileUrl: '文件路径',
   },
   credentials: {
     circulation: "总发布量",
@@ -281,7 +287,7 @@ const zh = {
     taskEvents: "任务事件",
     taskStartTime: "任务发起时间",
     computingStartTime: "计算开始时间",
-    taskEndTime: "任务结束时间",
+    taskEndTime: "结束时间",
     taskResult: "任务结果",
     declaredComputingPowerRequired: "声明的任务所需最低算力",
     capacity: "任务角色",
@@ -294,7 +300,8 @@ const zh = {
     eventContent: "事件内容",
     taskStatus: '任务状态',
     placeholder: '搜索任务ID',
-    modelEvaluation: '模型评估'
+    modelEvaluation: '模型评估',
+    taskName: "任务名称"
   },
   expert: {
     overview: '概览',
@@ -367,6 +374,9 @@ const zh = {
     waitWalletConfirm: '在您的钱包中确认此笔交易',
     confirmAuth: '确认授权',
     confirmCancelAuth: '确认取消授权',
+    authErc20Hint: '工作流每运行一次,包含的数据需要消耗对应的一个凭证.请在此选择授权的凭证',
+    authOrgHint: '工作流的运行需要节点进行统筹安排, 请在此授权节点',
+    authWLatHint: '工作流的运行会消耗一定的手续费,授权后的WLat将作为手续费进行扣除'
   },
   industry: {
     bank: '金融业（银行）',

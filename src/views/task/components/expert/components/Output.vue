@@ -4,7 +4,8 @@
         <p class="mt-30px">{{ t('expert.saveNotes') }}</p>
         <div v-if="workflowNodeSenderIdentityId">
             <p class="mt-30px text-color-[#333] font-bold">{{ t('role.resultConsumer') }}</p>
-            <el-checkbox-group v-model="checkList" :disabled="isSettingCompleted"
+            <el-checkbox-group v-model="checkList"
+                :disabled="props.isSettingCompleted || props.isReadonly"
                 class="mt-10px flex flex-col" @change="handleCheckboxChange">
                 <el-checkbox v-for="(item, index) in orgList" :key="index" :label="item.identityId"
                     :disabled="item.identityId === workflowNodeSenderIdentityId">
@@ -21,7 +22,6 @@
 
 import { useExpertMode } from '@/stores'
 const { t } = useI18n()
-const viewModel = ''
 const checkList: any = ref([])
 
 const workflowNodeSenderIdentityId = computed(() => useExpertMode().getWorkflowNodeSender)
@@ -33,12 +33,20 @@ const props = defineProps({
     isSettingCompleted: {
         type: Boolean,
         default: false
+    },
+    isReadonly: {
+        type: Boolean,
+        default: false
     }
 })
 
 watch(() => workflowNodeSenderIdentityId.value, (newV, oldV) => {
     console.log('触发了watch,oldV:', oldV);
     initData(oldV);
+})
+
+watch(orgList, () => {
+    initData()
 })
 
 const initData = (id?: string) => {
@@ -51,11 +59,6 @@ const initData = (id?: string) => {
         list.splice(list.findIndex((item: any) => item === id), 1)
     }
     return checkValue(list)
-    // orgList.value.map((item: any) => {
-    //     if (item.identityId === workflowNodeSenderIdentityId.value) {
-    //         checkList.value.push(item.identityId)
-    //     }
-    // })
 }
 const checkValue = (list: any) => {
     orgList.value.map((item: any) => {
@@ -70,10 +73,6 @@ const handleCheckboxChange = () => {
     useExpertMode().setOutputVoList(checkList.value)
 }
 
-onMounted(() => {
-    console.log('重新渲染了output');
-    initData();
-})
 </script>
 <style scoped lang='scss'>
 </style>

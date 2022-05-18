@@ -7,7 +7,7 @@
             <SwiperSlide
                class="slide cursor-pointer px-20px py-16px w-176px h-178px mr-20px border-1 border-solid border-[#EEEEEE]"
                v-for="box in taskList" :key="box.id">
-               <span v-if="true" class="slide-expert-label">
+               <span v-if="box.type === 1" class="slide-expert-label">
                   {{ t('task.expertMode') }}
                </span>
                <span v-else class="slide-wizard-label">
@@ -86,7 +86,8 @@ const getGlobalTask = () => {
          arr.forEach((item: any) => {
             const nameArr = item.taskName.split('_')
             item.algo = nameArr[2]
-            item.label = nameArr[3]
+            item.type = nameArr[3]
+            item.label = nameArr[4]
          })
          taskList.value = arr
       }

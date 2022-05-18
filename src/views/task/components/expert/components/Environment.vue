@@ -5,15 +5,15 @@
             <p>{{ t('expert.minimumResource') }}</p>
             <div class="mt-20px">
                 <p class="mb-10px">{{ t('common.cpu') }}</p>
-                <el-select class="w-full" v-model="props.envObj.costCpu" @change="handleCpuChangeFn"
-                    placeholder="Select" size="large">
+                <el-select :disabled="isReadonly" class="w-full" v-model="props.envObj.costCpu"
+                    @change="handleCpuChangeFn" placeholder="Select" size="large">
                     <el-option v-for="item in cpuOptions" :key="item.value" :label="item.label"
                         :value="item.value" />
                 </el-select>
             </div>
             <div class="mt-20px">
                 <p class="mb-10px">{{ t('common.memory') }}</p>
-                <el-input min="1" type="number" class="no-number"
+                <el-input :disabled="isReadonly" min="1" type="number" class="no-number"
                     oninput="value=value.replace(/[^0-9]/g,'')" @change="handleMemoryChangeFn"
                     v-model.trim="props.envObj.costMem">
                     <template #suffix>
@@ -23,7 +23,7 @@
             </div>
             <div class="mt-20px">
                 <p class="mb-10px">{{ t('common.bandwidth') }}</p>
-                <el-input min="1" type="number" class="no-number"
+                <el-input :disabled="isReadonly" min="1" type="number" class="no-number"
                     oninput="value=value.replace(/[^0-9]/g,'')" @change="handleBandwidthChangeFn"
                     v-model.trim="props.envObj.costBandwidth">
 
@@ -35,7 +35,7 @@
         </div>
         <div class="mt-30px">
             <p class="mb-10px">{{ t('expert.longestComputingTime') }}</p>
-            <el-input min="1" type="number" class="no-number"
+            <el-input :disabled="isReadonly" min="1" type="number" class="no-number"
                 oninput="value=value.replace(/[^0-9]/g,'')" @change="handleRuntimeChangeFn"
                 v-model.trim="props.envObj.runTime">
                 <template #suffix>
@@ -54,6 +54,10 @@ const props = defineProps({
     envObj: {
         type: Object,
         default: () => { }
+    },
+    isReadonly: {
+        type: Boolean,
+        default: false
     }
 })
 

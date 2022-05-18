@@ -1,7 +1,7 @@
 <template>
     <div class="flex-1 py-20px px-30px">
         <div class="btn-group">
-            <el-button :disabled="btn.value === 'view' && !props.isSettingCompleted"
+            <el-button :disabled="!props.isSettingCompleted || !props.isReadonly"
                 v-for="btn in btnList" round @click="handleClick(btn.value)">{{ btn.label }}
             </el-button>
         </div>
@@ -68,6 +68,10 @@ const props = defineProps({
     isSettingCompleted: {
         type: Boolean,
         default: false
+    },
+    isReadonly: {
+        type: Boolean,
+        default: false
     }
 })
 
@@ -89,11 +93,6 @@ const btnList = computed(() => [
         id: 1,
         value: 'save',
         label: t('common.save')
-    },
-    {
-        id: 2,
-        value: 'view',
-        label: t('common.viewEvent')
     }
 ])
 

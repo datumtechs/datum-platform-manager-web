@@ -1,5 +1,7 @@
 <template>
-    <div class="p-20px" id="container"></div>
+    <div class="p-20px" id="container">
+        <p class="chart-title">{{ t('home.dayTrend') }}</p>
+    </div>
 </template>
 
 <script setup lang='ts'>
@@ -7,8 +9,7 @@ import { Chart } from '@antv/g2';
 import { getTaskTrend } from '@/api/home'
 import { useFormatDay } from '@/hooks'
 
-
-const chartData = ref([])
+const { t } = useI18n()
 const initCharts = (data: any) => {
     const chart = new Chart({
         container: 'container',
@@ -36,6 +37,12 @@ const initCharts = (data: any) => {
     chart.tooltip({
         showCrosshairs: true,
         shared: true,
+        itemTpl: `
+        <div style="margin-bottom: 10px;list-style:none;">
+            <span style="background-color:{color};" class="g2-tooltip-marker"></span>
+            ${t('common.computeTimes')} : {value}
+        </div>
+        `
     });
 
     // chart.axis('statsTime', {
@@ -91,4 +98,13 @@ onMounted(() => {
 </script>
 
 <style scoped lang='scss'>
+#container {
+    position: relative;
+
+    .chart-title {
+        position: absolute;
+        font-family: DINPro-Bold, Ali-Bold;
+        font-size: 16px;
+    }
+}
 </style>

@@ -8,8 +8,8 @@
             <el-space class="mb-10px px-20px" v-for="(item, index) in props.codeObj.variableList"
                 :key="item.varKey">
                 <p class="w-140px">{{ item.varKey }}</p>
-                <el-input class="round-input" @change="handleVariable($event, index)"
-                    v-model="item.varValue" />
+                <el-input :disabled="isReadonly" class="round-input"
+                    @change="handleVariable($event, index)" v-model="item.varValue" />
             </el-space>
         </div>
         <div v-if="props.codeObj?.variableList.length > 0" class="h-20px mobile-bar"
@@ -17,7 +17,7 @@
             <i></i>
             <i></i>
         </div>
-        <div class="w-340px bg-primary m-20px code-context-box">
+        <div class="w-350px bg-primary m-auto my-10px p-10px code-context-box">
             <p class="text-color-[#333] font-bold pb-20px code-context-box-title">
                 <span>{{ t('expert.algoCode') }}</span>
                 <el-icon @click="zoomToDialog" class="cursor-pointer">
@@ -45,6 +45,10 @@ const props = defineProps({
     codeObj: {
         type: Object,
         default: () => { }
+    },
+    isReadonly: {
+        type: Boolean,
+        default: false
     }
 })
 

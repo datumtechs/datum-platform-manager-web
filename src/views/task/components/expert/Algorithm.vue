@@ -30,12 +30,15 @@ const props = defineProps({
     isSettingCompleted: {
         type: Boolean,
         default: false
-    }
+    },
+    isReadonly: {
+        type: Boolean,
+        default: false
+    },
 })
 
 const dragstart = (e: any, item: any) => {
     if (props.isSettingCompleted) return
-    // if (this.viewModel === 'view') return
     useExpertMode().setDotted(true)
 }
 
@@ -54,7 +57,7 @@ watch(isInEdit, () => {
 })
 
 const dragend = async (e: any, item: any) => {
-    if (props.isSettingCompleted) return
+    if (props.isSettingCompleted || props.isReadonly) return
     useExpertMode().setDotted(false)
     const inBoxFlag = isBoxInStage(e)
     if (!inBoxFlag) return
@@ -79,7 +82,7 @@ const dragend = async (e: any, item: any) => {
                     dataInputList: [],
                     inputModel: item.alg.inputModel,
                     model: {},
-                    isPsi: true
+                    isPsi: item.alg.algorithmId === 1001 ? false : true
                 },
                 nodeOutput: {
                     identityId: [],

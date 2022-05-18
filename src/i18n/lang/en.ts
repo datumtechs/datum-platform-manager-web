@@ -49,7 +49,8 @@ const en = {
     to: "to",
     endTime: "End Time",
     timeFrame: "time Frame",
-    reset: "Reset"
+    reset: "Reset",
+    computeTimes: "Compute times"
   },
   menu: {
     home: 'Home',
@@ -109,7 +110,8 @@ const en = {
     explorer: 'Explorer',
     viewAllComputingTask: 'View all computing tasks',
     usage: 'Usage',
-    explorerHint: 'Enter task ID or organization ID'
+    explorerHint: 'Enter task ID or organization ID',
+    dayTrend: "15 day privacy computing trend"
   },
   account: {
     walletAddress: 'Wallet Address',
@@ -249,11 +251,15 @@ const en = {
     state: "state",
     timeUse: "Time Use",
     viewDetails: "View Details",
-    tokenNum: '剩余',
     authorizeBalance: 'Authorized quantity',
     placeholder: "Search workflow name",
     taskSteps: "Task Steps",
-    viewTaskResults: "View Task Results"
+    viewTaskResults: "View Task Results",
+    resultUrl: "Result address",
+    taskCreationTime: "Task creation time",
+    orgName: 'Organization Name',
+    orgID: "Organization ID",
+    fileUrl: 'File Path',
   },
   credentials: {
     circulation: "Circulation",
@@ -281,7 +287,7 @@ const en = {
     taskEvents: "Task Events",
     taskStartTime: "Task start time",
     computingStartTime: "Computing start time",
-    taskEndTime: "Task end time",
+    taskEndTime: "End time",
     taskResult: "Task result",
     declaredComputingPowerRequired: "Declared computing power required",
     capacity: "Capacity",
@@ -295,6 +301,7 @@ const en = {
     taskStatus: 'Task Status',
     placeholder: 'Search task ID',
     modelEvaluation: 'Model Evaluation',
+    taskName: "Task name"
   },
   expert: {
     overview: 'Overview',
@@ -367,6 +374,9 @@ const en = {
     waitWalletConfirm: 'Confirm this transaction in your wallet',
     confirmAuth: 'Confirm authorization',
     confirmCancelAuth: 'Confirm cancel authorization',
+    authErc20Hint: 'Each time the workflow runs, the included data needs to consume a corresponding credential. Please select an authorized credential here',
+    authOrgHint: 'The operation of the workflow requires the coordination of the nodes, please authorize the nodes here',
+    authWLatHint: 'The workflow will take a certain amount of computing time, and the authorized WLat will run every time'
   },
   industry: {
     bank: 'Finance (bank)',

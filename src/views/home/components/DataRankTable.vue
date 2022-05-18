@@ -7,7 +7,7 @@
                 :label="t('myData.credentialName')" />
             <el-table-column prop="tokenUsed" :label="t('home.usage')" width="100" />
         </el-table>
-        <div type="primary" class="mt-30px bg-main h-50px rounded-25px">
+        <div type="primary" @click="linkToData" class="mt-30px bg-main h-50px rounded-25px">
             <p class="leading-50px text-[14px] text-[#fff] text-center cursor-pointer">{{
                     t("home.viewAllToken")
             }}</p>
@@ -17,6 +17,8 @@
 
 <script setup lang='ts'>
 import { getDataTokenUsedTop } from '@/api/home'
+
+const router = useRouter()
 const { t } = useI18n()
 const tableData = ref([])
 const queryDataRank = () => {
@@ -34,6 +36,11 @@ watchEffect(() => {
     queryDataRank()
 })
 
+const linkToData = () => {
+    router.push({
+        name: 'marketplace'
+    })
+}
 
 
 </script>

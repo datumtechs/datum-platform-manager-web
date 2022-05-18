@@ -11,10 +11,11 @@
       <PrivateSwitch :mode="'expert'" @change="$router.push({ name: 'wizardMode' })" />
     </div>
     <div class="my-30px flex border-1 border-solid border-color-[#EEE] operation-box">
-      <Algorithm :key="refreshTag" :isSettingCompleted="isSettingCompleted ? true : false" />
-      <Flow :status-list="statusList" :workflow-status="workflowStatus"
-        :isSettingCompleted="isSettingCompleted ? true : false" />
-      <Panel :isSettingCompleted="isSettingCompleted ? true : false" />
+      <Algorithm :isReadonly="isReadonly" :key="refreshTag"
+        :isSettingCompleted="isSettingCompleted" />
+      <Flow :isReadonly="isReadonly" :status-list="statusList" :workflow-status="workflowStatus"
+        :isSettingCompleted="isSettingCompleted" />
+      <Panel :isReadonly="isReadonly" :isSettingCompleted="isSettingCompleted ? true : false" />
     </div>
     <SetNameDialog v-model:show="showDialog" v-if="showDialog" />
   </div>
@@ -39,7 +40,8 @@ const refreshTag = ref(Date.now())
 const workflowId = computed(() => route.params.workflowId)
 const workflowVersion = computed(() => route.params.workflowVersion)
 const isInEdit = computed(() => !!workflowId.value && !!workflowVersion.value)
-const isSettingCompleted = computed(() => route.params.isSettingCompleted)
+const isSettingCompleted = computed(() => route.params.isSettingCompleted === '1')
+const isReadonly = computed(() => route.params.isReadonly === '1')
 const workflowName = computed(() => route.params.workflowName)
 
 watch(() => isInEdit.value, (newV, oldV) => {

@@ -2,7 +2,7 @@
     <div class="my-60px com-main-data-wrap">
         <div class="text-20px font-bold text-color-[#333] flex">
             <p>{{ t('auth.nodeAuth') }}</p>
-            <QuestionMark :content="''">
+            <QuestionMark :content="$t('auth.authOrgHint')">
             </QuestionMark>
         </div>
         <el-table v-loading="nodeTableLoading" class="mt-20px" :data="tableData">

@@ -15,11 +15,12 @@
           <template #header>{{ t('common.num') }}</template>
         </el-table-column>
         <el-table-column show-overflow-tooltip prop="workflowVersionName"
-          :label="t('workflow.workflowVersionName')" >
-              <template #default="scope">
-                  <el-button type="text" circle @click="details(scope.row)">{{scope.row.workflowVersionName }}</el-button>
-              </template>
-          </el-table-column>
+          :label="t('workflow.workflowVersionName')">
+          <template #default="scope">
+            <span class="link-btn" @click="details(scope.row)">{{ scope.row.workflowVersionName
+            }}</span>
+          </template>
+        </el-table-column>
         <el-table-column show-overflow-tooltip prop="createTime"
           :label="t('workflow.creationTime')">
           <template #default="scope">{{ useFormatTime(scope.row.createTime) }}</template>
@@ -125,12 +126,13 @@ const edit = (row: any) => {
   let params = {
     workflowId: row.workflowId,
     workflowVersion: row.workflowVersion,
-    workflowName: row.workflowName,
+    workflowName: row.workflowVersionName,
   }
   if (row.createMode === 1) {
     urlName = 'expertModel'
     params = Object.assign(params, {
-      isSettingCompleted: 1
+      isSettingCompleted: 1,
+      isReadonly: 0
     })
   } else {
     urlName = 'wizardMode'
@@ -144,6 +146,8 @@ const edit = (row: any) => {
 
 const start = async (row: any) => {
   const sign = await web3.signForWallet({ type: 'tx' })
+  console.log(sign);
+
   if (sign) {
     const res = await startWorkFlow({
       sign,
@@ -155,20 +159,23 @@ const start = async (row: any) => {
 
 }
 
-const details = (row:any)=>{
-  if(row.createMode == 2){
+const details = (row: any) => {
+  if (row.createMode == 2) {
     router.push({
-        name: 'wizardMode', params: {
-          workflowId: row.workflowId,
-          workflowVersion: row.workflowVersion,
-        }
-      })
-      return
+      name: 'wizardMode', params: {
+        workflowId: row.workflowId,
+        workflowVersion: row.workflowVersion,
+      }
+    })
+    return
   }
   router.push({
     name: 'expertModel', params: {
-        workflowId: row.workflowId,
-        workflowVersion: row.workflowVersion,
+      workflowId: row.workflowId,
+      workflowVersion: row.workflowVersion,
+      workflowName: row.workflowVersionName,
+      isSettingCompleted: 1,
+      isReadonly: 1
     }
   })
 }

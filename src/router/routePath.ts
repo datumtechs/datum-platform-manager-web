@@ -120,7 +120,7 @@ export default [
     path: '/computeTask',
     name: "computeTask",
     meta: {
-      show: ['side'],
+      show: ['home', 'side'],
       label: 'menu.computeTask',
       icon: "side-computeTask-icon"
     },
@@ -163,7 +163,7 @@ export default [
       },
       component: () => import('@/views/task/WizardMode.vue'),
     }, {
-      path: '/createWorkFlow/expertModel/:workflowId?/:workflowVersion?/:workflowName?/:isSettingCompleted?/:views?',
+      path: '/createWorkFlow/expertModel/:workflowId?/:workflowVersion?/:workflowName?/:isSettingCompleted?/:isReadonly?/:views?',
       name: "expertModel",
       meta: {
         label: 'menu.createTask'

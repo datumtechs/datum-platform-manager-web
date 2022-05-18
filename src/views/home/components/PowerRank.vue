@@ -14,7 +14,7 @@
               <!-- <p class="w-140px ellipse" v-if="box.title === 'totalCore'">{{ box.value }}</p> -->
               <CountUp v-if="box.title !== 'totalCore'" class="w-150px ellipse" :options="{
                 decimalPlaces: 2, useGrouping: true
-              }" :end-val="Number(useSizeWithUnit(box.value).value)">
+              }" :end-val="useSizeWithUnit(box.value).value || 0">
                 <template #suffix>
                   <span>{{
                       useSizeWithUnit(box.value).unit
@@ -22,7 +22,7 @@
                 </template>
               </CountUp>
               <CountUp v-else class="w-150px ellipse" :options="{ useGrouping: true }"
-                :end-val="Number(box.value)" />
+                :end-val="box.value || 0" />
             </div>
             <p class="mt-7px text-[14px] text-shallow">{{ box.label }}</p>
           </div>
@@ -130,7 +130,7 @@ const queryPowerRank = () => {
     if (code === 10000) {
       const newData = JSON.parse(JSON.stringify(data))
       const env = newData.slice(0, 3)
-      tableData.value = newData.slice(3)
+      tableData.value = newData
       rankList.value.forEach((rank, index) => {
         rank.ratio = (env[index].computingPowerRatio / 100) + '%'
         rank.nodeName = env[index].nodeName

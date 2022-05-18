@@ -4,8 +4,8 @@
         <div class="mt-40px">
             <p class="text-color-[#333] font-medium">{{ t('role.taskSponsor') }}</p>
             <el-select v-model="taskSender" class="mt-10px w-full" size="small"
-                :disabled="isSettingCompleted" filterable :placeholder="t('task.selectSponsor')"
-                @change="handleSenderChange">
+                :disabled="props.isSettingCompleted || props.isReadonly" filterable
+                :placeholder="t('task.selectSponsor')" @change="handleSenderChange">
                 <el-option v-for="item in orgList" :key="item.identityId" :label="item.nodeName"
                     :value="item.identityId"></el-option>
             </el-select>
@@ -14,13 +14,14 @@
             <p class="mt-40px text-color-[#333] font-medium">{{ t('expert.model') }}</p>
             <p class="mt-10px">
                 <el-select v-if="curNodeIndex !== 0" class="w-full" v-model="modelValue"
-                    size="small" :disabled="isSettingCompleted" filterable
+                    size="small" :disabled="props.isSettingCompleted || props.isReadonly" filterable
                     :placeholder="t('expert.selectModel')" @change="handleModelChange">
                     <el-option v-for="(item, index) in modelOptions" :key="index"
                         :label="item.fileName" :value="item.modelId"></el-option>
                 </el-select>
                 <el-cascader v-else class="w-full" :key="modelKey" v-model="modelValue"
-                    :disabled="isSettingCompleted" size="small" :span="12" :props="{
+                    :disabled="props.isSettingCompleted || props.isReadonly" size="small" :span="12"
+                    :props="{
                         // checkStrictly: true,
                         label: 'name', // label value
                         value: 'code', // 指定选项的值为选项对象的某个属性值
@@ -41,8 +42,8 @@
             <option v-for="item in orgs" :key="item.identityId" :label="item.label" :value="item.value"></option>
                 </el-select>-->
             <el-cascader class="w-full mt-10px" :key="cascaderKey[index]"
-                v-model="inputValue[index]" :disabled="isSettingCompleted" size="small" :span="12"
-                :props="{
+                v-model="inputValue[index]" :disabled="props.isSettingCompleted || props.isReadonly"
+                size="small" :span="12" :props="{
                     // checkStrictly: true,
                     label: 'name', // label value
                     value: 'code', // 指定选项的值为选项对象的某个属性值
@@ -51,7 +52,7 @@
                         inputLazyLoad(node, resolve, index)
                     }
                 }" @change="e => { changeInputValue(e, index) }"></el-cascader>
-            <Transfer :ref="setItemRef" :view-model="viewModel" :key="index"
+            <Transfer :isReadonly="props.isReadonly" :ref="setItemRef" :key="index"
                 :column-data="columnsList[index]" :transferIndex="index" :algorithm="algorithm"
                 @saveToStore="saveToStore">
             </Transfer>
@@ -70,7 +71,6 @@ import { queryUserDataList, queryDataDetails, getUserModelList } from '@/api/dat
 const { t } = useI18n()
 const modelKey = ref('')
 const taskSender = ref('')
-const viewModel = ref('')
 const algorithm: any = computed(() => useExpertMode().getAlgorithm)
 const orgList: any = computed(() => useExpertMode().getUserOrgList)
 const showModel: any = computed(() => algorithm.value.inputModel)
@@ -91,6 +91,10 @@ let columnsRef: any = []
 
 const props = defineProps({
     isSettingCompleted: {
+        type: Boolean,
+        default: false
+    },
+    isReadonly: {
         type: Boolean,
         default: false
     }
