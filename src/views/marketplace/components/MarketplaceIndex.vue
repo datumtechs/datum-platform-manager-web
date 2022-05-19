@@ -105,6 +105,7 @@ const queryTableData = async () => {
 }
 
 watch(() => pageObj.current, () => {
+    tableData.value = []
     queryTableData()
 });
 

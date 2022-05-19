@@ -49,7 +49,8 @@ export const waves = {
 
 
 export const tableTooltip = {
-  updated(el:any, ) {
+  updated(el: any, binding: any) {
+
     if (el.querySelectorAll) {
       const label:any[] = el.querySelector('.el-table__body-wrapper').querySelectorAll('.show-ellipsis-tooltip')
       label.forEach(v => {
@@ -57,16 +58,12 @@ export const tableTooltip = {
         if (childNode?.children?.length) {//子节点只查询1级
           const nodeChildNode: any[] = [...childNode.children]
           nodeChildNode.forEach((v: any) => {
-            const text = childNode.innerText
-            const app: any = createAppVnode(v, text)
             if(v.querySelector('.tooltip-ellipsis-content')) return
-            if(v)app.mount(v)
+            createAppVnode(v, childNode.innerText)
           })
         } else {
           if(v.querySelector('.tooltip-ellipsis-content')) return
-          const text = childNode?.innerText
-          const app: any = createAppVnode(childNode, text)
-          app.mount(childNode)
+           createAppVnode(childNode, childNode?.innerText)
         }
       })
       //更新思路直接获取  el-tooltip 标签 缺陷导致重复
@@ -74,7 +71,7 @@ export const tableTooltip = {
   }
 }
 
-const createAppVnode = (e: any,text:string): any => {
-  const dom = createApp(h(Dom, {text}, {}))
-  return dom
+const createAppVnode = (el: any,text:string): any => {
+  const app = createApp(h(Dom, {text}, {}))
+  app.mount(el)
 }

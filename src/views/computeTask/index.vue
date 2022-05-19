@@ -94,6 +94,7 @@ const taskStatus = ref('ALL')
 
 const indexMethod = (index: number) => useTableIndex(index, pageObj.current, pageObj.size)
 watch(() => pageObj.current, (newValue, oldValue) => {
+  tableData.value = []
   queryList()
 });
 
@@ -129,6 +130,7 @@ const transferTimestamp = (str: string | undefined) => {
 }
 
 const queryList = () => {
+   loading.value = true
   queryTaskList({
     current: pageObj.current, size: pageObj.size, taskStatus: taskStatus.value,
     keyword: keyword.value,
@@ -141,6 +143,7 @@ const queryList = () => {
       tableData.value = data.items
       pageObj.total = data.total
     }
+     loading.value = false
   }).catch(error => {
     loading.value = false
   })
