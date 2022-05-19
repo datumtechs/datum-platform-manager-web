@@ -336,7 +336,15 @@ const en = {
     algoVariable: 'Algorithm Variable',
     algoCode: 'Algorithm Code',
     frontModel: 'Front node output model',
-    exceedPsiLimit: 'Number of PSI nodes exceeded'
+    exceedPsiLimit: 'Number of PSI nodes exceeded',
+    saveHint: 'Please drag the algorithm combination workflow on the left and complete the input/output information.',
+    saveInputHint: 'Please select the task initiator of the algorithm',
+    saveInputParamsHint: 'Please complete the data provider information of the algorithm task',
+    saveInputLabelHint: 'Please select a label column for the data provider',
+    saveInputFeatureHint: 'Please select the feature column of the data provider',
+    saveInputIDHint: 'Please select the ID column of the data provider',
+    saveSuccessHint: 'Save the workflow successfully, jump to the workflow record page',
+    saveStatusErrorHint: 'The current page state is incorrect and cannot be saved, please try again',
   },
   role: {
     taskSponsor: 'Task sponsor',

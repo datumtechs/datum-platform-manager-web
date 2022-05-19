@@ -2,7 +2,7 @@
     <div class="flex-1 py-20px px-30px">
         <div class="btn-group">
             <el-button :disabled="props.isReadonly" v-for="btn in btnList" round
-                @click="handleClick(btn.value)">{{ btn.label }}
+                @click="handleClick()">{{ btn.label }}
             </el-button>
         </div>
         <div id="mainStage" @dragover.stop="dragover($event)" class="mainStage"
@@ -97,48 +97,42 @@ const btnList = computed(() => [
 ])
 
 const judgeMentParams = () => {
-    console.log(nodeList.value.length);
-    console.log(nodeList.value);
-    console.log(nodeList);
-
     let flag = true
     if (!nodeList.value.length) {
-        ElMessage.error('请拖动左侧算法组合工作流并完善输入/输出等信息')
+        ElMessage.error(t('expert.saveHint'))
         flag = false
     } else {
         for (let i = 0; i < nodeList.value.length; i++) {
-            console.log(i);
-            console.log(nodeList.value[i].workflowNodeInputVoList);
-            if (!nodeList.value[i].workflowNodeInputVoList) { //不存在input 数据方未进行选择
-                ElMessage.error('请完善算法任务的数据提供方信息')
-                flag = false
-                return
-            }
-            if (!nodeList.value[i].workflowNodeSenderIdentityId) {
-                ElMessage.error('请选择算法的任务发起方')
+            if (!nodeList.value[i].nodeInput?.identityId) {
+                ElMessage.error(t('expert.saveInputHint'))
                 flag = false
                 return
             }
 
-            if (nodeList.value[i].workflowNodeInputVoList && nodeList.value[i].workflowNodeInputVoList.length === 0) {
-                ElMessage.error('请完善算法任务的数据提供方信息')
+            if (nodeList.value[i].nodeInput?.dataInputList?.length === 0) { //不存在input 数据方未进行选择
+                ElMessage.error(t('expert.saveInputParamsHint'))
                 flag = false
                 return
             } else {
-                const input = nodeList.value[i].workflowNodeInputVoList
-                for (let j = 0; j < input.length; j++) {
-                    if (input[j].dataColumnIds && input[j].dataColumnIds.length === 0) {
-                        ElMessage.error('请选择数据提供方的自变量')
+                const inputArray = nodeList.value[i].nodeInput.dataInputList
+                if (inputArray.length !== 2) {
+                    ElMessage.error(t('expert.saveInputParamsHint'))
+                    flag = false
+                    return
+                }
+                for (let j = 0; j < inputArray.length; j++) {
+                    if (inputArray[j].dataColumnIds && inputArray[j].dataColumnIds.length === 0) {
+                        ElMessage.error(t('expert.saveInputFeatureHint'))
                         flag = false
                         return
                     }
-                    if (nodeList.value[i].alg.inputModel && j === 0 && !input[j].dependentVariable) {
-                        ElMessage.error('请选择数据提供方的因变量')
+                    if (nodeList.value[i].alg.inputModel && j === 0 && !inputArray[j].dependentVariable) {
+                        ElMessage.error(t('expert.saveInputLabelHint'))
                         flag = false
                         return
                     }
-                    if (!input[j].keyColumn) {
-                        ElMessage.error('请选择数据提供方的ID列')
+                    if (!inputArray[j].keyColumn) {
+                        ElMessage.error(t('expert.saveInputIDHint'))
                         flag = false
                         return
                     }
@@ -147,57 +141,21 @@ const judgeMentParams = () => {
         }
     }
     return flag
-    // else {
-    //     for (let i = 0; i < nodeList.value.length; i++) {
-    //         if (!nodeList.value[i].workflowNodeInputVoList) { //不存在input 数据方未进行选择
-    //             ElMessage.error('请完善算法任务的数据提供方信息')
-    //             flag = false
-    //             break
-    //         }
-    //         if (!nodeList.value[i].workflowNodeSenderIdentityId) {
-    //             ElMessage.error('请选择算法的任务发起方')
-    //             flag = false
-    //             break
-    //         }
-
-    //         if (nodeList.value[i].workflowNodeInputVoList && nodeList.value[i].workflowNodeInputVoList.length === 0) {
-    //             ElMessage.error('请完善算法任务的数据提供方信息')
-    //             flag = false
-    //             break
-    //         } else {
-    //             const input = nodeList.value[i].workflowNodeInputVoList
-    //             for (let j = 1; j < input.length; j++) {
-    //                 if (input[j].dataColumnIds && input[j].dataColumnIds.length === 0) {
-    //                     ElMessage.error('请选择数据提供方的自变量')
-    //                     flag = false
-    //                     break
-    //                 }
-    //                 if (nodeList.value[i].nodeAlgorithmVo.inputModel && j === 0 && !input[j].dependentVariable) {
-    //                     ElMessage.error('请选择数据提供方的因变量')
-    //                     flag = false
-    //                     break
-    //                 }
-    //                 if (!input[j].keyColumn) {
-    //                     ElMessage.error('请选择数据提供方的ID列')
-    //                     flag = false
-    //                     break
-    //                 }
-    //             }
-    //         }
-    //     }
-    // }
 }
 
-const handleClick = (value: string) => {
-    judgeMentParams()
-    // saveWorkflow()
+const handleClick = () => {
+    const flag = judgeMentParams()
+    console.log(flag);
+    if (flag) {
+        saveWorkflow()
+    }
 }
 
 const saveWorkflow = async () => {
     const params = getSaveParams()
     const { code } = await saveWorkflowInExpert(params)
     if (code === 10000) {
-        ElMessage.success('保存工作流成功,跳转工作流记录页面')
+        ElMessage.success(t('expert.saveSuccessHint'))
         router.push({
             name: 'workflow'
         })
@@ -205,7 +163,7 @@ const saveWorkflow = async () => {
 }
 
 const getSaveParams = () => {
-    if (!workflowId || !workflowVersion) return ElMessage.error('当前状态不正确, 无法保存,请重试')
+    if (!workflowId || !workflowVersion) return ElMessage.error(t('expert.saveStatusErrorHint'))
     const params: any = {
         workflowId: workflowId.value,
         workflowVersion: workflowVersion.value,

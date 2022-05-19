@@ -336,7 +336,15 @@ const zh = {
     algoVariable: '算法变量',
     algoCode: '算法代码',
     frontModel: '前置节点输出模型',
-    exceedPsiLimit: '超过PSI节点数量'
+    exceedPsiLimit: '超过PSI节点数量',
+    saveHint: '请拖动左侧算法组合工作流并完善输入/输出等信息',
+    saveInputHint: '请选择算法的任务发起方',
+    saveInputParamsHint: '请完善算法任务的数据提供方信息',
+    saveInputLabelHint: '请选择数据提供方的标签列',
+    saveInputFeatureHint: '请选择数据提供方的特征列',
+    saveInputIDHint: '请选择数据提供方的ID列',
+    saveSuccessHint: '保存工作流成功,跳转工作流记录页面',
+    saveStatusErrorHint: '当前页面状态不正确, 无法保存,请重试',
   },
   role: {
     taskSponsor: '任务发起方',
