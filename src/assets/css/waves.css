@@ -30,5 +30,10 @@
   width: 100%;
   overflow: hidden ;
   text-overflow:ellipsis ;
-  white-space: nowrap ;
+  white-space: nowrap !important;
+  /* position: relative; */
+}
+.ellipsis-content{
+  text-overflow:ellipsis ;
+  white-space: nowrap !important;
 }
