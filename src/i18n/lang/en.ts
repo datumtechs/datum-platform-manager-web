@@ -260,6 +260,9 @@ const en = {
     orgName: 'Organization Name',
     orgID: "Organization ID",
     fileUrl: 'File Path',
+    copySuccess: "Copy successfully",
+    startSuccess: "Start successfully",
+    startWorkflow: "Start Workflow",
   },
   credentials: {
     circulation: "Circulation",
@@ -379,7 +382,7 @@ const en = {
     authorizeToken: 'Authorize token',
     exceedTotal: 'Authorized amount exceeds holding amount',
     waitForConfirm: 'Waiting For Confirmation',
-    waitWalletConfirm: 'Confirm this transaction in your wallet',
+    waitWalletConfirm: 'Confirm this action in your wallet',
     confirmAuth: 'Confirm authorization',
     confirmCancelAuth: 'Confirm cancel authorization',
     authErc20Hint: 'Each time the workflow runs, the included data needs to consume a corresponding credential. Please select an authorized credential here',
@@ -405,6 +408,10 @@ const en = {
     pending: 'pending',
     running: 'running',
     succeed: 'succeed',
+  },
+  exception: {
+    error: 'Exception',
+    4001: 'User denied the action'
   }
 }
 

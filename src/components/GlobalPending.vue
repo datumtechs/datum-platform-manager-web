@@ -1,12 +1,13 @@
 <template>
-    <el-dialog v-model="props.show" :title="title" width="20%" :before-close="handleClose">
+    <el-dialog v-model="props.show" :title="props.title" width="20%" :before-close="handleClose">
         <div class="pending-wrapper">
             <img class="w-100px " src="@/assets/images/global/pending.svg" alt="">
             <div>
                 <p class="text-16px my-10px text-color-[#333] font-medium">{{
                         t('auth.waitForConfirm')
                 }}</p>
-                <p class="text-14px text-color-[#666] leading-22px">{{ content }}</p>
+                <p class="text-14px text-color-[#666] leading-22px" v-html="props.content">
+                </p>
                 <p class="text-14px mb-50px leading-22px">{{ t('auth.waitWalletConfirm') }}</p>
             </div>
         </div>

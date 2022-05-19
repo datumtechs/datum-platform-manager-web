@@ -5,7 +5,7 @@ import useDuring from './useDuring'
 import useFormatTime from './useFormatTime'
 import useRole from './useRole'
 import usePathIncludeNode from './usePathIncludeNode'
-import useGlobalTaskMap,{useWorkflowDetailsMap} from './useGlobalTaskMap'
+import useGlobalTaskMap, { useWorkflowDetailsMap } from './useGlobalTaskMap'
 import useFileType from './useFileType'
 import useAddressDisplay from './useAddressDisplay'
 import { useExchangeFrom, useExchangeTo } from './useDecimal'
@@ -14,10 +14,12 @@ import useObserver from './useObserver'
 import useThousand from './useThousand'
 import useSizeWithUnit from './useSizeWithUnit'
 import useFormatDay from './useFormatDay'
+import useException from './useException'
 
 // const context = require.context('./', false, /\.ts$/)
 
 export {
+    useException,
     useFormatDay,
     useSizeWithUnit,
     useThousand,

@@ -260,6 +260,9 @@ const zh = {
     orgName: '组织名称',
     orgID: "组织ID",
     fileUrl: '文件路径',
+    copySuccess: "复制成功",
+    startSuccess: "启动成功",
+    startWorkflow: "启动工作流",
   },
   credentials: {
     circulation: "总发布量",
@@ -379,7 +382,7 @@ const zh = {
     authorizeToken: '授权凭证',
     exceedTotal: '授权金额超出持有金额',
     waitForConfirm: '等待确认',
-    waitWalletConfirm: '在您的钱包中确认此笔交易',
+    waitWalletConfirm: '在您的钱包中确认此操作',
     confirmAuth: '确认授权',
     confirmCancelAuth: '确认取消授权',
     authErc20Hint: '工作流每运行一次,包含的数据需要消耗对应的一个凭证.请在此选择授权的凭证',
@@ -405,6 +408,10 @@ const zh = {
     pending: '等待中',
     running: '运行中',
     succeed: '成功',
+  },
+  exception: {
+    error: '操作异常',
+    4001: '用户拒绝了该操作'
   }
 }
 
