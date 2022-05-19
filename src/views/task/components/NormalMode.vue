@@ -14,7 +14,7 @@
         </p>
       </div>
     </div>
-    <div style="pointer-events:none">
+    <div :style="{'pointer-events':views ? 'none': 'auto'}">
       <div v-show="activeIndex == 0" class="mt-38px mb-42px ml-6px">
         <PrivateSwitch :mode="'normal'" v-if="!workfolwParams.workflowId"
           @change="$router.push({ name: 'expertModel' })" />

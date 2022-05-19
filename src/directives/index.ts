@@ -53,15 +53,16 @@ export const tableTooltip = {
       const label:any[] = el.querySelectorAll('.show-ellipsis-tooltip')
       label.forEach(v => {
         const childNode = v.childNodes[0]
+        console.log(childNode)
         const dom = document.createElement('div')
-        const app: any = createApp( {
+        const app: any = createApp({
+          // v-model:visible="visible"
               template: `<el-tooltip
                       effect="light"
-                      v-model:visible="visible"
                       content="${childNode.innerText}"
                       placement="top"
                     >
-                      <div class="tooltip-ellipsis-content" @mouseenter="mouseenter" @mouseleave="mouseleave" @dblclick="copy">${childNode.innerText} </div>
+                      <div class="tooltip-ellipsis-content"   @dblclick="copy">${childNode.innerText} </div>
                     </el-tooltip>` ,
               data: ()=>{
                 return {
@@ -69,15 +70,15 @@ export const tableTooltip = {
                 }
               },
           methods: {
-                mouseenter(e:any) {
-                  const box = e.target
-                  if (box.scrollWidth > box.offsetWidth) {
-                    this.visible= true
-                  } else {
-                    console.log("没有出现省略号")
-                  }
-                },
-                mouseleave (){this.visible = false},
+                // mouseenter(e:any) {
+                //   const box = e.target
+                //   if (box.scrollWidth > box.offsetWidth) {
+                //     this.visible= true
+                //   } else {
+                //     console.log("没有出现省略号")
+                //   }
+                // },
+                // mouseleave (){this.visible = false},
                 copy(e: any) {
                   const text: string = e.target.innerText
                     e.target.style.backgroundColor="颜色值"
@@ -94,9 +95,26 @@ export const tableTooltip = {
               }
            
         }).component('el-tooltip', ElTooltip)
-        childNode.innerText = ''
-        app.mount(dom)
-        childNode.appendChild(dom)
+        if (childNode.children.length) {//子节点只查询1级
+          console.log('子节点')
+          const nodeChildNode: any[] = [...childNode.children]
+             
+          // console.log(nodeChildNode)
+          nodeChildNode.forEach((v:any) => {
+            v.innerText = ''
+            app.mount(dom)
+            v.appendChild(dom)
+          })
+        } else {
+          // if (childNode.scrollWidth > childNode.offsetWidth) {
+            childNode.innerText = ''
+            app.mount(dom)
+            childNode.appendChild(dom)
+          // } else {
+          //   console.log(childNode.className)
+          //   if(childNode.className.indexOf('tooltip-ellipsis-content') < 0) childNode.className += ' tooltip-ellipsis-content'
+          // }
+        }
       })
       //更新思路直接获取  el-tooltip 标签 缺陷导致重复
     }

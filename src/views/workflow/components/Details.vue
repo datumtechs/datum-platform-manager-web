@@ -176,8 +176,7 @@ const details = (row: any) => {
       workflowVersion: row.workflowVersion,
       workflowName: row.workflowVersionName,
       isSettingCompleted: 1,
-      isReadonly: 1
-        views:'view'
+      isReadonly: 1,
     }
   })
 }
