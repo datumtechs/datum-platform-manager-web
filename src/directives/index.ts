@@ -98,22 +98,22 @@ export const tableTooltip = {
         if (childNode.children.length) {//子节点只查询1级
           console.log('子节点')
           const nodeChildNode: any[] = [...childNode.children]
-             
-          // console.log(nodeChildNode)
-          nodeChildNode.forEach((v:any) => {
-            v.innerText = ''
-            app.mount(dom)
-            v.appendChild(dom)
+          nodeChildNode.forEach((v: any) => {
+            // if (v.className.indexOf('ellipsis-content') < 0) v.className += ' ellipsis-content'
+            // console.log(v?.scrollWidth , v?.offsetWidth)
+            // if (v?.scrollWidth > v?.offsetWidth) {
+              v.innerText = ''
+              app.mount(dom)
+              v.appendChild(dom)
+            // }
           })
         } else {
-          // if (childNode.scrollWidth > childNode.offsetWidth) {
+          if (childNode.className.indexOf('ellipsis-content') < 0) childNode.className += ' ellipsis-content'
+          if (childNode?.scrollWidth > childNode?.offsetWidth) {
             childNode.innerText = ''
             app.mount(dom)
             childNode.appendChild(dom)
-          // } else {
-          //   console.log(childNode.className)
-          //   if(childNode.className.indexOf('tooltip-ellipsis-content') < 0) childNode.className += ' tooltip-ellipsis-content'
-          // }
+          }
         }
       })
       //更新思路直接获取  el-tooltip 标签 缺陷导致重复
