@@ -1,8 +1,8 @@
 <template>
     <div class="flex-1 py-20px px-30px">
         <div class="btn-group">
-            <el-button :disabled="!props.isSettingCompleted || !props.isReadonly"
-                v-for="btn in btnList" round @click="handleClick(btn.value)">{{ btn.label }}
+            <el-button :disabled="props.isReadonly" v-for="btn in btnList" round
+                @click="handleClick(btn.value)">{{ btn.label }}
             </el-button>
         </div>
         <div id="mainStage" @dragover.stop="dragover($event)" class="mainStage"
@@ -106,9 +106,9 @@ const judgeMentParams = () => {
         ElMessage.error('请拖动左侧算法组合工作流并完善输入/输出等信息')
         flag = false
     } else {
-        for (let i = 1; i < nodeList.value.length; i++) {
+        for (let i = 0; i < nodeList.value.length; i++) {
             console.log(i);
-
+            console.log(nodeList.value[i].workflowNodeInputVoList);
             if (!nodeList.value[i].workflowNodeInputVoList) { //不存在input 数据方未进行选择
                 ElMessage.error('请完善算法任务的数据提供方信息')
                 flag = false
@@ -126,7 +126,7 @@ const judgeMentParams = () => {
                 return
             } else {
                 const input = nodeList.value[i].workflowNodeInputVoList
-                for (let j = 1; j < input.length; j++) {
+                for (let j = 0; j < input.length; j++) {
                     if (input[j].dataColumnIds && input[j].dataColumnIds.length === 0) {
                         ElMessage.error('请选择数据提供方的自变量')
                         flag = false
@@ -148,7 +148,7 @@ const judgeMentParams = () => {
     }
     return flag
     // else {
-    //     for (let i = 1; i < nodeList.value.length; i++) {
+    //     for (let i = 0; i < nodeList.value.length; i++) {
     //         if (!nodeList.value[i].workflowNodeInputVoList) { //不存在input 数据方未进行选择
     //             ElMessage.error('请完善算法任务的数据提供方信息')
     //             flag = false
@@ -189,13 +189,8 @@ const judgeMentParams = () => {
 }
 
 const handleClick = (value: string) => {
-    if (value === 'save') {
-        saveWorkflow()
-    } else {
-        router.push({
-            name: ''
-        })
-    }
+    judgeMentParams()
+    // saveWorkflow()
 }
 
 const saveWorkflow = async () => {

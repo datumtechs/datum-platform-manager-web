@@ -92,6 +92,7 @@ const del = (obj: any) => {
     })
     .catch(() => { })
 }
+
 </script>
 <style lang="scss" scoped>
 </style>

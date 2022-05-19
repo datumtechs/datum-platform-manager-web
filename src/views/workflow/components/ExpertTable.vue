@@ -3,17 +3,18 @@
         <el-table-column type="index" width="80" :index="indexMethod">
             <template #header>{{ t('common.num') }}</template>
         </el-table-column>
-        <el-table-column prop="workflowName" :class-name="'show-ellipsis-tooltip'"
-            :label="t('workflow.workflowName')" />
-        <el-table-column :class-name="'show-ellipsis-tooltip'" prop="lastRunTime"
-            :label="t('workflow.latestRunningTime')">
-            <template #default="scope">{{ scope.row.lastRunTime &&
-                    useFormatTime(scope.row.lastRunTime) ||
-                    '-'
-            }}</template>
+        <el-table-column prop="workflowName" :label="t('workflow.workflowName')" />
+        <el-table-column prop="lastRunTime" :label="t('workflow.latestRunningTime')">
+            <template #default="{ row }">
+                <div v-if="row.lastRunTime">
+                    {{ useFormatTime(row.lastRunTime) }}
+                </div>
+                <div v-else>
+                    -
+                </div>
+            </template>
         </el-table-column>
-        <el-table-column :class-name="'show-ellipsis-tooltip'" prop="createTime" :label="t('workflow.creationTime')"
-            :width="180">
+        <el-table-column prop="createTime" :label="t('workflow.creationTime')" :width="180">
             <template #default="scope">{{ useFormatTime(scope.row.createTime) }}</template>
         </el-table-column>
         <el-table-column :label="t('common.actions')" :fixed="'right'">
