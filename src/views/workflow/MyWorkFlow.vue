@@ -19,11 +19,12 @@
     <div class="com-main-data-wrap main-content">
       <DataTable v-loading="loading" v-if="activekey === 0" :data="tableData" @query="query"
         :size='size' :current="current" />
-      <ExpertTable v-loading="loading" v-else :data="tableData" @query="query" :size='size'
+      <ExpertTable v-loading="loading" v-if="activekey === 1" :data="tableData" @query="query" :size='size'
         :current="current" />
       <div class="flex my-50px justify-center">
         <el-pagination background layout="prev, pager, next" @current-change="(_) => {
           current = _
+          tableData = []
           query()
         }" :total="total" />
       </div>
@@ -106,6 +107,8 @@ const tabsChange = (index: string) => {
   activekey.value = +index
   createMode.value = index == '0' ? 2 : 1
   keyword.value = ''
+  current.value = 1
+  tableData.value = []
 }
 
 const transferTimestamp = (str:string|undefined)=>{

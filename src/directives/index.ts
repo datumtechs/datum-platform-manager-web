@@ -1,4 +1,5 @@
-import {ElTooltip} from 'element-plus'
+import { createApp, h } from 'vue'
+import Dom from './TooltipEllipsis.vue'
 
 export const waves = {
   bind(el:any, binding:any) {
@@ -48,75 +49,32 @@ export const waves = {
 
 
 export const tableTooltip = {
-  updated(el:any, binding:any) {
+  updated(el:any, ) {
     if (el.querySelectorAll) {
-      const label:any[] = el.querySelectorAll('.show-ellipsis-tooltip')
+      const label:any[] = el.querySelector('.el-table__body-wrapper').querySelectorAll('.show-ellipsis-tooltip')
       label.forEach(v => {
         const childNode = v.childNodes[0]
-        console.log(childNode)
-        const dom = document.createElement('div')
-        const app: any = createApp({
-          // v-model:visible="visible"
-              template: `<el-tooltip
-                      effect="light"
-                      content="${childNode.innerText}"
-                      placement="top"
-                    >
-                      <div class="tooltip-ellipsis-content"   @dblclick="copy">${childNode.innerText} </div>
-                    </el-tooltip>` ,
-              data: ()=>{
-                return {
-                  visible:false
-                }
-              },
-          methods: {
-                // mouseenter(e:any) {
-                //   const box = e.target
-                //   if (box.scrollWidth > box.offsetWidth) {
-                //     this.visible= true
-                //   } else {
-                //     console.log("没有出现省略号")
-                //   }
-                // },
-                // mouseleave (){this.visible = false},
-                copy(e: any) {
-                  const text: string = e.target.innerText
-                    e.target.style.backgroundColor="颜色值"
-                    const input = document.createElement('input');
-                    document.body.appendChild(input);
-                    input.setAttribute('value', text);
-                    input.value = text
-                    input.select();
-                    if (document.execCommand('copy')) {
-                        document.execCommand('copy');
-                    }
-                    document.body.removeChild(input)
-                }
-              }
-           
-        }).component('el-tooltip', ElTooltip)
-        if (childNode.children.length) {//子节点只查询1级
-          console.log('子节点')
+        if (childNode?.children?.length) {//子节点只查询1级
           const nodeChildNode: any[] = [...childNode.children]
           nodeChildNode.forEach((v: any) => {
-            // if (v.className.indexOf('ellipsis-content') < 0) v.className += ' ellipsis-content'
-            // console.log(v?.scrollWidth , v?.offsetWidth)
-            // if (v?.scrollWidth > v?.offsetWidth) {
-              v.innerText = ''
-              app.mount(dom)
-              v.appendChild(dom)
-            // }
+            const text = childNode.innerText
+            const app: any = createAppVnode(v, text)
+            if(v.querySelector('.tooltip-ellipsis-content')) return
+            if(v)app.mount(v)
           })
         } else {
-          if (childNode.className.indexOf('ellipsis-content') < 0) childNode.className += ' ellipsis-content'
-          if (childNode?.scrollWidth > childNode?.offsetWidth) {
-            childNode.innerText = ''
-            app.mount(dom)
-            childNode.appendChild(dom)
-          }
+          if(v.querySelector('.tooltip-ellipsis-content')) return
+          const text = childNode?.innerText
+          const app: any = createAppVnode(childNode, text)
+          app.mount(childNode)
         }
       })
       //更新思路直接获取  el-tooltip 标签 缺陷导致重复
     }
   }
+}
+
+const createAppVnode = (e: any,text:string): any => {
+  const dom = createApp(h(Dom, {text}, {}))
+  return dom
 }

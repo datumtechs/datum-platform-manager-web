@@ -7,7 +7,7 @@
         </div>
         <div class="w-230px table-box">
             <p class="deep-title font-bold w-210px ellipse">{{ node.nodeName }}</p>
-            <el-tooltip placement="top" :content="node.identityId">
+            <el-tooltip placement="top" :content="node.identityId"  effect="light">
                 <p class="shallow-text w-210px ellipse">{{ node.identityId }}</p>
             </el-tooltip>
         </div>
