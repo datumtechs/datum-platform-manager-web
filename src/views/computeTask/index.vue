@@ -94,7 +94,6 @@ const taskStatus = ref('ALL')
 
 const indexMethod = (index: number) => useTableIndex(index, pageObj.current, pageObj.size)
 watch(() => pageObj.current, (newValue, oldValue) => {
-  tableData.value = []
   queryList()
 });
 

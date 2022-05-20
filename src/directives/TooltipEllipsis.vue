@@ -1,5 +1,4 @@
 <template>
-    <!-- <div v-if="" class="tooltip-ellipsis-content"   @dblclick="copy">{{text}}</div> -->
     <el-tooltip
       effect="light"
       :content="text"
@@ -15,9 +14,6 @@ const props = defineProps({
     default:''
   }
 })
-// const show = computed(()=>
-// )
-
 
  const copy =(e:any)=> {
       const text:any = e.target.innerText

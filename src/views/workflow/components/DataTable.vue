@@ -14,7 +14,7 @@
     <el-table-column :class-name="'show-ellipsis-tooltip'" prop="createTime" :label="t('workflow.creationTime')" :width="180">
       <template #default="scope">{{ useFormatTime(scope.row.createTime) }}</template>
     </el-table-column>
-    <el-table-column :label="t('common.actions')" :fixed="'right'">
+    <el-table-column  :label="t('common.actions')" :fixed="'right'">
       <template #default="{ row }">
 
         <div v-if="!row.isSettingCompleted">

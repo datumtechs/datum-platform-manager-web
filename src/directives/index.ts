@@ -1,3 +1,4 @@
+import { show } from 'dom7'
 import { createApp, h } from 'vue'
 import Dom from './TooltipEllipsis.vue'
 
@@ -50,26 +51,121 @@ export const waves = {
 
 export const tableTooltip = {
   updated(el: any, binding: any) {
-
     if (el.querySelectorAll) {
-      const label:any[] = el.querySelector('.el-table__body-wrapper').querySelectorAll('.show-ellipsis-tooltip')
+      const label: any[] = el.querySelector('.el-table__body-wrapper').querySelectorAll('.show-ellipsis-tooltip')
+      const nodeChildNode:any[] = []
       label.forEach(v => {
-        const childNode = v.childNodes[0]
-        if (childNode?.children?.length) {//子节点只查询1级
-          const nodeChildNode: any[] = [...childNode.children]
-          nodeChildNode.forEach((v: any) => {
-            if(v.querySelector('.tooltip-ellipsis-content')) return
-            createAppVnode(v, childNode.innerText)
+        nodeChildNode.push([...v.querySelectorAll('.cell')])
+      })
+      cleanDom()
+      nodeChildNode.flat().forEach((v: any) => {
+        if (v?.children?.length) {
+          const dom = document.createElement('div')
+          dom.classList.add('tooltip-ellipsis-content')
+          const list: any = [...v?.children]
+          list.forEach((item: any) => {
+            // item.classList.add('tooltip-ellipsis-content')
+            dom.appendChild(item)            
           })
+          dom.ondblclick = copy
+          v.appendChild(dom) 
         } else {
-          if(v.querySelector('.tooltip-ellipsis-content')) return
-           createAppVnode(childNode, childNode?.innerText)
+          const text = v.innerText
+          v.classList.add('tooltip-ellipsis-content')
+          v.ondblclick = copy
+          if (v.scrollWidth > v.offsetWidth) {
+            createTips(v,text)            
+          }
         }
       })
       //更新思路直接获取  el-tooltip 标签 缺陷导致重复
     }
   }
 }
+
+
+const createTips = (el: any, text: string) => {
+  let flag: boolean = false
+  let timer: any = ''
+  let newShowTimer:any
+  el.onmouseover = function (e: any) {
+    if(newShowTimer) clearTimeout(newShowTimer)
+    newShowTimer = setTimeout(() => {
+      show()      
+    },15)
+  }
+  
+
+  el.onmouseleave = function (e: any) {
+    flag = false
+    clean()
+  }
+  
+  function _popperOnmouseenter() {
+    flag = true
+    clean()
+  }
+
+  function _popperOnmouseleave() { 
+    flag = false
+    clean()
+  }
+
+
+  function show() {
+    flag = false
+      flag = true
+      const dom = document.createElement('div')
+      const dom2 = document.createElement('div')
+      dom.classList.add('_popper-warp')
+      dom2.classList.add('_popper')
+      dom2.innerHTML = text
+      document.body.append(dom)
+      dom.append(dom2) 
+      let  greater  = 0
+      if (dom.clientWidth > el.clientWidth) {
+        greater =  dom.clientWidth - el.clientWidth
+       }
+      dom.style.left = el.getBoundingClientRect().left - (greater/2) +'px'
+      dom.style.top = el.getBoundingClientRect().top - 40 + 'px'
+      dom.onmouseover = _popperOnmouseenter
+      dom.onmouseleave = _popperOnmouseleave
+  }
+
+  function clean() {
+    if(timer) clearTimeout(timer)
+    timer = setTimeout(() => {
+      if (!flag) {
+        cleanDom()
+     }
+   },10)
+  }
+}
+
+function cleanDom() {
+  const _popperList:any = [...document.querySelectorAll('._popper-warp')]
+  if (_popperList.length) {
+    _popperList.forEach((v:any) => {
+      document.body.removeChild(v)
+    })
+  }
+}
+
+function copy (e:any) {
+  const text:any = e.target.innerText
+  e.target.style.backgroundColor="颜色值"
+  const input:any = document.createElement('input');
+  document.body.appendChild(input);
+  input.setAttribute('value', text);
+  input.value = text
+  input.select();
+  if (document.execCommand('copy')) {
+      document.execCommand('copy');
+  }
+  document.body.removeChild(input)
+}
+
+
 
 const createAppVnode = (el: any,text:string): any => {
   const app = createApp(h(Dom, {text}, {}))
