@@ -1,7 +1,7 @@
 <template>
   <div class="normal-wrap pt-40px pb-40px" v-loading="loading">
     <div class="flex item-center justify-between px-9px py-5px bg-color-[#F7F8F9] h-80px">
-      <div @click="setActiveStep(index)" class="w-max-220px flex-col flex pl-31px leading-24px justify-center font-800"
+      <div @click="setActiveStep(index)" v-waves class="w-max-220px flex-col flex pl-31px leading-24px justify-center font-800"
         v-for="(item, index) in list" :key="item.setp" :style="{
           flex: list.length <= 1 ? 'flex-230px' : 'flex-1'
         }" :class="{ active: activeIndex == index }">
@@ -226,6 +226,7 @@ const previous = () => {
 }
 
 const setActiveStep = (index: number) => {
+  if( activeIndex.value == index) return
   if (workfolwParams.value?.completedCalculationProcessStep + 1 < index) {
     ElMessage.warning(t('task.pleaseCompleteStep'))
     return

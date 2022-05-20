@@ -1,7 +1,7 @@
 <template>
   <div class="side-menu-wrap flex flex-col text-14px">
     <el-menu router>
-      <el-menu-item class="h-63px" :key="item.path" :class="{ active: handActive(item.path) }" :index="item.path" 
+      <el-menu-item class="h-63px" :key="item.path" :class="{ active: handActive(item.path) }" :index="item.path"  @click="routeClicks(item)"
         v-for="item in routeList">
         <div class="pl-30px pr-15px flex items-center">
           <img class="w-22px mr-14px" v-if="item.meta.icon" :src="handIcon(item.meta.icon)" />
@@ -12,10 +12,11 @@
       </el-menu-item>
     </el-menu>
     <el-menu router class="flex-1 bg-color-[#F7F8F9] pt-26px">
-      <el-menu-item class="h-63px mb-16px" index="createWorkFlow/wizardMode" @click="createWorkflow"
+      <el-menu-item class="h-63px mb-16px" index="createWorkFlow/wizardMode" @click="createWorkflow" 
         v-if="privateList.length && store.token">
         <!-- :class="{ active: handActive('createTask') }" -->
         <div
+          v-waves
           class="mx-15px h-50px w-full flex items-center justify-center bg-color-[#2B60E9] rounded-[25px] text-color-[#fff]">
           <el-icon class="mr-13px">
             <plus />
@@ -23,7 +24,7 @@
           {{ t('menu.createTask') }}
         </div>
       </el-menu-item>
-      <el-menu-item class="h-63px" :key="item.path" :class="{ active: handActive(item.path) }" :index="item.path"  @click="clicks(item)"
+      <el-menu-item class="h-63px" :key="item.path" :class="{ active: handActive(item.path) }" :index="item.path"  @click="routeClicks(item)"
         v-show="store.token" v-for="item in privateList">
         <div class="pl-30px pr-15px flex items-center">
           <img class="w-22px mr-14px" v-if="item.meta.icon" :src="handIcon(item.meta.icon)" />
@@ -48,12 +49,12 @@ import myAuth from '@/assets/images/side/side-my-auth-icon.png'
 import myModelsIcon from '@/assets/images/side/side-my-models-icon.png'
 import computeTask from '@/assets/images/side/side-computeTask-icon.png'
 import { type RouteLocationNormalizedLoaded, useRoute, useRouter } from 'vue-router'
-import { useUsersInfo, useWorkFlow,usekeepAliveStamp } from '@/stores'
+import { useUsersInfo, useWorkFlow,useKeepAliveInfo } from '@/stores'
 const { t } = useI18n()
 const internalInstance:any = getCurrentInstance()
 const store = useUsersInfo()
 const workStore = useWorkFlow()
-const keepAliveStamp = usekeepAliveStamp()
+const keepAliveInfo = useKeepAliveInfo()
 const route: RouteLocationNormalizedLoaded = useRoute()
 const router = useRouter()
 //@ts-ignore
@@ -101,17 +102,14 @@ const createWorkflow = () => {
     workflowId: null,
     workflowVersion: null,
   })
+  routeClicks()
   router.push({ name: 'wizardMode' })
 }
 
-const clicks = (item:any)=>{
-   keepAliveStamp.setKeepAliveStamp()
+const routeClicks = (item?:any)=>{
+  keepAliveInfo.reset()
 }
 
-// watch(route,(to,from)=>{
-//    console.log(unref(internalInstance.parent.parent))
-  
-// })
 
 </script>
 <style lang="scss" scoped>

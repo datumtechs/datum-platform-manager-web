@@ -44,6 +44,10 @@ const props = defineProps({
     type: String,
     default: ''
   },
+  keyword:{
+    type:String,
+    default:''
+  },
   showFilter: {
     type: Boolean,
     default: true
@@ -54,6 +58,9 @@ const emit = defineEmits(['search', 'reset'])
 
 watch(() => input1.value, () => {
   submit()
+})
+watch(() => props.keyword, () => {
+  input1.value = props.keyword
 })
 
 // onBeforeRouteLeave((to:any,form:any)=>{

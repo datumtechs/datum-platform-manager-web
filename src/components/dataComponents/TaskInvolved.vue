@@ -24,7 +24,6 @@
   <div class="flex my-50px justify-center">
     <el-pagination background layout="prev, pager, next" v-model:current-page="pageObj.current"
       v-model:page-size="pageObj.size" :total="pageObj.total" @current-change="(_) => {
-        current = _
         getTaskListByData()
       }" />
   </div>
