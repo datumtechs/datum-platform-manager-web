@@ -17,8 +17,8 @@ app.directive('waves', (el,binding) => {
  waves.bind(el,binding)
  waves.bind(el,binding)
 })
-app.directive('tableTooltip', (el,binding,VNode) => {
-  tableTooltip.updated(el)
+app.directive('tableTooltip', (el,binding) => {
+  tableTooltip.updated(el,binding)
 })
 app.use(i18n).use(store).use(router).use(ElLoading)
 app.mount('#app')

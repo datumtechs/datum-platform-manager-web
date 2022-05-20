@@ -24,7 +24,6 @@
       <div class="flex my-50px justify-center">
         <el-pagination background layout="prev, pager, next" @current-change="(_) => {
           current = _
-          tableData = []
           query()
         }" :total="total" />
       </div>
@@ -108,7 +107,6 @@ const tabsChange = (index: string) => {
   createMode.value = index == '0' ? 2 : 1
   keyword.value = ''
   current.value = 1
-  tableData.value = []
 }
 
 const transferTimestamp = (str:string|undefined)=>{
