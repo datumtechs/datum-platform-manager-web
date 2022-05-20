@@ -133,7 +133,9 @@ const judgeMentParams = () => {
                         flag = false
                         return
                     }
-                    if (nodeList.value[i].alg.inputModel && j === 0 && !inputArray[j].dependentVariable) {
+                    if (nodeList.value[i].alg.inputModel && i === 0 && !inputArray[j].dependentVariable) {
+                        console.log('此时的数值', i, nodeList.value[i].alg.inputModel, j, inputArray[j].dependentVariable);
+
                         ElMessage.error(t('expert.saveInputLabelHint'))
                         flag = false
                         return
