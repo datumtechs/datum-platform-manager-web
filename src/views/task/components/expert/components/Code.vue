@@ -12,18 +12,17 @@
                     @change="handleVariable($event, index)" v-model="item.varValue" />
             </el-space>
         </div>
-        <div v-if="props.codeObj?.variableList.length > 0" class="h-20px mobile-bar"
+        <div v-if="props.codeObj?.variableList.length > 0" class="h-1px mobile-bar"
             @mousedown.prevent="mousedown">
-            <i></i>
-            <i></i>
+            <img src="@/assets/images/task/drag@2x.png" alt="">
         </div>
+        <p class="text-color-[#333] font-bold pb-20px code-context-box-title">
+            <span>{{ t('expert.algoCode') }}</span>
+            <el-icon @click="zoomToDialog" class="cursor-pointer">
+                <full-screen />
+            </el-icon>
+        </p>
         <div class="w-350px bg-primary m-auto my-10px p-10px code-context-box">
-            <p class="text-color-[#333] font-bold pb-20px code-context-box-title">
-                <span>{{ t('expert.algoCode') }}</span>
-                <el-icon @click="zoomToDialog" class="cursor-pointer">
-                    <full-screen />
-                </el-icon>
-            </p>
             <div v-html="props.codeObj.code?.calculateContractCode"></div>
         </div>
         <el-dialog v-model="zoomShow" top="5vh" :title="t('expert.algoCode')" width="40%">
@@ -105,7 +104,12 @@ const zoomToDialog = () => {
         overflow: auto;
     }
 
-
+    .code-context-box-title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 20px 0;
+    }
 
     .code-dialog-content {
         height: calc(100vh - 25vh);
@@ -126,39 +130,28 @@ const zoomToDialog = () => {
         overflow: auto;
         height: calc(100% - 34px);
         flex: 1;
-
-        .code-context-box-title {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .code-context-box-content {}
+        position: relative;
 
         &::-webkit-scrollbar {
             width: 0px;
-            height: 10px;
-            background-color: #f5f5f5;
+            height: 7px;
         }
     }
 
-
     .mobile-bar {
         width: 100%;
-        height: 10px;
-        background-color: #fff;
-        box-shadow: 0 0 2px rgba(0, 0, 0, .4);
-        cursor: row-resize;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
+        height: 1px;
+        border-top: 1px solid #EEEEEE;
+        position: relative;
 
-        i {
+        img {
             width: 20px;
-            height: 1px;
-            background-color: #eee;
-            margin: 1px 0;
+            height: 20px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            cursor: ns-resize;
         }
     }
 }

@@ -32,8 +32,9 @@
             <p class="text">{{ useSize(node.orgTotalBandwidth) + 'P/S' }}</p>
         </div>
         <div class="operate text-center flex-grow">
-            <p class="font-medium text-14px leading-20px text-color-[#0052D9] cursor-pointer px-10px"
-                @click="linkToDetail">{{ t('node.view') }}</p>
+            <p class="font-medium  leading-20px link-btn  px-10px" @click="linkToDetail">{{
+                    t('node.view')
+            }}</p>
         </div>
     </div>
 </template>

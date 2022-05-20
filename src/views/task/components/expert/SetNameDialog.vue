@@ -1,6 +1,6 @@
 <template>
     <div class="nameDialog">
-        <el-dialog v-model="props.show" destroy-on-close width="320px"
+        <el-dialog v-model="props.show" @opened="openFn" destroy-on-close width="320px"
             @close="emit('update:show', false)">
             <div class="font-bold text-14px leading-18px text-color-[#333]">{{
                     t('expert.inputNameTips')
@@ -10,7 +10,7 @@
                 <el-form ref="nameFormRef" @submit.prevent :rules="rules" :model="nameForm"
                     style="max-width: 460px">
                     <el-form-item prop="name">
-                        <el-input v-model="nameForm.name" />
+                        <el-input ref="inputRef" v-model="nameForm.name" />
                     </el-form-item>
                 </el-form>
             </div>
@@ -36,6 +36,7 @@ const { t } = useI18n()
 const router = useRouter()
 const emit = defineEmits(['update:show'])
 const nameFormRef = ref<any>()
+const inputRef = ref<any>(null)
 const rules = reactive({
     name: [
         { required: true, message: 'Please input Activity name', trigger: 'blur' },
@@ -68,6 +69,12 @@ const submitForm = async (form: any) => {
         } else {
             console.log('error submit!', fields)
         }
+    })
+}
+
+const openFn = () => {
+    nextTick(() => {
+        inputRef.value.focus()
     })
 }
 

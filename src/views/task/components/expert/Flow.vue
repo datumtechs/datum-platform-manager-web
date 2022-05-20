@@ -5,19 +5,26 @@
                 @click="handleClick()">{{ btn.label }}
             </el-button>
         </div>
+        <!-- 0-未运行,1-运行中,2-运行成功，3-运行失败 -->
         <div id="mainStage" @dragover.stop="dragover($event)" class="mainStage"
             :class="{ showDot }">
             <div v-for="(node, index) in nodeListWithStatus" v-waves :key="node.id"
                 class="node-box mb-100px" :class="{ 'node-arrow': index < nodeList.length - 1 }">
                 <div class="node cursor-pointer" @click="selectNode(node, index)"
                     :class="{ 'active-node': curNodeId === node.algorithmId }">
-                    <div class="status">
-                        <!-- <img src="@/assets/images/task/finish@2x.png" />
-                        <img src="@/assets/images/task/failed@2x.png" />
-                        <img src="@/assets/images/task/loading@2x.gif" /> -->
+                    <div class="status" v-if="node.status">
+                        <el-tooltip effect="light" placement="top-start"
+                            :content="t(`${node.statusMsg}`)">
+                            <img v-if="node.status === 2"
+                                src="@/assets/images/task/finish@2x.png" />
+                            <img v-else-if="node.status === 3"
+                                src="@/assets/images/task/failed@2x.png" />
+                            <img v-else-if="node.status === 1"
+                                src="@/assets/images/task/loading@2x.gif" />
+                        </el-tooltip>
                     </div>
                     <div class="node-label">
-                        <el-tooltip class="box-item" effect="dark" :content="node.nodeName"
+                        <el-tooltip class="box-item" effect="light" :content="node.nodeName"
                             placement="top-start">{{ node?.nodeName }}</el-tooltip>
                     </div>
                     <div v-if="!props.isSettingCompleted" class="btn">
@@ -36,7 +43,7 @@
                     <el-checkbox :disabled="props.isSettingCompleted"
                         @change="handleVoPsi($event, index)" v-model="node.nodeInput.isPsi"
                         label="PSI" />
-                    <el-tooltip class="box-item" effect="dark" :content="t('expert.psiHint')"
+                    <el-tooltip class="box-item" effect="light" :content="t('expert.psiHint')"
                         placement="top-start">
                         <img src="@/assets/images/task/quest@2x.png" class="w-14px h-14px ml-6px" />
                     </el-tooltip>
@@ -240,9 +247,12 @@ const selectNode = (node: any, index: number) => {
 const nodeListWithStatus: any = computed(() => {
     if (props.statusList.length === 0) return nodeList.value
     // if(props.runStatus.)
+
+    const statusMap = new Map([[0, ''], [1, 'status.running'], [2, 'task.runSucceed'], [3, 'task.runFailed']])
+
     return nodeList.value.map((node: any, index: any) => {
         node.status = props.statusList[index] ? props.statusList[index].runStatus : 0
-        node.statusMsg = props.statusList[index] ? props.statusList[index].runMsg : ''
+        node.statusMsg = props.statusList[index] ? statusMap.get(props.statusList[index].runStatus) : ''
         node.taskId = props.statusList[index] ? props.statusList[index].taskId : '0'
         node.isEdit = false
         return { ...node }

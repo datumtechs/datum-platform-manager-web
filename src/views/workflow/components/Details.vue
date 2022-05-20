@@ -17,7 +17,8 @@
         <el-table-column :class-name="'show-ellipsis-tooltip'" prop="workflowVersionName"
           :label="t('workflow.workflowVersionName')">
           <template #default="scope">
-            <span class="link-btn" @click="details(scope.row)">{{ scope.row.workflowVersionName
+            <span class="font-medium  leading-20px link-btn" @click="details(scope.row)">{{
+                scope.row.workflowVersionName
             }}</span>
           </template>
         </el-table-column>
@@ -58,17 +59,33 @@
             <!-- 0 - 待运行 1 - 运行中 2 - 运行成功 3 - 运行失败 -->
             <!-- 已运行 -->
             <div v-if="row.status !== 0">
-              <el-button type="text" circle @click="copy(row)">{{ t('common.copy') }}</el-button>
+              <!-- <el-button type="text" circle @click="copy(row)">{{ t('common.copy') }}</el-button>
               <el-button type="text" circle @click="view(row)">{{
                   t('workflow.viewDetails')
               }}
-              </el-button>
+              </el-button> -->
+              <el-space :size="20">
+                <span class="font-medium  leading-20px link-btn" @click="copy(row)">{{
+                    t('common.copy')
+                }}</span>
+                <span class="font-medium  leading-20px link-btn" @click="view(row)">{{
+                    t('workflow.viewDetails')
+                }}</span>
+              </el-space>
             </div>
             <!-- 未运行 -->
             <div v-else>
-              <el-button type="text" circle @click="edit(row)">{{ t('common.edit') }}</el-button>
+              <!-- <el-button type="text" circle @click="edit(row)">{{ t('common.edit') }}</el-button>
               <el-button type="text" circle @click="start(row)">{{ t('common.startUp') }}
-              </el-button>
+              </el-button> -->
+              <el-space :size="20">
+                <span class="font-medium  leading-20px link-btn" @click="edit(row)">{{
+                    t('common.edit')
+                }}</span>
+                <span class="font-medium  leading-20px link-btn" @click="start(row)">{{
+                    t('common.startUp')
+                }}</span>
+              </el-space>
             </div>
           </template>
         </el-table-column>
@@ -80,7 +97,8 @@
         }" :total="total" />
       </div>
     </div>
-    <SetNameDialog v-model:show="showDialog" v-if="showDialog" @submit="copySubmit" />
+    <SetNameDialog v-model:show="showDialog" :beforeName="beforeName" v-if="showDialog"
+      @submit="copySubmit" />
     <GlobalPending v-model:show="pending.show" :content="pending.content" :title="pending.title" />
   </div>
 </template>
@@ -101,6 +119,7 @@ const workFlowName = ref('')
 const tableData = ref([])
 const { t, locale } = useI18n()
 const activeRow = ref<any>({})
+const beforeName = ref('')
 
 
 type Pending = {
@@ -120,7 +139,7 @@ const queryVersionList = () => {
     const { data, code }: any = res
     if (code === 10000) {
       tableData.value = data.items
-      const str = data.items[0]?.workflowVersionName
+      const str = data.items[data.items.length - 1]?.workflowVersionName
       const index = str.lastIndexOf("-v")
       workFlowName.value = str.substring(0, index)
       current.value = data.current
@@ -216,6 +235,7 @@ onMounted(() => {
 const copy = (row: any) => {
   showDialog.value = true
   activeRow.value = row
+  beforeName.value = workFlowName.value + '-v' + (total.value + 1)
 }
 const copySubmit = (name: string) => {
   copyWorkflow({

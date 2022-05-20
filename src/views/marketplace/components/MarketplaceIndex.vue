@@ -122,9 +122,9 @@ onMounted(() => {
             </template>
         </Banner>
         <div class="main-content mt-30px max-w-1200px mx-auto overflow-hidden">
-            <el-table v-tableTooltip v-loading="marketLoading" :header-cell-style="{ height: '50px' }"
-                :row-style="{ height: '70px' }" :data="tableData" highlight-current-row
-                style="width: 100%">
+            <el-table v-tableTooltip v-loading="marketLoading"
+                :header-cell-style="{ height: '50px' }" :row-style="{ height: '70px' }"
+                :data="tableData" highlight-current-row style="width: 100%">
                 <el-table-column type="index" :label="t('common.num')" :index="indexMethod"
                     width="80" />
                 <el-table-column :class-name="'show-ellipsis-tooltip'" prop="metaDataName"
@@ -141,9 +141,9 @@ onMounted(() => {
                 <el-table-column :label="t('common.actions')" width="200">
                     <template #default="{ row }">
                         <el-space :size="20">
-                            <span class="text-14px text-color-[#0052D9] leading-20px cursor-pointer"
+                            <span class="font-medium  leading-20px link-btn"
                                 @click="purchase(row)">{{ t('common.purchase') }}</span>
-                            <span class="text-14px text-color-[#0052D9] leading-20px cursor-pointer"
+                            <span class="font-medium  leading-20px link-btn"
                                 @click="linkToViewData(row)">{{ t('myData.viewData') }}</span>
                             <!-- <span class="text-14px text-color-[#0052D9] leading-20px cursor-pointer"
                                 @click="linkToViewToken(row)">{{

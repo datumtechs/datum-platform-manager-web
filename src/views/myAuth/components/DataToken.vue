@@ -45,17 +45,15 @@
             </el-table-column>
             <el-table-column :label="t('common.actions')">
                 <template #default="{ row }">
-                    <el-button class="text-14px text-color-[#0052D9] cursor-pointer" type="text"
-                        circle @click="setBalance(row)">
-                        {{
+                    <el-space :size="20">
+                        <span class="font-medium  leading-20px link-btn" @click="setBalance(row)">{{
                                 t('auth.plzInputAuthTokenNumber')
-                        }}</el-button>
-                    <el-button v-if="props.type === 'fee'"
-                        class="text-14px text-color-[#0052D9] cursor-pointer" type="text" circle
-                        @click="purchaseWLat(row)">{{
-                                t('common.purchase')
-                        }}
-                    </el-button>
+                        }}</span>
+                        <span v-if="props.type === 'fee'" class="font-medium  leading-20px link-btn"
+                            @click="purchaseWLat(row)">{{
+                                    t('common.purchase')
+                            }}</span>
+                    </el-space>
                 </template>
             </el-table-column>
         </el-table>

@@ -10,7 +10,8 @@
       </template>
     </Banner>
     <div class="main-content com-main-data-wrap">
-      <el-table v-tableTooltip v-loading="loading" :data="tableData" class="mt-30px com-table _com_el-table-wrap">
+      <el-table v-tableTooltip v-loading="loading" :data="tableData"
+        class="mt-30px com-table _com_el-table-wrap">
         <el-table-column type="index" width="80" :index="indexMethod">
           <template #header>{{ t('common.num') }}</template>
         </el-table-column>
@@ -35,8 +36,9 @@
         </el-table-column>
         <el-table-column :label="t('common.actions')">
           <template #default="scope">
-            <el-button type="text" circle @click="viewData(scope.row)">{{ t('node.viewTask') }}
-            </el-button>
+            <span class="font-medium  leading-20px link-btn" @click="viewData(scope.row)">{{
+                t('node.viewTask')
+            }}</span>
           </template>
         </el-table-column>
       </el-table>
@@ -129,7 +131,7 @@ const transferTimestamp = (str: string | undefined) => {
 }
 
 const queryList = () => {
-   loading.value = true
+  loading.value = true
   queryTaskList({
     current: pageObj.current, size: pageObj.size, taskStatus: taskStatus.value,
     keyword: keyword.value,
@@ -142,7 +144,7 @@ const queryList = () => {
       tableData.value = data.items
       pageObj.total = data.total
     }
-     loading.value = false
+    loading.value = false
   }).catch(error => {
     loading.value = false
   })

@@ -93,12 +93,30 @@ const props: any = defineProps({
   isReadonly: {
     type: Boolean,
     default: false
+  },
+  inputValue: {
+    type: Array,
+    default: () => []
   }
 })
 
 watch(() => props.columnData, (newV, oldV) => {
   setList(newV)
 })
+
+watch(() => props.inputValue, (newV, oldV) => {
+  if (newV === null) {
+    resetTransfer()
+  }
+}, { deep: true })
+
+
+const resetTransfer = () => {
+  ids.value = []
+  list.value = []
+  labels.value = []
+  features.value = []
+}
 
 const setList = (arr: Array<any>) => {
   arr.map((item: any, index: number) => {

@@ -199,7 +199,9 @@ const en = {
     idColumnTips: "Used for multi-party data sample alignment",
     labelTips: "In supervised learning, the relationship between feature (x) and actual label (y) is found to predict y when x is provided.",
     featureTips: "In supervised learning, the relationship between feature (x) and actual label (y) is found to predict y when x is provided.",
-    resultReceiverTips: "The result receiver is a trusted node used to store the calculation result file, and the node can provide users with the function of viewing / downloading the results later."
+    resultReceiverTips: "The result receiver is a trusted node used to store the calculation result file, and the node can provide users with the function of viewing / downloading the results later.",
+    runSucceed: 'The task run successfully',
+    runFailed: 'The task run failed'
   },
   myData: {
     tasksBriefInfoFirstParagraph: " ",
@@ -411,7 +413,17 @@ const en = {
   },
   exception: {
     error: 'Exception',
-    4001: 'User denied the action'
+    unknown: 'Unknown Exception',
+    "4001": 'User denied the action',
+    "4100": 'Unauthorized: The requested method and/or account has not been authorized by the user.',
+    "4200": 'Unsupported Method: The Provider does not support the requested method.',
+    "4900": 'Disconnected: The Provider is disconnected from all chains.',
+    "4901": 'Chain Disconnected: The Provider is not connected to the requested chain.',
+    "-32700": "Parse error: Invalid JSON",
+    "-32600": "Invalid request:	JSON is not a valid request object",
+    "-32601": "Method not found: Method does not exist",
+    "-32602": "Invalid params: Invalid method parameters",
+    "-32603": "Internal error: Internal JSON-RPC error",
   }
 }
 
