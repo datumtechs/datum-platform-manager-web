@@ -199,7 +199,9 @@ const en = {
     idColumnTips: "Used for multi-party data sample alignment",
     labelTips: "In supervised learning, the relationship between feature (x) and actual label (y) is found to predict y when x is provided.",
     featureTips: "In supervised learning, the relationship between feature (x) and actual label (y) is found to predict y when x is provided.",
-    resultReceiverTips: "The result receiver is a trusted node used to store the calculation result file, and the node can provide users with the function of viewing / downloading the results later."
+    resultReceiverTips: "The result receiver is a trusted node used to store the calculation result file, and the node can provide users with the function of viewing / downloading the results later.",
+    runSucceed: 'The task run successfully',
+    runFailed: 'The task run failed'
   },
   myData: {
     tasksBriefInfoFirstParagraph: " ",

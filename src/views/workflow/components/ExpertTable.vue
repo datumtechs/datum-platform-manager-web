@@ -21,16 +21,27 @@
             <template #default="{ row }">
 
                 <div v-if="!row.isSettingCompleted">
-                    <el-button type="text" @click="Edit(row)">{{ t('workflow.continueEditing') }}
+                    <!-- <el-button type="text" @click="Edit(row)">{{ t('workflow.continueEditing') }}
                     </el-button>
                     <el-button type="text" @click="del(row)">{{ t('workflow.deleteWorkflow') }}
-                    </el-button>
+                    </el-button> -->
+                    <el-space :size="20">
+                        <span class="font-medium leading-20px link-btn" @click="Edit(row)">{{
+                                t('workflow.continueEditing')
+                        }}</span>
+                        <span class="font-medium leading-20px link-btn" @click="del(row)">{{
+                                t('workflow.deleteWorkflow')
+                        }}</span>
+                    </el-space>
                 </div>
                 <div v-else>
-                    <el-button type="text" @click="operationRecord(row)">{{
+                    <!-- <el-button type="text" @click="operationRecord(row)">{{
                             t('workflow.operationRecord')
                     }}
-                    </el-button>
+                    </el-button> -->
+                    <span class="font-medium leading-20px link-btn" @click="operationRecord(row)">{{
+                            t('workflow.operationRecord')
+                    }}</span>
                 </div>
             </template>
         </el-table-column>

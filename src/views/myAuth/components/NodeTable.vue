@@ -5,11 +5,12 @@
             <QuestionMark :content="$t('auth.authOrgHint')">
             </QuestionMark>
         </div>
-        <el-table v-tableTooltip  v-loading="nodeTableLoading" class="mt-20px" :data="tableData">
+        <el-table v-tableTooltip v-loading="nodeTableLoading" class="mt-20px" :data="tableData">
             <el-table-column type="index" width="80">
                 <template #header>{{ t('common.num') }}</template>
             </el-table-column>
-            <el-table-column :class-name="'show-ellipsis-tooltip'" prop="nodeName" :label="t('auth.networkName')" />
+            <el-table-column :class-name="'show-ellipsis-tooltip'" prop="nodeName"
+                :label="t('auth.networkName')" />
             <el-table-column prop="identityIp" :label="t('auth.networkIP')" />
             <el-table-column prop="identityPort" :label="t('node.nodePort')" />
             <el-table-column :label="t('auth.authStatus')">
@@ -20,12 +21,14 @@
             </el-table-column>
             <el-table-column :label="t('common.actions')">
                 <template #default="{ row }">
-                    <el-button type="text" circle @click="showAuth(row)">{{ t('auth.auth') }}
-                    </el-button>
-                    <el-button type="text" circle @click="showCancel(row)">{{
-                            t('auth.cancelAuth')
-                    }}
-                    </el-button>
+                    <el-space :size="20">
+                        <span class="font-medium  leading-20px link-btn" @click="showAuth(row)">{{
+                                t('auth.auth')
+                        }}</span>
+                        <span class="font-medium  leading-20px link-btn" @click="showCancel(row)">{{
+                                t('auth.cancelAuth')
+                        }}</span>
+                    </el-space>
                 </template>
             </el-table-column>
         </el-table>

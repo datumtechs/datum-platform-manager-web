@@ -14,13 +14,16 @@
         <el-table-column type="index" width="80">
           <template #header>{{ t('common.num') }}</template>
         </el-table-column>
-        <el-table-column :class-name="'show-ellipsis-tooltip'" prop="taskId" :label="t('myData.taskID')" />
-        <el-table-column :class-name="'show-ellipsis-tooltip'" prop="status" :label="t('workflow.state')">
+        <el-table-column :class-name="'show-ellipsis-tooltip'" prop="taskId"
+          :label="t('myData.taskID')" />
+        <el-table-column :class-name="'show-ellipsis-tooltip'" prop="status"
+          :label="t('workflow.state')">
           <template #default="{ row }">
             {{ useWorkflowDetailsMap(row.status) || '-' }}
           </template>
         </el-table-column>
-        <el-table-column :class-name="'show-ellipsis-tooltip'" prop="taskType" :label="t('workflow.taskSteps')">
+        <el-table-column :class-name="'show-ellipsis-tooltip'" prop="taskType"
+          :label="t('workflow.taskSteps')">
         </el-table-column>
         <el-table-column :class-name="'show-ellipsis-tooltip'" prop="createTime"
           :label="t('computeTask.taskStartTime')">
@@ -29,9 +32,12 @@
 
         <el-table-column :label="t('common.actions')" :fixed="'right'">
           <template #default="{ row }">
-            <el-button type="text" v-if="row.status === 2 || row.status === 3" circle
+            <!-- <el-button type="text" v-if="row.status === 2 || row.status === 3" circle
               @click="details(row)">{{ t('workflow.viewTaskResults') }}
-            </el-button>
+            </el-button> -->
+            <span class="font-medium  leading-20px link-btn" @click="details(row)">{{
+                t('workflow.viewTaskResults')
+            }}</span>
           </template>
         </el-table-column>
       </el-table>

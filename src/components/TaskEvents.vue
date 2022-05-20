@@ -3,9 +3,12 @@
     <el-table-column type="index" width="80" align="center">
       <template #header>{{ t('common.num') }}</template>
     </el-table-column>
-    <el-table-column prop="eventType" align="center" :label="t('computeTask.eventType')" />
-    <el-table-column prop="nodeName" align="center" :label="t('computeTask.eventMaker')" />
-    <el-table-column prop="eventAt" align="center" :label="t('computeTask.generationTime')">
+    <el-table-column prop="eventType" align="center" :label="t('computeTask.eventType')"
+      width="180px" />
+    <el-table-column prop="nodeName" align="center" :label="t('computeTask.eventMaker')"
+      width="200px" />
+    <el-table-column prop="eventAt" align="center" :label="t('computeTask.generationTime')"
+      width="180px">
       <template #default="{ row }">{{ useFormatTime(row.eventAt) }}</template>
     </el-table-column>
     <el-table-column prop="eventContent" align="center" :label="t('computeTask.eventContent')" />
