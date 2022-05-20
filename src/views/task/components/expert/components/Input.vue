@@ -124,9 +124,6 @@ const changeInputValue = (item: any, index: number) => {
         return columnsList.value[index] = []
     }
     if (item) {
-        const ids = getIdentity(inputValue.value)
-        useExpertMode().setDisableOrg(ids)
-
         const upList: any = []
         cascaderKey.value.map((item: any, i: number) => {
             if (index !== i) {
@@ -159,7 +156,7 @@ const getIdentity = (list: any) => {
     return list.map((item: any) => item?.[0])
 }
 
-const isDisabled = (org: any, index: number) => {
+const isCurrentSelectDisabled = (org: any, index: number) => {
     if (inputValueOrg.value[index] === org.identityId) {
         return false
     } else {
@@ -174,15 +171,15 @@ const inputLazyLoad = async (node: any, resolve: any, index: number) => {
     try {
         let nodes
         if (level === 0) {
+            useExpertMode().setDisableOrg(inputValueOrg.value)
             setTimeout(() => {
                 if (inputValue.value.length) {
-                    useExpertMode().setDisableOrg(inputValueOrg.value)
                     // 已做了选择
                     nodes = orgList.value.map((org: any) => ({
                         value: org.identityId,
                         label: org.nodeName,
                         leaf: level >= 2,
-                        disabled: isDisabled(org, index)
+                        disabled: isCurrentSelectDisabled(org, index)
                     }))
                 } else {
                     nodes = orgList.value.map((org: any) => ({
