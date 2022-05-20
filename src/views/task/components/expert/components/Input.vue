@@ -10,7 +10,6 @@
                     :value="item.identityId"></el-option>
             </el-select>
         </div>
-        {{ inputValueOrg }}
         <div v-if="showModel">
             <p class="mt-40px text-color-[#333] font-medium">{{ t('expert.model') }}</p>
             <p class="mt-10px">
@@ -157,14 +156,14 @@ const getColumnList = async (metaDataId: string, index: number, params?: any) =>
 
 const getIdentity = (list: any) => {
     if (!list) return []
-    return list.map((item: any) => item[0])
+    return list.map((item: any) => item?.[0])
 }
 
-const isDisabled = (item: any, index: number) => {
-    if (inputValueOrg.value[index] === item.identityId || !inputValueOrg.value[index]) {
+const isDisabled = (org: any, index: number) => {
+    if (inputValueOrg.value[index] === org.identityId) {
         return false
     } else {
-        return item.disabled
+        return org.disabled
     }
 }
 
@@ -177,6 +176,7 @@ const inputLazyLoad = async (node: any, resolve: any, index: number) => {
         if (level === 0) {
             setTimeout(() => {
                 if (inputValue.value.length) {
+                    useExpertMode().setDisableOrg(inputValueOrg.value)
                     // 已做了选择
                     nodes = orgList.value.map((org: any) => ({
                         value: org.identityId,
@@ -192,7 +192,8 @@ const inputLazyLoad = async (node: any, resolve: any, index: number) => {
                         disabled: org.disabled || false
                     }))
                 }
-                console.log('nodes', nodes);
+                console.log('nodes', nodes, index);
+
                 resolve(nodes)
             }, 300);
         } else if (level === 1) {
