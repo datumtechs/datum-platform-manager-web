@@ -10,6 +10,7 @@
                     :value="item.identityId"></el-option>
             </el-select>
         </div>
+        {{ inputValueOrg }}
         <div v-if="showModel">
             <p class="mt-40px text-color-[#333] font-medium">{{ t('expert.model') }}</p>
             <p class="mt-10px">
@@ -120,6 +121,7 @@ const initInputPanel = () => {
 
 const changeInputValue = (item: any, index: number) => {
     if (item && item.length === 0) {
+        // todo 将禁用设置成可用
         return columnsList.value[index] = []
     }
     if (item) {
@@ -159,14 +161,15 @@ const getIdentity = (list: any) => {
 }
 
 const isDisabled = (item: any, index: number) => {
-    if (inputValueOrg.value[index] === item.identityId) {
+    if (inputValueOrg.value[index] === item.identityId || !inputValueOrg.value[index]) {
         return false
     } else {
         return item.disabled
     }
 }
 
-const inputValueOrg = computed(() => inputValue.value.map((item: any) => item[0]))
+const inputValueOrg = computed(() => inputValue.value.map((item: any) => item?.[0]))
+
 const inputLazyLoad = async (node: any, resolve: any, index: number) => {
     const { level, data } = node
     try {
@@ -174,9 +177,7 @@ const inputLazyLoad = async (node: any, resolve: any, index: number) => {
         if (level === 0) {
             setTimeout(() => {
                 if (inputValue.value.length) {
-                    console.log(inputValueOrg.value);
                     // 已做了选择
-
                     nodes = orgList.value.map((org: any) => ({
                         value: org.identityId,
                         label: org.nodeName,
@@ -188,9 +189,10 @@ const inputLazyLoad = async (node: any, resolve: any, index: number) => {
                         value: org.identityId,
                         label: org.nodeName,
                         leaf: level >= 2,
-                        disabled: org.disabled
+                        disabled: org.disabled || false
                     }))
                 }
+                console.log('nodes', nodes);
                 resolve(nodes)
             }, 300);
         } else if (level === 1) {
