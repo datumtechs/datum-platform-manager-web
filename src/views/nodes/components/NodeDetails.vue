@@ -32,7 +32,6 @@ const identityId = computed((): any =>
   route.params.identityId
 )
 
-console.log(identityId);
 
 
 const getDetail = async () => {

@@ -16,7 +16,7 @@
                 v-model:current-page="pageObj.current" v-model:page-size="pageObj.size"
                 :total="pageObj.total" />
         </div>
-        <Search :placeholder="t('node.placeholder')" @search="search" @reset="orderBy = ''">
+        <Search :keyword="keyword" :placeholder="t('node.placeholder')" @search="search" @reset="orderBy = ''">
             <template #content>
                 <p class="search-label mb-10px">
                     {{ t('node.sortBy') }}
@@ -34,6 +34,7 @@
 <script setup lang='ts'>
 import NodeCard from './NodeCard.vue'
 import { getOrgList } from '@/api/node'
+import {useKeepAliveInfo } from '@/stores'
 const { t, locale } = useI18n()
 const totalNode = ref(1876)
 const orderBy = ref('')
@@ -42,8 +43,8 @@ const current = ref(1)
 let nodeList: any = ref([])
 const nodeLoading = ref(false)
 const keyword = ref('')
-
-
+const keepAlive = useKeepAliveInfo()
+const route = useRoute()
 const sortList = ref([
     {
         id: 1,
@@ -95,7 +96,7 @@ const search = (text: string) => {
 const queryOrgList = async () => {
     nodeLoading.value = true
     const { code, data } = await getOrgList({
-        orderBy: orderBy.value, size: size.value, current: current.value, keyword: keyword.value
+        orderBy: orderBy.value, size: size.value, current: pageObj.current, keyword: keyword.value
     })
     nodeLoading.value = false
     if (code === 10000) {
@@ -103,8 +104,24 @@ const queryOrgList = async () => {
         pageObj.total = data.total
     }
 }
+
+
+const setKeepAliveInfo = ()=>{
+//    const comTabsKeep = keepAlive.getComTabs[route.path] || ''
+  const currentKeep = keepAlive.getCurrent[route.path] || ''
+  const searchParams = keepAlive.getSearchParams[route.path] || ''
+//   if(comTabsKeep)activekey.value = comTabsKeep
+  if(currentKeep) {
+      pageObj.current = currentKeep
+      return
+  }
+  keyword.value = searchParams['keyword'] // 反选效果
+  queryOrgList()
+}
+
+
 onMounted(() => {
-    queryOrgList()
+    setKeepAliveInfo()
 })
 </script>
 <style scoped lang='scss'>

@@ -10,6 +10,7 @@
       <el-table-column :label="t('common.actions')">
         <template #default="scope">
           <el-button
+            v-waves
             type="text"
             :disabled="!!(scope.row.publicFlag || scope.row.connectFlag)"
             circle
@@ -18,10 +19,12 @@
         </template>
       </el-table-column>
     </el-table>
-    <div
+    <div v-waves
       @click="dialogFormVisible = true"
       class="w-170px h-50px rounded-25px com-button my-40px absolute right-[0] cursor-pointer"
-    >{{ t('node.addNode') }}</div>
+    >
+        {{ t('node.addNode') }}
+    </div>
     <el-dialog
       v-model="dialogFormVisible"
       :width="600"
@@ -40,12 +43,14 @@
         <div>
           <el-button
             class="w-100px"
+             v-waves
             style="height: 40px;"
             round
             @click="cancel"
           >{{ t('common.cancel') }}</el-button>
           <el-button
             class="w-100px"
+             v-waves
             style="height: 40px;"
             round
             type="primary"

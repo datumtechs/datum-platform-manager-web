@@ -1,4 +1,4 @@
-<template>
+ v-waves <template>
   <div class="mt-50px step-two-wrap">
     <div class="flex items-center mb-36px text-14px">
       <div class="mr-20px text-color-[#666666]">{{ $t('task.selection') }} ：</div>
@@ -31,8 +31,8 @@
       :taskParams="props.taskParams" :disabledData="psiInputOne?.metaData" :key="'output'"
       @update:params="psiInputTwo = $event" :params="psiInputParams.two" :num="2" :orgList="props.orgList" />
     <div class="flex items-center pt-20px" v-if="!views">
-      <el-button round class="h-50px previous" @click="previous">{{ $t('common.previous') }}</el-button>
-      <el-button round class="h-50px previous ml-20px" @click="preserv">{{ $t('common.saveAndReturn') }}</el-button>
+      <el-button  v-waves round class="h-50px previous" @click="previous">{{ $t('common.previous') }}</el-button>
+      <el-button v-waves  round class="h-50px previous ml-20px" @click="preserv">{{ $t('common.saveAndReturn') }}</el-button>
       <NextButton @click="submit" />
     </div>
   </div>

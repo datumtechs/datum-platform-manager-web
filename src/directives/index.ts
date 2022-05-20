@@ -1,6 +1,4 @@
-import { show } from 'dom7'
-import { createApp, h } from 'vue'
-import Dom from './TooltipEllipsis.vue'
+// import { createApp, h } from 'vue'
 
 export const waves = {
   bind(el:any, binding:any) {
@@ -64,7 +62,6 @@ export const tableTooltip = {
           dom.classList.add('tooltip-ellipsis-content')
           const list: any = [...v?.children]
           list.forEach((item: any) => {
-            // item.classList.add('tooltip-ellipsis-content')
             dom.appendChild(item)            
           })
           dom.ondblclick = copy
@@ -78,7 +75,7 @@ export const tableTooltip = {
           }
         }
       })
-      //更新思路直接获取  el-tooltip 标签 缺陷导致重复
+      // 更新思路直接获取 el-tooltip 标签 缺陷导致重复
     }
   }
 }
@@ -127,7 +124,7 @@ const createTips = (el: any, text: string) => {
         greater =  dom.clientWidth - el.clientWidth
        }
       dom.style.left = el.getBoundingClientRect().left - (greater/2) +'px'
-      dom.style.top = el.getBoundingClientRect().top - 40 + 'px'
+      dom.style.top = el.getBoundingClientRect().top - 38 + 'px'
       dom.onmouseover = _popperOnmouseenter
       dom.onmouseleave = _popperOnmouseleave
   }
@@ -167,7 +164,7 @@ function copy (e:any) {
 
 
 
-const createAppVnode = (el: any,text:string): any => {
-  const app = createApp(h(Dom, {text}, {}))
-  app.mount(el)
-}
+// const createAppVnode = (el: any,text:string): any => {
+//   const app = createApp(h(Dom, {text}, {}))
+//   app.mount(el)
+// }

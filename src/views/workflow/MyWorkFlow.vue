@@ -22,13 +22,12 @@
       <ExpertTable v-loading="loading" v-if="activekey === 1" :data="tableData" @query="query" :size='size'
         :current="current" />
       <div class="flex my-50px justify-center">
-        <el-pagination background layout="prev, pager, next" @current-change="(_) => {
-          current = _
-          query()
-        }" :total="total" />
+        <el-pagination background layout="prev, pager, next" :total="total"  v-model:current-page="current" @current-change="query"/>
       </div>
     </div>
-    <Search :placeholder="t('workflow.placeholder')" @search="search" @reset="date = [],algValue = ''">
+    <Search :placeholder="t('workflow.placeholder')"
+    :keyword="keyword"
+    @search="search" @reset="date = [],algValue = ''">
       <template #content>
         <div>
           <div class="search-label  mt-20px mb-10px font-900">{{t('myData.TaskCategory')}}</div>
@@ -69,8 +68,10 @@
 import { getAlgTree } from '@/api/algorithm'
 import DataTable from './components/DataTable.vue';
 import ExpertTable from './components/ExpertTable.vue';
+import {useKeepAliveInfo } from '@/stores'
 import { queryWorkflowList, queryWorkflowStats } from '@/api/workflow/index'
 const { t, locale } = useI18n()
+const route = useRoute()
 const current = ref(1)
 const size = ref(10)
 const total = ref(0)
@@ -83,6 +84,7 @@ const date = ref()
 const algList = ref<any[]>([])
 const algValue = ref('')
 const keyword = ref('')
+const keepAlive = useKeepAliveInfo()
 
 const list = ref([
   {
@@ -121,14 +123,18 @@ const transferTimestamp = (str:string|undefined)=>{
 
 const query = () => {
   loading.value = true
-  queryWorkflowList({
+  const params:any = {
     createMode: createMode.value,
     current: current.value, size: 10, taskStatus: 'ALL',
     keyword:keyword.value,
     algorithmId: algValue.value,
     begin: transferTimestamp(date.value && date.value[0]) || null,
     end: transferTimestamp(date.value && date.value[1])|| null,
-  }).then(res => {
+  }
+  
+  keepAlive.setCurrent(current.value,route.path)
+  keepAlive.setSearchParams(params,route.path)
+  queryWorkflowList(params).then(res => {
     loading.value = false
     const { data, code } = res
     if (code === 10000) {
@@ -150,11 +156,17 @@ const getTaskStats = () => {
   })
 }
 
-onMounted(() => {
-  query()
-  getTaskStats()
-  queryAlg()
-})
+
+
+
+const setKeepAliveInfo = ()=>{
+   const comTabsKeep = keepAlive.getComTabs[route.path] || ''
+  const currentKeep = keepAlive.getCurrent[route.path] || ''
+  const searchParams = keepAlive.getSearchParams[route.path] || ''
+  if(comTabsKeep)activekey.value = comTabsKeep
+  if(currentKeep) current.value = currentKeep
+  keyword.value = searchParams['keyword'] // 反选效果
+}
 
 const queryAlg =()=>{
   getAlgTree().then(res => {
@@ -164,6 +176,13 @@ const queryAlg =()=>{
     }
   })
 }
+
+onMounted(() => {
+  setKeepAliveInfo()
+  query()
+  getTaskStats()
+  queryAlg()
+})
 
 </script>
 <style lang="scss">

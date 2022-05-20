@@ -12,10 +12,13 @@
   </div>
 </template>
 <script lang="ts" setup>
+import {useKeepAliveInfo } from '@/stores'
+const route = useRoute()
 const { t } = useI18n()
 const tabsItems = ref<any[]>([])
 const sliderWidth = ref(0)
 const translateX = ref(0)
+const keepAlive = useKeepAliveInfo()
 const props = defineProps({
   list: {
     type: Object, default: () => []
@@ -30,9 +33,6 @@ const emit = defineEmits(['change'])
 const { locale } = useI18n()
 
 watch(locale, (val, val1) => {
-  console.log(val);
-  console.log(val1);
-
   nextTick(() => {
     handleTabs(+activeIndex.value)
   })
@@ -43,6 +43,11 @@ const setItemRef = (el: any) => {
 }
 
 onMounted(() => {
+  // keepalive 与 props 优先级问题需要考虑  暂定有keepalive 优先
+  if(keepAlive.getComTabs[route.path]) {
+      handleTabs(keepAlive.getComTabs[route.path])
+      return
+  }
   nextTick(() => {
     if (tabsItems.value?.length) {
       handleTabs(+activeIndex.value)
@@ -50,8 +55,9 @@ onMounted(() => {
   })
 })
 
-const tabsClick = (index: string) => {
+const tabsClick = (index: string|number) => {
   handleTabs(+index)
+  keepAlive.setComTabs(+index,route.path)
   emit('change', +index)
 }
 

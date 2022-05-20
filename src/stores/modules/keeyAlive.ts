@@ -1,15 +1,30 @@
 import { defineStore } from "pinia";
 
-export default defineStore('keepAliveStamp', {
+export default defineStore('keepAliveInfo', {
     state: () => ({
-      stamp: Date.now()
+      comTabs: {},
+      current: {},
+      searchParams: {}
     }),
     getters: {
-      getStamp: state => state.stamp
+      getComTabs: state => state.comTabs   , 
+      getCurrent: state => state.current  ,  
+      getSearchParams: state => state.searchParams    
     },
     actions: {
-        setKeepAliveStamp() {
-            this.stamp = Date.now()
-        },
+      setComTabs(i:number,path:string) {
+          this.comTabs[path] = i
+      },
+      setCurrent(i:number,path:string) {
+          this.current[path] = i
+      },
+      setSearchParams(obj:any,path:string) {
+        this.searchParams[path] = obj
+    },
+      reset() {
+        this.comTabs = {}
+        this.current = {}
+        this.searchParams = {}
+      }
     }
 })

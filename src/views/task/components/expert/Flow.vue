@@ -1,13 +1,13 @@
 <template>
     <div class="flex-1 py-20px px-30px">
         <div class="btn-group">
-            <el-button :disabled="props.isReadonly" v-for="btn in btnList" round
+            <el-button v-waves :disabled="props.isReadonly" v-for="btn in btnList" round
                 @click="handleClick()">{{ btn.label }}
             </el-button>
         </div>
         <div id="mainStage" @dragover.stop="dragover($event)" class="mainStage"
             :class="{ showDot }">
-            <div v-for="(node, index) in nodeListWithStatus" :key="node.id"
+            <div v-for="(node, index) in nodeListWithStatus" v-waves :key="node.id"
                 class="node-box mb-100px" :class="{ 'node-arrow': index < nodeList.length - 1 }">
                 <div class="node cursor-pointer" @click="selectNode(node, index)"
                     :class="{ 'active-node': curNodeId === node.algorithmId }">
