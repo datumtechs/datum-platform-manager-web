@@ -19,12 +19,9 @@
                     <el-option v-for="(item, index) in modelOptions" :key="index"
                         :label="item.fileName" :value="item.modelId"></el-option>
                 </el-select>
-                <el-cascader v-else class="w-full" :key="modelKey" v-model="modelValue"
+                <el-cascader clearable v-else class="w-full" :key="modelKey" v-model="modelValue"
                     :disabled="props.isSettingCompleted || props.isReadonly" size="small" :span="12"
                     :props="{
-                        // checkStrictly: true,
-                        label: 'name', // label value
-                        value: 'code', // 指定选项的值为选项对象的某个属性值
                         lazy: true,
                         lazyLoad: (node, resolve) => {
                             modelLazyLoad(node, resolve)
@@ -37,27 +34,18 @@
                 {{ `${t('role.dataProvider')}-${index + 1}` }}
                 <!-- TODO 改名称为数据提供方 -->
             </p>
-            <!-- <p class> -->
-            <!-- <el-select size="mini">
-            <option v-for="item in orgs" :key="item.identityId" :label="item.label" :value="item.value"></option>
-                </el-select>-->
-            <el-cascader class="w-full mt-10px" :key="cascaderKey[index]"
+            <el-cascader clearable class="w-full mt-10px" :key="cascaderKey[index]"
                 v-model="inputValue[index]" :disabled="props.isSettingCompleted || props.isReadonly"
                 size="small" :span="12" :props="{
-                    // checkStrictly: true,
-                    label: 'name', // label value
-                    value: 'code', // 指定选项的值为选项对象的某个属性值
                     lazy: true,
                     lazyLoad: (node, resolve) => {
                         inputLazyLoad(node, resolve, index)
                     }
                 }" @change="e => { changeInputValue(e, index) }"></el-cascader>
-            <Transfer :isReadonly="props.isReadonly" :ref="setItemRef" :key="index"
-                :column-data="columnsList[index]" :transferIndex="index" :algorithm="algorithm"
-                @saveToStore="saveToStore">
+            <Transfer :inputValue="inputValue[index]" :isReadonly="props.isReadonly"
+                :ref="setItemRef" :key="index" :column-data="columnsList[index]"
+                :transferIndex="index" :algorithm="algorithm" @saveToStore="saveToStore">
             </Transfer>
-            <!-- <i v-if="index > minLen - 1" class="el-icon-delete delete-input-btn pointer" @click="delToInput(index)"></i> -->
-            <!-- </p> -->
         </div>
     </div>
 </template>
@@ -170,9 +158,15 @@ const getIdentity = (list: any) => {
     return list.map((item: any) => item[0])
 }
 
+const isDisabled = (item: any, index: number) => {
+    if (inputValueOrg.value[index] === item.identityId) {
+        return false
+    } else {
+        return item.disabled
+    }
+}
 
 const inputValueOrg = computed(() => inputValue.value.map((item: any) => item[0]))
-
 const inputLazyLoad = async (node: any, resolve: any, index: number) => {
     const { level, data } = node
     try {
@@ -180,24 +174,19 @@ const inputLazyLoad = async (node: any, resolve: any, index: number) => {
         if (level === 0) {
             setTimeout(() => {
                 if (inputValue.value.length) {
+                    console.log(inputValueOrg.value);
                     // 已做了选择
-                    const isDisabled = (item: any) => {
-                        if (inputValueOrg[index] === item.identityId) {
-                            return false
-                        } else {
-                            return item.disabled
-                        }
-                    }
+
                     nodes = orgList.value.map((org: any) => ({
-                        code: org.identityId,
-                        name: org.nodeName,
+                        value: org.identityId,
+                        label: org.nodeName,
                         leaf: level >= 2,
-                        disabled: isDisabled(org)
+                        disabled: isDisabled(org, index)
                     }))
                 } else {
                     nodes = orgList.value.map((org: any) => ({
-                        code: org.identityId,
-                        name: org.nodeName,
+                        value: org.identityId,
+                        label: org.nodeName,
                         leaf: level >= 2,
                         disabled: org.disabled
                     }))
@@ -205,11 +194,11 @@ const inputLazyLoad = async (node: any, resolve: any, index: number) => {
                 resolve(nodes)
             }, 300);
         } else if (level === 1) {
-            const params = { current: 1, size: 1000, identityId: node.data.code }
+            const params = { current: 1, size: 1000, identityId: node.data.value }
             const { code, data } = await queryUserDataList(params)
             const nextNodes = data.items.map((item: any) => ({
-                code: item.metaDataId,
-                name: item.metaDataName,
+                value: item.metaDataId,
+                label: item.metaDataName,
                 leaf: level >= 1 // >=2： 展示3级 >= 1： 展示2级
             }))
             resolve(nextNodes)
@@ -231,18 +220,18 @@ const modelLazyLoad = async (node: any, resolve: any) => {
         if (level === 0) {
             setTimeout(() => {
                 nodes = orgList.value.map((org: any) => ({
-                    code: org.identityId,
-                    name: org.nodeName,
+                    value: org.identityId,
+                    label: org.nodeName,
                     leaf: level >= 2
                 }))
                 resolve(nodes)
             }, 200)
         } else if (level === 1) {
-            const params = { algorithmId: algorithm.value.algorithmId, identityId: node.data.code }
+            const params = { algorithmId: algorithm.value.algorithmId, identityId: node.data.value }
             const { data } = await getUserModelList(params)
             const nextNodes = data.map((item: any) => ({
-                code: item.metaDataId,
-                name: item.fileName,
+                value: item.metaDataId,
+                label: item.fileName,
                 leaf: level >= 1 //  >=2： 展示3级 >= 1： 展示2级
             }))
             resolve(nextNodes)
