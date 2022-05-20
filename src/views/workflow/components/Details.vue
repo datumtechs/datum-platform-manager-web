@@ -80,7 +80,8 @@
         }" :total="total" />
       </div>
     </div>
-    <SetNameDialog v-model:show="showDialog" v-if="showDialog" @submit="copySubmit" />
+    <SetNameDialog v-model:show="showDialog" :beforeName="beforeName" v-if="showDialog"
+      @submit="copySubmit" />
     <GlobalPending v-model:show="pending.show" :content="pending.content" :title="pending.title" />
   </div>
 </template>
@@ -101,6 +102,7 @@ const workFlowName = ref('')
 const tableData = ref([])
 const { t, locale } = useI18n()
 const activeRow = ref<any>({})
+const beforeName = ref('')
 
 
 type Pending = {
@@ -120,7 +122,7 @@ const queryVersionList = () => {
     const { data, code }: any = res
     if (code === 10000) {
       tableData.value = data.items
-      const str = data.items[0]?.workflowVersionName
+      const str = data.items[data.items.length - 1]?.workflowVersionName
       const index = str.lastIndexOf("-v")
       workFlowName.value = str.substring(0, index)
       current.value = data.current
@@ -216,6 +218,7 @@ onMounted(() => {
 const copy = (row: any) => {
   showDialog.value = true
   activeRow.value = row
+  beforeName.value = workFlowName.value + '-v' + (total.value + 1)
 }
 const copySubmit = (name: string) => {
   copyWorkflow({

@@ -14,10 +14,10 @@
                 </div>
             </template>
         </el-table-column>
-        <el-table-column prop="createTime" :label="t('workflow.creationTime')" :width="180">
+        <el-table-column prop="createTime" :label="t('workflow.creationTime')">
             <template #default="scope">{{ useFormatTime(scope.row.createTime) }}</template>
         </el-table-column>
-        <el-table-column :label="t('common.actions')" :fixed="'right'">
+        <el-table-column :label="t('common.actions')">
             <template #default="{ row }">
 
                 <div v-if="!row.isSettingCompleted">
