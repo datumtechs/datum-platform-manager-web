@@ -25,12 +25,14 @@
           :label="t('workflow.creationTime')">
           <template #default="scope">{{ useFormatTime(scope.row.createTime) }}</template>
         </el-table-column>
-        <el-table-column :class-name="'show-ellipsis-tooltip'" prop="status" :label="t('workflow.state')">
+        <el-table-column :class-name="'show-ellipsis-tooltip'" prop="status"
+          :label="t('workflow.state')">
           <template #default="{ row }">
             {{ useWorkflowDetailsMap(row.status) || '-' }}
           </template>
         </el-table-column>
-        <el-table-column :class-name="'show-ellipsis-tooltip'" prop="beginTime" :label="t('computeTask.startTime')">
+        <el-table-column :class-name="'show-ellipsis-tooltip'" prop="beginTime"
+          :label="t('computeTask.startTime')">
           <template #default="{ row }">
             <div v-if="row.beginTime">
               {{ useFormatTime(row.beginTime) }}
@@ -40,8 +42,8 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column :class-name="'show-ellipsis-tooltip'" prop="endTime" :label="t('workflow.timeUse')"
-          :width="180">
+        <el-table-column :class-name="'show-ellipsis-tooltip'" prop="endTime"
+          :label="t('workflow.timeUse')" :width="180">
           <template #default="{ row }">
             <div v-if="row.beginTime">
               {{ useDuring(row.endTime - row.beginTime) }}
@@ -79,12 +81,13 @@
       </div>
     </div>
     <SetNameDialog v-model:show="showDialog" v-if="showDialog" @submit="copySubmit" />
+    <GlobalPending v-model:show="pending.show" :content="pending.content" :title="pending.title" />
   </div>
 </template>
 <script lang="ts" setup>
 import SetNameDialog from './SetNameDialog.vue'
 import { getWorkflowVersionList, copyWorkflow } from '@/api/workflow'
-import { useFormatTime, useDuring, useWorkflowDetailsMap } from '@/hooks'
+import { useFormatTime, useDuring, useWorkflowDetailsMap, useException } from '@/hooks'
 import { startWorkFlow } from '@/api/workflow'
 import { ElMessage } from 'element-plus';
 const web3: any = inject('web3')
@@ -98,6 +101,19 @@ const workFlowName = ref('')
 const tableData = ref([])
 const { t, locale } = useI18n()
 const activeRow = ref<any>({})
+
+
+type Pending = {
+  show: boolean,
+  content: string,
+  title: string,
+}
+
+const pending: Pending = reactive({
+  show: false,
+  content: '',
+  title: ''
+})
 
 const queryVersionList = () => {
   getWorkflowVersionList({ current: current.value, size: 10, workflowId }).then(res => {
@@ -145,30 +161,40 @@ const edit = (row: any) => {
 }
 
 const start = async (row: any) => {
-  const sign = await web3.signForWallet({ type: 'tx' })
-  console.log(sign);
-
-  if (sign) {
-    const res = await startWorkFlow({
-      sign,
-      workflowId: row.workflowId,
-      workflowVersion: row.workflowVersion,
-    })
-    console.log(res);
+  pending.show = true
+  pending.title = t('workflow.startWorkflow')
+  pending.content = `${t('workflow.startWorkflow')}:<span class="text-color-[#2B60E9]"> ${row.workflowVersionName}</span}>`
+  try {
+    const sign = await web3.signForWallet({ type: 'tx' })
+    pending.show = false
+    if (sign) {
+      const res = await startWorkFlow({
+        sign,
+        workflowId: row.workflowId,
+        workflowVersion: row.workflowVersion,
+      })
+      const { code } = res
+      if (code === 10000) {
+        ElMessage.success(t('workflow.startSuccess'))
+        queryVersionList()
+      }
+    }
+  } catch (error: any) {
+    pending.show = false
+    useException(error.code)
   }
-
 }
 
 const details = (row: any) => {
   if (row.createMode == 2) {
     router.push({
-        name: 'wizardMode', params: {
-          workflowId: row.workflowId,
-          workflowVersion: row.workflowVersion,
-          views:'view'
-        }
-      })
-      return
+      name: 'wizardMode', params: {
+        workflowId: row.workflowId,
+        workflowVersion: row.workflowVersion,
+        views: 'view'
+      }
+    })
+    return
   }
   router.push({
     name: 'expertModel', params: {
@@ -199,15 +225,12 @@ const copySubmit = (name: string) => {
   }).then(res => {
     const { code } = res
     if (code == 10000) {
-      ElMessage.success(t('common.success'))
+      ElMessage.success(t('workflow.copySuccess'))
       showDialog.value = false
       queryVersionList()
     }
   })
 }
-
-const payment = () => { }
-const startUp = () => { }
 </script>
 <style lang="scss" scoped>
 </style>

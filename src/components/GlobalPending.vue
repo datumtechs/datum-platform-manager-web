@@ -1,11 +1,14 @@
 <template>
-    <el-dialog v-model="props.show" :title="title" width="20%" :before-close="handleClose">
+    <el-dialog v-model="props.show" :title="props.title" width="20%" :before-close="handleClose">
         <div class="pending-wrapper">
-            <img class="w-140px h-140px" src="@/assets/images/global/pending-98.gif" alt="">
+            <img class="w-100px " src="@/assets/images/global/pending.svg" alt="">
             <div>
-                <p class="text-24px mt-20px">{{ t('auth.waitForConfirm') }}</p>
-                <p class="text-16px my-30px">{{ content }}</p>
-                <p class="text-14px mb-20px">{{ t('auth.waitWalletConfirm') }}</p>
+                <p class="text-16px my-10px text-color-[#333] font-medium">{{
+                        t('auth.waitForConfirm')
+                }}</p>
+                <p class="text-14px text-color-[#666] leading-22px" v-html="props.content">
+                </p>
+                <p class="text-14px mb-50px leading-22px">{{ t('auth.waitWalletConfirm') }}</p>
             </div>
         </div>
     </el-dialog>
@@ -17,7 +20,7 @@ const emits = defineEmits(['update:show'])
 const props = defineProps({
     show: {
         type: Boolean,
-        default: true
+        default: false
     },
     title: {
         type: String,
@@ -40,7 +43,6 @@ const handleClose = () => {
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    margin-bottom: 40px;
     text-align: center;
 }
 </style>
