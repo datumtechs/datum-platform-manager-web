@@ -105,7 +105,6 @@ const queryTableData = async () => {
 }
 
 watch(() => pageObj.current, () => {
-    tableData.value :class-name="'show-ellipsis-tooltip'"
     queryTableData()
 });
 
