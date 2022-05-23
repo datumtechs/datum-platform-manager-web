@@ -114,7 +114,11 @@ const handParams = (obj: any) => {
         dataColumnIds: obj?.feature.map((_: any) => _.columnIdx).join(',')
       }
       resolve(item)
-    } catch (e) { reject('err') }
+    } catch (e) {
+      ElMessage.closeAll()
+      ElMessage.warning(t('task.selectData'))
+      reject('err')
+   }
   })
 }
 

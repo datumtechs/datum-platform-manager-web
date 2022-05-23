@@ -21,31 +21,13 @@
                 v.name
               }}</p>
               <div class="com-button w-120px h-40px mx-20px rounded-20px cursor-pointer"
-                @click="createTask(v)">{{ t('menu.createTask') }}</div>
+                @click="createTask(v,item)">{{ t('menu.createTask') }}</div>
             </div>
           </div>
         </div>
       </div>
       <el-empty :description="t('common.noData')"
         v-show="activekey === 0 ? !list.privacy?.length : !list.noPrivacy?.length" />
-      <!--
-      <div class="w-full mt-50px">
-        <h5
-          class="text-20px text-color-[#333333] mb-20px font-600"
-        >{{ t('computing.privacyAIComputing') }}</h5>
-        <div class="flex flex-wrap">
-          <div
-            class="w-317px box-flex-w h-265px overflow-hidden rounded-8px border-1px border-solid border-color-[#eeeeee]"
-          >
-            <img class="w-full h-135px border-top" />
-            <p class="text-16px text-color-[#333333] font-600 px-20px pt-20px pb-24px">XXXXXX</p>
-            <div class="flex w-full px-20px">
-              <div class="com-button w-120px h-40px rounded-20px">{{ t('menu.createTask') }}</div>
-            </div>
-          </div>
-        </div>
-      </div>
-      -->
     </div>
   </div>
 </template>
@@ -82,8 +64,8 @@ const query = () => {
     }
   })
 }
-const createTask = (row: any) => {
-  router.push({ name: "createTask", params: { ...row } })
+const createTask = (row: any,item:any) => {
+  router.push({ name: "wizardMode", params: { calculationType:item.id ,algorithmId:row.id} })
 }
 
 onMounted(() => {

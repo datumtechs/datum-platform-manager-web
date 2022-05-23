@@ -3,7 +3,7 @@
         <Banner :back-show="true" :bg-name="'clocksWatches'" :showRouter="false"
             :detailName="detailName" @back="router.go(-1)">
             <template #select>
-                <ComTabs :list="hasModel ? list : modelList" :activekey="activekey"
+                <ComTabs :keep="false" :list="hasModel ? list : modelList" :activekey="activekey"
                     @change="tabsChange" />
             </template>
         </Banner>

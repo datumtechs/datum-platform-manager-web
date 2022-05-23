@@ -3,7 +3,7 @@
     <Banner :back-show="true" :bg-name="'market'" @back="router.go(-1)" :detailName="dataName"
       :showRouter="false">
       <template #select>
-        <ComTabs :list="list" :activekey="activekey" @change="tabsChange" />
+        <ComTabs :keep="false" :list="list" :activekey="activekey" @change="tabsChange" />
       </template>
     </Banner>
     <div class="com-main-data-wrap">

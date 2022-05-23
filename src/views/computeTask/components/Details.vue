@@ -2,7 +2,7 @@
   <div class="flex-1 task-wrap com-main">
     <Banner :back-show="true" :bg-name="'clocksWatches'" @back="router.go(-1)">
       <template #select>
-        <ComTabs :list="list" :activekey="activekey" @change="tabsChange" />
+        <ComTabs :keep="false" :list="list" :activekey="activekey" @change="tabsChange" />
       </template>
     </Banner>
     <div class="com-main-data-wrap mt-63px">
