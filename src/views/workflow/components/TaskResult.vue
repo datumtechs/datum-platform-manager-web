@@ -91,7 +91,7 @@ const queryResultData = () => {
             tableData.value[1].rProp = data.taskType
             tableData.value[2].lProp = useFormatTime(data.createTime)
             tableData.value[2].rProp = useFormatTime(data.endAt)
-            tableData.value[3].lProp = useDuring(data.endAt - data.createTime)
+            tableData.value[3].lProp = useDuring(data.endAt , data.createTime)
             tableData.value[3].rProp = data.taskResultList
 
         }

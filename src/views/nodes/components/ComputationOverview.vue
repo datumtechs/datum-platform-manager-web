@@ -91,7 +91,7 @@ const getTaskDetail = async () => {
         baseData[1].lProp = useFormatTime(data.startAt) + ''
         baseData[1].rProp = useFormatTime(data.endAt) + ''
 
-        baseData[2].lProp = useDuring(data.endAt - data.startAt)
+        baseData[2].lProp = useDuring(data.endAt , data.startAt)
         baseData[2].rProp = data.status
 
         baseData[3].lProp['cpu'].value = data.requiredCore
