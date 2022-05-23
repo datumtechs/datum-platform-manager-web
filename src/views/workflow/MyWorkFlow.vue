@@ -27,7 +27,7 @@
     </div>
     <Search :placeholder="t('workflow.placeholder')"
     :keyword="keyword"
-    @search="search" @reset="date = [],algValue = ''">
+    @search="search" @reset="reset">
       <template #content>
         <div>
           <div class="search-label  mt-20px mb-10px font-900">{{t('myData.TaskCategory')}}</div>
@@ -109,6 +109,8 @@ const tabsChange = (index: string) => {
   createMode.value = index == '0' ? 2 : 1
   keyword.value = ''
   current.value = 1
+  algValue.value = '',
+  date.value = []
 }
 
 const transferTimestamp = (str:string|undefined)=>{
@@ -120,6 +122,11 @@ const transferTimestamp = (str:string|undefined)=>{
   }
 }
 
+const reset = ()=>{
+  current.value = 1
+  date.value = []
+  algValue.value = ''
+}
 
 const query = () => {
   loading.value = true
@@ -133,7 +140,7 @@ const query = () => {
   }
   
   keepAlive.setCurrent(current.value,route.path)
-  keepAlive.setSearchParams(params,route.path)
+  keepAlive.setSearchParams({...params, date},route.path)
   queryWorkflowList(params).then(res => {
     loading.value = false
     const { data, code } = res
@@ -160,12 +167,14 @@ const getTaskStats = () => {
 
 
 const setKeepAliveInfo = ()=>{
-   const comTabsKeep = keepAlive.getComTabs[route.path] || ''
+  const comTabsKeep = keepAlive.getComTabs[route.path] || ''
   const currentKeep = keepAlive.getCurrent[route.path] || ''
   const searchParams = keepAlive.getSearchParams[route.path] || ''
   if(comTabsKeep)activekey.value = comTabsKeep
   if(currentKeep) current.value = currentKeep
   keyword.value = searchParams['keyword'] // 反选效果
+  algValue.value = searchParams['algorithmId']
+  date.value = searchParams['date']
 }
 
 const queryAlg =()=>{

@@ -13,12 +13,10 @@
       <DataTable :data="tableData" @purchase="purchase" @viewData="viewData" :loading="dataLoading"
         @viewCredential="viewCredential" />
       <div class="flex my-50px justify-center">
-        <el-pagination background layout="prev, pager, next" @current-change="(_) => {
-          current = _
-        }" :total="total" />
+        <el-pagination background layout="prev, pager, next" @current-change="query" v-model:current-page="current" :total="total" />
       </div>
     </div>
-    <Search :showFilter="false" @search="search" @reset="keyword = ''"
+    <Search :keyword="keyword" :showFilter="false" @search="search"
       :placeholder="t('myData.marketPlaceholder')"></Search>
   </div>
 </template>
@@ -26,9 +24,13 @@
 import DataTable from './components/DataTable.vue'
 import { type Router, useRouter } from 'vue-router'
 import { queryUserDataList, queryDataStats } from '@/api/data'
+import {useKeepAliveInfo } from '@/stores'
+const keepAlive = useKeepAliveInfo()
+
 const { t } = useI18n()
 const chainCfg: any = inject('chainCfg')
 const router: Router = useRouter()
+const route = useRoute()
 const tableData = ref([])
 const current = ref(1)
 const total = ref(0)
@@ -59,8 +61,9 @@ const search = (str: string) => {
   query()
 }
 
-const query = () => {
+const query = () => { 
   dataLoading.value = true
+   keepAlive.setCurrent(current.value,route.path)
   queryUserDataList({ current: current.value, size: 10, keyword: keyword.value }).then(res => {
     const { data, code } = res
     dataLoading.value = false
@@ -83,6 +86,8 @@ const queryTotal = () => {
 }
 
 onMounted(() => {
+  const currentKeep = keepAlive.getCurrent[route.path] || ''
+  if(currentKeep) current.value = currentKeep
   query()
   queryTotal()
 })

@@ -45,10 +45,10 @@
     </div>
     <div class="flex my-50px justify-center">
       <el-pagination background layout="prev, pager, next" v-model:current-page="pageObj.current"
-        v-model:page-size="pageObj.size" :total="pageObj.total" />
+        v-model:page-size="pageObj.size" :total="pageObj.total" @current-change="queryList" />
     </div>
-    <Search :placeholder="t('computeTask.placeholder')" @search="search"
-      @reset="taskStatus = 'ALL', keyword = ''">
+    <Search :keyword="keyword" :placeholder="t('computeTask.placeholder')" @search="search"
+      @reset="reset">
       <template #content>
         <!-- <div class="search-label  mt-20px mb-10px font-900">{{ t('myData.TaskCategory') }}</div>
         <el-select class="w-full picker-rounded" clearable v-model="algValue"
@@ -66,18 +66,22 @@
         </el-radio-group>
         <div class="search-label mt-20px mb-10px font-bold">{{ t('common.timeFrame') }}</div>
         <el-date-picker class="picker-rounded" v-model="date" type="daterange"
-          value-format="YYYY-MM-DD" :range-separator="t('common.to')"
+          value-format="YYYY-MM-DD" :range-separator="t('common.to')"  :teleported="false"
           :start-placeholder="t('node.startTime')" :end-placeholder="t('common.endTime')" />
       </template>
     </Search>
   </div>
 </template>
 <script lang="ts" setup>
-import { getAlgTree } from '@/api/algorithm'
+// import { getAlgTree } from '@/api/algorithm'
 import { type Router, useRouter } from 'vue-router'
 import { queryTaskList } from '@/api/task'
 import { useFormatTime, useDuring, useTableIndex, useGlobalTaskMap } from '@/hooks'
+import {useKeepAliveInfo } from '@/stores'
+const keepAlive = useKeepAliveInfo()
+
 const router: Router = useRouter()
+const route = useRoute()
 const { t } = useI18n()
 
 const loading = ref(false)
@@ -88,16 +92,12 @@ const pageObj = reactive({
   size: 10
 })
 const date = ref()
-const algList = ref<any[]>([])
-const algValue = ref('')
+
 const keyword = ref('')
 const taskStatus = ref('ALL')
 
 
 const indexMethod = (index: number) => useTableIndex(index, pageObj.current, pageObj.size)
-watch(() => pageObj.current, (newValue, oldValue) => {
-  queryList()
-});
 
 const search = (str: string) => {
   keyword.value = str
@@ -130,15 +130,34 @@ const transferTimestamp = (str: string | undefined) => {
   }
 }
 
+const setKeepAliveInfo = ()=>{
+  const currentKeep = keepAlive.getCurrent[route.path] || ''
+  const searchParams = keepAlive.getSearchParams[route.path] || ''
+  if(currentKeep) pageObj.current = currentKeep
+  keyword.value = searchParams['keyword'] // 反选效果
+  date.value = searchParams['date']
+  taskStatus.value = searchParams['taskStatus'] || 'ALL'
+}
+
+const reset = ()=>{
+  taskStatus.value = 'ALL'
+  date.value = []
+  pageObj.current = 1
+}
+
 const queryList = () => {
   loading.value = true
-  queryTaskList({
-    current: pageObj.current, size: pageObj.size, taskStatus: taskStatus.value,
+  const params:any = {
+    current: pageObj.current, size: pageObj.size,
+    taskStatus: taskStatus.value,
     keyword: keyword.value,
-    algorithmId: algValue.value,
     begin: transferTimestamp(date.value && date.value[0]) || null,
     end: transferTimestamp(date.value && date.value[1]) || null,
-  }).then(res => {
+   }
+   console.log(1)
+  keepAlive.setCurrent(pageObj.current,route.path)
+  keepAlive.setSearchParams({...params, date},route.path)
+  queryTaskList(params).then(res => {
     const { data, code } = res
     if (code === 10000) {
       tableData.value = data.items
@@ -158,19 +177,20 @@ const viewData = (obj: any) => {
   })
 }
 
-const queryAlg = () => {
-  getAlgTree().then(res => {
-    const { data, code } = res
-    if (code === 10000) {
-      algList.value = data?.childrenList[0]?.childrenList
-    }
-  })
-}
+// const queryAlg = () => {
+//   getAlgTree().then(res => {
+//     const { data, code } = res
+//     if (code === 10000) {
+//       algList.value = data?.childrenList[0]?.childrenList
+//     }
+//   })
+// }
 
 
 onMounted(() => {
+  setKeepAliveInfo()
   queryList()
-  queryAlg()
+  // queryAlg()
 })
 </script>
 <style lang="scss">

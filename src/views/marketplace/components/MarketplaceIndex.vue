@@ -1,9 +1,14 @@
 <script lang="ts" setup>
 import { queryDataList } from '@/api/data'
 import { useTableIndex } from '@/hooks'
+import {useKeepAliveInfo } from '@/stores'
+const keepAlive = useKeepAliveInfo()
+
 const { t, locale } = useI18n()
-const total = ref(0)
+// const total = ref(0)
 const router = useRouter()
+const route = useRoute()
+
 
 const chainCfg: any = inject('chainCfg')
 
@@ -11,6 +16,7 @@ const chainCfg: any = inject('chainCfg')
 interface PageParams {
     current: number,
     size: number,
+    total:number,
     fileType?: string,
     industry?: string,
     keyword?: string,
@@ -20,6 +26,7 @@ interface PageParams {
 }
 const pageParams: PageParams = reactive({
     current: 1,
+    total:0,
     size: 10,
     fileType: 'CSV',
     industry: '',
@@ -29,11 +36,11 @@ const pageParams: PageParams = reactive({
     orderBy: 'PUBLISHED',
 })
 
-const pageObj = reactive({
-    total: 0,
-    current: 1,
-    size: 10
-})
+// const pageObj = reactive({
+//     total: 0,
+//     current: 1,
+//     size: 10
+// })
 
 const marketLoading = ref(false)
 
@@ -83,8 +90,24 @@ const linkToViewData = (row: any) => {
     })
 }
 
+const setKeepAliveInfo = ()=>{
+  const currentKeep = keepAlive.getCurrent[route.path] || ''
+  const searchParams = keepAlive.getSearchParams[route.path] || ''
+  if(currentKeep) pageParams.current = currentKeep
+  pageParams.keyword = searchParams['keyword'] // 反选效果
+  pageParams.orderBy = searchParams['orderBy'] || 'PUBLISHED'
+}
+
+const reset = ()=>{
+  pageParams.current = 1
+  pageParams.orderBy = 'PUBLISHED'
+}
+
+
 const queryTableData = async () => {
     marketLoading.value = true
+    keepAlive.setCurrent(pageParams.current,route.path)
+    keepAlive.setSearchParams(pageParams,route.path)
     const { code, data } = await queryDataList({
         current: pageParams.current,
         size: pageParams.size,
@@ -100,15 +123,16 @@ const queryTableData = async () => {
     marketLoading.value = false
     if (code === 10000) {
         tableData.value = data.items
-        total.value = data.total
+        pageParams.total = data.total
     }
 }
 
-watch(() => pageObj.current, () => {
-    queryTableData()
-});
+// watch(() => pageObj.current, () => {
+//     queryTableData()
+// });
 
 onMounted(() => {
+    setKeepAliveInfo()
     queryTableData()
 })
 
@@ -117,8 +141,8 @@ onMounted(() => {
     <div class="flex-1 task-wrap">
         <Banner :bg-name="'market'">
             <template #briefInfo>
-                <p v-if="locale === 'zh'">全网共 {{ total }} 可参与隐私计算的有效数据</p>
-                <p v-else>{{ total }} participant data in the privacy computing network</p>
+                <p v-if="locale === 'zh'">全网共 {{ pageParams.total }} 可参与隐私计算的有效数据</p>
+                <p v-else>{{ pageParams.total }} participant data in the privacy computing network</p>
             </template>
         </Banner>
         <div class="main-content mt-30px max-w-1200px mx-auto overflow-hidden">
@@ -155,12 +179,13 @@ onMounted(() => {
             </el-table>
         </div>
         <div class="flex my-50px justify-center">
-            <el-pagination background v-model:current-page="pageObj.current"
-                v-model:page-size="pageObj.size" layout="prev, pager, next"
-                :total="pageObj.total" />
+            <el-pagination background  v-model:current-page="pageParams.current" @current-change="queryTableData"
+                v-model:page-size="pageParams.size" layout="prev, pager, next"
+                :total="20" />
+                <!-- :total="pageParams.total" /> -->
         </div>
-        <Search :placeholder="t('myData.marketPlaceholder')" @search="search"
-            @reset="pageParams.orderBy = 'PUBLISHED'">
+        <Search :keyword="pageParams.keyword" :placeholder="t('myData.marketPlaceholder')" @search="search"
+            @reset="reset">
             <template #content>
                 <p class="search-label mb-10px">
                     {{ t('node.sortBy') }}

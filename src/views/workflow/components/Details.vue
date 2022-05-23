@@ -1,7 +1,7 @@
 <template>
   <div class="flex-1">
     <Banner :bg-name="'clocksWatches'" :showRouter="false" :detailName="workFlowName"
-      :backShow="true" @back="$router.go(-1)">
+      :backShow="true" @back="$router.go(-1),  keepAlive.setCurrent(0,route.path)">
       <template #briefInfo>
         <p class="text-color-[#999999] ml-60px">
           {{ locale == 'zh' ? `共 ${total} 条该工作流的运行记录` : `${total}
@@ -104,9 +104,9 @@
 </template>
 <script lang="ts" setup>
 import SetNameDialog from './SetNameDialog.vue'
-import { getWorkflowVersionList, copyWorkflow } from '@/api/workflow'
+import {useKeepAliveInfo } from '@/stores'
+import { getWorkflowVersionList, copyWorkflow,startWorkFlow } from '@/api/workflow'
 import { useFormatTime, useDuring, useWorkflowDetailsMap, useException } from '@/hooks'
-import { startWorkFlow } from '@/api/workflow'
 import { ElMessage } from 'element-plus';
 const web3: any = inject('web3')
 const showDialog = ref(false)
@@ -120,6 +120,7 @@ const tableData = ref([])
 const { t, locale } = useI18n()
 const activeRow = ref<any>({})
 const beforeName = ref('')
+const keepAlive = useKeepAliveInfo()
 
 
 type Pending = {
@@ -135,6 +136,7 @@ const pending: Pending = reactive({
 })
 
 const queryVersionList = () => {
+  keepAlive.setCurrent(current.value,route.path)
   getWorkflowVersionList({ current: current.value, size: 10, workflowId }).then(res => {
     const { data, code }: any = res
     if (code === 10000) {
@@ -228,6 +230,8 @@ const details = (row: any) => {
 
 
 onMounted(() => {
+  const currentKeep = keepAlive.getCurrent[route.path] || ''
+  if(currentKeep) current.value = currentKeep
   queryVersionList()
 })
 

@@ -32,13 +32,11 @@
 
 import { Search } from '@element-plus/icons-vue'
 import { useDebounceFn } from '@vueuse/core'
-import { onBeforeRouteLeave } from 'vue-router';
 const input1 = ref('')
 const visible = ref(false)
 const asyncVisible = ref(false)
 const { t } = useI18n()
 const route = useRoute()
-// const popoverKey = ref(Date.now())
 const props = defineProps({
   placeholder: {
     type: String,
@@ -94,9 +92,12 @@ const cancel = () => {
   popoverRefHide()
 }
 const reset = () => {
-  input1.value = ''
   emit('reset')
-  emit('search', input1.value)
+  if(input1.value){
+    input1.value = ''
+  }else{
+    emit('search', input1.value)
+  }
   unref(popoverRef).afterLeave(() => {
     console.log(123)
   })
