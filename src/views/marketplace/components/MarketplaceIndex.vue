@@ -181,8 +181,7 @@ onMounted(() => {
         <div class="flex my-50px justify-center">
             <el-pagination background  v-model:current-page="pageParams.current" @current-change="queryTableData"
                 v-model:page-size="pageParams.size" layout="prev, pager, next"
-                :total="20" />
-                <!-- :total="pageParams.total" /> -->
+                :total="pageParams.total" />
         </div>
         <Search :keyword="pageParams.keyword" :placeholder="t('myData.marketPlaceholder')" @search="search"
             @reset="reset">
