@@ -2,8 +2,8 @@
     <div class="decorate-wrapper">
         <Banner :bg-name="'network'">
             <template #briefInfo>
-                <p v-if="locale === 'zh'">全网共 {{ pageObj.total }} 个可参与隐私计算任务的节点</p>
-                <p v-else>{{ pageObj.total }} participant nodes in the privacy computing network</p>
+                <p v-if="locale === 'zh'">全网共 {{ total }} 个可参与隐私计算任务的节点</p>
+                <p v-else>{{ total }} participant nodes in the privacy computing network</p>
             </template>
         </Banner>
         <div v-loading="nodeLoading"
@@ -34,7 +34,7 @@
 
 <script setup lang='ts'>
 import NodeCard from './NodeCard.vue'
-import { getOrgList } from '@/api/node'
+import { getOrgList,getOrgStats } from '@/api/node'
 import {useKeepAliveInfo } from '@/stores'
 const { t, locale } = useI18n()
 // const totalNode = ref(1876)
@@ -84,7 +84,7 @@ const pageObj = reactive({
     current: 1,
     size: 10
 })
-
+const total = ref(0)
 // watch(() => pageObj.current, () => {
 //     queryOrgList()
 // })
@@ -118,6 +118,12 @@ const queryOrgList = async () => {
         pageObj.total = data.total
     }
 }
+const queryOrgStats = async () => {
+    const { code, data } = await getOrgStats({})
+    if (code === 10000) {
+        total.value = data.orgCount
+    }
+}
 
 
 const setKeepAliveInfo = ()=>{
@@ -132,6 +138,7 @@ const setKeepAliveInfo = ()=>{
 onMounted(() => {
     setKeepAliveInfo()
     queryOrgList()
+    queryOrgStats()
 })
 </script>
 <style scoped lang='scss'>
