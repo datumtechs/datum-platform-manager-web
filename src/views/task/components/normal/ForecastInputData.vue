@@ -113,6 +113,9 @@ const handParams = (obj: any) => {
         dependentVariable: obj?.label.columnIdx,
         dataColumnIds: obj?.feature.map((_: any) => _.columnIdx).join(',')
       }
+      if(!item.identityId || !item.metaDataId || !item.keyColumn){
+        throw 'err'
+      }
       resolve(item)
     } catch (e) {
       ElMessage.closeAll()

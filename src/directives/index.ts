@@ -148,6 +148,8 @@ function cleanDom() {
   }
 }
 
+export const cleanFn = cleanDom
+
 function copy (e:any) {
   const text:any = e.target.innerText
   e.target.style.backgroundColor="颜色值"
