@@ -2,7 +2,7 @@
   <div class="flex-1 task-wrap com-main">
     <Banner :back-show="true" :bg-name="'clocksWatches'" @back="router.go(-1)">
       <template #select>
-        <ComTabs :list="list" :activekey="activekey" @change="tabsChange" />
+        <ComTabs :keep="false" :list="list" :activekey="activekey" @change="tabsChange" />
       </template>
     </Banner>
     <div class="com-main-data-wrap mt-63px">
@@ -92,7 +92,7 @@ const getTaskDetail = async () => {
     baseData[1].lProp = useFormatTime(data.startAt) + ''
     baseData[1].rProp = useFormatTime(data.endAt) + ''
 
-    baseData[2].lProp = useDuring(data.endAt - data.startAt)
+    baseData[2].lProp = useDuring(data.endAt , data.startAt)
     baseData[2].rProp = data.status
 
     baseData[3].lProp['cpu'].value = data.requiredCore

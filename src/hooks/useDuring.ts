@@ -1,5 +1,7 @@
 import i18n from '@/i18n'
-const useDuring = (time: number) => {
+const useDuring = (endAt: number, startAt: number) => {
+    if (!startAt) return "00:00:00"
+    const time = endAt - startAt
     let hours = parseInt(`${time / (1000 * 60 * 60)}`, 10)
     const minutes = parseInt(`${(time % (1000 * 60 * 60)) / (1000 * 60)}`, 10)
     const seconds = parseInt(`${(time % (1000 * 60)) / 1000}`, 10)

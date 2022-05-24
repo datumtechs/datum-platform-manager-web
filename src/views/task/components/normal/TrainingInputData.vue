@@ -39,6 +39,7 @@ import { CaretBottom } from '@element-plus/icons-vue'
 import NextButton from './NextButton.vue'
 import { setWorkflowOfWizardMode } from '@/api/workflow'
 const router: any = useRouter()
+const {t} = useI18n()
 const emit = defineEmits(['previous', 'getParams', 'next'])
 const props: any | { orgList: any } = defineProps({
   noticeText: {
@@ -103,7 +104,11 @@ const handParams = (obj: any) => {
         dataColumnIds: obj?.feature.map((_: any) => _.columnIdx).join(',')
       }
       resolve(item)
-    } catch (e) { reject('err') }
+    } catch (e) {
+        ElMessage.closeAll()
+        ElMessage.warning(t('task.selectData'))
+       reject('err') 
+    }
   })
 }
 

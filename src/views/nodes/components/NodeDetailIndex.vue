@@ -1,7 +1,7 @@
 <template>
     <div class="main-content mt-30px max-w-1200px mx-auto overflow-hidden">
         <div class="inline-block h-50px">
-            <ComTabs :list="list" :activekey="activekey" @change="tabsChange" />
+            <ComTabs :keep="false" :list="list" :activekey="activekey" @change="tabsChange" />
         </div>
         <DataTable v-if="activekey === 0" :identityId="identityId" />
         <ComputationTable v-else :identityId="identityId" />

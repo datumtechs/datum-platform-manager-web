@@ -25,6 +25,10 @@ const props = defineProps({
   },
   activekey: {
     type: Number, default: 0
+  },
+  keep:{
+    type: Boolean,
+    default: true
   }
 })
 const activeIndex = ref(props.activekey)
@@ -48,6 +52,7 @@ onMounted(() => {
       handleTabs(keepAlive.getComTabs[route.path])
       return
   }
+  console.log(props.keep)
   nextTick(() => {
     if (tabsItems.value?.length) {
       handleTabs(+activeIndex.value)
@@ -57,7 +62,7 @@ onMounted(() => {
 
 const tabsClick = (index: string|number) => {
   handleTabs(+index)
-  keepAlive.setComTabs(+index,route.path)
+  if(typeof props.keep === 'undefined' || props.keep )keepAlive.setComTabs(+index,route.path)
   emit('change', +index)
 }
 

@@ -47,7 +47,7 @@
           :label="t('workflow.timeUse')" :width="180">
           <template #default="{ row }">
             <div v-if="row.beginTime">
-              {{ useDuring(row.endTime - row.beginTime) }}
+              {{ useDuring(row.endTime , row.beginTime) }}
             </div>
             <div v-else>
               -

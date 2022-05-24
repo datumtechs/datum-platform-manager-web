@@ -202,7 +202,7 @@ const zh = {
     featureTips: "监督学习中，通过寻找特征(X)与实际标签(Y)之间的关系，以实现当提供X时能预测Y。",
     resultReceiverTips: "结果接收方是用于存储本次计算结果文件的可信任节点，节点后续可提供给用户查看/下载结果的功能。",
     runSucceed: '任务运行成功',
-    runFailed: '任务运行失败'
+    runFailed: '任务运行失败',
   },
   myData: {
     tasksBriefInfoFirstParagraph: "全网共",

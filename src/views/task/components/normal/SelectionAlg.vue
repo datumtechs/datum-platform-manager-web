@@ -54,6 +54,7 @@ import { postCreateWorkflowWizard } from '@/api/workflow'
 import NextButton from './NextButton.vue'
 import { useWorkFlow } from '@/stores'
 const { locale, t } = useI18n()
+const route:any = useRoute()
 const store = useWorkFlow()
 const algList: any = ref<any[]>([])//算法列表 //最外层
 const algTypelist = computed(() => algList.value.filter((v: any) => v.id == form.calculationType))//具体算法
@@ -87,8 +88,8 @@ watch(() => props.processList, (e) => {
 
 const form: any = reactive({
   workflowName: "",
-  calculationType: undefined,
-  algorithmId: undefined,
+  calculationType: +route.params?.calculationType || undefined,
+  algorithmId:  +route.params?.algorithmId || undefined,
   calculationProcessId: undefined,
   workflowDesc: ""
 })

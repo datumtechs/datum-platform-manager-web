@@ -33,6 +33,8 @@ import TaskParamsTransfer from '@/components/TaskParamsTransfer.vue';
 import { CaretBottom } from '@element-plus/icons-vue'
 import NextButton from './NextButton.vue'
 import { setWorkflowOfWizardMode } from '@/api/workflow'
+import { ElMessage } from 'element-plus';
+const {t} = useI18n()
 const router: any = useRouter()
 const emit = defineEmits(['previous', 'getParams', 'next'])
 const props: any = defineProps({
@@ -98,7 +100,11 @@ const handParams = (obj: any) => {
         // dataColumnIds: obj?.feature.map((_: any) => _.columnIdx)
       }
       resolve(item)
-    } catch (e) { reject('err') }
+    } catch (e) {
+      ElMessage.closeAll()
+      ElMessage.warning(t('task.selectData'))
+       reject('err')
+    }
   })
 }
 

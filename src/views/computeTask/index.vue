@@ -31,7 +31,7 @@
         </el-table-column>
         <el-table-column :label="t('computeTask.totalTime')">
           <template #default="{ row }">
-            <div>{{ useDuring(row.endAt - row.startAt) }}</div>
+            <div>{{  useDuring(row.endAt , row.startAt) }}</div>
           </template>
         </el-table-column>
         <el-table-column :label="t('common.actions')">

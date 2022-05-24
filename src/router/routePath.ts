@@ -156,7 +156,7 @@ export default [
     // component: () => import('@/views/task/CreateTask.vue'),
     component: () => import('@/views/task/index.vue'),
     children: [{
-      path: '/createWorkFlow/wizardMode/:views?/:workflowId?/:workflowVersion?',
+      path: '/createWorkFlow/wizardMode/:workflowId?/:workflowVersion?/:views?',
       name: "wizardMode",
       meta: {
         label: 'menu.createTask',
