@@ -50,7 +50,8 @@ const zh = {
     endTime: "结束时间",
     timeFrame: "时间范围",
     reset: "重置",
-    computeTimes: "计算次数"
+    computeTimes: "计算次数",
+    create: '创建'
   },
   menu: {
     home: '首页',
@@ -142,7 +143,7 @@ const zh = {
     viewTask: "查看任务"
   },
   task: {
-    goTo: "切换",
+    goTo: "切换至",
     createTaskBriefInfo: "创建你需要的工作流",
     expertMode: "专家模式",
     wizardMode: "向导模式",

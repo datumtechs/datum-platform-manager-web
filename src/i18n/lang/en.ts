@@ -50,7 +50,8 @@ const en = {
     endTime: "End Time",
     timeFrame: "time Frame",
     reset: "Reset",
-    computeTimes: "Compute times"
+    computeTimes: "Compute times",
+    create: 'Create'
   },
   menu: {
     home: 'Home',
@@ -142,7 +143,7 @@ const en = {
     viewTask: "View Task"
   },
   task: {
-    goTo: "Switch ",
+    goTo: "Switch to the ",
     createTaskBriefInfo: "Create new Workflow you need",
     expertMode: "Expert Mode",
     wizardMode: "Wizard Mode",

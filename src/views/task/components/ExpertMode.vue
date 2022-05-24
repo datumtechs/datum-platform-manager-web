@@ -13,8 +13,9 @@
     <div class="my-30px flex border-1 border-solid border-color-[#EEE] operation-box">
       <Algorithm :isReadonly="isReadonly" :key="refreshTag"
         :isSettingCompleted="isSettingCompleted" />
-      <Flow :isReadonly="isReadonly" :status-list="statusList" :workflow-status="workflowStatus"
-        :isSettingCompleted="isSettingCompleted" />
+      <Flow :isInEdit="isInEdit" :isReadonly="isReadonly" :status-list="statusList"
+        :workflow-status="workflowStatus" :isSettingCompleted="isSettingCompleted"
+        @showNameDialog="(_: boolean) => showDialog = _" />
       <Panel :isReadonly="isReadonly" :isSettingCompleted="isSettingCompleted ? true : false" />
     </div>
     <SetNameDialog v-model:show="showDialog" v-if="showDialog" />
@@ -33,9 +34,8 @@ import { Back } from '@element-plus/icons-vue'
 const { locale } = useI18n()
 
 const route = useRoute()
-const showDialog = computed(() =>
-  route.params.workflowId ? false : true
-)
+const showDialog = ref(false)
+
 const refreshTag = ref(Date.now())
 const workflowId = computed(() => route.params.workflowId)
 const workflowVersion = computed(() => route.params.workflowVersion)
@@ -46,6 +46,7 @@ const workflowName = computed(() => route.params.workflowName)
 
 watch(() => isInEdit.value, (newV, oldV) => {
   if (newV) {
+    showDialog.value = !isInEdit.value
     queryStatus()
   }
 })
@@ -61,6 +62,7 @@ onBeforeUnmount(() => {
 
 const workflowStatus = ref(0)
 const statusList = ref([])
+
 const queryStatus = () => {
   getWorkflowStatusOfExpertMode({
     workflowId: workflowId.value,
@@ -88,6 +90,7 @@ const queryNodeSetting = () => {
 
 
 onMounted(() => {
+  showDialog.value = !isInEdit.value
   if (isInEdit.value && isSettingCompleted.value) {
     queryStatus()
     queryNodeSetting()

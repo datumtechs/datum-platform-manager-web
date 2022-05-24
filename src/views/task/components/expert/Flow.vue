@@ -1,8 +1,11 @@
 <template>
     <div class="flex-1 py-20px px-30px">
         <div class="btn-group">
-            <el-button v-waves :disabled="props.isReadonly" v-for="btn in btnList" round
-                @click="handleClick()">{{ btn.label }}
+            <el-button v-if="!isInEdit" v-waves round @click="emits('showNameDialog', true)">
+                {{ t('common.create') }}
+            </el-button>
+            <el-button v-else v-waves :disabled="props.isReadonly" round @click="handleClick()">
+                {{ t('common.save') }}
             </el-button>
         </div>
         <!-- 0-未运行,1-运行中,2-运行成功，3-运行失败 -->
@@ -79,8 +82,15 @@ const props = defineProps({
     isReadonly: {
         type: Boolean,
         default: false
+    },
+    isInEdit: {
+        type: Boolean,
+        default: false
     }
 })
+
+const emits = defineEmits(['showNameDialog'])
+
 
 const dragover = (e: any) => {
     e.preventDefault()
@@ -95,13 +105,18 @@ const workflowVersion = computed(() => route.params.workflowVersion)
 const showDot = computed(() => useExpertMode().getDotted)
 
 const nodeList: any = computed(() => useExpertMode().getNodeList)
-const btnList = computed(() => [
-    {
-        id: 1,
-        value: 'save',
-        label: t('common.save')
-    }
-])
+// const btnList = computed(() => [
+//     {
+//         id: 0,
+//         value: 'create',
+//         label: t('common.create')
+//     },
+//     {
+//         id: 1,
+//         value: 'save',
+//         label: t('common.save')
+//     }
+// ])
 
 const judgeMentParams = () => {
     let flag = true
