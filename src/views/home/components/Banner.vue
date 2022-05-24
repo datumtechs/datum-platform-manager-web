@@ -6,7 +6,7 @@
         <span class="text-[24px] font-bold leading-33px pl-9px">{{ t('home.explorer') }}</span>
       </div>
       <el-input v-model="searchText" :placeholder="$t('home.explorerHint')" :prefix-icon="Search"
-        class="w-668px mt-35px search-input" type="text">
+        class="search-input" type="text">
         <template #suffix>
           <div @click="handleQuery()"
             class="w-110px bg-bg-main text-[#fff] leading-50px font-medium rounded-25px cursor-pointer text-[16px] -mr-11px">
@@ -34,7 +34,7 @@ const handleQuery = () => {
   }).then((res: any) => {
     const { code, data } = res
     if (code === 10000) {
-      
+
     }
   })
 }
@@ -48,6 +48,9 @@ const handleQuery = () => {
   background-size: 100% 100%;
 
   .search-input {
+    width: 668px;
+    margin-top: 35px;
+
     :deep(.el-input__inner) {
       height: 50px;
       line-height: 50px;

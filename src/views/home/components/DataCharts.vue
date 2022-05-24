@@ -7,7 +7,6 @@
 <script setup lang='ts'>
 import { Chart } from '@antv/g2';
 import { getTaskTrend } from '@/api/home'
-import { useFormatDay } from '@/hooks'
 
 const { t } = useI18n()
 const initCharts = (data: any) => {
@@ -16,9 +15,9 @@ const initCharts = (data: any) => {
         autoFit: true,
         width: 755,
         height: 500,
-        padding: 40,
+        padding: [60, 40, 20, 40],
+        // syncViewPadding: true,
     });
-
     chart.data(data);
     chart.scale(
         {
@@ -45,20 +44,10 @@ const initCharts = (data: any) => {
         `
     });
 
-    // chart.axis('statsTime', {
-    //     label: {
-    //         formatter: (val) => {
-    //             return useFormatDay(+val)
-    //         },
-    //     },
-    // });
-
     chart
         .line()
         .position('statsTime*statsValue')
         .shape('smooth');
-
-
     chart.render();
 }
 
@@ -67,30 +56,12 @@ const queryData = () => {
     getTaskTrend({}).then((res: any) => {
         const { code, data } = res
         if (code === 10000) {
-            // chartData.value = data
             initCharts(data)
         }
     })
 
 }
 
-function findMaxMin(data: any) {
-    let maxValue = 0;
-    let minValue = 50000;
-    let maxObj = null;
-    let minObj = null;
-    for (const d of data) {
-        if (d.Close > maxValue) {
-            maxValue = d.Close;
-            maxObj = d;
-        }
-        if (d.Close < minValue) {
-            minValue = d.Close;
-            minObj = d;
-        }
-    }
-    return { max: maxObj, min: minObj };
-}
 onMounted(() => {
     queryData()
 })
@@ -102,7 +73,9 @@ onMounted(() => {
     position: relative;
 
     .chart-title {
+        min-width: 200px;
         position: absolute;
+        top: 15px;
         font-family: DINPro-Bold, Ali-Bold;
         font-size: 16px;
     }
