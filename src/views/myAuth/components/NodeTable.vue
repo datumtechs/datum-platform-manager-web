@@ -22,12 +22,14 @@
             <el-table-column :label="t('common.actions')">
                 <template #default="{ row }">
                     <el-space :size="20">
-                        <span class="font-medium  leading-20px link-btn" @click="showAuth(row)">{{
-                                t('auth.auth')
-                        }}</span>
-                        <span class="font-medium  leading-20px link-btn" @click="showCancel(row)">{{
-                                t('auth.cancelAuth')
-                        }}</span>
+                        <span v-if="!row.isInWhitelist" class="font-medium  leading-20px link-btn"
+                            @click="showAuth(row)">{{
+                                    t('auth.auth')
+                            }}</span>
+                        <span v-else class="font-medium  leading-20px link-btn"
+                            @click="showCancel(row)">{{
+                                    t('auth.cancelAuth')
+                            }}</span>
                     </el-space>
                 </template>
             </el-table-column>

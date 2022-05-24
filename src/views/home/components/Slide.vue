@@ -1,40 +1,53 @@
 <template>
    <div class="flex mt-57px h-178px">
       <div class="w-980px h-178px">
-         <Swiper :modules="[A11y, Autoplay]"
-            :autoplay="{ delay: 3000, disableOnInteraction: false, pauseOnMouseEnter: true }"
-            :loop="true" class="mySwiper h-178px" :space-between="20" :slides-per-view="5">
-            <SwiperSlide
-               class="slide cursor-pointer px-20px py-16px w-176px h-178px mr-20px border-1 border-solid border-[#EEEEEE]"
-               @click="linkToTaskDetail(box)" v-for="box in taskList" :key="box.id">
-               <span v-if="box.type === '1'" class="slide-expert-label">
-                  {{ t('task.expertMode') }}
-               </span>
-               <span v-else class="slide-wizard-label">
-                  {{ t('task.wizardMode') }}
-               </span>
-               <el-tooltip effect="light" :content="box.algo" placement="top-start">
-                  <p class="text-[16px] text-[#333] mt-38px leading-22px font-medium ellipse">{{
-                        box.algo
-                  }} </p>
-               </el-tooltip>
-               <el-tooltip effect="light" :content="box.label" placement="bottom-start">
-                  <p class="mt-6px text-[14px] text-[#333] leading-20px ellipse">{{ box.label }}</p>
-               </el-tooltip>
-               <p class="mt-32px text-[#666] leading-20px flex items-center">
-                  <img class="w-24px h-24px org-img mr-8px" :src="box.imageUrl" alt="">
-                  <el-tooltip effect="light" :content="box.nodeName" placement="top-start">
-                     <span @click.stop="linkToNode(box)"
-                        class="ellipse w-110px org-name text-[14px] text-color-[#666] leading-20px">{{
-                              box.nodeName
-                        }}</span>
-                  </el-tooltip>
-               </p>
-            </SwiperSlide>
-         </Swiper>
+         <el-skeleton style="width: 980px" :count="1" :rows="5" class="flex"
+            :loading="skeletonLoading" animated>
+            <template #template>
+               <div v-for="item in 5" class="w-176px h-178px mr-20px mt-10px">
+                  <el-skeleton :rows="4" animated :loading="skeletonLoading" />
+               </div>
+            </template>
+            <template #default>
+               <Swiper :modules="[A11y, Autoplay]"
+                  :autoplay="{ delay: 3000, disableOnInteraction: false, pauseOnMouseEnter: true }"
+                  :loop="true" class="mySwiper h-178px" :space-between="20" :slides-per-view="5">
+                  <SwiperSlide
+                     class="slide cursor-pointer px-20px py-16px w-176px h-178px mr-20px border-1 border-solid border-[#EEEEEE]"
+                     @click="linkToTaskDetail(box)" v-for="box in taskList" :key="box.id">
+                     <span v-if="box.type === '1'" class="slide-expert-label">
+                        {{ t('task.expertMode') }}
+                     </span>
+                     <span v-else class="slide-wizard-label">
+                        {{ t('task.wizardMode') }}
+                     </span>
+                     <el-tooltip effect="light" :content="box.algo" placement="top-start">
+                        <p class="text-[16px] text-[#333] mt-38px leading-22px font-medium ellipse">
+                           {{
+                                 box.algo
+                           }} </p>
+                     </el-tooltip>
+                     <el-tooltip effect="light" :content="box.label" placement="bottom-start">
+                        <p class="mt-6px text-[14px] text-[#333] leading-20px ellipse">{{ box.label
+                        }}
+                        </p>
+                     </el-tooltip>
+                     <p class="mt-32px text-[#666] leading-20px flex items-center">
+                        <img class="w-24px h-24px org-img mr-8px" :src="box.imageUrl" alt="">
+                        <el-tooltip effect="light" :content="box.nodeName" placement="bottom-start">
+                           <span @click.stop="linkToNode(box)"
+                              class="ellipse w-110px org-name text-[14px] text-color-[#666] leading-20px">{{
+                                    box.nodeName
+                              }}</span>
+                        </el-tooltip>
+                     </p>
+                  </SwiperSlide>
+               </Swiper>
+            </template>
+         </el-skeleton>
       </div>
       <div @click="linkToComputeTask"
-         class="w-156px ml-10px h-178px cursor-pointer border-1 border-solid border-[#EEEEEE] flex flex-col justify-center items-center">
+         class="w-156px ml-20px h-178px cursor-pointer border-1 border-solid border-[#EEEEEE] flex flex-col justify-center items-center">
          <p class="text-[#252525] font-bold">{{ t('home.viewAllComputingTask') }}</p>
          <img class="w-24px h-24px mt-12px" :src="arrow" />
       </div>
@@ -52,7 +65,7 @@ import { getLatestTaskList } from '@/api/home'
 const { t } = useI18n()
 const router = useRouter()
 
-
+const skeletonLoading = ref(true)
 
 interface LatestTask {
    id: number | string,
@@ -103,6 +116,7 @@ const getGlobalTask = () => {
    }).then((res: any) => {
       const { code, data } = res
       if (code === 10000) {
+         skeletonLoading.value = false
          const arr = JSON.parse(JSON.stringify(data));
          arr.forEach((item: LatestTask) => {
             const nameArr = item.taskName.split('_')

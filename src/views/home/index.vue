@@ -17,7 +17,6 @@ const getOverviewData = () => {
   })
 }
 
-
 onMounted(() => {
   getOverviewData()
 })

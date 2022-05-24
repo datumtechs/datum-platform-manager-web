@@ -6,7 +6,7 @@
             </template>
         </Title>
         <div class="mt-16px h-435px border-1 border-solid border-[#EEEEEE] flex">
-            <div class="w-500px py-66px px-60px grid grid-cols-2 grid-rows-3 gap-x-20px gap-y-50px">
+            <div class="py-66px px-60px grid grid-cols-2 grid-rows-3 gap-x-20px gap-y-50px">
                 <div v-for="(item, key) in viewList" :key="item.id">
                     <div class="leading-17px text-[14px] text-shallow">{{ item.label }}
                     </div>
@@ -26,16 +26,29 @@
                     </div>
                 </div>
             </div>
-            <DataCharts />
+
+            <suspense>
+                <template #default>
+                    <DataCharts />
+                </template>
+                <template #fallback>
+                    <div class="w-855px h-500px p-20px">
+                        <el-skeleton class="my-40px" :loading="true" :rows="8" animated />
+                    </div>
+                </template>
+            </suspense>
         </div>
     </div>
 </template>
 
 <script setup lang='ts'>
 import Title from './Title.vue'
-import DataCharts from './DataCharts.vue'
+// import DataCharts from './DataCharts.vue'
 import { useSizeWithUnit } from '@/hooks'
 import CountUp from 'vue-countup-v3'
+
+const DataCharts = defineAsyncComponent(() =>
+    import('./DataCharts.vue'))
 
 const props = defineProps({
     globalStats: {

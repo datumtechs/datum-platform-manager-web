@@ -13,97 +13,114 @@
     </div>
   </div>
 </template>
-<script lang="ts" setup>
+<script lang="ts">
 import BaseInfo from './dataComponents/BaseInfo.vue';
 import MetaData from './dataComponents/MetaData.vue';
 import TaskInvolved from './dataComponents/TaskInvolved.vue'
-import { type Router, useRouter, useRoute } from 'vue-router'
 import { useUsersInfo } from '@/stores'
 import { useFileType, useFormatTime } from '@/hooks'
 import { queryDataDetails } from '@/api/data'
 import { enums } from '@/utils/enum'
 
-const { t } = useI18n()
-const router: Router = useRouter()
-const store = useUsersInfo()
-const route = useRoute()
-const activekey = ref(0)
-const metaDataId: string | any = route.query.metaDataId || ''
-const dataName: string | any = route.query.dataName
+export default {
+  components: [BaseInfo, MetaData, TaskInvolved],
+  beforeRouteEnter(to: any, from: any, next: any) {
+    next((vm: any) => {
+      if (from.name === 'marketplace') {
+        next()
+      } else {
+        if (!vm.store.token) {
+          vm.router.push({ name: 'marketplace' })
+        }
+        if (vm.store.token && !vm.metaDataId) {
+          return vm.router.go(-1)
+        }
+      }
 
-
-const list = ref([
-  {
-    name: 'myData.basicInfo'
+    })
   },
-  {
-    name: 'myData.metadata'
-  },
-  {
-    name: 'myData.tasksInvolved'
-  }
-])
-
-const MetadataData = ref([{
-  remarks: "myData"
-}])
-
-const TaskInvolvedData = ref([{
-  remarks: "myData"
-}])
+  setup() {
+    const { t } = useI18n()
+    const router = useRouter()
+    const store = useUsersInfo()
+    const route = useRoute()
+    const activekey = ref(0)
+    const metaDataId: string | any = route.query.metaDataId || ''
+    const dataName: string | any = route.query.dataName
 
 
-const tableData = ref<any[]>([])
-const tabsChange = (index: string) => {
-  activekey.value = +index
-}
+    const list = ref([
+      {
+        name: 'myData.basicInfo'
+      },
+      {
+        name: 'myData.metadata'
+      },
+      {
+        name: 'myData.tasksInvolved'
+      }
+    ])
 
-const query = () => {
-  queryDataDetails({ metaDataId: metaDataId }).then(res => {
-    const { data, code } = res
-    if (code == 10000) {
-      tableData.value = [{
-        lName: 'myData.dataName',
-        lProp: data.metaDataName,
-        rName: 'myData.credentialSymbol',
-        rProp: data.tokenSymbol,
-      }, {
-        lName: 'myData.launchTime',
-        lProp: useFormatTime(data.publishedAt),
-        rName: 'myData.industryData',
-        rProp: t(enums.industry[data.industry])// data.industry,
-      }, {
-        lName: 'myData.dataFormat',
-        lProp: useFileType(data.fileType),
-        rName: 'myData.dataSize',
-        rProp: data.size,
-      }, {
-        lName: 'myData.rowsData',
-        lProp: data.rows,
-        rName: 'myData.columnsData',
-        rProp: data.columns,
-      }, {
-        lName: 'myData.dataDescription',
-        lProp: data.remarks,
-        last: true
-      }]
-      MetadataData.value = data.columnsList
+    const MetadataData = ref([{
+      remarks: "myData"
+    }])
+
+    const tableData = ref<any[]>([])
+    const tabsChange = (index: string) => {
+      activekey.value = +index
     }
-  })
+
+    const query = () => {
+      queryDataDetails({ metaDataId: metaDataId }).then(res => {
+        const { data, code } = res
+        if (code == 10000) {
+          tableData.value = [{
+            lName: 'myData.dataName',
+            lProp: data.metaDataName,
+            rName: 'myData.credentialSymbol',
+            rProp: data.tokenSymbol,
+          }, {
+            lName: 'myData.launchTime',
+            lProp: useFormatTime(data.publishedAt),
+            rName: 'myData.industryData',
+            rProp: t(enums.industry[data.industry])// data.industry,
+          }, {
+            lName: 'myData.dataFormat',
+            lProp: useFileType(data.fileType),
+            rName: 'myData.dataSize',
+            rProp: data.size,
+          }, {
+            lName: 'myData.rowsData',
+            lProp: data.rows,
+            rName: 'myData.columnsData',
+            rProp: data.columns,
+          }, {
+            lName: 'myData.dataDescription',
+            lProp: data.remarks,
+            last: true
+          }]
+          MetadataData.value = data.columnsList
+        }
+      })
+    }
+
+    onMounted(() => {
+      query()
+    })
+
+    return {
+      tabsChange,
+      list,
+      activekey,
+      tableData,
+      MetadataData,
+      metaDataId,
+      dataName,
+      router,
+      store
+    }
+  }
 }
-
-
-
-onMounted(() => {
-  if (!store.token) {
-    router.push({ name: 'marketplace' })
-  }
-  if (store.token && !metaDataId) {
-    return router.go(-1)
-  }
-  query()
-})
-
 
 </script>
 <style lang="scss" scoped>
