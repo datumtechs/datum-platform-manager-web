@@ -266,6 +266,7 @@ const en = {
     copySuccess: "Copy successfully",
     startSuccess: "Start successfully",
     startWorkflow: "Start Workflow",
+    credentialPriceTips:"The displayed price is for reference only. Please refer to the exchange for the real price"
   },
   credentials: {
     circulation: "Circulation",

@@ -23,7 +23,7 @@
     <div class="flex items-center pt-20px" v-if="!views">
       <el-button v-waves round class="h-50px previous" @click="previous">{{ $t('common.previous') }}</el-button>
       <el-button v-waves round class="h-50px previous ml-20px" @click="preserv">{{ $t('common.saveAndReturn') }}</el-button>
-      <NextButton @click="submit" />
+      <NextButton @clicks="submit" />
     </div>
   </div>
 </template>

@@ -2,7 +2,7 @@
   <el-form v-bind="$attrs" :label-position="'top'" :rules="rules" :ref="(el: any) => formRef = el" :model="form"
     class="mt-38px">
     <el-form-item :label="`${t('task.taskName')}:`" prop="workflowName" class="select-alg-require-icon">
-      <div class="absolute -top-30px cursor-pointer" :style="{ left: locale === 'zh' ? '142px' : '161px' }">
+      <div class="absolute -top-30px cursor-pointer" :style="{ left: locale === 'zh' ? '119px' : '174px' }">
         <question-mark>
           <template #content>
             {{ t('task.taskNameRules') }}
@@ -19,7 +19,7 @@
         </question-mark>
       </div>
       <el-input :disabled="disabled" :input-style="{ borderColor: '#EEEEEE', height: '50px' }" :minlength="8"
-        :maxlength="64" v-model="form.workflowName"></el-input>
+        :maxlength="64" v-model.trim="form.workflowName"></el-input>
     </el-form-item>
     <el-form-item :label="`${t('task.stepOneSelectComputingTitle')}:`" prop="calculationType" class="select-alg-require-icon">
       <el-radio-group v-model="form.calculationType" :disabled="disabled"
@@ -46,7 +46,7 @@
         type="textarea" :rows="4" v-model="form.workflowDesc"></el-input>
     </el-form-item>
   </el-form>
-  <NextButton v-if="!disabled" @click="next" />
+  <NextButton v-if="!disabled" @clicks="next" />
 </template>
 <script lang="ts" setup>
 import { getAlgTree } from '@/api/algorithm'

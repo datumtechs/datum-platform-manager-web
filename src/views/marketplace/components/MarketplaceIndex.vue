@@ -141,7 +141,7 @@ onMounted(() => {
     <div class="flex-1 task-wrap">
         <Banner :bg-name="'market'">
             <template #briefInfo>
-                <p v-if="locale === 'zh'">全网共 {{ pageParams.total }} 可参与隐私计算的有效数据</p>
+                <p v-if="locale === 'zh'">全网共 {{ pageParams.total }} 个可参与隐私计算的有效数据</p>
                 <p v-else>{{ pageParams.total }} participant data in the privacy computing network</p>
             </template>
         </Banner>
@@ -160,6 +160,18 @@ onMounted(() => {
                 <el-table-column prop="tokenPrice" :label="t('common.credentialPrice')">
                     <template #default="{ row }">
                         <div>{{ row.tokenPrice }} LAT</div>
+                    </template>
+                    <template #header>
+                        <div class="flex items-center">
+                            {{t('common.credentialPrice')}}
+                            <el-tooltip effect="light" placement="top">
+                                <img class="w-16px h-16px ml-10px cursor-pointer" src="@/assets/images/task/quest@2x.png"
+                                    alt="">
+                                <template #content>
+                                    {{t('myData.credentialPriceTips')}}
+                                </template>
+                            </el-tooltip>
+                        </div>
                     </template>
                 </el-table-column>
                 <el-table-column :label="t('common.actions')" width="200">
