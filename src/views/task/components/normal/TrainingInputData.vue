@@ -38,6 +38,7 @@ import TaskParamsTransfer from '@/components/TaskParamsTransfer.vue';
 import { CaretBottom } from '@element-plus/icons-vue'
 import NextButton from './NextButton.vue'
 import { setWorkflowOfWizardMode } from '@/api/workflow'
+import { ElMessage } from 'element-plus';
 const router: any = useRouter()
 const {t} = useI18n()
 const emit = defineEmits(['previous', 'getParams', 'next'])

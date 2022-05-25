@@ -14,16 +14,26 @@
   </div>
 </template>
 <script lang="ts">
-import BaseInfo from './dataComponents/BaseInfo.vue';
-import MetaData from './dataComponents/MetaData.vue';
-import TaskInvolved from './dataComponents/TaskInvolved.vue'
+import { defineComponent } from "vue"
+// import BaseInfo from './dataComponents/BaseInfo.vue';
+// import MetaData from './dataComponents/MetaData.vue';
+// import TaskInvolved from './dataComponents/TaskInvolved.vue'
 import { useUsersInfo } from '@/stores'
 import { useFileType, useFormatTime } from '@/hooks'
 import { queryDataDetails } from '@/api/data'
 import { enums } from '@/utils/enum'
 
-export default {
-  components: [BaseInfo, MetaData, TaskInvolved],
+// export type router = {
+// 	go:any
+// }
+// export type activekey = Number |string
+// export type dataName = string
+// export type metaDataId = string|number
+// export type tableData = any[]
+// customElements.define('base-info', BaseInfo)
+
+export default defineComponent ({
+  // components: [BaseInfo, MetaData, TaskInvolved],
   beforeRouteEnter(to: any, from: any, next: any) {
     next((vm: any) => {
       if (from.name === 'marketplace') {
@@ -41,10 +51,10 @@ export default {
   },
   setup() {
     const { t } = useI18n()
-    const router = useRouter()
-    const store = useUsersInfo()
-    const route = useRoute()
-    const activekey = ref(0)
+    const router:any = useRouter()
+    const store:any = useUsersInfo()
+    const route:any = useRoute()
+    const activekey:any = ref(0)
     const metaDataId: string | any = route.query.metaDataId || ''
     const dataName: string | any = route.query.dataName
 
@@ -121,6 +131,7 @@ export default {
     }
   }
 }
+)
 
 </script>
 <style lang="scss" scoped>
