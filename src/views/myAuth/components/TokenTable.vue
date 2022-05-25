@@ -1,9 +1,9 @@
 <template>
     <div class="my-60px com-main-data-wrap main-content">
         <DataToken type="fee" :tableData="feeTokenData" :titleContent="$t('auth.authWLatHint')"
-            :title="t('auth.feeToken')" @updateData="queryWLat()" :loading="feeLoading" />
+            :title="t('auth.feeToken')" @updateData="queryWLat()" />
         <DataToken type="data" :tableData="dataTokenData" :titleContent="$t('auth.authErc20Hint')"
-            :title="t('auth.dataToken')" @updateData="queryDataList" :loading="dataLoading" />
+            :title="t('auth.dataToken')" @updateData="queryDataList" />
         <div class="flex my-50px justify-center">
             <el-pagination v-model:current-page="pageObj.current" v-model:page-size="pageObj.size"
                 background layout="prev, pager, next" :total="pageObj.total" />
@@ -13,13 +13,11 @@
 <script setup lang="ts">
 import DataToken from './DataToken.vue'
 import { queryUserDataList, getUserMetisLatInfo } from '@/api/data'
+import { useInterval } from '@/hooks'
 const { t } = useI18n()
 
 const feeTokenData: any = ref([])
 const dataTokenData = ref([])
-
-const feeLoading = ref(false)
-const dataLoading = ref(false)
 
 const pageObj = reactive({
     total: 0,
@@ -34,37 +32,32 @@ watch(() => pageObj.current, (newValue, oldValue) => {
 
 const queryDataList = (str?: string) => {
     pageObj.keyword = str || ''
-    dataLoading.value = true
     queryUserDataList({
         current: pageObj.current,
         size: pageObj.size,
         keyword: pageObj.keyword
     }).then(res => {
-        dataLoading.value = false
         const { data, code } = res
         if (code === 10000) {
             dataTokenData.value = data.items
         }
-    }).catch((error: any) => {
-        dataLoading.value = false
     })
 }
 
-
 const queryWLat = async () => {
-    feeLoading.value = true
     const { code, data } = await getUserMetisLatInfo({})
-    feeLoading.value = false
     if (code === 10000) {
         feeTokenData.value = [data]
     }
 }
 
-onMounted(() => {
-    queryDataList()
-    queryWLat()
-})
+useInterval(queryWLat, 5000)
+useInterval(queryDataList, 5000)
 
+onMounted(() => {
+    queryWLat()
+    queryDataList()
+})
 
 </script>
 <style lang="scss">

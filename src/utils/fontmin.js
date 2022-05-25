@@ -1,4 +1,4 @@
-// 不直接在写死在package了，不然每次发布都要安装。 全局安装 npm install -g fontmin && npm link fontmini
+// 不直接在写死在package了，不然每次发布都要安装。 全局安装 npm install -g fontmin && npm link fontmin
 // const Fontmin = require('fontmin')
 import Fontmin from 'fontmin'
 
@@ -51,9 +51,6 @@ function walk(dir) {
     })
   })
 }
-
-fs.stat()
-
 
 const fontmin = new Fontmin().src(fontSrc).dest(fontDest)
 

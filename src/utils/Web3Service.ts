@@ -102,11 +102,11 @@ class Web3Service {
     const uuId = this.useWallet.getNonceId
     return JSON.stringify({
       domain: {
-        name: 'Moirae'
+        name: 'Datum'
       },
       message: {
         key: uuId,
-        desc: 'Welcome to Moirae!'
+        desc: 'Welcome to Datum!'
       },
       primaryType: 'Login',
       types: {
@@ -132,7 +132,7 @@ class Web3Service {
     const address: string = this.useUsersInfo.getAddress
     return JSON.stringify({
       domain: {
-        name: 'Moirae'
+        name: 'Datum'
       },
       message: {
         address

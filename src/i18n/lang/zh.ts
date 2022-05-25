@@ -74,7 +74,7 @@ const zh = {
   },
   head: {
     myAccountTitle: "我的账户",
-    connect: '连接 Moirae',
+    connect: '连接 Datum',
     login: '登录 RosettaFlow',
     logout: '登出',
     myAccount: '我的账户',
@@ -237,7 +237,6 @@ const zh = {
     marketPlaceholder: "搜索凭证、数据名称",
     priceAsc: '价格升序',
     priceDesc: '价格降序',
-    credentialPriceTips:"展示价格仅供参考，真实价格请参考交易所"
   },
   workflow: {
     workflowName: "工作流名称",
@@ -267,6 +266,8 @@ const zh = {
     copySuccess: "复制成功",
     startSuccess: "启动成功",
     startWorkflow: "启动工作流",
+    credentialPriceTips: "展示价格仅供参考，真实价格请参考交易所",
+    consumption: "本次工作流消耗"
   },
   credentials: {
     circulation: "总发布量",
@@ -391,7 +392,8 @@ const zh = {
     confirmCancelAuth: '确认取消授权',
     authErc20Hint: '工作流每运行一次,包含的数据需要消耗对应的一个凭证.请在此选择授权的凭证',
     authOrgHint: '工作流的运行需要节点进行统筹安排, 请在此授权节点',
-    authWLatHint: '工作流的运行会消耗一定的手续费,授权后的WLat将作为手续费进行扣除'
+    authWLatHint: '工作流的运行会消耗一定的手续费,授权后的WLat将作为手续费进行扣除',
+    plzInputTokenName: '请输入凭证或数据名称'
   },
   industry: {
     bank: '金融业（银行）',

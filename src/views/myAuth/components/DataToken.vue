@@ -7,8 +7,9 @@
                 </QuestionMark>
             </div>
             <div v-if="props.type === 'data'" class="w-300px">
-                <el-input size="large" v-model="searchText" class="rounded-3xl"
-                    :prefix-icon="Search" clearable @clear="emit('updateData', searchText)">
+                <el-input :placeholder="t('auth.plzInputTokenName')" size="large"
+                    v-model="searchText" class="rounded-3xl" :prefix-icon="Search" clearable
+                    @clear="emit('updateData', searchText)">
                 </el-input>
             </div>
         </div>

@@ -93,7 +93,6 @@ const queryResultData = () => {
             tableData.value[2].rProp = data.endAt ? useFormatTime(data.endAt) : '-'
             tableData.value[3].lProp = data.endAt ? useDuring(data.endAt, data.createTime) : '-'
             tableData.value[3].rProp = data.taskResultList
-
         }
     })
 }

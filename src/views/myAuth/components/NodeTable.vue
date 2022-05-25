@@ -5,7 +5,7 @@
             <QuestionMark :content="$t('auth.authOrgHint')">
             </QuestionMark>
         </div>
-        <el-table v-tableTooltip v-loading="nodeTableLoading" class="mt-20px" :data="tableData">
+        <el-table v-tableTooltip class="mt-20px" :data="tableData">
             <el-table-column type="index" width="80">
                 <template #header>{{ t('common.num') }}</template>
             </el-table-column>
@@ -86,7 +86,7 @@
 </template>
 <script setup lang="ts">
 import { getUserOrgList } from '@/api/login'
-import { useNotice } from '@/hooks'
+import { useNotice, useInterval } from '@/hooks'
 
 interface OrgNode {
     identityId: string
@@ -105,7 +105,6 @@ const chainCfg: any = inject('chainCfg')
 const web3: any = inject('web3')
 const { t, locale } = useI18n()
 
-const nodeTableLoading = ref(true)
 const tableData = ref([])
 const currentNode = ref<OrgNode>({
     identityId: '',
@@ -174,15 +173,11 @@ const authSubmit = () => {
 }
 
 const queryOrgList = (): void => {
-    nodeTableLoading.value = true
     getUserOrgList().then(res => {
         const { data, code } = res
-        nodeTableLoading.value = false
         if (code === 10000) {
             tableData.value = data
         }
-    }).catch((e: any) => {
-        nodeTableLoading.value = false
     })
 }
 
@@ -200,10 +195,12 @@ const showCancel = (row: OrgNode) => {
     currentNode.value = row
 }
 
+
+useInterval(queryOrgList, 3000)
+
 onMounted(() => {
     queryOrgList()
 })
-
 
 </script>
 <style lang="scss">

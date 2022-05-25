@@ -24,9 +24,9 @@ import { queryNavigation } from '@/api/home'
 
 const { t } = useI18n()
 const searchText = ref('')
+const router = useRouter()
 
 const handleQuery = () => {
-
   if (!searchText.value) return
   // 搜索关键字. 任务id跳任务详情（精确匹配）、 组织id跳组织详情（精确匹配）
   queryNavigation({
@@ -34,7 +34,19 @@ const handleQuery = () => {
   }).then((res: any) => {
     const { code, data } = res
     if (code === 10000) {
-
+      if (data.type === 'org') {
+        router.push({
+          name: 'nodeDetailIndex', params: {
+            identityId: data.id
+          }
+        })
+      } else if (data.type === 'task') {
+        router.push({
+          name: 'computeTaskDetails', query: {
+            taskId: data.id
+          }
+        })
+      }
     }
   })
 }

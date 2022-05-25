@@ -8,7 +8,10 @@
                 }}</p>
                 <p class="text-14px text-color-[#666] leading-22px" v-html="props.content">
                 </p>
-                <p class="text-14px mb-50px leading-22px">{{ t('auth.waitWalletConfirm') }}</p>
+                <slot name="consume"></slot>
+                <p class="text-14px font-medium mt-20px mb-50px leading-22px">{{
+                        t('auth.waitWalletConfirm')
+                }}</p>
             </div>
         </div>
     </el-dialog>
@@ -44,5 +47,7 @@ const handleClose = () => {
     justify-content: center;
     flex-direction: column;
     text-align: center;
+    width: 300px;
+    margin: 0 auto;
 }
 </style>

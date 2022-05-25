@@ -1,7 +1,7 @@
 <template>
   <div class="flex-1">
     <Banner :bg-name="'clocksWatches'" :showRouter="false" :detailName="workFlowName"
-      :backShow="true" @back="$router.go(-1),  keepAlive.setCurrent(0,route.path)">
+      :backShow="true" @back="$router.go(-1), keepAlive.setCurrent(0, route.path)">
       <template #briefInfo>
         <p class="text-color-[#999999] ml-60px">
           {{ locale == 'zh' ? `共 ${total} 条该工作流的运行记录` : `${total}
@@ -47,7 +47,7 @@
           :label="t('workflow.timeUse')" :width="180">
           <template #default="{ row }">
             <div v-if="row.beginTime">
-              {{ useDuring(row.endTime , row.beginTime) }}
+              {{ useDuring(row.endTime, row.beginTime) }}
             </div>
             <div v-else>
               -
@@ -99,14 +99,30 @@
     </div>
     <SetNameDialog v-model:show="showDialog" :beforeName="beforeName" v-if="showDialog"
       @submit="copySubmit" />
-    <GlobalPending v-model:show="pending.show" :content="pending.content" :title="pending.title" />
+
+    <GlobalPending v-model:show="pending.show" :content="pending.content" :title="pending.title">
+      <template v-slot:consume>
+        <div class="w-240px">
+          <el-row>
+            <p>{{ t('workflow.consumption') }}: </p>
+          </el-row>
+          <div v-for="item in consumeList" :key="item.token.symbol">
+            <p>
+              <span>{{ item.token.symbol }}</span>: <span>{{
+                  useExchangeFrom(item.needValue, item.token.decimal)
+              }}</span>
+            </p>
+          </div>
+        </div>
+      </template>
+    </GlobalPending>>
   </div>
 </template>
 <script lang="ts" setup>
 import SetNameDialog from './SetNameDialog.vue'
-import {useKeepAliveInfo } from '@/stores'
-import { getWorkflowVersionList, copyWorkflow,startWorkFlow } from '@/api/workflow'
-import { useFormatTime, useDuring, useWorkflowDetailsMap, useException } from '@/hooks'
+import { useKeepAliveInfo } from '@/stores'
+import { getWorkflowVersionList, copyWorkflow, startWorkFlow, getWorkflowStartDetail } from '@/api/workflow'
+import { useFormatTime, useDuring, useWorkflowDetailsMap, useException, useExchangeFrom } from '@/hooks'
 import { ElMessage } from 'element-plus';
 const web3: any = inject('web3')
 const showDialog = ref(false)
@@ -121,7 +137,7 @@ const { t, locale } = useI18n()
 const activeRow = ref<any>({})
 const beforeName = ref('')
 const keepAlive = useKeepAliveInfo()
-
+const consumeList: any = ref([])
 
 type Pending = {
   show: boolean,
@@ -135,8 +151,9 @@ const pending: Pending = reactive({
   title: ''
 })
 
+
 const queryVersionList = () => {
-  keepAlive.setCurrent(current.value,route.path)
+  keepAlive.setCurrent(current.value, route.path)
   getWorkflowVersionList({ current: current.value, size: 10, workflowId }).then(res => {
     const { data, code }: any = res
     if (code === 10000) {
@@ -181,25 +198,39 @@ const edit = (row: any) => {
   })
 }
 
-const start = async (row: any) => {
+
+const setDialog = (row: any): void => {
   pending.show = true
   pending.title = t('workflow.startWorkflow')
-  pending.content = `${t('workflow.startWorkflow')}:<span class="text-color-[#2B60E9]"> ${row.workflowVersionName}</span}>`
+  pending.content = `
+    <div>${t('workflow.startWorkflow')}:<span class="text-color-[#2B60E9]"> ${row.workflowVersionName}</span}></div>
+  `
+}
+
+const start = async (row: any) => {
+
   try {
-    const sign = await web3.signForWallet({ type: 'tx' })
-    pending.show = false
-    if (sign) {
-      const res = await startWorkFlow({
-        sign,
-        workflowId: row.workflowId,
-        workflowVersion: row.workflowVersion,
-      })
-      const { code } = res
-      if (code === 10000) {
-        ElMessage.success(t('workflow.startSuccess'))
-        queryVersionList()
-      }
-    }
+    const res = await getWorkflowStartDetail({
+      workflowId: row.workflowId,
+      workflowVersion: row.workflowVersion
+    })
+    const { data } = res
+    consumeList.value = data.itemList
+    setDialog(row)
+    // const sign = await web3.signForWallet({ type: 'tx' })
+    // pending.show = false
+    // if (sign) {
+    //   const res = await startWorkFlow({
+    //     sign,
+    //     workflowId: row.workflowId,
+    //     workflowVersion: row.workflowVersion,
+    //   })
+    //   const { code } = res
+    //   if (code === 10000) {
+    //     ElMessage.success(t('workflow.startSuccess'))
+    //     queryVersionList()
+    //   }
+    // }
   } catch (error: any) {
     pending.show = false
     useException(error.code)
@@ -231,7 +262,7 @@ const details = (row: any) => {
 
 onMounted(() => {
   const currentKeep = keepAlive.getCurrent[route.path] || ''
-  if(currentKeep) current.value = currentKeep
+  if (currentKeep) current.value = currentKeep
   queryVersionList()
 })
 

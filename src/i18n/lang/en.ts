@@ -74,7 +74,7 @@ const en = {
   },
   head: {
     myAccountTitle: 'My Account',
-    connect: 'Connect Moirae',
+    connect: 'Connect Datum',
     login: 'Log In RosettaFlow',
     logout: 'Log Out',
     myAccount: 'My Account',
@@ -266,7 +266,9 @@ const en = {
     copySuccess: "Copy successfully",
     startSuccess: "Start successfully",
     startWorkflow: "Start Workflow",
-    credentialPriceTips:"The displayed price is for reference only. Please refer to the exchange for the real price"
+    credentialPriceTips: "The price is for reference only. Please refer to the exchange for the real price",
+    consumption: "Consumption of this workflow",
+    plzInputTokenName: 'Please enter token or data name'
   },
   credentials: {
     circulation: "Circulation",

@@ -9,9 +9,10 @@
                </div>
             </template>
             <template #default>
-               <Swiper :modules="[A11y, Autoplay]"
+               <Swiper :modules="[Controller, Autoplay]" @swiper="setControlledSwiper"
                   :autoplay="{ delay: 3000, disableOnInteraction: false, pauseOnMouseEnter: true }"
-                  :loop="true" class="mySwiper h-178px" :space-between="20" :slides-per-view="5">
+                  :loop="isSwiperLoop" class="mySwiper h-178px" :space-between="20"
+                  :slides-per-view="5">
                   <SwiperSlide
                      class="slide cursor-pointer px-20px py-16px w-176px h-178px mr-20px border-1 border-solid border-[#EEEEEE]"
                      @click="linkToTaskDetail(box)" v-for="box in taskList" :key="box.id">
@@ -23,14 +24,11 @@
                      </span>
                      <el-tooltip effect="light" :content="box.algo" placement="top-start">
                         <p class="text-[16px] text-[#333] mt-38px leading-22px font-medium ellipse">
-                           {{
-                                 box.algo
-                           }} </p>
+                           {{ box.algo }} </p>
                      </el-tooltip>
                      <el-tooltip effect="light" :content="box.label" placement="bottom-start">
                         <p class="mt-6px text-[14px] text-[#333] leading-20px ellipse">{{ box.label
-                        }}
-                        </p>
+                        }}</p>
                      </el-tooltip>
                      <p class="mt-32px text-[#666] leading-20px flex items-center">
                         <img class="w-24px h-24px org-img mr-8px" :src="box.imageUrl" alt="">
@@ -58,14 +56,10 @@
 import arrow from '@assets/images/home/slide-arrow.png'
 import { useObserver } from '@/hooks'
 import { Swiper, SwiperSlide } from 'swiper/vue';
-import { A11y, Autoplay } from 'swiper';
+import { Controller, Autoplay } from 'swiper';
 import 'swiper/css'
 import { getLatestTaskList } from '@/api/home'
-
-const { t } = useI18n()
-const router = useRouter()
-
-const skeletonLoading = ref(true)
+import { emit } from 'process';
 
 interface LatestTask {
    id: number | string,
@@ -81,8 +75,19 @@ interface LatestTask {
    algo?: string,
 }
 
-const taskList = ref<LatestTask[]>([])
+const showSlide = ref(true)
+const { t } = useI18n()
+const router = useRouter()
+const skeletonLoading = ref(true)
 
+const isSwiperLoop = computed(() => taskList.value.length > 5)
+
+const taskList = ref<LatestTask[]>([])
+const controlledSwiper: any = ref(null);
+const setControlledSwiper = (swiper: any) => {
+   controlledSwiper.value = swiper;
+   console.log(controlledSwiper.value);
+};
 
 const linkToTaskDetail = (row: any) => {
    router.push({
@@ -108,6 +113,19 @@ const linkToNode = (row: any) => {
    })
 }
 
+
+const _findLabel = (str: string, char: string, n: number) => {
+   let x = str.indexOf(char);
+   if (n === 1) {
+      x = str.indexOf(char);
+   } else {
+      for (let i = 1; i < n; i++) {
+         x = str.indexOf(char, x + 1);
+      }
+   }
+   return str.slice(x + 1, str.length)
+}
+
 const getGlobalTask = () => {
    getLatestTaskList({
       size: 10,
@@ -117,12 +135,13 @@ const getGlobalTask = () => {
       const { code, data } = res
       if (code === 10000) {
          skeletonLoading.value = false
+         if (data.length === 0) showSlide.value = false
          const arr = JSON.parse(JSON.stringify(data));
          arr.forEach((item: LatestTask) => {
             const nameArr = item.taskName.split('_')
             item.algo = nameArr[2]
             item.type = nameArr[3]
-            item.label = nameArr[4]
+            item.label = _findLabel(item.taskName, '_', 4)
          })
          taskList.value = arr
       }
