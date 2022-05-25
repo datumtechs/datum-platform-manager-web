@@ -243,7 +243,7 @@ const authSubmit = () => {
                 _closeAuthDialog)
                 .then((res: any) => {
                     useNotice('success', content, chainCfg.value?.blockExplorerUrl, res.transactionHash)
-                    emit('updateData')
+                    emit('updateData', searchText.value)
                 }).catch((error: any) => {
                     _closeAuthDialog()
                     useNotice('error', error)

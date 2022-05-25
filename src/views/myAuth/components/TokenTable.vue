@@ -3,7 +3,7 @@
         <DataToken type="fee" :tableData="feeTokenData" :titleContent="$t('auth.authWLatHint')"
             :title="t('auth.feeToken')" @updateData="queryWLat()" />
         <DataToken type="data" :tableData="dataTokenData" :titleContent="$t('auth.authErc20Hint')"
-            :title="t('auth.dataToken')" @updateData="queryDataList" />
+            :title="t('auth.dataToken')" @updateData="updateToken" />
         <div class="flex my-50px justify-center">
             <el-pagination v-model:current-page="pageObj.current" v-model:page-size="pageObj.size"
                 background layout="prev, pager, next" :total="pageObj.total" />
@@ -26,12 +26,18 @@ const pageObj = reactive({
     keyword: ''
 })
 
+const keyword = ref('')
+const updateToken = (str?: string) => {
+    keyword.value = str || ''
+    queryDataList()
+}
+
 watch(() => pageObj.current, (newValue, oldValue) => {
     queryDataList()
 });
 
-const queryDataList = (str?: string) => {
-    pageObj.keyword = str || ''
+const queryDataList = () => {
+    pageObj.keyword = keyword.value
     queryUserDataList({
         current: pageObj.current,
         size: pageObj.size,
@@ -51,8 +57,8 @@ const queryWLat = async () => {
     }
 }
 
-useInterval(queryWLat, 5000)
-useInterval(queryDataList, 5000)
+useInterval(queryWLat, 3000)
+useInterval(queryDataList, 3000)
 
 onMounted(() => {
     queryWLat()
