@@ -45,6 +45,7 @@ import NextButton from './NextButton.vue'
 import { setWorkflowOfWizardMode } from '@/api/workflow'
 import { getUserModelList } from '@/api/task'
 import { queryAlgoDetail } from '@/api/algorithm'
+import { ElMessage } from 'element-plus';
 const router: any = useRouter()
 const {t} = useI18n()
 const emit = defineEmits(['previous', 'getParams', 'next'])
@@ -112,6 +113,9 @@ const handParams = (obj: any) => {
         keyColumn: obj?.idColumn.columnIdx,
         dependentVariable: obj?.label.columnIdx,
         dataColumnIds: obj?.feature.map((_: any) => _.columnIdx).join(',')
+      }
+      if(!item.identityId || !item.metaDataId || !item.keyColumn){
+        throw 'err'
       }
       resolve(item)
     } catch (e) {

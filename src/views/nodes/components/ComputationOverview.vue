@@ -7,7 +7,7 @@
             <BaseInfo v-if="activekey === 0" :tableData="baseData" type="task" />
             <PartyInfo v-if="activekey === 1" :taskSponsor="taskSponsor"
                 :resultConsumer="resultConsumer" :dataProvider="dataProvider"
-                :powerProvider="powerProvider" />
+                :powerProvider="powerProvider" :dataDetails="dataDetails"/>
             <TaskEvents v-if="activekey === 2" :data="eventList" />
         </div>
     </div>
@@ -79,7 +79,7 @@ const eventList = ref([])
 const resultConsumer = ref([])
 const dataProvider = ref([])
 const powerProvider = ref([])
-
+const dataDetails = ref({})
 const getTaskDetail = async () => {
     const { code, data } = await queryTaskDetails({
         taskId: taskId.value,
@@ -99,7 +99,7 @@ const getTaskDetail = async () => {
         baseData[3].lProp['bandWidth'].value = useSize(data.requiredBandwidth) + 'P/S'
 
         eventList.value = data.eventList
-
+        dataDetails.value = data
         taskSponsor.value = new Array(data.sponsor)
         resultConsumer.value = data.resultReceiverList
         dataProvider.value = data.dataProviderList

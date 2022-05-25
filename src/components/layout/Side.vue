@@ -37,7 +37,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { getCurrentInstance } from 'vue'
+// import { getCurrentInstance } from 'vue'
 import routePath from '@/router/routePath'
 import { HelpFilled, Plus } from '@element-plus/icons-vue'
 import nodeIcon from '@/assets/images/side/side-node-icon.png'
@@ -51,7 +51,7 @@ import computeTask from '@/assets/images/side/side-computeTask-icon.png'
 import { type RouteLocationNormalizedLoaded, useRoute, useRouter } from 'vue-router'
 import { useUsersInfo, useWorkFlow,useKeepAliveInfo } from '@/stores'
 const { t } = useI18n()
-const internalInstance:any = getCurrentInstance()
+// const internalInstance:any = getCurrentInstance()
 const store = useUsersInfo()
 const workStore = useWorkFlow()
 const keepAliveInfo = useKeepAliveInfo()

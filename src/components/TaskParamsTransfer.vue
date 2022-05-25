@@ -31,7 +31,9 @@
           <span class="inline-block w-100px text-color-[#333333] mb-10px font-medium">{{ t('task.setTo') }}</span>
           <div v-waves  v-for="v in props.fieldType" :key="v.type" @click="handFields(v)"
             class="border-1px cursor-pointer border-solid border-color-[#eeeeee] text-color-[#999999] rounded-26px mb-10px h-40px w-full flex items-center justify-center"
-            :class="{ 'com-button': handActiveClass(v),'no-click': !handActiveClass(v)}">
+            :class="{ 'com-button': handActiveClass(v),'no-click': !handActiveClass(v)}" 
+            :style="{background: fieldsList.length? '' :'#fff',color: fieldsList.length? '' :'#000'}"
+            >
             {{ t(`${v.name}`) }}
             <el-tooltip effect="light" :content="t(v.tips)" placement="right">
               <img class="w-20px h-20px ml-10px cursor-pointer" :src="handActiveClass(v)? questWhite:questbg"
@@ -164,6 +166,7 @@ const orgList = computed(() => props.orgList.map((v: any) => {
   return {
     value: v.identityId,
     label: v.nodeName,
+    leaf: false,
     disabled: props.disabledData[0] == v.identityId
   }
 }))
@@ -224,6 +227,7 @@ const cascaderChange = (e: any) => {
         }
       })
       if (e !== 'init') activeIndex.value = 0
+      form.idColumn = fieldsList.value[activeIndex.value]
       if (e == 'init') initParams()
     }
   })

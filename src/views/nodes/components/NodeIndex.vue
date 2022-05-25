@@ -8,21 +8,23 @@
         </Banner>
         <div v-loading="nodeLoading"
             class="main-content mt-30px max-w-1200px mx-auto overflow-hidden">
-            <NodeCard v-for="(node, index) in nodeList" :size="10" :page="1" :node="node"
-                :index="index" :key="index" />
+            <NodeCard v-if="nodeList.length" v-for="(node, index) in nodeList" :size="10" :page="1"
+                :node="node" :index="index" :key="index" />
+            <el-empty :description="t('common.noData')" v-else />
         </div>
-        <div class="flex my-50px justify-center">
+        <div v-if="nodeList.length" class="flex my-50px justify-center">
             <el-pagination background layout="prev, pager, next" @current-change="queryOrgList"
                 v-model:current-page="pageObj.current" v-model:page-size="pageObj.size"
                 :total="pageObj.total" />
-                <!-- :total="pageObj.total" /> -->
+            <!-- :total="pageObj.total" /> -->
         </div>
-        <Search :keyword="keyword" :placeholder="t('node.placeholder')" @search="search" @reset="reset">
+        <Search :keyword="keyword" :placeholder="t('node.placeholder')" @search="search"
+            @reset="reset">
             <template #content>
                 <p class="search-label mb-10px">
                     {{ t('node.sortBy') }}
                 </p>
-                <el-select class="w-full" size="large" v-model="orderBy" :teleported="false"> 
+                <el-select class="w-full" size="large" v-model="orderBy" :teleported="false">
                     <el-option v-for="item in sortList" :key="item.id" :label="t(item.label)"
                         :value="item.orderBy" />
                 </el-select>
@@ -34,8 +36,8 @@
 
 <script setup lang='ts'>
 import NodeCard from './NodeCard.vue'
-import { getOrgList,getOrgStats } from '@/api/node'
-import {useKeepAliveInfo } from '@/stores'
+import { getOrgList, getOrgStats } from '@/api/node'
+import { useKeepAliveInfo } from '@/stores'
 const { t, locale } = useI18n()
 // const totalNode = ref(1876)
 const orderBy = ref('')
@@ -95,28 +97,33 @@ const search = (text: string) => {
     queryOrgList()
 }
 
-const reset = ()=>{
-  pageObj.current = 1
-  orderBy.value = ''
+const reset = () => {
+    pageObj.current = 1
+    orderBy.value = ''
 }
 
 
 const queryOrgList = async () => {
-    nodeLoading.value = true
-    const params = {
-        orderBy: orderBy.value, 
-        size: 10, 
-        current: pageObj.current,
-        keyword: keyword.value
+    try {
+        nodeLoading.value = true
+        const params = {
+            orderBy: orderBy.value,
+            size: 10,
+            current: pageObj.current,
+            keyword: keyword.value
+        }
+        keepAlive.setCurrent(pageObj.current, route.path)
+        keepAlive.setSearchParams({ ...params }, route.path)
+        const { code, data } = await getOrgList(params)
+        nodeLoading.value = false
+        if (code === 10000) {
+            nodeList.value = data.items
+            pageObj.total = data.total
+        }
+    } catch (error) {
+        nodeLoading.value = false
     }
-     keepAlive.setCurrent(pageObj.current,route.path)
-    keepAlive.setSearchParams({...params},route.path)
-    const { code, data } = await getOrgList(params)
-    nodeLoading.value = false
-    if (code === 10000) {
-        nodeList.value = data.items
-        pageObj.total = data.total
-    }
+
 }
 const queryOrgStats = async () => {
     const { code, data } = await getOrgStats({})
@@ -126,12 +133,12 @@ const queryOrgStats = async () => {
 }
 
 
-const setKeepAliveInfo = ()=>{
-  const currentKeep = keepAlive.getCurrent[route.path] || ''
-  const searchParams = keepAlive.getSearchParams[route.path] || ''
-  if(currentKeep) pageObj.current = currentKeep
-  keyword.value = searchParams['keyword'] || '' // 反选效果
-  orderBy.value = searchParams['orderBy'] || '' // 反选效果
+const setKeepAliveInfo = () => {
+    const currentKeep = keepAlive.getCurrent[route.path] || ''
+    const searchParams = keepAlive.getSearchParams[route.path] || ''
+    if (currentKeep) pageObj.current = currentKeep
+    keyword.value = searchParams['keyword'] || '' // 反选效果
+    orderBy.value = searchParams['orderBy'] || '' // 反选效果
 }
 
 

@@ -16,7 +16,8 @@
       <el-table-column prop="info" key="taskSponsor" :label="t('common.info')">
         <template #default="{ row }">
           <div v-if="activeName === 'taskSponsor'">
-            {{ t('node.address') }} : {{ row.address }}
+            <!-- {{ t('node.address') }} : {{ row.address }} -->
+            {{ t('node.address') }} : {{ dataDetails?.address }}
           </div>
           <div v-else-if="activeName === 'dataProvider'">
             {{ t('myData.credentialName') }} : {{ row.dataTokenName }}
@@ -49,7 +50,7 @@ interface RoleTableType {
   address?: String
 }
 
-const props = defineProps({
+const props:any = defineProps({
   taskSponsor: {
     type: Array,
     default: () => []
@@ -65,6 +66,10 @@ const props = defineProps({
   powerProvider: {
     type: Array,
     default: () => []
+  },
+  dataDetails: {
+    type: Object,
+    default: () => {}
   },
 })
 

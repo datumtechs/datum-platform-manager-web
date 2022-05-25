@@ -26,8 +26,15 @@
                     </div>
                 </div>
             </div>
-
-            <suspense>
+            <el-skeleton style="width: 755px" :count="1" :rows="5" class="flex" animated>
+                <template #template>
+                    <el-skeleton class="m-40px" :loading="true" :rows="10" animated />
+                </template>
+                <template #default>
+                    <DataCharts />
+                </template>
+            </el-skeleton>
+            <!-- <suspense>
                 <template #default>
                     <DataCharts />
                 </template>
@@ -36,7 +43,7 @@
                         <el-skeleton class="my-40px" :loading="true" :rows="8" animated />
                     </div>
                 </template>
-            </suspense>
+            </suspense> -->
         </div>
     </div>
 </template>

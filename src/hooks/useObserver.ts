@@ -1,8 +1,8 @@
 import { useIntersectionObserver } from '@vueuse/core'
 
 const useObserver = (callback: any) => {
-    const target = ref()
-    const result = ref([])
+    const target:any = ref()
+    const result:any = ref([])
     const { stop } = useIntersectionObserver(target, ([{ isIntersecting }]) => {
         // 如果target对应的DOM进入可视区，那么该回调函数就触发
         if (isIntersecting) {

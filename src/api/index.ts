@@ -6,7 +6,7 @@ import { getLanguage } from '@/utils/lang'
 let tokenAbnormal = false
 
 const service = axios.create({
-  // baseURL: '/api', // url = base url + request url
+  // baseURL: 'https://192.168.120.137', // url = base url + request url
   timeout: 50000,
   headers: {
     'Content-Type': 'application/json'
