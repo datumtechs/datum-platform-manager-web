@@ -6,19 +6,29 @@
 
 <script setup lang='ts'>
 import { Chart } from '@antv/g2';
-import { getTaskTrend } from '@/api/home'
+
+const props = defineProps({
+    chartsData: {
+        type: Array as any,
+        default: () => []
+    }
+})
+
+console.log(props.chartsData);
+
 
 const { t } = useI18n()
-const initCharts = (data: any) => {
+const initCharts = () => {
+    console.log(props.chartsData);
+
     const chart = new Chart({
         container: 'container',
         autoFit: true,
         width: 755,
         height: 500,
-        padding: [60, 40, 20, 40],
-        // syncViewPadding: true,
-    });
-    chart.data(data);
+        padding: [60, 40, 40, 40],
+    })
+    chart.data(props.chartsData);
     chart.scale(
         {
             statsTime: {
@@ -51,19 +61,8 @@ const initCharts = (data: any) => {
     chart.render();
 }
 
-
-const queryData = () => {
-    getTaskTrend({}).then((res: any) => {
-        const { code, data } = res
-        if (code === 10000) {
-            initCharts(data)
-        }
-    })
-
-}
-
 onMounted(() => {
-    queryData()
+    initCharts() //  queryData()
 })
 
 </script>
@@ -71,6 +70,8 @@ onMounted(() => {
 <style scoped lang='scss'>
 #container {
     position: relative;
+    width: 795px;
+    height: 435px;
 
     .chart-title {
         min-width: 200px;

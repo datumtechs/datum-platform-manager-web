@@ -26,36 +26,30 @@
                     </div>
                 </div>
             </div>
-            <el-skeleton style="width: 755px" :count="1" :rows="5" class="flex" animated>
+            <el-skeleton style="width: 980px" :loading="skeletonLoading" :count="1" :rows="5"
+                class="flex" animated>
                 <template #template>
-                    <el-skeleton class="m-40px" :loading="true" :rows="10" animated />
-                </template>
-                <template #default>
-                    <DataCharts />
-                </template>
-            </el-skeleton>
-            <!-- <suspense>
-                <template #default>
-                    <DataCharts />
-                </template>
-                <template #fallback>
-                    <div class="w-855px h-500px p-20px">
-                        <el-skeleton class="my-40px" :loading="true" :rows="8" animated />
+                    <div class="w-795px h-500px p-20px">
+                        <el-skeleton class="mt-40px" :loading="true" :rows="8" animated />
                     </div>
                 </template>
-            </suspense> -->
+                <template #default>
+                    <DataCharts :chartsData="chartsData" />
+                </template>
+            </el-skeleton>
         </div>
     </div>
 </template>
 
 <script setup lang='ts'>
 import Title from './Title.vue'
-// import DataCharts from './DataCharts.vue'
 import { useSizeWithUnit } from '@/hooks'
+import { getTaskTrend } from '@/api/home'
+import DataCharts from './DataCharts.vue'
 import CountUp from 'vue-countup-v3'
 
-const DataCharts = defineAsyncComponent(() =>
-    import('./DataCharts.vue'))
+const chartsData = ref([])
+const skeletonLoading = ref(true)
 
 const props = defineProps({
     globalStats: {
@@ -104,7 +98,19 @@ watchEffect(() => {
     })
 })
 
+const queryData = () => {
+    getTaskTrend({}).then((res: any) => {
+        skeletonLoading.value = false
+        const { code, data } = res
+        if (code === 10000) {
+            chartsData.value = data
+        }
+    })
+}
 
+onMounted(() => {
+    queryData()
+})
 </script>
 
 <style scoped lang='scss'>
