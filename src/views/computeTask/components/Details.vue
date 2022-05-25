@@ -8,7 +8,7 @@
     <div class="com-main-data-wrap mt-63px">
       <BaseInfo v-if="activekey === 0" :tableData="baseData" type="task" />
       <PartyInfo v-if="activekey === 1" :taskSponsor="taskSponsor" :resultConsumer="resultConsumer"
-        :dataProvider="dataProvider" :powerProvider="powerProvider" />
+        :dataProvider="dataProvider" :powerProvider="powerProvider" :dataDetails="dataDetails"/>
       <TaskEvents v-if="activekey === 2" :data="eventList" />
     </div>
   </div>
@@ -18,12 +18,13 @@ import BaseInfo from '@/components/dataComponents/BaseInfo.vue'
 import PartyInfo from '@/components/commonTable/PartyInfo.vue'
 import TaskEvents from '@/components/TaskEvents.vue'
 import { queryTaskDetails } from '@/api/task'
-import { useDuring, useFormatTime, useSize } from '@/hooks'
+import { useDuring, useFormatTime, useSize,useGlobalTaskMap } from '@/hooks'
 
 const router = useRouter()
 const route = useRoute()
 const taskId = computed(() => route.query.taskId)
 const activekey = ref(0)
+const dataDetails = ref({})
 const list = reactive([
   {
     name: 'myData.basicInfo'
@@ -93,14 +94,14 @@ const getTaskDetail = async () => {
     baseData[1].rProp = useFormatTime(data.endAt) + ''
 
     baseData[2].lProp = useDuring(data.endAt , data.startAt)
-    baseData[2].rProp = data.status
+    baseData[2].rProp =   useGlobalTaskMap(data.status) 
 
     baseData[3].lProp['cpu'].value = data.requiredCore
     baseData[3].lProp['memory'].value = useSize(data.requiredMemory)
     baseData[3].lProp['bandWidth'].value = useSize(data.requiredBandwidth) + 'P/S'
 
     eventList.value = data.eventList
-
+    dataDetails.value = data
     taskSponsor.value = new Array(data.sponsor)
     resultConsumer.value = data.resultReceiverList
     dataProvider.value = data.dataProviderList

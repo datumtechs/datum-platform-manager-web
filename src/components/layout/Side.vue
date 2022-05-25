@@ -38,7 +38,6 @@
 </template>
 <script setup lang="ts">
 // import { getCurrentInstance } from 'vue'
-import {cleanFn} from '@/directives'
 import routePath from '@/router/routePath'
 import { HelpFilled, Plus } from '@element-plus/icons-vue'
 import nodeIcon from '@/assets/images/side/side-node-icon.png'
@@ -108,7 +107,6 @@ const createWorkflow = () => {
 }
 
 const routeClicks = (item?:any)=>{
-  cleanFn()
   keepAliveInfo.reset()
 }
 
