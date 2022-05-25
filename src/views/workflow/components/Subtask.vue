@@ -62,7 +62,7 @@ const total = ref(0)
 const workFlowName = ref('')
 const tableData = ref([])
 const { t, locale } = useI18n()
-
+const timer:any = ref()
 
 const query = () => {
   getWorkflowRunTaskList({
@@ -87,8 +87,22 @@ const details = (row: any) => {
 }
 
 onMounted(() => {
-  query()
+  timeOutFn()
 })
+
+onBeforeUnmount(()=>{
+   if(timer.value)clearTimeout(timer.value)
+})
+
+
+const timeOutFn = ()=>{
+  if(timer.value) clearTimeout(timer)
+  query()
+  timer.value = setTimeout(()=>{
+    timeOutFn()
+  },3000)  
+}
+
 
 </script>
 <style lang="scss" scoped>

@@ -121,7 +121,7 @@ const { t, locale } = useI18n()
 const activeRow = ref<any>({})
 const beforeName = ref('')
 const keepAlive = useKeepAliveInfo()
-
+const timer:any = ref()
 
 type Pending = {
   show: boolean,
@@ -134,6 +134,15 @@ const pending: Pending = reactive({
   content: '',
   title: ''
 })
+
+const timeOutFn = ()=>{
+  if(timer.value) clearTimeout(timer)
+  queryVersionList()
+  timer.value = setTimeout(()=>{
+    timeOutFn()
+  },3000)  
+}
+
 
 const queryVersionList = () => {
   keepAlive.setCurrent(current.value,route.path)
@@ -232,7 +241,11 @@ const details = (row: any) => {
 onMounted(() => {
   const currentKeep = keepAlive.getCurrent[route.path] || ''
   if(currentKeep) current.value = currentKeep
-  queryVersionList()
+  timeOutFn()
+})
+
+onBeforeUnmount(()=>{
+   if(timer.value)clearTimeout(timer.value)
 })
 
 
