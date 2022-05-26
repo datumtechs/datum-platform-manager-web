@@ -122,14 +122,20 @@ const initialData = () => {
   })
 }
 
+const _swapArrIndex = (arr: Array<any>, index1: number, index2: number) => {
+  arr[index1] = arr.splice(index2, 1, arr[index1])[0]
+  return arr
+}
+
+
 const queryPowerRank = () => {
   getOrgPowerTop({
-    size: 13
+    size: 10
   }).then((res: any) => {
     const { data, code } = res
     if (code === 10000) {
       const newData = JSON.parse(JSON.stringify(data))
-      const env = newData.slice(0, 3)
+      const env = _swapArrIndex(newData.slice(0, 3), 0, 1)
       tableData.value = newData
       rankList.value.forEach((rank, index) => {
         rank.ratio = (env[index].computingPowerRatio / 100) + '%'

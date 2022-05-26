@@ -54,12 +54,10 @@
 
 <script setup lang='ts'>
 import arrow from '@assets/images/home/slide-arrow.png'
-import { useObserver } from '@/hooks'
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Controller, Autoplay } from 'swiper';
 import 'swiper/css'
 import { getLatestTaskList } from '@/api/home'
-import { emit } from 'process';
 
 interface LatestTask {
    id: number | string,

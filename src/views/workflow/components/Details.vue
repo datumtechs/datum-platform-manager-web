@@ -137,7 +137,7 @@ const { t, locale } = useI18n()
 const activeRow = ref<any>({})
 const beforeName = ref('')
 const keepAlive = useKeepAliveInfo()
-const timer:any = ref()
+const timer: any = ref()
 const consumeList: any = ref([])
 type Pending = {
   show: boolean,
@@ -151,12 +151,12 @@ const pending: Pending = reactive({
   title: ''
 })
 
-const timeOutFn = ()=>{
-  if(timer.value) clearTimeout(timer)
+const timeOutFn = () => {
+  if (timer.value) clearTimeout(timer)
   queryVersionList()
-  timer.value = setTimeout(()=>{
+  timer.value = setTimeout(() => {
     timeOutFn()
-  },3000)  
+  }, 3000)
 }
 
 
@@ -225,20 +225,20 @@ const start = async (row: any) => {
     const { data } = res
     consumeList.value = data.itemList
     setDialog(row)
-    // const sign = await web3.signForWallet({ type: 'tx' })
-    // pending.show = false
-    // if (sign) {
-    //   const res = await startWorkFlow({
-    //     sign,
-    //     workflowId: row.workflowId,
-    //     workflowVersion: row.workflowVersion,
-    //   })
-    //   const { code } = res
-    //   if (code === 10000) {
-    //     ElMessage.success(t('workflow.startSuccess'))
-    //     queryVersionList()
-    //   }
-    // }
+    const sign = await web3.signForWallet({ type: 'tx' })
+    pending.show = false
+    if (sign) {
+      const res = await startWorkFlow({
+        sign,
+        workflowId: row.workflowId,
+        workflowVersion: row.workflowVersion,
+      })
+      const { code } = res
+      if (code === 10000) {
+        ElMessage.success(t('workflow.startSuccess'))
+        queryVersionList()
+      }
+    }
   } catch (error: any) {
     pending.show = false
     useException(error.code)
@@ -274,8 +274,8 @@ onMounted(() => {
   timeOutFn()
 })
 
-onBeforeUnmount(()=>{
-   if(timer.value)clearTimeout(timer.value)
+onBeforeUnmount(() => {
+  if (timer.value) clearTimeout(timer.value)
 })
 
 

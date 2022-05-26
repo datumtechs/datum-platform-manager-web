@@ -7,6 +7,7 @@ import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import WindiCSS from 'vite-plugin-windicss'
 import ElementPlus from 'unplugin-element-plus/vite'
 import path from 'path'
+import fs from 'fs'
 
 // https://vitejs.dev/config/ 
 export default defineConfig({
@@ -87,7 +88,8 @@ export default defineConfig({
     proxy: {
       // 选项写法
       '/flow': {
-        target: 'http://192.168.10.145:10000/',
+        // target: 'http://192.168.10.145:10000/',
+        target: 'http://192.168.10.157:8234', // test env
         changeOrigin: true,
         rewrite: path => path
       }
