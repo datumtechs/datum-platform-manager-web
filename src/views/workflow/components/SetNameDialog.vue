@@ -10,7 +10,7 @@
                 <el-form ref="nameFormRef" @submit.prevent :rules="rules" :model="nameForm"
                     style="max-width: 460px">
                     <el-form-item prop="name">
-                        <el-input ref="inputRef" v-model="nameForm.name" />
+                        <el-input ref="inputRef" v-model.trim="nameForm.name" />
                     </el-form-item>
                 </el-form>
             </div>

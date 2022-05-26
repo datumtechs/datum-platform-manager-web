@@ -152,6 +152,9 @@ const queryAlgTree = () => {
     const { data, code } = res
     if (code === 10000) {
       algList.value = data?.childrenList[0]?.childrenList
+      if(form.algorithmId){
+        algChange()
+      }
     }
   })
 }
