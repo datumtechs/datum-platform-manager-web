@@ -95,7 +95,7 @@ const rankList = ref([
     title: 'No.2',
     imgUrl: cpuImg,
     ratio: '0.00%',
-    nodeName: 'aaa',
+    nodeName: '',
     value: 0
   },
   {
@@ -103,7 +103,7 @@ const rankList = ref([
     title: 'No.1',
     imgUrl: cpuImg,
     ratio: '0.00%',
-    nodeName: 'bbb',
+    nodeName: '',
     value: 0
   },
   {
@@ -111,7 +111,7 @@ const rankList = ref([
     title: 'No.3',
     imgUrl: cpuImg,
     ratio: '0.00%',
-    nodeName: 'ccc',
+    nodeName: '',
     value: 0
   }
 ])
