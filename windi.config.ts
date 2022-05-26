@@ -3,6 +3,9 @@ import { defineConfig } from 'vite-plugin-windicss'
 export default defineConfig({
   preflight: false,
   attributify: true,
+  shortcuts: {
+    "flex-c": "flex justify-center items-center",
+  },
   theme: {
     screens: {
       sm: { max: '700px' },

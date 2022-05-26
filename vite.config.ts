@@ -13,7 +13,7 @@ export default defineConfig({
   plugins: [
     vue(),
     ElementPlus({
-      importStyle: 'sass',
+      // importStyle: 'sass',
       useSource: true,
     }),
     WindiCSS(),

@@ -16,10 +16,12 @@ import useSizeWithUnit from './useSizeWithUnit'
 import useFormatDay from './useFormatDay'
 import useException from './useException'
 import useInterval from './useInterval'
+import useIsAddress from './useIsAddress'
 
 // const context = require.context('./', false, /\.ts$/)
 
 export {
+    useIsAddress,
     useInterval,
     useException,
     useFormatDay,

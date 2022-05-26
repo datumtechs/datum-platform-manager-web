@@ -89,7 +89,6 @@ const taskList = ref<LatestTask[]>([])
 const controlledSwiper: any = ref(null);
 const setControlledSwiper = (swiper: any) => {
    controlledSwiper.value = swiper;
-   console.log(controlledSwiper.value);
 };
 
 const linkToTaskDetail = (row: any) => {
@@ -138,7 +137,7 @@ const getGlobalTask = () => {
       const { code, data } = res
       if (code === 10000) {
          skeletonLoading.value = false
-         if (data.length === 0) showSlide.value = false
+         if (data.length < 5) showSlide.value = false
          const arr = JSON.parse(JSON.stringify(data));
          arr.forEach((item: LatestTask) => {
             const nameArr = item.taskName.split('_')

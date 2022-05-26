@@ -13,12 +13,13 @@ const messages: any = {
   }
 }
 export const getLocale = () => {
-  const storagelanguage = localStorage.langue
-  if (storagelanguage) {
-    return storagelanguage
+  const storageLanguage = localStorage.language
+  if (storageLanguage) {
+    return storageLanguage
   }
   const language = navigator.language.toLowerCase()
   const locales = Object.keys(messages)
+  
   for (const locale of locales) {
     if (language.indexOf(locale) > -1) {
       return locale

@@ -9,7 +9,7 @@ let browserLanguage: any
 }())
 
 const getLanguage = () => {
-    return localStorage.getItem('langue') || browserLanguage
+    return localStorage.getItem('language') || browserLanguage
 }
 
 export {

@@ -428,6 +428,9 @@ const zh = {
     "-32601": "找不到方法: 方法不存在",
     "-32602": "无效参数: 方法参数无效",
     "-32603": "内部错误",
+    "helpAddressNotFound": "助手合约地址未找到",
+    "ERCAddressNotFound": "凭证合约地址未找到",
+    "observerProxyAddressNotFound": "代理合约地址未找到"
   }
 }
 
