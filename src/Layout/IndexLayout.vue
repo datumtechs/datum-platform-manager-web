@@ -34,7 +34,7 @@ import { ElContainer, ElHeader } from 'element-plus';
   transition: all 0.5s;
 }
 
-.fade-main-enter {
+.fade-main-enter-from {
   opacity: 0;
   transform: translateY(-10px);
 }

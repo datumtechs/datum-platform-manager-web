@@ -247,12 +247,12 @@ class Web3Service {
    * @param {string} address
    * @returns Promise 授权节点结果
    */
-  async authNode(observerProxyWalletAddress: string, metisPayAddress: string, callback: any): Promise<any> {
+  async authNode(observerProxyWalletAddress: string, datumNetworkPayAddress: string, callback: any): Promise<any> {
     try {
-      if (!observerProxyWalletAddress || !metisPayAddress) throw new Error('ObserverWallet address was not found')
+      if (!observerProxyWalletAddress || !datumNetworkPayAddress) throw new Error('ObserverWallet address was not found')
       await this._hasLogin()
       await this._setTargetChain()
-      const contract = await new this.web3.eth.Contract(MetisPayABI, metisPayAddress)
+      const contract = await new this.web3.eth.Contract(MetisPayABI, datumNetworkPayAddress)
       const userAddress = useUsersInfo().getAddress
       const res = await contract.methods.addWhitelist(observerProxyWalletAddress).send({
         from: userAddress
@@ -271,12 +271,12 @@ class Web3Service {
    * @param {string} address
    * @returns Promise 取消授权节点结果
    */
-  async revokeNode(observerProxyWalletAddress: string, metisPayAddress: string, callback: any): Promise<any> {
+  async revokeNode(observerProxyWalletAddress: string, datumNetworkPayAddress: string, callback: any): Promise<any> {
     try {
-      if (!observerProxyWalletAddress || !metisPayAddress) return new Error('address is not found')
+      if (!observerProxyWalletAddress || !datumNetworkPayAddress) return new Error('address is not found')
       await this._hasLogin()
       await this._setTargetChain()
-      const contract = await new this.web3.eth.Contract(MetisPayABI, metisPayAddress)
+      const contract = await new this.web3.eth.Contract(MetisPayABI, datumNetworkPayAddress)
       const userAddress = useUsersInfo().getAddress
       const res = await contract.methods.deleteWhitelist(observerProxyWalletAddress).send({
         from: userAddress

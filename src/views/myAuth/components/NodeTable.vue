@@ -147,7 +147,7 @@ const authSubmit = () => {
         const content = `${t('auth.authorizeNode')}: ${currentNode.value?.nodeName}`
         pending.title = t('auth.confirmAuth')
         pending.content = content
-        web3.authNode(currentNode.value?.observerProxyWalletAddress, chainCfg.value.metisPayAddress, _close)
+        web3.authNode(currentNode.value?.observerProxyWalletAddress, chainCfg.value.datumNetworkPayAddress, _close)
             .then((res: any) => {
                 if (res && res.transactionHash) {
                     useNotice('success', content, chainCfg.value?.blockExplorerUrl, res.transactionHash)
@@ -160,7 +160,7 @@ const authSubmit = () => {
         const content = `${t('auth.cancelNodeAuth')}: ${currentNode.value?.nodeName}`
         pending.title = t('auth.confirmCancelAuth')
         pending.content = content
-        web3.revokeNode(currentNode.value?.observerProxyWalletAddress, chainCfg.value.metisPayAddress, _close)
+        web3.revokeNode(currentNode.value?.observerProxyWalletAddress, chainCfg.value.datumNetworkPayAddress, _close)
             .then((res: any) => {
                 if (res && res.transactionHash) {
                     useNotice('success', '', chainCfg.value?.blockExplorerUrl, res.transactionHash)
