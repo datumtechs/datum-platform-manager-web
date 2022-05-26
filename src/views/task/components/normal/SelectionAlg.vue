@@ -43,7 +43,7 @@
     </el-form-item>
     <el-form-item :label="`${t('task.pleaseComments')}:`">
       <el-input :disabled="disabled" :input-style="{ borderColor: '#EEEEEE', height: '50px' }" show-word-limit
-        type="textarea" :rows="4" :maxlength="200" v-model="form.workflowDesc"></el-input>
+        type="textarea" :rows="4" :maxlength="200" v-model.trim="form.workflowDesc"></el-input>
     </el-form-item>
   </el-form>
   <NextButton v-if="!disabled" @clicks="next" />

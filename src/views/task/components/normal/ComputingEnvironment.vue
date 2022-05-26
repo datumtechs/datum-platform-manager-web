@@ -115,10 +115,50 @@ const paramsItem = {
   timeSymbol: 'minute'
 }
 const rulesItem = {
-  cpu: [{ required: true, message: `${t('task.pleaseEnter')}${t('task.taskName')}` }],
-  memory: [{ required: true, message: t('task.stepOneSelectComputingTitle') }],
-  bandwidth: [{ required: true, message: t('task.stepOneSelectAlgorithmTitle') }],
-  time: [{ required: true, message: t('task.stepOneSelectProcedureTitle') }]
+  cpu: [   
+      {
+        validator: (rule: any, value: any, callback: any) => {
+          if(!(value && /^\+?[1-9][0-9]*$/.test(String(value)))) {
+            return callback(t('common.enterNumber'))
+          }
+          return callback()
+        },
+      },
+      { required: true, message: `${t('task.pleaseEnter')}${t('task.taskName')}` }
+    ],
+  memory: [
+      {
+        validator: (rule: any, value: any, callback: any) => {
+          if(!(value && /^\+?[1-9][0-9]*$/.test(String(value)))) {
+            return callback(t('common.enterNumber'))
+          }
+          return callback()
+        },
+      },
+      { required: true, message: t('task.stepOneSelectComputingTitle') }
+    ],
+  bandwidth: [
+      {
+        validator: (rule: any, value: any, callback: any) => {
+          if(!(value && /^\+?[1-9][0-9]*$/.test(String(value)))) {
+            return callback(t('common.enterNumber'))
+          }
+          return callback()
+        },
+      },
+      { required: true, message: t('task.stepOneSelectAlgorithmTitle') }
+    ],
+  time: [
+    {
+      validator: (rule: any, value: any, callback: any) => {
+        if(!(value && /^\+?[1-9][0-9]*$/.test(String(value)))) {
+          return callback(t('common.enterNumber'))
+        }
+        return callback()
+      },
+    },
+    { required: true, message: t('task.stepOneSelectProcedureTitle') }
+  ]
 }
 const form = reactive({
   0: {
