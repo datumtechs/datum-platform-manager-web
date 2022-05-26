@@ -225,18 +225,25 @@ class Web3Service {
    */
   async authERC20TOKEN(ERC20address: string, walletHelpAddress: string, total: number, callback: any): Promise<any> {
     try {
-      if (!ERC20address || !walletHelpAddress) return new Error('address is not found')
-      await this._hasLogin()
-      await this._setTargetChain()
-      const contract = await new this.web3.eth.Contract(Erc20ABI, ERC20address)
-      const userAddress = useUsersInfo().getAddress
-      const res = await contract.methods.approve(walletHelpAddress, total).send({
-        from: userAddress
-      }).on('transactionHash', (txHash: string) => {
-        console.log('txHash:', txHash);
-        callback(txHash)
-      })
-      return Promise.resolve(res)
+      console.log(this.i18n.global);
+
+      if (!ERC20address) {
+        throw new Error(this.i18n.t('exception.ERCAddressNotFound'))
+      } else if (!walletHelpAddress) {
+        throw new Error(this.i18n.t('exception.helpAddressNotFound'))
+      } else {
+        await this._hasLogin()
+        await this._setTargetChain()
+        const contract = await new this.web3.eth.Contract(Erc20ABI, ERC20address)
+        const userAddress = useUsersInfo().getAddress
+        const res = await contract.methods.approve(walletHelpAddress, total).send({
+          from: userAddress
+        }).on('transactionHash', (txHash: string) => {
+          console.log('txHash:', txHash);
+          callback(txHash)
+        })
+        return Promise.resolve(res)
+      }
     } catch (error: any) {
       throw new Error(`${error.message}`)
     }
@@ -249,18 +256,23 @@ class Web3Service {
    */
   async authNode(observerProxyWalletAddress: string, datumNetworkPayAddress: string, callback: any): Promise<any> {
     try {
-      if (!observerProxyWalletAddress || !datumNetworkPayAddress) throw new Error('ObserverWallet address was not found')
-      await this._hasLogin()
-      await this._setTargetChain()
-      const contract = await new this.web3.eth.Contract(MetisPayABI, datumNetworkPayAddress)
-      const userAddress = useUsersInfo().getAddress
-      const res = await contract.methods.addWhitelist(observerProxyWalletAddress).send({
-        from: userAddress
-      }).on('transactionHash', (txHash: string) => {
-        console.log(txHash);
-        callback(txHash)
-      })
-      return Promise.resolve(res)
+      if (!observerProxyWalletAddress) {
+        throw new Error(this.i18n.t('exception.observerProxyAddressNotFound'))
+      } else if (!datumNetworkPayAddress) {
+        throw new Error(this.i18n.t('exception.helpAddressNotFound'))
+      } else {
+        await this._hasLogin()
+        await this._setTargetChain()
+        const contract = await new this.web3.eth.Contract(MetisPayABI, datumNetworkPayAddress)
+        const userAddress = useUsersInfo().getAddress
+        const res = await contract.methods.addWhitelist(observerProxyWalletAddress).send({
+          from: userAddress
+        }).on('transactionHash', (txHash: string) => {
+          console.log(txHash);
+          callback(txHash)
+        })
+        return Promise.resolve(res)
+      }
     } catch (error: any) {
       throw new Error(`${error.message}`)
     }
@@ -273,19 +285,22 @@ class Web3Service {
    */
   async revokeNode(observerProxyWalletAddress: string, datumNetworkPayAddress: string, callback: any): Promise<any> {
     try {
-      if (!observerProxyWalletAddress || !datumNetworkPayAddress) return new Error('address is not found')
-      await this._hasLogin()
-      await this._setTargetChain()
-      const contract = await new this.web3.eth.Contract(MetisPayABI, datumNetworkPayAddress)
-      const userAddress = useUsersInfo().getAddress
-      const res = await contract.methods.deleteWhitelist(observerProxyWalletAddress).send({
-        from: userAddress
-      }).on('transactionHash', (txHash: string) => {
-        console.log('txHash:', txHash);
-        callback(txHash)
-      })
-
-      return Promise.resolve(res)
+      if (!observerProxyWalletAddress) {
+        throw new Error(this.i18n.t('exception.observerProxyAddressNotFound'))
+      } else if (!datumNetworkPayAddress) {
+        throw new Error(this.i18n.t('exception.helpAddressNotFound'))
+      } else {
+        await this._hasLogin()
+        await this._setTargetChain()
+        const contract = await new this.web3.eth.Contract(MetisPayABI, datumNetworkPayAddress)
+        const userAddress = useUsersInfo().getAddress
+        const res = await contract.methods.deleteWhitelist(observerProxyWalletAddress).send({
+          from: userAddress
+        }).on('transactionHash', (txHash: string) => {
+          callback(txHash)
+        })
+        return Promise.resolve(res)
+      }
     } catch (error: any) {
       throw new Error(`${error.message}`)
     }

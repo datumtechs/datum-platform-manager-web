@@ -26,7 +26,7 @@ onMounted(() => {
 
 </script>
 <template>
-  <el-config-provider :locale="useLanguage().langue == 'zh' ? elementZhLocale : elementEnLocale">
+  <el-config-provider :locale="useLanguage().language == 'zh' ? elementZhLocale : elementEnLocale">
     <IndexLayout />
   </el-config-provider>
 </template>

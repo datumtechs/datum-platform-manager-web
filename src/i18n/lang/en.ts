@@ -428,6 +428,10 @@ const en = {
     "-32601": "Method not found: Method does not exist",
     "-32602": "Invalid params: Invalid method parameters",
     "-32603": "Internal error: Internal JSON-RPC error",
+    "helpAddressNotFound": "Helper contract address not found",
+    "ERCAddressNotFound": "Token contract address not found",
+    "observerProxyAddressNotFound": "Proxy contract address not found",
+    "workflowLengthError":"Length should be 8 to 64"
   }
 }
 

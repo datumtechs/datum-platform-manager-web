@@ -23,10 +23,9 @@
             </div>
             <div class="mt-20px">
                 <p class="mb-10px">{{ t('common.bandwidth') }}</p>
-                <el-input :disabled="isReadonly" min="1" type="number" class="no-number"
+                <el-input :disabled="isReadonly" type="number" class="no-number"
                     oninput="value=value.replace(/[^0-9]/g,'')" @change="handleBandwidthChangeFn"
                     v-model.trim="props.envObj.costBandwidth">
-
                     <template #suffix>
                         <p class="font-14px leading-40px">Mbps</p>
                     </template>

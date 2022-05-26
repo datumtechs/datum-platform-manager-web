@@ -238,7 +238,8 @@ const authSubmit = () => {
             const unit = useExchangeTo(+authForm.quantity, currentToken.tokenDecimal)
             web3.authERC20TOKEN(
                 currentToken.tokenAddress,
-                chainCfg.value.datumNetworkPayAddress,
+                // chainCfg.value.datumNetworkPayAddress,
+                "",
                 unit,
                 _closeAuthDialog)
                 .then((res: any) => {

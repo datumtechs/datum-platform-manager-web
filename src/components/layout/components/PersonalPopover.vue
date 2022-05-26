@@ -2,15 +2,15 @@
   <el-popover @show="popoverShow = true" @hide="popoverShow = false" placement="bottom"
     popper-class="_el-popover" :width="140" trigger="hover">
     <template #reference>
-      <!-- <img v-if="popoverShow" class="langue rounded-1/2 w-40px h-40px"
+      <!-- <img v-if="popoverShow" class="language rounded-1/2 w-40px h-40px"
         src="@/assets/images/header/langue_active.png" /> -->
-      <img class="langue rounded-1/2 w-40px h-40px" src="@/assets/images/header/langue.png" />
+      <img class="language rounded-1/2 w-40px h-40px" src="@/assets/images/header/language.png" />
     </template>
     <div class="popover flex flex-col justify-between">
-      <p class="mb-24px text-l font-normal cursor-pointer" :class="{ active: store.langue == 'zh' }"
-        @click="changeLangue('zh')">简体中文</p>
-      <p @click="changeLangue('en')" class="text-l font-normal cursor-pointer"
-        :class="{ active: store.langue !== 'zh' }">English</p>
+      <p class="mb-24px text-l font-normal cursor-pointer" :class="{ active: store.language == 'zh' }"
+        @click="changeLanguage('zh')">简体中文</p>
+      <p @click="changeLanguage('en')" class="text-l font-normal cursor-pointer"
+        :class="{ active: store.language !== 'zh' }">English</p>
     </div>
   </el-popover>
 </template>
@@ -18,16 +18,16 @@
 import { useLanguage } from '@/stores'
 const store = useLanguage()
 const { locale } = useI18n()
-const changeLangue = (langue: string) => {
-  locale.value = langue
-  store.saveLang(langue)
+const changeLanguage = (language: string) => {
+  locale.value = language
+  store.saveLang(language)
 }
 
 const popoverShow = ref(false)
 
 </script>
 <style lang="scss" scoped>
-.langue {
+.language {
   &:hover {
     content: url("@/assets/images/header/langue_active.png")
   }

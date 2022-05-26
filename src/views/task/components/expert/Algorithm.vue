@@ -146,6 +146,7 @@ const queryAlgoList = () => {
     queryAlgoDetail().then(result => {
         const { data, code } = result
         if (code === 10000) {
+            target = []
             const arr = filterTree(data.childrenList)
             data.childrenList.forEach((item: any) => {
                 if (item.id === 2) {

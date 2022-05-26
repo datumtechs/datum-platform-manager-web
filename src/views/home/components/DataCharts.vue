@@ -14,9 +14,6 @@ const props = defineProps({
     }
 })
 
-console.log(props.chartsData);
-
-
 const { t } = useI18n()
 const initCharts = () => {
     console.log(props.chartsData);

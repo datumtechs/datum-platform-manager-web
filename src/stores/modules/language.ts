@@ -2,15 +2,15 @@ import { defineStore } from "pinia";
 
 export default defineStore('language', {
   state: () => ({
-    langue: localStorage.langue || 'zh'
+    language: localStorage.language || 'zh'
   }),
   getters: {
-    getLang: state => state.langue
+    getLang: state => state.language
   },
   actions: {
-    saveLang(langue: string) {
-      localStorage.setItem('langue', langue)
-      this.langue = langue
+    saveLang(language: string) {
+      localStorage.setItem('language', language)
+      this.language = language
     }
   }
 })

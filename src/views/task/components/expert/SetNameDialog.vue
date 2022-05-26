@@ -10,7 +10,8 @@
                 <el-form ref="nameFormRef" @submit.prevent :rules="rules" :model="nameForm"
                     style="max-width: 460px">
                     <el-form-item prop="name">
-                        <el-input ref="inputRef" v-model="nameForm.name" />
+                        <el-input onkeyup="value=value.replace(/\s+/g,'')" ref="inputRef"
+                            v-model="nameForm.name" />
                     </el-form-item>
                 </el-form>
             </div>
@@ -37,13 +38,21 @@ const router = useRouter()
 const emit = defineEmits(['update:show'])
 const nameFormRef = ref<any>()
 const inputRef = ref<any>(null)
+
+
+const checkName = (rule: any, value: any, callback: any) => {
+    setTimeout(() => {
+        callback()
+    }, 1000)
+}
+
 const rules = reactive({
     name: [
-        { required: true, message: 'Please input Activity name', trigger: 'blur' },
-        { min: 8, max: 64, message: 'Length should be 8 to 64', trigger: 'blur' },
+        { required: true, message: t('exception.plzInputWorkflowName'), trigger: 'blur' },
+        { min: 8, max: 64, message: t('exception.workflowLengthError'), trigger: 'blur' },
+        { validator: checkName, trigger: 'blur' }
     ]
 })
-
 
 const submitForm = async (form: any) => {
     if (!form) return
