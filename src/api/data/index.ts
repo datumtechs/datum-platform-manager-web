@@ -47,10 +47,10 @@ export const queryDataList = (params: any): Promise<any> => {
   })
 }
 
-export const getUserMetisLatInfo = (params: any): Promise<any> => {
+export const getUserDatumNetworkLatInfo = (params: any): Promise<any> => {
   return http({
     method: 'GET',
-    url: '/flow/data/getUserMetisLatInfo',
+    url: '/flow/data/getUserDatumNetworkLatInfo',
     params
   })
 }

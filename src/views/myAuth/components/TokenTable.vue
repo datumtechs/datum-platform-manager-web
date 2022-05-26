@@ -12,7 +12,7 @@
 </template>
 <script setup lang="ts">
 import DataToken from './DataToken.vue'
-import { queryUserDataList, getUserMetisLatInfo } from '@/api/data'
+import { queryUserDataList, getUserDatumNetworkLatInfo } from '@/api/data'
 import { useInterval } from '@/hooks'
 const { t } = useI18n()
 
@@ -51,7 +51,7 @@ const queryDataList = () => {
 }
 
 const queryWLat = async () => {
-    const { code, data } = await getUserMetisLatInfo({})
+    const { code, data } = await getUserDatumNetworkLatInfo({})
     if (code === 10000) {
         feeTokenData.value = [data]
     }

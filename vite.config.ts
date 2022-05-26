@@ -7,7 +7,6 @@ import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import WindiCSS from 'vite-plugin-windicss'
 import ElementPlus from 'unplugin-element-plus/vite'
 import path from 'path'
-import fs from 'fs'
 
 // https://vitejs.dev/config/ 
 export default defineConfig({
