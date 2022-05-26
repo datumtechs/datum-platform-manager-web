@@ -430,7 +430,9 @@ const zh = {
     "-32603": "内部错误",
     "helpAddressNotFound": "助手合约地址未找到",
     "ERCAddressNotFound": "凭证合约地址未找到",
-    "observerProxyAddressNotFound": "代理合约地址未找到"
+    "observerProxyAddressNotFound": "代理合约地址未找到",
+    "plzInputWorkflowName": "请输入工作流名称",
+    "workflowLengthError":"长度限制在8-64个字符"
   }
 }
 

@@ -430,7 +430,8 @@ const en = {
     "-32603": "Internal error: Internal JSON-RPC error",
     "helpAddressNotFound": "Helper contract address not found",
     "ERCAddressNotFound": "Token contract address not found",
-    "observerProxyAddressNotFound": "Proxy contract address not found"
+    "observerProxyAddressNotFound": "Proxy contract address not found",
+    "workflowLengthError":"Length should be 8 to 64"
   }
 }
 

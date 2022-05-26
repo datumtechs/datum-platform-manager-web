@@ -1,7 +1,7 @@
 <template>
     <div class="flex-1 py-20px px-30px">
         <div class="btn-group">
-            <el-button v-if="!isInEdit" v-waves round @click="emits('showNameDialog', true)">
+            <el-button v-if="!isInEdit" v-waves type="primary" round @click="emits('showNameDialog', true)">
                 {{ t('common.create') }}
             </el-button>
             <el-button v-else v-waves :disabled="props.isReadonly" round @click="handleClick()">
