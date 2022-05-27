@@ -51,7 +51,8 @@ const en = {
     timeFrame: "time Frame",
     reset: "Reset",
     computeTimes: "Compute times",
-    create: 'Create'
+    create: 'Create',
+    enterNumber:"please enter a positive integer"
   },
   menu: {
     home: 'Home',

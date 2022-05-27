@@ -226,8 +226,11 @@ const cascaderChange = (e: any) => {
           index
         }
       })
-      if (e !== 'init') activeIndex.value = 0
-      form.idColumn = fieldsList.value[activeIndex.value]
+      if (e !== 'init') {
+        activeIndex.value = 0
+        form.idColumn = fieldsList.value[activeIndex.value]
+        fieldsList.value[activeIndex.value] = false
+      }
       if (e == 'init') initParams()
     }
   })

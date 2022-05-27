@@ -186,7 +186,7 @@ const cascaderProps = ref({
       return
     }
     getUserModelList({
-      algorithmId:pathValues[1],
+      algorithmId: props.taskParams?.predictionInput?.algorithmId,
       identityId:pathValues[0]
     }).then(res=>{
       const {code,data} = res
@@ -232,11 +232,12 @@ const queryAlgoList = () => {
                 // algoList.value = arr
                 optionsList.value = props.orgList.map((v:any)=>{
                   return {
+                    leaf: false,
                     value: v.identityId,
                     label: v.nodeName,
-                    children:[
-                      ...arr
-                    ]
+                    // children:[
+                    //   ...arr
+                    // ]
                   }
                 })
                 if(props.taskParams.predictionInput?.model?.metaDataId){

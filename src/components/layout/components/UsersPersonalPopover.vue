@@ -53,6 +53,7 @@ const logout = async () => {
     if (code === 10000) {
       emit('drawerShowchange')
       useUsersInfo().clean()
+      router.push({name:'home'})
     }
   } catch (error) {
     console.log(error)

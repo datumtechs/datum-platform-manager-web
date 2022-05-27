@@ -51,7 +51,8 @@ const zh = {
     timeFrame: "时间范围",
     reset: "重置",
     computeTimes: "计算次数",
-    create: '创建'
+    create: '创建',
+    enterNumber:"请输入正整数"
   },
   menu: {
     home: '首页',
