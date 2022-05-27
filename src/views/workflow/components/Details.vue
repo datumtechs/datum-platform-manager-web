@@ -115,7 +115,7 @@
           </div>
         </div>
       </template>
-    </GlobalPending>>
+    </GlobalPending>
   </div>
 </template>
 <script lang="ts" setup>
