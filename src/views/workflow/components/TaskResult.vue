@@ -10,13 +10,13 @@
         <div class="com-main-data-wrap mt-63px">
             <ResultFile v-if="activekey === 0" :tableData="tableData" />
             <TaskEvents v-if="activekey === 1" :data="eventList" />
-            <ModelEvaluation v-if="activekey === 2" :modelEvaluate="modelEvaluate" />
+            <!-- <ModelEvaluation v-if="activekey === 2" :modelEvaluate="modelEvaluate" /> -->
         </div>
     </div>
 </template>
 <script setup lang='ts'>
 import ResultFile from './ResultFile.vue'
-import ModelEvaluation from './ModelEvaluation.vue'
+// import ModelEvaluation from './ModelEvaluation.vue'
 import { getWorkflowRunTaskResult } from '@/api/workflow'
 import { useFormatTime, useDuring, useWorkflowDetailsMap } from '@/hooks'
 
