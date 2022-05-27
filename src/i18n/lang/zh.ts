@@ -353,6 +353,7 @@ const zh = {
     saveInputIDHint: '请选择数据提供方的ID列',
     saveSuccessHint: '保存工作流成功,跳转工作流记录页面',
     saveStatusErrorHint: '当前页面状态不正确, 无法保存,请重试',
+    saveEnvInputHint: '请完成算法环境的配置'
   },
   role: {
     taskSponsor: '任务发起方',
@@ -432,7 +433,7 @@ const zh = {
     "ERCAddressNotFound": "凭证合约地址未找到",
     "observerProxyAddressNotFound": "代理合约地址未找到",
     "plzInputWorkflowName": "请输入工作流名称",
-    "workflowLengthError":"长度限制在8-64个字符"
+    "workflowLengthError": "长度限制在8-64个字符"
   }
 }
 

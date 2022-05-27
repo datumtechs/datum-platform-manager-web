@@ -14,8 +14,8 @@
             <div class="mt-20px">
                 <p class="mb-10px">{{ t('common.memory') }}</p>
                 <el-input :disabled="isReadonly" min="1" type="number" class="no-number"
-                    oninput="value=value.replace(/[^0-9]/g,'')" @change="handleMemoryChangeFn"
-                    v-model.trim="props.envObj.costMem">
+                    oninput="value=value.replace(/[^0-9]/g,'').replace(/\b(0+)/gi,'')"
+                    @change="handleMemoryChangeFn" v-model.trim="props.envObj.costMem">
                     <template #suffix>
                         <p class="font-14px leading-40px">MB</p>
                     </template>
@@ -24,8 +24,8 @@
             <div class="mt-20px">
                 <p class="mb-10px">{{ t('common.bandwidth') }}</p>
                 <el-input :disabled="isReadonly" type="number" class="no-number"
-                    oninput="value=value.replace(/[^0-9]/g,'')" @change="handleBandwidthChangeFn"
-                    v-model.trim="props.envObj.costBandwidth">
+                    oninput="value=value.replace(/[^0-9]/g,'').replace(/\b(0+)/gi,'')"
+                    @change="handleBandwidthChangeFn" v-model.trim="props.envObj.costBandwidth">
                     <template #suffix>
                         <p class="font-14px leading-40px">Mbps</p>
                     </template>
@@ -35,8 +35,8 @@
         <div class="mt-30px">
             <p class="mb-10px">{{ t('expert.longestComputingTime') }}</p>
             <el-input :disabled="isReadonly" min="1" type="number" class="no-number"
-                oninput="value=value.replace(/[^0-9]/g,'')" @change="handleRuntimeChangeFn"
-                v-model.trim="props.envObj.runTime">
+                oninput="value=value.replace(/\b(0+)/gi,'').replace(/[^0-9]/g,'')"
+                @change="handleRuntimeChangeFn" v-model.trim="props.envObj.runTime">
                 <template #suffix>
                     <p class="font-14px leading-40px">{{ t('common.minute') }}</p>
                 </template>
