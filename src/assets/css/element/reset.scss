@@ -1,0 +1,39 @@
+.el-dialog__header {
+    border: 0;
+}
+.el-dialog {
+    border-radius: 8px !important;
+}
+/*在Chrome下移除input[number]的上下箭头*/
+.no-number::-webkit-outer-spin-button,
+.no-number::-webkit-inner-spin-button {
+    margin: 0;
+    -webkit-appearance: none !important;
+}
+
+.no-number input[type="number"]::-webkit-outer-spin-button,
+.no-number input[type="number"]::-webkit-inner-spin-button {
+    margin: 0;
+    -webkit-appearance: none !important;
+}
+
+/*在firefox下移除input[number]的上下箭头*/
+.no-number {
+    -moz-appearance: textfield;
+}
+
+.no-number input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+.el-button > span {
+    font-family: DINPro-Regular, Ali-Regular;
+}
+
+.el-form-item__label:before {
+    display: none;
+}
+
+.el-form-item .is-required {
+    position: relative;
+}
