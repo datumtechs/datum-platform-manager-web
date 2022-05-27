@@ -19,6 +19,7 @@
         class="h-40px rounded-20px border-1 w-440px border-solid  border-color-[#EEEEEE]" :suffix-icon="CaretBottom"
         v-model="model" :options="optionsList" :props="cascaderProps" />
     </div>
+    <!-- {{model}} -->
     <div class="flex items-center text-14px mt-20px">
       <div class="mr-20px text-color-[#666666] font-medium w-130px">{{ $t('task.PSI') }} ：</div>
       <el-switch v-model="psi" :disabled="taskParams.isSettingCompleted" />
@@ -144,13 +145,13 @@ const submit = async (str?: string | any) => {
       identityId: identityId.value,
       isPsi: psi.value || false,
       inputModel: props.taskParams.inputModel || true,
-      algorithmId:model.value[1] || '',
+      algorithmId: props.taskParams?.predictionInput?.algorithmId || '',
       item: [
         data,
         data2
       ],
       model:{
-        metaDataId: model.value[2] || '',
+        metaDataId: model.value[1] || '',
       }
     },
     calculationProcessStep: {
@@ -248,7 +249,6 @@ const queryAlgoList = () => {
                 if(props.taskParams.predictionInput?.model?.metaDataId){
                     model.value = [
                       props.taskParams.predictionInput?.model?.identityId,
-                      props.taskParams.predictionInput?.algorithmId,
                       props.taskParams.predictionInput?.model?.metaDataId
                     ]
                 }
