@@ -2,11 +2,20 @@
   <div class="task-wrap com-main">
     <Banner :bg-name="'globalTask'">
       <template #briefInfo>
-        <p class="text-color-[#999999]">
+         <p class="text-color-[#999999]" v-if="locale === 'zh'">
+          全网共 
+          <span class="text-color-[#2B60E9] text-16px">{{ pageObj.total || 0 }}</span>
+          条隐私计算任务的运行记录
+        </p>
+        <p class="text-color-[#999999]" v-else>
+          <span class="text-color-[#2B60E9] text-16px">{{ pageObj.total || 0 }}</span>
+           privacy computing tasks in the whole network
+        </p>
+        <!-- <p class="text-color-[#999999]">
           {{ t('myData.tasksBriefInfoFirstParagraph') }}
           <span class="text-color-[#2B60E9] text-16px">{{ pageObj.total }}</span>
           {{ t('myData.tasksBriefInfoTwoParagraph') }}
-        </p>
+        </p> -->
       </template>
     </Banner>
     <div class="main-content com-main-data-wrap">
@@ -82,7 +91,7 @@ const keepAlive = useKeepAliveInfo()
 
 const router: Router = useRouter()
 const route = useRoute()
-const { t } = useI18n()
+const { t,locale } = useI18n()
 
 const loading = ref(false)
 const tableData = ref([])

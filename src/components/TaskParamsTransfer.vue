@@ -230,6 +230,7 @@ const cascaderChange = (e: any) => {
         activeIndex.value = 0
         form.idColumn = fieldsList.value[activeIndex.value]
         fieldsList.value[activeIndex.value] = false
+        activeIndex.value = 1
       }
       if (e == 'init') initParams()
     }
@@ -255,6 +256,7 @@ const initParams = () => {
         form.feature.push(item)
       }
     }
+    activeIndex.value = fieldsList.value.findIndex((v:any)=>v.show)
   })
   //@ts-ignore
   fieldTypeActive.value = props.fieldType[props.fieldType.length - 1].type

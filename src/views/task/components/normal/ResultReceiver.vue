@@ -42,6 +42,7 @@
 import NoticeText from './NoticeText.vue';
 import { setWorkflowOfWizardMode } from '@/api/workflow'
 const router: any = useRouter()
+const route: any = useRoute()
 const emit = defineEmits(['previous', 'next'])
 const props: any | { orgList: any } = defineProps({
   noticeText: {
@@ -141,6 +142,10 @@ const next = async (str?: string) => {
     const { data, code } = res
     if (code === 10000) {
       if (str == 'preserv') {
+        if(route.params) {
+          router.push({name:'workflow'})
+          return
+        }
         router.go(-1)
         // emit('next')
       }

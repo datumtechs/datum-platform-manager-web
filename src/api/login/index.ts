@@ -26,7 +26,7 @@ export const Logout = (): Promise<any> => {
 export const updateUserInfo = (data: {}): Promise<any> => {
   return http({
     method: 'POST',
-    url: '/flow/user/updateNickName',
+    url: '/flow/user/updateUserName',
     data
   })
 }

@@ -71,6 +71,7 @@ import NoticeText from './NoticeText.vue';
 import { setWorkflowOfWizardMode } from '@/api/workflow'
 import NextButton from './NextButton.vue'
 const router: any = useRouter()
+const route: any = useRoute()
 const { t } = useI18n()
 const emit = defineEmits(['previous', 'next'])
 const props = defineProps({
@@ -244,6 +245,10 @@ const submit = async (str?:any) => {
     const { data, code } = res
     if (code === 10000) {
       if (str == 'preserv') {
+        if(route.params) {
+          router.push({name:'workflow'})
+          return
+        }
         router.go(-1)
         return
       }

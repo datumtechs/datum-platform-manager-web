@@ -95,7 +95,7 @@ const submit = () => {
   formRef.value?.validate((bol: boolean) => {
     if (bol) {
       // console.log(form.value?.name)
-      updateUserInfo({ address: store.address, nickName: form.value?.name }).then(res => {
+      updateUserInfo({ address: store.address, userName: form.value?.name }).then(res => {
         const { code } = res
         if (code === 10000) {
           ElMessage.success(t('common.success'))
