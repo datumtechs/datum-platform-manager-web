@@ -1,7 +1,8 @@
 <template>
     <div class="flex-1 py-20px px-30px">
         <div class="btn-group">
-            <el-button v-if="!isInEdit" v-waves type="primary" round @click="emits('showNameDialog', true)">
+            <el-button v-if="!isInEdit" v-waves type="primary" round
+                @click="emits('showNameDialog', true)">
                 {{ t('common.create') }}
             </el-button>
             <el-button v-else v-waves :disabled="props.isReadonly" round @click="handleClick()">
@@ -105,21 +106,10 @@ const workflowVersion = computed(() => route.params.workflowVersion)
 const showDot = computed(() => useExpertMode().getDotted)
 
 const nodeList: any = computed(() => useExpertMode().getNodeList)
-// const btnList = computed(() => [
-//     {
-//         id: 0,
-//         value: 'create',
-//         label: t('common.create')
-//     },
-//     {
-//         id: 1,
-//         value: 'save',
-//         label: t('common.save')
-//     }
-// ])
 
 const judgeMentParams = () => {
     let flag = true
+
     if (!nodeList.value.length) {
         ElMessage.error(t('expert.saveHint'))
         flag = false
@@ -148,9 +138,7 @@ const judgeMentParams = () => {
                         flag = false
                         return
                     }
-                    if (nodeList.value[i].alg.inputModel && i === 0 && !inputArray[j].dependentVariable) {
-                        console.log('此时的数值', i, nodeList.value[i].alg.inputModel, j, inputArray[j].dependentVariable);
-
+                    if (i === 0 && !nodeList.value[i].alg.inputModel && nodeList.value[i].alg.algorithmId !== 1001 && !inputArray[j].dependentVariable) {
                         ElMessage.error(t('expert.saveInputLabelHint'))
                         flag = false
                         return
@@ -162,17 +150,23 @@ const judgeMentParams = () => {
                     }
                 }
             }
+            if (!nodeList.value[i].resource?.costBandwidth ||
+                !nodeList.value[i].resource?.costCpu ||
+                !nodeList.value[i].resource?.costMem ||
+                !nodeList.value[i].resource?.runTime
+            ) {
+                ElMessage.error(t('expert.saveEnvInputHint'))
+                flag = false
+                return
+            }
         }
+
     }
     return flag
 }
 
 const handleClick = () => {
-    const flag = judgeMentParams()
-    console.log(flag);
-    if (flag) {
-        saveWorkflow()
-    }
+    !!judgeMentParams() && saveWorkflow()
 }
 
 const saveWorkflow = async () => {

@@ -355,6 +355,7 @@ const en = {
     saveInputIDHint: 'Please select the ID column of the data provider',
     saveSuccessHint: 'Save the workflow successfully, jump to the workflow record page',
     saveStatusErrorHint: 'The current page state is incorrect and cannot be saved, please try again',
+    saveEnvInputHint: 'Please complete the configuration of the algorithm environment'
   },
   role: {
     taskSponsor: 'Task sponsor',
@@ -432,7 +433,7 @@ const en = {
     "helpAddressNotFound": "Helper contract address not found",
     "ERCAddressNotFound": "Token contract address not found",
     "observerProxyAddressNotFound": "Proxy contract address not found",
-    "workflowLengthError":"Length should be 8 to 64"
+    "workflowLengthError": "Length should be 8 to 64"
   }
 }
 
