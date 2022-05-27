@@ -102,8 +102,8 @@
 import { CaretBottom, Remove } from '@element-plus/icons-vue'
 import { queryUserDataList, queryDataDetails } from '@/api/data'
 import type { CascaderOption } from 'element-plus/lib/components/cascader-panel/src/node';
-import questbg from '@/assets/Images/task/questBgfff.png'
-import questWhite from '@/assets/Images/task/questWhite.png'
+import questbg from '@/assets/images/task/questBgfff.png'
+import questWhite from '@/assets/images/task/questWhite.png'
 const { t, locale } = useI18n()
 const emit = defineEmits(['update:params'])
 const fieldTypeActive = ref('idColumn')

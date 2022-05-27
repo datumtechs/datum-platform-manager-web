@@ -1,7 +1,7 @@
 <template>
   <div class="flex items-center private-switch-wrap cursor-pointer">
     <div class="flex items-center" @click="click">
-          <img src="@/assets/Images/task/switch.png" class="w-20px h-20px"/>
+          <img src="@/assets/images/task/switch.png" class="w-20px h-20px"/>
         <span class="text-color-[#2B60E9] mx-6px">
           {{ $t('task.goTo') }}{{ isExpertMode ? $t('task.wizardMode') : $t('task.expertMode') }}
         </span>
