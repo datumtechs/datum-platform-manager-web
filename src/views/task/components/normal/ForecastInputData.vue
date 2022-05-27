@@ -47,6 +47,7 @@ import { getUserModelList } from '@/api/task'
 import { queryAlgoDetail } from '@/api/algorithm'
 import { ElMessage } from 'element-plus';
 const router: any = useRouter()
+const route: any = useRoute()
 const {t} = useI18n()
 const emit = defineEmits(['previous', 'getParams', 'next'])
 const props: any = defineProps({
@@ -160,6 +161,10 @@ const submit = async (str?: string | any) => {
     const { code } = res
     if (code === 10000) {
       if (str == 'preserv') {
+        if(route.params) {
+          router.push({name:'workflow'})
+          return
+        }
         router.go(-1)
         return
       }
