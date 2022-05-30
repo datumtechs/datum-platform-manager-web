@@ -52,7 +52,7 @@ const zh = {
     reset: "重置",
     computeTimes: "计算次数",
     create: '创建',
-    enterNumber:"请输入正整数"
+    enterNumber: "请输入正整数"
   },
   menu: {
     home: '首页',
@@ -268,7 +268,8 @@ const zh = {
     startSuccess: "启动成功",
     startWorkflow: "启动工作流",
     credentialPriceTips: "展示价格仅供参考，真实价格请参考交易所",
-    consumption: "本次工作流消耗"
+    consumption: "本次工作流消耗",
+    plzInputTokenName: '请输入凭证或数据名称'
   },
   credentials: {
     circulation: "总发布量",

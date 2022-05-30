@@ -8,7 +8,7 @@
             <ComputationTable v-else />-->
             <BaseInfo v-if="activekey === 0" :tableData="tableData" />
             <MetaData v-if="activekey === 1" :data="metadataData" />
-            <TaskInvolved v-if="activekey === 2" />
+            <TaskInvolved v-if="activekey === 2" :metaDataId="metaDataId" />
         </div>
     </div>
 </template>
@@ -38,7 +38,7 @@ const tabsChange = (index: string) => {
     activekey.value = +index
 }
 
-const metaDataId = computed(() => route.query.metaDataId)
+const metaDataId: any = computed(() => route.query.metaDataId || '')
 
 const metadataData = ref([])
 const tableData = ref<any[]>([])
