@@ -2,7 +2,7 @@
     <div class="flex-1 h-full relative">
         <div class="main-content mt-30px max-w-1200px mx-auto overflow-hidden">
             <div class="inline-block h-50px">
-                <ComTabs :list="list" :activekey="activekey" @change="tabsChange" />
+                <ComTabs :list="list" :activekey="activekey" @change="tabsChange" :keep="false" />
             </div>
             <!-- <DataTable v-if="activekey === 0" />
             <ComputationTable v-else />-->

@@ -238,6 +238,7 @@ const zh = {
     marketPlaceholder: "搜索凭证、数据名称",
     priceAsc: '价格升序',
     priceDesc: '价格降序',
+    credentialPriceTips: "展示价格仅供参考，真实价格请参考交易所",
   },
   workflow: {
     workflowName: "工作流名称",
@@ -267,7 +268,6 @@ const zh = {
     copySuccess: "复制成功",
     startSuccess: "启动成功",
     startWorkflow: "启动工作流",
-    credentialPriceTips: "展示价格仅供参考，真实价格请参考交易所",
     consumption: "本次工作流消耗",
     plzInputTokenName: '请输入凭证或数据名称'
   },
