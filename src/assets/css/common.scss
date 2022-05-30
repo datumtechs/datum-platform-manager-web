@@ -83,7 +83,7 @@ $calcHeight: calc(100vh - 70px);
   border-radius: 10px;
   box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
-  background-color: #7F7F7F;
+  background-color: #7f7f7f;
 }
 
 .hover-line {
@@ -151,4 +151,10 @@ $calcHeight: calc(100vh - 70px);
   &:hover {
     opacity: 0.8;
   }
+}
+
+.disable-btn {
+  cursor: not-allowed;
+  color: #7f7f7f;
+  opacity: 0.8;
 }

@@ -32,12 +32,10 @@
 
         <el-table-column :label="t('common.actions')" :fixed="'right'">
           <template #default="{ row }">
-            <!-- <el-button type="text" v-if="row.status === 2 || row.status === 3" circle
-              @click="details(row)">{{ t('workflow.viewTaskResults') }}
-            </el-button> -->
-            <span class="font-medium  leading-20px link-btn" @click="details(row)">{{
-                t('workflow.viewTaskResults')
-            }}</span>
+            <span :class="{ 'disable-btn': row.status === 0 || row.status === 1 }"
+              class="font-medium leading-20px link-btn" @click="details(row)">{{
+                  t('workflow.viewTaskResults')
+              }}</span>
           </template>
         </el-table-column>
       </el-table>
@@ -62,7 +60,7 @@ const total = ref(0)
 const workFlowName = ref('')
 const tableData = ref([])
 const { t, locale } = useI18n()
-const timer:any = ref()
+const timer: any = ref()
 
 const query = () => {
   getWorkflowRunTaskList({
@@ -77,6 +75,7 @@ const query = () => {
 }
 
 const details = (row: any) => {
+  if (row.status === 0 || row.status === 1) return
   router.push({
     name: 'TaskResult', query: {
       hasModel: row.outputModel,
@@ -90,17 +89,17 @@ onMounted(() => {
   timeOutFn()
 })
 
-onBeforeUnmount(()=>{
-   if(timer.value)clearTimeout(timer.value)
+onBeforeUnmount(() => {
+  if (timer.value) clearTimeout(timer.value)
 })
 
 
-const timeOutFn = ()=>{
-  if(timer.value) clearTimeout(timer)
+const timeOutFn = () => {
+  if (timer.value) clearTimeout(timer)
   query()
-  timer.value = setTimeout(()=>{
+  timer.value = setTimeout(() => {
     timeOutFn()
-  },3000)  
+  }, 3000)
 }
 
 
