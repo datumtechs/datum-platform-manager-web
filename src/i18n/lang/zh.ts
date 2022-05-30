@@ -269,7 +269,8 @@ const zh = {
     startSuccess: "启动成功",
     startWorkflow: "启动工作流",
     consumption: "本次工作流消耗",
-    plzInputTokenName: '请输入凭证或数据名称'
+    plzInputTokenName: '请输入凭证或数据名称',
+    modelEvaluationResult: '模型评估结果'
   },
   credentials: {
     circulation: "总发布量",

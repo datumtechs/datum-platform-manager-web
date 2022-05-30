@@ -2,6 +2,9 @@
     <div class="nameDialog">
         <el-dialog v-model="props.show" @opened="openFn" destroy-on-close width="320px"
             @close="emit('update:show', false)">
+            <el-icon @click="emit('update:show', false)" class="dialog-close">
+                <Close />
+            </el-icon>
             <div class="font-bold text-14px leading-18px text-color-[#333]">{{
                     t('expert.inputNameTips')
             }}</div>
@@ -33,6 +36,8 @@
 
 <script setup lang='ts'>
 import { createWorkflowOfExpertMode } from '@/api/expert'
+import { Close } from '@element-plus/icons-vue'
+
 const { t } = useI18n()
 const router = useRouter()
 const emit = defineEmits(['update:show'])
@@ -100,6 +105,8 @@ const props = defineProps({
 
 <style scoped lang='scss'>
 .nameDialog {
+    position: relative;
+
     :deep(.el-dialog__header) {
         display: none;
     }
@@ -110,6 +117,14 @@ const props = defineProps({
 
     :deep(.el-input__inner) {
         height: 50px;
+    }
+
+    .dialog-close {
+        position: absolute;
+        right: 14px;
+        top: 14px;
+        font-size: 18px;
+        cursor: pointer;
     }
 }
 </style>

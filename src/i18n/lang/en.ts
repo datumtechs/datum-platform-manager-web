@@ -52,7 +52,7 @@ const en = {
     reset: "Reset",
     computeTimes: "Compute times",
     create: 'Create',
-    enterNumber:"please enter a positive integer"
+    enterNumber: "please enter a positive integer"
   },
   menu: {
     home: 'Home',
@@ -270,6 +270,7 @@ const en = {
     startWorkflow: "Start Workflow",
     consumption: "Consumption of this workflow",
     plzInputTokenName: 'Please enter token or data name',
+    modelEvaluationResult: 'Evaluation results'
   },
   credentials: {
     circulation: "Circulation",

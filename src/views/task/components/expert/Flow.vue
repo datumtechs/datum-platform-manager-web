@@ -138,7 +138,7 @@ const judgeMentParams = () => {
                         flag = false
                         return
                     }
-                    if (i === 0 && !nodeList.value[i].alg.inputModel && nodeList.value[i].alg.algorithmId !== 1001 && !inputArray[j].dependentVariable) {
+                    if (i === 0 && !nodeList.value[i].alg.inputModel && nodeList.value[i].alg.algorithmId !== 1001 && !inputArray[i].dependentVariable) {
                         ElMessage.error(t('expert.saveInputLabelHint'))
                         flag = false
                         return

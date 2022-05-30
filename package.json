@@ -49,15 +49,5 @@
     "vite-plugin-windicss": "^1.7.1",
     "vue-tsc": "^0.31.1",
     "windicss": "^3.4.3"
-<<<<<<< HEAD
   }
-=======
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {}
->>>>>>> 10d6fa4c09ef47000a4a4ca855d77ec42a80d75c
 }

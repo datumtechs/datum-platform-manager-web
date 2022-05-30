@@ -3,24 +3,25 @@
         <Banner :back-show="true" :bg-name="'clocksWatches'" :showRouter="false"
             :detailName="detailName" @back="router.go(-1)">
             <template #select>
-                <ComTabs :keep="false" :list="hasModel ? list : modelList" :activekey="activekey"
-                    @change="tabsChange" />
+                <ComTabs :keep="false" :list="hasModel === 'true' ? modelList : list"
+                    :activekey="activekey" @change="tabsChange" />
             </template>
         </Banner>
         <div class="com-main-data-wrap mt-63px">
+            {{ hasModel }}
             <ResultFile v-if="activekey === 0" :tableData="tableData" />
             <TaskEvents v-if="activekey === 1" :data="eventList" />
-            <!-- <ModelEvaluation v-if="activekey === 2" :modelEvaluate="modelEvaluate" /> -->
+            <ModelEvaluation v-if="activekey === 2" :modelEvaluate="modelEvaluate" />
         </div>
     </div>
 </template>
 <script setup lang='ts'>
 import ResultFile from './ResultFile.vue'
-// import ModelEvaluation from './ModelEvaluation.vue'
+import ModelEvaluation from './ModelEvaluation.vue'
 import { getWorkflowRunTaskResult } from '@/api/workflow'
 import { useFormatTime, useDuring, useWorkflowDetailsMap } from '@/hooks'
 
-const modelList = reactive([
+const modelList = ref([
     {
         name: 'computeTask.taskResult'
     },
@@ -32,7 +33,7 @@ const modelList = reactive([
     }
 ])
 
-const list = reactive([
+const list = ref([
     {
         name: 'computeTask.taskResult'
     },
