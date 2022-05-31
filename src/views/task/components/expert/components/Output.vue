@@ -28,6 +28,24 @@ const workflowNodeSenderIdentityId = computed(() => useExpertMode().getWorkflowN
 const workflowNodeOutputVoList = computed(() => useExpertMode().workflowNodeOutputVoList)
 
 const orgList: any = computed(() => useExpertMode().getUserOrgList)
+const curNodeId: any = computed(() => useExpertMode().getCurNodeId)
+const nodeList: any = computed(() => useExpertMode().getNodeList)
+
+
+const isDisabled = (item: any): boolean => {
+    if (curNodeId.value === 1001) {
+        if (nodeList.value[0].nodeInput.dataInputList.length > 0) {
+            const ids = nodeList.value[0].nodeInput.dataInputList.filter((d: any) => {
+                console.log(d);
+                return d.identityId
+            })
+            return ids.includes(item.identity)
+        }
+        return false
+    } else {
+        return item.identityId === workflowNodeSenderIdentityId.value
+    }
+}
 
 const props = defineProps({
     isSettingCompleted: {
@@ -41,9 +59,17 @@ const props = defineProps({
 })
 
 watch(() => workflowNodeSenderIdentityId.value, (newV, oldV) => {
-    console.log('触发了watch,oldV:', oldV);
-    initData(oldV);
+    if (curNodeId.value !== 1001) {
+        // 硬编码判断当前节点是否psi 从而判断当前模式是否PSI
+        initData(oldV);
+    } else {
+        initPsiData()
+    }
 })
+
+const initPsiData = () => {
+
+}
 
 watch(orgList, () => {
     initData()
@@ -63,7 +89,6 @@ const initData = (id?: string) => {
 const checkValue = (list: any) => {
     orgList.value.map((item: any) => {
         if (list.includes(item.identityId)) {
-            console.log('存在identityId', item.identityId);
             checkList.value.push(item.identityId)
         }
     })

@@ -260,7 +260,7 @@ export default [
     component: () => import('@/views/myAuth/index.vue'),
   },
   {
-    path: '/*',
+    path: '/:pathMatch(.*)',
     redirect: 'home',
     meta: {
       show: [],//不展示

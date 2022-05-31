@@ -196,15 +196,12 @@ const handleTransfer = (type: any, methods?: any) => {
   }
   const item = list.value[columnIndex.value]
   const labelList = types[type]
-  console.log(labelList);
 
   // 增加逻辑
   if (!methods) {
     if (!list.value.length) return
     labelList.push(item)
     list.value.splice(columnIndex.value, 1)
-    console.log('list', list);
-    console.log('labelList', labelList);
   }
   // 删除逻辑
   if (methods === 1) {
