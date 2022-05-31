@@ -39,7 +39,8 @@
                 v-model:page-size="pageObj.size" layout="prev, pager, next"
                 :total="pageObj.total" />
         </div>
-        <el-dialog v-model="showDialog" :width="480" :destroy-on-close="true">
+        <el-dialog v-model="showDialog" :width="480" @close="showDialog = false"
+            :destroy-on-close="true">
             <template #title>
                 <div class="flex items-center mb-24px">
                     <img class="w-24px h-24px" src="@/assets/images/auth/sigh.png" alt="">
@@ -80,8 +81,8 @@
                 </div>
             </template>
         </el-dialog>
-        <GlobalPending :show="pending.show" :content="pending.content" :title="pending.title"
-            @close-pending="pending.show = false" />
+        <GlobalPending v-model:show="pending.show" :content="pending.content"
+            :title="pending.title" />
     </div>
 </template>
 <script setup lang="ts">

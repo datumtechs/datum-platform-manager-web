@@ -1,8 +1,10 @@
 <template>
-  <el-form v-bind="$attrs" :label-position="'top'" :rules="rules" :ref="(el: any) => formRef = el" :model="form"
-    class="mt-38px">
-    <el-form-item :label="`${t('task.taskName')}:`" prop="workflowName" class="select-alg-require-icon">
-      <div class="absolute -top-30px cursor-pointer" :style="{ left: locale === 'zh' ? '119px' : '174px' }">
+  <el-form v-bind="$attrs" :label-position="'top'" :rules="rules" :ref="(el: any) => formRef = el"
+    :model="form" class="mt-38px">
+    <el-form-item :label="`${t('task.taskName')}:`" prop="workflowName"
+      class="select-alg-require-icon">
+      <div class="absolute -top-30px cursor-pointer"
+        :style="{ left: locale === 'zh' ? '80px' : '107px' }">
         <question-mark>
           <template #content>
             {{ t('task.taskNameRules') }}
@@ -18,32 +20,40 @@
           </template>
         </question-mark>
       </div>
-      <el-input :disabled="disabled" :input-style="{ borderColor: '#EEEEEE', height: '50px' }" :minlength="8"
-        :maxlength="64" v-model.trim="form.workflowName"></el-input>
+      <el-input :disabled="disabled" :input-style="{ borderColor: '#EEEEEE', height: '50px' }"
+        :minlength="8" :maxlength="64" v-model.trim="form.workflowName"></el-input>
     </el-form-item>
-    <el-form-item :label="`${t('task.stepOneSelectComputingTitle')}:`" prop="calculationType" class="select-alg-require-icon">
+    <el-form-item :label="`${t('task.stepOneSelectComputingTitle')}:`" prop="calculationType"
+      class="select-alg-require-icon">
       <el-radio-group v-model="form.calculationType" :disabled="disabled"
         @change="form.algorithmId = undefined, form.calculationProcessId = undefined">
         <el-radio :label="item.id" v-for="item in algList" :key="item.id">{{ item.name }}</el-radio>
       </el-radio-group>
     </el-form-item>
-    <el-form-item v-if="algTypelist[0]?.childrenList" class="select-alg-require-icon" :label="`${form.calculationType == 2000 ? t('task.stepOneSelectAIAlgorithmTitle') :t('task.stepOneSelectAlgorithmTitle')}:`"
+    <el-form-item v-if="algTypelist[0]?.childrenList" class="select-alg-require-icon"
+      :label="`${form.calculationType == 2000 ? t('task.stepOneSelectAIAlgorithmTitle') : t('task.stepOneSelectAlgorithmTitle')}:`"
       prop="algorithmId">
       <el-radio-group v-model="form.algorithmId" @change="algChange" :disabled="disabled">
-        <el-radio :label="item.id" v-for="item in algTypelist[0]?.childrenList" :key="item.id">{{ item.name }}
+        <el-radio :label="item.id" v-for="item in algTypelist[0]?.childrenList" :key="item.id">{{
+            item.name
+        }}
         </el-radio>
       </el-radio-group>
     </el-form-item>
-    <el-form-item v-if="props.processList.length && form.algorithmId && form.calculationType !== 1000" class="select-alg-require-icon" :label="`${$t('task.stepOneSelectProcedureTitle')}:`"
+    <el-form-item
+      v-if="props.processList.length && form.algorithmId && form.calculationType !== 1000"
+      class="select-alg-require-icon" :label="`${$t('task.stepOneSelectProcedureTitle')}:`"
       prop="calculationProcessId">
       <el-radio-group v-model="form.calculationProcessId" :disabled="disabled">
-        <el-radio :label="item.calculationProcessId" v-for="item in props.processList" :key="item.calculationProcessId">{{ item.name }}
+        <el-radio :label="item.calculationProcessId" v-for="item in props.processList"
+          :key="item.calculationProcessId">{{ item.name }}
         </el-radio>
       </el-radio-group>
     </el-form-item>
     <el-form-item :label="`${t('task.pleaseComments')}:`">
-      <el-input :disabled="disabled" :input-style="{ borderColor: '#EEEEEE', height: '50px' }" show-word-limit
-        type="textarea" :rows="4" :maxlength="200" v-model.trim="form.workflowDesc"></el-input>
+      <el-input :disabled="disabled" :input-style="{ borderColor: '#EEEEEE', height: '50px' }"
+        show-word-limit type="textarea" :rows="4" :maxlength="200" v-model.trim="form.workflowDesc">
+      </el-input>
     </el-form-item>
   </el-form>
   <NextButton v-if="!disabled" @clicks="next" />
@@ -54,7 +64,7 @@ import { postCreateWorkflowWizard } from '@/api/workflow'
 import NextButton from './NextButton.vue'
 import { useWorkFlow } from '@/stores'
 const { locale, t } = useI18n()
-const route:any = useRoute()
+const route: any = useRoute()
 const store = useWorkFlow()
 const algList: any = ref<any[]>([])//算法列表 //最外层
 const algTypelist = computed(() => algList.value.filter((v: any) => v.id == form.calculationType))//具体算法
@@ -80,8 +90,8 @@ watch(() => props.taskParams, (e) => {
 })
 
 watch(() => props.processList, (e) => {
-  if(form.calculationType == 1000){
-   form.calculationProcessId = e[0]?.calculationProcessId
+  if (form.calculationType == 1000) {
+    form.calculationProcessId = e[0]?.calculationProcessId
   }
 })
 
@@ -89,7 +99,7 @@ watch(() => props.processList, (e) => {
 const form: any = reactive({
   workflowName: "",
   calculationType: +route.params?.calculationType || undefined,
-  algorithmId:  +route.params?.algorithmId || undefined,
+  algorithmId: +route.params?.algorithmId || undefined,
   calculationProcessId: undefined,
   workflowDesc: ""
 })
@@ -122,7 +132,7 @@ const next = () => {
 const algChange = (type?: any) => {
   if (type !== 'notice') form.calculationProcessId = undefined
   emit('getParams', form)
-  getNoticeText() 
+  getNoticeText()
 }
 
 
@@ -152,7 +162,7 @@ const queryAlgTree = () => {
     const { data, code } = res
     if (code === 10000) {
       algList.value = data?.childrenList[0]?.childrenList
-      if(form.algorithmId){
+      if (form.algorithmId) {
         algChange()
       }
     }
@@ -212,6 +222,7 @@ onMounted(() => {
 <style lang="scss">
 .select-alg-require-icon {
   position: relative;
+
   &:before {
     content: "*";
     color: var(--el-color-danger);

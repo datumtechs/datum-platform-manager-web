@@ -120,12 +120,12 @@
   </div>
 </template>
 <script lang="ts" setup>
-import SetNameDialog from './SetNameDialog.vue'
 import { useKeepAliveInfo } from '@/stores'
 import { getWorkflowVersionList, copyWorkflow, startWorkFlow, getWorkflowStartDetail } from '@/api/workflow'
 import { useFormatTime, useDuring, useWorkflowDetailsMap, useException, useExchangeFrom } from '@/hooks'
 import { ElMessage } from 'element-plus';
 import { ArrowRight } from '@element-plus/icons-vue'
+import { useDebounceFn } from '@vueuse/core'
 
 const web3: any = inject('web3')
 const showDialog = ref(false)
@@ -143,9 +143,6 @@ const beforeName = ref('')
 const keepAlive = useKeepAliveInfo()
 const timer: any = ref()
 const consumeList: any = ref([])
-
-console.log(route.matched);
-
 
 const breadList: any = [
   {
@@ -234,7 +231,7 @@ const setDialog = (row: any): void => {
   pending.content = ''
 }
 
-const start = async (row: any) => {
+const start = useDebounceFn(async (row: any) => {
   workflowVersionName.value = row.workflowVersionName
   try {
     const res = await getWorkflowStartDetail({
@@ -262,7 +259,7 @@ const start = async (row: any) => {
     pending.show = false
     useException(error.code)
   }
-}
+}, 500)
 
 const details = (row: any) => {
   if (row.createMode == 2) {
@@ -298,11 +295,13 @@ onBeforeUnmount(() => {
 })
 
 
-const copy = (row: any) => {
+const copy = useDebounceFn((row: any) => {
   showDialog.value = true
   activeRow.value = row
   beforeName.value = workFlowName.value + '-v' + (total.value + 1)
-}
+}, 500)
+
+
 const copySubmit = (name: string) => {
   copyWorkflow({
     workflowVersionName: name,

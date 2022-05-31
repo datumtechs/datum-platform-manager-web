@@ -37,3 +37,27 @@
 .el-form-item .is-required {
     position: relative;
 }
+
+.nameDialog {
+    position: relative;
+
+    .el-dialog__header {
+        display: none !important;
+    }
+
+    .el-dialog__body {
+        padding: 36px 30px 25px;
+    }
+
+    .el-input__inner {
+        height: 50px;
+    }
+
+    .dialog-close {
+        position: absolute;
+        right: 14px;
+        top: 14px;
+        font-size: 18px;
+        cursor: pointer;
+    }
+}

@@ -8,7 +8,7 @@
                 :disabled="props.isSettingCompleted || props.isReadonly"
                 class="mt-10px flex flex-col" @change="handleCheckboxChange">
                 <el-checkbox v-for="(item, index) in orgList" :key="index" :label="item.identityId"
-                    :disabled="item.identityId === workflowNodeSenderIdentityId">
+                    :disabled="isDisabled(item)">
                     <span class="checkbox-label text-main">{{ item.nodeName }}</span>
                 </el-checkbox>
             </el-checkbox-group>
@@ -25,6 +25,7 @@ const { t } = useI18n()
 const checkList: any = ref([])
 
 const workflowNodeSenderIdentityId = computed(() => useExpertMode().getWorkflowNodeSender)
+const workflowNodeInputVoList = computed(() => useExpertMode().getInputVoList)
 const workflowNodeOutputVoList = computed(() => useExpertMode().workflowNodeOutputVoList)
 
 const orgList: any = computed(() => useExpertMode().getUserOrgList)
@@ -35,11 +36,8 @@ const nodeList: any = computed(() => useExpertMode().getNodeList)
 const isDisabled = (item: any): boolean => {
     if (curNodeId.value === 1001) {
         if (nodeList.value[0].nodeInput.dataInputList.length > 0) {
-            const ids = nodeList.value[0].nodeInput.dataInputList.filter((d: any) => {
-                console.log(d);
-                return d.identityId
-            })
-            return ids.includes(item.identity)
+            const ids = nodeList.value[0].nodeInput.dataInputList.map((d: any) => d.identityId)
+            return ids.includes(item.identityId)
         }
         return false
     } else {
@@ -60,27 +58,37 @@ const props = defineProps({
 
 watch(() => workflowNodeSenderIdentityId.value, (newV, oldV) => {
     if (curNodeId.value !== 1001) {
-        // 硬编码判断当前节点是否psi 从而判断当前模式是否PSI
-        initData(oldV);
-    } else {
-        initPsiData()
+        initData(oldV)
     }
 })
 
-const initPsiData = () => {
+watch(() => workflowNodeInputVoList.value, () => {
+    if (curNodeId.value === 1001) {
+        initData()
+    }
+}, { deep: true })
 
-}
-
-watch(orgList, () => {
+watch(() => orgList.value, () => {
+    // 回显时候的监听
     initData()
 })
 
+
 const initData = (id?: string) => {
+    const list: any = workflowNodeOutputVoList.value
     checkList.value = []
-    const list: any = workflowNodeOutputVoList.value //Array.from(new Set(workflowNodeOutputVoList.value.map((item: any) => item.identityId)))
-    if (!list.includes(workflowNodeSenderIdentityId.value)) {
-        list.push(workflowNodeSenderIdentityId.value)
+    if (curNodeId.value === 1001) {
+        workflowNodeInputVoList.value.map((vo: any) => {
+            if (!list.includes(vo.identityId)) {
+                list.push(vo.identityId)
+            }
+        })
+    } else {
+        if (!list.includes(workflowNodeSenderIdentityId.value)) {
+            list.push(workflowNodeSenderIdentityId.value)
+        }
     }
+
     if (id) {
         list.splice(list.findIndex((item: any) => item === id), 1)
     }
