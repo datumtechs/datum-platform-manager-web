@@ -28,7 +28,7 @@
         </div>
         <div class="flex" v-else>
           <el-button type="primary" round @click="submit">{{ t('common.preservation') }}</el-button>
-          <el-button round @click="disabled = !disabled, formRef.clearValidate()">{{
+          <el-button round @click="disabled = !disabled, formRef.clearValidate(),form.name = oldName">{{
             t('common.cancel')
           }}</el-button>
         </div>
@@ -46,13 +46,16 @@ const { t, locale } = useI18n()
 const store = useUsersInfo()
 const disabled = ref(true)
 const formRef = ref()
+const oldName = ref(store.userName)
 const form = ref({
   name: store.userName
 })
 
 watch(store, () => {//解决form 表单不更新数据
   form.value.name = store.userName
+  oldName.value = store.userName
 })
+
 
 console.log(store)
 const rules = ref({
@@ -100,6 +103,7 @@ const submit = () => {
         if (code === 10000) {
           ElMessage.success(t('common.success'))
           store.setUsers(form.value?.name)
+          oldName.value = form.value?.name
           disabled.value = !disabled.value
         }
       })

@@ -36,7 +36,7 @@
 
         <el-table-column :label="t('common.actions')" :fixed="'right'">
           <template #default="{ row }">
-            <span :class="{ 'disable-btn': row.status === 0 || row.status === 1 }"
+            <span :class="{ 'disable-btn': row.status === 0 }"
               class="font-medium leading-20px link-btn" @click="details(row)">{{
                   t('workflow.viewTaskResults')
               }}</span>
@@ -97,7 +97,7 @@ const query = () => {
 }
 
 const details = (row: any) => {
-  if (row.status === 0 || row.status === 1) return
+  if (row.status === 0 ) return
   router.push({
     name: 'TaskResult', params: {
       taskId: row.taskId

@@ -58,14 +58,13 @@ export const tableTooltip = {
       cleanDom()
       nodeChildNode.flat().forEach((v: any) => {
         if (v?.children?.length) {
-          const dom = document.createElement('div')
-          dom.classList.add('tooltip-ellipsis-content')
           const list: any = [...v?.children]
           list.forEach((item: any) => {
-            dom.appendChild(item)            
+            item.classList.add('tooltip-ellipsis-content')
+            if (item.scrollWidth > item.offsetWidth) {
+              createTips(item,item.innerText)     
+            }
           })
-          dom.ondblclick = copy
-          v.appendChild(dom) 
         } else {
           const text = v.innerText
           v.classList.add('tooltip-ellipsis-content')
@@ -110,15 +109,14 @@ const createTips = (el: any, text: string) => {
 
 
   function show() {
-    flag = false
       flag = true
       const dom = document.createElement('div')
-      const dom2 = document.createElement('div')
+      const contentDom = document.createElement('div')
       dom.classList.add('_popper-warp')
-      dom2.classList.add('_popper')
-      dom2.innerHTML = text
+      contentDom.classList.add('_popper')
+      contentDom.innerHTML = text
       document.body.append(dom)
-      dom.append(dom2) 
+      dom.append(contentDom) 
       let  greater  = 0
       if (dom.clientWidth > el.clientWidth) {
         greater =  dom.clientWidth - el.clientWidth
@@ -163,10 +161,3 @@ function copy (e:any) {
   }
   document.body.removeChild(input)
 }
-
-
-
-// const createAppVnode = (el: any,text:string): any => {
-//   const app = createApp(h(Dom, {text}, {}))
-//   app.mount(el)
-// }
