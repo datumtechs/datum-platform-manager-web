@@ -4,14 +4,14 @@
             <img class="w-100px " src="@/assets/images/global/pending.svg" alt="">
             <div>
                 <p class="text-16px my-10px text-color-[#333] font-medium">{{
-                        t('auth.waitForConfirm')
+                        t('auth.waitWalletConfirm')
                 }}</p>
                 <p class="text-14px text-color-[#666] leading-22px" v-html="props.content">
                 </p>
                 <slot name="consume"></slot>
-                <p class="text-14px font-medium mt-20px mb-50px leading-22px">{{
+                <!-- <p class="text-14px font-medium mt-20px mb-50px leading-22px">{{
                         t('auth.waitWalletConfirm')
-                }}</p>
+                }}</p> -->
             </div>
         </div>
     </el-dialog>

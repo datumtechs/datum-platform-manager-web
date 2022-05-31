@@ -220,7 +220,7 @@ export default [
     component: () => import('@/views/workflow/components/Details.vue'),
   },
   {
-    path: '/workflow/details/subtask/:id',
+    path: '/workflow/details/:id/subtask/:runId',
     name: "workflowSubtask",
     meta: {
       show: [],
@@ -230,7 +230,7 @@ export default [
     component: () => import('@/views/workflow/components/Subtask.vue'),
   },
   {
-    path: '/workflow/details/subtask/:id/taskResult/:taskId',
+    path: '/workflow/details/:id/subtask/:runId/taskResult/:taskId',
     name: "TaskResult",
     meta: {
       show: [],

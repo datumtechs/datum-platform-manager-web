@@ -71,7 +71,9 @@ const zh = {
     taskDetails: "详情任务",
     models: "我的模型",
     computeTask: "计算任务",
-    myAuthorization: '我的授权'
+    myAuthorization: '我的授权',
+    workflowVersion: '工作流版本记录',
+    workflowSubTask: '工作流子任务'
   },
   head: {
     myAccountTitle: "我的账户",
@@ -268,7 +270,7 @@ const zh = {
     copySuccess: "复制成功",
     startSuccess: "启动成功",
     startWorkflow: "启动工作流",
-    consumption: "本次工作流消耗",
+    consumption: "工作流将消耗",
     plzInputTokenName: '请输入凭证或数据名称',
     modelEvaluationResult: '模型评估结果'
   },
@@ -391,7 +393,7 @@ const zh = {
     authorizeToken: '授权凭证',
     exceedTotal: '授权金额超出持有金额',
     waitForConfirm: '等待确认',
-    waitWalletConfirm: '在您的钱包中确认此操作',
+    waitWalletConfirm: '请在您的钱包中确认此操作',
     confirmAuth: '确认授权',
     confirmCancelAuth: '确认取消授权',
     authErc20Hint: '工作流每运行一次,包含的数据需要消耗对应的一个凭证.请在此选择授权的凭证',

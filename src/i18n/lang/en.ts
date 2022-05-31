@@ -71,7 +71,9 @@ const en = {
     taskDetails: "Tasks Details",
     models: "My Models",
     computeTask: "Computing Tasks",
-    myAuthorization: 'My Authorization'
+    myAuthorization: 'My Authorization',
+    workflowVersion: 'Workflow version record',
+    workflowSubTask: 'Workflow subtask'
   },
   head: {
     myAccountTitle: 'My Account',
@@ -268,7 +270,7 @@ const en = {
     copySuccess: "Copy successfully",
     startSuccess: "Start successfully",
     startWorkflow: "Start Workflow",
-    consumption: "Consumption of this workflow",
+    consumption: "workflow will consume",
     plzInputTokenName: 'Please enter token or data name',
     modelEvaluationResult: 'Evaluation results'
   },

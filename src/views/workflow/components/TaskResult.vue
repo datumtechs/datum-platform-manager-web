@@ -3,12 +3,11 @@
         <Banner :back-show="true" :bg-name="'clocksWatches'" :showRouter="false"
             :detailName="detailName" @back="router.go(-1)">
             <template #select>
-                <ComTabs :keep="false" :list="hasModel === 'true' ? modelList : list"
+                <ComTabs :keep="false" :list="modelEvaluate ? modelList : list"
                     :activekey="activekey" @change="tabsChange" />
             </template>
         </Banner>
         <div class="com-main-data-wrap mt-63px">
-            {{ hasModel }}
             <ResultFile v-if="activekey === 0" :tableData="tableData" />
             <TaskEvents v-if="activekey === 1" :data="eventList" />
             <ModelEvaluation v-if="activekey === 2" :modelEvaluate="modelEvaluate" />
@@ -21,7 +20,7 @@ import ModelEvaluation from './ModelEvaluation.vue'
 import { getWorkflowRunTaskResult } from '@/api/workflow'
 import { useFormatTime, useDuring, useWorkflowDetailsMap } from '@/hooks'
 
-const modelList = ref([
+const modelList = [
     {
         name: 'computeTask.taskResult'
     },
@@ -31,16 +30,16 @@ const modelList = ref([
     {
         name: 'computeTask.modelEvaluation'
     }
-])
+]
 
-const list = ref([
+const list = [
     {
         name: 'computeTask.taskResult'
     },
     {
         name: 'computeTask.taskEvents'
     }
-])
+]
 const detailName = ref('')
 const eventList = ref([])
 const modelEvaluate = ref('')
@@ -70,7 +69,6 @@ const tableData = ref([{
     rProp: "",
 }])
 
-const hasModel = computed(() => route.query.hasModel)
 const taskId = computed(() => route.params.taskId)
 
 const tabsChange = (index: string) => {

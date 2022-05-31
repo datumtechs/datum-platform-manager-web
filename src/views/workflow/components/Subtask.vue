@@ -10,7 +10,11 @@
       </template>
     </Banner>
     <div class="com-main-data-wrap">
-      <el-table v-tableTooltip :data="tableData" class="mt-30px com-table">
+      <el-breadcrumb class="mt-30px" :separator-icon="ArrowRight">
+        <el-breadcrumb-item v-for="bread in breadList" :to="bread.link">{{ t(`${bread.label}`) }}
+        </el-breadcrumb-item>
+      </el-breadcrumb>
+      <el-table v-tableTooltip :data="tableData" class="mt-20px com-table">
         <el-table-column type="index" width="80">
           <template #header>{{ t('common.num') }}</template>
         </el-table-column>
@@ -51,16 +55,34 @@
 <script lang="ts" setup>
 import { getWorkflowRunTaskList } from '@/api/workflow'
 import { useFormatTime, useWorkflowDetailsMap } from '@/hooks'
-const showDialog = ref(false)
+import { ArrowRight } from '@element-plus/icons-vue'
+
 const route = useRoute()
 const router = useRouter()
-const workflowRunId = route.params.id
+const workflowRunId = route.params.runId
+const workflowId = route.params.id
 const current = ref(1)
 const total = ref(0)
 const workFlowName = ref('')
 const tableData = ref([])
 const { t, locale } = useI18n()
 const timer: any = ref()
+
+const breadList: any = [
+  {
+    id: 1,
+    link: '/workflow',
+    label: 'menu.workflow'
+  }, {
+    id: 2,
+    link: `/workflow/details/${workflowId}`,
+    label: 'menu.workflowVersion'
+  }, {
+    id: 3,
+    link: '',
+    label: 'menu.workflowSubTask'
+  }
+]
 
 const query = () => {
   getWorkflowRunTaskList({
@@ -77,9 +99,7 @@ const query = () => {
 const details = (row: any) => {
   if (row.status === 0 || row.status === 1) return
   router.push({
-    name: 'TaskResult', query: {
-      hasModel: row.outputModel,
-    }, params: {
+    name: 'TaskResult', params: {
       taskId: row.taskId
     }
   })
