@@ -1,5 +1,6 @@
 <template>
-    <el-dialog v-model="props.show" :title="props.title" width="20%" :before-close="handleClose">
+    <el-dialog v-model="props.show" :title="props.title" :width="'400px'"
+        :before-close="handleClose">
         <div class="pending-wrapper">
             <img class="w-100px " src="@/assets/images/global/pending.svg" alt="">
             <div>

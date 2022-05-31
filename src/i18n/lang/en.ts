@@ -358,7 +358,8 @@ const en = {
     saveInputIDHint: 'Please select the ID column of the data provider',
     saveSuccessHint: 'Save the workflow successfully, jump to the workflow record page',
     saveStatusErrorHint: 'The current page state is incorrect and cannot be saved, please try again',
-    saveEnvInputHint: 'Please complete the configuration of the algorithm environment'
+    saveEnvInputHint: 'Please complete the configuration of the algorithm environment',
+    paramsHint: 'Better calculation results can be obtained by adjusting algorithm variables'
   },
   role: {
     taskSponsor: 'Task sponsor',

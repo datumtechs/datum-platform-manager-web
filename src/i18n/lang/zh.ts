@@ -358,7 +358,8 @@ const zh = {
     saveInputIDHint: '请选择数据提供方的ID列',
     saveSuccessHint: '保存工作流成功,跳转工作流记录页面',
     saveStatusErrorHint: '当前页面状态不正确, 无法保存,请重试',
-    saveEnvInputHint: '请完成算法环境的配置'
+    saveEnvInputHint: '请完成算法环境的配置',
+    paramsHint: '调整算法变量，可以获取更好的计算结果'
   },
   role: {
     taskSponsor: '任务发起方',

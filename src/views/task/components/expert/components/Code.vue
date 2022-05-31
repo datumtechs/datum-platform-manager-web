@@ -2,8 +2,9 @@
     <div class="code-box flex flex-col">
         <div v-if="props.codeObj?.variableList.length > 0" ref="variable"
             class="code-variable-box py-20px">
-            <p class="text-color-[#333] font-bold px-20px pb-10px">
-                {{ t('expert.algoVariable') }}
+            <p class="text-color-[#333] font-bold px-20px pb-10px flex">
+                <span class="mr-10px">{{ t('expert.algoVariable') }}</span>
+                <QuestionMark class="w-2px" :content="t('expert.paramsHint')" />
             </p>
             <el-space class="mb-10px px-20px" v-for="(item, index) in props.codeObj.variableList"
                 :key="item.varKey">
@@ -17,8 +18,8 @@
             <img src="@/assets/images/task/drag@2x.png" alt="">
         </div>
         <p class="text-color-[#333] font-bold pb-20px code-context-box-title">
-            <span>{{ t('expert.algoCode') }}</span>
-            <el-icon @click="zoomToDialog" class="cursor-pointer">
+            <span class="mr-10px">{{ t('expert.algoCode') }}</span>
+            <el-icon @click="zoomToDialog" class="w-20px h-20px cursor-pointer">
                 <full-screen />
             </el-icon>
         </p>
@@ -106,9 +107,14 @@ const zoomToDialog = () => {
 
     .code-context-box-title {
         display: flex;
-        justify-content: space-between;
+        // justify-content: space-between;
         align-items: center;
         padding: 20px 20px 0;
+
+        .el-icon svg {
+            width: 20px;
+            height: 20px;
+        }
     }
 
     .code-dialog-content {
