@@ -67,7 +67,6 @@ export const tableTooltip = {
               }
             })
           } else {
-            const text = v.innerText
             v.classList.add('tooltip-ellipsis-content')
             v.ondblclick = copy
             if (v.scrollWidth > v.offsetWidth) {
