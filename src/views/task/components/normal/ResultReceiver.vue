@@ -40,7 +40,7 @@
 </template>
 <script lang="ts" setup>
 import NoticeText from './NoticeText.vue';
-import { setWorkflowOfWizardMode } from '@/api/workflow'
+import { setWorkflowOfWizardMode,getWorkflowSettingOfWizardMode } from '@/api/workflow'
 const router: any = useRouter()
 const route: any = useRoute()
 const emit = defineEmits(['previous', 'next'])
@@ -78,11 +78,14 @@ const { t } = useI18n()
 //5-选择结果接收方(通用), 
 //6-选择结果接收方(训练&预测)
 const listLength = ref(props.type == 6 ? 2 : 1)
+const psiInput = ref({})
 const formRef = ref<any>([])
 const form = reactive({
   0: { checkList: [] },
   1: { checkList: [] }
 })
+
+
 const rules = reactive({
   0: {
     checkList: [{ required: true, message: `${t('task.selectResultReceiver')}` }]
@@ -153,6 +156,7 @@ const next = async (str?: string) => {
   })
 }
 
+
 const init = () => {
   const data = props.taskParams
   if (data?.calculationProcessStep?.type == 5 || data?.calculationProcessStep?.type == 6) {
@@ -161,6 +165,7 @@ const init = () => {
     list.forEach((v, i) => {
       form[i].checkList = v.identityId
     })
+    query()
   }
 }
 
@@ -172,6 +177,24 @@ const previous = () => {
 watch(() => props.taskParams, () => {
   init()
 })
+
+
+const query = (index?: number) => {
+  if(props.taskParams.calculationProcessId !== 4) return
+  getWorkflowSettingOfWizardMode({
+    workflowId:  props.taskParams.workflowId,
+    workflowVersion:  props.taskParams.workflowVersion,
+    step: 1
+  }).then(res => {
+    const { data, code } = res
+    if (code === 10000) {
+      psiInput.value = { ...data }?.psiInput
+    }
+  }).catch((e:any) => {
+    console.log('接口报错', e)
+  })
+}
+
 
 </script>
 <style lang="scss">

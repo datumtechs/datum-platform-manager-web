@@ -62,7 +62,8 @@ const disabled = ref(false)
 const emit = defineEmits(["getParams", 'init', 'getNoticeText'])
 const props: any = defineProps({
   taskParams: { type: Object, default: () => ({}) },
-  processList: { type: Array, default: (): any[] => [] }//计算流程列表
+  processList: { type: Array, default: (): any[] => [] },//计算流程列表
+  activeIndex: { type: Number, default: 0 } 
 })
 watch(locale, () => {
   formRef.value.clearValidate()
@@ -74,7 +75,7 @@ watch(() => algList.value, () => {
 })
 watch(() => props.taskParams, (e) => {
   if (e.workflowId) disabled.value = true
-  if (algList.value.length) {
+  if (algList.value.length && props.activeIndex < 1) {
     setTaskParams()
   }
 })

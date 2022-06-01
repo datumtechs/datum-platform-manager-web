@@ -169,7 +169,7 @@ onMounted(() => {
                                 <img class="w-16px h-16px ml-10px cursor-pointer"
                                     src="@/assets/images/task/quest@2x.png" alt="">
                                 <template #content>
-                                    {{ t('workflow.credentialPriceTips') }}
+                                    {{ t('myData.credentialPriceTips') }}
                                 </template>
                             </el-tooltip>
                         </div>

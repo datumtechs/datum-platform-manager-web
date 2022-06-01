@@ -18,13 +18,21 @@
       <div v-show="activeIndex == 0" class="mt-38px mb-42px ml-6px">
         <PrivateSwitch :mode="'normal'" v-if="!workfolwParams.workflowId"
           @change="$router.push({ name: 'expertModel' })" />
-        <SelectionAlg @getNoticeText="getNoticeText" :taskParams="workfolwParams" @init="init(),activeIndex=1" :processList="processList"
+        <SelectionAlg @getNoticeText="getNoticeText" :activeIndex="activeIndex" :taskParams="workfolwParams" @init="init(),activeIndex=1" :processList="processList"
           @getParams="slectionAlgParams" />
       </div>
-       <component :is="componentList[list[activeIndex]?.type]?.components" :workflowInfo="{ ...workflowInfo }"
-      :step="activeIndex" :type="list[activeIndex]?.type" :fieldType="fieldType" :taskParams="workfolwParams"
-      :orgList="orgList" :views="views"
-       :noticeText="noticeText" @previous="previous" @next="next" @getParams="(params: any) => { }" />
+       <component :is="componentList[list[activeIndex]?.type]?.components" 
+          :workflowInfo="{ ...workflowInfo }"
+          :step="activeIndex" 
+          :type="list[activeIndex]?.type" 
+          :fieldType="fieldType" 
+          :taskParams="workfolwParams"
+          :orgList="orgList"
+          :views="views"
+          :noticeText="noticeText"
+          @previous="previous" 
+          @next="next" 
+          @getParams="(params: any) => { }" />
     </div>
   </div>
 </template>

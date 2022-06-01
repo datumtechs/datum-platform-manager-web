@@ -1,4 +1,4 @@
-// import { createApp, h } from 'vue'
+import { nextTick } from 'vue'
 
 export const waves = {
   bind(el:any, binding:any) {
@@ -49,33 +49,35 @@ export const waves = {
 
 export const tableTooltip = {
   updated(el: any, binding: any) {
-    if (el.querySelectorAll) {
-      const label: any[] = el.querySelector('.el-table__body-wrapper').querySelectorAll('.show-ellipsis-tooltip')
-      const nodeChildNode:any[] = []
-      label.forEach(v => {
-        nodeChildNode.push([...v.querySelectorAll('.cell')])
-      })
-      cleanDom()
-      nodeChildNode.flat().forEach((v: any) => {
-        if (v?.children?.length) {
-          const list: any = [...v?.children]
-          list.forEach((item: any) => {
-            item.classList.add('tooltip-ellipsis-content')
-            if (item.scrollWidth > item.offsetWidth) {
-              createTips(item,item.innerText)     
+    cleanDom()
+    nextTick(() => {
+      if (el.querySelectorAll) {
+        const label: any[] = el.querySelector('.el-table__body-wrapper').querySelectorAll('.show-ellipsis-tooltip')
+        const nodeChildNode:any[] = []
+        label.forEach(v => {
+          nodeChildNode.push([...v.querySelectorAll('.cell')])
+        })
+        nodeChildNode.flat().forEach((v: any) => {
+          if (v?.children?.length) {
+            const list: any = [...v?.children]
+            list.forEach((item: any) => {
+              item.classList.add('tooltip-ellipsis-content')
+              if (item.scrollWidth > item.offsetWidth) {
+                createTips(item,item.innerText)     
+              }
+            })
+          } else {
+            const text = v.innerText
+            v.classList.add('tooltip-ellipsis-content')
+            v.ondblclick = copy
+            if (v.scrollWidth > v.offsetWidth) {
+              createTips(v,text)            
             }
-          })
-        } else {
-          const text = v.innerText
-          v.classList.add('tooltip-ellipsis-content')
-          v.ondblclick = copy
-          if (v.scrollWidth > v.offsetWidth) {
-            createTips(v,text)            
           }
-        }
-      })
-      // 更新思路直接获取 el-tooltip 标签 缺陷导致重复
-    }
+        })
+        // 更新思路直接获取 el-tooltip 标签 缺陷导致重复
+      }
+    })
   }
 }
 
