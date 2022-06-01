@@ -63,7 +63,7 @@ export const tableTooltip = {
             list.forEach((item: any) => {
               item.classList.add('tooltip-ellipsis-content')
               if (item.scrollWidth > item.offsetWidth) {
-                createTips(item,item.innerText)     
+                createTips(item)     
               }
             })
           } else {
@@ -71,7 +71,7 @@ export const tableTooltip = {
             v.classList.add('tooltip-ellipsis-content')
             v.ondblclick = copy
             if (v.scrollWidth > v.offsetWidth) {
-              createTips(v,text)            
+              createTips(v)            
             }
           }
         })
@@ -82,7 +82,7 @@ export const tableTooltip = {
 }
 
 
-const createTips = (el: any, text: string) => {
+const createTips = (el: any) => {
   let flag: boolean = false
   let timer: any = ''
   let newShowTimer:any
@@ -116,7 +116,7 @@ const createTips = (el: any, text: string) => {
       const contentDom = document.createElement('div')
       dom.classList.add('_popper-warp')
       contentDom.classList.add('_popper')
-      contentDom.innerHTML = text
+      contentDom.innerHTML = el.innerText
       document.body.append(dom)
       dom.append(contentDom) 
       let  greater  = 0
