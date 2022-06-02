@@ -259,7 +259,7 @@ const start = useDebounceFn(async (row: any) => {
     pending.show = false
     useException(error.code)
   }
-}, 500)
+}, 300)
 
 const details = (row: any) => {
   if (row.createMode == 2) {
@@ -299,7 +299,7 @@ const copy = useDebounceFn((row: any) => {
   showDialog.value = true
   activeRow.value = row
   beforeName.value = workFlowName.value + '-v' + (total.value + 1)
-}, 500)
+}, 300)
 
 
 const copySubmit = (name: string) => {

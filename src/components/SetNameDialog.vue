@@ -45,7 +45,7 @@ const openFn = () => {
 const checkName = (rule: any, value: any, callback: any) => {
     setTimeout(() => {
         callback()
-    }, 500)
+    }, 300)
 }
 const rules = reactive({
     name: [

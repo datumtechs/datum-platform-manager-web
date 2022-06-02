@@ -42,9 +42,9 @@ const props = defineProps({
     type: String,
     default: ''
   },
-  keyword:{
-    type:String,
-    default:''
+  keyword: {
+    type: String,
+    default: ''
   },
   showFilter: {
     type: Boolean,
@@ -70,11 +70,11 @@ watch(() => props.keyword, () => {
 //   window.document.getElementById('search').innerHTML = ''
 // })
 
-onActivated(()=>{
+onActivated(() => {
   visible.value = true
 })
 
-onDeactivated(()=>{
+onDeactivated(() => {
   visible.value = false
 })
 
@@ -84,7 +84,7 @@ onDeactivated(()=>{
 const submit = useDebounceFn(() => {
   emit('search', input1.value)
   popoverRefHide()
-}, 500)
+}, 300)
 
 const popoverRef = ref()
 
@@ -93,9 +93,9 @@ const cancel = () => {
 }
 const reset = () => {
   emit('reset')
-  if(input1.value){
+  if (input1.value) {
     input1.value = ''
-  }else{
+  } else {
     emit('search', input1.value)
   }
   unref(popoverRef).afterLeave(() => {

@@ -41,7 +41,7 @@ service.interceptors.response.use(
         ElMessage.error(data.msg)
         setTimeout(() => {
           tokenAbnormal = false
-        }, 500)
+        }, 300)
       }
     }
     return data

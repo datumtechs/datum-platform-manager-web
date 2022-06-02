@@ -4,10 +4,7 @@ import Web3 from 'web3'
 import config from '@/config/network.js'
 import { abi as Erc20ABI } from '@/config/abi/DataTokenTemplate.json'
 import { abi as MetisPayABI } from '@/config/abi/MetisPay.json'
-import walletHelpAddress from '@/config/walletHelpAddress'
 import { queryCurrentChainInfo } from '@/api/chain'
-
-
 
 class Web3Service {
   private web3: any
@@ -41,15 +38,15 @@ class Web3Service {
 
       // 切换账号
       this.eth.on('accountsChanged', (account: any) => {
-        console.log('accountsChanged');
         useUsersInfo().clean()
+        // window.location.reload()
       })
       // 切换网络
       this.eth.on('chainChanged', () => {
         console.log('chainChanged');
       })
+
       this.eth.on('disconnect', () => {
-        console.log('user disconnect');
         useUsersInfo().clean()
       })
     }

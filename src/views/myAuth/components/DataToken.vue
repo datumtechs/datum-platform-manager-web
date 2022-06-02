@@ -150,7 +150,7 @@ const searchText = ref('')
 
 watch(() => searchText.value, useDebounceFn(() => {
     emit('updateData', searchText.value)
-}, 500))
+}, 300))
 
 
 const props = defineProps({
