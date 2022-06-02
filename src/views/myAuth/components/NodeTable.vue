@@ -204,8 +204,3 @@ onMounted(() => {
 })
 
 </script>
-<style lang="scss">
-:deep(.el-dialog__body) {
-    padding: 0 32px;
-}
-</style>

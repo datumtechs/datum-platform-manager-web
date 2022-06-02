@@ -275,10 +275,6 @@ const rules = ref(
 </script>
 
 <style scoped lang='scss'>
-:deep(.el-dialog__body) {
-    padding: 0 32px !important;
-}
-
 :deep(.el-dialog__header) {
     .el-dialog__title {
         color: #333333;
