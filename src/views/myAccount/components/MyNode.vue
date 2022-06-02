@@ -129,8 +129,8 @@ const addNode = () => {
 }
 
 
-const delSubmit = (row: { id: number }) => {
-  delNodeOrg({ identityId: row.id }).then(res => {
+const delSubmit = (row: { identityId: any }) => {
+  delNodeOrg({ identityId: row.identityId }).then(res => {
     const { data, code } = res
     if (code === 10000) {
       query()
