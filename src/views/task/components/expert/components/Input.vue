@@ -11,6 +11,7 @@
             </el-select>
         </div>
         <div v-if="showModel">
+            {{ modelValue }}
             <p class="mt-40px text-color-[#333] font-medium">{{ t('expert.model') }}</p>
             <p class="mt-10px">
                 <el-select v-if="curNodeIndex !== 0" class="w-full" v-model="modelValue"
@@ -57,13 +58,12 @@ import Transfer from './Transfer.vue'
 import { queryUserDataList, queryDataDetails, getUserModelList } from '@/api/data'
 
 const { t } = useI18n()
-const modelKey = ref('')
+const modelKey = ref(-1)
 const taskSender = ref('')
 const algorithm: any = computed(() => useExpertMode().getAlgorithm)
 const orgList: any = computed(() => useExpertMode().getUserOrgList)
 const showModel: any = computed(() => algorithm.value.inputModel)
 const inputVoList: any = computed(() => useExpertMode().getInputVoList)
-const outputVoList: any = computed(() => useExpertMode().getOutputVoList)
 const nodeList: any = computed(() => useExpertMode().getNodeList)
 const workflowNodeSenderIdentityId: any = computed(() => useExpertMode().getWorkflowNodeSender)
 
@@ -131,7 +131,7 @@ const changeInputValue = (item: any, index: number) => {
             }
         })
         upList.map((i: any) => {
-            cascaderKey[i] = cascaderKey.value[i] + 1
+            cascaderKey[i] = cascaderKey.value[i]++
         })
         if (item && item.length === 2) {
             getColumnList(item[item.length - 1], index)
@@ -151,10 +151,6 @@ const getColumnList = async (metaDataId: string, index: number, params?: any) =>
     }
 }
 
-const getIdentity = (list: any) => {
-    if (!list) return []
-    return list.map((item: any) => item?.[0])
-}
 
 const isCurrentSelectDisabled = (org: any, index: number) => {
     if (inputValueOrg.value[index] === org.identityId) {
@@ -243,6 +239,7 @@ const modelLazyLoad = async (node: any, resolve: any) => {
 }
 
 const changeModelValue = (item: any) => {
+    modelKey.value++
     if (Array.isArray(item)) {
         useExpertMode().setCurModel({
             metaDataId: item[1]
@@ -257,7 +254,7 @@ const handleModelChange = (val: any) => {
 }
 
 const curNodeIndex = computed(() => useExpertMode().getCurNodeIndex)
-const modelValue = ref('')
+const modelValue: any = ref('')
 const modelOptions = reactive([{
     fileName: t('expert.frontModel'),
     modelId: 'frontNodeOutput'
@@ -290,10 +287,13 @@ const handleInputValue = async () => {
                 })
             }
         })
-        console.log('showModel', showModel);
-
         if (showModel.value) {
-            modelValue.value = nodeList.value[curNodeIndex.value].model
+            const node = nodeList.value[curNodeIndex.value]?.nodeInput?.model
+            if (node.metaDataId === 'frontNodeOutput') {
+                modelValue.value = 'frontNodeOutput'
+            } else {
+                modelValue.value = [node?.identityId, node?.metaDataId,]
+            }
         }
         inputValue.value = res
         upInputKeys()
