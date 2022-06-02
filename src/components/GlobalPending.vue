@@ -50,5 +50,6 @@ const handleClose = () => {
     text-align: center;
     width: 300px;
     margin: 0 auto;
+    margin-bottom: 30px;
 }
 </style>
