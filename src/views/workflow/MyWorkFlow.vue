@@ -51,11 +51,11 @@
 
 </template>
 <script lang="ts" setup>
-import { getAlgTree } from '@/api/algorithm'
-import DataTable from './components/DataTable.vue';
-import ExpertTable from './components/ExpertTable.vue';
+import { getAlgTree } from '@/api/algorithm'         
 import { useKeepAliveInfo } from '@/stores'
 import { queryWorkflowList, queryWorkflowStats } from '@/api/workflow/index'
+import DataTable from './components/DataTable.vue';
+import ExpertTable from './components/ExpertTable.vue';
 const { t, locale } = useI18n()
 const route = useRoute()
 const current = ref(1)

@@ -85,7 +85,7 @@ watch(() => algList.value, () => {
 })
 watch(() => props.taskParams, (e) => {
   if (e.workflowId) disabled.value = true
-  if (algList.value.length && props.activeIndex < 1) {
+  if (algList.value.length && props.activeIndex <= 1) {
     setTaskParams()
   }
 })
