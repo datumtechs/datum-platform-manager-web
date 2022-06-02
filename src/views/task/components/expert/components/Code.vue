@@ -4,13 +4,14 @@
             class="code-variable-box py-20px">
             <p class="text-color-[#333] font-bold px-20px pb-10px flex">
                 <span class="mr-10px">{{ t('expert.algoVariable') }}</span>
-                <QuestionMark class="w-2px" :content="t('expert.paramsHint')" />
+                <!-- <QuestionMark class="w-2px" :content="t('expert.paramsHint')" /> -->
             </p>
             <el-space class="mb-10px px-20px" v-for="(item, index) in props.codeObj.variableList"
                 :key="item.varKey">
                 <p class="w-140px">{{ item.varKey }}</p>
                 <el-input :disabled="isReadonly" class="round-input"
                     @change="handleVariable($event, index)" v-model="item.varValue" />
+                <QuestionMark class="w-2px" :content="item.varDesc" />
             </el-space>
         </div>
         <div v-if="props.codeObj?.variableList.length > 0" class="h-1px mobile-bar"
@@ -19,9 +20,11 @@
         </div>
         <p class="text-color-[#333] font-bold pb-20px code-context-box-title">
             <span class="mr-10px">{{ t('expert.algoCode') }}</span>
-            <el-icon @click="zoomToDialog" class="w-20px h-20px cursor-pointer">
+            <!-- <el-icon>
                 <full-screen />
-            </el-icon>
+            </el-icon> -->
+            <img @click="zoomToDialog" class="w-18px h-18px cursor-pointer"
+                src="@/assets/images/global/fullscreen.svg" alt="" />
         </p>
         <div class="w-350px bg-primary m-auto my-10px p-10px code-context-box">
             <div v-html="props.codeObj.code?.calculateContractCode"></div>
