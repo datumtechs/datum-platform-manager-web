@@ -39,7 +39,7 @@
             </el-option-group>
           </el-select>
         </div>
-        <div>
+        <div class="search-item-wrap">
           <div class="search-label mt-20px mb-10px font-900">{{ t('common.timeFrame') }}</div>
           <el-date-picker class="picker-rounded" v-model="date" type="daterange" :teleported="false"
             value-format="YYYY-MM-DD" :range-separator="t('common.to')"
@@ -187,9 +187,15 @@ onMounted(() => {
 
 </script>
 <style lang="scss">
+.search-item-wrap{
+  .el-popper{
+    max-width: max-content !important;
+  }
+}
 .picker-rounded {
   border-radius: 20px;
   height: 40px;
+  width: 100% !important;
 
   .select-trigger {
     .el-input__inner {

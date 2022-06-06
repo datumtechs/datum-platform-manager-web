@@ -74,9 +74,11 @@
           <el-radio label="FAIL">{{ t('status.failed') }}</el-radio>
         </el-radio-group>
         <div class="search-label mt-20px mb-10px font-bold">{{ t('common.timeFrame') }}</div>
-        <el-date-picker class="picker-rounded" v-model="date" type="daterange"
-          value-format="YYYY-MM-DD" :range-separator="t('common.to')"  :teleported="false"
-          :start-placeholder="t('node.startTime')" :end-placeholder="t('common.endTime')" />
+        <div class="search-item-wrap">
+          <el-date-picker class="picker-rounded" v-model="date" type="daterange"
+                value-format="YYYY-MM-DD" :range-separator="t('common.to')"  :teleported="false"
+                :start-placeholder="t('node.startTime')" :end-placeholder="t('common.endTime')" />
+        </div>
       </template>
     </Search>
   </div>
@@ -203,9 +205,15 @@ onMounted(() => {
 })
 </script>
 <style lang="scss">
+.search-item-wrap{
+  .el-popper{
+    max-width: max-content !important;
+  }
+}
 .picker-rounded {
   border-radius: 20px;
   height: 40px;
+  width: 100% !important;
 
   .select-trigger {
     .el-input__inner {
