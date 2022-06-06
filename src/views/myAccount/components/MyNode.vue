@@ -19,11 +19,13 @@
         </template>
       </el-table-column>
     </el-table>
-    <div v-waves
-      @click="dialogFormVisible = true"
-      class="w-170px h-50px rounded-25px com-button my-40px absolute right-[0] cursor-pointer"
-    >
-        {{ t('node.addNode') }}
+      <div 
+          @click="dialogFormVisible = true"
+          class="w-170px h-50px rounded-25px com-button my-40px absolute right-[0] cursor-pointer"
+        >
+        <div v-waves class="w-full h-full flex justify-center items-center">
+          {{ t('node.addNode') }}
+        </div>
     </div>
     <el-dialog
       v-model="dialogFormVisible"
