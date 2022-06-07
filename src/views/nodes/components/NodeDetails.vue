@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { queryOrgDetail } from '@/api/node'
-import { useSize } from '@/hooks'
+import { useSize,usedBandwidth } from '@/hooks'
 const { t } = useI18n()
 const router = useRouter()
 const route = useRoute()
@@ -75,7 +75,7 @@ onMounted(() => {
             <p class="text-14px text-color-[#999999] leading-20px">{{ t('node.totalBandwidth') }}
             </p>
             <p class="text-14px text-color-[#333] mt-4px font-bold">{{
-              useSize(nodeInfo.orgTotalBandwidth) + 'P/S'
+              usedBandwidth(nodeInfo.orgTotalBandwidth) + 'ps'
             }}</p>
           </div>
         </div>

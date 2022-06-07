@@ -18,7 +18,7 @@ import BaseInfo from '@/components/dataComponents/BaseInfo.vue'
 import PartyInfo from '@/components/commonTable/PartyInfo.vue'
 import TaskEvents from '@/components/TaskEvents.vue'
 import { queryTaskDetails } from '@/api/task'
-import { useDuring, useFormatTime, useSize,useGlobalTaskMap } from '@/hooks'
+import { useDuring, useFormatTime, useSize,useGlobalTaskMap,usedBandwidth } from '@/hooks'
 
 const router = useRouter()
 const route = useRoute()
@@ -98,7 +98,7 @@ const getTaskDetail = async () => {
 
     baseData[3].lProp['cpu'].value = data.requiredCore
     baseData[3].lProp['memory'].value = useSize(data.requiredMemory)
-    baseData[3].lProp['bandWidth'].value = useSize(data.requiredBandwidth) + 'P/S'
+    baseData[3].lProp['bandWidth'].value = usedBandwidth(data.requiredBandwidth) + 'ps'
 
     eventList.value = data.eventList
     dataDetails.value = data

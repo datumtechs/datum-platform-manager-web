@@ -17,6 +17,7 @@ import useFormatDay from './useFormatDay'
 import useException from './useException'
 import useInterval from './useInterval'
 import useIsAddress from './useIsAddress'
+import usedBandwidth from './usedBandwidth'
 
 // const context = require.context('./', false, /\.ts$/)
 
@@ -40,5 +41,6 @@ export {
     useAddressDisplay,
     useExchangeFrom,
     useExchangeTo,
-    useWorkflowDetailsMap
+    useWorkflowDetailsMap,
+    usedBandwidth
 }
