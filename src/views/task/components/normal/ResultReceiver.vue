@@ -19,7 +19,7 @@
           }}</div>
           <el-form-item prop="checkList">
             <el-checkbox-group v-model="form[i].checkList">
-              <template v-for="v in props.orgList" :key="item.identityId">
+              <template v-for="v in props.taskParams.algorithmId == 1001 ? props.dataOrgList : props.orgList" :key="item.identityId">
                 <el-checkbox :label="v.identityId">{{ v.nodeName }}</el-checkbox>
                 <br />
               </template>
@@ -47,7 +47,7 @@ const emit = defineEmits(['previous', 'next'])
 const props: any | { orgList: any } = defineProps({
   noticeText: {
     type: Object,
-    default: () => ({})
+    default: () => ({}) 
   },
   step: {
     type: Number,
@@ -64,6 +64,10 @@ const props: any | { orgList: any } = defineProps({
   orgList: {
     type: Array,
     default: (): any => ([])
+  },
+  dataOrgList: {
+    type: Array,
+    default: (): any => []
   },
   taskParams: {
     type: Object,

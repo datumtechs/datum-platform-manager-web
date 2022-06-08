@@ -38,7 +38,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { getUserOrgList } from '@/api/login'
+import { getUserOrgList,getBaseOrgList } from '@/api/login'
 import { getWorkflowSettingOfWizardMode, startWorkFlow, getProcessList } from '@/api/workflow'
 import PrivateSwitch from './PrivateSwitch.vue'
 import SelectionAlg from './normal/SelectionAlg.vue';
@@ -312,7 +312,7 @@ const queryOrgList = () => {//查询组织列表
 }
 const queryIsDataOrgList = () => {//查询组织列表
   if (orgList.value.length) return
-  getUserOrgList({includeData:true}).then(res => {
+  getBaseOrgList().then(res => {
     const { data, code } = res
     if (code === 10000) {
       dataOrgList.value = data
