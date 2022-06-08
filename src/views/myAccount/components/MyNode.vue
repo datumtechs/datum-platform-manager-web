@@ -9,31 +9,22 @@
       <el-table-column prop="identityPort" :label="t('node.nodePort')" />
       <el-table-column :label="t('common.actions')">
         <template #default="scope">
-          <el-button
-            v-waves
-            type="text"
-            :disabled="!!(scope.row.publicFlag || scope.row.connectFlag)"
-            circle
-            @click="del(scope.row, scope.index)"
-          >{{ t('common.delete') }}</el-button>
+          <el-button v-waves type="text"
+            :disabled="!!(scope.row.publicFlag || scope.row.connectFlag)" circle
+            @click="del(scope.row, scope.index)">{{ t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>
-      <div 
-          @click="dialogFormVisible = true"
-          class="w-170px h-50px rounded-25px com-button my-40px absolute right-[0] cursor-pointer"
-        >
-        <div v-waves class="w-full h-full flex justify-center items-center">
-          {{ t('node.addNode') }}
-        </div>
+    <div @click="dialogFormVisible = true"
+      class="w-170px h-50px rounded-25px com-button my-40px absolute right-[0] cursor-pointer">
+      <div v-waves class="w-full h-full flex justify-center items-center">
+        {{ t('node.addNode') }}
+      </div>
     </div>
-    <el-dialog
-      v-model="dialogFormVisible"
-      :width="600"
-      :title="t('node.addNode')"
-      :destroy-on-close="true"
-    >
-      <el-form :model="form" :label-width="80" :rules="rules" :ref="(e: any) => formRef = e">
+    <el-dialog v-model="dialogFormVisible" :width="600" :title="t('node.addNode')"
+      :destroy-on-close="true">
+      <el-form :model="form" label-position="left" :label-width="80" :rules="rules"
+        :ref="(e: any) => formRef = e">
         <el-form-item :label="t('node.nodeIP')" prop="nodeIP">
           <el-input v-model="form.nodeIP" maxlength="20" />
         </el-form-item>
@@ -43,21 +34,11 @@
       </el-form>
       <template #footer>
         <div>
-          <el-button
-            class="w-100px"
-             v-waves
-            style="height: 40px;"
-            round
-            @click="cancel"
-          >{{ t('common.cancel') }}</el-button>
-          <el-button
-            class="w-100px"
-             v-waves
-            style="height: 40px;"
-            round
-            type="primary"
-            @click="addNode"
-          >{{ t('common.submit') }}</el-button>
+          <el-button class="w-100px" v-waves style="height: 40px;" round @click="cancel">{{
+              t('common.cancel')
+          }}</el-button>
+          <el-button class="w-100px" v-waves style="height: 40px;" round type="primary"
+            @click="addNode">{{ t('common.submit') }}</el-button>
         </div>
       </template>
     </el-dialog>
@@ -158,7 +139,9 @@ const addSubmit = () => {
 }
 
 const query = () => {
-  getUserOrgList().then(res => {
+  getUserOrgList({
+    includeData: false
+  }).then(res => {
     const { data, code } = res
     if (code === 10000) {
       console.log(data)
@@ -180,6 +163,7 @@ onMounted(() => {
       border-bottom: none;
       height: 50px;
     }
+
     .el-table__body .el-table__row {
       height: 70px;
     }

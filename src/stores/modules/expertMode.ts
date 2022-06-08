@@ -126,8 +126,8 @@ export default defineStore('expertMode', {
             this.showPanel = data
         },
 
-        async queryUserOrgList() {
-            const { code, data } = await getUserOrgList()
+        async queryUserOrgList(includeData: any) {
+            const { code, data } = await getUserOrgList(includeData)
             if (code === 10000) {
                 this.setUserOrgList(data)
             }

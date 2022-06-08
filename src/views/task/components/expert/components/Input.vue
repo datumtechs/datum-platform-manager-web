@@ -261,7 +261,7 @@ const modelOptions = reactive([{
 }])
 
 onMounted(async () => {
-    await useExpertMode().queryUserOrgList()
+    await useExpertMode().queryUserOrgList({ includeData: true })
     initInputPanel()
     // 回显
     handleInputValue()
