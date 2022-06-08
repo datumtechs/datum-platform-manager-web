@@ -49,8 +49,8 @@
             </el-skeleton>
          </div>
          <div @click="linkToComputeTask"
-            class="w-156px ml-20px h-178px cursor-pointer border-1 border-solid border-[#EEEEEE] flex flex-col justify-center items-center">
-            <p class="text-[#252525] font-bold">{{ t('home.viewAllComputingTask') }}</p>
+            class="w-156px text-center ml-20px h-178px cursor-pointer border-1 border-solid border-[#EEEEEE] flex flex-col justify-center items-center">
+            <p class="w-120px text-[#252525] font-bold">{{ t('home.viewAllComputingTask') }}</p>
             <img class="w-24px h-24px mt-12px" :src="arrow" />
          </div>
       </div>

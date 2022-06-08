@@ -139,7 +139,9 @@ const addSubmit = () => {
 }
 
 const query = () => {
-  getUserOrgList().then(res => {
+  getUserOrgList({
+    includeData: false
+  }).then(res => {
     const { data, code } = res
     if (code === 10000) {
       console.log(data)

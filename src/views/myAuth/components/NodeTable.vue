@@ -174,7 +174,7 @@ const authSubmit = () => {
 }
 
 const queryOrgList = (): void => {
-    getUserOrgList().then(res => {
+    getUserOrgList({ includeData: false }).then(res => {
         const { data, code } = res
         if (code === 10000) {
             tableData.value = data
