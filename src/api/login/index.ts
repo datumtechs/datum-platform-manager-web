@@ -32,10 +32,11 @@ export const updateUserInfo = (data: {}): Promise<any> => {
 }
 
 //网络节点列表
-export const getUserOrgList = (): Promise<any> => {
+export const getUserOrgList = (params?:any): Promise<any> => {
   return http({
     method: 'GET',
     url: '/flow/org/getUserOrgList',
+    params:{includeData: params?.includeData ? true:false}
   })
 }
 

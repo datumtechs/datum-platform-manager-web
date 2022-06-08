@@ -28,6 +28,7 @@
           :fieldType="fieldType" 
           :taskParams="workfolwParams"
           :orgList="orgList"
+          :dataOrgList="dataOrgList"
           :views="views"
           :noticeText="noticeText"
           @previous="previous" 
@@ -61,6 +62,7 @@ const route = useRoute()
 const router = useRouter()
 const activeIndex = ref(0)
 const orgList: any = ref<any>([])
+const dataOrgList: any = ref<any>([])
 const comList = ref([])
 const noticeText = ref({})
 const workfolwParams = ref<any>({})
@@ -308,11 +310,21 @@ const queryOrgList = () => {//查询组织列表
     }
   })
 }
+const queryIsDataOrgList = () => {//查询组织列表
+  if (orgList.value.length) return
+  getUserOrgList({includeData:true}).then(res => {
+    const { data, code } = res
+    if (code === 10000) {
+      dataOrgList.value = data
+    }
+  })
+}
 
 
 onMounted(() => {
   init()
   queryOrgList()
+  queryIsDataOrgList()
 })
 
 
@@ -324,7 +336,11 @@ onBeforeRouteLeave((to, form) => {
   })
 })
 </script>
+<style>
+
+</style>
 <style lang="scss" scoped>
+
 .normal-wrap {
   .cover {
     transform: rotate(45deg);

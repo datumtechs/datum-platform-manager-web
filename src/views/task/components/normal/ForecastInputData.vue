@@ -7,7 +7,7 @@
     <div class="flex items-center text-14px">
       <div class="mr-20px text-color-[#666666] font-medium w-130px">{{ $t('task.selectSponsor') }} ：</div>
       <el-select v-model="identityId" :suffix-icon="CaretBottom" :placeholder="$t('task.selectSponsor')"
-        :disabled="taskParams.isSettingCompleted" style="flex:0 0 440px"
+        :disabled="taskParams.isSettingCompleted" style="flex:0 0 440px" popper-class="max-width"
         class="h-40px rounded-20px border-1 basis-1/2 border-solid border-color-[#EEEEEE]">
         <el-option v-for="(v) in props.orgList" :label="v.nodeName" :value="v.identityId">
         </el-option>
@@ -26,11 +26,11 @@
     </div>
     <TaskParamsTransfer :fieldType="[props.fieldType[0], props.fieldType[2]]" :sellectionAlgPsi="true"
       :disabledData="psiInputTwo?.metaData" :key="'input'" @update:params="psiInputOne = $event"
-      :taskParams="props.taskParams" :params="psiInputParams.one" :num="1" :orgList="props.orgList" />
+      :taskParams="props.taskParams" :params="psiInputParams.one" :num="1" :orgList="props.dataOrgList" />
     <div class="h-30px"></div>
     <TaskParamsTransfer :fieldType="[props.fieldType[0], props.fieldType[2]]" :sellectionAlgPsi="true"
       :taskParams="props.taskParams" :disabledData="psiInputOne?.metaData" :key="'output'"
-      @update:params="psiInputTwo = $event" :params="psiInputParams.two" :num="2" :orgList="props.orgList" />
+      @update:params="psiInputTwo = $event" :params="psiInputParams.two" :num="2" :orgList="props.dataOrgList" />
     <div class="flex items-center pt-20px" v-if="!views">
       <el-button  v-waves round class="h-50px previous" @click="previous">{{ $t('common.previous') }}</el-button>
       <el-button v-waves  round class="h-50px previous ml-20px" @click="preserv">{{ $t('common.saveAndReturn') }}</el-button>
@@ -69,6 +69,10 @@ const props: any = defineProps({
     default: () => ({})
   },
   orgList: {
+    type: Array,
+    default: (): any => []
+  },
+  dataOrgList: {
     type: Array,
     default: (): any => []
   },
