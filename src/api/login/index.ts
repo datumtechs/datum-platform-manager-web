@@ -40,6 +40,15 @@ export const getUserOrgList = (params?: any): Promise<any> => {
   })
 }
 
+//用户有可用数据的
+export const getBaseOrgList = (): Promise<any> => {
+  return http({
+    method: 'GET',
+    url: '/flow/org/getBaseOrgList'
+  })
+}
+
+
 //  添加网络节点
 export const postJoinOrg = (data: {}): Promise<any> => {
   return http({
