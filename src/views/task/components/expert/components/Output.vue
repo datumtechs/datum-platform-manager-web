@@ -66,11 +66,11 @@ const props = defineProps({
 })
 
 
-watch(() => workflowNodeInputVoList.value, () => {
-    if (curNodeId.value === 1001) {
-        initData()
-    }
-}, { deep: true })
+// watch(() => workflowNodeInputVoList.value, () => {
+//     if (curNodeId.value === 1001) {
+//         initData()
+//     }
+// }, { deep: true })
 
 watch(() => orgList.value, () => {
     // 回显时候的监听
@@ -78,9 +78,9 @@ watch(() => orgList.value, () => {
 })
 
 
-const initData = (id?: string) => {
+const initData = () => {
     const list: any = workflowNodeOutputVoList.value
-    return checkValue(list)
+    if (list.length > 0) checkValue(list)
 }
 
 const checkValue = (list: any) => {

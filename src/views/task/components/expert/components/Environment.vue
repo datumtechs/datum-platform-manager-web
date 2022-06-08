@@ -115,7 +115,3 @@ const handleRuntimeChangeFn = (runTime: string) => {
 
 
 </script>
-
-<style scoped lang='scss'>
-.env-box {}
-</style>
