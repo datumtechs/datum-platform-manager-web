@@ -41,8 +41,8 @@
         </div>
         <div class="search-item-wrap">
           <div class="search-label mt-20px mb-10px font-900">{{ t('common.timeFrame') }}</div>
-          <el-date-picker class="picker-rounded" v-model="date" type="daterange" :teleported="false"
-            value-format="YYYY-MM-DD" :range-separator="t('common.to')"
+          <el-date-picker class="picker-rounded" v-model="date" type="daterange" :default-time="defaultTime" :teleported="false"
+            value-format="YYYY-MM-DD HH:mm:ss" :range-separator="t('common.to')"
             :start-placeholder="t('node.startTime')" :end-placeholder="t('common.endTime')" />
         </div>
       </template>
@@ -57,6 +57,10 @@ import { queryWorkflowList, queryWorkflowStats } from '@/api/workflow/index'
 import DataTable from './components/DataTable.vue';
 import ExpertTable from './components/ExpertTable.vue';
 const { t, locale } = useI18n()
+const defaultTime = ref([
+    new Date(2000, 1, 1, 0, 0, 0),
+  new Date(2000, 2, 1, 23, 59, 59),
+])
 const route = useRoute()
 const current = ref(1)
 const size = ref(10)
@@ -100,7 +104,7 @@ const tabsChange = (index: string) => {
     date.value = []
 }
 
-const transferTimestamp = (str: string | undefined) => {
+const transferTimestamp = (str: string | undefined,type?:string) => {
   if (!str) return ''
   try {
     return new Date(str).getTime()
@@ -123,7 +127,7 @@ const query = () => {
     keyword: keyword.value,
     algorithmId: algValue.value,
     begin: transferTimestamp(date.value && date.value[0]) || null,
-    end: transferTimestamp(date.value && date.value[1]) || null,
+    end: transferTimestamp(date.value && date.value[1],'end') || null,
   }
 
   keepAlive.setCurrent(current.value, route.path)

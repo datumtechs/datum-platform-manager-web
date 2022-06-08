@@ -38,7 +38,7 @@
               class="input-with-select">
               <template #append>
                 <el-select v-model="form[i].bandwidthSymbol" style="width: 110px">
-                  <el-option v-for="item in companyList" :label="`${item}ps`" :key="item" :value="item"></el-option>
+                  <el-option v-for="item in newCompanyList" :label="`${item}ps`" :key="item" :value="item"></el-option>
                 </el-select>
               </template>
             </el-input>
@@ -111,7 +111,7 @@ const paramsItem = {
   memory: '',
   memorySymbol: 'MB',
   bandwidth: '',
-  bandwidthSymbol: 'MB',
+  bandwidthSymbol: 'Mb',
   time: '',
   timeSymbol: 'minute'
 }
@@ -183,6 +183,7 @@ const rules = reactive({
 
 // const companyList = ref(['KB', 'MB', 'GB'])
 const companyList = ref(['MB'])
+const newCompanyList = ref(['Mb'])
 const timeCompanyList = ref([
   {
     label: 'common.minute',

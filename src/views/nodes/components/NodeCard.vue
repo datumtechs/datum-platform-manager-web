@@ -29,7 +29,7 @@
         </div>
         <div class="w-140px table-box">
             <p class="title whitespace-nowrap">{{ t('node.totalBandwidth') }}</p>
-            <p class="text">{{ useSize(node.orgTotalBandwidth) + 'P/S' }}</p>
+            <p class="text">{{ usedBandwidth(node.orgTotalBandwidth) + 'ps' }}</p>
         </div>
         <div class="operate text-center flex-grow">
             <p class="font-medium  leading-20px link-btn  px-10px" @click="linkToDetail">{{
@@ -40,7 +40,7 @@
 </template>
 
 <script setup lang='ts'>
-import { useSize, useTableIndex } from '@/hooks'
+import { useSize, useTableIndex,usedBandwidth } from '@/hooks'
 const { t } = useI18n()
 const router = useRouter()
 const props = defineProps({
@@ -92,7 +92,7 @@ const linkToDetail = () => {
     font-size: 14px;
     color: #333;
     margin-top: 13px;
-    line-height: 12px;
+    line-height: 18px;
     font-family: Ali-Bold, DINPro-Bold;
 }
 

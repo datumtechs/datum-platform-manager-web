@@ -25,7 +25,7 @@
           <div v-else-if="activeName === 'powerProvider'">
             <p>{{ t('common.cpu') }} : &nbsp; {{ row.usedCore }} {{ t('common.cores') }}</p>
             <p>{{ t('common.memory') }} : &nbsp; {{ useSize(row.usedMemory) }}</p>
-            <p>{{ t('common.bandwidth') }} : &nbsp; {{ useSize(row.usedBandwidth) + 'P/S' }}</p>
+            <p>{{ t('common.bandwidth') }} : &nbsp; {{ usedBandwidth(row.usedBandwidth) + 'ps' }}</p>
           </div>
           <div v-else>
             -
@@ -38,7 +38,7 @@
 
 <script setup lang='ts'>
 import type { TabsPaneContext } from 'element-plus'
-import { useSize } from '@/hooks'
+import { useSize,usedBandwidth } from '@/hooks'
 const { t } = useI18n()
 interface RoleTableType {
   identityId: String

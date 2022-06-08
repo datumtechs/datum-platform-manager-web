@@ -75,8 +75,8 @@
         </el-radio-group>
         <div class="search-label mt-20px mb-10px font-bold">{{ t('common.timeFrame') }}</div>
         <div class="search-item-wrap">
-          <el-date-picker class="picker-rounded" v-model="date" type="daterange"
-                value-format="YYYY-MM-DD" :range-separator="t('common.to')"  :teleported="false"
+          <el-date-picker class="picker-rounded" v-model="date" type="daterange" :default-time="defaultTime"
+                value-format="YYYY-MM-DD HH:mm:ss" :range-separator="t('common.to')"  :teleported="false"
                 :start-placeholder="t('node.startTime')" :end-placeholder="t('common.endTime')" />
         </div>
       </template>
@@ -90,7 +90,10 @@ import { queryTaskList } from '@/api/task'
 import { useFormatTime, useDuring, useTableIndex, useGlobalTaskMap } from '@/hooks'
 import {useKeepAliveInfo } from '@/stores'
 const keepAlive = useKeepAliveInfo()
-
+const defaultTime = ref([
+    new Date(2000, 1, 1, 0, 0, 0),
+  new Date(2000, 2, 1, 23, 59, 59),
+])
 const router: Router = useRouter()
 const route = useRoute()
 const { t,locale } = useI18n()
