@@ -120,6 +120,11 @@ const judgeMentParams = () => {
                 flag = false
                 return
             }
+            if (nodeList.value[i].nodeOutput?.identityId.length === 0) {
+                ElMessage.error(t('expert.saveOutputHint'))
+                flag = false
+                return
+            }
 
             if (nodeList.value[i].nodeInput?.dataInputList?.length === 0) { //不存在input 数据方未进行选择
                 ElMessage.error(t('expert.saveInputParamsHint'))

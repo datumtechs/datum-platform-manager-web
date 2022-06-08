@@ -32,3 +32,11 @@ export const getWorkflowSettingOfExpertMode = (params: any): Promise<any> => {
         params
     })
 }
+
+// 查询组织方
+export const queryBaseOrgList = (): Promise<any> => {
+    return http({
+        method: 'GET',
+        url: '/flow/org/getBaseOrgList',
+    })
+}

@@ -11,7 +11,6 @@
             </el-select>
         </div>
         <div v-if="showModel">
-            {{ modelValue }}
             <p class="mt-40px text-color-[#333] font-medium">{{ t('expert.model') }}</p>
             <p class="mt-10px">
                 <el-select v-if="curNodeIndex !== 0" class="w-full" v-model="modelValue"
@@ -62,6 +61,7 @@ const modelKey = ref(-1)
 const taskSender = ref('')
 const algorithm: any = computed(() => useExpertMode().getAlgorithm)
 const orgList: any = computed(() => useExpertMode().getUserOrgList)
+const baseOrgList: any = computed(() => useExpertMode().getBaseOrgList)
 const showModel: any = computed(() => algorithm.value.inputModel)
 const inputVoList: any = computed(() => useExpertMode().getInputVoList)
 const nodeList: any = computed(() => useExpertMode().getNodeList)
@@ -171,22 +171,20 @@ const inputLazyLoad = async (node: any, resolve: any, index: number) => {
             setTimeout(() => {
                 if (inputValue.value.length) {
                     // 已做了选择
-                    nodes = orgList.value.map((org: any) => ({
+                    nodes = baseOrgList.value.map((org: any) => ({
                         value: org.identityId,
                         label: org.nodeName,
                         leaf: level >= 2,
                         disabled: isCurrentSelectDisabled(org, index)
                     }))
                 } else {
-                    nodes = orgList.value.map((org: any) => ({
+                    nodes = baseOrgList.value.map((org: any) => ({
                         value: org.identityId,
                         label: org.nodeName,
                         leaf: level >= 2,
                         disabled: org.disabled || false
                     }))
                 }
-                console.log('nodes', nodes, index);
-
                 resolve(nodes)
             }, 300);
         } else if (level === 1) {
@@ -261,7 +259,8 @@ const modelOptions = reactive([{
 }])
 
 onMounted(async () => {
-    await useExpertMode().queryUserOrgList({ includeData: true })
+    await useExpertMode().queryUserOrgList()
+    await useExpertMode().queryBaseOrgList()
     initInputPanel()
     // 回显
     handleInputValue()
@@ -273,7 +272,7 @@ const handleInputValue = async () => {
     taskSender.value = workflowNodeSenderIdentityId.value
     if (inputVoList.value && inputVoList.value.length) {
         selectLayout = inputVoList
-        const orgs = orgList.value.map((item: any) => item.identityId)
+        const orgs = baseOrgList.value.map((item: any) => item.identityId)
         inputVoList.value.map((item: any, index: number) => {
             if (orgs.includes(item.identityId)) {
                 res[index] = [

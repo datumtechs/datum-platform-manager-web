@@ -336,7 +336,7 @@ const en = {
     longestComputingTime: 'Longest computing time',
     configureOutput: "Configure the algorithm output :",
     configureInput: "Configure the algorithm input :",
-    saveNotes: 'Saved to the data initiator by default',
+    saveNotes: 'Saved to the task initiator by default',
     storageForm: 'Storage Form',
     plaintext: 'Plaintext',
     model: 'Model',
@@ -359,7 +359,8 @@ const en = {
     saveSuccessHint: 'Save the workflow successfully, jump to the workflow record page',
     saveStatusErrorHint: 'The current page state is incorrect and cannot be saved, please try again',
     saveEnvInputHint: 'Please complete the configuration of the algorithm environment',
-    paramsHint: 'Better calculation results can be obtained by adjusting algorithm variables'
+    paramsHint: 'Better calculation results can be obtained by adjusting algorithm variables',
+    saveOutputHint: 'Please select the algorithm output'
   },
   role: {
     taskSponsor: 'Task sponsor',

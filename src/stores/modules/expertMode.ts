@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import { getUserOrgList } from '@/api/login'
+import { queryBaseOrgList } from '@/api/expert'
 
 export default defineStore('expertMode', {
     state: () => ({
@@ -13,6 +14,8 @@ export default defineStore('expertMode', {
         // curNodeData: {},
         workflowNodeSenderIdentityId: '',
         orgList: <any>[],
+        baseOrgList: <any>[],
+        selectLayoutOrgList: <any>[],
         // 输入
         workflowNodeInputVoList: [],
         // 输出
@@ -28,6 +31,8 @@ export default defineStore('expertMode', {
         getCurNodeIndex: state => state.curNodeIndex,
         getWorkflowNodeSender: state => state.workflowNodeSenderIdentityId,
         getUserOrgList: state => state.orgList,
+        getBaseOrgList: state => state.baseOrgList,
+        getSelectLayoutOrgList: state => state.selectLayoutOrgList,
         getAlgorithm: state => state.algorithm,
         getShowPanel: state => state.showPanel,
         getInputVoList: state => state.workflowNodeInputVoList,
@@ -35,6 +40,9 @@ export default defineStore('expertMode', {
         getIsPSIModel: state => state.isPSIModel
     },
     actions: {
+        setSelectLayoutOrgList(data: any) {
+            this.selectLayoutOrgList = data
+        },
         setDotted(flag: boolean) {
             this.showDotted = flag
         },
@@ -78,20 +86,25 @@ export default defineStore('expertMode', {
         setUserOrgList(data: any) {
             this.orgList = data
         },
+        setBaseOrgList(data: any) {
+            this.baseOrgList = data
+        },
         setOutputVoList(data: Array<any>) {
-            const output: any = []
-            this.orgList.map((item: any) => {
-                if (data.length && data.includes(item.identityId)) {
-                    // output.push({
-                    //     identityId: item.identityId,
-                    // })
-                    output.push(item.identityId)
-                }
-            })
+            // const output: any = []
+            // this.orgList.map((item: any) => {
+            //     if (data.length && data.includes(item.identityId)) {
+            //         output.push(item.identityId)
+            //     }
+            // })
             if (this.nodeList[this.curNodeIndex]) {
-                this.nodeList[this.curNodeIndex].nodeOutput.identityId = output
+                this.nodeList[this.curNodeIndex].nodeOutput.identityId = data
             }
         },
+        // setPsiOutputVoList(list: Array<any>) {
+        //     if (this.nodeList[this.curNodeIndex]) {
+        //         this.nodeList[this.curNodeIndex].nodeOutput.identityId = list
+        //     }
+        // },
         resetWorkflow() {
             this.nodeList = []
             this.workflowNodeInputVoList = []
@@ -109,7 +122,7 @@ export default defineStore('expertMode', {
         },
 
         setDisableOrg(data: Array<any>) {
-            this.orgList.map((item: any) => {
+            this.baseOrgList.map((item: any) => {
                 if (data.includes(item.identityId)) {
                     item.disabled = true
                 } else {
@@ -126,10 +139,16 @@ export default defineStore('expertMode', {
             this.showPanel = data
         },
 
-        async queryUserOrgList(includeData: any) {
-            const { code, data } = await getUserOrgList(includeData)
+        async queryUserOrgList() {
+            const { code, data } = await getUserOrgList()
             if (code === 10000) {
                 this.setUserOrgList(data)
+            }
+        },
+        async queryBaseOrgList() {
+            const { code, data } = await queryBaseOrgList()
+            if (code === 10000) {
+                this.setBaseOrgList(data)
             }
         },
 

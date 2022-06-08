@@ -336,7 +336,7 @@ const zh = {
     longestComputingTime: '最长运行时间',
     configureOutput: "请设置算法输出 :",
     configureInput: "请设置算法输入 :",
-    saveNotes: '任务输出已默认保存至数据发起方',
+    saveNotes: '任务输出已默认保存至任务发起方',
     storageForm: '存储形式',
     plaintext: '明文',
     model: '模型',
@@ -359,7 +359,8 @@ const zh = {
     saveSuccessHint: '保存工作流成功,跳转工作流记录页面',
     saveStatusErrorHint: '当前页面状态不正确, 无法保存,请重试',
     saveEnvInputHint: '请完成算法环境的配置',
-    paramsHint: '调整算法变量，可以获取更好的计算结果'
+    paramsHint: '调整算法变量，可以获取更好的计算结果',
+    saveOutputHint: '请选择算法输出方'
   },
   role: {
     taskSponsor: '任务发起方',
