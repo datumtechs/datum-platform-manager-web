@@ -38,6 +38,7 @@ export default defineStore('usersInfo', {
       localStorage.setItem(address, '')
       localStorage.setItem(token, '')
       localStorage.setItem(userName, '')
+      window.location.href = '/'
     }
   }
 })
