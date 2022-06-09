@@ -135,6 +135,10 @@ export default defineStore('expertMode', {
             this.nodeList[this.curNodeIndex].nodeInput.dataInputList[data.transferIndex] = data.params
         },
 
+        setInputListByChange(index: number) {
+            this.nodeList[this.curNodeIndex].nodeInput.dataInputList[index] = {}
+        },
+
         setShowPanel(data: boolean) {
             this.showPanel = data
         },
