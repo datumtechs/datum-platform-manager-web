@@ -34,7 +34,8 @@
                            }}</p>
                         </el-tooltip>
                         <p class="mt-32px text-[#666] leading-20px flex items-center">
-                           <img class="w-24px h-24px org-img mr-8px" :src="box.imageUrl" alt="">
+                           <img class="w-24px h-24px org-img mr-8px" :src="orgImg" alt=""
+                              @load="successLoadImg($event, box.imageUrl)">
                            <el-tooltip effect="light" :content="box.nodeName"
                               placement="bottom-start">
                               <span @click.stop="linkToNode(box)"
@@ -63,6 +64,7 @@ import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Controller, Autoplay } from 'swiper';
 import 'swiper/css'
 import { getLatestTaskList } from '@/api/home'
+import orgImg from '@/assets/images/home/org.svg'
 
 interface LatestTask {
    id: number | string,
@@ -84,6 +86,16 @@ const router = useRouter()
 const skeletonLoading = ref(true)
 
 const isSwiperLoop = computed(() => taskList.value.length > 5)
+
+// const errorLoadImg = (e: any) => {
+//    e.target.src = orgImg
+// }
+const successLoadImg = (e: any, url: string) => {
+   console.log('img success', e);
+   if (e.target.complete) {
+      e.target.src = url
+   }
+}
 
 const taskList = ref<LatestTask[]>([])
 const controlledSwiper: any = ref(null);
