@@ -1,28 +1,16 @@
 <template>
     <div class="p-30px">
         <p class="text-color-[#333] font-bold">{{ t('expert.configureOutput') }}</p>
-        <p class="mt-30px">{{ t('expert.saveNotes') }}</p>
+        <!-- <p class="mt-30px">{{ t('expert.saveNotes') }}</p> -->
         <p class="mt-30px text-color-[#333] font-bold">{{ t('role.resultConsumer') }}</p>
-        <div v-if="curNodeId === 1001">
-            <el-checkbox-group v-model="checkList"
-                :disabled="props.isSettingCompleted || props.isReadonly"
-                class="mt-10px flex flex-col" @change="handleCheckboxChange">
-                <el-checkbox v-for="(item, index) in selectList" :key="index"
-                    :label="item.identityId">
-                    <span class="checkbox-label text-main">{{ item.nodeName }}</span>
-                </el-checkbox>
-            </el-checkbox-group>
-        </div>
-
-        <div v-else>
-            <el-checkbox-group v-model="checkList"
-                :disabled="props.isSettingCompleted || props.isReadonly"
-                class="mt-10px flex flex-col" @change="handleCheckboxChange">
-                <el-checkbox v-for="(item, index) in orgList" :key="index" :label="item.identityId">
-                    <span class="checkbox-label text-main">{{ item.nodeName }}</span>
-                </el-checkbox>
-            </el-checkbox-group>
-        </div>
+        <el-checkbox-group v-model="checkList"
+            :disabled="props.isSettingCompleted || props.isReadonly" class="mt-10px flex flex-col"
+            @change="handleCheckboxChange">
+            <el-checkbox v-for="(item, index) in curNodeId === 1001 ? selectList : orgList"
+                :key="index" :label="item.identityId">
+                <span class="checkbox-label text-main">{{ item.nodeName }}</span>
+            </el-checkbox>
+        </el-checkbox-group>
         <p class="mt-30px text-color-[#333] font-bold">{{ t('expert.storageForm') }}</p>
         <p class="mt-10px">{{ t('expert.plaintext') }}</p>
     </div>
