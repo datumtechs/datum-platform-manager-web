@@ -19,7 +19,7 @@
           }}</div>
           <el-form-item prop="checkList">
             <el-checkbox-group v-model="form[i].checkList">
-              <template v-for="v in props.taskParams.algorithmId == 1001 ? props.dataOrgList : props.orgList" :key="item.identityId">
+              <template v-for="v in props.taskParams.algorithmId == 1001 ? psiListOrgList : props.orgList" :key="item.identityId">
                 <el-checkbox :label="v.identityId">{{ v.nodeName }}</el-checkbox>
                 <br />
               </template>
@@ -43,6 +43,7 @@ import NoticeText from './NoticeText.vue';
 import { setWorkflowOfWizardMode,getWorkflowSettingOfWizardMode } from '@/api/workflow'
 const router: any = useRouter()
 const route: any = useRoute()
+const psiListOrgList:any = ref([])
 const emit = defineEmits(['previous', 'next'])
 const props: any | { orgList: any } = defineProps({
   noticeText: {
@@ -82,7 +83,7 @@ const { t } = useI18n()
 //5-选择结果接收方(通用), 
 //6-选择结果接收方(训练&预测)
 const listLength = ref(props.type == 6 ? 2 : 1)
-const psiInput = ref({})
+const psiInput = ref<any[]>([])
 const formRef = ref<any>([])
 const form = reactive({
   0: { checkList: [] },
@@ -192,7 +193,15 @@ const query = (index?: number) => {
   }).then(res => {
     const { data, code } = res
     if (code === 10000) {
-      psiInput.value = { ...data }?.psiInput
+      psiInput.value = { ...data }?.psiInput?.item
+      // debugger
+      props.dataOrgList.forEach((v: any) => { 
+        psiInput.value.forEach((t: any) => {
+          if (t.identityId == v.identityId) {
+            psiListOrgList.value.push(v) 
+          } 
+        })
+      })
     }
   }).catch((e:any) => {
     console.log('接口报错', e)
