@@ -15,7 +15,7 @@
         <div class="p-30px">
           <div class="pb-20px text-color-[#333333] font-medium font-600">{{ $t('task.lowestNeed') }}</div>
           <el-form-item :label="`${$t('common.cpu')}：`" prop="cpu">
-            <el-input v-model="form[i].cpu" :placeholder="`${$t('task.pleaseEnter')}${$t('common.cpu')}`"
+            <el-input v-model="form[i].cpu" disabled :placeholder="`${$t('task.pleaseEnter')}${$t('common.cpu')}`"
               class="input-with-select">
               <template #append>
                 <div class="w-70px flex justify-center">{{ $t('common.cores') }}</div>
@@ -24,7 +24,7 @@
           </el-form-item>
 
           <el-form-item :label="`${$t('common.memory')}：`" prop="memory">
-            <el-input v-model="form[i].memory" :placeholder="`${$t('task.pleaseEnter')}${$t('common.memory')}`"
+            <el-input v-model="form[i].memory" disabled :placeholder="`${$t('task.pleaseEnter')}${$t('common.memory')}`"
               class="input-with-select">
               <template #append>
                 <el-select v-model="form[i].memorySymbol" style="width: 110px">
@@ -34,7 +34,7 @@
             </el-input>
           </el-form-item>
           <el-form-item :label="`${$t('common.bandwidth')}：`" prop="bandwidth">
-            <el-input v-model="form[i].bandwidth" :placeholder="`${$t('task.pleaseEnter')}${$t('common.bandwidth')}`"
+            <el-input v-model="form[i].bandwidth" disabled :placeholder="`${$t('task.pleaseEnter')}${$t('common.bandwidth')}`"
               class="input-with-select">
               <template #append>
                 <el-select v-model="form[i].bandwidthSymbol" style="width: 110px">
