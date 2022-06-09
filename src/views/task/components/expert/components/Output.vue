@@ -53,18 +53,10 @@ const props = defineProps({
     }
 })
 
-
-// watch(() => workflowNodeInputVoList.value, () => {
-//     if (curNodeId.value === 1001) {
-//         initData()
-//     }
-// }, { deep: true })
-
 watch(() => orgList.value, () => {
     // 回显时候的监听
     initData()
 })
-
 
 const initData = () => {
     const list: any = workflowNodeOutputVoList.value

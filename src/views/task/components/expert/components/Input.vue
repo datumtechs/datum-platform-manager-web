@@ -19,7 +19,7 @@
                     <el-option v-for="(item, index) in modelOptions" :key="index"
                         :label="item.fileName" :value="item.modelId"></el-option>
                 </el-select>
-                <el-cascader clearable v-else class="w-full" :key="modelKey" v-model="modelValue"
+                <el-cascader v-else class="w-full" :key="modelKey" v-model="modelValue"
                     :disabled="props.isSettingCompleted || props.isReadonly" size="small" :span="12"
                     :props="{
                         lazy: true,
@@ -34,7 +34,7 @@
                 {{ `${t('role.dataProvider')}-${index + 1}` }}
                 <!-- TODO 改名称为数据提供方 -->
             </p>
-            <el-cascader clearable class="w-full mt-10px" :key="cascaderKey[index]"
+            <el-cascader class="w-full mt-10px" :key="cascaderKey[index]"
                 v-model="inputValue[index]" :disabled="props.isSettingCompleted || props.isReadonly"
                 size="small" :span="12" :props="{
                     lazy: true,
