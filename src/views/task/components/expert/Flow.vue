@@ -132,6 +132,13 @@ const judgeMentParams = () => {
                 return
             } else {
                 const inputArray = nodeList.value[i].nodeInput.dataInputList
+                for (let index = 0; index < inputArray.length; index++) {
+                    if (Object.keys(inputArray[index]).length === 0) {
+                        ElMessage.error(t('expert.saveInputParamsHint'))
+                        flag = false
+                        return
+                    }
+                }
                 if (inputArray.length !== 2) {
                     ElMessage.error(t('expert.saveInputParamsHint'))
                     flag = false

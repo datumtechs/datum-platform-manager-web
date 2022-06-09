@@ -3,8 +3,8 @@
         <p class="text-color-[#333] font-bold">{{ t('expert.configureInput') }}</p>
         <div class="mt-40px">
             <p class="text-color-[#333] font-medium">{{ t('role.taskSponsor') }}</p>
-            <el-select v-model="taskSender" class="mt-10px w-full" size="small"
-                :disabled="props.isSettingCompleted || props.isReadonly" filterable
+            <el-select clearable @clear="clearSender" v-model="taskSender" class="mt-10px w-full"
+                size="small" :disabled="props.isSettingCompleted || props.isReadonly" filterable
                 :placeholder="t('task.selectSponsor')" @change="handleSenderChange">
                 <el-option v-for="item in orgList" :key="item.identityId" :label="item.nodeName"
                     :value="item.identityId"></el-option>
@@ -19,7 +19,7 @@
                     <el-option v-for="(item, index) in modelOptions" :key="index"
                         :label="item.fileName" :value="item.modelId"></el-option>
                 </el-select>
-                <el-cascader clearable v-else class="w-full" :key="modelKey" v-model="modelValue"
+                <el-cascader v-else class="w-full" :key="modelKey" v-model="modelValue"
                     :disabled="props.isSettingCompleted || props.isReadonly" size="small" :span="12"
                     :props="{
                         lazy: true,
@@ -77,6 +77,14 @@ const columnsList: any = ref([])
 
 let columnsRef: any = []
 
+
+watch(inputValue.value, (newV, oldV) => {
+    if (newV.length) {
+        const ids = newV.findIndex(item => item === null)
+    }
+
+})
+
 const props = defineProps({
     isSettingCompleted: {
         type: Boolean,
@@ -94,6 +102,10 @@ onBeforeUpdate(() => {
 
 const setItemRef = (el: any) => {
     el && columnsRef.push(el)
+}
+
+const clearSender = () => {
+    taskSender.value = ""
 }
 
 const saveToStore = (transferIndex: any) => {
@@ -119,6 +131,9 @@ const initInputPanel = () => {
 }
 
 const changeInputValue = (item: any, index: number) => {
+    if (!item) {
+        useExpertMode().setInputListByChange(index)
+    }
     if (item && item.length === 0) {
         // todo 将禁用设置成可用
         return columnsList.value[index] = []
