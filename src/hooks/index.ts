@@ -18,10 +18,12 @@ import useException from './useException'
 import useInterval from './useInterval'
 import useIsAddress from './useIsAddress'
 import usedBandwidth from './usedBandwidth'
+import useLoadImg from './useLoadImg'
 
 // const context = require.context('./', false, /\.ts$/)
 
 export {
+    useLoadImg,
     useIsAddress,
     useInterval,
     useException,

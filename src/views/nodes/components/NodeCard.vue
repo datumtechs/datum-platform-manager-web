@@ -3,7 +3,8 @@
         class="node-line mb-10px flex h-90px border-1 border-solid border-[#eee] items-center hover-line">
         <div class="w-73px index-box">{{ useTableIndex(props.index, props.page, props.size) }}</div>
         <div class="pr-30px">
-            <img class="w-36px h-36px rounded-1/2" :src="node.imageUrl" />
+            <img class="w-36px h-36px rounded-1/2" :src="orgImg"
+                @load="useLoadImg($event, node.imageUrl)" />
         </div>
         <div class="w-230px table-box">
             <p class="deep-title font-bold w-210px ellipse">{{ node.nodeName }}</p>
@@ -40,7 +41,8 @@
 </template>
 
 <script setup lang='ts'>
-import { useSize, useTableIndex,usedBandwidth } from '@/hooks'
+import orgImg from '@/assets/images/home/org.svg'
+import { useSize, useTableIndex, usedBandwidth, useLoadImg } from '@/hooks'
 const { t } = useI18n()
 const router = useRouter()
 const props = defineProps({

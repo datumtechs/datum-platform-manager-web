@@ -7,7 +7,8 @@
                     <back />
                 </el-icon>
                 <div v-if="props.imgUrl" class="mr-14px h-36px">
-                    <img class="w-40px h-40px rounded-1/2" :src="props.imgUrl" />
+                    <img class="w-40px h-40px rounded-1/2" :src="orgImg"
+                        @load="useLoadImg($event, props.imgUrl)" />
                 </div>
                 <div class="w-full font-bold text-48px text-color-[#393939] font-900 leading-58px">
                     <p class="leading-40px">
@@ -28,7 +29,9 @@
 </template>
 <script lang="ts" setup>
 import { Back } from '@element-plus/icons-vue'
-import top1bg from '@/assets/images/home/top1bg.png'
+import orgImg from '@/assets/images/home/org.svg'
+import { useLoadImg } from '@/hooks'
+
 const emit = defineEmits(['back'])
 const props = defineProps({
     bgName: {
