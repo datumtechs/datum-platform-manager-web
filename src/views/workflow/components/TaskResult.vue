@@ -7,7 +7,7 @@
                     :activekey="activekey" @change="tabsChange" />
             </template>
         </Banner>
-        <div class="com-main-data-wrap mt-63px">
+        <div class="com-main-data-wrap mt-63px main-content">
             <ResultFile v-if="activekey === 0" :tableData="tableData" />
             <TaskEvents v-if="activekey === 1" :data="eventList" />
             <ModelEvaluation v-if="activekey === 2" :modelEvaluate="modelEvaluate" />

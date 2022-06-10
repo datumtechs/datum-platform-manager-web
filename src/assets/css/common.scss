@@ -148,6 +148,7 @@ $calcHeight: calc(100vh - 70px);
   font-size: 14px;
   color: #2b60e9;
   cursor: pointer;
+  white-space: nowrap;
   &:hover {
     opacity: 0.8;
   }

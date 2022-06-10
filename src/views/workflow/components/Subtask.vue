@@ -9,7 +9,7 @@
         </p>
       </template>
     </Banner>
-    <div class="com-main-data-wrap">
+    <div class="com-main-data-wrap main-content">
       <el-breadcrumb class="mt-30px" :separator-icon="ArrowRight">
         <el-breadcrumb-item v-for="bread in breadList" :to="bread.link">{{ t(`${bread.label}`) }}
         </el-breadcrumb-item>
@@ -97,7 +97,7 @@ const query = () => {
 }
 
 const details = (row: any) => {
-  if (row.status === 0 ) return
+  if (row.status === 0) return
   router.push({
     name: 'TaskResult', params: {
       taskId: row.taskId

@@ -3,7 +3,8 @@
         <el-table-column type="index" width="80" :index="indexMethod">
             <template #header>{{ t('common.num') }}</template>
         </el-table-column>
-        <el-table-column prop="workflowName" :label="t('workflow.workflowName')" :class-name="'show-ellipsis-tooltip'" />
+        <el-table-column prop="workflowName" :label="t('workflow.workflowName')"
+            :class-name="'show-ellipsis-tooltip'" />
         <el-table-column prop="lastRunTime" :label="t('workflow.latestRunningTime')">
             <template #default="{ row }">
                 <div v-if="row.lastRunTime">
