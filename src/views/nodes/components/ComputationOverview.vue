@@ -7,7 +7,7 @@
             <BaseInfo v-if="activekey === 0" :tableData="baseData" type="task" />
             <PartyInfo v-if="activekey === 1" :taskSponsor="taskSponsor"
                 :resultConsumer="resultConsumer" :dataProvider="dataProvider"
-                :powerProvider="powerProvider" :dataDetails="dataDetails"/>
+                :powerProvider="powerProvider" :dataDetails="dataDetails" />
             <TaskEvents v-if="activekey === 2" :data="eventList" />
         </div>
     </div>
@@ -18,7 +18,7 @@ import BaseInfo from '@/components/dataComponents/BaseInfo.vue'
 import PartyInfo from '@/components/commonTable/PartyInfo.vue'
 import TaskEvents from '@/components/TaskEvents.vue'
 import { queryTaskDetails } from '@/api/task'
-import { useDuring, useFormatTime, useSize,usedBandwidth } from '@/hooks'
+import { useDuring, useFormatTime, useSize, usedBandwidth, useGlobalTaskMap } from '@/hooks'
 
 const route = useRoute()
 const taskId = computed(() => route.query.taskId)
@@ -92,7 +92,7 @@ const getTaskDetail = async () => {
         baseData[1].rProp = data.endAt ? useFormatTime(data.endAt) + '' : '00:00:00'
 
         baseData[2].lProp = useDuring(data.endAt, data.startAt)
-        baseData[2].rProp = data.status
+        baseData[2].rProp = useGlobalTaskMap(data.status)
 
         baseData[3].lProp['cpu'].value = data.requiredCore
         baseData[3].lProp['memory'].value = useSize(data.requiredMemory)
