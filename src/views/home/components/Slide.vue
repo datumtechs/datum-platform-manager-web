@@ -34,8 +34,8 @@
                            }}</p>
                         </el-tooltip>
                         <p class="mt-32px text-[#666] leading-20px flex items-center">
-                           <img class="w-24px h-24px org-img mr-8px" :src="orgImg" alt=""
-                              @load="useLoadImg($event, box.imageUrl)">
+                           <img class="w-24px h-24px org-img mr-8px" :src="node.imageUrl"
+                              @error="useLoadImg($event, orgImg)">
                            <el-tooltip effect="light" :content="box.nodeName"
                               placement="bottom-start">
                               <span @click.stop="linkToNode(box)"
