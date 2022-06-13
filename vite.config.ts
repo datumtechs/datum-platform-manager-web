@@ -96,5 +96,16 @@ export default defineConfig({
       }
     },
     cors: true
+  },
+  build: {
+    terserOptions: {
+      /**
+       * command 用来判断环境
+       */
+      compress: {
+        drop_console: true,
+        drop_debugger: true
+      }
+    }
   }
 })
