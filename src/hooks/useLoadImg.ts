@@ -1,5 +1,6 @@
 const useLoadImg = (e: any, url: string) => {
     if (e.target.complete) {
+        console.log('inside the complete');
         e.target.src = url
     }
 }
