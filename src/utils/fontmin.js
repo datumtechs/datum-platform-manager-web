@@ -1,15 +1,18 @@
 // 不直接在写死在package了，不然每次发布都要安装。 全局安装 npm install -g fontmin && npm link fontmin
 // const Fontmin = require('fontmin')
-import Fontmin from 'fontmin'
+// const fs = require('fs')
+// const path = require('path')
 
-const fs = require('fs')
-const path = require('path')
+import Fontmin from 'fontmin'
+import fs from 'fs'
+import path from 'path'
+
 
 const dir = './'
 const ext = 'ts,js,tsx,jsx,json' // svg
-const fontSrc = './src/assets/font/base/*.ttf'
-const fontDest = './src/assets/font'
-const excludeDir = ['node_modules', '.nuxt', '.git', '.svn', 'config']
+const fontSrc = './src/assets/font/origin/*.ttf'
+const fontDest = './src/assets/font/ali'
+const excludeDir = [ 'node_modules', '.nuxt', '.git', '.svn', 'config' ]
 // const includeDir = [ 'src', 'i18n',]
 const chineseData = []
 const fileExtReg = new RegExp(`\\.(${ext.replace(/,/g, '|')})$`, 'i')
@@ -26,7 +29,7 @@ function walk(dir) {
       }
       Promise.all(
         files.map(file => {
-          return new Promise((resolve, reject) => {
+          return /** @type {Promise<void>} */(new Promise((resolve, reject) => {
             const filePath = path.join(dir, file)
             fs.stat(filePath, (err, stats) => {
               if (err) throw err
@@ -39,13 +42,14 @@ function walk(dir) {
                   }
                   const arr = data.match(/[^\x00-\x7F]+/g)
                   arr && chineseData.push(...arr)
+                  // @ts-ignore
                   resolve()
                 })
               } else {
                 resolve()
               }
             })
-          })
+          }))
         })
       ).then(resolve)
     })
@@ -60,6 +64,7 @@ walk(dir).then(() => {
   text = Array.from(new Set(text.split(''))).join()
   console.log('all chars: ', text)
   fontmin.use(
+    // @ts-ignore
     Fontmin.glyph({
       text,
       trim: false
