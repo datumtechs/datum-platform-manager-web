@@ -12,7 +12,7 @@
         <!-- 0-未运行,1-运行中,2-运行成功，3-运行失败 -->
         <div id="mainStage" @dragover.stop="dragover($event)" class="mainStage"
             :class="{ showDot }">
-            <div v-for="(node, index) in nodeListWithStatus" v-waves :key="node.id"
+            <div v-for="(node, index) in nodeListWithStatus" :key="node.id"
                 class="node-box mb-100px" :class="{ 'node-arrow': index < nodeList.length - 1 }">
                 <div class="node cursor-pointer" @click="selectNode(node, index)"
                     :class="{ 'active-node': curNodeId === node.algorithmId }">
@@ -342,7 +342,7 @@ watch(nodeListWithStatus, () => {
                 text-align: center;
                 width: 141px;
                 text-overflow: ellipsis;
-                overflow: hidden;
+                // overflow: hidden;
                 white-space: nowrap;
                 font-size: 14px;
                 line-height: 20px;
