@@ -128,9 +128,9 @@ const next = async (str?: string) => {
   const params = listLength.value <= 1 ? {
     commonOutput: { ...validate[0] }
   } : {
-    trainingAndPredictionOutput: {
-      prediction: { ...validate[0] },
-      training: { ...validate[1] }
+      trainingAndPredictionOutput: {
+      training: { ...validate[0] },
+      prediction: { ...validate[1] },
     }
   }
 
@@ -151,7 +151,7 @@ const next = async (str?: string) => {
     if (code === 10000) {
       if (str == 'preserv') {
         if(route.params) {
-          router.push({name:'workflow'})
+          // router.push({name:'workflow'})
           return
         }
         router.go(-1)
@@ -166,7 +166,7 @@ const init = () => {
   const data = props.taskParams
   if (data?.calculationProcessStep?.type == 5 || data?.calculationProcessStep?.type == 6) {
     const list = data?.calculationProcessStep?.type == 5 ?
-      [data.commonOutput] : [{ ...data.trainingAndPredictionOutput.prediction }, { ...data.trainingAndPredictionOutput.training }]
+      [data.commonOutput] : [{ ...data.trainingAndPredictionOutput.training }, { ...data.trainingAndPredictionOutput.prediction }]
     list.forEach((v, i) => {
       form[i].checkList = v.identityId
     })

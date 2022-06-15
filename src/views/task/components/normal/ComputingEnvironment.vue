@@ -225,8 +225,8 @@ const submit = async (str?:any) => {
     commonResource: { ...validate[0] }
   } : {
     trainingAndPredictionResource: {
-      training: { ...validate[1] },
-      prediction: { ...validate[0] }
+      training: { ...validate[0] },
+      prediction: { ...validate[1] }
     }
   }
 
@@ -264,7 +264,7 @@ const init = () => {
   const data = props.taskParams
   if (data?.calculationProcessStep?.type == 3 || data?.calculationProcessStep?.type == 4) {
     const list = data?.calculationProcessStep?.type == 3 ?
-      [data.commonResource] : [{ ...data.trainingAndPredictionResource.prediction }, { ...data.trainingAndPredictionResource.training }]
+      [data.commonResource] : [{ ...data.trainingAndPredictionResource.training }, { ...data.trainingAndPredictionResource.prediction }]
     list.forEach((v, i) => {
       form[i].cpu = v.costCpu
       form[i].memory = v.costMem
