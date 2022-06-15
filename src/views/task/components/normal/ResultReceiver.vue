@@ -151,7 +151,7 @@ const next = async (str?: string) => {
     if (code === 10000) {
       if (str == 'preserv') {
         if(route.params) {
-          // router.push({name:'workflow'})
+          router.push({name:'workflow'})
           return
         }
         router.go(-1)
