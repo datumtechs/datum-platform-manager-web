@@ -12,45 +12,50 @@
         <!-- 0-未运行,1-运行中,2-运行成功，3-运行失败 -->
         <div id="mainStage" @dragover.stop="dragover($event)" class="mainStage"
             :class="{ showDot }">
-            <div v-for="(node, index) in nodeListWithStatus" :key="node.id"
-                class="node-box mb-100px" :class="{ 'node-arrow': index < nodeList.length - 1 }">
-                <div class="node cursor-pointer" @click="selectNode(node, index)"
-                    :class="{ 'active-node': curNodeId === node.algorithmId }">
-                    <div class="status" v-if="node.status">
-                        <el-tooltip effect="light" placement="top-start"
-                            :content="t(`${node.statusMsg}`)">
-                            <img v-if="node.status === 2"
-                                src="@/assets/images/task/finish@2x.png" />
-                            <img v-else-if="node.status === 3"
-                                src="@/assets/images/task/failed@2x.png" />
-                            <img v-else-if="node.status === 1"
-                                src="@/assets/images/task/loading@2x.gif" />
-                        </el-tooltip>
-                    </div>
-                    <div class="node-label">
-                        <el-tooltip class="box-item" effect="light" :content="node.nodeName"
-                            placement="top-start">{{ node?.nodeName }}</el-tooltip>
-                    </div>
-                    <div v-if="!props.isSettingCompleted" class="btn">
-                        <el-tooltip v-if="true" class="box-item" effect="dark"
-                            :content="t('expert.deleteNode')" placement="top-start"><img
-                                @click.stop="deleteNode(node, index)"
-                                src="@/assets/images/task/delete@2x.png" class="cursor-pointer" />
-                        </el-tooltip>
+            <div class="node-wrapper" v-waves>
+                <div v-for="(node, index) in nodeListWithStatus" :key="node.id"
+                    class="node-box mb-100px"
+                    :class="{ 'node-arrow': index < nodeList.length - 1 }">
+                    <div class="node cursor-pointer" @click="selectNode(node, index)"
+                        :class="{ 'active-node': curNodeId === node.algorithmId }">
+                        <div class="status" v-if="node.status">
+                            <el-tooltip effect="light" placement="top-start"
+                                :content="t(`${node.statusMsg}`)">
+                                <img v-if="node.status === 2"
+                                    src="@/assets/images/task/finish@2x.png" />
+                                <img v-else-if="node.status === 3"
+                                    src="@/assets/images/task/failed@2x.png" />
+                                <img v-else-if="node.status === 1"
+                                    src="@/assets/images/task/loading@2x.gif" />
+                            </el-tooltip>
+                        </div>
+                        <div class="node-label">
+                            <el-tooltip class="box-item" effect="light" :content="node.nodeName"
+                                placement="top-start">{{ node?.nodeName }}</el-tooltip>
+                        </div>
+                        <div v-if="!props.isSettingCompleted" class="btn">
+                            <el-tooltip v-if="true" class="box-item" effect="dark"
+                                :content="t('expert.deleteNode')" placement="top-start"><img
+                                    @click.stop="deleteNode(node, index)"
+                                    src="@/assets/images/task/delete@2x.png"
+                                    class="cursor-pointer" />
+                            </el-tooltip>
 
-                        <p v-else
-                            class="w-100px flex text-14px text-color-[#0052D9] leading-20px cursor-pointer">
-                            {{ t('expert.viewResult') }}</p>
+                            <p v-else
+                                class="w-100px flex text-14px text-color-[#0052D9] leading-20px cursor-pointer">
+                                {{ t('expert.viewResult') }}</p>
+                        </div>
                     </div>
-                </div>
-                <div v-if="node.alg.supportDefaultPsi">
-                    <el-checkbox :disabled="props.isSettingCompleted"
-                        @change="handleVoPsi($event, index)" v-model="node.nodeInput.isPsi"
-                        label="PSI" />
-                    <el-tooltip class="box-item" effect="light" :content="t('expert.psiHint')"
-                        placement="top-start">
-                        <img src="@/assets/images/task/quest@2x.png" class="w-14px h-14px ml-6px" />
-                    </el-tooltip>
+                    <div v-if="node.alg.supportDefaultPsi">
+                        <el-checkbox :disabled="props.isSettingCompleted"
+                            @change="handleVoPsi($event, index)" v-model="node.nodeInput.isPsi"
+                            label="PSI" />
+                        <el-tooltip class="box-item" effect="light" :content="t('expert.psiHint')"
+                            placement="top-start">
+                            <img src="@/assets/images/task/quest@2x.png"
+                                class="w-14px h-14px ml-6px" />
+                        </el-tooltip>
+                    </div>
                 </div>
             </div>
         </div>
