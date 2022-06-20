@@ -34,23 +34,35 @@ class Web3Service {
 
       this.web3 = new Web3(this.eth)
       const chainId = await this._queryChainID()
-      if (this._getDecimalChainID(chainId) !== config.chainId) await this._addNetwork()
+      // if (this._getDecimalChainID(chainId) !== config.chainId) await this._addNetwork()
 
       // 切换账号
-      this.eth.on('accountsChanged', (account: any) => {
+      this.eth.on('accountsChanged', (accounts: Array<any>) => {
+        const currentAccount = this.useUsersInfo.getAddress
+        if (accounts.length === 0) {
+          // MetaMask is locked or the user has not connected any accounts
+          console.log('Please connect to MetaMask.');
+          window.location.href = '/'
+        } else if (accounts[0] !== currentAccount) {
+          if (accounts[0] && currentAccount) {
+            window.location.href = '/'
+          }
+        }
         useUsersInfo().clean()
-        // window.location.reload()
       })
       // 切换网络
-      this.eth.on('chainChanged', () => {
+      this.eth.on('chainChanged', (chainId: string) => {
         console.log('chainChanged');
+        // window.location.reload()
       })
 
       this.eth.on('disconnect', () => {
         useUsersInfo().clean()
+        window.location.href = '/'
       })
     }
   }
+
   _queryChainID() {
     return this.eth.request({
       method: 'eth_chainId'

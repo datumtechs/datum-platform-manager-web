@@ -31,14 +31,13 @@ export default defineStore('usersInfo', {
       this.address = str
     },
 
-    clean() {
+    clean(account?: Array<any>) {
       this.address = ''
       this.token = ''
       this.userName = ''
       localStorage.setItem(address, '')
       localStorage.setItem(token, '')
       localStorage.setItem(userName, '')
-      window.location.href = '/'
     }
   }
 })

@@ -16,8 +16,6 @@ const props = defineProps({
 
 const { t } = useI18n()
 const initCharts = () => {
-    console.log(props.chartsData);
-
     const chart = new Chart({
         container: 'container',
         autoFit: true,
