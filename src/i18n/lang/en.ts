@@ -371,7 +371,7 @@ const en = {
     powerProvider: 'Power provider'
   },
   auth: {
-    tokenAuth: 'Certificate Authorization',
+    tokenAuth: 'Credential Authorization',
     nodeAuth: 'Node authorization',
     holdQuantity: "Hold Quantity",
     authQuantity: "Auth Quantity",
