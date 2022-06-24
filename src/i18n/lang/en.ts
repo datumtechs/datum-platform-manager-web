@@ -400,7 +400,8 @@ const en = {
     confirmCancelAuth: 'Confirm cancel authorization',
     authErc20Hint: 'Each time the workflow runs, the included data needs to consume a corresponding credential. Please select an authorized credential here',
     authOrgHint: 'The operation of the workflow requires the coordination of the nodes, please authorize the nodes here',
-    authWLatHint: 'The workflow will take a certain amount of computing time, and the authorized WLat will run every time'
+    authWLatHint: 'The workflow will take a certain amount of computing time, and the authorized WLat will run every time',
+    setQty: 'Set quantity',
   },
   industry: {
     bank: 'Finance (bank)',

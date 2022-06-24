@@ -30,7 +30,7 @@
             <el-table-column :label="t('auth.holdQuantity')">
                 <template #default="{ row }">
                     <p v-if="row.tokenBalance">{{
-                            useExchangeFrom(row.tokenBalance, row.tokenDecimal)
+                    useExchangeFrom(row.tokenBalance, row.tokenDecimal)
                     }}</p>
                     <p v-else>0</p>
                 </template>
@@ -38,8 +38,8 @@
             <el-table-column prop="authorizeBalance" :label="t('auth.authorizedQuantity')">
                 <template #default="{ row }">
                     <p v-if="row.authorizeBalance">{{
-                            useExchangeFrom(row.authorizeBalance,
-                                row.tokenDecimal)
+                    useExchangeFrom(row.authorizeBalance,
+                    row.tokenDecimal)
                     }}</p>
                     <p v-else>0</p>
                 </template>
@@ -48,11 +48,11 @@
                 <template #default="{ row }">
                     <el-space :size="20">
                         <span class="font-medium  leading-20px link-btn" @click="setBalance(row)">{{
-                                t('auth.plzInputAuthTokenNumber')
+                        t('auth.setQty')
                         }}</span>
                         <span v-if="props.type === 'fee'" class="font-medium  leading-20px link-btn"
                             @click="purchaseWLat(row)">{{
-                                    t('common.purchase')
+                            t('common.purchase')
                             }}</span>
                     </el-space>
                 </template>
@@ -81,7 +81,7 @@
                 <div>
                     <el-button class="w-100px" style="height: 32px;" round
                         @click="showAuthDialog = false">{{
-                                t('common.cancel')
+                        t('common.cancel')
                         }}</el-button>
                     <el-button class="w-100px" style="height: 32px;" round type="primary"
                         @click="authSubmit">{{ t('common.confirm') }}

@@ -401,7 +401,7 @@ const zh = {
     authErc20Hint: '工作流每运行一次，包含的数据需要消耗对应的一个凭证，请在此选择授权的凭证',
     authOrgHint: '工作流的运行需要节点进行统筹安排，请在此授权节点',
     authWLatHint: '工作流的运行会消耗一定的手续费，授权后的WLat将作为手续费进行扣除',
-    plzInputTokenName: '请输入凭证或数据名称'
+    setQty: '设置授权数量',
   },
   industry: {
     bank: '金融业（银行）',
