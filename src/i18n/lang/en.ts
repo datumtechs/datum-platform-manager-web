@@ -175,7 +175,7 @@ const en = {
     procedurePredict: "Predict",
     procedureAll: "Train and then predict",
     selection: "Selection",
-    selectSponsor: "Select the initiator",
+    selectSponsor: "Select task initiator",
     importFields: "Import fields",
     field: "Field",
     fieldTips: "Select and assign the fields used in your task",
