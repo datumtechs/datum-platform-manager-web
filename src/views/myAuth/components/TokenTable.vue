@@ -46,6 +46,7 @@ const queryDataList = () => {
         const { data, code } = res
         if (code === 10000) {
             dataTokenData.value = data.items
+            pageObj.total = data.total
         }
     })
 }

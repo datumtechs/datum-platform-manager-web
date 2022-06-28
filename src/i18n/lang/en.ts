@@ -175,7 +175,11 @@ const en = {
     procedurePredict: "Predict",
     procedureAll: "Train and then predict",
     selection: "Selection",
+<<<<<<< HEAD
     selectSponsor: "Select task initiator",
+=======
+    selectSponsor: "Select the initiator",
+>>>>>>> d7813cd (update some text transfer & auth token page bug)
     importFields: "Import fields",
     field: "Field",
     fieldTips: "Select and assign the fields used in your task",
@@ -381,8 +385,8 @@ const en = {
     networkIP: "Network IP",
     networkName: "Network Name",
     quantityError: "The current quantity is incorrect",
-    feeToken: "Fee Token",
-    dataToken: "Data Token",
+    feeToken: "Fee Credential",
+    dataToken: "Data Credential",
     plzInputAuthTokenNumber: 'Set authorized quantity',
     cancelTokenAuth: 'Cancel credential authorization',
     authStatus: 'Status',
