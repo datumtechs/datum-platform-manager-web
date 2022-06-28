@@ -3,41 +3,44 @@
     <div class="w-full flex items-center py-20px px-30px">
       <div class="text-color-[#666666] w-150px mr-11px font-medium">
         {{ locale == 'zh' ?
-            t('task.selectData') : `${t('task.select')} ${props.num}st ${t('task.selectData')}`
+            t('task.selectData') : `${t('auth.dataToken')} ${props.num}`
         }}
         {{ locale == 'zh' ? props.num : '' }}：</div>
       <el-cascader @change="cascaderChange" clearable :disabled="taskParams.isSettingCompleted"
-        class="h-40px rounded-20px border-1 w-395px border-solid border-color-[#EEEEEE]" :suffix-icon="CaretBottom"
-        v-model="form.metaData" :options="orgList" :props="cascaderProps" />
+        class="h-40px rounded-20px border-1 w-395px border-solid border-color-[#EEEEEE]"
+        :suffix-icon="CaretBottom" v-model="form.metaData" :options="orgList"
+        :props="cascaderProps" />
     </div>
     <div class="transfer flex h-411px min-w-600px">
       <!--左面-->
       <div class="pl-30px pt-20px flex-1 pr-5px">
         <p class="text-color-[#333333] font-medium">{{ t('task.fieldTips') }}</p>
-        <ul class="fields-main w-full h-330px overflow-auto mt-40px pr-25px" v-if="fieldsList.length">
+        <ul class="fields-main w-full h-330px overflow-auto mt-40px pr-25px"
+          v-if="fieldsList.length">
           <li v-show="item.show"
             class="cursor-pointer border-1px border-solid border-color-[#eeeeee] rounded-26px mb-10px h-40px w-full flex items-center justify-center"
-            :class="{'border-color-[#2B60E9] text-color-[#2B60E9]': activeIndex == index}"
+            :class="{ 'border-color-[#2B60E9] text-color-[#2B60E9]': activeIndex == index }"
             v-for="(item, index) in fieldsList" @click="activeIndex = index" :key="index">{{
                 item.columnName
             }}</li>
-             <!--  -->
+          <!--  -->
         </ul>
         <el-empty :description="t('common.noData')" v-else />
       </div>
       <!--中间-->
       <div class="border-l-r flex-1 pt-20px px-30px">
         <div>
-          <span class="inline-block w-100px text-color-[#333333] mb-10px font-medium">{{ t('task.setTo') }}</span>
-          <div v-waves  v-for="v in props.fieldType" :key="v.type" @click="handFields(v)"
+          <span class="inline-block w-100px text-color-[#333333] mb-10px font-medium">{{
+              t('task.setTo')
+          }}</span>
+          <div v-waves v-for="v in props.fieldType" :key="v.type" @click="handFields(v)"
             class="border-1px cursor-pointer border-solid border-color-[#eeeeee] text-color-[#999999] rounded-26px mb-10px h-40px w-full flex items-center justify-center"
-            :class="{ 'com-button': handActiveClass(v),'no-click': !handActiveClass(v)}" 
-            :style="{background: fieldsList.length? '' :'#fff',color: fieldsList.length? '' :'#000'}"
-            >
+            :class="{ 'com-button': handActiveClass(v), 'no-click': !handActiveClass(v) }"
+            :style="{ background: fieldsList.length ? '' : '#fff', color: fieldsList.length ? '' : '#000' }">
             {{ t(`${v.name}`) }}
             <el-tooltip effect="light" :content="t(v.tips)" placement="right">
-              <img class="w-20px h-20px ml-10px cursor-pointer" :src="handActiveClass(v)? questWhite:questbg"
-                alt="">
+              <img class="w-20px h-20px ml-10px cursor-pointer"
+                :src="handActiveClass(v) ? questWhite : questbg" alt="">
               <template #content>
                 <slot name="content"></slot>
               </template>
@@ -52,7 +55,7 @@
               t('task.idColumn')
           }}</span>
           <div
-           :style="{backgroundColor:form.idColumn?.columnName? 'rgba(238, 238, 238, .2)':'#fff'}"
+            :style="{ backgroundColor: form.idColumn?.columnName ? 'rgba(238, 238, 238, .2)' : '#fff' }"
             class="relative border-1px cursor-pointer border-solid border-color-[#eeeeee] rounded-26px mb-10px h-40px w-full flex items-center justify-center">
             {{ form.idColumn?.columnName }}
             <el-icon v-if="form.idColumn?.columnName" @click="removeFormParams('idColumn')"
@@ -66,7 +69,7 @@
               t('task.label')
           }}</span>
           <div
-           :style="{backgroundColor:form.label?.columnName? 'rgba(238, 238, 238, .2)':'#fff'}"
+            :style="{ backgroundColor: form.label?.columnName ? 'rgba(238, 238, 238, .2)' : '#fff' }"
             class="relative border-1px cursor-pointer border-solid border-color-[#eeeeee] rounded-26px mb-10px h-40px w-full flex items-center justify-center">
             {{ form.label?.columnName }}
             <!---->
@@ -82,8 +85,8 @@
           }}</span>
           <ul
             class="relative fields-main w-full h-200px overflow-auto px-10px pt-10px border-1px border-solid border-color-[#eeeeee]">
-            <li 
-            :style="{backgroundColor:form.label?.columnName? 'rgba(238, 238, 238, .2)':'#fff'}"
+            <li
+              :style="{ backgroundColor: form.label?.columnName ? 'rgba(238, 238, 238, .2)' : '#fff' }"
               class="cursor-pointer border-1px border-solid border-color-[#eeeeee] rounded-26px mb-10px h-40px w-full flex items-center justify-center"
               v-for="(item, index) in form.feature" :key="index">
               {{ item.columnName }}
@@ -198,11 +201,11 @@ const cascaderProps = ref({
   }
 })
 
-const handActiveClass=(v:any)=>{
-  if(v.type == 'idColumn' && !form.idColumn?.columnName)return true
-  if(v.type == 'label' && !form.label?.columnName)return true
-  if(v.type == 'feature' && !fieldsList.value.length) return true
-  if(v.type == 'feature' && fieldsList.value.length &&  (nextActiveIndex.value?.index > -1)) return true
+const handActiveClass = (v: any) => {
+  if (v.type == 'idColumn' && !form.idColumn?.columnName) return true
+  if (v.type == 'label' && !form.label?.columnName) return true
+  if (v.type == 'feature' && !fieldsList.value.length) return true
+  if (v.type == 'feature' && fieldsList.value.length && (nextActiveIndex.value?.index > -1)) return true
   // if(v.type == 'feature') return true
   return false
 }
@@ -256,7 +259,7 @@ const initParams = () => {
         form.feature.push(item)
       }
     }
-    activeIndex.value = fieldsList.value.findIndex((v:any)=>v.show)
+    activeIndex.value = fieldsList.value.findIndex((v: any) => v.show)
   })
   //@ts-ignore
   fieldTypeActive.value = props.fieldType[props.fieldType.length - 1].type
@@ -274,31 +277,31 @@ const clearableCascader = () => {
 const handFields = (v: any) => {
   if (!activeIndex.value && activeIndex.value !== 0) return
   if (!fieldsList.value[activeIndex.value].show) return
-    switch (v.type) {
-      case 'idColumn':
-        if (!form.label?.columnName) {
-          fieldTypeActive.value = 'label'
-        } else {
-          fieldTypeActive.value = 'feature'
-        }
-        if (form.idColumn.columnName) return
-        form.idColumn = fieldsList.value[activeIndex.value]; break;
-      case 'label':
-        if (form.label?.columnName) {
-          fieldTypeActive.value = 'feature'
-          return
-        }
+  switch (v.type) {
+    case 'idColumn':
+      if (!form.label?.columnName) {
+        fieldTypeActive.value = 'label'
+      } else {
         fieldTypeActive.value = 'feature'
-        form.label = fieldsList.value[activeIndex.value]; break;
-      case 'feature':
-        //@ts-ignore
-        form.feature?.push(fieldsList.value[activeIndex.value]); break;
-      default:
-        console.log("错误")
-        break;
-    }
-    fieldsList.value[activeIndex.value].show = false
-    activeIndex.value = nextActiveIndex.value.index || 0
+      }
+      if (form.idColumn.columnName) return
+      form.idColumn = fieldsList.value[activeIndex.value]; break;
+    case 'label':
+      if (form.label?.columnName) {
+        fieldTypeActive.value = 'feature'
+        return
+      }
+      fieldTypeActive.value = 'feature'
+      form.label = fieldsList.value[activeIndex.value]; break;
+    case 'feature':
+      //@ts-ignore
+      form.feature?.push(fieldsList.value[activeIndex.value]); break;
+    default:
+      console.log("错误")
+      break;
+  }
+  fieldsList.value[activeIndex.value].show = false
+  activeIndex.value = nextActiveIndex.value.index || 0
 }
 
 const handfeatureList = (item: any, index: number) => {
@@ -336,11 +339,12 @@ const removeFormParams = (name: string) => {
   border-right: 1px solid #eeeeee;
 }
 
-.no-click{
+.no-click {
   cursor: no-drop;
   background: rgba(238, 238, 238, .5);
 }
-.com-button{
+
+.com-button {
   color: #fff;
 }
 </style>

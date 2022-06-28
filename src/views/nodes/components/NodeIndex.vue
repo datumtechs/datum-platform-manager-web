@@ -3,7 +3,7 @@
         <Banner :bg-name="'network'">
             <template #briefInfo>
                 <p v-if="locale === 'zh'">全网共 {{ total }} 个可参与隐私计算任务的节点</p>
-                <p v-else>{{ total }} participant nodes in the privacy computing network</p>
+                <p v-else>{{ total }} available nodes in the privacy computing network</p>
             </template>
         </Banner>
         <div v-loading="nodeLoading"

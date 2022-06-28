@@ -34,11 +34,11 @@
                 </template>
             </el-table-column>
         </el-table>
-        <div class="flex my-50px justify-center">
+        <!-- <div class="flex my-50px justify-center">
             <el-pagination background v-model:current-page="pageObj.current"
                 v-model:page-size="pageObj.size" layout="prev, pager, next"
                 :total="pageObj.total" />
-        </div>
+        </div> -->
         <el-dialog v-model="showDialog" :width="480" @close="showDialog = false"
             :destroy-on-close="true">
             <template #title>

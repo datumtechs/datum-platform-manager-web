@@ -142,7 +142,7 @@ onMounted(() => {
         <Banner :bg-name="'market'">
             <template #briefInfo>
                 <p v-if="locale === 'zh'">全网共 {{ pageParams.total }} 个可参与隐私计算的有效数据</p>
-                <p v-else>{{ pageParams.total }} participant data in the privacy computing network
+                <p v-else>{{ pageParams.total }} data available in the privacy computing network
                 </p>
             </template>
         </Banner>
