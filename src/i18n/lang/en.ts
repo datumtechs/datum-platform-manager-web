@@ -175,11 +175,7 @@ const en = {
     procedurePredict: "Predict",
     procedureAll: "Train and then predict",
     selection: "Selection",
-<<<<<<< HEAD
     selectSponsor: "Select task initiator",
-=======
-    selectSponsor: "Select the initiator",
->>>>>>> d7813cd (update some text transfer & auth token page bug)
     importFields: "Import fields",
     field: "Field",
     fieldTips: "Select and assign the fields used in your task",
