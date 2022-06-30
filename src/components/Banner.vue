@@ -8,10 +8,10 @@
           <el-icon :size="40" v-if="backShow" class="cursor-pointer mr-20px" @click="emit('back')">
             <back />
           </el-icon>
-          <div v-if="showRouter">
+          <div v-if="showRouter" class="font-backup font-600">
             {{ t(`${$route.meta.label}`) }}
           </div>
-          <div v-else class="detail-name">{{ detailName }}</div>
+          <div v-else class="detail-name font-backup font-600">{{ detailName }}</div>
         </div>
         <div class="text-14px font-medium font-400 text-color-[#999999] leading-20px"
           :class="$slots.select ? 'mt-8px' : 'mt-14px'">
