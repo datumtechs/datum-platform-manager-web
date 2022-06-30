@@ -7,23 +7,20 @@
     <div class="flex items-center text-14px">
       <div class="mr-15px text-color-[#666666] font-medium w-135px">{{ $t('task.selectSponsor') }} ：
       </div>
-      <el-select v-model="identityId" :suffix-icon="CaretBottom"
-        :placeholder="$t('task.selectSponsor')" :disabled="taskParams.isSettingCompleted"
-        style="flex:0 0 440px" popper-class="max-width"
+      <el-select v-model="identityId" :suffix-icon="CaretBottom" :placeholder="$t('task.selectSponsor')"
+        :disabled="taskParams.isSettingCompleted" style="flex:0 0 440px" popper-class="max-width"
         class="h-40px rounded-20px border-1 basis-1/2 border-solid border-color-[#EEEEEE]">
         <el-option v-for="(v) in props.orgList" :label="v.nodeName" :value="v.identityId">
         </el-option>
       </el-select>
     </div>
-    <TaskParamsTransfer :fieldType="[props.fieldType[0]]" :sellectionAlgPsi="true"
-      :disabledData="psiInputTwo?.metaData" :taskParams="props.taskParams" :key="'input'"
-      @update:params="psiInputOne = $event" :params="psiInputParams.one" :num="1"
-      :orgList="props.dataOrgList" />
+    <TaskParamsTransfer :fieldType="[props.fieldType[0]]" :sellectionAlgPsi="true" :disabledData="psiInputTwo?.metaData"
+      :taskParams="props.taskParams" :key="'input'" @update:params="psiInputOne = $event" :params="psiInputParams.one"
+      :num="1" :orgList="props.dataOrgList" />
     <div class="h-30px"></div>
-    <TaskParamsTransfer :fieldType="[props.fieldType[0]]" :sellectionAlgPsi="true"
-      :disabledData="psiInputOne?.metaData" :taskParams="props.taskParams" :key="'output'"
-      @update:params="psiInputTwo = $event" :params="psiInputParams.two" :num="2"
-      :orgList="props.dataOrgList" />
+    <TaskParamsTransfer :fieldType="[props.fieldType[0]]" :sellectionAlgPsi="true" :disabledData="psiInputOne?.metaData"
+      :taskParams="props.taskParams" :key="'output'" @update:params="psiInputTwo = $event" :params="psiInputParams.two"
+      :num="2" :orgList="props.dataOrgList" />
     <div class="flex items-center pt-20px" v-if="!views">
       <el-button v-waves round class="h-50px previous" @click="previous">{{ $t('common.previous') }}
       </el-button>
@@ -153,11 +150,12 @@ const submit = async (str?: string | any) => {
     const { code } = res
     if (code === 10000) {
       if (str == 'preserv') {
-        if (route.params) {
-          router.push({ name: 'workflow' })
+        console.log(route.params);
+        if (route.params?.workflowId) {
+          router.go(-1)
           return
         }
-        router.go(-1)
+        router.push({ name: 'workflow' })
         return
       }
       next()
@@ -202,6 +200,6 @@ watch(() => props.taskParams, () => {
 
 .previous {
   border-radius: 25px !important;
-  padding: 20px 40px !important;
+  padding: 23px 40px !important;
 }
 </style>

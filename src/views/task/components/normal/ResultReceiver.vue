@@ -4,9 +4,10 @@
       <div class="mr-20px text-color-[#666666]">{{ $t('task.selection') }} ：</div>
       <NoticeText :noticeText="props.noticeText" />
     </div>
-    <div class="my-30px w-full pl-24px text-color-[#0052D9] flex flex items-center h-36px bg-color-[#EEF4FF] rounded-[4px] text-14px">
-        <img class="w-20px h-20px mr-8px" src="@/assets/images/auth/sigh.png"/>
-        <span>{{t('task.resultReceiverTips')}}</span>
+    <div
+      class="my-30px w-full pl-24px text-color-[#0052D9] flex flex items-center h-36px bg-color-[#EEF4FF] rounded-[4px] text-14px">
+      <img class="w-20px h-20px mr-8px" src="@/assets/images/auth/sigh.png" />
+      <span>{{ t('task.resultReceiverTips') }}</span>
     </div>
     <div class="flex receivers justify-between">
       <el-form v-for="(item, i) in listLength" :rules="rules[i]" :ref="(e: any) => formRef[i] = e" :model="form[i]"
@@ -19,7 +20,8 @@
           }}</div>
           <el-form-item prop="checkList">
             <el-checkbox-group v-model="form[i].checkList">
-              <template v-for="v in props.taskParams.algorithmId == 1001 ? psiListOrgList : props.orgList" :key="item.identityId">
+              <template v-for="v in props.taskParams.algorithmId == 1001 ? psiListOrgList : props.orgList"
+                :key="item.identityId">
                 <el-checkbox :label="v.identityId">{{ v.nodeName }}</el-checkbox>
                 <br />
               </template>
@@ -30,7 +32,8 @@
     </div>
     <div class="flex items-center pt-20px relative" v-if="!views">
       <el-button v-waves round class="h-50px previous" @click="previous">{{ $t('common.previous') }}</el-button>
-      <el-button v-waves round class="h-50px previous ml-20px" @click="preserv">{{ $t('common.saveAndReturn') }}</el-button>
+      <el-button v-waves round class="h-50px previous ml-20px" @click="preserv">{{ $t('common.saveAndReturn') }}
+      </el-button>
       <!-- <el-button round @click="next" class="h-50px absolute right-0px com-button previous ml-20px">{{
           $t('task.startTask')
       }}</el-button>
@@ -40,15 +43,15 @@
 </template>
 <script lang="ts" setup>
 import NoticeText from './NoticeText.vue';
-import { setWorkflowOfWizardMode,getWorkflowSettingOfWizardMode } from '@/api/workflow'
+import { setWorkflowOfWizardMode, getWorkflowSettingOfWizardMode } from '@/api/workflow'
 const router: any = useRouter()
 const route: any = useRoute()
-const psiListOrgList:any = ref([])
+const psiListOrgList: any = ref([])
 const emit = defineEmits(['previous', 'next'])
 const props: any | { orgList: any } = defineProps({
   noticeText: {
     type: Object,
-    default: () => ({}) 
+    default: () => ({})
   },
   step: {
     type: Number,
@@ -74,7 +77,7 @@ const props: any | { orgList: any } = defineProps({
     type: Object,
     default: () => ({})
   },
-   views: {
+  views: {
     type: Boolean,
     default: false
   }
@@ -128,7 +131,7 @@ const next = async (str?: string) => {
   const params = listLength.value <= 1 ? {
     commonOutput: { ...validate[0] }
   } : {
-      trainingAndPredictionOutput: {
+    trainingAndPredictionOutput: {
       training: { ...validate[0] },
       prediction: { ...validate[1] },
     }
@@ -150,11 +153,13 @@ const next = async (str?: string) => {
     const { data, code } = res
     if (code === 10000) {
       if (str == 'preserv') {
-        if(route.params) {
-          router.push({name:'workflow'})
+        console.log(route.params);
+        if (route.params?.workflowId) {
+          router.go(-1)
           return
         }
-        router.go(-1)
+        router.push({ name: 'workflow' })
+        return
         // emit('next')
       }
     }
@@ -185,25 +190,25 @@ watch(() => props.taskParams, () => {
 
 
 const query = (index?: number) => {
-  if(props.taskParams.calculationProcessId !== 4) return
+  if (props.taskParams.calculationProcessId !== 4) return
   getWorkflowSettingOfWizardMode({
-    workflowId:  props.taskParams.workflowId,
-    workflowVersion:  props.taskParams.workflowVersion,
+    workflowId: props.taskParams.workflowId,
+    workflowVersion: props.taskParams.workflowVersion,
     step: 1
   }).then(res => {
     const { data, code } = res
     if (code === 10000) {
       psiInput.value = { ...data }?.psiInput?.item
       // debugger
-      props.dataOrgList.forEach((v: any) => { 
+      props.dataOrgList.forEach((v: any) => {
         psiInput.value.forEach((t: any) => {
           if (t.identityId == v.identityId) {
-            psiListOrgList.value.push(v) 
-          } 
+            psiListOrgList.value.push(v)
+          }
         })
       })
     }
-  }).catch((e:any) => {
+  }).catch((e: any) => {
     console.log('接口报错', e)
   })
 }
@@ -226,6 +231,6 @@ const query = (index?: number) => {
 
 .previous {
   border-radius: 25px !important;
-  padding: 20px 40px !important;
+  padding: 23px 40px !important;
 }
 </style>
