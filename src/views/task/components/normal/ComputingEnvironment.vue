@@ -34,8 +34,8 @@
             </el-input>
           </el-form-item>
           <el-form-item :label="`${$t('common.bandwidth')}：`" prop="bandwidth">
-            <el-input v-model="form[i].bandwidth" disabled :placeholder="`${$t('task.pleaseEnter')}${$t('common.bandwidth')}`"
-              class="input-with-select">
+            <el-input v-model="form[i].bandwidth" disabled
+              :placeholder="`${$t('task.pleaseEnter')}${$t('common.bandwidth')}`" class="input-with-select">
               <template #append>
                 <el-select v-model="form[i].bandwidthSymbol" style="width: 110px">
                   <el-option v-for="item in newCompanyList" :label="`${item}ps`" :key="item" :value="item"></el-option>
@@ -61,7 +61,8 @@
     </div>
     <div class="flex items-center pt-20px" v-if="!views">
       <el-button v-waves round class="h-50px previous" @click="previous">{{ $t('common.previous') }}</el-button>
-      <el-button v-waves round class="h-50px previous ml-20px" @click="preserv">{{ $t('common.saveAndReturn') }}</el-button>
+      <el-button v-waves round class="h-50px previous ml-20px" @click="preserv">{{ $t('common.saveAndReturn') }}
+      </el-button>
       <NextButton @clicks="submit" />
     </div>
   </div>
@@ -95,7 +96,7 @@ const props = defineProps({
     type: Object,
     default: () => ({})
   },
-    views: {
+  views: {
     type: Boolean,
     default: false
   }
@@ -116,43 +117,43 @@ const paramsItem = {
   timeSymbol: 'minute'
 }
 const rulesItem = {
-  cpu: [   
-      {
-        validator: (rule: any, value: any, callback: any) => {
-          if(!(value && /^\+?[1-9][0-9]*$/.test(String(value)))) {
-            return callback(t('common.enterNumber'))
-          }
-          return callback()
-        },
+  cpu: [
+    {
+      validator: (rule: any, value: any, callback: any) => {
+        if (!(value && /^\+?[1-9][0-9]*$/.test(String(value)))) {
+          return callback(t('common.enterNumber'))
+        }
+        return callback()
       },
-      { required: true, message: `${t('task.pleaseEnter')}${t('task.taskName')}` }
-    ],
+    },
+    { required: true, message: `${t('task.pleaseEnter')}${t('task.taskName')}` }
+  ],
   memory: [
-      {
-        validator: (rule: any, value: any, callback: any) => {
-          if(!(value && /^\+?[1-9][0-9]*$/.test(String(value)))) {
-            return callback(t('common.enterNumber'))
-          }
-          return callback()
-        },
+    {
+      validator: (rule: any, value: any, callback: any) => {
+        if (!(value && /^\+?[1-9][0-9]*$/.test(String(value)))) {
+          return callback(t('common.enterNumber'))
+        }
+        return callback()
       },
-      { required: true, message: t('task.stepOneSelectComputingTitle') }
-    ],
+    },
+    { required: true, message: t('task.stepOneSelectComputingTitle') }
+  ],
   bandwidth: [
-      {
-        validator: (rule: any, value: any, callback: any) => {
-          if(!(value && /^\+?[1-9][0-9]*$/.test(String(value)))) {
-            return callback(t('common.enterNumber'))
-          }
-          return callback()
-        },
+    {
+      validator: (rule: any, value: any, callback: any) => {
+        if (!(value && /^\+?[1-9][0-9]*$/.test(String(value)))) {
+          return callback(t('common.enterNumber'))
+        }
+        return callback()
       },
-      { required: true, message: t('task.stepOneSelectAlgorithmTitle') }
-    ],
+    },
+    { required: true, message: t('task.stepOneSelectAlgorithmTitle') }
+  ],
   time: [
     {
       validator: (rule: any, value: any, callback: any) => {
-        if(!(value && /^\+?[1-9][0-9]*$/.test(String(value)))) {
+        if (!(value && /^\+?[1-9][0-9]*$/.test(String(value)))) {
           return callback(t('common.enterNumber'))
         }
         return callback()
@@ -196,7 +197,7 @@ const preserv = () => {
 }
 
 
-const submit = async (str?:any) => {  
+const submit = async (str?: any) => {
   //@ts-ignore
   const validate: any[] = new Array(listLength.value).fill(false)
   // const data: any[] = []
@@ -246,11 +247,12 @@ const submit = async (str?:any) => {
     const { data, code } = res
     if (code === 10000) {
       if (str == 'preserv') {
-        if(route.params) {
-          router.push({name:'workflow'})
+        console.log(route.params);
+        if (route.params?.workflowId) {
+          router.go(-1)
           return
         }
-        router.go(-1)
+        router.push({ name: 'workflow' })
         return
       }
       emit('next')
@@ -285,43 +287,43 @@ watch(() => props.taskParams, () => {
 
 </script>
 <style lang="scss" scoped>
-.environment  {
-  :deep(.el-form){
-   .el-form-item .el-form-item__label {
-    font-size: 14px;
-    font-weight: 400;
-    font-family: DINPro-Medium, Ali-Medium;
-    color: #333333;
-    line-height: 20px;
-  }
-
-  .el-form-item .el-input--default {
-    height: 40px;
-    border-radius: 20px;
-    border: 1px solid #eeeeee;
-
-    .el-input__inner {
-      border: none;
-      height: 100%;
-      border-radius: 20px 0 0 20px;
-      text-indent: 20px;
+.environment {
+  :deep(.el-form) {
+    .el-form-item .el-form-item__label {
+      font-size: 14px;
+      font-weight: 400;
+      font-family: DINPro-Medium, Ali-Medium;
+      color: #333333;
+      line-height: 20px;
     }
 
-    .el-input-group__append {
-      background: #f7f8f9;
-      border-radius: 0 20px 20px 0;
-      border: none;
+    .el-form-item .el-input--default {
+      height: 40px;
+      border-radius: 20px;
+      border: 1px solid #eeeeee;
 
-      .el-input--default {
+      .el-input__inner {
         border: none;
+        height: 100%;
+        border-radius: 20px 0 0 20px;
+        text-indent: 20px;
+      }
+
+      .el-input-group__append {
+        background: #f7f8f9;
+        border-radius: 0 20px 20px 0;
+        border: none;
+
+        .el-input--default {
+          border: none;
+        }
       }
     }
-  }
   }
 }
 
 .previous {
   border-radius: 25px !important;
-  padding: 0 40px !important;
+  padding: 23px 40px !important;
 }
 </style>
