@@ -27,7 +27,8 @@ body {
   min-height: 100vh;
   color: var(--color-text);
   background: var(--color-background);
-  font-family: DINPro-Regular, Ali-Regular, Microsoft YaHei, Helvetica, sans-serif;
+  font-family: DINPro-Regular, Ali-Regular, "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB",
+    "Heiti SC", "Microsoft YaHei", sans-serif;
   font-size: 14px;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -44,7 +45,7 @@ li {
 }
 
 a {
-  color: #2B60E9 ;
+  color: #2b60e9;
   text-decoration: none;
 }
 
@@ -62,6 +63,11 @@ a {
 
 .font-medium {
   font-family: DINPro-Medium, Ali-Medium;
+}
+
+.font-backup {
+  font-family: "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei",
+    sans-serif;
 }
 
 #app {
