@@ -4,6 +4,7 @@ import vue from '@vitejs/plugin-vue'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+import { visualizer } from 'rollup-plugin-visualizer';
 import WindiCSS from 'vite-plugin-windicss'
 import ElementPlus from 'unplugin-element-plus/vite'
 import path from 'path'
@@ -15,6 +16,7 @@ export default defineConfig(({ command }) => {
   return {
     plugins: [
       vue(),
+      visualizer(),
       ElementPlus({
         // importStyle: 'sass',
         useSource: true,
@@ -31,9 +33,6 @@ export default defineConfig(({ command }) => {
           'vue',
           'vue-router',
           'vue-i18n',
-          // {
-          //   'element-plus/es': ['ElMessageBox', 'ElMessage', 'ElLoading'],
-          // },
           {
             '@vueuse/core': [
               // @vueuse
@@ -105,8 +104,19 @@ export default defineConfig(({ command }) => {
           drop_console: command !== 'serve',
           drop_debugger: command !== 'serve',
         }
+      },
+      rollupOptions: {
+        output: {
+          // manualChunks 配置
+          manualChunks: {
+            'web3': ['web3'],
+            'vue': ['vue', 'vue-router'],
+            'i18n': ['vue-i18n'],
+            'pinia': ['pinia'],
+            'element': ['element-plus'],
+          }
+        }
       }
     }
   }
-
 })

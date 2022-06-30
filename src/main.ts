@@ -5,7 +5,6 @@ import i18n from './i18n'
 import store from './stores'
 import {waves,tableTooltip} from '@/directives'
 
-// import 'element-plus/dist/index.css'
 import '@/assets/css/base.scss';
 import '@/assets/font/font.scss'
 import '@/assets/css/waves.css'
