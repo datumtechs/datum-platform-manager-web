@@ -109,7 +109,7 @@ const zh = {
     ranking: '排名',
     viewAllNode: '查看所有节点',
     viewAllToken: '查看所有凭证',
-    dataUseTop10: '数据凭证任务使用TOP10',
+    dataUseTop10: '数据使用TOP10',
     modelUseTop10: '模型凭证任务使用TOP10',
     explorer: '浏览器',
     viewAllComputingTask: '查看所有计算任务',

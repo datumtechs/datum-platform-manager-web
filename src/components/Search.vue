@@ -130,33 +130,48 @@ onMounted(() => {
     border: 1px solid #e9e9e9;
     align-items: center;
 
-    .el-input__inner {
-      height: 100%;
-      padding-left: 53px;
-      padding-right: 46px;
-      border: none;
-      text-indent: 5px;
-    }
+    .el-input__wrapper {
+      width: 100%;
+      height: 40px;
+      box-shadow: none;
 
-    .el-input__prefix {
-      left: 22px;
-      font-size: 18px;
-    }
+      &.is-focus {
+        box-shadow: none;
+      }
 
-    .el-input__suffix {
-      right: 23px;
+      .el-input__inner {
+        height: 100%;
+        border: none;
+        text-indent: 25px;
+        padding-left: 9px;
+        text-indent: 5px;
+      }
 
-      .el-input__suffix-inner {
-        align-items: center;
-        position: relative;
+      .el-input__prefix {
+        padding-left: 14px;
+        font-size: 18px;
+      }
 
-        .el-icon {
-          position: absolute;
-          right: 40px;
-          font-size: 20px;
+      .el-input__suffix {
+        padding-right: 9px;
+      }
+
+      .el-input__suffix {
+        right: 23px;
+
+        .el-input__suffix-inner {
+          align-items: center;
+          position: relative;
+
+          .el-icon {
+            position: absolute;
+            right: 40px;
+            font-size: 20px;
+          }
         }
       }
     }
+
   }
 }
 </style>

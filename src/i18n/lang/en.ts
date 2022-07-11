@@ -109,7 +109,7 @@ const en = {
     ranking: 'Ranking',
     viewAllNode: 'View All Nodes',
     viewAllToken: 'View All Tokens',
-    dataUseTop10: 'Data Credential Use TOP10',
+    dataUseTop10: 'Data Use TOP10',
     modelUseTop10: 'Model Credential Use TOP10',
     explorer: 'Explorer',
     viewAllComputingTask: 'View all computing tasks',
