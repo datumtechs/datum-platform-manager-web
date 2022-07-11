@@ -87,7 +87,7 @@ const linkToDetail = () => {
 .title {
     font-size: 14px;
     color: #999;
-    line-height: 12px;
+    line-height: 16px;
 }
 
 .text {

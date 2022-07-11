@@ -241,6 +241,7 @@ const zh = {
     priceAsc: '价格升序',
     priceDesc: '价格降序',
     credentialPriceTips: "展示价格仅供参考，真实价格请参考交易所",
+    useScene: "使用场景"
   },
   workflow: {
     workflowName: "工作流名称",
@@ -289,7 +290,8 @@ const zh = {
     privacyStatistics: "隐私统计分析",
     privacyAIComputing: "隐私AI计算",
     privacyComputing: "隐私计算",
-    nonPrivacyComputing: "非隐私计算"
+    nonPrivacyComputing: "非隐私计算",
+    applicationScenarios: "应用场景"
   },
   computeTask: {
     taskId: "任务 ID",

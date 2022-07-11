@@ -241,6 +241,7 @@ const en = {
     priceAsc: 'Price ascending ',
     priceDesc: 'Price descending',
     credentialPriceTips: "The price is for reference only. Please refer to the exchange for the real price",
+    useScene: "Use Scenes"
   },
   workflow: {
     workflowName: "Workflow Name",
@@ -289,7 +290,8 @@ const en = {
     privacyStatistics: "Privacy Statistics",
     privacyAIComputing: "Privacy AI Computing",
     privacyComputing: "Privacy Computing",
-    nonPrivacyComputing: "Non-Privacy Computing"
+    nonPrivacyComputing: "Non-Privacy Computing",
+    applicationScenarios: "Application Scenarios"
   },
   computeTask: {
     taskId: "Task ID",

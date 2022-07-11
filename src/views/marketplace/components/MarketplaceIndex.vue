@@ -108,22 +108,24 @@ const queryTableData = async () => {
     marketLoading.value = true
     keepAlive.setCurrent(pageParams.current, route.path)
     keepAlive.setSearchParams(pageParams, route.path)
-    const { code, data } = await queryDataList({
-        current: pageParams.current,
-        size: pageParams.size,
-        fileType: pageParams.fileType,
-        industry: pageParams.industry,
-        keyword: pageParams.keyword,
-        maxSize: pageParams.maxSize,
-        minSize: pageParams.minSize,
-        orderBy: pageParams.orderBy,
-    }).catch(err => {
+    try {
+        const { code, data } = await queryDataList({
+            current: pageParams.current,
+            size: pageParams.size,
+            fileType: pageParams.fileType,
+            industry: pageParams.industry,
+            keyword: pageParams.keyword,
+            maxSize: pageParams.maxSize,
+            minSize: pageParams.minSize,
+            orderBy: pageParams.orderBy,
+        })
         marketLoading.value = false
-    })
-    marketLoading.value = false
-    if (code === 10000) {
-        tableData.value = data.items
-        pageParams.total = data.total
+        if (code === 10000) {
+            tableData.value = data.items
+            pageParams.total = data.total
+        }
+    } catch (error) {
+        marketLoading.value = false
     }
 }
 
@@ -156,9 +158,13 @@ onMounted(() => {
                     :label="t('myData.dataName')" />
                 <el-table-column :class-name="'show-ellipsis-tooltip'" prop="nodeName"
                     :label="t('myData.dataProvider')" />
-                <el-table-column :class-name="'show-ellipsis-tooltip'" prop="tokenName"
-                    :label="t('myData.credentialName')" />
-                <el-table-column prop="tokenPrice" :label="t('common.credentialPrice')">
+                <el-table-column :class-name="'show-ellipsis-tooltip'" prop="dataSize"
+                    :label="t('myData.dataSize')" />
+                <el-table-column :class-name="'show-ellipsis-tooltip'" prop="industryData"
+                    :label="t('myData.industryData')" />
+                <el-table-column :class-name="'show-ellipsis-tooltip'" prop="useScene"
+                    :label="t('myData.useScene')" />
+                <!-- <el-table-column prop="tokenPrice" :label="t('common.credentialPrice')">
                     <template #default="{ row }">
                         <div>{{ row.tokenPrice }} LAT</div>
                     </template>
@@ -174,7 +180,7 @@ onMounted(() => {
                             </el-tooltip>
                         </div>
                     </template>
-                </el-table-column>
+                </el-table-column> -->
                 <el-table-column :label="t('common.actions')" width="200">
                     <template #default="{ row }">
                         <el-space :size="20">
