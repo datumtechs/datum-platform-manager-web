@@ -61,6 +61,24 @@
         cursor: pointer;
     }
 }
+.tokenDialog {
+    .el-dialog__header {
+        height: 57px;
+        color: #333;
+        font-weight: 500;
+        font-size: 14px;
+        border-bottom: 1px solid #eee !important;
+        margin-right: 0;
+        line-height: 20px;
+        display: flex;
+        align-items: center;
+        padding: 0 20px;
+    }
+
+    .el-dialog__body {
+        padding: 20px;
+    }
+}
 
 .el-popper {
     max-width: 380px;

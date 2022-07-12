@@ -52,7 +52,12 @@ const en = {
     reset: "Reset",
     computeTimes: "Compute times",
     create: 'Create',
-    enterNumber: "please enter a positive integer"
+    enterNumber: "please enter a positive integer",
+    attributeCredential: "Attribute Credential",
+    noAttributeCredential: "No Attribute Credential",
+    credentialId: "Credential ID",
+    period: "Period",
+    buyCredential: "Purchase Credential"
   },
   menu: {
     home: 'Home',
@@ -72,8 +77,9 @@ const en = {
     models: "My Models",
     computeTask: "Computing Tasks",
     myAuthorization: 'My Authorization',
-    workflowVersion: 'Workflow version record',
-    workflowSubTask: 'Workflow subtask'
+    workflowVersion: 'Workflow Version Record',
+    workflowSubTask: 'Workflow Subtask',
+    AlgoService: 'Algorithm service'
   },
   head: {
     myAccountTitle: 'My Account',
@@ -241,7 +247,9 @@ const en = {
     priceAsc: 'Price ascending ',
     priceDesc: 'Price descending',
     credentialPriceTips: "The price is for reference only. Please refer to the exchange for the real price",
-    useScene: "Use Scenes"
+    useScene: "Use Scenes",
+    holdings: "Holdings",
+    viewHoldingCredentials: "View Holding Credentials"
   },
   workflow: {
     workflowName: "Workflow Name",
@@ -291,7 +299,9 @@ const en = {
     privacyAIComputing: "Privacy AI Computing",
     privacyComputing: "Privacy Computing",
     nonPrivacyComputing: "Non-Privacy Computing",
-    applicationScenarios: "Application Scenarios"
+    applicationScenarios: "Application Scenarios",
+    learnNow: "Learn Now",
+    chineseChessContent: "We implemented a set of Alpha Zero algorithms on the Datum network and applied them to Chinese chess.Its main purpose is to demonstrate how to access custom algorithms on the datum network to accomplish various tasks. Looking forward to your participation"
   },
   computeTask: {
     taskId: "Task ID",

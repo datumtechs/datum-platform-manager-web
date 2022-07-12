@@ -52,7 +52,12 @@ const zh = {
     reset: "重置",
     computeTimes: "计算次数",
     create: '创建',
-    enterNumber: "请输入正整数"
+    enterNumber: "请输入正整数",
+    attributeCredential: "有属性凭证",
+    noAttributeCredential: "无属性凭证",
+    credentialId: "凭证ID",
+    period: "有效期",
+    buyCredential: "购买凭证"
   },
   menu: {
     home: '首页',
@@ -73,7 +78,8 @@ const zh = {
     computeTask: "计算任务",
     myAuthorization: '我的授权',
     workflowVersion: '工作流版本记录',
-    workflowSubTask: '工作流子任务'
+    workflowSubTask: '工作流子任务',
+    AlgoService: '算法服务'
   },
   head: {
     myAccountTitle: "我的账户",
@@ -241,7 +247,9 @@ const zh = {
     priceAsc: '价格升序',
     priceDesc: '价格降序',
     credentialPriceTips: "展示价格仅供参考，真实价格请参考交易所",
-    useScene: "使用场景"
+    useScene: "使用场景",
+    holdings: "持有量",
+    viewHoldingCredentials: "查看持有凭证"
   },
   workflow: {
     workflowName: "工作流名称",
@@ -291,7 +299,9 @@ const zh = {
     privacyAIComputing: "隐私AI计算",
     privacyComputing: "隐私计算",
     nonPrivacyComputing: "非隐私计算",
-    applicationScenarios: "应用场景"
+    applicationScenarios: "应用场景",
+    learnNow: "立即了解",
+    chineseChessContent: "我们在 Datum 网络上实现了一套Alpha Zero算法，并具体应用到中国象棋。其主旨是演示怎么在 datum 网络上接入自定义算法以完成各种各样的任务。期待你的参与"
   },
   computeTask: {
     taskId: "任务 ID",

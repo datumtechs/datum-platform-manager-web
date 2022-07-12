@@ -10,25 +10,30 @@
       </template>
     </Banner>
     <div class="main-content com-main-data-wrap">
-      <DataTable :data="tableData" @purchase="purchase" @viewData="viewData" :loading="dataLoading"
+      <DataTable @purchase="purchase" :data="tableData" @viewData="viewData" :loading="dataLoading"
         @viewCredential="viewCredential" />
       <div class="flex my-50px justify-center">
-        <el-pagination background layout="prev, pager, next" @current-change="query" v-model:current-page="current" :total="total" />
+        <el-pagination background layout="prev, pager, next" @current-change="query"
+          v-model:current-page="current" :total="total" />
       </div>
     </div>
     <Search :keyword="keyword" :showFilter="false" @search="search"
       :placeholder="t('myData.marketPlaceholder')"></Search>
+    <TokenList :title="`${$t('myData.viewHoldingCredentials')}  ( ${currentDataName} )`"
+      v-model:showDialog="showDialog" />
   </div>
 </template>
 <script lang="ts" setup>
 import DataTable from './components/DataTable.vue'
 import { type Router, useRouter } from 'vue-router'
 import { queryUserDataList, queryDataStats } from '@/api/data'
-import {useKeepAliveInfo } from '@/stores'
+import { useKeepAliveInfo } from '@/stores'
 const keepAlive = useKeepAliveInfo()
 
 const { t } = useI18n()
 const chainCfg: any = inject('chainCfg')
+const showDialog = ref(false)
+const currentDataName = ref('false')
 const router: Router = useRouter()
 const route = useRoute()
 const tableData = ref([])
@@ -38,10 +43,11 @@ const dataTotal = ref(0)
 const keyword = ref('')
 
 const dataLoading = ref(false)
+
+
 const purchase = (row: any) => {
-  const dexUrl = `${chainCfg.value.dexUrl}swap?outputCurrency=${row.tokenAddress}&exactField=OUTPUT&exactAmount=1`
-  //TODO dex
-  window.open(dexUrl, "_blank");
+  currentDataName.value = row.metaDataName
+  showDialog.value = !showDialog.value
 }
 const viewData = (row: any) => {
   router.push({
@@ -61,9 +67,9 @@ const search = (str: string) => {
   query()
 }
 
-const query = () => { 
+const query = () => {
   dataLoading.value = true
-   keepAlive.setCurrent(current.value,route.path)
+  keepAlive.setCurrent(current.value, route.path)
   queryUserDataList({ current: current.value, size: 10, keyword: keyword.value }).then(res => {
     const { data, code } = res
     dataLoading.value = false
@@ -87,7 +93,7 @@ const queryTotal = () => {
 
 onMounted(() => {
   const currentKeep = keepAlive.getCurrent[route.path] || ''
-  if(currentKeep) current.value = currentKeep
+  if (currentKeep) current.value = currentKeep
   query()
   queryTotal()
 })

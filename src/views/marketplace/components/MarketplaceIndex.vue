@@ -8,6 +8,7 @@ const { t, locale } = useI18n()
 // const total = ref(0)
 const router = useRouter()
 const route = useRoute()
+const currentDataName = ref('')
 
 
 const chainCfg: any = inject('chainCfg')
@@ -43,6 +44,7 @@ const pageParams: PageParams = reactive({
 // })
 
 const marketLoading = ref(false)
+const showDialog = ref(false)
 
 const sortList = ref([
     {
@@ -76,9 +78,12 @@ const indexMethod = (index: number) => useTableIndex(index, pageParams.current, 
 
 const tableData = ref([])
 const purchase = (row: any) => {
-    const dexUrl = `${chainCfg.value.dexUrl}swap?outputCurrency=${row.tokenAddress}&exactField=OUTPUT&exactAmount=1`
+    // const dexUrl = `${chainCfg.value.dexUrl}swap?outputCurrency=${row.tokenAddress}&exactField=OUTPUT&exactAmount=1`
     //TODO dex
-    window.open(dexUrl, "_blank");
+    // window.open(dexUrl, "_blank");
+    currentDataName.value = row.metaDataName
+    showDialog.value = !showDialog.value
+
 }
 const linkToViewData = (row: any) => {
     router.push({
@@ -229,6 +234,8 @@ onMounted(() => {
                 </el-select> -->
             </template>
         </Search>
+        <TokenList :title="`${$t('common.buyCredential')} - ${currentDataName}`"
+            v-model:showDialog="showDialog" />
     </div>
 </template>
 

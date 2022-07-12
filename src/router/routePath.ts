@@ -111,7 +111,7 @@ export default [
     name: "computeServe",
     meta: {
       show: ['home', 'side'],
-      label: 'menu.computing',
+      label: 'menu.AlgoService',
       icon: "side-computing-icon"
     },
     component: () => import('@/views/computeServe/index.vue'),

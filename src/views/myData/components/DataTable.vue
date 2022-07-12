@@ -26,7 +26,7 @@
       <template #default="{ row }">
         <el-space :size="20">
           <span class="font-medium  leading-20px link-btn" @click="purchase(row)">{{
-              t('myData.purchase')
+              t('myData.viewHoldingCredentials')
           }}</span>
           <span class="font-medium  leading-20px link-btn" @click="viewData(row)">{{
               t('myData.viewData')
@@ -55,9 +55,11 @@ const props = defineProps({
 })
 
 const purchase = (obj: any) => {
-  const dexUrl = `${chainCfg.value.dexUrl}swap?outputCurrency=${obj.tokenAddress}&exactField=OUTPUT&exactAmount=1`
+  emit('purchase', obj)
+
+  // const dexUrl = `${chainCfg.value.dexUrl}swap?outputCurrency=${obj.tokenAddress}&exactField=OUTPUT&exactAmount=1`
   //TODO dex
-  window.open(dexUrl, "_blank");
+  // window.open(dexUrl, "_blank");
 }
 const viewData = (obj: any) => {
   emit('viewData', obj)
