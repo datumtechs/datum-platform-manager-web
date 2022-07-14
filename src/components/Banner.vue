@@ -37,6 +37,7 @@ import newTask from '@/assets/images/banner/newTask.png'
 import myData from '@/assets/images/banner/myData.png'
 import myAuth from '@/assets/images/banner/myAuth.png'
 import myAccount from '@/assets/images/banner/myAccount.png'
+import publicCenter from '@/assets/images/banner/center.png'
 
 const { t } = useI18n()
 const emit = defineEmits(['back'])
@@ -85,6 +86,9 @@ const bgUrl = computed(() => {
       break;
     case 'myAccount':
       bgMap = myAccount;
+      break;
+    case 'publicCenter':
+      bgMap = publicCenter;
       break;
     default:
       bgMap = network;

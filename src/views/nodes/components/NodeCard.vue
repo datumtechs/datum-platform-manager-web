@@ -3,11 +3,17 @@
         class="node-line mb-10px flex h-90px border-1 border-solid border-[#eee] items-center hover-line">
         <div class="w-73px index-box">{{ useTableIndex(props.index, props.page, props.size) }}</div>
         <div class="pr-30px">
-            <img class="w-36px h-36px rounded-1/2" :src="node.imageUrl"
-                @error="useLoadImg($event, orgImg)" />
+            <img @click="linkToDetail" class="w-36px h-36px rounded-1/2 cursor-pointer"
+                :src="node.imageUrl" @error="useLoadImg($event, orgImg)" />
         </div>
         <div class="w-230px table-box">
-            <p class="deep-title font-bold w-210px ellipse">{{ node.nodeName }}</p>
+            <div class="flex justify-between">
+                <p class="deep-title font-bold w-120px ellipse cursor-pointer"
+                    @click="linkToDetail">
+                    {{ node.nodeName }}
+                </p>
+                <Stamp :type="'node'" :content="$t('node.credibleOrganization')" />
+            </div>
             <el-tooltip placement="top" effect="light" :content="node.identityId">
                 <p class="shallow-text w-210px ellipse">{{ node.identityId }}</p>
             </el-tooltip>

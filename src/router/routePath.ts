@@ -138,12 +138,30 @@ export default [
   },
   {
     path: '/myAccount/:infoType',
-    name: "myAccount",
+    name: 'myAccount',
     meta: {
       show: [],
       label: 'head.myAccount'
     },
     component: () => import('@/views/myAccount/index.vue')
+  },
+  {
+    path: '/publicityCenter',
+    name: 'publicityCenter',
+    meta:{
+      show:['home', 'side'],
+      label:'menu.publicityCenter',
+      icon:'side-center-icon'
+    },
+    component: () => import('@/views/publicCenter/index.vue'),
+  },
+  {
+    path: '/publicityCenter/info/:infoNum',
+    name: 'publicityInfo',
+    meta:{
+      show:[],
+    },
+    component: () => import('@/views/publicCenter/components/Info.vue'),
   },
   {
     path: '/createWorkFlow',

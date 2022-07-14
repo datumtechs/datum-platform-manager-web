@@ -79,7 +79,8 @@ const zh = {
     myAuthorization: '我的授权',
     workflowVersion: '工作流版本记录',
     workflowSubTask: '工作流子任务',
-    AlgoService: '算法服务'
+    AlgoService: '算法服务',
+    publicityCenter:'公示中心'
   },
   head: {
     myAccountTitle: "我的账户",
@@ -149,7 +150,9 @@ const zh = {
     address: "发起账户",
     placeholder: "搜索节点身份标识,名称关键字",
     sortBy: "排列方式",
-    viewTask: "查看任务"
+    viewTask: "查看任务",
+    credibleOrganization: "可信组织",
+    committee: "委员会",
   },
   task: {
     goTo: "切换至",
@@ -453,6 +456,13 @@ const zh = {
     "observerProxyAddressNotFound": "代理合约地址未找到",
     "plzInputWorkflowName": "请输入工作流名称",
     "workflowLengthError": "长度限制在8-64个字符"
+  },
+  center:{
+    committeeProposal:'委员会提案',
+    trustedAuthentication:'可信认证',
+    committeeMembers:'委员会成员',
+    approvalOrganization:'审批组织',
+    certificateTime:'认证时间'
   }
 }
 

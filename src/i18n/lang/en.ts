@@ -79,7 +79,8 @@ const en = {
     myAuthorization: 'My Authorization',
     workflowVersion: 'Workflow Version Record',
     workflowSubTask: 'Workflow Subtask',
-    AlgoService: 'Algorithm service'
+    AlgoService: 'Algorithm Service',
+    publicityCenter:'Publicity Center'
   },
   head: {
     myAccountTitle: 'My Account',
@@ -149,7 +150,9 @@ const en = {
     address: "Address",
     placeholder: "Search node ID, name keyword",
     sortBy: "Sort By",
-    viewTask: "View Task"
+    viewTask: "View Task",
+    credibleOrganization: 'Credible Node',
+    committee: "Committee Members"
   },
   task: {
     goTo: "Switch to the ",
@@ -451,7 +454,14 @@ const en = {
     "helpAddressNotFound": "Helper contract address not found",
     "ERCAddressNotFound": "Token contract address not found",
     "observerProxyAddressNotFound": "Proxy contract address not found",
+    "plzInputWorkflowName": "Please enter a workflow name",
     "workflowLengthError": "Length should be 8 to 64"
+  },
+  center:{
+    committeeProposal:'Committee Proposal',
+    trustedAuthentication:'Trusted Authentication',
+    committeeMembers:'Committee Members',
+    approvalOrganization:'Approval Organization'
   }
 }
 

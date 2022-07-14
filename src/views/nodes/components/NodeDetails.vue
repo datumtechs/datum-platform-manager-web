@@ -55,7 +55,12 @@ onMounted(() => {
 <template>
   <div class="flex-1 h-full relative">
     <DetailBanner :backShow="true" @back="router.go(-1)" :imgUrl="nodeInfo.imageUrl">
-      <template #primaryInfo>{{ nodeInfo.nodeName }}</template>
+      <template #primaryInfo>
+        <div class="w-800px h-50px flex">
+          <p class="ellipse max-w-700px"> {{ nodeInfo.nodeName }}</p>
+          <Stamp :type="'node'" class="align-top" />
+        </div>
+      </template>
       <template #briefInfo>Identifier：{{ identityId }}</template>
       <template #machineInfo class="flex">
         <div class="flex text-center">
