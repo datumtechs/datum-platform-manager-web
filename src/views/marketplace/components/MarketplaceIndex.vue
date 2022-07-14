@@ -138,6 +138,12 @@ const queryTableData = async () => {
 //     queryTableData()
 // });
 
+const linkToNode = (row: any) => {
+    router.push({
+        path: `/nodes/details/${row.identityId}`,
+    })
+}
+
 onMounted(() => {
     setKeepAliveInfo()
     queryTableData()
@@ -162,7 +168,18 @@ onMounted(() => {
                 <el-table-column :class-name="'show-ellipsis-tooltip'" prop="metaDataName"
                     :label="t('myData.dataName')" />
                 <el-table-column :class-name="'show-ellipsis-tooltip'" prop="nodeName"
-                    :label="t('myData.dataProvider')" />
+                    :label="t('myData.dataProvider')">
+                    <template #default="{ row }">
+                        <div class="flex">
+                            <Stamp :type="'node'" :content="$t('node.credibleOrganization')" />
+                            <p class="w-120px ellipse cursor-pointer pl-10px"
+                                @click="linkToNode(row)">{{
+                                        row.nodeName
+                                }}</p>
+                        </div>
+                    </template>
+                </el-table-column>
+
                 <el-table-column :class-name="'show-ellipsis-tooltip'" prop="dataSize"
                     :label="t('myData.dataSize')" />
                 <el-table-column :class-name="'show-ellipsis-tooltip'" prop="industryData"

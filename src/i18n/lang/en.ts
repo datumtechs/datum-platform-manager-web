@@ -461,7 +461,14 @@ const en = {
     committeeProposal:'Committee Proposal',
     trustedAuthentication:'Trusted Authentication',
     committeeMembers:'Committee Members',
-    approvalOrganization:'Approval Organization'
+    approvalOrganization:'Approval Organization',
+    certificateTime:'Certificate Time',
+    certificateValidity:'Certificate Validity',
+    proposalContent:'Proposal content',
+    proposer:'Proposer',
+    proposalType:'Proposal Type',
+    votingTime:'Voting Time',
+    proposalProgression:'Progression'
   }
 }
 

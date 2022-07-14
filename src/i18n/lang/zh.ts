@@ -462,7 +462,13 @@ const zh = {
     trustedAuthentication:'可信认证',
     committeeMembers:'委员会成员',
     approvalOrganization:'审批组织',
-    certificateTime:'认证时间'
+    certificateTime:'认证时间',
+    certificateValidity:'证书有效期',
+    proposalContent:'提案内容',
+    proposer:'提案发起人',
+    proposalType:'提案类型',
+    votingTime:'投票时间',
+    proposalProgression:'提案进度'
   }
 }
 

@@ -6,8 +6,8 @@
             </template>
         </Banner>
         <TrustedOrg v-if="activekey === 0" />
-        <Proposal v-else-if="activekey === 1" />
-        <Committee v-else />
+        <Committee v-else-if="activekey === 1" />
+        <Proposal v-else />
     </div>
 </template>
 
@@ -21,11 +21,12 @@ const list = ref([
         name: 'node.credibleOrganization'
     },
     {
-        name: 'center.committeeProposal'
+        name: 'center.committeeMembers'
     },
     {
-        name: 'center.committeeMembers'
+        name: 'center.committeeProposal'
     }
+
 ])
 const tabsChange = (index: string) => {
     activekey.value = +index

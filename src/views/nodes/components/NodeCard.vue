@@ -7,12 +7,12 @@
                 :src="node.imageUrl" @error="useLoadImg($event, orgImg)" />
         </div>
         <div class="w-230px table-box">
-            <div class="flex justify-between">
-                <p class="deep-title font-bold w-120px ellipse cursor-pointer"
+            <div class="flex">
+                <Stamp :type="'node'" :content="$t('node.credibleOrganization')" />
+                <p class="deep-title font-bold w-120px ellipse cursor-pointer pl-10px"
                     @click="linkToDetail">
                     {{ node.nodeName }}
                 </p>
-                <Stamp :type="'node'" :content="$t('node.credibleOrganization')" />
             </div>
             <el-tooltip placement="top" effect="light" :content="node.identityId">
                 <p class="shallow-text w-210px ellipse">{{ node.identityId }}</p>

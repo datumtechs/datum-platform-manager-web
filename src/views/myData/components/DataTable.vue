@@ -6,7 +6,16 @@
     <el-table-column :class-name="'show-ellipsis-tooltip'" prop="metaDataName"
       :label="t('myData.dataName')" />
     <el-table-column :class-name="'show-ellipsis-tooltip'" prop="nodeName"
-      :label="t('myData.dataProvider')" />
+      :label="t('myData.dataProvider')">
+      <template #default="{ row }">
+        <div class="flex">
+          <Stamp :type="'node'" :content="$t('node.credibleOrganization')" />
+          <p class="w-120px ellipse cursor-pointer pl-10px" @click="linkToNode(row)">{{
+              row.nodeName
+          }}</p>
+        </div>
+      </template>
+    </el-table-column>
     <el-table-column :class-name="'show-ellipsis-tooltip'" prop="tokenName"
       :label="t('myData.credentialName')" />
     <el-table-column :class-name="'show-ellipsis-tooltip'" :label="t('auth.holdQuantity')">
@@ -60,6 +69,12 @@ const purchase = (obj: any) => {
   // const dexUrl = `${chainCfg.value.dexUrl}swap?outputCurrency=${obj.tokenAddress}&exactField=OUTPUT&exactAmount=1`
   //TODO dex
   // window.open(dexUrl, "_blank");
+}
+
+const linkToNode = (row: any) => {
+  router.push({
+    path: `/nodes/details/${row.identityId}`,
+  })
 }
 const viewData = (obj: any) => {
   emit('viewData', obj)

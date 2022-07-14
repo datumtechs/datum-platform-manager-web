@@ -7,9 +7,8 @@
             <el-table-column prop="" :label="t('workflow.orgName')">
             </el-table-column>
             <el-table-column prop="" :label="t('center.approvalOrganization')"></el-table-column>
-            <el-table-column prop="" :label="t('')"></el-table-column>
-            <el-table-column prop="" :label="t('')"></el-table-column>
-            <el-table-column prop="" :label="t('')"></el-table-column>
+            <el-table-column prop="" :label="t('center.certificateTime')"></el-table-column>
+            <el-table-column prop="" :label="t('center.certificateValidity')"></el-table-column>
             <el-table-column prop="" :label="t('common.actions')">
             </el-table-column>
         </el-table>
