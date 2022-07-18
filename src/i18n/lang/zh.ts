@@ -354,6 +354,7 @@ const zh = {
     saveNotes: '任务输出已默认保存至任务发起方',
     storageForm: '存储形式',
     plaintext: '明文',
+    cipherText:'密文',
     model: '模型',
     selectModel: '请选择模型',
     viewResult: '查看结果',

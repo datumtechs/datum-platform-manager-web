@@ -1,8 +1,17 @@
 <template>
     <div class="w-242px algo-box">
-        <p class="text-18px font-bold mt-16px pl-24px">{{ t('common.algorithm') }}</p>
+        <p class="text-18px font-bold mt-17px mb-13px pl-24px">
+            {{
+                    t('common.algorithm')
+            }}</p>
+        <div class="tab-box">
+            <div class="tab flex-1 text-center" :class="{ 'active': curTab === item.value }"
+                @click="curTab = item.value" v-for="(item, index) in tabList" :key="index">
+                <p>{{ item.label }}</p>
+            </div>
+        </div>
         <div class="algo-wrapper" v-if="workflowId && workflowVersion">
-            <div v-for="algo in algoList" class="flex flex-col items-center mt-24px">
+            <div v-if="1" v-for="algo in algoList" class="flex flex-col items-center mt-24px">
                 <p
                     class="h-36px w-230px text-14px leading-20px text-[#333] font-bold pl-18px flex items-center">
                     {{ algo.name }}</p>
@@ -49,6 +58,23 @@ const isPSIModel = computed(() => useExpertMode().getIsPSIModel)
 const workflowId = computed(() => route.params.workflowId)
 const workflowVersion = computed(() => route.params.workflowVersion)
 const isInEdit = computed(() => !!workflowId.value && !!workflowVersion.value)
+const curTab = ref('privacy')
+
+
+const tabList = ref([
+    {
+        key: 1,
+        name: '',
+        label: t('computing.privacyComputing'),
+        value: 'privacy'
+    },
+    {
+        key: 2,
+        name: '',
+        label: t('computing.nonPrivacyComputing'),
+        value: 'nonPrivacy'
+    },
+])
 
 watch(isInEdit, () => {
     if (isInEdit.value) {
@@ -142,6 +168,8 @@ const filterTree = (arr: any, newArray: any = []) => {
     return target
 }
 
+
+// cipher
 const queryAlgoList = () => {
     queryAlgoDetail().then(result => {
         const { data, code } = result
@@ -170,6 +198,32 @@ onMounted(() => {
 <style scoped lang='scss'>
 .algo-box {
     border-right: 1px solid #eeeeee;
+
+    .tab-box {
+        display: flex;
+        height: 40px;
+        border-top: 1px solid #eeeeee;
+
+        .tab {
+            cursor: pointer;
+            line-height: 40px;
+            border-bottom: 1px solid #eeeeee;
+
+            p {
+                color: #666666;
+                font-size: 14px;
+            }
+
+            &.active {
+                color: #333333;
+                border-bottom: none
+            }
+
+            &:not(:last-child) {
+                border-right: 1px solid #eeeeee;
+            }
+        }
+    }
 
     .algo-wrapper {
         height: calc(100% - 58px);
