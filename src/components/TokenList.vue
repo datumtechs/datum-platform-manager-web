@@ -48,11 +48,11 @@ const props = defineProps({
         default: ''
     },
     nfTokenData: {
-        type: Array<any>,
+        type: Array,
         default: () => []
     },
     nftTokenData: {
-        type: Array<any>,
+        type: Array,
         default: () => []
     }
 })

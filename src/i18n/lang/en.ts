@@ -284,7 +284,8 @@ const en = {
     startWorkflow: "Start Workflow",
     consumption: "workflow will consume",
     plzInputTokenName: 'Please enter token or data name',
-    modelEvaluationResult: 'Evaluation results'
+    modelEvaluationResult: 'Evaluation results',
+    selectTokenOfData:'Select the credentials required for the task'
   },
   credentials: {
     circulation: "Circulation",

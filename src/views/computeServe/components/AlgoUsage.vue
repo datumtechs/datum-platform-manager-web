@@ -1,5 +1,5 @@
 <template>
-    <div v-for="(item, i) in appList">
+    <div v-for="(item, i) in props.appList">
         <div class="application-box" :style='`background:url(${item.imgUrl})`'>
             <p class="mt-37px text-color-[#333] font-500 leading-31px text-[22px]">{{ item.name }}
             </p>
@@ -19,10 +19,21 @@
 </template>
 
 <script setup lang='ts'>
+
+
 import arrow from '@/assets/images/computeServe/arrow.svg'
+import type { PropType } from 'vue';
+
+export interface objType {
+    name: '',
+    imgUrl: '',
+    content: ''
+}
+
+
 const props = defineProps({
     appList: {
-        type: Array<any>,
+        type: Array as PropType<objType[]>,
         default: () => []
     }
 })

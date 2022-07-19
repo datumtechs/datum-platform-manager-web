@@ -6,7 +6,8 @@
             }}</p>
         <div class="tab-box">
             <div class="tab flex-1 text-center" :class="{ 'active': curTab === item.value }"
-                @click="curTab = item.value" v-for="(item, index) in tabList" :key="index">
+                @click="curTab = item.value; queryAlgoList()" v-for="(item, index) in tabList"
+                :key="index">
                 <p>{{ item.label }}</p>
             </div>
         </div>
@@ -171,7 +172,10 @@ const filterTree = (arr: any, newArray: any = []) => {
 
 // cipher
 const queryAlgoList = () => {
-    queryAlgoDetail().then(result => {
+    // curTab === privacy nonPrivacy 算法分类id. 1-所有算法 2-隐私算法 3-非隐私算法
+    queryAlgoDetail({
+        id: curTab.value === 'privacy' ? '2' : '3'
+    }).then(result => {
         const { data, code } = result
         if (code === 10000) {
             target = []

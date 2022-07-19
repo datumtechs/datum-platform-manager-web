@@ -9,9 +9,10 @@ export const getAlgTree = (): Promise<any> => {
 }
 
 //查询算法详情
-export const queryAlgoDetail = (): Promise<any> => {
+export const queryAlgoDetail = (data:any): Promise<any> => {
   return http({
     method: 'GET',
     url: ' /flow/alg/getAlgTreeDetails',
+    params: data
   })
 }

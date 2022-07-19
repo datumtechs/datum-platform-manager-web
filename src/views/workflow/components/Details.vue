@@ -117,6 +117,7 @@
         </div>
       </template>
     </GlobalPending>
+    <TaskStarter v-model:show="starter.show" :content="starter.content" :title="starter.title" />
   </div>
 </template>
 <script lang="ts" setup>
@@ -143,6 +144,12 @@ const beforeName = ref('')
 const keepAlive = useKeepAliveInfo()
 const timer: any = ref()
 const consumeList: any = ref([])
+const currentRow: any = ref({})
+const starter: any = reactive({
+  show: false,
+  content: "",
+  title: ""
+})
 
 const breadList: any = [
   {
@@ -231,7 +238,14 @@ const setDialog = (row: any): void => {
   pending.content = ''
 }
 
-const start = useDebounceFn(async (row: any) => {
+const start = (row: any) => {
+  currentRow.value = row
+  starter.show = true
+  starter.title = t('workflow.selectTokenOfData')
+}
+
+
+const runTask = useDebounceFn(async (row: any) => {
   workflowVersionName.value = row.workflowVersionName
   try {
     const res = await getWorkflowStartDetail({
