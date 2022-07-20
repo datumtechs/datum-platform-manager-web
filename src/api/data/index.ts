@@ -3,7 +3,14 @@ import http from '@/api'
 export const queryUserDataList = (params: {}): Promise<any> => {
   return http({
     method: 'GET',
-    url: '/flow/data/getUserDataList',
+    url: '/flow/data/getDataListByUser',
+    params
+  })
+}
+export const getUserAuthDataList = (params: {}): Promise<any> => {
+  return http({
+    method: 'GET',
+    url: '/flow/data/getUserAuthDataList',
     params
   })
 }

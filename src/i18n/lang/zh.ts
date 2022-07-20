@@ -57,7 +57,8 @@ const zh = {
     noAttributeCredential: "无属性凭证",
     credentialId: "凭证ID",
     period: "有效期",
-    buyCredential: "购买凭证"
+    buyCredential: "购买凭证",
+    algorithmLibrary: "算法库"
   },
   menu: {
     home: '首页',
@@ -80,7 +81,7 @@ const zh = {
     workflowVersion: '工作流版本记录',
     workflowSubTask: '工作流子任务',
     AlgoService: '算法服务',
-    publicityCenter:'公示中心'
+    publicityCenter: '公示中心'
   },
   head: {
     myAccountTitle: "我的账户",
@@ -285,7 +286,7 @@ const zh = {
     consumption: "工作流将消耗",
     plzInputTokenName: '请输入凭证或数据名称',
     modelEvaluationResult: '模型评估结果',
-    selectTokenOfData:'选择任务所需要的凭证'
+    selectTokenOfData: '选择任务所需要的凭证',
   },
   credentials: {
     circulation: "总发布量",
@@ -305,7 +306,9 @@ const zh = {
     nonPrivacyComputing: "非隐私计算",
     applicationScenarios: "应用场景",
     learnNow: "立即了解",
-    chineseChessContent: "我们在 Datum 网络上实现了一套Alpha Zero算法，并具体应用到中国象棋。其主旨是演示怎么在 datum 网络上接入自定义算法以完成各种各样的任务。期待你的参与"
+    chineseChessContent: "我们在 Datum 网络上实现了一套Alpha Zero算法，并具体应用到中国象棋。其主旨是演示怎么在 datum 网络上接入自定义算法以完成各种各样的任务。期待你的参与",
+    privacy: "隐私算法",
+    nonPrivacy: "非隐私算法",
   },
   computeTask: {
     taskId: "任务 ID",
@@ -355,7 +358,7 @@ const zh = {
     saveNotes: '任务输出已默认保存至任务发起方',
     storageForm: '存储形式',
     plaintext: '明文',
-    cipherText:'密文',
+    cipherText: '密文',
     model: '模型',
     selectModel: '请选择模型',
     viewResult: '查看结果',
@@ -459,18 +462,23 @@ const zh = {
     "plzInputWorkflowName": "请输入工作流名称",
     "workflowLengthError": "长度限制在8-64个字符"
   },
-  center:{
-    committeeProposal:'委员会提案',
-    trustedAuthentication:'可信认证',
-    committeeMembers:'委员会成员',
-    approvalOrganization:'审批组织',
-    certificateTime:'认证时间',
-    certificateValidity:'证书有效期',
-    proposalContent:'提案内容',
-    proposer:'提案发起人',
-    proposalType:'提案类型',
-    votingTime:'投票时间',
-    proposalProgression:'提案进度'
+  center: {
+    committeeProposal: '委员会提案',
+    trustedAuthentication: '可信认证',
+    committeeMembers: '委员会成员',
+    approvalOrganization: '审批组织',
+    certificateTime: '认证时间',
+    certificateValidity: '证书有效期',
+    proposalContent: '提案内容',
+    proposer: '提案发起人',
+    proposalType: '提案类型',
+    votingTime: '投票时间',
+    proposalProgression: '提案进度',
+    joinTime: '加入时间',
+    certificationDetails: "认证详情", // Certification Details
+    proposalDetails: "提案详情", //Proposal Details
+    publicInfo: "公示资料", //Public information
+    dataDesc: "资料说明" // Data description
   }
 }
 

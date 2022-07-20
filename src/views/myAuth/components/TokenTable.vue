@@ -12,7 +12,7 @@
 </template>
 <script setup lang="ts">
 import DataToken from './DataToken.vue'
-import { queryUserDataList, getUserDatumNetworkLatInfo } from '@/api/data'
+import { getUserAuthDataList, getUserDatumNetworkLatInfo } from '@/api/data'
 import { useInterval } from '@/hooks'
 const { t } = useI18n()
 
@@ -38,7 +38,7 @@ watch(() => pageObj.current, (newValue, oldValue) => {
 
 const queryDataList = () => {
     pageObj.keyword = keyword.value
-    queryUserDataList({
+    getUserAuthDataList({
         current: pageObj.current,
         size: pageObj.size,
         keyword: pageObj.keyword

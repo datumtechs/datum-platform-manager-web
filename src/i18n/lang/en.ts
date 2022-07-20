@@ -57,7 +57,8 @@ const en = {
     noAttributeCredential: "No Attribute Credential",
     credentialId: "Credential ID",
     period: "Period",
-    buyCredential: "Purchase Credential"
+    buyCredential: "Purchase Credential",
+    algorithmLibrary: "Algorithm Library"
   },
   menu: {
     home: 'Home',
@@ -80,7 +81,7 @@ const en = {
     workflowVersion: 'Workflow Version Record',
     workflowSubTask: 'Workflow Subtask',
     AlgoService: 'Algorithm Service',
-    publicityCenter:'Publicity Center'
+    publicityCenter: 'Publicity Center'
   },
   head: {
     myAccountTitle: 'My Account',
@@ -285,7 +286,7 @@ const en = {
     consumption: "workflow will consume",
     plzInputTokenName: 'Please enter token or data name',
     modelEvaluationResult: 'Evaluation results',
-    selectTokenOfData:'Select the credentials required for the task'
+    selectTokenOfData: 'Select the credentials required for the task'
   },
   credentials: {
     circulation: "Circulation",
@@ -305,7 +306,9 @@ const en = {
     nonPrivacyComputing: "Non-Privacy Computing",
     applicationScenarios: "Application Scenarios",
     learnNow: "Learn Now",
-    chineseChessContent: "We implemented a set of Alpha Zero algorithms on the Datum network and applied them to Chinese chess.Its main purpose is to demonstrate how to access custom algorithms on the datum network to accomplish various tasks. Looking forward to your participation"
+    chineseChessContent: "We implemented a set of Alpha Zero algorithms on the Datum network and applied them to Chinese chess.Its main purpose is to demonstrate how to access custom algorithms on the datum network to accomplish various tasks. Looking forward to your participation",
+    privacy: "Privacy",
+    nonPrivacy: "NonPrivacy",
   },
   computeTask: {
     taskId: "Task ID",
@@ -355,7 +358,7 @@ const en = {
     saveNotes: 'Saved to the task initiator by default',
     storageForm: 'Storage Form',
     plaintext: 'PlainText',
-    cipherText:'CipherText',
+    cipherText: 'CipherText',
     model: 'Model',
     selectModel: 'Select Model',
     viewResult: 'View Results',
@@ -459,18 +462,23 @@ const en = {
     "plzInputWorkflowName": "Please enter a workflow name",
     "workflowLengthError": "Length should be 8 to 64"
   },
-  center:{
-    committeeProposal:'Committee Proposal',
-    trustedAuthentication:'Trusted Authentication',
-    committeeMembers:'Committee Members',
-    approvalOrganization:'Approval Organization',
-    certificateTime:'Certificate Time',
-    certificateValidity:'Certificate Validity',
-    proposalContent:'Proposal content',
-    proposer:'Proposer',
-    proposalType:'Proposal Type',
-    votingTime:'Voting Time',
-    proposalProgression:'Progression'
+  center: {
+    committeeProposal: 'Committee Proposal',
+    trustedAuthentication: 'Trusted Authentication',
+    committeeMembers: 'Committee',
+    approvalOrganization: 'Approval Organization',
+    certificateTime: 'Certificate Time',
+    certificateValidity: 'Certificate Validity',
+    proposalContent: 'Proposal content',
+    proposer: 'Proposer',
+    proposalType: 'Proposal Type',
+    votingTime: 'Voting Time',
+    proposalProgression: 'Progression',
+    joinTime: 'Join Time',
+    certificationDetails: "Certification Details", // Certification Details
+    proposalDetails: "Proposal Details", //Proposal Details
+    publicInfo: "Public Information", //Public information
+    dataDesc: "Data Description" // Data description
   }
 }
 

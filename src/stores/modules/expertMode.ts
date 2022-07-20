@@ -22,7 +22,8 @@ export default defineStore('expertMode', {
         workflowNodeOutputVoList: [],
         disableOrg: [],
         showPanel: false,
-        isPSIModel: false
+        isPSIModel: false,
+        isPrivacy: true
     }),
     getters: {
         getDotted: state => state.showDotted,
@@ -90,21 +91,10 @@ export default defineStore('expertMode', {
             this.baseOrgList = data
         },
         setOutputVoList(data: Array<any>) {
-            // const output: any = []
-            // this.orgList.map((item: any) => {
-            //     if (data.length && data.includes(item.identityId)) {
-            //         output.push(item.identityId)
-            //     }
-            // })
             if (this.nodeList[this.curNodeIndex]) {
                 this.nodeList[this.curNodeIndex].nodeOutput.identityId = data
             }
         },
-        // setPsiOutputVoList(list: Array<any>) {
-        //     if (this.nodeList[this.curNodeIndex]) {
-        //         this.nodeList[this.curNodeIndex].nodeOutput.identityId = list
-        //     }
-        // },
         resetWorkflow() {
             this.nodeList = []
             this.workflowNodeInputVoList = []
@@ -161,6 +151,9 @@ export default defineStore('expertMode', {
         },
         setIsPSIModel(data: boolean) {
             this.isPSIModel = data
+        },
+        setIsPrivacy(data: boolean) {
+            this.isPrivacy = data
         }
     }
 })

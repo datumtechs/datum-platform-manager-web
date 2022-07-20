@@ -1,7 +1,9 @@
 <script lang="ts" setup>
 import { queryDataList } from '@/api/data'
-import { useTableIndex } from '@/hooks'
+import { useTableIndex, useSize } from '@/hooks'
 import { useKeepAliveInfo } from '@/stores'
+import { enums } from '@/utils/enum'
+
 const keepAlive = useKeepAliveInfo()
 
 const { t, locale } = useI18n()
@@ -171,7 +173,7 @@ onMounted(() => {
                     :label="t('myData.dataProvider')">
                     <template #default="{ row }">
                         <div class="flex">
-                            <Stamp :type="'node'" :content="$t('node.credibleOrganization')" />
+                            <CertificationLabel :obj="row" />
                             <p class="w-120px ellipse cursor-pointer pl-10px"
                                 @click="linkToNode(row)">{{
                                         row.nodeName
@@ -180,12 +182,33 @@ onMounted(() => {
                     </template>
                 </el-table-column>
 
-                <el-table-column :class-name="'show-ellipsis-tooltip'" prop="dataSize"
-                    :label="t('myData.dataSize')" />
-                <el-table-column :class-name="'show-ellipsis-tooltip'" prop="industryData"
-                    :label="t('myData.industryData')" />
-                <el-table-column :class-name="'show-ellipsis-tooltip'" prop="useScene"
-                    :label="t('myData.useScene')" />
+                <el-table-column :class-name="'show-ellipsis-tooltip'"
+                    :label="t('myData.dataSize')">
+                    <template #default="{ row }">
+                        <div>
+                            {{ useSize(row.size) }}
+                        </div>
+                    </template>
+                </el-table-column>
+                <el-table-column :class-name="'show-ellipsis-tooltip'"
+                    :label="t('myData.industryData')">
+                    <template #default="{ row }">
+                        <div>{{ $t(`${enums.industry[row.industry]}`) }}</div>
+                    </template>
+                </el-table-column>
+                <el-table-column :class-name="'show-ellipsis-tooltip'"
+                    :label="t('myData.useScene')">
+                    <template #default="{ row }">
+                        <div>
+                            <el-space wrap :size="10"
+                                :spacer="(row.isSupportPtAlg && row.isSupportCtAlg) ? '|' : ''">
+
+                                <span>{{ row.isSupportPtAlg ? $t('expert.plaintext') : '' }}</span>
+                                <span>{{ row.isSupportCtAlg ? $t('expert.cipherText') : '' }}</span>
+                            </el-space>
+                        </div>
+                    </template>
+                </el-table-column>
                 <!-- <el-table-column prop="tokenPrice" :label="t('common.credentialPrice')">
                     <template #default="{ row }">
                         <div>{{ row.tokenPrice }} LAT</div>

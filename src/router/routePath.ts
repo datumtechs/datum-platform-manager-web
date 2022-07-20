@@ -148,18 +148,18 @@ export default [
   {
     path: '/publicityCenter',
     name: 'publicityCenter',
-    meta:{
-      show:['home', 'side'],
-      label:'menu.publicityCenter',
-      icon:'side-center-icon'
+    meta: {
+      show: ['home', 'side'],
+      label: 'menu.publicityCenter',
+      icon: 'side-center-icon'
     },
     component: () => import('@/views/publicCenter/index.vue'),
   },
   {
-    path: '/publicityCenter/info/:infoNum',
+    path: '/publicityCenter/info/:infoType',
     name: 'publicityInfo',
-    meta:{
-      show:[],
+    meta: {
+      show: [],
     },
     component: () => import('@/views/publicCenter/components/Info.vue'),
   },

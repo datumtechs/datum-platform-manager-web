@@ -1,20 +1,67 @@
 <template>
     <div class="my-60px com-main-data-wrap">
-        <el-table :data="tableData">
-            <el-table-column type="index" width="80">
-                <template #header>{{ t('common.num') }}</template>
-            </el-table-column>
-            <el-table-column></el-table-column>
-            <el-table-column></el-table-column>
-            <el-table-column></el-table-column>
-        </el-table>
+        <div class="committee-wrapper">
+            <div class="committee-box" v-for="box in 9">
+                <el-avatar :size="45" src="https://empty" @error="errorHandler" />
+                <p class="mt-10px text-[#000] font-bold text-16px leading-22.4px">
+                    <span>{{ $t('workflow.orgName')
+                    }}</span>
+                    <span>{{}}</span>
+                </p>
+                <p class="mt-4px text-[#5D5C65] text-12px leading-16.8px">
+                    <span>{{ $t('center.joinTime') }}</span>
+                    <span>{{}}</span>
+                </p>
+            </div>
+
+        </div>
+        <div class="flex my-50px justify-center">
+            <el-pagination v-model:current-page="pageObj.current" v-model:page-size="pageObj.size"
+                background layout="prev, pager, next" :total="pageObj.total" />
+        </div>
     </div>
 </template>
 
 <script setup lang='ts'>
+import { getAuthorityList } from '@/api/publicity'
+
 const { t } = useI18n()
-const tableData = ref([])
+const authorityList = ref([])
+const queryAuthList = () => {
+    getAuthorityList({
+        current: pageObj.current,
+        size: pageObj.size
+    }).then(res => {
+        const { code, data } = res
+        if (code === 10000) {
+            authorityList.value = data.items
+            pageObj.total = data.total
+        }
+    })
+}
+const errorHandler = () => true
+const pageObj = reactive({
+    total: 0,
+    current: 1,
+    size: 10,
+})
+onMounted(() => {
+    queryAuthList()
+})
 </script>
 
 <style scoped lang='scss'>
+.committee-wrapper {
+    display: grid;
+    grid-gap: 30px;
+    grid-template-columns: 328px 328px 328px;
+    // grid-template-rows: 33.33% 33.33% 33.33%;
+
+    .committee-box {
+        width: 328px;
+        height: 138px;
+        border: 1px solid #eeeeee;
+        padding: 20px;
+    }
+}
 </style>

@@ -3,7 +3,7 @@
         <div class="w-full mb-50px" v-for="(item, i) in list" :key="i">
             <p class="text-20px text-color-[#333333] mb-20px font-600">{{ item.name }}</p>
             <div class="flex flex-wrap">
-                <!-- <div class="flex flex-wrap mb-30px mr-50px" v-for="(v, index) in item.childrenList"
+                <div class="flex flex-wrap mb-30px mr-50px" v-for="(v, index) in item.childrenList"
                     :key="index">
                     <div
                         class="w-317px box-flex-w h-265px overflow-hidden rounded-8px border-1px border-solid border-color-[#eeeeee]">
@@ -15,7 +15,7 @@
                         <div class="com-button w-120px h-40px mx-20px rounded-20px cursor-pointer"
                             @click="emit('createTask', v, item)">{{ t('menu.createTask') }}</div>
                     </div>
-                </div> -->
+                </div>
             </div>
         </div>
     </div>
@@ -29,8 +29,8 @@ import xgBoost from '@/assets/images/computeServe/XGBoost.png'
 const { t } = useI18n()
 const props = defineProps({
     list: {
-        type: Array,
-        default: (): any[] => []
+        type: Object,
+        default: () => { }
     },
 })
 

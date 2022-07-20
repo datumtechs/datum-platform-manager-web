@@ -2,27 +2,43 @@
     <div class="w-242px algo-box">
         <p class="text-18px font-bold mt-17px mb-13px pl-24px">
             {{
-                    t('common.algorithm')
+                    t('common.algorithmLibrary')
             }}</p>
         <div class="tab-box">
-            <div class="tab flex-1 text-center" :class="{ 'active': curTab === item.value }"
+            <div class="tab flex-1 text-left" :class="{ 'active': curTab === item.value }"
                 @click="curTab = item.value; queryAlgoList()" v-for="(item, index) in tabList"
                 :key="index">
-                <p>{{ item.label }}</p>
+                <p class="pl-24px">{{ item.label }}</p>
             </div>
         </div>
         <div class="algo-wrapper" v-if="workflowId && workflowVersion">
-            <div v-if="1" v-for="algo in algoList" class="flex flex-col items-center mt-24px">
+            <div v-for="algo in algoList" class="flex flex-col items-center mt-24px">
                 <p
                     class="h-36px w-230px text-14px leading-20px text-[#333] font-bold pl-18px flex items-center">
                     {{ algo.name }}</p>
-                <ul class="mt-4px">
-                    <li class="h-36px w-230px drag-box cursor-pointer flex items-center pl-18px"
-                        @dragstart.stop="dragstart($event, item)"
-                        @dragend.stop="dragend($event, item)" :draggable="true"
-                        v-for="item in algo.childrenList" :key="item.id">{{ item.name }}
-                    </li>
-                </ul>
+                <div class="mt-4px">
+                    <div class="flex items-center" :class="{ 'drag-box': !item.childrenList }"
+                        v-for="item in algo.childrenList" :key="item.id">
+                        <div v-if="item.childrenList">
+                            <!-- <div class="h-36px w-230px  cursor-pointer flex items-center pl-18px">
+                                <span>{{ item.name }}</span> <span>
+                                    <el-icon :size="18" class="cursor-pointer ml-10px">
+                                        <CirclePlus />
+                                    </el-icon>
+                                </span>
+                            </div> -->
+                            <div @dragstart.stop="dragstart($event, i)"
+                                @dragend.stop="dragend($event, i)" :draggable="true"
+                                class="h-36px w-230px drag-box cursor-pointer flex items-center pl-18px"
+                                v-for="i in item.childrenList">{{ i.name }}</div>
+                        </div>
+                        <div @dragstart.stop="dragstart($event, item)"
+                            @dragend.stop="dragend($event, item)" :draggable="true"
+                            class="h-36px w-230px cursor-pointer flex items-center pl-18px" v-else>
+                            {{ item.name }}
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -33,6 +49,7 @@ import { queryAlgoDetail } from '@/api/algorithm'
 import { useExpertMode } from '@/stores'
 import { MAX_NODES } from '@/config/constants'
 import { ElMessage } from 'element-plus'
+import { CirclePlus } from '@element-plus/icons-vue'
 const route = useRoute()
 const { t, locale } = useI18n()
 
@@ -48,7 +65,7 @@ const props = defineProps({
 })
 
 const dragstart = (e: any, item: any) => {
-    if (props.isSettingCompleted) return
+    if (props.isSettingCompleted || item.childrenList) return
     useExpertMode().setDotted(true)
 }
 
@@ -66,13 +83,13 @@ const tabList = ref([
     {
         key: 1,
         name: '',
-        label: t('computing.privacyComputing'),
+        label: t('computing.privacy'),
         value: 'privacy'
     },
     {
         key: 2,
         name: '',
-        label: t('computing.nonPrivacyComputing'),
+        label: t('computing.nonPrivacy'),
         value: 'nonPrivacy'
     },
 ])
@@ -84,7 +101,7 @@ watch(isInEdit, () => {
 })
 
 const dragend = async (e: any, item: any) => {
-    if (props.isSettingCompleted || props.isReadonly) return
+    if (props.isSettingCompleted || props.isReadonly || item.childrenList) return
     useExpertMode().setDotted(false)
     const inBoxFlag = isBoxInStage(e)
     if (!inBoxFlag) return
@@ -95,7 +112,6 @@ const dragend = async (e: any, item: any) => {
     } else {
 
         // 是否是PSI 暂定1001是PSI PSI的长度只有一个 且PSI没有自变量和因变量
-
         if ((item.id === 1001 && nodeList.value.length > 0) || nodeList.value.length >= MAX_NODES) {
             return ElMessage.error(t('task.exceedMaxNode'))
         } else if (!!isPSIModel.value) {
@@ -130,9 +146,10 @@ const dragend = async (e: any, item: any) => {
                 workflowId: workflowId || '',
                 workflowVersion: workflowVersion || ''
             }
-            if (item.id === 1001) {
-                useExpertMode().setIsPSIModel(true)
-            }
+
+            // 0-密文  1-明文
+            useExpertMode().setIsPrivacy(item.isPrivacy === 0)
+            useExpertMode().setIsPSIModel(item.id === 1001)
             useExpertMode().addNodeList(params)
         }
     }
@@ -179,12 +196,16 @@ const queryAlgoList = () => {
         const { data, code } = result
         if (code === 10000) {
             target = []
-            const arr = filterTree(data.childrenList)
-            data.childrenList.forEach((item: any) => {
-                if (item.id === 2) {
-                    item.childrenList = arr
-                }
-            })
+            console.log('处理签', data.childrenList);
+
+            // const arr = filterTree(data.childrenList)
+            // console.log(arr);
+
+            // data.childrenList.forEach((item: any) => {
+            //     if (item.id === 2000) {
+            //         item.childrenList = arr
+            //     }
+            // })
             algoList.value = data.childrenList
         }
     }).catch(err => {

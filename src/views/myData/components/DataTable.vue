@@ -9,25 +9,33 @@
       :label="t('myData.dataProvider')">
       <template #default="{ row }">
         <div class="flex">
-          <Stamp :type="'node'" :content="$t('node.credibleOrganization')" />
+          <CertificationLabel :obj="row" />
           <p class="w-120px ellipse cursor-pointer pl-10px" @click="linkToNode(row)">{{
               row.nodeName
           }}</p>
         </div>
       </template>
     </el-table-column>
-    <el-table-column :class-name="'show-ellipsis-tooltip'" prop="tokenName"
-      :label="t('myData.credentialName')" />
-    <el-table-column :class-name="'show-ellipsis-tooltip'" :label="t('auth.holdQuantity')">
+    <el-table-column :class-name="'show-ellipsis-tooltip'" :label="t('myData.dataSize')">
       <template #default="{ row }">
-        <div v-if="row.authorizeBalance">{{ useExchangeFrom(row.tokenBalance) }}</div>
-        <div v-else>-</div>
+        <div>
+          {{ useSize(row.size) }}
+        </div>
       </template>
     </el-table-column>
-    <el-table-column :class-name="'show-ellipsis-tooltip'" :label="t('workflow.authorizeBalance')">
+    <el-table-column :class-name="'show-ellipsis-tooltip'" :label="t('myData.industryData')">
       <template #default="{ row }">
-        <div v-if="row.authorizeBalance">{{ useExchangeFrom(row.authorizeBalance) }}</div>
-        <div v-else>-</div>
+        <div>{{ $t(`${enums.industry[row.industry]}`) }}</div>
+      </template>
+    </el-table-column>
+    <el-table-column :class-name="'show-ellipsis-tooltip'" :label="t('myData.useScene')">
+      <template #default="{ row }">
+        <div>
+          <el-space wrap :size="10" :spacer="(row.isSupportPtAlg && row.isSupportCtAlg) ? '|' : ''">
+            <span>{{ row.isSupportPtAlg ? $t('expert.plaintext') : '' }}</span>
+            <span>{{ row.isSupportCtAlg ? $t('expert.cipherText') : '' }}</span>
+          </el-space>
+        </div>
       </template>
     </el-table-column>
     <!-- <el-table-column :class-name="'show-ellipsis-tooltip'" prop="tokenPrice" :label="t('myData.price')" /> -->
@@ -47,7 +55,9 @@
 </template>
 <script lang="ts" setup>
 import { type Router, useRouter } from 'vue-router'
-import { useExchangeFrom } from '@/hooks'
+import { useExchangeFrom, useSize } from '@/hooks'
+import { useKeepAliveInfo } from '@/stores'
+import { enums } from '@/utils/enum'
 const chainCfg: any = inject('chainCfg')
 const router: Router = useRouter()
 const { t } = useI18n()

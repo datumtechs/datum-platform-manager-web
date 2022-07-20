@@ -47,6 +47,7 @@
             </template>
         </el-table-column>
     </el-table>
+    <TaskStarter v-model:show="starter.show" :content="starter.content" :title="starter.title" />
 </template>
 <script lang="ts" setup>
 import { ElMessageBox, ElMessage } from 'element-plus'
@@ -56,7 +57,11 @@ import { useFormatTime, useTableIndex } from '@/hooks'
 
 const emit = defineEmits(['query'])
 const { t } = useI18n()
-
+const starter: any = reactive({
+    show: true,
+    content: "11111111111",
+    title: "111111"
+})
 
 const indexMethod = (index: number) => useTableIndex(index, props.current, props.size)
 const router: Router = useRouter()

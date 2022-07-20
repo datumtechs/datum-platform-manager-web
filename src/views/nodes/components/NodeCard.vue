@@ -8,7 +8,7 @@
         </div>
         <div class="w-230px table-box">
             <div class="flex">
-                <Stamp :type="'node'" :content="$t('node.credibleOrganization')" />
+                <CertificationLabel :obj="node" />
                 <p class="deep-title font-bold w-120px ellipse cursor-pointer pl-10px"
                     @click="linkToDetail">
                     {{ node.nodeName }}
