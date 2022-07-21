@@ -23,7 +23,7 @@ export default defineStore('expertMode', {
         disableOrg: [],
         showPanel: false,
         isPSIModel: false,
-        isPrivacy: true
+        isPrivacy: true,
     }),
     getters: {
         getDotted: state => state.showDotted,
@@ -83,6 +83,12 @@ export default defineStore('expertMode', {
         setSender(data: any) {
             this.workflowNodeSenderIdentityId = data
             this.nodeList[this.curNodeIndex].nodeInput.identityId = data
+        },
+        setComputingProvider(data: any) {
+            this.nodeList[this.curNodeIndex].nodeInput.powerIdentityId = data
+        },
+        setComputingType(data: any) {
+            this.nodeList[this.curNodeIndex].nodeInput.powerType = data // 	算力提供方式 0-随机 1-指定
         },
         setUserOrgList(data: any) {
             this.orgList = data

@@ -1,16 +1,15 @@
 <template>
     <div class="my-60px com-main-data-wrap">
         <div class="committee-wrapper">
-            <div class="committee-box" v-for="box in 9">
-                <el-avatar :size="45" src="https://empty" @error="errorHandler" />
+            <div class="committee-box" v-for="box in authorityList">
+                <el-avatar :size="45" :src="box.imageUrl" @error="errorHandler" />
                 <p class="mt-10px text-[#000] font-bold text-16px leading-22.4px">
-                    <span>{{ $t('workflow.orgName')
-                    }}</span>
-                    <span>{{}}</span>
+                    <span>{{ $t('workflow.orgName') }}:</span>
+                    <span class="ml-8px">{{ box.nodeName }}</span>
                 </p>
                 <p class="mt-4px text-[#5D5C65] text-12px leading-16.8px">
-                    <span>{{ $t('center.joinTime') }}</span>
-                    <span>{{}}</span>
+                    <span>{{ $t('center.joinTime') }}:</span>
+                    <span class="ml-8px">{{ useFormatTime(box.authorityJoinTime) }}</span>
                 </p>
             </div>
 
@@ -24,9 +23,10 @@
 
 <script setup lang='ts'>
 import { getAuthorityList } from '@/api/publicity'
+import { useFormatTime } from '@/hooks'
 
 const { t } = useI18n()
-const authorityList = ref([])
+const authorityList = ref(<any>[])
 const queryAuthList = () => {
     getAuthorityList({
         current: pageObj.current,
@@ -60,8 +60,9 @@ onMounted(() => {
     .committee-box {
         width: 328px;
         height: 138px;
-        border: 1px solid #eeeeee;
+        border: 1px solid #EBEEF9;
         padding: 20px;
+        // box-shadow: 1px 1px 1px #eee;
     }
 }
 </style>

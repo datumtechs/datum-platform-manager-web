@@ -107,18 +107,19 @@ const curNodeId = computed(() => useExpertMode().getCurNodeId)
 const curNodeIndex = computed(() => useExpertMode().getCurNodeIndex)
 const workflowId = computed(() => route.params.workflowId)
 const workflowVersion = computed(() => route.params.workflowVersion)
-
 const showDot = computed(() => useExpertMode().getDotted)
+const isPrivacy = computed(() => useExpertMode().isPrivacy)
+
 
 const nodeList: any = computed(() => useExpertMode().getNodeList)
 
 const judgeMentParams = () => {
     let flag = true
-
     if (!nodeList.value.length) {
         ElMessage.error(t('expert.saveHint'))
         flag = false
     } else {
+
         for (let i = 0; i < nodeList.value.length; i++) {
             if (!nodeList.value[i].nodeInput?.identityId) {
                 ElMessage.error(t('expert.saveInputHint'))
@@ -137,17 +138,20 @@ const judgeMentParams = () => {
                 return
             } else {
                 const inputArray = nodeList.value[i].nodeInput.dataInputList
+
+                if (isPrivacy.value && inputArray.length !== 2) {
+                    // 如果隐私计算 却没有2个对手方
+                    ElMessage.error(t('expert.saveInputParamsHint'))
+                    flag = false
+                    return
+                }
+
                 for (let index = 0; index < inputArray.length; index++) {
                     if (Object.keys(inputArray[index]).length === 0) {
                         ElMessage.error(t('expert.saveInputParamsHint'))
                         flag = false
                         return
                     }
-                }
-                if (inputArray.length !== 2) {
-                    ElMessage.error(t('expert.saveInputParamsHint'))
-                    flag = false
-                    return
                 }
                 for (let j = 0; j < inputArray.length; j++) {
                     if (inputArray[j].dataColumnIds && inputArray[j].dataColumnIds.length === 0) {

@@ -47,7 +47,7 @@
             </template>
         </el-table-column>
     </el-table>
-    <TaskStarter v-model:show="starter.show" :content="starter.content" :title="starter.title" />
+    <!-- <TaskStarter v-model:show="starter.show" :content="starter.content" :title="starter.title" /> -->
 </template>
 <script lang="ts" setup>
 import { ElMessageBox, ElMessage } from 'element-plus'

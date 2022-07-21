@@ -215,7 +215,8 @@ const en = {
     featureTips: "In supervised learning, the relationship between feature (x) and actual label (y) is found to predict y when x is provided.",
     resultReceiverTips: "The result receiver is a trusted node used to store the calculation result file, and the node can provide users with the function of viewing / downloading the results later.",
     runSucceed: 'The task run successfully',
-    runFailed: 'The task run failed'
+    runFailed: 'The task run failed',
+    selectComputingProvider: 'Please select a computing provider'
   },
   myData: {
     tasksBriefInfoFirstParagraph: " ",
@@ -380,7 +381,11 @@ const en = {
     saveStatusErrorHint: 'The current page state is incorrect and cannot be saved, please try again',
     saveEnvInputHint: 'Please complete the configuration of the algorithm environment',
     paramsHint: 'Better calculation results can be obtained by adjusting algorithm variables',
-    saveOutputHint: 'Please select the algorithm output'
+    saveOutputHint: 'Please select the algorithm output',
+    randomModel: 'Random Mode',
+    specifyMode: 'Specify Mode',
+    compositeWorkflow: 'Drag the algorithm below to the middle area to combine the workflow you need',
+    cleanNodeTips: 'You already have algorithm nodes in your workflow, switch the privacy type will clear the nodes of current workflow '
   },
   role: {
     taskSponsor: 'Task sponsor',

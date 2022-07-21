@@ -287,6 +287,10 @@ const rules = ref(
     padding: 28px 32px 20px;
 }
 
+:deep(.el-dialog__body) {
+    padding: 10px 32px;
+}
+
 :deep(.el-form-item--default) {
     margin-bottom: 10px;
 }

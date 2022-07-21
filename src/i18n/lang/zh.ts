@@ -216,6 +216,7 @@ const zh = {
     resultReceiverTips: "结果接收方是用于存储本次计算结果文件的可信任节点，节点后续可提供给用户查看/下载结果的功能。",
     runSucceed: '任务运行成功',
     runFailed: '任务运行失败',
+    selectComputingProvider: '请选择算力提供方'
   },
   myData: {
     tasksBriefInfoFirstParagraph: "全网共",
@@ -380,7 +381,11 @@ const zh = {
     saveStatusErrorHint: '当前页面状态不正确, 无法保存,请重试',
     saveEnvInputHint: '请完成算法环境的配置',
     paramsHint: '调整算法变量，可以获取更好的计算结果',
-    saveOutputHint: '请选择算法输出方'
+    saveOutputHint: '请选择算法输出方',
+    randomMode: '随机选择',
+    specifyMode: '指定模式',
+    compositeWorkflow: '将下方算法拖拽至中间区域组合您所需要的工作流',
+    cleanNodeTips: '您当前工作流中已有节点,切换隐私类型将会清空当前工作流节点,是否继续?'
   },
   role: {
     taskSponsor: '任务发起方',

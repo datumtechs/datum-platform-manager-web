@@ -103,6 +103,7 @@ const queryNodeSetting = () => {
   }).then(res => {
     const { code, data } = res
     if (code === 10000) {
+      useExpertMode().setIsPrivacy(data.workflowNodeList[0].alg.type === 0)
       useExpertMode().setNodeList(data.workflowNodeList)
     }
   })

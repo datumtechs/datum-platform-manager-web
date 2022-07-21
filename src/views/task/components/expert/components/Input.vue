@@ -29,10 +29,29 @@
                     }" @change="e => { changeModelValue(e) }"></el-cascader>
             </p>
         </div>
+        <div class="mt-40px" v-if="!isPrivacy">
+            <p class="text-color-[#333] font-medium">
+                {{ `${t('role.powerProvider')}` }}
+            </p>
+            <div class="mt-10px">
+                <el-radio-group v-model="powerType" @change="handleComputingRadio">
+                    <el-radio :label="0" size="large">{{ $t('expert.randomMode') }}</el-radio>
+                    <el-radio :label="1" size="large">{{ $t('expert.specifyMode') }}</el-radio>
+                </el-radio-group>
+                <el-select v-if="powerType === 1" class="w-full" v-model="computingProvider"
+                    size="small" :disabled="props.isSettingCompleted || props.isReadonly" filterable
+                    :placeholder="t('task.selectComputingProvider')"
+                    @change="handleComputingSelectChange">
+                    <el-option v-for="node in baseOrgList" :key="node.identityId"
+                        :label="node.nodeName" :value="node.identityId"></el-option>
+                </el-select>
+            </div>
+        </div>
         <div v-for="(item, index) in selectLayout" :key="index" class="mt-40px">
             <p class="text-color-[#333] font-medium">
-                {{ `${t('role.dataProvider')}-${index + 1}` }}
-                <!-- TODO 改名称为数据提供方 -->
+                {{ isPrivacy ? `${t('role.dataProvider')}-${index + 1}`
+                        : `${t('role.dataProvider')}`
+                }}
             </p>
             <el-cascader clearable class="w-full mt-10px" :key="cascaderKey[index]"
                 v-model="inputValue[index]" :disabled="props.isSettingCompleted || props.isReadonly"
@@ -56,24 +75,34 @@ import { useExpertMode } from '@/stores'
 import Transfer from './Transfer.vue'
 import { queryUserDataList, queryDataDetails, getUserModelList } from '@/api/data'
 
+const store = useExpertMode()
+
 const { t } = useI18n()
 const modelKey = ref(-1)
 const taskSender = ref('')
+const powerType = ref(0)
+
 const algorithm: any = computed(() => useExpertMode().getAlgorithm)
 const orgList: any = computed(() => useExpertMode().getUserOrgList)
 const baseOrgList: any = computed(() => useExpertMode().getBaseOrgList)
 const showModel: any = computed(() => algorithm.value.inputModel)
 const inputVoList: any = computed(() => useExpertMode().getInputVoList)
 const nodeList: any = computed(() => useExpertMode().getNodeList)
+const isPrivacy: any = computed(() => useExpertMode().isPrivacy)
 const workflowNodeSenderIdentityId: any = computed(() => useExpertMode().getWorkflowNodeSender)
 
+
+// const baseOrgList: any = store.baseOrgList
+
+
 let selectLayout: any = ref([{ item: '111', value: '111', }])
-const minLen = 2
+let minLen = 2
 
 const cascaderKey: any = ref([])
 const inputValue: Ref<any[]> = ref([] as any[])
 
 const columnsList: any = ref([])
+const computingProvider: any = ref('')
 
 let columnsRef: any = []
 
@@ -127,7 +156,11 @@ const saveToStore = (transferIndex: any) => {
 }
 
 const initInputPanel = () => {
+    minLen = isPrivacy.value ? 2 : 1
     selectLayout.value = Array(minLen).fill({})
+    if (!isPrivacy.value) {
+        useExpertMode().setComputingType(0)
+    }
 }
 
 const changeInputValue = (item: any, index: number) => {
@@ -221,6 +254,15 @@ const inputLazyLoad = async (node: any, resolve: any, index: number) => {
 const handleSenderChange = (value: any) => {
     useExpertMode().setSender(value)
 }
+
+const handleComputingRadio = (value: any) => {
+    useExpertMode().setComputingType(value)
+}
+
+const handleComputingSelectChange = (value: any) => {
+    useExpertMode().setComputingProvider(value)
+}
+
 
 const modelLazyLoad = async (node: any, resolve: any) => {
     const { level } = node

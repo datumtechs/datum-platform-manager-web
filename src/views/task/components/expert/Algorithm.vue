@@ -1,13 +1,14 @@
 <template>
     <div class="w-242px algo-box">
-        <p class="text-18px font-bold mt-17px mb-13px pl-24px">
+        <div class="text-18px font-bold mt-17px mb-13px pl-24px flex">
             {{
                     t('common.algorithmLibrary')
-            }}</p>
+            }}
+            <QuestionMark :content="$t('expert.compositeWorkflow')" />
+        </div>
         <div class="tab-box">
             <div class="tab flex-1 text-left" :class="{ 'active': curTab === item.value }"
-                @click="curTab = item.value; queryAlgoList()" v-for="(item, index) in tabList"
-                :key="index">
+                @click="handleChangeAlgoType(item)" v-for="(item, index) in tabList" :key="index">
                 <p class="pl-24px">{{ item.label }}</p>
             </div>
         </div>
@@ -41,6 +42,11 @@
                 </div>
             </div>
         </div>
+        <CommonDialog v-model:show="show" @submit="submitToChange" :title="$t('account.tips')">
+            <template v-slot:content>
+                {{ $t('expert.cleanNodeTips') }}
+            </template>
+        </CommonDialog>
     </div>
 </template>
 
@@ -49,9 +55,10 @@ import { queryAlgoDetail } from '@/api/algorithm'
 import { useExpertMode } from '@/stores'
 import { MAX_NODES } from '@/config/constants'
 import { ElMessage } from 'element-plus'
-import { CirclePlus } from '@element-plus/icons-vue'
 const route = useRoute()
+const store = useExpertMode()
 const { t, locale } = useI18n()
+const show = ref(false)
 
 const props = defineProps({
     isSettingCompleted: {
@@ -64,6 +71,26 @@ const props = defineProps({
     },
 })
 
+const submitToChange = () => {
+    show.value = false
+    curTab.value = curTab.value === 'privacy' ? 'nonPrivacy' : 'privacy'
+    // TODO clean nodelist
+    store.resetWorkflow()
+    queryAlgoList()
+}
+
+
+const handleChangeAlgoType = (item: any) => {
+    //TODO show confirm before change the tabs
+    if (nodeList.value.length > 0 && curTab.value !== item.value) {
+        show.value = true
+    } else {
+        curTab.value = item.value;
+        queryAlgoList()
+    }
+
+}
+
 const dragstart = (e: any, item: any) => {
     if (props.isSettingCompleted || item.childrenList) return
     useExpertMode().setDotted(true)
@@ -71,6 +98,7 @@ const dragstart = (e: any, item: any) => {
 
 const nodeList = computed(() => useExpertMode().getNodeList)
 const isPSIModel = computed(() => useExpertMode().getIsPSIModel)
+const isPrivacy = computed(() => useExpertMode().isPrivacy)
 
 
 const workflowId = computed(() => route.params.workflowId)
@@ -82,13 +110,11 @@ const curTab = ref('privacy')
 const tabList = ref([
     {
         key: 1,
-        name: '',
         label: t('computing.privacy'),
         value: 'privacy'
     },
     {
         key: 2,
-        name: '',
         label: t('computing.nonPrivacy'),
         value: 'nonPrivacy'
     },
@@ -98,6 +124,12 @@ watch(isInEdit, () => {
     if (isInEdit.value) {
         queryAlgoList()
     }
+})
+
+watch(isPrivacy, () => {
+    console.log(isPrivacy.value);
+    curTab.value = !!isPrivacy.value ? 'privacy' : 'nonPrivacy'
+    queryAlgoList()
 })
 
 const dragend = async (e: any, item: any) => {
@@ -146,9 +178,10 @@ const dragend = async (e: any, item: any) => {
                 workflowId: workflowId || '',
                 workflowVersion: workflowVersion || ''
             }
+            console.log(item.alg.type, 'item.isPrivacy');
 
             // 0-密文  1-明文
-            useExpertMode().setIsPrivacy(item.isPrivacy === 0)
+            useExpertMode().setIsPrivacy(item.alg.type === 0)
             useExpertMode().setIsPSIModel(item.id === 1001)
             useExpertMode().addNodeList(params)
         }
@@ -215,6 +248,7 @@ const queryAlgoList = () => {
 
 onMounted(() => {
     if (isInEdit.value) {
+        curTab.value = !!isPrivacy.value ? 'privacy' : 'nonPrivacy'
         queryAlgoList()
     }
 })
@@ -260,5 +294,17 @@ onMounted(() => {
             }
         }
     }
+}
+
+:deep(.el-dialog__body) {
+    padding: 10px 32px;
+}
+
+:deep(.el-form-item--default) {
+    margin-bottom: 10px;
+}
+
+:deep(.el-input__inner) {
+    border-radius: 24px;
 }
 </style>
