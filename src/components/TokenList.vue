@@ -1,20 +1,36 @@
 <template>
-    <el-dialog custom-class="tokenDialog" v-model="showDialog" :title="props.title" :width="'871px'"
-        @close="emits('update:showDialog', false)">
+    <el-dialog custom-class="tokenDialog" append-to-body v-model="showDialog" :title="props.title"
+        :width="'871px'" @close="emits('update:showDialog', false)">
         <div class="token-table-box">
             <p class="token-table-box-title font-bold">{{ $t('common.noAttributeCredential') }}</p>
-            <el-table :data="nfTokenData">
+            <el-table v-loading="ftLoading" :data="nfTokenData">
                 <el-table-column type="index" width="80" :label="$t('common.num')">
                 </el-table-column>
                 <el-table-column prop="tokenName" :label="$t('myData.credentialName')">
                 </el-table-column>
-                <el-table-column props="tokenSymbol" :label="$t('myData.credentialSymbol')">
+                <el-table-column prop="tokenSymbol" :label="$t('myData.credentialSymbol')">
                 </el-table-column>
-                <el-table-column props="holdings" :label="$t('myData.holdings')">
+                <el-table-column :label="$t('myData.taskConsumption')">
+                    <template #default="{ row }">
+                        <div>
+                            <p v-if="row.erc20PtAlgConsume">
+                                <span>{{ $t('expert.plaintext') }}:</span>
+                                <span class="pl-8px">{{ useExchangeFrom(row.erc20PtAlgConsume,
+                                        row.tokenDecimal)
+                                }}</span>
+                            </p>
+                            <p v-if="row.erc20CtAlgConsume">
+                                <span>{{ $t('expert.cipherText') }}:</span>
+                                <span class="pl-8px">{{ useExchangeFrom(row.erc20CtAlgConsume,
+                                        row.tokenDecimal)
+                                }}</span>
+                            </p>
+                        </div>
+                    </template>
                 </el-table-column>
                 <el-table-column :label="$t('common.actions')">
-                    <template>
-                        <span class="font-medium  leading-20px link-btn" @click="">{{
+                    <template #default="{ row }">
+                        <span class="font-medium  leading-20px link-btn" @click="purchaseFT(row)">{{
                                 $t('common.purchase')
                         }}</span>
                     </template>
@@ -23,21 +39,60 @@
         </div>
         <div class="token-table-box">
             <p class="token-table-box-title font-bold">{{ $t('common.attributeCredential') }}</p>
-            <el-table :data="nftTokenData">
+            <el-table v-loading="nftLoading" :data="nftTokenData">
                 <el-table-column type="index" width="80" :label="$t('common.num')">
                 </el-table-column>
                 <el-table-column prop="tokenName" :label="$t('myData.credentialName')">
                 </el-table-column>
-                <el-table-column prop="credentialId" :label="$t('common.credentialId')">
+                <el-table-column :label="$t('common.credentialId')">
+                    <template #default="{ row }">
+                        <div>
+                            {{ `# ${row.tokenId}` }}
+                        </div>
+                    </template>
                 </el-table-column>
-                <el-table-column prop="period" :label="$t('common.period')"></el-table-column>
+                <el-table-column :label="$t('common.period')">
+                    <template #default="{ row }">
+                        <div>
+                            {{ useFormatTime(+row.characteristic) }}
+                        </div>
+                    </template>
+                </el-table-column>
+                <el-table-column :label="$t('myData.useScene')">
+                    <template #default="{ row }">
+                        <el-space wrap :size="10"
+                            :spacer="(row.isSupportPtAlg && row.isSupportCtAlg) ? '|' : ''">
+                            <span>{{ row.isSupportPtAlg ? $t('expert.plaintext') : '' }}</span>
+                            <span>{{ row.isSupportCtAlg ? $t('expert.cipherText') : '' }}</span>
+                        </el-space>
+                    </template>
+                </el-table-column>
+                <el-table-column :label="$t('common.actions')">
+                    <template #default="{ row }">
+                        <el-popover placement="top" :title="$t('myData.selectExchange')"
+                            :width="100" trigger="hover">
+                            <img class="w-39px h-39px cursor-pointer" :src="tofun" alt=""
+                                @click="linkToExchange">
+                            <template #reference>
+                                <span class="font-medium  leading-20px link-btn">{{
+                                        $t('common.purchase')
+                                }}</span>
+                            </template>
+                        </el-popover>
+                    </template>
+                </el-table-column>
             </el-table>
         </div>
     </el-dialog>
 </template>
 
 <script setup lang='ts'>
+import { getNoAttributeCredential, getAttributeCredential } from '@/api/data'
+import { useExchangeFrom, useFormatTime } from '@/hooks'
+import tofun from '@/assets/images/market/tofun.png'
+const chainCfg: any = inject('chainCfg')
 const { t } = useI18n()
+
 const props = defineProps({
     showDialog: {
         type: Boolean,
@@ -47,16 +102,70 @@ const props = defineProps({
         type: String,
         default: ''
     },
-    nfTokenData: {
-        type: Array,
-        default: () => []
-    },
-    nftTokenData: {
-        type: Array,
-        default: () => []
+    id: {
+        type: String,
+        default: ''
     }
 })
 const emits = defineEmits(['update:showDialog'])
+const nfTokenData = ref(<any>[])
+const nftTokenData = ref(<any>[])
+
+const ftLoading = ref(false)
+const nftLoading = ref(false)
+
+const pageObj = reactive({
+    current: 1,
+    size: 10,
+    total: 0
+})
+
+const purchaseFT = (row: any) => {
+    const dexUrl = `${chainCfg.value.dexUrl}swap?outputCurrency=${row.tokenAddress}&exactField=OUTPUT&exactAmount=1`
+    //TODO dex
+    window.open(dexUrl, "_blank");
+}
+
+const linkToExchange = (row: any) => {
+    const dexUrl = `${chainCfg.value.tofunftUrl}` //swap?outputCurrency=${row.tokenAddress}&exactField=OUTPUT&exactAmount=1`
+    //TODO dex
+    window.open(dexUrl, "_blank");
+}
+
+const queryFT = () => {
+    ftLoading.value = true
+    getNoAttributeCredential({ metaDataId: props.id }).then(res => {
+        ftLoading.value = false
+        const { data, code } = res
+        if (code === 10000) {
+            nfTokenData.value = [data]
+        }
+    }).catch(err => {
+        ftLoading.value = false
+    })
+}
+
+const queryNFT = () => {
+    nftLoading.value = true
+    getAttributeCredential({ metaDataId: props.id, size: pageObj.size, current: pageObj.current }).then(res => {
+        nftLoading.value = false
+        const { data, code } = res
+        if (code === 10000) {
+            nftTokenData.value = data.items
+            pageObj.total = data.total
+        }
+    }).catch(err => {
+        nftLoading.value = false
+    })
+}
+
+
+onMounted(() => {
+    queryFT()
+    queryNFT()
+})
+
+
 </script>
 
 <style scoped lang='scss'>

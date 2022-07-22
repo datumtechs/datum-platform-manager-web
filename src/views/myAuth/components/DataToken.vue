@@ -63,7 +63,7 @@
                 :total="pageObj.total" /> -->
         <el-dialog v-model="showAuthDialog" :width="480" :destroy-on-close="true">
             <template #title>
-                <div class="flex items-center mb-24px">
+                <div class="flex items-center">
                     <img class="w-24px h-24px" src="@/assets/images/auth/sigh.png" alt="">
                     <p class="pl-8px"> {{ t('auth.plzInputAuthTokenNumber') }}</p>
                 </div>
@@ -89,38 +89,6 @@
                 </div>
             </template>
         </el-dialog>
-        <!-- <el-dialog v-model="showCancelDialog" :title="t('auth.cancelTokenAuth')" :width="480"
-            :destroy-on-close="true">
-            <template #title>
-                <div class="flex items-center mb-24px">
-                    <img class="w-24px h-24px" src="@/assets/images/auth/sigh.png" alt="">
-                    <p class="pl-8px"> {{ t('auth.cancelTokenAuth') }}</p>
-                </div>
-            </template>
-            <div class="flex items-center mb-24px">
-                <p class="pl-32px break-word" v-if="locale === 'zh'"> 将&nbsp;
-                    <span class="text-color-[#2B60E9]">{{
-                        currentToken.tokenName
-                    }}</span>
-                    &nbsp;的授权数量重置为0.
-                </p>
-                <p class="pl-32px break-word" v-else> Reset the authorized quantity of <span
-                        class="text-color-[#2B60E9]">{{
-                            currentToken.tokenName
-                        }}</span>
-                    to 0.</p>
-            </div>
-            <template #footer>
-                <div>
-                    <el-button class="w-100px" style="height: 32px;" round
-                        @click="showCancelDialog = false">{{
-                            t('common.cancel')
-                        }}</el-button>
-                    <el-button class="w-100px" style="height: 32px;" round type="primary"
-                        @click="cancelConfirm">{{ t('common.confirm') }}</el-button>
-                </div>
-            </template>
-        </el-dialog> -->
         <GlobalPending v-model:show="pending.show" :content="pending.content"
             :title="pending.title" />
     </div>
@@ -283,12 +251,12 @@ const rules = ref(
         line-height: 24px;
     }
 
-    height:72px;
-    padding: 28px 32px 20px;
+    // height:72px;
+    // padding: 28px 32px 20px;
 }
 
 :deep(.el-dialog__body) {
-    padding: 10px 32px;
+    padding: 20px 32px;
 }
 
 :deep(.el-form-item--default) {

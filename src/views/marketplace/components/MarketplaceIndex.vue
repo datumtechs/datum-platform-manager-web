@@ -11,6 +11,7 @@ const { t, locale } = useI18n()
 const router = useRouter()
 const route = useRoute()
 const currentDataName = ref('')
+const currentMetadataId = ref('')
 
 
 const chainCfg: any = inject('chainCfg')
@@ -84,9 +85,11 @@ const purchase = (row: any) => {
     //TODO dex
     // window.open(dexUrl, "_blank");
     currentDataName.value = row.metaDataName
-    showDialog.value = !showDialog.value
+    currentMetadataId.value = row.metaDataId
 
+    showDialog.value = !showDialog.value
 }
+
 const linkToViewData = (row: any) => {
     router.push({
         path: '/marketplace/dataOverview',
@@ -274,8 +277,8 @@ onMounted(() => {
                 </el-select> -->
             </template>
         </Search>
-        <TokenList :title="`${$t('common.buyCredential')} - ${currentDataName}`"
-            v-model:showDialog="showDialog" />
+        <TokenList v-if="showDialog" :title="`${$t('common.buyCredential')} - ${currentDataName}`"
+            :id="currentMetadataId" v-model:showDialog="showDialog" />
     </div>
 </template>
 

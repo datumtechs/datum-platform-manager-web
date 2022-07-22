@@ -2,7 +2,7 @@
   <el-dialog :model-value="props.loginShow" :append-to-body="true" :width="400" :top="'30vh'"
     ref="dialog" :destroy-on-close="true" :close-on-click-modal="false"
     :close-on-press-escape="false" @close="emit('loginShowChange')">
-    <template #header>
+    <template #title>
       <p class="text-[18px] font-bold">{{ t('head.loginDialogTitle') }}</p>
     </template>
     <div v-if="!isWallet">

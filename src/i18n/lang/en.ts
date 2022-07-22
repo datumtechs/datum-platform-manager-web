@@ -92,7 +92,7 @@ const en = {
     editNickname: 'Modify Nickname',
     nickname: "Nickname",
     nodeManagement: 'Node Management',
-    loginDialogTitle: "Metamask Extension",
+    loginDialogTitle: "Select Login Wallet",
     install: "install",
     installTipOne: 'One-click blockchain application',
     installTipTwo: 'Privacy Preserved Locally',
@@ -254,7 +254,9 @@ const en = {
     credentialPriceTips: "The price is for reference only. Please refer to the exchange for the real price",
     useScene: "Use Scenes",
     holdings: "Holdings",
-    viewHoldingCredentials: "View Holding Credentials"
+    viewHoldingCredentials: "View Holding Credentials",
+    taskConsumption: 'Task Consumption',
+    selectExchange: 'Select Exchange'
   },
   workflow: {
     workflowName: "Workflow Name",

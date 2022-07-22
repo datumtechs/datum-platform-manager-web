@@ -229,8 +229,6 @@ const queryAlgoList = () => {
         const { data, code } = result
         if (code === 10000) {
             target = []
-            console.log('处理签', data.childrenList);
-
             // const arr = filterTree(data.childrenList)
             // console.log(arr);
 

@@ -92,7 +92,7 @@ const zh = {
     nickname: "昵称",
     editNickname: '修改昵称',
     nodeManagement: '网络节点管理',
-    loginDialogTitle: "Metamask 扩展",
+    loginDialogTitle: "选择登陆钱包",
     install: "安装",
     installTipOne: "一键连接区块链应用",
     installTipTwo: "账户隐私保留在本地"
@@ -254,7 +254,9 @@ const zh = {
     credentialPriceTips: "展示价格仅供参考，真实价格请参考交易所",
     useScene: "使用场景",
     holdings: "持有量",
-    viewHoldingCredentials: "查看持有凭证"
+    viewHoldingCredentials: "查看持有凭证",
+    taskConsumption: '任务消耗量',
+    selectExchange: '选择交易所'
   },
   workflow: {
     workflowName: "工作流名称",

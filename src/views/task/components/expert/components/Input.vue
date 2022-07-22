@@ -34,7 +34,8 @@
                 {{ `${t('role.powerProvider')}` }}
             </p>
             <div class="mt-10px">
-                <el-radio-group v-model="powerType" @change="handleComputingRadio">
+                <el-radio-group :disabled="props.isSettingCompleted || props.isReadonly"
+                    v-model="powerType" @change="handleComputingRadio">
                     <el-radio :label="0" size="large">{{ $t('expert.randomMode') }}</el-radio>
                     <el-radio :label="1" size="large">{{ $t('expert.specifyMode') }}</el-radio>
                 </el-radio-group>
@@ -137,6 +138,7 @@ const clearSender = () => {
     taskSender.value = ""
 }
 
+// 当选择数据字段时保存至store
 const saveToStore = (transferIndex: any) => {
     const columnObj = columnsRef[transferIndex].getList()
     const columnLists = Array(2).fill({})
@@ -158,9 +160,9 @@ const saveToStore = (transferIndex: any) => {
 const initInputPanel = () => {
     minLen = isPrivacy.value ? 2 : 1
     selectLayout.value = Array(minLen).fill({})
-    if (!isPrivacy.value) {
-        useExpertMode().setComputingType(0)
-    }
+    // if (!isPrivacy.value) {
+    //     useExpertMode().setComputingType(0)
+    // } 在save的时候再存
 }
 
 const changeInputValue = (item: any, index: number) => {
@@ -211,7 +213,7 @@ const isCurrentSelectDisabled = (org: any, index: number) => {
 const inputValueOrg = computed(() => inputValue.value.map((item: any) => item?.[0]))
 
 const inputLazyLoad = async (node: any, resolve: any, index: number) => {
-    const { level, data } = node
+    const { level } = node
     try {
         let nodes
         if (level === 0) {
@@ -331,6 +333,7 @@ const handleInputValue = async () => {
         selectLayout = inputVoList
         const orgs = baseOrgList.value.map((item: any) => item.identityId)
         inputVoList.value.map((item: any, index: number) => {
+            //TODO 处理回显
             if (orgs.includes(item.identityId)) {
                 res[index] = [
                     item.identityId,
@@ -343,6 +346,21 @@ const handleInputValue = async () => {
                 })
             }
         })
+
+        //inputVoList 拿不到 computingProvider
+        if (!isPrivacy.value) {
+            const curInput = nodeList.value[curNodeIndex.value]?.nodeInput
+            console.log('curInput', curInput);
+
+            if (curInput) {
+                powerType.value = curInput.powerType
+                if (powerType.value && curInput.powerIdentityId) {
+                    computingProvider.value = curInput.powerIdentityId
+                }
+            }
+        }
+
+
         if (showModel.value) {
             const node = nodeList.value[curNodeIndex.value]?.nodeInput?.model
             if (node.metaDataId === 'frontNodeOutput') {
@@ -351,8 +369,13 @@ const handleInputValue = async () => {
                 modelValue.value = [node?.identityId, node?.metaDataId,]
             }
         }
+
         inputValue.value = res
         upInputKeys()
+    } else {
+        if (!isPrivacy.value) {
+            useExpertMode().setComputingType(0)
+        }
     }
 }
 const handleCascaderKey = () => {

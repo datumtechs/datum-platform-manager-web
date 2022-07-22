@@ -69,6 +69,7 @@ export default defineStore('expertMode', {
             this.curModel = this.nodeList[this.curNodeIndex]['model'] || ''
             this.workflowNodeSenderIdentityId = this.nodeList[this.curNodeIndex].nodeInput.identityId || ''
             this.workflowNodeInputVoList = this.nodeList[this.curNodeIndex].nodeInput.dataInputList || []
+            // identityId Array
             this.workflowNodeOutputVoList = this.nodeList[this.curNodeIndex].nodeOutput.identityId || []
         },
         setEnvByType(data: any) {

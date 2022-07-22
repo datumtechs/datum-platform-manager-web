@@ -7,8 +7,9 @@
     <div class="flex items-center text-14px">
       <div class="mr-15px text-color-[#666666] font-medium w-135px">{{ $t('task.selectSponsor') }} ：
       </div>
-      <el-select v-model="identityId" :suffix-icon="CaretBottom" :placeholder="$t('task.selectSponsor')"
-        :disabled="taskParams.isSettingCompleted" style="flex:0 0 440px" popper-class="max-width"
+      <el-select v-model="identityId" :suffix-icon="CaretBottom"
+        :placeholder="$t('task.selectSponsor')" :disabled="taskParams.isSettingCompleted"
+        style="flex:0 0 440px" popper-class="max-width"
         class="h-40px rounded-20px border-1 basis-1/2 border-solid border-color-[#EEEEEE]">
         <el-option v-for="(v) in props.orgList" :label="v.nodeName" :value="v.identityId">
         </el-option>
@@ -18,21 +19,23 @@
       <div class="mr-20px text-color-[#666666] font-medium w-130px">{{ $t('task.selectModel') }} ：
       </div>
       <el-cascader clearable :disabled="taskParams.isSettingCompleted"
-        class="h-40px rounded-20px border-1 w-440px border-solid  border-color-[#EEEEEE]" :suffix-icon="CaretBottom"
-        v-model="model" :options="optionsList" :props="cascaderProps" />
+        class="h-40px rounded-20px border-1 w-440px border-solid  border-color-[#EEEEEE]"
+        :suffix-icon="CaretBottom" v-model="model" :options="optionsList" :props="cascaderProps" />
     </div>
     <!-- {{model}} -->
     <div class="flex items-center text-14px mt-20px">
       <div class="mr-20px text-color-[#666666] font-medium w-130px">{{ $t('task.PSI') }} ：</div>
       <el-switch v-model="psi" :disabled="taskParams.isSettingCompleted" />
     </div>
-    <TaskParamsTransfer :fieldType="[props.fieldType[0], props.fieldType[2]]" :sellectionAlgPsi="true"
-      :disabledData="psiInputTwo?.metaData" :key="'input'" @update:params="psiInputOne = $event"
-      :taskParams="props.taskParams" :params="psiInputParams.one" :num="1" :orgList="props.dataOrgList" />
+    <TaskParamsTransfer :fieldType="[props.fieldType[0], props.fieldType[2]]"
+      :sellectionAlgPsi="true" :disabledData="psiInputTwo?.metaData" :key="'input'"
+      @update:params="psiInputOne = $event" :taskParams="props.taskParams"
+      :params="psiInputParams.one" :num="1" :orgList="props.dataOrgList" />
     <div class="h-30px"></div>
-    <TaskParamsTransfer :fieldType="[props.fieldType[0], props.fieldType[2]]" :sellectionAlgPsi="true"
-      :taskParams="props.taskParams" :disabledData="psiInputOne?.metaData" :key="'output'"
-      @update:params="psiInputTwo = $event" :params="psiInputParams.two" :num="2" :orgList="props.dataOrgList" />
+    <TaskParamsTransfer :fieldType="[props.fieldType[0], props.fieldType[2]]"
+      :sellectionAlgPsi="true" :taskParams="props.taskParams" :disabledData="psiInputOne?.metaData"
+      :key="'output'" @update:params="psiInputTwo = $event" :params="psiInputParams.two" :num="2"
+      :orgList="props.dataOrgList" />
     <div class="flex items-center pt-20px" v-if="!views">
       <el-button v-waves round class="h-50px previous" @click="previous">{{ $t('common.previous') }}
       </el-button>
@@ -241,7 +244,7 @@ const filterTree = (arr: any, newArray: any = []) => {
 
 const queryAlgoList = () => {
   if (props.type == 1 && props.step == 1) {
-    queryAlgoDetail().then(result => {
+    queryAlgoDetail({}).then(result => {
       const { data, code } = result
       if (code === 10000) {
         const arr = filterTree(data.childrenList)//算法列表
