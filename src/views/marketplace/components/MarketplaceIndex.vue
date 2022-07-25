@@ -86,7 +86,6 @@ const purchase = (row: any) => {
     // window.open(dexUrl, "_blank");
     currentDataName.value = row.metaDataName
     currentMetadataId.value = row.metaDataId
-
     showDialog.value = !showDialog.value
 }
 

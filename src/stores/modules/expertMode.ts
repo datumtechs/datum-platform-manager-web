@@ -23,6 +23,7 @@ export default defineStore('expertMode', {
         disableOrg: [],
         showPanel: false,
         isPSIModel: false,
+        isFeatureModel: false,
         isPrivacy: true,
     }),
     getters: {
@@ -38,7 +39,8 @@ export default defineStore('expertMode', {
         getShowPanel: state => state.showPanel,
         getInputVoList: state => state.workflowNodeInputVoList,
         getOutputVoList: state => state.workflowNodeOutputVoList,
-        getIsPSIModel: state => state.isPSIModel
+        getIsPSIModel: state => state.isPSIModel,
+        getIsFeatureModel: state => state.isFeatureModel
     },
     actions: {
         setSelectLayoutOrgList(data: any) {
@@ -158,6 +160,9 @@ export default defineStore('expertMode', {
         },
         setIsPSIModel(data: boolean) {
             this.isPSIModel = data
+        },
+        setIsFeatureModel(data: boolean) {
+            this.isFeatureModel = data
         },
         setIsPrivacy(data: boolean) {
             this.isPrivacy = data

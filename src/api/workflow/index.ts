@@ -109,3 +109,11 @@ export const getWorkflowStartDetail = (params: any): Promise<any> => {
     params
   })
 }
+
+export const preparationStartCredentialList = (params: any): Promise<any> => {
+  return http({
+    method: 'GET',
+    url: '/flow/workflow/preparationStartCredentialList',
+    params
+  })
+}

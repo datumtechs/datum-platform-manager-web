@@ -58,7 +58,9 @@ const en = {
     credentialId: "Credential ID",
     period: "Period",
     buyCredential: "Purchase Credential",
-    algorithmLibrary: "Algorithm Library"
+    algorithmLibrary: "Algorithm Library",
+    privacyAlg: 'Privacy Algorithm',
+    nonPrivacyAlg: 'NonPrivacy Algorithm'
   },
   menu: {
     home: 'Home',
@@ -289,7 +291,8 @@ const en = {
     consumption: "workflow will consume",
     plzInputTokenName: 'Please enter token or data name',
     modelEvaluationResult: 'Evaluation results',
-    selectTokenOfData: 'Select the credentials required for the task'
+    selectTokenOfData: 'Select the credentials required for the task',
+    costPerTask: 'Credentials consumption of a single task in plaintext or ciphertext scenarios'
   },
   credentials: {
     circulation: "Circulation",
@@ -365,14 +368,14 @@ const en = {
     model: 'Model',
     selectModel: 'Select Model',
     viewResult: 'View Results',
-    psiHint: 'If checked, the PSI operation will be performed before the current task is executed',
+    psiHint: 'If checked, the PSI operation will be performed to align the data before the current node task is executed.',
     labelRequired: 'labels（required)',
     labelOptionals: 'labels（optional)',
     deleteNode: 'Delete the node',
     algoVariable: 'Algorithm Variable',
     algoCode: 'Algorithm Code',
     frontModel: 'Front node output model',
-    exceedPsiLimit: 'Number of PSI nodes exceeded',
+    exceedPsiLimit: 'Limit of PSI nodes exceeded',
     saveHint: 'Please drag the algorithm combination workflow on the left and complete the input/output information.',
     saveInputHint: 'Please select the task initiator of the algorithm',
     saveInputParamsHint: 'Please complete the data provider information of the algorithm task',
@@ -387,7 +390,8 @@ const en = {
     randomModel: 'Random Mode',
     specifyMode: 'Specify Mode',
     compositeWorkflow: 'Drag the algorithm below to the middle area to combine the workflow you need',
-    cleanNodeTips: 'You already have algorithm nodes in your workflow, switch the privacy type will clear the nodes of current workflow '
+    cleanNodeTips: 'You already have algorithm nodes in your workflow, switch the privacy type will clear the nodes of current workflow',
+    exceedAlgLimit: 'Exceeds the maximum node limit of the current algorithm'
   },
   role: {
     taskSponsor: 'Task sponsor',
