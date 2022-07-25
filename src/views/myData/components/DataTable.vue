@@ -28,12 +28,13 @@
         <div>{{ $t(`${enums.industry[row.industry]}`) }}</div>
       </template>
     </el-table-column>
-    <el-table-column :class-name="'show-ellipsis-tooltip'" :label="t('myData.useScene')">
+    <el-table-column :class-name="'show-ellipsis-tooltip'" width="200"
+      :label="t('myData.useScene')">
       <template #default="{ row }">
         <div>
           <el-space wrap :size="10" :spacer="(row.isSupportPtAlg && row.isSupportCtAlg) ? '|' : ''">
-            <span>{{ row.isSupportPtAlg ? $t('expert.plaintext') : '' }}</span>
-            <span>{{ row.isSupportCtAlg ? $t('expert.cipherText') : '' }}</span>
+            <span>{{ row.isSupportPtAlg ? $t('common.nonPrivacy') : '' }}</span>
+            <span>{{ row.isSupportCtAlg ? $t('common.privacy') : '' }}</span>
           </el-space>
         </div>
       </template>

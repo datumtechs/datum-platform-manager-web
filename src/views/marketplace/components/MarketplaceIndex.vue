@@ -205,8 +205,11 @@ onMounted(() => {
                             <el-space wrap :size="10"
                                 :spacer="(row.isSupportPtAlg && row.isSupportCtAlg) ? '|' : ''">
 
-                                <span>{{ row.isSupportPtAlg ? $t('expert.plaintext') : '' }}</span>
-                                <span>{{ row.isSupportCtAlg ? $t('expert.cipherText') : '' }}</span>
+                                <span>{{ row.isSupportPtAlg ? $t('common.nonPrivacy') :
+                                        ''
+                                }}</span>
+                                <span>{{ row.isSupportCtAlg ? $t('common.privacy') : ''
+                                }}</span>
                             </el-space>
                         </div>
                     </template>

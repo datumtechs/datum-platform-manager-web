@@ -59,8 +59,8 @@ const zh = {
     period: "有效期",
     buyCredential: "购买凭证",
     algorithmLibrary: "算法库",
-    privacyAlg: '隐私算法',
-    nonPrivacyAlg: '非隐私算法'
+    privacy: '隐私计算',
+    nonPrivacy: '非隐私计算'
   },
   menu: {
     home: '首页',

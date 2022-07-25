@@ -20,13 +20,13 @@
                     <template #default="{ row }">
                         <div>
                             <p v-if="row.erc20PtAlgConsume">
-                                <span>{{ $t('common.nonPrivacyAlg') }}:</span>
+                                <span>{{ $t('common.nonPrivacy') }}:</span>
                                 <span class="pl-8px">{{ useExchangeFrom(row.erc20PtAlgConsume,
                                         row.tokenDecimal)
                                 }}</span>
                             </p>
                             <p v-if="row.erc20CtAlgConsume">
-                                <span>{{ $t('common.privacyAlg') }}:</span>
+                                <span>{{ $t('common.privacy') }}:</span>
                                 <span class="pl-8px">{{ useExchangeFrom(row.erc20CtAlgConsume,
                                         row.tokenDecimal)
                                 }}</span>
@@ -66,8 +66,8 @@
                 </el-table-column>
                 <el-table-column :label="$t('myData.useScene')">
                     <template #default="{ row }">
-                        <span v-if="row.isSupportPtAlg">{{ $t('expert.plaintext') }}</span>
-                        <span v-else>{{ $t('expert.cipherText') }}</span>
+                        <span v-if="row.isSupportPtAlg">{{ $t('common.nonPrivacy') }}</span>
+                        <span v-else>{{ $t('common.privacy') }}</span>
                     </template>
                 </el-table-column>
                 <el-table-column :label="$t('common.actions')">

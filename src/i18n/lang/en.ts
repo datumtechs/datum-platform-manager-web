@@ -59,8 +59,8 @@ const en = {
     period: "Period",
     buyCredential: "Purchase Credential",
     algorithmLibrary: "Algorithm Library",
-    privacyAlg: 'Privacy Algorithm',
-    nonPrivacyAlg: 'NonPrivacy Algorithm'
+    privacy: 'Privacy',
+    nonPrivacy: 'NonPrivacy'
   },
   menu: {
     home: 'Home',
@@ -256,7 +256,7 @@ const en = {
     credentialPriceTips: "The price is for reference only. Please refer to the exchange for the real price",
     useScene: "Use Scenes",
     holdings: "Holdings",
-    viewHoldingCredentials: "View Holding Credentials",
+    viewHoldingCredentials: "Holding Credentials",
     taskConsumption: 'Task Consumption',
     selectExchange: 'Select Exchange'
   },
