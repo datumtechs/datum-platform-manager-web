@@ -58,7 +58,9 @@ const zh = {
     credentialId: "凭证ID",
     period: "有效期",
     buyCredential: "购买凭证",
-    algorithmLibrary: "算法库"
+    algorithmLibrary: "算法库",
+    privacy: '隐私计算',
+    nonPrivacy: '非隐私计算'
   },
   menu: {
     home: '首页',
@@ -297,6 +299,7 @@ const zh = {
     plzInputTokenName: '请输入凭证或数据名称',
     modelEvaluationResult: '模型评估结果',
     selectTokenOfData: '选择任务所需要的凭证',
+    costPerTask: '隐私算法或非隐私算法场景下单次任务的消耗量'
   },
   credentials: {
     circulation: "总发布量",
@@ -372,14 +375,14 @@ const zh = {
     model: '模型',
     selectModel: '请选择模型',
     viewResult: '查看结果',
-    psiHint: '勾选后,将在当前节点任务执行前进行PSI运算',
+    psiHint: '勾选后,将在当前节点任务执行前进行PSI运算对齐数据',
     labelRequired: '标签（必选)',
     labelOptionals: '标签（选填)',
     deleteNode: '删除节点',
     algoVariable: '算法变量',
     algoCode: '算法代码',
     frontModel: '前置节点输出模型',
-    exceedPsiLimit: '超过PSI节点数量',
+    exceedPsiLimit: '超过PSI节点限制',
     saveHint: '请拖动左侧算法组合工作流并完善输入/输出等信息',
     saveInputHint: '请选择算法的任务发起方',
     saveInputParamsHint: '请完善算法任务的数据提供方信息',
@@ -394,7 +397,8 @@ const zh = {
     randomMode: '随机选择',
     specifyMode: '指定模式',
     compositeWorkflow: '将下方算法拖拽至中间区域组合您所需要的工作流',
-    cleanNodeTips: '您当前工作流中已有节点,切换隐私类型将会清空当前工作流节点,是否继续?'
+    cleanNodeTips: '您当前工作流中已有节点,切换隐私类型将会清空当前工作流节点,是否继续?',
+    exceedAlgLimit: '超过当前算法最大节点限制'
   },
   role: {
     taskSponsor: '任务发起方',

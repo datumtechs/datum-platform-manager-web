@@ -19,7 +19,11 @@
     </div>
     <Search :keyword="keyword" :showFilter="false" @search="search"
       :placeholder="t('myData.marketPlaceholder')"></Search>
-    <TokenList :title="`${$t('myData.viewHoldingCredentials')}  ( ${currentDataName} )`"
+    <!-- <TokenList :title="`${$t('myData.viewHoldingCredentials')}  ( ${currentDataName} )`"
+      v-model:showDialog="showDialog" /> -->
+
+    <TokenList v-if="showDialog"
+      :title="`${$t('myData.viewHoldingCredentials')} - ${currentDataName}`" :id="currentMetadataId"
       v-model:showDialog="showDialog" />
   </div>
 </template>
@@ -33,7 +37,8 @@ const keepAlive = useKeepAliveInfo()
 const { t } = useI18n()
 const chainCfg: any = inject('chainCfg')
 const showDialog = ref(false)
-const currentDataName = ref('false')
+const currentDataName = ref('')
+const currentMetadataId = ref('')
 const router: Router = useRouter()
 const route = useRoute()
 const tableData = ref([])
@@ -47,6 +52,7 @@ const dataLoading = ref(false)
 
 const purchase = (row: any) => {
   currentDataName.value = row.metaDataName
+  currentMetadataId.value = row.metaDataId
   showDialog.value = !showDialog.value
 }
 const viewData = (row: any) => {

@@ -3,21 +3,15 @@
         custom-class="starterDialog" :before-close="handleClose"
         @close="emits('update:show', false)">
         <div class="starter-wrapper">
-            <div v-for="(data, index) in 4" class="starter-box">
+            <div v-for="(item, index) in radioGroupAry" class="starter-box">
                 <!-- <div class="starter-box-title font-bold text-16px text-color-#[000] leading-44px"> -->
-                <p class="starter-title font-bold text-[#000]">Data-{{ index + 1 }}</p>
-                <el-select class="starter-selector" :placeholder="$t('workflow.selectTokenOfData')">
-                    <!-- <el-option></el-option> -->
+                <p class="starter-title font-bold text-[#000]">{{ item.metaDataName }}</p>
+                <el-select class="starter-selector" v-model="selectAry[index]"
+                    :placeholder="$t('workflow.selectTokenOfData')">
+                    <el-option v-for="ele in item.haveAttributesCredentialList" :value="ele.id"
+                        :label="`${ele.tokenName} ( ${ele.tokenSymbol} )`" :key="ele.id">
+                    </el-option>
                 </el-select>
-                <!-- </div> -->
-                <!-- <div class="starter-box-content-box flex">
-                    <el-radio-group v-model="radioGroupAry[index]">
-                        <el-radio class="starter-box-content" v-for="(token, num) in 4"
-                            :label="num + ''">Bank {{ radioGroupAry[index] }}
-                            Token A (Taken{{ num }}) 失效日期:2022-04-22
-                        </el-radio>
-                    </el-radio-group>
-                </div> -->
             </div>
         </div>
         <template #footer>
@@ -36,13 +30,15 @@
 </template>
 
 <script setup lang='ts'>
+import { preparationStartCredentialList } from '@/api/workflow'
 const { t } = useI18n()
+
 const handleClose = () => {
     emits('update:show', false)
 }
-const radioGroupAry = ref([
-    '0', '0', '0', '0'
-])
+const radioGroupAry: any = ref([])
+
+const selectAry: any = ref([])
 
 const emits = defineEmits(['update:show'])
 const props = defineProps({
@@ -53,15 +49,38 @@ const props = defineProps({
     show: {
         type: Boolean,
         default: false
+    },
+    workflowId: {
+        type: String,
+        default: ''
+    },
+    workflowVersionId: {
+        type: Number,
+        default: -1
     }
+})
+
+onMounted(() => {
+    preparationStartCredentialList({
+        workflowId: props.workflowId,
+        workflowVersion: props.workflowVersionId,
+
+    }).then(res => {
+        const { code, data } = res
+        if (code === 10000) {
+            data.forEach((ele: any) => {
+                ele.haveAttributesCredentialList.unshift(ele.noAttributesCredential)
+            });
+            radioGroupAry.value = data
+        }
+    })
 })
 </script>
 
 <style scoped lang='scss'>
 .starter-wrapper {
-    // max-height: 513px;
-    overflow-y: auto;
 
+    // max-height: 513px;
     .starter-box {
         height: 54px;
         padding: 20px;

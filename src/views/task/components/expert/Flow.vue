@@ -252,6 +252,7 @@ const deleteNode = (node: any, index: number) => {
     useExpertMode().deleteNode(index)
     if (node.algorithmId) {
         useExpertMode().setIsPSIModel(false)
+        useExpertMode().setIsFeatureModel(false)
     }
     // 更新序号 1. 获取id 2 reset
     const id = useExpertMode().getCurNodeId
@@ -269,11 +270,8 @@ const selectNode = (node: any, index: number) => {
     useExpertMode().setCurNodeId(node.algorithmId)
     useExpertMode().setCurData(node)
     useExpertMode().setShowPanel(true)
-    if (node.algorithmId === 1001) {
-        useExpertMode().setIsPSIModel(true)
-    } else {
-        useExpertMode().setIsPSIModel(false)
-    }
+    useExpertMode().setIsPSIModel(node.algorithmId === 1001)
+    useExpertMode().setIsFeatureModel(node.algorithmId === 3001)
 }
 
 const nodeListWithStatus: any = computed(() => {

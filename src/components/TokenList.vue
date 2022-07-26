@@ -11,16 +11,22 @@
                 <el-table-column prop="tokenSymbol" :label="$t('myData.credentialSymbol')">
                 </el-table-column>
                 <el-table-column :label="$t('myData.taskConsumption')">
+                    <template #header>
+                        <div class="flex">
+                            <p>{{ $t('myData.taskConsumption') }}</p>
+                            <QuestionMark :content="$t('workflow.costPerTask')" />
+                        </div>
+                    </template>
                     <template #default="{ row }">
                         <div>
                             <p v-if="row.erc20PtAlgConsume">
-                                <span>{{ $t('expert.plaintext') }}:</span>
+                                <span>{{ $t('common.nonPrivacy') }}:</span>
                                 <span class="pl-8px">{{ useExchangeFrom(row.erc20PtAlgConsume,
                                         row.tokenDecimal)
                                 }}</span>
                             </p>
                             <p v-if="row.erc20CtAlgConsume">
-                                <span>{{ $t('expert.cipherText') }}:</span>
+                                <span>{{ $t('common.privacy') }}:</span>
                                 <span class="pl-8px">{{ useExchangeFrom(row.erc20CtAlgConsume,
                                         row.tokenDecimal)
                                 }}</span>
@@ -60,11 +66,8 @@
                 </el-table-column>
                 <el-table-column :label="$t('myData.useScene')">
                     <template #default="{ row }">
-                        <el-space wrap :size="10"
-                            :spacer="(row.isSupportPtAlg && row.isSupportCtAlg) ? '|' : ''">
-                            <span>{{ row.isSupportPtAlg ? $t('expert.plaintext') : '' }}</span>
-                            <span>{{ row.isSupportCtAlg ? $t('expert.cipherText') : '' }}</span>
-                        </el-space>
+                        <span v-if="row.isSupportPtAlg">{{ $t('common.nonPrivacy') }}</span>
+                        <span v-else>{{ $t('common.privacy') }}</span>
                     </template>
                 </el-table-column>
                 <el-table-column :label="$t('common.actions')">
@@ -72,7 +75,7 @@
                         <el-popover placement="top" :title="$t('myData.selectExchange')"
                             :width="100" trigger="hover">
                             <img class="w-39px h-39px cursor-pointer" :src="tofun" alt=""
-                                @click="linkToExchange">
+                                @click="linkToExchange(row)">
                             <template #reference>
                                 <span class="font-medium  leading-20px link-btn">{{
                                         $t('common.purchase')
@@ -121,14 +124,14 @@ const pageObj = reactive({
 })
 
 const purchaseFT = (row: any) => {
+    //TODO 校验合约地址
     const dexUrl = `${chainCfg.value.dexUrl}swap?outputCurrency=${row.tokenAddress}&exactField=OUTPUT&exactAmount=1`
-    //TODO dex
     window.open(dexUrl, "_blank");
 }
 
 const linkToExchange = (row: any) => {
-    const dexUrl = `${chainCfg.value.tofunftUrl}` //swap?outputCurrency=${row.tokenAddress}&exactField=OUTPUT&exactAmount=1`
-    //TODO dex
+    //TODO 校验合约地址
+    const dexUrl = `${chainCfg.value.tofunftUrl}/nft/platon/${row.tokenAddress}` //swap?outputCurrency=${row.tokenAddress}&exactField=OUTPUT&exactAmount=1`
     window.open(dexUrl, "_blank");
 }
 

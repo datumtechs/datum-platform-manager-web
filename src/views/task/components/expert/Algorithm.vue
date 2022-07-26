@@ -18,25 +18,20 @@
                     class="h-36px w-230px text-14px leading-20px text-[#333] font-bold pl-18px flex items-center">
                     {{ algo.name }}</p>
                 <div class="mt-4px">
-                    <div class="flex items-center" :class="{ 'drag-box': !item.childrenList }"
+                    <div class="flex items-center flex-col"
+                        :class="{ 'drag-box': !item.childrenList, 'no-drag-box': item.childrenList }"
                         v-for="item in algo.childrenList" :key="item.id">
+                        <div @dragstart.stop="dragstart($event, item)"
+                            @dragend.stop="dragend($event, item)" :draggable="true"
+                            class="h-36px w-230px flex items-center pl-18px"
+                            :class="{ 'sub-List-title': item.childrenList, 'sub-drag-box': !item.childrenList }">
+                            {{ item.name }}
+                        </div>
                         <div v-if="item.childrenList">
-                            <!-- <div class="h-36px w-230px  cursor-pointer flex items-center pl-18px">
-                                <span>{{ item.name }}</span> <span>
-                                    <el-icon :size="18" class="cursor-pointer ml-10px">
-                                        <CirclePlus />
-                                    </el-icon>
-                                </span>
-                            </div> -->
                             <div @dragstart.stop="dragstart($event, i)"
                                 @dragend.stop="dragend($event, i)" :draggable="true"
                                 class="h-36px w-230px drag-box cursor-pointer flex items-center pl-18px"
                                 v-for="i in item.childrenList">{{ i.name }}</div>
-                        </div>
-                        <div @dragstart.stop="dragstart($event, item)"
-                            @dragend.stop="dragend($event, item)" :draggable="true"
-                            class="h-36px w-230px cursor-pointer flex items-center pl-18px" v-else>
-                            {{ item.name }}
                         </div>
                     </div>
                 </div>
@@ -98,6 +93,7 @@ const dragstart = (e: any, item: any) => {
 
 const nodeList = computed(() => useExpertMode().getNodeList)
 const isPSIModel = computed(() => useExpertMode().getIsPSIModel)
+const isFeatureModel = computed(() => useExpertMode().getIsFeatureModel)
 const isPrivacy = computed(() => useExpertMode().isPrivacy)
 
 
@@ -144,10 +140,11 @@ const dragend = async (e: any, item: any) => {
     } else {
 
         // 是否是PSI 暂定1001是PSI PSI的长度只有一个 且PSI没有自变量和因变量
-        if ((item.id === 1001 && nodeList.value.length > 0) || nodeList.value.length >= MAX_NODES) {
+        if (((item.id === 1001 || item.id === 3001) && nodeList.value.length > 0) || nodeList.value.length >= MAX_NODES) {
+            // psi 特征工程不可挂在别的算法下
             return ElMessage.error(t('task.exceedMaxNode'))
-        } else if (!!isPSIModel.value) {
-            return ElMessage.error(t('expert.exceedPsiLimit'))
+        } else if (!!isPSIModel.value || !!isFeatureModel.value) {
+            return ElMessage.error(t('expert.exceedAlgLimit'))
         } else {
             const params = {
                 // TODO input output env varParams 都需要单独存放 不采用Vo内部元素
@@ -183,6 +180,7 @@ const dragend = async (e: any, item: any) => {
             // 0-密文  1-明文
             useExpertMode().setIsPrivacy(item.alg.type === 0)
             useExpertMode().setIsPSIModel(item.id === 1001)
+            useExpertMode().setIsFeatureModel(item.id === 3001)
             useExpertMode().addNodeList(params)
         }
     }
@@ -283,13 +281,27 @@ onMounted(() => {
     }
 
     .algo-wrapper {
-        height: calc(100% - 58px);
+        height: calc(100% - 118px);
         overflow-y: auto;
+
+        .no-drag-box {
+            margin-bottom: 20px;
+        }
 
         .drag-box {
             &:hover {
                 background: #e6ecf8;
             }
+        }
+
+        .sub-List-title {
+            font-size: 14px;
+            color: #333333;
+            font-family: DINPro-Bold, Ali-Bold;
+        }
+
+        .sub-drag-box {
+            cursor: pointer;
         }
     }
 }

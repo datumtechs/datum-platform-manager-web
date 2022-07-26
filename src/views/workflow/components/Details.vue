@@ -117,7 +117,8 @@
         </div>
       </template>
     </GlobalPending>
-    <TaskStarter v-model:show="starter.show" :content="starter.content" :title="starter.title" />
+    <TaskStarter v-if="starter.show" v-model:show="starter.show" :workflowId="workflowId"
+      :workflowVersionId="currentRow.workflowVersion" :title="starter.title" />
   </div>
 </template>
 <script lang="ts" setup>
@@ -132,7 +133,8 @@ const web3: any = inject('web3')
 const showDialog = ref(false)
 const route = useRoute()
 const router = useRouter()
-const workflowId = route.params.id
+const workflowId: any = route.params.id
+const workflowVersionId: any = ref('')
 const current = ref(1)
 const total = ref(0)
 const workFlowName = ref('')
