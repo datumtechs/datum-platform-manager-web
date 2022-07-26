@@ -4,6 +4,7 @@
       <div class="mr-20px text-color-[#666666]">{{ $t('task.selection') }} ：</div>
       <NoticeText :noticeText="props.noticeText" />
     </div>
+
     <div class="flex items-center text-14px">
       <div class="mr-15px text-color-[#666666] font-medium w-135px">{{ $t('task.selectSponsor') }} ：
       </div>
@@ -14,29 +15,54 @@
         </el-option>
       </el-select>
     </div>
-    <div class="flex items-center text-14px mt-20px" v-if="taskParams?.predictionInput?.inputModel">
+
+    <div class="flex items-center text-14px mt-20px" v-if="taskParams?.ptPredictionInput?.inputModel">
       <div class="mr-20px text-color-[#666666] font-medium w-130px">{{ $t('task.selectModel') }} ：
       </div>
       <el-cascader clearable :disabled="taskParams.isSettingCompleted"
         class="h-40px rounded-20px border-1 w-440px border-solid  border-color-[#EEEEEE]" :suffix-icon="CaretBottom"
         v-model="model" :options="optionsList" :props="cascaderProps" />
     </div>
-    <div class="flex items-center text-14px mt-20px text-color-[#999]" v-if="taskParams?.predictionInput?.inputModel">
-      <div class="mr-20px  w-130px"> </div>
+
+    <div class="flex items-center text-14px mt-20px text-color-[#999]" v-if="taskParams?.ptPredictionInput?.inputModel">
+      <div class="mr-20px w-130px"> </div>
       {{ $t('task.resultsModelTips') }}
     </div>
+
     <!-- {{model}} -->
     <div class="flex items-center text-14px mt-20px">
-      <div class="mr-20px text-color-[#666666] font-medium w-130px">{{ $t('task.PSI') }} ：</div>
-      <el-switch v-model="psi" :disabled="taskParams.isSettingCompleted" />
+      <div class="mr-20px text-color-[#666666] font-medium w-130px">{{ $t('task.select') }}{{ $t('role.powerProvider')
+      }} ：</div>
+      <el-radio-group v-model="powerType" @change="powerIdentityId = ''">
+        <el-radio :label="0">{{ $t('task.automaticAllocation') }}</el-radio>
+        <el-radio :label="1">{{ $t('task.manualSelection') }}</el-radio>
+      </el-radio-group>
     </div>
+
+
+
+    <div class="flex items-center text-14px  mt-20px">
+      <div class="mr-15px text-color-[#666666] font-medium w-135px"></div>
+      <el-select v-if="powerType === 1" v-model="powerIdentityId" size="small"
+        :disabled="props.isSettingCompleted || props.isReadonly" :placeholder="t('task.selectComputingProvider')"
+        style="flex:0 0 440px" popper-class="max-width"
+        class="h-40px w-200px rounded-20px border-1 basis-1/2 border-solid border-color-[#EEEEEE]">
+        <el-option v-for="node in props.dataOrgList" :key="node.identityId" :label="node.nodeName"
+          :value="node.identityId">
+        </el-option>
+      </el-select>
+    </div>
+
+
+
     <TaskParamsTransfer :fieldType="[props.fieldType[0], props.fieldType[2]]" :sellectionAlgPsi="true"
       :disabledData="psiInputTwo?.metaData" :key="'input'" @update:params="psiInputOne = $event"
       :taskParams="props.taskParams" :params="psiInputParams.one" :num="1" :orgList="props.dataOrgList" />
     <div class="h-30px"></div>
-    <TaskParamsTransfer :fieldType="[props.fieldType[0], props.fieldType[2]]" :sellectionAlgPsi="true"
-      :taskParams="props.taskParams" :disabledData="psiInputOne?.metaData" :key="'output'"
-      @update:params="psiInputTwo = $event" :params="psiInputParams.two" :num="2" :orgList="props.dataOrgList" />
+    <!-- <TaskParamsTransfer :fieldType="[props.fieldType[0], props.fieldType[2]]"
+      :sellectionAlgPsi="true" :taskParams="props.taskParams" :disabledData="psiInputOne?.metaData"
+      :key="'output'" @update:params="psiInputTwo = $event" :params="psiInputParams.two" :num="2"
+      :orgList="props.dataOrgList" /> -->
     <div class="flex items-center pt-20px" v-if="!views">
       <el-button v-waves round class="h-50px previous" @click="previous">{{ $t('common.previous') }}
       </el-button>
@@ -56,10 +82,13 @@ import { setWorkflowOfWizardMode } from '@/api/workflow'
 import { getUserModelList } from '@/api/task'
 import { queryAlgoDetail } from '@/api/algorithm'
 import { ElMessage } from 'element-plus';
+// import { useExpertMode } from '@/stores'
+
 const router: any = useRouter()
 const route: any = useRoute()
 const { t } = useI18n()
 const emit = defineEmits(['previous', 'getParams', 'next'])
+// const baseOrgList: any = computed(() => useExpertMode().getBaseOrgList)
 const props: any = defineProps({
   noticeText: {
     type: Object,
@@ -99,6 +128,13 @@ const props: any = defineProps({
   }
 })
 
+// const handleComputingSelectChange = (value: any) => {
+//   useExpertMode().setComputingProvider(value)
+// }
+
+
+const powerIdentityId = ref('')
+const powerType = ref(0)
 const psiInputParams = reactive({ one: [], two: [] })
 const psiInputOne = ref<any>({})
 const psiInputTwo = ref<any>({})
@@ -147,22 +183,27 @@ const preserv = () => {
 
 const submit = async (str?: string | any) => {
   const data = await handParams(psiInputOne.value)
-  const data2 = await handParams(psiInputTwo.value)
+  // const data2 = await handParams(psiInputTwo.value)
+
+  if (powerType.value && !powerIdentityId.value) {
+    ElMessage.closeAll()
+    ElMessage.warning(t('task.selectData'))
+    return
+  }
+
 
   setWorkflowOfWizardMode({
     workflowId: props.workflowInfo.workflowId,
     workflowVersion: props.workflowInfo.workflowVersion,
     algorithmId: props.taskParams.algorithmId,
     calculationProcessId: props.taskParams.calculationProcessId,
-    predictionInput: {
+    ptPredictionInput: {
       identityId: identityId.value,
-      isPsi: psi.value || false,
-      inputModel: props.taskParams.inputModel || true,
-      algorithmId: props.taskParams?.predictionInput?.algorithmId || '',
-      item: [
-        data,
-        data2
-      ],
+      inputModel: props.taskParams.ptPredictionInput.inputModel || true,
+      algorithmId: props.taskParams?.ptPredictionInput?.algorithmId || '',
+      dataInput: data,
+      powerType: powerType.value,
+      powerIdentityId: powerIdentityId.value,
       model: {
         metaDataId: model.value[1] || '',
       }
@@ -189,11 +230,11 @@ const submit = async (str?: string | any) => {
 }
 
 const init = () => {
-  const { predictionInput } = props.taskParams
-  psi.value = predictionInput.isPsi || undefined
-  identityId.value = predictionInput?.identityId
-  psiInputParams.one = predictionInput?.item[0] || []
-  psiInputParams.two = predictionInput?.item[1] || []
+  const { ptPredictionInput } = props.taskParams
+  identityId.value = ptPredictionInput?.identityId
+  psiInputParams.one = ptPredictionInput?.dataInput || []
+  powerType.value = ptPredictionInput?.powerType || []
+  powerIdentityId.value = ptPredictionInput?.powerIdentityId || []
 }
 
 
@@ -223,53 +264,22 @@ const cascaderProps = ref({
   }
 })
 
-// let target: any = []
-// const filterTree = (arr: any, newArray: any = []) => {
-//   target.concat(newArray)
-//   arr.forEach((son: any) => {
-//     if (Array.isArray(son.childrenList)) {
-//       filterTree(son.childrenList, target)
-//     } else {
-//       if (son.isAlgorithm && son.isExistAlgorithm) {
-//         target.push({
-//           value: son.id,
-//           // value: son.name,
-//           label: son.name,
-//         });
-//       }
-//     }
-//   })
-//   return target
-// }
-
 
 const queryAlgoList = () => {
-  if (props.type == 1 && props.step == 1) {
-    // queryAlgoDetail({}).then(result => {
-    //   const { data, code } = result
-    //   if (code === 10000) {
-    // const arr = filterTree(data.childrenList)//算法列表
-    // algoList.value = arr
+  if (props.type == 8 && props.step == 1) {
     optionsList.value = props.orgList.map((v: any) => {
       return {
         leaf: false,
         value: v.identityId,
         label: v.nodeName,
-        // children:[
-        //   ...arr
-        // ]
       }
     })
-    if (props.taskParams.predictionInput?.model?.metaDataId) {
+    if (props.taskParams.ptPredictionInput?.model?.metaDataId) {
       model.value = [
-        props.taskParams.predictionInput?.model?.identityId,
-        props.taskParams.predictionInput?.model?.metaDataId
+        props.taskParams.ptPredictionInput?.model?.identityId,
+        props.taskParams.ptPredictionInput?.model?.metaDataId
       ]
     }
-    // }
-    // }).catch(err => {
-    //   console.log(err);
-    // })
   } else {
     optionsList.value = [
       {

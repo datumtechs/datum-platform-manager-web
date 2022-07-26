@@ -12,7 +12,7 @@ const props = defineProps(['noticeText'])
 const list = computed(() => {
   let newList: any[] = []
   if (props.noticeText) {
-    newList = Object.values(props.noticeText) || []
+    newList = Object.values(props.noticeText).filter(v => v) || []
   }
   return newList
 })
