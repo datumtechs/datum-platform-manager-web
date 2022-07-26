@@ -1,11 +1,11 @@
 <template>
     <div class="mt-20px flex-1 border-1 border-solid border-[#EEEEEE] px-40px pt-27px pb-43px">
-        <el-table v-tableTooltip :row-style="{ height: '50px' }" class="home-data-table" :data="tableData"
-            style="width: 100%">
+        <el-table v-tableTooltip :row-style="{ height: '50px' }" class="home-data-table"
+            :data="tableData" style="width: 100%">
             <el-table-column type="index" :label="t('home.ranking')" width="80" />
-            <el-table-column :class-name="'show-ellipsis-tooltip'" prop="tokenName"
-                :label="t('myData.credentialName')" />
-            <el-table-column prop="tokenUsed" :label="t('home.usage')" width="100" />
+            <el-table-column :class-name="'show-ellipsis-tooltip'" prop="metaDataName"
+                :label="t('myData.dataName')" />
+            <el-table-column prop="usageCount" :label="t('home.usage')" width="100" />
         </el-table>
         <div type="primary" @click="linkToData" class="mt-30px bg-main h-50px rounded-25px">
             <p class="leading-50px text-[14px] text-[#fff] text-center cursor-pointer">{{

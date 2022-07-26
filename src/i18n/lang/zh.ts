@@ -101,15 +101,15 @@ const zh = {
   },
   home: {
     dataOverview: '数据总览',
-    privacyComputations: '隐私计算总次数',
+    computations: '计算总次数',
     participatingAddresses: '参与计算地址总数',
     activeAddresses: '24h活跃地址数',
     aIModels: '全网AI模型总数',
     modelCredentials: '模型凭证数量',
     modelCredUse: '模型凭证使用量',
     dataAmount: '全网数据总量',
-    dataCredentials: '数据凭证数量',
-    dataCredUse: '数据凭证使用量',
+    dataCredentials: '全网数据个数',
+    dataUsageTimes: '数据使用次数',
     globalPowerAndRank: '全网算力概况与排行',
     totalCpu: '全网总CPU',
     totalMemory: '全网总内存',
@@ -124,7 +124,7 @@ const zh = {
     explorer: '浏览器',
     viewAllComputingTask: '查看所有计算任务',
     usage: '使用量',
-    explorerHint: '输入任务ID或者组织ID',
+    explorerHint: '输入数据名称 / 任务ID / 组织ID',
     dayTrend: "15天隐私计算走势"
   },
   account: {
@@ -292,7 +292,8 @@ const zh = {
     plzInputTokenName: '请输入凭证或数据名称',
     modelEvaluationResult: '模型评估结果',
     selectTokenOfData: '选择任务所需要的凭证',
-    costPerTask: '隐私算法或非隐私算法场景下单次任务的消耗量'
+    costPerTask: '隐私算法或非隐私算法场景下单次任务的消耗量',
+    selectCredentialForData: '请为数据选择消耗的凭证'
   },
   credentials: {
     circulation: "总发布量",

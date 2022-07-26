@@ -118,7 +118,8 @@
       </template>
     </GlobalPending>
     <TaskStarter v-if="starter.show" v-model:show="starter.show" :workflowId="workflowId"
-      :workflowVersionId="currentRow.workflowVersion" :title="starter.title" />
+      @startTask="startTask" :workflowVersionId="currentRow.workflowVersion"
+      :title="starter.title" />
   </div>
 </template>
 <script lang="ts" setup>
@@ -247,23 +248,29 @@ const start = (row: any) => {
 }
 
 
-const runTask = useDebounceFn(async (row: any) => {
-  workflowVersionName.value = row.workflowVersionName
+const startTask = useDebounceFn(async (ary: Array<string>) => {
+  console.log('currentRow', currentRow.value);
+
+  workflowVersionName.value = currentRow.value.workflowVersionName
+
   try {
     const res = await getWorkflowStartDetail({
-      workflowId: row.workflowId,
-      workflowVersion: row.workflowVersion
+      workflowId: currentRow.value.workflowId,
+      workflowVersion: currentRow.value.workflowVersion,
+      credentialIdList: ary
     })
     const { data } = res
     consumeList.value = data.itemList
-    setDialog(row)
+    //TODO
+    setDialog(ary)
+
     const sign = await web3.signForWallet({ type: 'tx' })
     pending.show = false
     if (sign) {
       const res = await startWorkFlow({
         sign,
-        workflowId: row.workflowId,
-        workflowVersion: row.workflowVersion,
+        workflowId: currentRow.value.workflowId,
+        workflowVersion: currentRow.value.workflowVersion,
       })
       const { code } = res
       if (code === 10000) {

@@ -101,12 +101,12 @@ export const getWorkflowRunTaskResult = (params: any): Promise<any> => {
     params
   })
 }
-
-export const getWorkflowStartDetail = (params: any): Promise<any> => {
+// 查询启动工作流明细
+export const getWorkflowStartDetail = (data: any): Promise<any> => {
   return http({
-    method: 'GET',
+    method: 'POST',
     url: '/flow/workflow/preparationStart',
-    params
+    data
   })
 }
 
@@ -117,3 +117,5 @@ export const preparationStartCredentialList = (params: any): Promise<any> => {
     params
   })
 }
+
+

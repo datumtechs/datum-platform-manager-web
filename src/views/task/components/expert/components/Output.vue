@@ -4,6 +4,7 @@
         <!-- <p class="mt-30px">{{ t('expert.saveNotes') }}</p> -->
         <p class="mt-30px text-color-[#333] font-bold">{{ t('role.resultConsumer') }}</p>
         <el-checkbox-group v-model="checkList"
+            :max="!isPrivacy ? 1 : curNodeId === 1001 ? selectList.length : orgList.length"
             :disabled="props.isSettingCompleted || props.isReadonly" class="mt-10px flex flex-col"
             @change="handleCheckboxChange">
             <el-checkbox v-for="(item, index) in curNodeId === 1001 ? selectList : orgList"
@@ -25,6 +26,7 @@ const checkList: any = ref([])
 // const workflowNodeSenderIdentityId: string = computed(() => useExpertMode().getWorkflowNodeSender)
 const workflowNodeInputVoList: any = computed(() => useExpertMode().workflowNodeInputVoList)
 const workflowNodeOutputVoList: any = computed(() => useExpertMode().workflowNodeOutputVoList)
+const isPrivacy = computed(() => useExpertMode().isPrivacy)
 
 const selectList = computed(() => {
     const arr: any = []

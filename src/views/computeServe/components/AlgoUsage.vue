@@ -8,7 +8,7 @@
             }}</p>
             <p class="cursor-pointer mt-19px">
                 <span
-                    class="inline-block align-middle text-color-[#2B60E9] text-[16px] leading-22px">
+                    class="inline-block font-medium align-middle text-color-[#2B60E9] text-[16px] leading-22px">
                     {{
                             $t('computing.learnNow')
                     }}</span>

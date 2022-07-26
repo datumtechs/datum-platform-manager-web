@@ -5,7 +5,7 @@
         <div class="starter-wrapper">
             <div v-for="(item, index) in radioGroupAry" class="starter-box">
                 <!-- <div class="starter-box-title font-bold text-16px text-color-#[000] leading-44px"> -->
-                <p class="starter-title font-bold text-[#000]">{{ item.metaDataName }}</p>
+                <p class="starter-title font-bold text-[#333]">{{ item.metaDataName }}</p>
                 <el-select class="starter-selector" v-model="selectAry[index]"
                     :placeholder="$t('workflow.selectTokenOfData')">
                     <el-option v-for="ele in item.haveAttributesCredentialList" :value="ele.id"
@@ -21,9 +21,10 @@
                             $t('common.cancel')
                     }}
                 </el-button>
-                <el-button class="footer-btn" type="primary" @click="">{{
-                        $t('common.startUp')
-                }}</el-button>
+                <el-button class="footer-btn" type="primary" @click="startUp">
+                    {{
+                            $t('common.startUp')
+                    }}</el-button>
             </div>
         </template>
     </el-dialog>
@@ -40,7 +41,7 @@ const radioGroupAry: any = ref([])
 
 const selectAry: any = ref([])
 
-const emits = defineEmits(['update:show'])
+const emits = defineEmits(['update:show', 'startTask'])
 const props = defineProps({
     title: {
         type: String,
@@ -59,7 +60,15 @@ const props = defineProps({
         default: -1
     }
 })
+const startUp = () => {
+    // TODO 校验
+    if (selectAry.value.length && selectAry.value.length === radioGroupAry.value.length) {
+        emits('startTask', selectAry.value)
+    } else {
+        ElMessage.error(t('workflow.selectCredentialForData'))
+    }
 
+}
 onMounted(() => {
     preparationStartCredentialList({
         workflowId: props.workflowId,
@@ -94,7 +103,7 @@ onMounted(() => {
         }
 
         .starter-title {
-            flex-basis: 120px;
+            flex-basis: 200px;
         }
 
         .starter-selector {

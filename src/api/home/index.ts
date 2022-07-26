@@ -4,7 +4,7 @@ import http from '@/api'
 export const getDataTokenUsedTop = (params: any): Promise<any> => {
     return http({
         method: 'GET',
-        url: '/flow/home/getDataTokenUsedTop',
+        url: '/flow/home/getDataUsedTop',
         params
     })
 }

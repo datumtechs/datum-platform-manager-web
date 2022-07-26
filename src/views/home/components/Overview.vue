@@ -63,7 +63,7 @@ const viewList = computed(() => [
     {
         id: 1,
         title: 'taskCount',
-        label: t('home.privacyComputations'),
+        label: t('home.computations'),
         value: 0
     }, {
         id: 2, title: 'addressCountOfTask',
@@ -87,7 +87,7 @@ const viewList = computed(() => [
     }, {
         id: 9,
         title: 'dataTokenUsed',
-        label: t('home.dataCredUse'),
+        label: t('home.dataUsageTimes'),
         value: 0
     }
 ])

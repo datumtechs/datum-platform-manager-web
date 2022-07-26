@@ -58,7 +58,8 @@ onMounted(() => {
       <template #primaryInfo>
         <div class="w-800px h-50px flex">
           <p class="ellipse max-w-700px"> {{ nodeInfo.nodeName }}</p>
-          <Stamp :type="'node'" class="align-top" />
+          <CertificationLabel :obj="nodeInfo" />
+          <!-- <Stamp :type="'node'" class="align-top" /> -->
         </div>
       </template>
       <template #briefInfo>Identifier：{{ identityId }}</template>

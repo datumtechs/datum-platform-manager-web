@@ -101,15 +101,15 @@ const en = {
   },
   home: {
     dataOverview: 'Data Overview',
-    privacyComputations: 'Privacy Computations',
+    computations: 'Computations',
     participatingAddresses: 'Participating Addresses',
     activeAddresses: '24h Active Addresses',
     aIModels: 'AI Models',
     modelCredentials: 'Model Credentials',
     modelCredUse: 'Model Cred. Use',
     dataAmount: 'Data Amount',
-    dataCredentials: 'Data Credentials',
-    dataCredUse: 'Data Cred. Use',
+    dataCredentials: 'Number of data',
+    dataUsageTimes: 'Data Usage Times',
     globalPowerAndRank: 'Computing Power Overview & Ranking',
     totalCpu: 'Total CPU',
     totalMemory: 'Total Memory',
@@ -124,7 +124,7 @@ const en = {
     explorer: 'Explorer',
     viewAllComputingTask: 'View all computing tasks',
     usage: 'Usage',
-    explorerHint: 'Enter task ID or organization ID',
+    explorerHint: 'Enter Data Name / Task ID / Organization ID',
     dayTrend: "15 day privacy computing trend"
   },
   account: {
@@ -292,7 +292,8 @@ const en = {
     plzInputTokenName: 'Please enter token or data name',
     modelEvaluationResult: 'Evaluation results',
     selectTokenOfData: 'Select the credentials required for the task',
-    costPerTask: 'Credentials consumption of a single task in plaintext or ciphertext scenarios'
+    costPerTask: 'Credentials consumption of a single task in plaintext or ciphertext scenarios',
+    selectCredentialForData: 'Please select consumed voucher for data'
   },
   credentials: {
     circulation: "Circulation",

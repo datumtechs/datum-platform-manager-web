@@ -7,7 +7,7 @@
     </Banner>
     <div class="main-content com-main-data-wrap mt-55px">
       <div v-if="activekey < 2">
-        <AlgoService :list="list[activekey]" @createTask="createTask" />
+        <AlgoService :list="list[activekey]" :type="activekey" @createTask="createTask" />
         <!-- <el-empty v-else :description="t('common.noData')" /> -->
       </div>
       <div v-else>

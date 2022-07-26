@@ -1,7 +1,7 @@
 <template>
     <el-dialog custom-class="tokenDialog" append-to-body v-model="showDialog" :title="props.title"
         :width="'871px'" @close="emits('update:showDialog', false)">
-        <div class="token-table-box">
+        <div class="token-table-box mb-40px">
             <p class="token-table-box-title font-bold">{{ $t('common.noAttributeCredential') }}</p>
             <el-table v-loading="ftLoading" :data="nfTokenData">
                 <el-table-column type="index" width="80" :label="$t('common.num')">
@@ -43,7 +43,7 @@
                 </el-table-column>
             </el-table>
         </div>
-        <div class="token-table-box">
+        <div class="token-table-box mb-20px">
             <p class="token-table-box-title font-bold">{{ $t('common.attributeCredential') }}</p>
             <el-table v-loading="nftLoading" :data="nftTokenData">
                 <el-table-column type="index" width="80" :label="$t('common.num')">
@@ -85,6 +85,11 @@
                     </template>
                 </el-table-column>
             </el-table>
+            <div class="flex mt-30px justify-center">
+                <el-pagination v-model:current-page="pageObj.current"
+                    @current-change="handlePageChange" v-model:page-size="pageObj.size" background
+                    layout="prev, pager, next" :total="pageObj.total" />
+            </div>
         </div>
     </el-dialog>
 </template>
@@ -119,9 +124,14 @@ const nftLoading = ref(false)
 
 const pageObj = reactive({
     current: 1,
-    size: 10,
+    size: 5,
     total: 0
 })
+
+const handlePageChange = (page: number) => {
+    pageObj.current = page
+    queryNFT()
+}
 
 const purchaseFT = (row: any) => {
     //TODO 校验合约地址
@@ -173,7 +183,6 @@ onMounted(() => {
 
 <style scoped lang='scss'>
 .token-table-box {
-    margin-bottom: 40px;
 
     .token-table-box-title {
         font-size: 16px;
