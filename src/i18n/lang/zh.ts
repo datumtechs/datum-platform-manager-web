@@ -216,7 +216,14 @@ const zh = {
     resultReceiverTips: "结果接收方是用于存储本次计算结果文件的可信任节点，节点后续可提供给用户查看/下载结果的功能。",
     runSucceed: '任务运行成功',
     runFailed: '任务运行失败',
-    selectComputingProvider: '请选择算力提供方'
+    selectComputingProvider: '请选择算力提供方',
+    stepOneComputingTypeTitle: "请选择计算类型",
+    pleaseSelectnNoPrivacyAlgorithm: "请选择非隐私算法",
+    pleaseSelectFeatureEngineeringAlgorithm: "请选择特征工程算法",
+    pleaseSelectFeatureEngineeringInputData: "选择特征工程输入数据",
+    automaticAllocation: "自动分配",
+    manualSelection: "手动选择",
+    resultsModelTips: "将使用训练任务的结果作为预测任务所用的模型。"
   },
   myData: {
     tasksBriefInfoFirstParagraph: "全网共",

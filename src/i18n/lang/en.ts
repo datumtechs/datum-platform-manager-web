@@ -216,7 +216,14 @@ const en = {
     resultReceiverTips: "The result receiver is a trusted node used to store the calculation result file, and the node can provide users with the function of viewing / downloading the results later.",
     runSucceed: 'The task run successfully',
     runFailed: 'The task run failed',
-    selectComputingProvider: 'Please select a computing provider'
+    selectComputingProvider: 'Please select a computing provider',
+    stepOneComputingTypeTitle: "Select the category of computing",
+    pleaseSelectnNoPrivacyAlgorithm: "Please select a no privacy algorithm",
+    pleaseSelectFeatureEngineeringAlgorithm: "Please select a feature engineering algorithm",
+    pleaseSelectFeatureEngineeringInputData: "Select feature engineering input data",
+    automaticAllocation: "Automatic Allocation",
+    manualSelection: "Manual Selection",
+    resultsModelTips: "The results of the training task will be used as the model for the prediction task"
   },
   myData: {
     tasksBriefInfoFirstParagraph: " ",

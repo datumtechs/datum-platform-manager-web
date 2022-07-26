@@ -1,8 +1,9 @@
 <template>
   <div class="normal-wrap pt-40px pb-40px" v-loading="loading">
     <div class="flex item-center justify-between px-9px py-5px bg-color-[#F7F8F9] h-80px">
-      <div @click="setActiveStep(index)" v-waves class="w-max-220px flex-col flex pl-31px leading-24px justify-center font-800"
-        v-for="(item, index) in list" :key="item.setp" :style="{
+      <div @click="setActiveStep(index)" v-waves
+        class="w-max-220px flex-col flex pl-31px leading-24px justify-center font-800" v-for="(item, index) in list"
+        :key="item.setp" :style="{
           flex: list.length <= 1 ? 'flex-230px' : 'flex-1'
         }" :class="{ active: activeIndex == index }">
         <div class="setp-item-name text-22px font-medium font-800 text-color-[#CCCCCC]">
@@ -14,37 +15,31 @@
         </p>
       </div>
     </div>
-    <div :style="{'pointer-events':views ? 'none': 'auto'}">
+    <div :style="{ 'pointer-events': views ? 'none' : 'auto' }">
       <div v-show="activeIndex == 0" class="mt-38px mb-42px ml-6px">
         <PrivateSwitch :mode="'normal'" v-if="!workfolwParams.workflowId"
           @change="$router.push({ name: 'expertModel' })" />
-        <SelectionAlg @getNoticeText="getNoticeText" :activeIndex="activeIndex" :taskParams="workfolwParams" @init="init(),activeIndex=1" :processList="processList"
-          @getParams="slectionAlgParams" />
+        <SelectionAlg @getNoticeText="getNoticeText" :activeIndex="activeIndex" :taskParams="workfolwParams"
+          @init="init(), activeIndex = 1" :processList="processList" @getParams="slectionAlgParams" />
       </div>
-       <component :is="componentList[list[activeIndex]?.type]?.components" 
-          :workflowInfo="{ ...workflowInfo }"
-          :step="activeIndex" 
-          :type="list[activeIndex]?.type" 
-          :fieldType="fieldType" 
-          :taskParams="workfolwParams"
-          :orgList="orgList"
-          :dataOrgList="dataOrgList"
-          :views="views"
-          :noticeText="noticeText"
-          @previous="previous" 
-          @next="next" 
-          @getParams="(params: any) => { }" />
+      <component :is="componentList[list[activeIndex]?.type]?.components" :workflowInfo="{ ...workflowInfo }"
+        :step="activeIndex" :type="list[activeIndex]?.type" :fieldType="fieldType" :taskParams="workfolwParams"
+        :orgList="orgList" :dataOrgList="dataOrgList" :views="views" :noticeText="noticeText" @previous="previous"
+        @next="next" @getParams="(params: any) => { }" />
     </div>
   </div>
 </template>
 <script lang="ts" setup>
-import { getUserOrgList,getBaseOrgList } from '@/api/login'
+import { getUserOrgList, getBaseOrgList } from '@/api/login'
 import { getWorkflowSettingOfWizardMode, startWorkFlow, getProcessList } from '@/api/workflow'
 import PrivateSwitch from './PrivateSwitch.vue'
 import SelectionAlg from './normal/SelectionAlg.vue';
 import PSIInputData from './normal/PSIInputData.vue';//psi训练输入数据
 import TrainingInputData from './normal/TrainingInputData.vue';//训练输入数据
+import PlaintextTrainingInputData from './normal/PlaintextTrainingInputData.vue';//明文训练输入数据
 import ForecastInputData from './normal/ForecastInputData.vue';//预测输入数据
+import PlaintextForecastInputData from './normal/PlaintextForecastInputData.vue';//预测输入数据
+
 import ComputingEnvironment from './normal/ComputingEnvironment.vue';//计算环境
 import ResultReceiver from './normal/ResultReceiver.vue';//结果接收方
 import { useWorkFlow } from '@/stores'
@@ -62,7 +57,7 @@ const route = useRoute()
 const router = useRouter()
 const activeIndex = ref(0)
 const orgList: any = ref<any>([])
-const dataOrgList: any = ref<any>([])
+const dataOrgList: any[] = ref<any[]>([])
 const comList = ref([])
 const noticeText = ref({})
 const workfolwParams = ref<any>({})
@@ -82,8 +77,10 @@ const componentList = markRaw<any[]>(
   //4-选择计算环境(训练&预测), 
   //5-选择结果接收方(通用), 
   //6-选择结果接收方(训练&预测)
+  //7-明文训练
+  //8-明文预测
   (() => {
-    return new Array(7).fill('').map((v, index) => {
+    return new Array(9).fill('').map((v, index) => {
       let obj = {}
       switch (index) {
         case 0:
@@ -113,6 +110,16 @@ const componentList = markRaw<any[]>(
             components: ResultReceiver,//结果接收方
             i18Text: "selectResultReceiver"
           }; break;
+        case 7:
+          obj = {
+            components: PlaintextTrainingInputData,//明文训练
+            i18Text: "selectTrainingInputData"
+          }; break;
+        case 8:
+          obj = {
+            components: PlaintextForecastInputData,//明文预测
+            i18Text: "selectForecastInputData"
+          }; break;
         default: break;
       }
       return obj
@@ -131,15 +138,15 @@ const list = ref<any[]>(
 const fieldType = ref<any[]>([{
   name: "task.idColumn",//id列
   type: "idColumn",
-  tips:"task.idColumnTips"
+  tips: "task.idColumnTips"
 }, {
   name: "task.label",//标签
   type: "label",
-  tips:"task.labelTips"
+  tips: "task.labelTips"
 }, {
   name: "task.feature",//特征
   type: "feature",
-  tips:"task.featureTips"
+  tips: "task.featureTips"
 }])
 
 watch(activeIndex, () => {
@@ -148,19 +155,18 @@ watch(activeIndex, () => {
 
 const getNoticeText = (obj: any) => {
   noticeText.value = obj
-}
-const aa = (event:any)=>{
-  event.preventDefault()
-  event.stopPropagation()
+  console.log(obj);
 
 }
 
 const getStepInfo = (data: any) => {
   if (list.value.length > 1) return
+  console.log(workfolwParams.value.algorithmId);
+
   comList.value = data.map((v: any, index: number) => {
     list.value.push({
       setp: `0${index + 2}`,
-      info: `task.${componentList[v.type]?.i18Text}`,
+      info: `task.${workfolwParams.value?.algorithmId == 3001 && index <= 0 ? "pleaseSelectFeatureEngineeringInputData" : componentList[v.type]?.i18Text}`,
       type: v.type
     })
     return v
@@ -236,7 +242,7 @@ const previous = () => {
 }
 
 const setActiveStep = (index: number) => {
-  if( activeIndex.value == index) return
+  if (activeIndex.value == index) return
   if (workfolwParams.value?.completedCalculationProcessStep + 1 < index) {
     ElMessage.warning(t('task.pleaseCompleteStep'))
     return
@@ -288,7 +294,7 @@ const setProces = () => {//设置流程
 const init = () => {
   const workflowId = route.params.workflowId || store.getWorkerFlow.workflowId
   const workflowVersion = route.params.workflowVersion || store.getWorkerFlow.workflowVersion
-  views.value = route.params.views  == 'view'
+  views.value = route.params.views == 'view'
   if (workflowId) {
     workflowInfo.workflowId = workflowId
     workflowInfo.workflowVersion = workflowVersion
@@ -337,10 +343,8 @@ onBeforeRouteLeave((to, form) => {
 })
 </script>
 <style>
-
 </style>
 <style lang="scss" scoped>
-
 .normal-wrap {
   .cover {
     transform: rotate(45deg);
