@@ -484,7 +484,7 @@ const en = {
   center: {
     committeeProposal: 'Committee Proposal',
     trustedAuthentication: 'Trusted Authentication',
-    committeeMembers: 'Committee',
+    committeeMembers: 'Committee Member',
     approvalOrganization: 'Approval Organization',
     certificateTime: 'Certificate Time',
     certificateValidity: 'Certificate Validity',

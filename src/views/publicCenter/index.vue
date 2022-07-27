@@ -15,6 +15,7 @@
 import TrustedOrg from './components/TrustedOrg.vue'
 import Committee from './components/Committee.vue'
 import Proposal from './components/Proposal.vue'
+const route = useRoute()
 const activekey = ref(0)
 const list = ref([
     {
@@ -31,6 +32,23 @@ const list = ref([
 const tabsChange = (index: string) => {
     activekey.value = +index
 }
+
+const tabIndex = computed(() =>
+    route.params.tab || 0
+)
+console.log('tabIndex', tabIndex.value);
+
+watch(() => tabIndex.value, (newV, oldV) => {
+    console.log('tabIndex in watch', tabIndex.value);
+    activekey.value = +tabIndex.value
+})
+
+
+onMounted(() => {
+    console.log('tabIndex', tabIndex.value);
+    activekey.value = +tabIndex.value
+})
+
 </script>
 
 <style scoped lang='scss'>

@@ -41,9 +41,10 @@
         </div>
         <div class="search-item-wrap">
           <div class="search-label mt-20px mb-10px font-900">{{ t('common.timeFrame') }}</div>
-          <el-date-picker class="picker-rounded" v-model="date" type="daterange" :default-time="defaultTime" :teleported="false"
-            value-format="YYYY-MM-DD HH:mm:ss" :range-separator="t('common.to')"
-            :start-placeholder="t('node.startTime')" :end-placeholder="t('common.endTime')" />
+          <el-date-picker class="picker-rounded" v-model="date" type="daterange"
+            :default-time="defaultTime" :teleported="false" value-format="YYYY-MM-DD HH:mm:ss"
+            :range-separator="t('common.to')" :start-placeholder="t('node.startTime')"
+            :end-placeholder="t('common.endTime')" />
         </div>
       </template>
     </Search>
@@ -51,14 +52,14 @@
 
 </template>
 <script lang="ts" setup>
-import { getAlgTree } from '@/api/algorithm'         
+import { getAlgTree } from '@/api/algorithm'
 import { useKeepAliveInfo } from '@/stores'
 import { queryWorkflowList, queryWorkflowStats } from '@/api/workflow/index'
 import DataTable from './components/DataTable.vue';
 import ExpertTable from './components/ExpertTable.vue';
 const { t, locale } = useI18n()
 const defaultTime = ref([
-    new Date(2000, 1, 1, 0, 0, 0),
+  new Date(2000, 1, 1, 0, 0, 0),
   new Date(2000, 2, 1, 23, 59, 59),
 ])
 const route = useRoute()
@@ -100,11 +101,11 @@ const tabsChange = (index: string) => {
   createMode.value = index == '0' ? 2 : 1
   keyword.value = ''
   current.value = 1
-  algValue.value = '',
-    date.value = []
+  algValue.value = ''
+  date.value = []
 }
 
-const transferTimestamp = (str: string | undefined,type?:string) => {
+const transferTimestamp = (str: string | undefined, type?: string) => {
   if (!str) return ''
   try {
     return new Date(str).getTime()
@@ -127,7 +128,7 @@ const query = () => {
     keyword: keyword.value,
     algorithmId: algValue.value,
     begin: transferTimestamp(date.value && date.value[0]) || null,
-    end: transferTimestamp(date.value && date.value[1],'end') || null,
+    end: transferTimestamp(date.value && date.value[1], 'end') || null,
   }
 
   keepAlive.setCurrent(current.value, route.path)
@@ -191,11 +192,12 @@ onMounted(() => {
 
 </script>
 <style lang="scss">
-.search-item-wrap{
-  .el-popper{
+.search-item-wrap {
+  .el-popper {
     max-width: max-content !important;
   }
 }
+
 .picker-rounded {
   border-radius: 20px;
   height: 40px;
