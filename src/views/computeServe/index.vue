@@ -61,8 +61,8 @@ const query = () => {
   })
 }
 
-const createTask = ({ branch3, branch2 }: any) => {
-  router.push({ name: "wizardMode", params: { calculationType: branch2.id, algorithmId: branch3.id } })
+const createTask = ({ algorithmInfo, calculationTypeInfo }: any) => {
+  router.push({ name: "wizardMode", params: { calculationType: calculationTypeInfo.id, algorithmId: algorithmInfo.id } })
 }
 
 onMounted(() => {

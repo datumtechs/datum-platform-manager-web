@@ -4,12 +4,15 @@
             <p class="text-20px text-color-[#333333] mb-20px font-600">{{ item.name }}</p>
             <div v-if="type === 0" class="flex flex-wrap">
                 <div class="flex flex-wrap mb-30px mr-50px" v-for="(v, index) in item.childrenList" :key="index">
-                    <AlgoCard @task="(branchInfo) => taskEmitter({ branch3: branchInfo, branch2: item })" :obj="v" />
+                    <AlgoCard
+                        @task="(branchInfo) => taskEmitter({ algorithmInfo: branchInfo, calculationTypeInfo: item })"
+                        :obj="v" />
                 </div>
             </div>
             <div v-else>
                 <div class="flex flex-wrap mb-30px mr-50px" :key="i">
-                    <AlgoCard @task="(branchInfo) => taskEmitter({ branch3: branchInfo, branch2: { id: 'noPrivacy' } })"
+                    <AlgoCard
+                        @task="(branchInfo) => taskEmitter({ algorithmInfo: branchInfo, calculationTypeInfo: { id: 'noPrivacy' } })"
                         :obj="item" />
                 </div>
             </div>
