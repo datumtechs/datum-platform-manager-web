@@ -12,7 +12,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import {useKeepAliveInfo } from '@/stores'
+import { useKeepAliveInfo } from '@/stores'
 const route = useRoute()
 const { t } = useI18n()
 const tabsItems = ref<any[]>([])
@@ -26,7 +26,7 @@ const props = defineProps({
   activekey: {
     type: Number, default: 0
   },
-  keep:{
+  keep: {
     type: Boolean,
     default: true
   }
@@ -48,11 +48,11 @@ const setItemRef = (el: any) => {
 
 onMounted(() => {
   // keepalive 与 props 优先级问题需要考虑  暂定有keepalive 优先
-  if(keepAlive.getComTabs[route.path]) {
-      handleTabs(keepAlive.getComTabs[route.path])
-      return
+  if (keepAlive.getComTabs[route.path]) {
+    handleTabs(keepAlive.getComTabs[route.path])
+    emit('change', +keepAlive?.getComTabs[route.path])
+    return
   }
-  console.log(props.keep)
   nextTick(() => {
     if (tabsItems.value?.length) {
       handleTabs(+activeIndex.value)
@@ -60,9 +60,9 @@ onMounted(() => {
   })
 })
 
-const tabsClick = (index: string|number) => {
+const tabsClick = (index: string | number) => {
   handleTabs(+index)
-  if(typeof props.keep === 'undefined' || props.keep )keepAlive.setComTabs(+index,route.path)
+  if (typeof props.keep === 'undefined' || props.keep) keepAlive.setComTabs(+index, route.path)
   emit('change', +index)
 }
 
