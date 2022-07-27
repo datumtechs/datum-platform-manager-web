@@ -57,15 +57,12 @@ const route = useRoute()
 const router = useRouter()
 const activeIndex = ref(0)
 const orgList: any = ref<any>([])
-const dataOrgList: any[] = ref<any[]>([])
+const dataOrgList: any = ref<any>([])
 const comList = ref([])
 const noticeText = ref({})
 const workfolwParams = ref<any>({})
 const processList = ref([])//流程列表
-const workflowInfo = reactive<any>({
-  workflowId: '',
-  workflowVersion: ''
-})
+const workflowInfo = reactive<any>({ workflowId: '', workflowVersion: '' })
 const emit = defineEmits(['getWorkName'])
 const views = ref(false)
 
@@ -126,14 +123,7 @@ const componentList = markRaw<any[]>(
     })
   })()
 )
-const list = ref<any[]>(
-  [
-    {
-      setp: '01',
-      info: 'task.selectionAlg',
-    }
-  ]
-)
+const list = ref<any[]>([{ setp: '01', info: 'task.selectionAlg' }])
 
 const fieldType = ref<any[]>([{
   name: "task.idColumn",//id列
@@ -149,20 +139,19 @@ const fieldType = ref<any[]>([{
   tips: "task.featureTips"
 }])
 
+
 watch(activeIndex, () => {
   store.setStep(activeIndex.value)
 })
 
 const getNoticeText = (obj: any) => {
   noticeText.value = obj
-  console.log(obj);
-
+  // console.log(obj);
 }
 
 const getStepInfo = (data: any) => {
   if (list.value.length > 1) return
-  console.log(workfolwParams.value.algorithmId);
-
+  // console.log(workfolwParams.value.algorithmId);
   comList.value = data.map((v: any, index: number) => {
     list.value.push({
       setp: `0${index + 2}`,

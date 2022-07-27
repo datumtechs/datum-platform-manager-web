@@ -60,6 +60,7 @@ onMounted(() => {
   // keepalive 与 props 优先级问题需要考虑  暂定有keepalive 优先
   if (keepAlive.getComTabs[route.path]) {
     handleTabs(keepAlive.getComTabs[route.path])
+    emit('change', +keepAlive?.getComTabs[route.path])
     return
   }
   nextTick(() => {

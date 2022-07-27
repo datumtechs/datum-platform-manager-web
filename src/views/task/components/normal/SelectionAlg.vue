@@ -98,8 +98,8 @@ const props: any = defineProps({
 const form: any = reactive({
   workflowName: "",
   computingType: "",
-  calculationType: +route.params?.calculationType || undefined,
-  algorithmId: +route.params?.algorithmId || undefined,
+  calculationType: undefined,
+  algorithmId: undefined,
   calculationProcessId: undefined,
   workflowDesc: ""
 })
@@ -141,8 +141,6 @@ watch(() => props.processList, (e) => {
   }
 })
 watch(() => algDetailsList.value, (e) => {
-  // form.calculationProcessId = ''
-  // form.algorithmId = ''
   if (algDetailsList.value?.length && algDetailsList.value.length == 1) {
     setTimeout(() => {
       form.algorithmId = algDetailsList.value[0].id
@@ -194,6 +192,28 @@ const queryAlgTree = () => {
     const { data, code } = res
     if (code === 10000) {
       algList.value = data?.childrenList || []
+      const { calculationType, algorithmId } = route.params
+
+      algList.value.forEach((v: any) => {
+        if (calculationType == 'noPrivacy' && algorithmId) {
+          v.childrenList.some((item: any) => {
+            if (item.id == algorithmId) {
+              return (form.computingType = v.id, form.algorithmId = item.id) && true
+            }
+          })
+        } else if (!isNaN(calculationType) && !isNaN(algorithmId)) {
+          v.childrenList.some((branch: any) => {
+            if (branch.id == calculationType) {
+              branch.childrenList.some((item: any) => {
+                if (item.id == algorithmId) {
+                  return (form.computingType = v.id, form.calculationType = branch.id, form.algorithmId = item.id) && true
+                }
+              })
+              return true
+            }
+          })
+        }
+      })
       if (form.algorithmId) {
         algChange()
       }
@@ -276,7 +296,6 @@ const getNoticeText = () => {
   })
 
   setTimeout(() => {
-    console.log(props.processList);
     props.processList.forEach((v: any) => {
       if (v.calculationProcessId == form.calculationProcessId) {
         paramsText.calculationProcessText = v.name

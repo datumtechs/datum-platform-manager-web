@@ -3,14 +3,17 @@
         <div class="w-full mb-50px" v-for="(item, i) in list" :key="i">
             <p class="text-20px text-color-[#333333] mb-20px font-600">{{ item.name }}</p>
             <div v-if="type === 0" class="flex flex-wrap">
-                <div class="flex flex-wrap mb-30px mr-50px" v-for="(v, index) in item.childrenList"
-                    :key="index">
-                    <AlgoCard @task="taskEmitter" :obj="v" />
+                <div class="flex flex-wrap mb-30px mr-50px" v-for="(v, index) in item.childrenList" :key="index">
+                    <AlgoCard
+                        @task="(branchInfo) => taskEmitter({ algorithmInfo: branchInfo, calculationTypeInfo: item })"
+                        :obj="v" />
                 </div>
             </div>
             <div v-else>
                 <div class="flex flex-wrap mb-30px mr-50px" :key="i">
-                    <AlgoCard @task="taskEmitter" :obj="item" />
+                    <AlgoCard
+                        @task="(branchInfo) => taskEmitter({ algorithmInfo: branchInfo, calculationTypeInfo: { id: 'noPrivacy' } })"
+                        :obj="item" />
                 </div>
             </div>
         </div>
