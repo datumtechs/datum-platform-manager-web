@@ -42,15 +42,6 @@ watch(locale, (val, val1) => {
   })
 })
 
-watch(activeIndex, (newV, oldV) => {
-  console.log('newV', newV);
-  console.log('oldV', oldV);
-
-  nextTick(() => {
-    handleTabs(+ activeIndex.value)
-  })
-})
-
 const setItemRef = (el: any) => {
   if (el) tabsItems.value?.push(el)
 }
