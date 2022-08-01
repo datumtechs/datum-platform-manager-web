@@ -1,5 +1,5 @@
 <template>
-    <div class="my-60px com-main-data-wrap">
+    <div class="my-60px com-main-data-wrap main-content">
         <el-table :data="tableData">
             <el-table-column type="index" width="80">
                 <template #header>{{ t('common.num') }}</template>

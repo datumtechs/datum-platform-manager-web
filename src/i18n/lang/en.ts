@@ -60,7 +60,8 @@ const en = {
     buyCredential: "Purchase Credential",
     algorithmLibrary: "Algorithm Library",
     privacy: 'Privacy',
-    nonPrivacy: 'NonPrivacy'
+    nonPrivacy: 'NonPrivacy',
+    expireTime: 'Expire'
   },
   menu: {
     home: 'Home',
@@ -347,7 +348,8 @@ const en = {
     taskStatus: 'Task Status',
     placeholder: 'Search task ID',
     modelEvaluation: 'Model Evaluation',
-    taskName: "Task name"
+    taskName: "Task name",
+    characteristicEngineering: 'Characteristic Engineering'
   },
   expert: {
     overview: 'Overview',
@@ -497,7 +499,9 @@ const en = {
     certificationDetails: "Certification Details", // Certification Details
     proposalDetails: "Proposal Details", //Proposal Details
     publicInfo: "Public Information", //Public information
-    dataDesc: "Data Description" // Data description
+    dataDesc: "Data Description", // Data description
+    trustedDesc: 'Organizations that publish high-quality data, are certified by committee members and have issued certificates of trust',
+    committeeDesc: 'An organization initiated by the original node, screening high-quality nodes and performing credible certification'
   }
 }
 

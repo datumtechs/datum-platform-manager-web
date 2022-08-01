@@ -1,19 +1,17 @@
 <template>
     <!-- <el-input v-model="props.modelEvaluate" :rows="10" type="textarea" placeholder="" /> -->
-    <el-descriptions :title="`${t('workflow.modelEvaluationResult')} :`" direction="horizontal"
-        :column="1" class="w-600px" border>
+    <el-descriptions direction="horizontal" :column="1" class="w-600px" border>
         <el-descriptions-item label-class-name="result-label" class-name="result-content"
             v-for="item in modelList" :key="item.value" :label="`${item.label}`">{{
                     item.value
             }}</el-descriptions-item>
     </el-descriptions>
-
 </template>
 
 <script setup lang='ts'>
 const { t } = useI18n()
 const props = defineProps({
-    modelEvaluate: {
+    dataList: {
         type: String,
         default: ""
     }
@@ -22,8 +20,8 @@ const props = defineProps({
 const modelList: any = ref([])
 
 const init = () => {
-    if (props.modelEvaluate) {
-        const obj = JSON.parse(props.modelEvaluate)
+    if (props.dataList) {
+        const obj = JSON.parse(props.dataList)
         Object.keys(obj).forEach(key => {
             let newObj = {
                 label: key,
@@ -32,7 +30,6 @@ const init = () => {
             modelList.value.push(newObj);
         })
     }
-
 }
 
 onMounted(() => {
