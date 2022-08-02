@@ -1,6 +1,7 @@
 <template>
-    <div class="my-60px com-main-data-wrap">
-        <div class="committee-wrapper">
+    <div class="my-60px com-main-data-wrap main-content" main-content>
+        <DescBox type="committee" :content="$t('center.committeeDesc')" />
+        <div v-if="authorityList.length > 0" class="committee-wrapper">
             <div class="committee-box" v-for="box in authorityList">
                 <el-avatar :size="45" :src="box.imageUrl" @error="errorHandler" />
                 <p class="mt-10px text-[#000] font-bold text-16px leading-22.4px">
@@ -12,8 +13,8 @@
                     <span class="ml-8px">{{ useFormatTime(box.authorityJoinTime) }}</span>
                 </p>
             </div>
-
         </div>
+        <el-empty v-else :description="t('common.noData')" />
         <div class="flex my-50px justify-center">
             <el-pagination v-model:current-page="pageObj.current" v-model:page-size="pageObj.size"
                 background layout="prev, pager, next" :total="pageObj.total" />
@@ -22,6 +23,7 @@
 </template>
 
 <script setup lang='ts'>
+import DescBox from './DescBox.vue'
 import { getAuthorityList } from '@/api/publicity'
 import { useFormatTime } from '@/hooks'
 

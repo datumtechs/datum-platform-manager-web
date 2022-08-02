@@ -114,3 +114,10 @@
         padding-top: 30px;
     }
 }
+.starterDialog {
+    .el-select-dropdown__item {
+        white-space: pre-wrap;
+        text-overflow: unset;
+        min-height: 34px;
+    }
+}

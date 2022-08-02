@@ -2,14 +2,14 @@
     <el-dialog v-model="props.show" :title="props.title" :width="'591px'"
         custom-class="starterDialog" :before-close="handleClose"
         @close="emits('update:show', false)">
-        <div class="starter-wrapper">
+        <div v-loading="starterLoading" class="starter-wrapper">
             <div v-for="(item, index) in radioGroupAry" class="starter-box">
                 <!-- <div class="starter-box-title font-bold text-16px text-color-#[000] leading-44px"> -->
                 <p class="starter-title font-bold text-[#333]">{{ item.metaDataName }}</p>
                 <el-select class="starter-selector" v-model="selectAry[index]"
                     :placeholder="$t('workflow.selectTokenOfData')">
                     <el-option v-for="ele in item.haveAttributesCredentialList" :value="ele.id"
-                        :label="`${ele.tokenName} ( ${ele.tokenSymbol} )`" :key="ele.id">
+                        :label="tokenLabel(ele)" :key="ele.id">
                     </el-option>
                 </el-select>
             </div>
@@ -32,7 +32,16 @@
 
 <script setup lang='ts'>
 import { preparationStartCredentialList } from '@/api/workflow'
+import { useFormatTime } from '@/hooks'
 const { t } = useI18n()
+const starterLoading = ref(false)
+const tokenLabel = (ele: any) => {
+    if (ele.tokenSymbol) {
+        return `${ele.tokenName}` + ` ( ${ele.tokenSymbol} ) `
+    } else {
+        return `${ele.tokenName}` + ` ( ${t('common.expireTime')}: ` + `  ${useFormatTime(+ele.characteristic)} )`
+    }
+}
 
 const handleClose = () => {
     emits('update:show', false)
@@ -69,12 +78,15 @@ const startUp = () => {
     }
 
 }
-onMounted(() => {
+
+const queryList = () => {
+    starterLoading.value = true
     preparationStartCredentialList({
         workflowId: props.workflowId,
         workflowVersion: props.workflowVersionId,
 
     }).then(res => {
+        starterLoading.value = false
         const { code, data } = res
         if (code === 10000) {
             data.forEach((ele: any) => {
@@ -82,7 +94,13 @@ onMounted(() => {
             });
             radioGroupAry.value = data
         }
+    }).catch(err => {
+        starterLoading.value = false
     })
+}
+
+onMounted(() => {
+    queryList()
 })
 </script>
 
@@ -91,7 +109,7 @@ onMounted(() => {
 
     // max-height: 513px;
     .starter-box {
-        height: 54px;
+        min-height: 54px;
         padding: 20px;
         border: 1px solid #eeeeee;
         border-radius: 8px;
@@ -103,52 +121,18 @@ onMounted(() => {
         }
 
         .starter-title {
-            flex-basis: 200px;
+            flex-basis: 150px;
         }
 
         .starter-selector {
-            width: 100%;
-            padding-left: 9px;
+            padding-left: 20px;
+            flex: 1;
 
             :deep(.el-input__inner) {
                 border-radius: 24px;
             }
         }
-
-        // .starter-box-title {
-        //     height: 44px;
-        //     border-bottom: 1px solid #eeeeee;
-
-        //     p {
-        //         padding-left: 30px;
-        //     }
-        // }
-
-        // .starter-box-content-box {
-        //     height: 106px;
-        //     padding: 13px 30px;
-        //     width: 100%;
-        //     font-size: 14px;
-        //     // margin: 13px 30px;
-        //     // overflow-y: auto;
-
-        //     :deep(.el-radio-group) {
-        //         width: 100%;
-        //         display: flex;
-        //         flex-direction: column;
-        //         flex-wrap: nowrap;
-        //         overflow-y: auto;
-        //         align-items: flex-start;
-        //     }
-
-        //     .starter-box-content {
-        //         margin-bottom: 10px;
-        //     }
-
-        // }
     }
-
-
 }
 
 .dialog-footer {
@@ -156,6 +140,17 @@ onMounted(() => {
         width: 100px;
         height: 40px;
         border-radius: 25px !important;
+    }
+}
+
+.el-select-dropdown__list {
+    .el-select-dropdown__item {
+        padding: 10px 32px 10px 20px;
+        white-space: pre-wrap;
+        text-overflow: unset;
+        min-height: 34px;
+        height: unset;
+        line-height: 34px;
     }
 }
 </style>

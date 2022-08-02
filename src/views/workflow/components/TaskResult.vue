@@ -3,23 +3,33 @@
         <Banner :back-show="true" :bg-name="'clocksWatches'" :showRouter="false"
             :detailName="detailName" @back="router.go(-1)">
             <template #select>
-                <ComTabs :keep="false" :list="modelEvaluate ? modelList : list"
+                <ComTabs :keep="false"
+                    :list="(modelEvaluate || informationValueEvaluate) ? modelList : list"
                     :activekey="activekey" @change="tabsChange" />
             </template>
         </Banner>
         <div class="com-main-data-wrap mt-63px main-content">
             <ResultFile v-if="activekey === 0" :tableData="tableData" />
             <TaskEvents v-if="activekey === 1" :data="eventList" />
-            <ModelEvaluation v-if="activekey === 2" :modelEvaluate="modelEvaluate" />
+            <DynamicOutput v-if="activekey === 2"
+                :dataList="modelEvaluate ? modelEvaluate : informationValueEvaluate" />
+            <!-- <DynamicOutput v-if="activekey === 2 && informationValueEvaluate"
+                :dataList="informationValueEvaluate" /> -->
         </div>
     </div>
 </template>
 <script setup lang='ts'>
 import ResultFile from './ResultFile.vue'
-import ModelEvaluation from './ModelEvaluation.vue'
+import DynamicOutput from './DynamicOutput.vue'
 import { getWorkflowRunTaskResult } from '@/api/workflow'
 import { useFormatTime, useDuring, useWorkflowDetailsMap } from '@/hooks'
-
+const detailName = ref('')
+const eventList = ref([])
+const modelEvaluate = ref('')
+const informationValueEvaluate = ref('')
+const route = useRoute()
+const router = useRouter()
+const activekey = ref(0)
 const modelList = [
     {
         name: 'computeTask.taskResult'
@@ -28,7 +38,7 @@ const modelList = [
         name: 'computeTask.taskEvents'
     },
     {
-        name: 'computeTask.modelEvaluation'
+        name: modelEvaluate.value ? 'computeTask.modelEvaluation' : 'computeTask.characteristicEngineering'
     }
 ]
 
@@ -40,12 +50,7 @@ const list = [
         name: 'computeTask.taskEvents'
     }
 ]
-const detailName = ref('')
-const eventList = ref([])
-const modelEvaluate = ref('')
-const route = useRoute()
-const router = useRouter()
-const activekey = ref(0)
+
 const tableData = ref([{
     lName: 'computeTask.taskName',
     lProp: "",
@@ -84,6 +89,7 @@ const queryResultData = () => {
             detailName.value = data.workflowVersionName
             eventList.value = data.eventList
             modelEvaluate.value = data.modelEvaluate || ''
+            informationValueEvaluate.value = data.informationValueEvaluate || ''
             tableData.value[0].lProp = data.workflowVersionName
             tableData.value[0].rProp = useWorkflowDetailsMap(data.status) || ''
             tableData.value[1].lProp = data.taskId

@@ -60,7 +60,8 @@ const zh = {
     buyCredential: "购买凭证",
     algorithmLibrary: "算法库",
     privacy: '隐私计算',
-    nonPrivacy: '非隐私计算'
+    nonPrivacy: '非隐私计算',
+    expireTime: '失效时间'
   },
   menu: {
     home: '首页',
@@ -347,7 +348,8 @@ const zh = {
     taskStatus: '任务状态',
     placeholder: '搜索任务ID',
     modelEvaluation: '模型评估',
-    taskName: "任务名称"
+    taskName: "任务名称",
+    characteristicEngineering: '特征工程'
   },
   expert: {
     overview: '概览',
@@ -497,7 +499,9 @@ const zh = {
     certificationDetails: "认证详情", // Certification Details
     proposalDetails: "提案详情", //Proposal Details
     publicInfo: "公示资料", //Public information
-    dataDesc: "资料说明" // Data description
+    dataDesc: "资料说明", // Data description
+    trustedDesc: '发布优质数据, 由委员认证并已颁发信任证书的组织',
+    committeeDesc: '由原始节点发起的, 筛选优质节点并进行可信认证的机构'
   }
 }
 

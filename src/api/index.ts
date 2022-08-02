@@ -36,7 +36,7 @@ service.interceptors.response.use(
         useUsersInfo().clean()
         setTimeout(() => {
           window.location.href = '/'
-        }, 2000);
+        }, 1500);
       }
       if (config.url.includes('/flow') && !!data.msg && !tokenAbnormal) {
         tokenAbnormal = true

@@ -1,5 +1,6 @@
 <template>
-    <div class="my-60px com-main-data-wrap">
+    <div class="my-60px com-main-data-wrap main-content">
+        <DescBox type="trusted" :content="$t('center.trustedDesc')" />
         <el-table :data="tableData">
             <el-table-column type="index" width="80">
                 <template #header>{{ t('common.num') }}</template>
@@ -20,6 +21,7 @@
 </template>
 
 <script setup lang='ts'>
+import DescBox from './DescBox.vue'
 import { getOrgVcList } from '@/api/publicity'
 const { t } = useI18n()
 const tableData = ref([])
