@@ -84,7 +84,7 @@ const en = {
     workflowVersion: 'Workflow Version Record',
     workflowSubTask: 'Workflow Subtask',
     AlgoService: 'Algorithm Service',
-    publicityCenter: 'Publicity Center'
+    publicityCenter: 'Service Announcement'
   },
   head: {
     myAccountTitle: 'My Account',
@@ -300,8 +300,9 @@ const en = {
     plzInputTokenName: 'Please enter token or data name',
     modelEvaluationResult: 'Evaluation results',
     selectTokenOfData: 'Select the credentials required for the task',
-    costPerTask: 'Credentials consumption of a single task in plaintext or ciphertext scenarios',
-    selectCredentialForData: 'Please select consumed voucher for data'
+    costPerTask: 'Consumption of a single task in private or non-private computing scenarios',
+    selectCredentialForData: 'Please select consumed voucher for data',
+    dataNotContainCredentials: 'The data does not contain the certificate, please go to the data market to purchase.'
   },
   credentials: {
     circulation: "Circulation",
@@ -439,9 +440,9 @@ const en = {
     waitWalletConfirm: 'Confirm this action in your wallet',
     confirmAuth: 'Confirm authorization',
     confirmCancelAuth: 'Confirm cancel authorization',
-    authErc20Hint: 'Each time the workflow runs, the included data needs to consume a corresponding credential. Please select an authorized credential here',
-    authOrgHint: 'The operation of the workflow requires the coordination of the nodes, please authorize the nodes here',
-    authWLatHint: 'The workflow will take a certain amount of computing time, and the authorized WLat will run every time',
+    authErc20Hint: 'User authorization is required when consuming data without attribute credentials, please select an authorized credential here.',
+    authOrgHint: 'Workflow requires authorized agent nodes to coordinate tasks.',
+    authWLatHint: 'The authorized WLat will be deducted as the handling fee of the workflow task.',
     setQty: 'Set quantity',
   },
   industry: {
@@ -500,8 +501,8 @@ const en = {
     proposalDetails: "Proposal Details", //Proposal Details
     publicInfo: "Public Information", //Public information
     dataDesc: "Data Description", // Data description
-    trustedDesc: 'Organizations that publish high-quality data, are certified by committee members and have issued certificates of trust',
-    committeeDesc: 'An organization initiated by the original node, screening high-quality nodes and performing credible certification'
+    trustedDesc: 'The organizations listed below have been accredited by the Board and have received a Trusted Credential.',
+    committeeDesc: 'It is composed of credible institutions and conducts credible certification of network participating organizations as needed.'
   }
 }
 
