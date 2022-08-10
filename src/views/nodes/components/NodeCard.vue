@@ -9,7 +9,7 @@
         <div class="w-230px table-box">
             <div class="flex">
                 <CertificationLabel :obj="node" />
-                <p class="deep-title font-bold w-120px ellipse cursor-pointer pl-10px"
+                <p class="deep-title font-bold w-120px ellipse cursor-pointer"
                     @click="linkToDetail">
                     {{ node.nodeName }}
                 </p>
