@@ -279,8 +279,9 @@ onMounted(() => {
                 </el-select> -->
             </template>
         </Search>
-        <TokenList v-if="showDialog" :title="`${$t('common.buyCredential')} - ${currentDataName}`"
-            :id="currentMetadataId" v-model:showDialog="showDialog" />
+        <TokenList v-if="showDialog" type="common"
+            :title="`${$t('common.buyCredential')} - ${currentDataName}`" :id="currentMetadataId"
+            v-model:showDialog="showDialog" />
     </div>
 </template>
 

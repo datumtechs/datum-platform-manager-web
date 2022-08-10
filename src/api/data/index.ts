@@ -86,3 +86,20 @@ export const getAttributeCredential = (params: any): Promise<any> => {
     params
   })
 }
+
+// 查询当前用户数据绑定的无属性的凭证
+export const getUserNoAttributeCredential = (params: any): Promise<any> => {
+  return http({
+    method: 'GET',
+    url: '/flow/data/getUserNoAttributeCredential',
+    params
+  })
+}
+// 查询当前用户数据绑定的有属性的凭证
+export const getUserAttributeCredentialList = (params: any): Promise<any> => {
+  return http({
+    method: 'GET',
+    url: '/flow/data/getUserAttributeCredentialList',
+    params
+  })
+}

@@ -81,12 +81,12 @@ const viewList = computed(() => [
         value: 0
     }, {
         id: 8,
-        title: 'dataTokenCount',
+        title: 'dataCount',
         label: t('home.dataCredentials'),
         value: 0
     }, {
         id: 9,
-        title: 'dataTokenUsed',
+        title: 'dataUsed',
         label: t('home.dataUsageTimes'),
         value: 0
     }

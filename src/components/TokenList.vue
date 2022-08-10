@@ -22,13 +22,13 @@
                             <p v-if="row.erc20PtAlgConsume">
                                 <span>{{ $t('common.nonPrivacy') }}:</span>
                                 <span class="pl-8px">{{ useExchangeFrom(row.erc20PtAlgConsume,
-                                        row.tokenDecimal)
+                                        row.tokenDecimal) + ' ' + `${row.tokenSymbol}`
                                 }}</span>
                             </p>
                             <p v-if="row.erc20CtAlgConsume">
                                 <span>{{ $t('common.privacy') }}:</span>
                                 <span class="pl-8px">{{ useExchangeFrom(row.erc20CtAlgConsume,
-                                        row.tokenDecimal)
+                                        row.tokenDecimal) + ' ' + `${row.tokenSymbol}`
                                 }}</span>
                             </p>
                         </div>
@@ -95,8 +95,8 @@
 </template>
 
 <script setup lang='ts'>
-import { getNoAttributeCredential, getAttributeCredential } from '@/api/data'
-import { useExchangeFrom, useFormatTime } from '@/hooks'
+import { getUserNoAttributeCredential, getUserAttributeCredentialList, getNoAttributeCredential, getAttributeCredential } from '@/api/data'
+import { useFormatTime, useExchangeFrom } from '@/hooks'
 import tofun from '@/assets/images/market/tofun.png'
 const chainCfg: any = inject('chainCfg')
 const { t } = useI18n()
@@ -113,6 +113,10 @@ const props = defineProps({
     id: {
         type: String,
         default: ''
+    },
+    type: {
+        type: String,
+        default: 'common'
     }
 })
 const emits = defineEmits(['update:showDialog'])
@@ -145,31 +149,33 @@ const linkToExchange = (row: any) => {
     window.open(dexUrl, "_blank");
 }
 
-const queryFT = () => {
+const queryFT = async () => {
     ftLoading.value = true
-    getNoAttributeCredential({ metaDataId: props.id }).then(res => {
+    let fn = props.type === 'common' ? getNoAttributeCredential : getUserNoAttributeCredential
+    try {
+        const { code, data } = await fn({ metaDataId: props.id })
         ftLoading.value = false
-        const { data, code } = res
         if (code === 10000) {
             nfTokenData.value = [data]
         }
-    }).catch(err => {
+    } catch (error) {
         ftLoading.value = false
-    })
+    }
 }
 
-const queryNFT = () => {
+const queryNFT = async () => {
     nftLoading.value = true
-    getAttributeCredential({ metaDataId: props.id, size: pageObj.size, current: pageObj.current }).then(res => {
+    let fn = props.type === 'common' ? getAttributeCredential : getUserAttributeCredentialList
+    try {
+        const { code, data } = await fn({ metaDataId: props.id })
         nftLoading.value = false
-        const { data, code } = res
         if (code === 10000) {
             nftTokenData.value = data.items
             pageObj.total = data.total
         }
-    }).catch(err => {
+    } catch (error) {
         nftLoading.value = false
-    })
+    }
 }
 
 

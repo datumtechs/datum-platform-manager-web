@@ -19,10 +19,7 @@
     </div>
     <Search :keyword="keyword" :showFilter="false" @search="search"
       :placeholder="t('myData.marketPlaceholder')"></Search>
-    <!-- <TokenList :title="`${$t('myData.viewHoldingCredentials')}  ( ${currentDataName} )`"
-      v-model:showDialog="showDialog" /> -->
-
-    <TokenList v-if="showDialog"
+    <TokenList v-if="showDialog" type="personal"
       :title="`${$t('myData.viewHoldingCredentials')} - ${currentDataName}`" :id="currentMetadataId"
       v-model:showDialog="showDialog" />
   </div>
