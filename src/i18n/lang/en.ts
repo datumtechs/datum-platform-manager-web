@@ -61,7 +61,8 @@ const en = {
     algorithmLibrary: "Algorithm Library",
     privacy: 'Privacy',
     nonPrivacy: 'NonPrivacy',
-    expireTime: 'Expire'
+    expireTime: 'Expire',
+    times: 'Times'
   },
   menu: {
     home: 'Home',
@@ -266,7 +267,8 @@ const en = {
     holdings: "Holdings",
     viewHoldingCredentials: "Holding Credentials",
     taskConsumption: 'Task Consumption',
-    selectExchange: 'Select Exchange'
+    selectExchange: 'Select Exchange',
+    dataOwner: 'Data Owner'
   },
   workflow: {
     workflowName: "Workflow Name",

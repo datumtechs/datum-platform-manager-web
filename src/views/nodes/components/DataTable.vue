@@ -7,14 +7,34 @@
                 width="80" />
             <el-table-column :class-name="'show-ellipsis-tooltip'" prop="metaDataName"
                 :label="t('myData.dataName')" />
-            <el-table-column :class-name="'show-ellipsis-tooltip'" prop="tokenName"
-                :label="t('myData.credentialName')" />
-            <el-table-column prop="tokenSymbol" :label="t('myData.credentialSymbol')" />
-            <el-table-column prop="launchTime" :label="t('myData.launchTime')">
+            <el-table-column :class-name="'show-ellipsis-tooltip'" prop="nodeName"
+                :label="t('myData.dataOwner')" />
+            <el-table-column :class-name="'show-ellipsis-tooltip'" :label="t('myData.dataSize')">
                 <template #default="{ row }">
-                    <div>{{ useFormatTime(row.publishedAt) }}</div>
+                    <div>{{ useSize(row.size) }}</div>
                 </template>
             </el-table-column>
+            <el-table-column :label="t('myData.industryData')">
+                <template #default="{ row }">
+                    <div>{{ $t(`${enums.industry[row.industry]}`) }}</div>
+                </template>
+            </el-table-column>
+            <el-table-column :label="t('myData.useScene')">
+                <template #default="{ row }">
+                    <div>
+                        <el-space wrap :size="10"
+                            :spacer="(row.isSupportPtAlg && row.isSupportCtAlg) ? '|' : ''">
+
+                            <span>{{ row.isSupportPtAlg ? $t('common.nonPrivacy') :
+                                    ''
+                            }}</span>
+                            <span>{{ row.isSupportCtAlg ? $t('common.privacy') : ''
+                            }}</span>
+                        </el-space>
+                    </div>
+                </template>
+            </el-table-column>
+
             <el-table-column :label="t('common.actions')">
                 <template #default="{ row }">
                     <el-space :size="20">
@@ -36,7 +56,8 @@
 <script setup lang='ts'>
 import type { Ref } from 'vue'
 import { getDataListByOrg } from '@/api/data'
-import { useTableIndex, useFormatTime } from '@/hooks'
+import { useTableIndex, useFormatTime, useSize } from '@/hooks'
+import { enums } from '@/utils/enum'
 const { t } = useI18n()
 const tableData: Ref<{}[]> = ref([])
 const router = useRouter()

@@ -61,7 +61,8 @@ const zh = {
     algorithmLibrary: "算法库",
     privacy: '隐私计算',
     nonPrivacy: '非隐私计算',
-    expireTime: '失效时间'
+    expireTime: '失效时间',
+    times: '次'
   },
   menu: {
     home: '首页',
@@ -266,7 +267,8 @@ const zh = {
     holdings: "持有量",
     viewHoldingCredentials: "查看持有凭证",
     taskConsumption: '任务消耗量',
-    selectExchange: '选择交易所'
+    selectExchange: '选择交易所',
+    dataOwner: '数据拥有者'
   },
   workflow: {
     workflowName: "工作流名称",
