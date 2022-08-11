@@ -70,7 +70,7 @@
                         <span v-else>{{ $t('common.privacy') }}</span>
                     </template>
                 </el-table-column>
-                <el-table-column :label="$t('common.actions')">
+                <el-table-column v-if="type === 'common'" :label="$t('common.actions')">
                     <template #default="{ row }">
                         <el-popover placement="top" :title="$t('myData.selectExchange')"
                             :width="100" trigger="hover">
