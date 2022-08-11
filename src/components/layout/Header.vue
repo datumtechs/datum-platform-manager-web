@@ -4,11 +4,8 @@ import PersonalCenter from './components/PersonalCenter.vue'
 </script>
 <template>
   <header class="flex h-70px items-center opacity-79 bg-light-50 w-full h-full">
-    <img
-      class="logo w-164px h-26px ml-37px cursor-pointer"
-      @click="$router.push('/')"
-      src="@/assets/images/header/logo.png"
-    />
+    <img class="logo w-125px h-32px ml-40px cursor-pointer" @click="$router.push('/')"
+      src="@/assets/images/header/datum-black.png" />
     <Menu />
     <PersonalCenter />
   </header>
