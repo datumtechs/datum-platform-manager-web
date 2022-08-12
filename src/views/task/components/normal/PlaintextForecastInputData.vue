@@ -245,8 +245,11 @@ const cascaderProps = ref({
       resolve([])
       return
     }
+    // console.log(props.taskParams?.ptPredictionInput?.algorithmId);
+
+    // debugger
     getUserModelList({
-      algorithmId: props.taskParams?.predictionInput?.algorithmId,
+      algorithmId: props.taskParams?.ptPredictionInput?.algorithmId,
       identityId: pathValues[0]
     }).then(res => {
       const { code, data } = res
