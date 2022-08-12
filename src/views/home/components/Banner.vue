@@ -1,9 +1,9 @@
 <template>
   <section class="h-300px banner">
     <div class="h-300px max-w-1160px mx-auto px-37px flex justify-center flex-col">
-      <div class="flex items-end">
-        <img :src="mainLogo" />
-        <span class="text-[24px] font-bold leading-33px pl-9px">{{ t('home.explorer') }}</span>
+      <div class="flex items-center">
+        <img class="w-205px h-52px" :src="mainLogo" />
+        <span class="text-[24px] font-bold leading-33px pl-26px">{{ t('home.explorer') }}</span>
       </div>
       <el-input v-model="searchText" :placeholder="$t('home.explorerHint')" :prefix-icon="Search"
         class="search-input" type="text">
@@ -18,7 +18,7 @@
 </template>
 
 <script setup lang='ts'>
-import mainLogo from '@assets/images/home/mainLogo.png'
+import mainLogo from '@assets/images/header/datum-black.png'
 import { Search } from '@element-plus/icons-vue'
 import { queryNavigation } from '@/api/home'
 

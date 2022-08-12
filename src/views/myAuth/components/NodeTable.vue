@@ -42,7 +42,7 @@
         <el-dialog v-model="showDialog" :width="480" @close="showDialog = false"
             :destroy-on-close="true">
             <template #title>
-                <div class="flex items-center mb-24px">
+                <div class="flex items-center">
                     <img class="w-24px h-24px" src="@/assets/images/auth/sigh.png" alt="">
                     <p class="pl-8px"> {{ curTitle }}</p>
                 </div>
@@ -100,7 +100,6 @@ interface OrgNode {
     status: number
     updateAt: number
 }
-
 
 const chainCfg: any = inject('chainCfg')
 const web3: any = inject('web3')

@@ -172,11 +172,12 @@ onMounted(() => {
                 <el-table-column :class-name="'show-ellipsis-tooltip'" prop="metaDataName"
                     :label="t('myData.dataName')" />
                 <el-table-column :class-name="'show-ellipsis-tooltip'" prop="nodeName"
-                    :label="t('myData.dataProvider')">
+                    :label="t('myData.dataOwner')">
                     <template #default="{ row }">
                         <div class="flex">
                             <CertificationLabel :obj="row" />
-                            <p class="w-120px ellipse cursor-pointer pl-10px"
+                            <p :class="{ 'pl-10px': (row.isCertified || row.isAuthority) }"
+                                class="w-120px ellipse cursor-pointer link-btn"
                                 @click="linkToNode(row)">{{
                                         row.nodeName
                                 }}</p>
@@ -279,8 +280,9 @@ onMounted(() => {
                 </el-select> -->
             </template>
         </Search>
-        <TokenList v-if="showDialog" :title="`${$t('common.buyCredential')} - ${currentDataName}`"
-            :id="currentMetadataId" v-model:showDialog="showDialog" />
+        <TokenList v-if="showDialog" type="common"
+            :title="`${$t('common.buyCredential')} - ${currentDataName}`" :id="currentMetadataId"
+            v-model:showDialog="showDialog" />
     </div>
 </template>
 

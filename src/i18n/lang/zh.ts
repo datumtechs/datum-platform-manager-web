@@ -61,7 +61,8 @@ const zh = {
     algorithmLibrary: "算法库",
     privacy: '隐私计算',
     nonPrivacy: '非隐私计算',
-    expireTime: '失效时间'
+    expireTime: '失效时间',
+    times: '次'
   },
   menu: {
     home: '首页',
@@ -84,7 +85,7 @@ const zh = {
     workflowVersion: '工作流版本记录',
     workflowSubTask: '工作流子任务',
     AlgoService: '算法服务',
-    publicityCenter: '公示中心'
+    publicityCenter: '服务公告'
   },
   head: {
     myAccountTitle: "我的账户",
@@ -266,7 +267,8 @@ const zh = {
     holdings: "持有量",
     viewHoldingCredentials: "查看持有凭证",
     taskConsumption: '任务消耗量',
-    selectExchange: '选择交易所'
+    selectExchange: '选择交易所',
+    dataOwner: '数据拥有者'
   },
   workflow: {
     workflowName: "工作流名称",
@@ -300,8 +302,9 @@ const zh = {
     plzInputTokenName: '请输入凭证或数据名称',
     modelEvaluationResult: '模型评估结果',
     selectTokenOfData: '选择任务所需要的凭证',
-    costPerTask: '隐私算法或非隐私算法场景下单次任务的消耗量',
-    selectCredentialForData: '请为数据选择消耗的凭证'
+    costPerTask: '隐私或非隐私计算场景下单次任务的消耗量',
+    selectCredentialForData: '请为数据选择消耗的凭证',
+    dataNotContainCredentials: '数据未包含凭证, 请前往数据市场购买'
   },
   credentials: {
     circulation: "总发布量",
@@ -439,9 +442,9 @@ const zh = {
     waitWalletConfirm: '请在您的钱包中确认此操作',
     confirmAuth: '确认授权',
     confirmCancelAuth: '确认取消授权',
-    authErc20Hint: '工作流每运行一次，包含的数据需要消耗对应的一个凭证，请在此选择授权的凭证',
-    authOrgHint: '工作流的运行需要节点进行统筹安排，请在此授权节点',
-    authWLatHint: '工作流的运行会消耗一定的手续费，授权后的WLat将作为手续费进行扣除',
+    authErc20Hint: '在消耗数据的无属性凭证时，需要用户授权，请在此选择授权的凭证',
+    authOrgHint: '工作流需要授权代理节点进行任务统筹',
+    authWLatHint: '授权后的WLat将作为工作流任务的手续费进行扣除',
     setQty: '设置授权数量',
   },
   industry: {
@@ -500,8 +503,8 @@ const zh = {
     proposalDetails: "提案详情", //Proposal Details
     publicInfo: "公示资料", //Public information
     dataDesc: "资料说明", // Data description
-    trustedDesc: '发布优质数据, 由委员认证并已颁发信任证书的组织',
-    committeeDesc: '由原始节点发起的, 筛选优质节点并进行可信认证的机构'
+    trustedDesc: '下列组织已由委员会认证，并获得可信证书。',
+    committeeDesc: '由具备公信力的机构组成，并对网络参与组织按需做可信认证。'
   }
 }
 

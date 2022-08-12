@@ -261,9 +261,7 @@ const startTask = useDebounceFn(async (ary: Array<string>) => {
     })
     const { data } = res
     consumeList.value = data.itemList
-    //TODO
     setDialog(ary)
-
     const sign = await web3.signForWallet({ type: 'tx' })
     pending.show = false
     if (sign) {
@@ -271,6 +269,7 @@ const startTask = useDebounceFn(async (ary: Array<string>) => {
         sign,
         workflowId: currentRow.value.workflowId,
         workflowVersion: currentRow.value.workflowVersion,
+        credentialIdList: ary
       })
       const { code } = res
       if (code === 10000) {

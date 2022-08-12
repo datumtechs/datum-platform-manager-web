@@ -137,7 +137,11 @@ const queryPowerRank = () => {
       const newData = JSON.parse(JSON.stringify(data))
       const env = _swapArrIndex(newData.slice(0, 3), 0, 1)
       tableData.value = newData
-      rankList.value.forEach((rank, index) => {
+      let ary = rankList.value
+      if (env.length < rankList.value.length) {
+        ary = rankList.value.slice(0, env.length)
+      }
+      ary.forEach((rank, index) => {
         rank.ratio = (env[index].computingPowerRatio / 100) + '%'
         rank.nodeName = env[index].nodeName
       })

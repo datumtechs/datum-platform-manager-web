@@ -15,7 +15,23 @@ const props = defineProps({
 })
 
 const { t } = useI18n()
+
+const setMaxOfCharts = (arr: Array<any>) => {
+    let maxPrivacy = 0, maxNoPrivacy = 0
+    arr.forEach((ele: any) => {
+        if (ele.privacyStatsValue > maxPrivacy) maxPrivacy = ele.privacyStatsValue
+        if (ele.noPrivacyStatsValue > maxNoPrivacy) maxNoPrivacy = ele.noPrivacyStatsValue
+    })
+    return {
+        maxAxis: Math.max(Math.ceil(maxPrivacy), Math.ceil(maxNoPrivacy))
+    }
+}
+
 const initCharts = () => {
+    const { maxAxis } = setMaxOfCharts(props.chartsData)
+    // const hideAxis = maxPrivacy >= maxNoPrivacy ? 'noPrivacyStatsValue' : 'privacyStatsValue'
+    // const maxAxis = Math.max(maxPrivacy, maxNoPrivacy)
+
     const chart = new Chart({
         container: 'container',
         autoFit: true,
@@ -24,6 +40,7 @@ const initCharts = () => {
         padding: [60, 40, 40, 40],
     })
     chart.data(props.chartsData);
+    // chart.data(noPrivacyList.value);
     chart.scale(
         {
             statsTime: {
@@ -31,33 +48,74 @@ const initCharts = () => {
                 tickCount: 15,
                 mask: 'MM-DD'
             },
-            statsValue: {
+            privacyStatsValue: {
                 nice: true,
-                min: 0
+                min: 0,
+                max: maxAxis//maxPrivacy
+            },
+            noPrivacyStatsValue: {
+                nice: true,
+                min: 0,
+                max: maxAxis//maxNoPrivacy
             }
         }
     );
 
+    // chart.axis('noPrivacyStatsValue', false);
+
+
     chart.tooltip({
         showCrosshairs: true,
         shared: true,
+        showMarkers: true,
+        // title: (title, datum) => {
+        //     // console.log(title)
+        //     // console.log(datum)
+        //     return `${title} ${t('common.computeTimes')}`
+        // },
         itemTpl: `
         <div style="margin-bottom: 10px;list-style:none;">
             <span style="background-color:{color};" class="g2-tooltip-marker"></span>
-            ${t('common.computeTimes')} : {value}
+            {name} : {value} ${t('common.times')}
         </div>
         `
     });
-
+    const view2 = chart.createView();
     chart
         .line()
-        .position('statsTime*statsValue')
-        .shape('smooth');
+        .position('statsTime*privacyStatsValue')
+        .shape('smooth').color('#1890ff').tooltip('privacyStatsValue', (privacyStatsValue) => {
+            return {
+                name: t('common.privacy'),
+                value: privacyStatsValue
+            }
+        });;
+    chart
+        .line()
+        .position('statsTime*noPrivacyStatsValue')
+        .shape('smooth').color('#2fc25b').tooltip('noPrivacyStatsValue', (noPrivacyStatsValue) => {
+            return {
+                name: t('common.nonPrivacy'),
+                value: noPrivacyStatsValue
+            }
+        });
+
+    view2.annotation().text({
+        content: '趋势线',
+        position: ['min', 'min'],
+        style: {
+            fill: '#8c8c8c',
+            fontSize: 14,
+            fontWeight: 300
+        },
+        offsetY: -140
+    });
     chart.render();
 }
 
 onMounted(() => {
-    initCharts() //  queryData()
+    // props.chartsData.length > 0 && classification(props.chartsData)
+    initCharts()
 })
 
 </script>

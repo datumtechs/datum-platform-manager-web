@@ -1,17 +1,27 @@
 <template>
-    <el-dialog v-model="props.show" :title="props.title" :width="'591px'"
+    <el-dialog v-model="props.show" append-to-body :title="props.title" :width="'591px'"
         custom-class="starterDialog" :before-close="handleClose"
         @close="emits('update:show', false)">
         <div v-loading="starterLoading" class="starter-wrapper">
             <div v-for="(item, index) in radioGroupAry" class="starter-box">
                 <!-- <div class="starter-box-title font-bold text-16px text-color-#[000] leading-44px"> -->
                 <p class="starter-title font-bold text-[#333]">{{ item.metaDataName }}</p>
-                <el-select class="starter-selector" v-model="selectAry[index]"
-                    :placeholder="$t('workflow.selectTokenOfData')">
+                <el-select v-if="item.haveAttributesCredentialList" class="starter-selector"
+                    v-model="selectAry[index]" :placeholder="$t('workflow.selectTokenOfData')">
                     <el-option v-for="ele in item.haveAttributesCredentialList" :value="ele.id"
                         :label="tokenLabel(ele)" :key="ele.id">
                     </el-option>
                 </el-select>
+                <p v-else class="flex-1">
+                    <span v-if="locale === 'zh'">数据未包含凭证, 请前往
+                        <router-link to="/marketplace">数据市场</router-link>
+                        购买
+                    </span>
+                    <span v-else>The data does not contain the certificate, please go to the
+                        <router-link to="/marketplace">data market</router-link> to
+                        purchase.
+                    </span>
+                </p>
             </div>
         </div>
         <template #footer>
@@ -33,7 +43,8 @@
 <script setup lang='ts'>
 import { preparationStartCredentialList } from '@/api/workflow'
 import { useFormatTime } from '@/hooks'
-const { t } = useI18n()
+import { ElMessage } from 'element-plus'
+const { t, locale } = useI18n()
 const starterLoading = ref(false)
 const tokenLabel = (ele: any) => {
     if (ele.tokenSymbol) {
@@ -122,6 +133,7 @@ onMounted(() => {
 
         .starter-title {
             flex-basis: 150px;
+            margin-right: 20px;
         }
 
         .starter-selector {
