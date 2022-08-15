@@ -169,12 +169,19 @@ const submit = async (str?: string | any) => {
 
 
 const init = () => {
-  const { trainingInput } = props.taskParams
-  psi.value = trainingInput.isPsi || undefined
-  identityId.value = trainingInput?.identityId
-  psiInputParams.one = trainingInput?.item[0] || []
-  psiInputParams.two = trainingInput?.item[1] || []
+  try {
+    const { trainingInput } = props.taskParams
+    psi.value = trainingInput.isPsi || false
+    identityId.value = trainingInput?.identityId
+    psiInputParams.one = trainingInput?.item && trainingInput?.item[0] || []
+    psiInputParams.two = trainingInput?.item && trainingInput?.item[1] || []
+  } catch (e) {
+    console.log(e);
+  }
 }
+onMounted(() => {
+  init()
+})
 
 watch(() => props.taskParams, () => {
   init()
