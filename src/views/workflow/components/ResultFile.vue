@@ -25,9 +25,10 @@
                                 }}
                             </el-descriptions-item>
                             <el-descriptions-item label-class-name="file-label"
-                                class-name="file-content" :label="t('workflow.fileUrl')">{{
+                                class-name="file-content" :label="t('workflow.fileUrl')">
+                                <a href="javascript:void(0)" @click="downloadFn(item)"> {{
                                         item.filePath
-                                }}
+                                }}</a>
                             </el-descriptions-item>
                         </el-descriptions>
                     </div>
@@ -41,14 +42,27 @@
     </el-table>
 </template>
 <script lang="ts" setup>
+import { downloadResultFile } from '@/api/workflow'
+import { downloadFile } from '@/utils'
 const { t } = useI18n()
-
 const props = defineProps({
     tableData: {
         type: Array,
         default: () => []
     }
 })
+const downloadFn = (item: any) => {
+    downloadResultFile({
+        metaDataId: item.metadataId
+    }).then(res => {
+        if (res) downloadFile(res, 'result')
+
+    }).catch(e => {
+        console.log(e);
+    })
+}
+
+
 </script>
 <style scoped lang='scss'>
 :deep(.el-descriptions__cell) {

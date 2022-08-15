@@ -32,3 +32,16 @@ export const formatDuring = (time: any) => {
   const seconds = parseInt(`${(time % (1000 * 60)) / 1000}`, 10)
   return `${_isZero(hours)}:${_isZero(minutes)}:${_isZero(seconds)}`
 }
+
+export const downloadFile = (str: any, name: string = 'result', type: string = 'zip') => {
+  const blob = new Blob([str])
+  const fileName = `${name}.${type}` || 'default.zip'
+  const link = document.createElement('a')
+  link.download = fileName
+  link.style.display = 'none'
+  link.href = URL.createObjectURL(blob)
+  document.body.appendChild(link)
+  link.click()
+  URL.revokeObjectURL(link.href)
+  document.body.removeChild(link)
+}

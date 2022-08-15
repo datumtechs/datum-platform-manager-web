@@ -163,3 +163,7 @@ $calcHeight: calc(100vh - 70px);
 .max-width {
   max-width: max-content !important;
 }
+
+.noWrap {
+  white-space: nowrap;
+}

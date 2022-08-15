@@ -62,7 +62,8 @@ const zh = {
     privacy: '隐私计算',
     nonPrivacy: '非隐私计算',
     expireTime: '失效时间',
-    times: '次'
+    times: '次',
+    balance: '余额',
   },
   menu: {
     home: '首页',
@@ -268,7 +269,8 @@ const zh = {
     viewHoldingCredentials: "查看持有凭证",
     taskConsumption: '任务消耗量',
     selectExchange: '选择交易所',
-    dataOwner: '数据拥有者'
+    dataOwner: '数据拥有者',
+    tokenBalance: '凭证余额',
   },
   workflow: {
     workflowName: "工作流名称",

@@ -62,7 +62,8 @@ const en = {
     privacy: 'Privacy',
     nonPrivacy: 'NonPrivacy',
     expireTime: 'Expire',
-    times: 'Times'
+    times: 'Times',
+    balance: 'Balance',
   },
   menu: {
     home: 'Home',
@@ -268,7 +269,8 @@ const en = {
     viewHoldingCredentials: "Holding Credentials",
     taskConsumption: 'Task Consumption',
     selectExchange: 'Select Exchange',
-    dataOwner: 'Data Owner'
+    dataOwner: 'Data Owner',
+    tokenBalance: 'Token Balance',
   },
   workflow: {
     workflowName: "Workflow Name",

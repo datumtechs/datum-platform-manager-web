@@ -118,4 +118,11 @@ export const preparationStartCredentialList = (params: any): Promise<any> => {
   })
 }
 
-
+// 结果文件下载 /flow/workflow/downloadResultFile
+export const downloadResultFile = (params: any): Promise<any> => {
+  return http({
+    method: 'GET',
+    url: '/flow/workflow/downloadResultFile',
+    params
+  })
+}

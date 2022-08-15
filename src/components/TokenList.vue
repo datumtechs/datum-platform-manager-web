@@ -1,6 +1,6 @@
 <template>
     <el-dialog custom-class="tokenDialog" append-to-body v-model="showDialog" :title="props.title"
-        :width="'871px'" @close="emits('update:showDialog', false)">
+        :width="'1001px'" @close="emits('update:showDialog', false)">
         <div class="token-table-box mb-40px">
             <p class="token-table-box-title font-bold">{{ $t('common.noAttributeCredential') }}</p>
             <el-table v-loading="ftLoading" :data="nfTokenData">
@@ -9,6 +9,13 @@
                 <el-table-column prop="tokenName" :label="$t('myData.credentialName')">
                 </el-table-column>
                 <el-table-column prop="tokenSymbol" :label="$t('myData.credentialSymbol')">
+                </el-table-column>
+                <el-table-column :label="$t('myData.tokenBalance')">
+                    <template #default="{ row }">
+                        <p>{{ useExchangeFrom(row.tokenBalance,
+                                row.tokenDecimal) + ' ' + row.tokenSymbol
+                        }}</p>
+                    </template>
                 </el-table-column>
                 <el-table-column :label="$t('myData.taskConsumption')">
                     <template #header>
@@ -20,14 +27,14 @@
                     <template #default="{ row }">
                         <div>
                             <p v-if="row.erc20PtAlgConsume">
-                                <span>{{ $t('common.nonPrivacy') }}:</span>
-                                <span class="pl-8px">{{ useExchangeFrom(row.erc20PtAlgConsume,
+                                <span class="pr-8px">{{ $t('common.nonPrivacy') }}:</span>
+                                <span class="noWrap">{{ useExchangeFrom(row.erc20PtAlgConsume,
                                         row.tokenDecimal) + ' ' + `${row.tokenSymbol}`
                                 }}</span>
                             </p>
                             <p v-if="row.erc20CtAlgConsume">
-                                <span>{{ $t('common.privacy') }}:</span>
-                                <span class="pl-8px">{{ useExchangeFrom(row.erc20CtAlgConsume,
+                                <span class="pr-8px">{{ $t('common.privacy') }}:</span>
+                                <span class="noWrap">{{ useExchangeFrom(row.erc20CtAlgConsume,
                                         row.tokenDecimal) + ' ' + `${row.tokenSymbol}`
                                 }}</span>
                             </p>
@@ -100,7 +107,6 @@ import { useFormatTime, useExchangeFrom } from '@/hooks'
 import tofun from '@/assets/images/market/tofun.png'
 const chainCfg: any = inject('chainCfg')
 const { t } = useI18n()
-
 const props = defineProps({
     showDialog: {
         type: Boolean,
@@ -119,9 +125,11 @@ const props = defineProps({
         default: 'common'
     }
 })
+
 const emits = defineEmits(['update:showDialog'])
-const nfTokenData = ref(<any>[])
-const nftTokenData = ref(<any>[])
+
+const nfTokenData: any = ref([])
+const nftTokenData: any = ref([])
 
 const ftLoading = ref(false)
 const nftLoading = ref(false)
@@ -189,7 +197,6 @@ onMounted(() => {
 
 <style scoped lang='scss'>
 .token-table-box {
-
     .token-table-box-title {
         font-size: 16px;
         margin-bottom: 18px;
