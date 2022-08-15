@@ -2,8 +2,12 @@
   <el-form :ref="(el: any) => formRef = el" :model="form" class="account-form mx-50px my-67px"
     :rules="rules" :label-position="'left'" :label-width="locale == 'zh' ? '80px' : '150px'">
     <el-form-item :label="`${t('account.walletAddress')}:`">
-      <p class="text-16px w-390px address leading-22px text-color-[#333333]">{{ store.address }}
-        <span class="text-16px cursor-pointer ml-10px" @click="copy">
+      <p class="text-16px w-390px address leading-22px text-color-[#333333]">
+        <span id="address">
+          {{ store.address }}
+        </span>
+        <span class="text-16px cursor-pointer ml-10px copy" data-clipboard-target="#address"
+          @click="copy">
           <el-icon>
             <document-copy />
           </el-icon>
@@ -18,7 +22,7 @@
         </a>
       </p>
 
-      <input :ref="(el) => addressRef = el" class="w-1 opacity-0" :value="store.address" />
+      <input class="w-1 opacity-0" :value="store.address" />
     </el-form-item>
     <el-form-item :label="`${t('head.nickname')}:`" prop="name">
       <div class="flex w-400px">
@@ -46,6 +50,8 @@ import { DocumentCopy } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
 import { useUsersInfo } from '@/stores'
 import { updateUserInfo } from '@/api/login'
+import Clipboard from 'clipboard'
+
 type Callback = (call?: any) => any;
 const { t, locale } = useI18n()
 const store = useUsersInfo()
@@ -81,22 +87,20 @@ const rules = ref({
   ]
 })
 
-const addressRef = ref()
 const copy = () => {
-  // 有兼容性 暂时先这样
-  try {
-    const addressDom = addressRef.value
-    console.log(addressDom)
-    addressDom.select()
-    const res = document.execCommand('copy')
-    if (res) {
-      ElMessage.success(t('account.copyStatusSuccess'))
-      return
-    }
+  let clipboard = new Clipboard('.copy')
+  clipboard.on('success', (e) => {
+    ElMessage.success(t('account.copyStatusSuccess'))
+    // 释放内存
+    e.clearSelection()
+    clipboard.destroy()
+  })
+  clipboard.on('error', (e) => {
+    // 不支持复制
     ElMessage.error(t('account.copyStatusFailed'))
-  } catch {
-    ElMessage.error(t('account.copyStatusFailed'))
-  }
+    // 释放内存
+    clipboard.destroy()
+  })
 }
 
 const submit = () => {
