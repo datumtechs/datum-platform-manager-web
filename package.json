@@ -20,6 +20,7 @@
     "@vueuse/core": "^8.4.2",
     "axios": "^0.26.0",
     "big.js": "^6.1.1",
+    "clipboard": "^2.0.11",
     "element-plus": "^2.0.2",
     "pinia": "^2.0.11",
     "qs": "^6.10.3",
