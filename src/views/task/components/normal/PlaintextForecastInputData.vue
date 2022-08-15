@@ -232,7 +232,7 @@ const init = () => {
   const { ptPredictionInput } = props.taskParams
   identityId.value = ptPredictionInput?.identityId
   psiInputParams.one = ptPredictionInput?.dataInput || []
-  powerType.value = ptPredictionInput?.powerType || []
+  powerType.value = ptPredictionInput?.powerType || 0
   powerIdentityId.value = ptPredictionInput?.powerIdentityId || []
 }
 
