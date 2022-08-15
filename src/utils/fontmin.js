@@ -60,7 +60,8 @@ const fontmin = new Fontmin().src(fontSrc).dest(fontDest)
 
 walk(dir).then(() => {
   const baseChars = `1234567890-= !@#$%^&*()_+（）。、；·~ \`~qwertyuiop[]\\QWERTYUIOP{}|asdfghjkl;' ASDFGHJKL:"zxcvbnm,./ ZXCVBNM<>?`
-  let text = baseChars + chineseData.join()
+  const plusChars = `线性逻辑回归深度神经网络先行回归`
+  let text = baseChars + plusChars + chineseData.join()
   text = Array.from(new Set(text.split(''))).join()
   console.log('all chars: ', text)
   fontmin.use(

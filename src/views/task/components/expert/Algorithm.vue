@@ -15,7 +15,7 @@
         <div class="algo-wrapper" v-if="workflowId && workflowVersion">
             <div v-for="algo in algoList" class="flex flex-col items-center mt-24px">
                 <p
-                    class="h-36px w-230px text-14px leading-20px text-[#333] font-bold pl-18px flex items-center">
+                    class="h-36px w-230px text-18px leading-20px text-[#333] font-bold pl-18px flex items-center">
                     {{ algo.name }}</p>
                 <div class="mt-4px">
                     <div class="flex items-center flex-col"
@@ -23,14 +23,14 @@
                         v-for="item in algo.childrenList" :key="item.id">
                         <div @dragstart.stop="dragstart($event, item)"
                             @dragend.stop="dragend($event, item)" :draggable="true"
-                            class="h-36px w-230px flex items-center pl-18px"
+                            class="h-36px w-230px flex items-center pl-24px"
                             :class="{ 'sub-List-title': item.childrenList, 'sub-drag-box': !item.childrenList }">
                             {{ item.name }}
                         </div>
                         <div v-if="item.childrenList">
                             <div @dragstart.stop="dragstart($event, i)"
                                 @dragend.stop="dragend($event, i)" :draggable="true"
-                                class="h-36px w-230px drag-box cursor-pointer flex items-center pl-18px"
+                                class="h-36px w-230px drag-box cursor-pointer flex items-center pl-24px"
                                 v-for="i in item.childrenList">{{ i.name }}</div>
                         </div>
                     </div>
@@ -77,6 +77,9 @@ const submitToChange = () => {
 
 const handleChangeAlgoType = (item: any) => {
     //TODO show confirm before change the tabs
+    if (props.isSettingCompleted) {
+        return ElMessage.error(t('expert.canNotSwitch'))
+    }
     if (nodeList.value.length > 0 && curTab.value !== item.value) {
         show.value = true
     } else {

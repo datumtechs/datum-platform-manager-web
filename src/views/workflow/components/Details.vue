@@ -263,6 +263,7 @@ const startTask = useDebounceFn(async (ary: Array<string>) => {
     consumeList.value = data.itemList
     setDialog(ary)
     const sign = await web3.signForWallet({ type: 'tx' })
+    starter.show = false
     pending.show = false
     if (sign) {
       const res = await startWorkFlow({
