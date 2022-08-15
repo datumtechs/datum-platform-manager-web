@@ -33,7 +33,7 @@
     <div class="flex items-center text-14px mt-20px">
       <div class="mr-20px text-color-[#666666] font-medium w-130px">{{ $t('task.select') }}{{ $t('role.powerProvider')
       }} ：</div>
-      <el-radio-group v-model="powerType" @change="powerIdentityId = ''">
+      <el-radio-group v-model="powerType" @change="powerIdentityId = ''" :disabled="taskParams.isSettingCompleted">
         <el-radio :label="0">{{ $t('task.automaticAllocation') }}</el-radio>
         <el-radio :label="1">{{ $t('task.manualSelection') }}</el-radio>
       </el-radio-group>
@@ -43,9 +43,8 @@
 
     <div class="flex items-center text-14px  mt-20px">
       <div class="mr-15px text-color-[#666666] font-medium w-135px"></div>
-      <el-select v-if="powerType === 1" v-model="powerIdentityId" size="small"
-        :disabled="props.isSettingCompleted || props.isReadonly" :placeholder="t('task.selectComputingProvider')"
-        style="flex:0 0 440px" popper-class="max-width"
+      <el-select v-if="powerType === 1" v-model="powerIdentityId" size="small" :disabled="taskParams.isSettingCompleted"
+        :placeholder="t('task.selectComputingProvider')" style="flex:0 0 440px" popper-class="max-width"
         class="h-40px w-200px rounded-20px border-1 basis-1/2 border-solid border-color-[#EEEEEE]">
         <el-option v-for="node in props.dataOrgList" :key="node.identityId" :label="node.nodeName"
           :value="node.identityId">
@@ -246,8 +245,11 @@ const cascaderProps = ref({
       resolve([])
       return
     }
+    // console.log(props.taskParams?.ptPredictionInput?.algorithmId);
+
+    // debugger
     getUserModelList({
-      algorithmId: props.taskParams?.predictionInput?.algorithmId,
+      algorithmId: props.taskParams?.ptPredictionInput?.algorithmId,
       identityId: pathValues[0]
     }).then(res => {
       const { code, data } = res

@@ -18,7 +18,7 @@
     <div class="flex items-center text-14px mt-20px">
       <div class="mr-20px text-color-[#666666] font-medium w-130px">{{ $t('task.select') }}{{ $t('role.powerProvider')
       }} ：</div>
-      <el-radio-group v-model="powerType" @change="() => {
+      <el-radio-group v-model="powerType" :disabled="taskParams.isSettingCompleted" @change="() => {
         powerIdentityId = ''
       }">
         <el-radio :label="0">{{ $t('task.automaticAllocation') }}</el-radio>
@@ -27,9 +27,8 @@
     </div>
     <div class="flex items-center text-14px  mt-20px">
       <div class="mr-15px text-color-[#666666] font-medium w-135px"></div>
-      <el-select v-if="powerType === 1" v-model="powerIdentityId"
-        :disabled="props.isSettingCompleted || props.isReadonly" :placeholder="t('task.selectComputingProvider')"
-        style="flex:0 0 440px" popper-class="max-width"
+      <el-select v-if="powerType === 1" v-model="powerIdentityId" :disabled="taskParams.isSettingCompleted"
+        :placeholder="t('task.selectComputingProvider')" style="flex:0 0 440px" popper-class="max-width"
         class="h-40px w-200px rounded-20px border-1 basis-1/2 border-solid border-color-[#EEEEEE]">
         <el-option v-for="item in dataOrgList" :key="item.identityId" :label="item.nodeName" :value="item.identityId">
         </el-option>
