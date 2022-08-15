@@ -35,7 +35,7 @@ export const formatDuring = (time: any) => {
 
 export const downloadFile = (str: any, name: string = 'result', type: string = 'zip') => {
   const blob = new Blob([str])
-  const fileName = `${name}.${type}` || 'default.zip'
+  const fileName = `${name}.zip` || 'default'
   const link = document.createElement('a')
   link.download = fileName
   link.style.display = 'none'

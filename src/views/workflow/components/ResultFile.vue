@@ -56,7 +56,6 @@ const downloadFn = (item: any) => {
         metaDataId: item.metadataId
     }).then(res => {
         if (res) downloadFile(res, 'result')
-
     }).catch(e => {
         console.log(e);
     })

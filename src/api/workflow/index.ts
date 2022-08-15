@@ -123,6 +123,7 @@ export const downloadResultFile = (params: any): Promise<any> => {
   return http({
     method: 'GET',
     url: '/flow/workflow/downloadResultFile',
-    params
+    params,
+    responseType: 'blob'
   })
 }
