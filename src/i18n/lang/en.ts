@@ -406,7 +406,8 @@ const en = {
     specifyMode: 'Specify Mode',
     compositeWorkflow: 'Drag the algorithm below to the middle area to combine the workflow you need',
     cleanNodeTips: 'You already have algorithm nodes in your workflow, switch the privacy type will clear the nodes of current workflow',
-    exceedAlgLimit: 'Exceeds the maximum node limit of the current algorithm'
+    exceedAlgLimit: 'Exceeds the maximum node limit of the current algorithm',
+    canNotSwitch: 'A workflow that has already been set up cannot switch algorithm types'
   },
   role: {
     taskSponsor: 'Task sponsor',

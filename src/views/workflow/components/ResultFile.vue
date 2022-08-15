@@ -51,11 +51,14 @@ const props = defineProps({
         default: () => []
     }
 })
+
 const downloadFn = (item: any) => {
+    console.log(item);
+
     downloadResultFile({
         metaDataId: item.metadataId
     }).then(res => {
-        if (res) downloadFile(res, 'result')
+        if (res) downloadFile(res, item.metadataId)
     }).catch(e => {
         console.log(e);
     })

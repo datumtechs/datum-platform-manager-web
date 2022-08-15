@@ -406,7 +406,8 @@ const zh = {
     specifyMode: '指定模式',
     compositeWorkflow: '将下方算法拖拽至中间区域组合您所需要的工作流',
     cleanNodeTips: '您当前工作流中已有节点,切换隐私类型将会清空当前工作流节点,是否继续?',
-    exceedAlgLimit: '超过当前算法最大节点限制'
+    exceedAlgLimit: '超过当前算法最大节点限制',
+    canNotSwitch: '已完成设置的工作流无法切换算法类型'
   },
   role: {
     taskSponsor: '任务发起方',

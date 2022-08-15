@@ -9,6 +9,7 @@
     "src/**/*.vue"
   ],
   "compilerOptions": {
+    "resolveJsonModule": true,
     "target": "esnext",
     "module": "esnext",
     "declaration": true,
