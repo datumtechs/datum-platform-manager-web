@@ -182,8 +182,6 @@ const preserv = () => {
 
 const submit = async (str?: string | any) => {
   const data = await handParams(psiInputOne.value)
-  // const data2 = await handParams(psiInputTwo.value)
-
   if (powerType.value && !powerIdentityId.value) {
     ElMessage.closeAll()
     ElMessage.warning(t('task.selectData'))
@@ -232,8 +230,8 @@ const init = () => {
   const { ptPredictionInput } = props.taskParams
   identityId.value = ptPredictionInput?.identityId
   psiInputParams.one = ptPredictionInput?.dataInput || []
-  powerType.value = ptPredictionInput?.powerType || []
-  powerIdentityId.value = ptPredictionInput?.powerIdentityId || []
+  powerType.value = ptPredictionInput?.powerType || 0
+  powerIdentityId.value = ptPredictionInput?.powerIdentityId || ''
 }
 
 
