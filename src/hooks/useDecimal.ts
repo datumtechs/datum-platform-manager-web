@@ -10,9 +10,11 @@ import Big from 'big.js';
  */
 
 export const useExchangeFrom = (originNumber: number, decimal: number = 18) => {
+    if (!originNumber) return '--'
     return new Big(originNumber).div(new Big(10).pow(decimal)) + ''
 }
 
 export const useExchangeTo = (originNumber: number, decimal: number = 18) => {
+    if (!originNumber) return '--'
     return new Big(10).pow(decimal).mul(new Big(originNumber)).toFixed();
 }
