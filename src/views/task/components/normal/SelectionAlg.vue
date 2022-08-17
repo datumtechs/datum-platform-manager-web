@@ -295,12 +295,12 @@ const getNoticeText = () => {
     }
   })
 
+  props.processList.forEach((v: any) => {
+    if (v.calculationProcessId == form.calculationProcessId) {
+      paramsText.calculationProcessText = v.name
+    }
+  })
   setTimeout(() => {
-    props.processList.forEach((v: any) => {
-      if (v.calculationProcessId == form.calculationProcessId) {
-        paramsText.calculationProcessText = v.name
-      }
-    })
     emit('getNoticeText', paramsText)
   }, 100)
 }
