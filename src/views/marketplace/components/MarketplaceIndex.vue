@@ -176,8 +176,7 @@ onMounted(() => {
                     <template #default="{ row }">
                         <div class="flex">
                             <CertificationLabel :obj="row" />
-                            <p :class="{ 'pl-10px': (row.isCertified || row.isAuthority) }"
-                                class="w-120px ellipse cursor-pointer link-btn"
+                            <p class="w-120px ellipse cursor-pointer link-btn"
                                 @click="linkToNode(row)">{{
                                         row.nodeName
                                 }}</p>
