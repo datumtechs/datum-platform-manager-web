@@ -76,8 +76,6 @@ import { useExpertMode } from '@/stores'
 import Transfer from './Transfer.vue'
 import { queryUserDataList, queryDataDetails, getUserModelList } from '@/api/data'
 
-const store = useExpertMode()
-
 const { t } = useI18n()
 const modelKey = ref(-1)
 const taskSender = ref('')
@@ -320,6 +318,7 @@ const modelOptions = reactive([{
 onMounted(async () => {
     await useExpertMode().queryUserOrgList()
     await useExpertMode().queryBaseOrgList()
+    await useExpertMode().queryPowerOrgList()
     initInputPanel()
     // 回显
     handleInputValue()

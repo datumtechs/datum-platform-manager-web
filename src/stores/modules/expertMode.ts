@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { getUserOrgList } from '@/api/login'
-import { queryBaseOrgList } from '@/api/expert'
+import { queryBaseOrgList, getPowerOrgList } from '@/api/expert'
 
 export default defineStore('expertMode', {
     state: () => ({
@@ -15,6 +15,7 @@ export default defineStore('expertMode', {
         workflowNodeSenderIdentityId: '',
         orgList: <any>[],
         baseOrgList: <any>[],
+        powerOrgList: <any>[],
         selectLayoutOrgList: <any>[],
         // 输入
         workflowNodeInputVoList: [],
@@ -34,6 +35,7 @@ export default defineStore('expertMode', {
         getWorkflowNodeSender: state => state.workflowNodeSenderIdentityId,
         getUserOrgList: state => state.orgList,
         getBaseOrgList: state => state.baseOrgList,
+        getPowerOrgList: state => state.powerOrgList,
         getSelectLayoutOrgList: state => state.selectLayoutOrgList,
         getAlgorithm: state => state.algorithm,
         getShowPanel: state => state.showPanel,
@@ -99,6 +101,9 @@ export default defineStore('expertMode', {
         setBaseOrgList(data: any) {
             this.baseOrgList = data
         },
+        setPowerOrgList(data: any) {
+            this.powerOrgList = data
+        },
         setOutputVoList(data: Array<any>) {
             if (this.nodeList[this.curNodeIndex]) {
                 this.nodeList[this.curNodeIndex].nodeOutput.identityId = data
@@ -150,6 +155,12 @@ export default defineStore('expertMode', {
         },
         async queryBaseOrgList() {
             const { code, data } = await queryBaseOrgList()
+            if (code === 10000) {
+                this.setPowerOrgList(data)
+            }
+        },
+        async queryPowerOrgList() {
+            const { code, data } = await getPowerOrgList()
             if (code === 10000) {
                 this.setBaseOrgList(data)
             }
