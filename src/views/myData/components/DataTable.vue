@@ -10,7 +10,7 @@
       <template #default="{ row }">
         <div class="flex">
           <CertificationLabel :obj="row" />
-          <p class="w-120px ellipse cursor-pointer pl-10px" @click="linkToNode(row)">{{
+          <p class="w-120px ellipse cursor-pointer" @click="linkToNode(row)">{{
               row.nodeName
           }}</p>
         </div>

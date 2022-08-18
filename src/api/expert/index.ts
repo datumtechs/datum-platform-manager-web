@@ -40,3 +40,11 @@ export const queryBaseOrgList = (): Promise<any> => {
         url: '/flow/org/getBaseOrgList',
     })
 }
+
+// 获取算力 /flow/org/getPowerOrgList
+export const getPowerOrgList = (): Promise<any> => {
+    return http({
+        method: 'GET',
+        url: '/flow/org/getPowerOrgList',
+    })
+}

@@ -10,7 +10,7 @@
                 </el-table-column>
                 <el-table-column prop="tokenSymbol" :label="$t('myData.credentialSymbol')">
                 </el-table-column>
-                <el-table-column :label="$t('myData.tokenBalance')">
+                <el-table-column v-if="type !== 'common'" :label="$t('myData.tokenBalance')">
                     <template #default="{ row }">
                         <p>{{ useExchangeFrom(row.tokenBalance,
                                 row.tokenDecimal) + ' ' + row.tokenSymbol
