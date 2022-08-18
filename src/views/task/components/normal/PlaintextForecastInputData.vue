@@ -181,8 +181,13 @@ const preserv = () => {
 }
 
 const submit = async (str?: string | any) => {
+  if (!identityId.value) {
+    ElMessage.closeAll()
+    ElMessage.warning(t('task.selectSponsor'))
+    return
+  }
   const data = await handParams(psiInputOne.value)
-  if (powerType.value && !powerIdentityId.value) {
+  if (powerType.value && !powerIdentityId.value || !identityId.value) {
     ElMessage.closeAll()
     ElMessage.warning(t('task.selectData'))
     return
