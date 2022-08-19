@@ -41,10 +41,11 @@ export const getUserOrgList = (params?: any): Promise<any> => {
 }
 
 //用户有可用数据的
-export const getBaseOrgList = (): Promise<any> => {
+export const getBaseOrgList = (params: any): Promise<any> => {
   return http({
     method: 'GET',
-    url: '/flow/org/getBaseOrgList'
+    url: '/flow/org/getBaseOrgList',
+    params
   })
 }
 

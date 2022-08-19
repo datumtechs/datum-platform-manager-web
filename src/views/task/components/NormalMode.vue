@@ -255,6 +255,7 @@ const query = (index?: number) => {
       workfolwParams.value = { ...data }
       emit('getWorkName', data.workflowName)
     }
+    if (!index) queryIsDataOrgList(data.algorithmType)
     loading.value = false
   }).catch((e) => {
     console.log('接口报错', e)
@@ -307,9 +308,9 @@ const queryOrgList = () => {//可用的组织列表
     }
   })
 }
-const queryIsDataOrgList = () => {//有数据组织列表
+const queryIsDataOrgList = (algorithmType: any) => {//有数据组织列表
   if (orgList.value.length) return
-  getBaseOrgList().then(res => {
+  getBaseOrgList({ algorithmType }).then(res => {
     // getPowerOrgList().then(res => {
     const { data, code } = res
     if (code === 10000) {
@@ -332,7 +333,7 @@ const queryPowerOrgList = () => {// 可用算力组织列表
 onMounted(() => {
   init()
   queryOrgList()
-  queryIsDataOrgList()
+  // queryIsDataOrgList()
   queryPowerOrgList()
 })
 
