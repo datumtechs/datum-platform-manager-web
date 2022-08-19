@@ -7,16 +7,14 @@
         }}
         {{ locale == 'zh' ? props.num : '' }}：</div>
       <el-cascader @change="cascaderChange" clearable :disabled="taskParams.isSettingCompleted"
-        class="h-40px rounded-20px border-1 w-395px border-solid border-color-[#EEEEEE]"
-        :suffix-icon="CaretBottom" v-model="form.metaData" :options="orgList"
-        :props="cascaderProps" />
+        class="h-40px rounded-20px border-1 w-395px border-solid border-color-[#EEEEEE]" :suffix-icon="CaretBottom"
+        v-model="form.metaData" :options="orgList" :props="cascaderProps" />
     </div>
     <div class="transfer flex h-411px min-w-600px">
       <!--左面-->
       <div class="pl-30px pt-20px flex-1 pr-5px">
         <p class="text-color-[#333333] font-medium">{{ t('task.fieldTips') }}</p>
-        <ul class="fields-main w-full h-330px overflow-auto mt-40px pr-25px"
-          v-if="fieldsList.length">
+        <ul class="fields-main w-full h-330px overflow-auto mt-40px pr-25px" v-if="fieldsList.length">
           <li v-show="item.show"
             class="cursor-pointer border-1px border-solid border-color-[#eeeeee] rounded-26px mb-10px h-40px w-full flex items-center justify-center"
             :class="{ 'border-color-[#2B60E9] text-color-[#2B60E9]': activeIndex == index }"
@@ -39,8 +37,7 @@
             :style="{ background: fieldsList.length ? '' : '#fff', color: fieldsList.length ? '' : '#000' }">
             {{ t(`${v.name}`) }}
             <el-tooltip effect="light" :content="t(v.tips)" placement="right">
-              <img class="w-20px h-20px ml-10px cursor-pointer"
-                :src="handActiveClass(v) ? questWhite : questbg" alt="">
+              <img class="w-20px h-20px ml-10px cursor-pointer" :src="handActiveClass(v) ? questWhite : questbg" alt="">
               <template #content>
                 <slot name="content"></slot>
               </template>
@@ -54,8 +51,7 @@
           <span class="inline-block w-100px text-color-[#333333] mb-10px">{{
               t('task.idColumn')
           }}</span>
-          <div
-            :style="{ backgroundColor: form.idColumn?.columnName ? 'rgba(238, 238, 238, .2)' : '#fff' }"
+          <div :style="{ backgroundColor: form.idColumn?.columnName ? 'rgba(238, 238, 238, .2)' : '#fff' }"
             class="relative border-1px cursor-pointer border-solid border-color-[#eeeeee] rounded-26px mb-10px h-40px w-full flex items-center justify-center">
             {{ form.idColumn?.columnName }}
             <el-icon v-if="form.idColumn?.columnName" @click="removeFormParams('idColumn')"
@@ -68,8 +64,7 @@
           <span class="inline-block w-100px text-color-[#333333] mb-10px">{{
               t('task.label')
           }}</span>
-          <div
-            :style="{ backgroundColor: form.label?.columnName ? 'rgba(238, 238, 238, .2)' : '#fff' }"
+          <div :style="{ backgroundColor: form.label?.columnName ? 'rgba(238, 238, 238, .2)' : '#fff' }"
             class="relative border-1px cursor-pointer border-solid border-color-[#eeeeee] rounded-26px mb-10px h-40px w-full flex items-center justify-center">
             {{ form.label?.columnName }}
             <!---->
@@ -85,8 +80,7 @@
           }}</span>
           <ul
             class="relative fields-main w-full h-200px overflow-auto px-10px pt-10px border-1px border-solid border-color-[#eeeeee]">
-            <li
-              :style="{ backgroundColor: form.label?.columnName ? 'rgba(238, 238, 238, .2)' : '#fff' }"
+            <li :style="{ backgroundColor: form.label?.columnName ? 'rgba(238, 238, 238, .2)' : '#fff' }"
               class="cursor-pointer border-1px border-solid border-color-[#eeeeee] rounded-26px mb-10px h-40px w-full flex items-center justify-center"
               v-for="(item, index) in form.feature" :key="index">
               {{ item.columnName }}
@@ -189,11 +183,27 @@ const cascaderProps = ref({
     }).then(res => {
       const { data, code } = res
       if (code === 10000) {
-        resolve(data.items.map((v: any) => ({
-          value: v.metaDataId,
-          label: v.metaDataName,
-          leaf: true
-        })))
+        const list: any[] = []
+        // 0-密文算法，1-明文算法
+        const algorithmType: any = props?.taskParams?.algorithmType
+        data.items.forEach((v: any) => {
+          if (algorithmType == 1 && v.isSupportPtAlg) {
+            list.push({
+              value: v.metaDataId,
+              label: v.metaDataName,
+              leaf: true
+            })
+          }
+          if (algorithmType == 0 && v.isSupportCtAlg) {
+            list.push({
+              value: v.metaDataId,
+              label: v.metaDataName,
+              leaf: true
+            })
+          }
+        })
+
+        resolve(list)
       } else {
         resolve([])
       }

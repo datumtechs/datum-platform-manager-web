@@ -24,13 +24,15 @@
       </div>
       <component :is="componentList[list[activeIndex]?.type]?.components" :workflowInfo="{ ...workflowInfo }"
         :step="activeIndex" :type="list[activeIndex]?.type" :fieldType="fieldType" :taskParams="workfolwParams"
-        :orgList="orgList" :dataOrgList="dataOrgList" :views="views" :noticeText="noticeText" @previous="previous"
-        @next="next" @getParams="(params: any) => { }" />
+        :orgList="orgList" :dataOrgList="dataOrgList" :powerOrgList="powerOrgList" :views="views"
+        :noticeText="noticeText" @previous="previous" @next="next" @getParams="(params: any) => { }" />
     </div>
   </div>
 </template>
 <script lang="ts" setup>
 import { getUserOrgList, getBaseOrgList } from '@/api/login'
+import { getPowerOrgList } from '@/api/expert'
+
 import { getWorkflowSettingOfWizardMode, startWorkFlow, getProcessList } from '@/api/workflow'
 import PrivateSwitch from './PrivateSwitch.vue'
 import SelectionAlg from './normal/SelectionAlg.vue';
@@ -39,7 +41,6 @@ import TrainingInputData from './normal/TrainingInputData.vue';//训练输入数
 import PlaintextTrainingInputData from './normal/PlaintextTrainingInputData.vue';//明文训练输入数据
 import ForecastInputData from './normal/ForecastInputData.vue';//预测输入数据
 import PlaintextForecastInputData from './normal/PlaintextForecastInputData.vue';//预测输入数据
-
 import ComputingEnvironment from './normal/ComputingEnvironment.vue';//计算环境
 import ResultReceiver from './normal/ResultReceiver.vue';//结果接收方
 import { useWorkFlow } from '@/stores'
@@ -58,6 +59,7 @@ const router = useRouter()
 const activeIndex = ref(0)
 const orgList: any = ref<any>([])
 const dataOrgList: any = ref<any>([])
+const powerOrgList: any = ref<any>([])
 const comList = ref([])
 const noticeText = ref({})
 const workfolwParams = ref<any>({})
@@ -296,7 +298,7 @@ const init = () => {
 }
 
 
-const queryOrgList = () => {//查询组织列表
+const queryOrgList = () => {//可用的组织列表
   if (orgList.value.length) return
   getUserOrgList().then(res => {
     const { data, code } = res
@@ -305,12 +307,23 @@ const queryOrgList = () => {//查询组织列表
     }
   })
 }
-const queryIsDataOrgList = () => {//查询组织列表
+const queryIsDataOrgList = () => {//有数据组织列表
   if (orgList.value.length) return
   getBaseOrgList().then(res => {
+    // getPowerOrgList().then(res => {
     const { data, code } = res
     if (code === 10000) {
       dataOrgList.value = data
+    }
+  })
+}
+const queryPowerOrgList = () => {// 可用算力组织列表
+  if (orgList.value.length) return
+  // getBaseOrgList().then(res => {
+  getPowerOrgList().then(res => {
+    const { data, code } = res
+    if (code === 10000) {
+      powerOrgList.value = data
     }
   })
 }
@@ -320,6 +333,7 @@ onMounted(() => {
   init()
   queryOrgList()
   queryIsDataOrgList()
+  queryPowerOrgList()
 })
 
 

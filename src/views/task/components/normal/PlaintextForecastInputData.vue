@@ -46,7 +46,7 @@
       <el-select v-if="powerType === 1" v-model="powerIdentityId" size="small" :disabled="taskParams.isSettingCompleted"
         :placeholder="t('task.selectComputingProvider')" style="flex:0 0 440px" popper-class="max-width"
         class="h-40px w-200px rounded-20px border-1 basis-1/2 border-solid border-color-[#EEEEEE]">
-        <el-option v-for="node in props.dataOrgList" :key="node.identityId" :label="node.nodeName"
+        <el-option v-for="node in props.powerOrgList" :key="node.identityId" :label="node.nodeName"
           :value="node.identityId">
         </el-option>
       </el-select>
@@ -110,6 +110,10 @@ const props: any = defineProps({
     default: (): any => []
   },
   dataOrgList: {
+    type: Array,
+    default: (): any => []
+  },
+  powerOrgList: {
     type: Array,
     default: (): any => []
   },
