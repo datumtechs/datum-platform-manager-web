@@ -30,7 +30,7 @@
       <el-select v-if="powerType === 1" v-model="powerIdentityId" :disabled="taskParams.isSettingCompleted"
         :placeholder="t('task.selectComputingProvider')" style="flex:0 0 440px" popper-class="max-width"
         class="h-40px w-200px rounded-20px border-1 basis-1/2 border-solid border-color-[#EEEEEE]">
-        <el-option v-for="item in dataOrgList" :key="item.identityId" :label="item.nodeName" :value="item.identityId">
+        <el-option v-for="item in powerOrgList" :key="item.identityId" :label="item.nodeName" :value="item.identityId">
         </el-option>
       </el-select>
     </div>
@@ -86,6 +86,10 @@ const props: any | { orgList: any } = defineProps({
     default: (): any => []
   },
   dataOrgList: {
+    type: Array as PropType<any[]>,
+    default: (): any[] => []
+  },
+  powerOrgList: {
     type: Array as PropType<any[]>,
     default: (): any[] => []
   },
@@ -157,6 +161,12 @@ const preserv = () => {
 }
 
 const submit = async (str?: string | any) => {
+  if (!identityId.value) {
+    ElMessage.closeAll()
+    ElMessage.warning(t('task.selectSponsor'))
+    return
+  }
+
   const data = await handParams(psiInputOne.value)
   // const data2 = await handParams(psiInputTwo.value)
   if (powerType.value && !powerIdentityId.value) {
