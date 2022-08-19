@@ -11,10 +11,16 @@ import Big from 'big.js';
 
 export const useExchangeFrom = (originNumber: number, decimal: number = 18) => {
     if (!originNumber) return '--'
-    return new Big(originNumber).div(new Big(10).pow(decimal)) + ''
+    return new Big(originNumber).div(new Big(10).pow(decimal)).toFixed() + ''
 }
 
 export const useExchangeTo = (originNumber: number, decimal: number = 18) => {
     if (!originNumber) return '--'
     return new Big(10).pow(decimal).mul(new Big(originNumber)).toFixed();
+}
+
+
+export const useRemoveScientific = (originNumber: number) => {
+    if (!originNumber) return '--'
+    return new Big(originNumber).toFixed()
 }

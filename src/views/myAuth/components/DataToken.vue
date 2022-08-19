@@ -97,7 +97,7 @@
 <script setup lang='ts'>
 import { Search } from '@element-plus/icons-vue'
 import { useDebounceFn } from '@vueuse/core'
-import { useExchangeFrom, useExchangeTo, useNotice } from '@/hooks'
+import { useExchangeFrom, useExchangeTo, useNotice, useRemoveScientific } from '@/hooks'
 const { t, locale } = useI18n()
 const chainCfg: any = inject('chainCfg')
 
@@ -198,7 +198,7 @@ const cancelConfirm = () => {
 const authSubmit = () => {
     formRef.value?.validate((bol: boolean) => {
         if (bol) {
-            const content = `${t('auth.auth')} ${+authForm.quantity} ${currentToken.tokenName}`
+            const content = `${t('auth.auth')} ${useRemoveScientific(+authForm.quantity)} ${currentToken.tokenName}`
             showAuthDialog.value = false
             pending.show = true
             pending.title = t('auth.confirmAuth')

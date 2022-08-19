@@ -15,7 +15,7 @@ export default function useNotice(
             dangerouslyUseHTMLString: true,
             message: `
                 <div class="leading-22px">
-                    <p>${content}</p>
+                    <p class="break-all">${content}</p>
                 </div>
                 <div class="leading-22px mt-4px">
                     <a target="_blank" href="${urlPrefix}trade-detail?txHash=${txHash}"
@@ -31,7 +31,7 @@ export default function useNotice(
             dangerouslyUseHTMLString: true,
             message: `
                 <div>
-                    <p>${content}
+                    <p class="break-all">${content}
                     </p>
                 </div>
             `,

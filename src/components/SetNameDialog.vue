@@ -49,8 +49,8 @@ const checkName = (rule: any, value: any, callback: any) => {
 }
 const rules = reactive({
     name: [
-        { required: true, message: 'Please input Activity name', trigger: 'blur' },
-        { min: 8, max: 64, message: 'Length should be 8 to 64', trigger: 'blur' },
+        { required: true, message: t('exception.inputActivityName'), trigger: 'blur' },
+        { min: 8, max: 64, message: t('exception.workflowLengthError'), trigger: 'blur' },
         { validator: checkName, trigger: 'blur' }
     ]
 })

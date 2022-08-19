@@ -441,7 +441,7 @@ const en = {
     transactionReceipt: 'Transaction Receipt',
     transactionReject: 'Transaction Reject',
     authorizeToken: 'Authorize token',
-    exceedTotal: 'Authorized amount exceeds holding amount',
+    exceedTotal: 'Authorized quantity exceeds held quantity',
     waitForConfirm: 'Waiting For Confirmation',
     waitWalletConfirm: 'Confirm this action in your wallet',
     confirmAuth: 'Confirm authorization',
@@ -488,7 +488,8 @@ const en = {
     "ERCAddressNotFound": "Token contract address not found",
     "observerProxyAddressNotFound": "Proxy contract address not found",
     "plzInputWorkflowName": "Please enter a workflow name",
-    "workflowLengthError": "Length should be 8 to 64"
+    "workflowLengthError": "Length should be 8 to 64",
+    "inputActivityName": "Please input Activity name"
   },
   center: {
     committeeProposal: 'Committee Proposal',

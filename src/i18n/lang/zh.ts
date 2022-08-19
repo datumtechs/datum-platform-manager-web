@@ -97,7 +97,7 @@ const zh = {
     nickname: "昵称",
     editNickname: '修改昵称',
     nodeManagement: '网络节点管理',
-    loginDialogTitle: "选择登陆钱包",
+    loginDialogTitle: "选择登录钱包",
     install: "安装",
     installTipOne: "一键连接区块链应用",
     installTipTwo: "账户隐私保留在本地"
@@ -441,7 +441,7 @@ const zh = {
     transactionReceipt: '交易已经被接受',
     transactionReject: '交易异常',
     authorizeToken: '授权凭证',
-    exceedTotal: '授权金额超出持有金额',
+    exceedTotal: '授权数量超出持有数量',
     waitForConfirm: '等待确认',
     waitWalletConfirm: '请在您的钱包中确认此操作',
     confirmAuth: '确认授权',
@@ -488,7 +488,8 @@ const zh = {
     "ERCAddressNotFound": "凭证合约地址未找到",
     "observerProxyAddressNotFound": "代理合约地址未找到",
     "plzInputWorkflowName": "请输入工作流名称",
-    "workflowLengthError": "长度限制在8-64个字符"
+    "workflowLengthError": "长度限制在8-64个字符",
+    "inputActivityName": "请输入有效名称"
   },
   center: {
     committeeProposal: '委员会提案',

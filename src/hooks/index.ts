@@ -8,7 +8,7 @@ import usePathIncludeNode from './usePathIncludeNode'
 import useGlobalTaskMap, { useWorkflowDetailsMap } from './useGlobalTaskMap'
 import useFileType from './useFileType'
 import useAddressDisplay from './useAddressDisplay'
-import { useExchangeFrom, useExchangeTo } from './useDecimal'
+import { useExchangeFrom, useExchangeTo, useRemoveScientific } from './useDecimal'
 import useNotice from './useNotice'
 import useObserver from './useObserver'
 import useThousand from './useThousand'
@@ -23,6 +23,7 @@ import useLoadImg from './useLoadImg'
 // const context = require.context('./', false, /\.ts$/)
 
 export {
+    useRemoveScientific,
     useLoadImg,
     useIsAddress,
     useInterval,
