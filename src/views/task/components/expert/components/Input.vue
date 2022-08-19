@@ -236,15 +236,36 @@ const inputLazyLoad = async (node: any, resolve: any, index: number) => {
                 resolve(nodes)
             }, 300);
         } else if (level === 1) {
+            let nextNodes: any = []
             const params = { current: 1, size: 1000, identityId: node.data.value }
             const { code, data } = await queryUserDataList(params)
-            const nextNodes = data.items.map((item: any) => ({
-                value: item.metaDataId,
-                label: item.metaDataName,
-                leaf: level >= 1 // >=2： 展示3级 >= 1： 展示2级
-            }))
+            if (!!isPrivacy.value) {
+                data.items.forEach((item: any) => {
+                    if (item.isSupportCtAlg) {
+                        const obj = {
+                            value: item.metaDataId,
+                            label: item.metaDataName,
+                            leaf: level >= 1 // >=2： 展示3级 >= 1： 展示2级}}
+                        }
+                        nextNodes.push(obj)
+                    }
+                })
+            } else {
+                data.items.forEach((item: any) => {
+                    if (item.isSupportPtAlg) {
+                        const obj = {
+                            value: item.metaDataId,
+                            label: item.metaDataName,
+                            leaf: level >= 1 // >=2： 展示3级 >= 1： 展示2级}}
+                        }
+                        nextNodes.push(obj)
+                    }
+                })
+            }
+            console.log(nextNodes);
             resolve(nextNodes)
         }
+
 
     } catch (error) {
         console.log(error);
@@ -317,7 +338,7 @@ const modelOptions = reactive([{
 
 onMounted(async () => {
     await useExpertMode().queryUserOrgList()
-    await useExpertMode().queryBaseOrgList()
+    await useExpertMode().queryBaseOrgList(isPrivacy.value ? 0 : 1)
     await useExpertMode().queryPowerOrgList()
     initInputPanel()
     // 回显

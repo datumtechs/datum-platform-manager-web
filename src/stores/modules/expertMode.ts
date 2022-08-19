@@ -123,6 +123,7 @@ export default defineStore('expertMode', {
 
             this.disableOrg = []
             this.showPanel = false
+            this.isFeatureModel = false
         },
 
         setDisableOrg(data: Array<any>) {
@@ -153,16 +154,16 @@ export default defineStore('expertMode', {
                 this.setUserOrgList(data)
             }
         },
-        async queryBaseOrgList() {
-            const { code, data } = await queryBaseOrgList()
+        async queryBaseOrgList(algorithmType: number = 0) {
+            const { code, data } = await queryBaseOrgList({ algorithmType })
             if (code === 10000) {
-                this.setPowerOrgList(data)
+                this.setBaseOrgList(data)
             }
         },
         async queryPowerOrgList() {
             const { code, data } = await getPowerOrgList()
             if (code === 10000) {
-                this.setBaseOrgList(data)
+                this.setPowerOrgList(data)
             }
         },
 
