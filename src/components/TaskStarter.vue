@@ -119,7 +119,7 @@ const queryList = () => {
         const { code, data } = res
         if (code === 10000) {
             data.forEach((ele: any) => {
-                ele.haveAttributesCredentialList.unshift(ele.noAttributesCredential)
+                if (ele.noAttributesCredential) ele.haveAttributesCredentialList.unshift(ele.noAttributesCredential)
             });
             radioGroupAry.value = data
             setFirstOption()
