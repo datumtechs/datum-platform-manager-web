@@ -306,7 +306,8 @@ const zh = {
     selectTokenOfData: '选择任务所需要的凭证',
     costPerTask: '隐私或非隐私计算场景下单次任务的消耗量',
     selectCredentialForData: '请为数据选择消耗的凭证',
-    dataNotContainCredentials: '数据未包含凭证, 请前往数据市场购买'
+    dataNotContainCredentials: '数据未包含凭证, 请前往数据市场购买',
+    filterOverdueTip: '已为您过滤无法使用的过期凭证'
   },
   credentials: {
     circulation: "总发布量",

@@ -306,7 +306,8 @@ const en = {
     selectTokenOfData: 'Select the credentials required for the task',
     costPerTask: 'Consumption of a single task in private or non-private computing scenarios',
     selectCredentialForData: 'Please select consumed voucher for data',
-    dataNotContainCredentials: 'The data does not contain the certificate, please go to the data market to purchase.'
+    dataNotContainCredentials: 'The data does not contain the certificate, please go to the data market to purchase.',
+    filterOverdueTip: 'Expired vouchers that cannot be used have been filtered for you'
   },
   credentials: {
     circulation: "Circulation",

@@ -3,6 +3,12 @@
         custom-class="starterDialog" :before-close="handleClose"
         @close="emits('update:show', false)">
         <div v-loading="starterLoading" class="starter-wrapper">
+            <div class="flex mb-20px mt-(-10px)">
+                <el-icon :size="20" color="#333">
+                    <Warning />
+                </el-icon>
+                <p class="pl-8px">{{ $t('workflow.filterOverdueTip') }}</p>
+            </div>
             <div v-for="(item, index) in radioGroupAry" class="starter-box">
                 <!-- <div class="starter-box-title font-bold text-16px text-color-#[000] leading-44px"> -->
                 <p class="starter-title font-bold text-[#333]">{{ item.metaDataName }}</p>
@@ -44,6 +50,7 @@
 import { preparationStartCredentialList } from '@/api/workflow'
 import { useFormatTime } from '@/hooks'
 import { ElMessage } from 'element-plus'
+import { Warning } from '@element-plus/icons-vue'
 const { t, locale } = useI18n()
 const starterLoading = ref(false)
 const tokenLabel = (ele: any) => {
