@@ -73,27 +73,26 @@ export default defineComponent({
           tableData.value = [{
             lName: 'myData.dataName',
             lProp: data.metaDataName,
-            rName: 'myData.credentialSymbol',
-            rProp: data.tokenSymbol,
-          }, {
-            lName: 'myData.launchTime',
-            lProp: useFormatTime(data.publishedAt),
+            // rName: 'myData.credentialSymbol',
+            // rProp: data.tokenSymbol,
             rName: 'myData.industryData',
             rProp: t(enums.industry[data.industry])// data.industry,
           }, {
-            lName: 'myData.dataFormat',
-            lProp: useFileType(data.fileType),
+            lName: 'myData.launchTime',
+            lProp: useFormatTime(data.publishedAt),
             rName: 'myData.dataSize',
             rProp: data.size,
+
           }, {
-            lName: 'myData.rowsData',
-            lProp: data.rows,
+            lName: 'myData.dataFormat',
+            lProp: useFileType(data.fileType),
             rName: 'myData.columnsData',
             rProp: data.columns,
           }, {
-            lName: 'myData.dataDescription',
-            lProp: data.remarks,
-            last: true
+            lName: 'myData.rowsData',
+            lProp: data.rows,
+            rName: 'myData.dataDescription',
+            rProp: data.remarks,
           }]
           MetadataData.value = data.columnsList
         }

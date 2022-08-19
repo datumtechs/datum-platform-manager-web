@@ -174,6 +174,11 @@ const setKeepAliveInfo = () => {
   date.value = searchParams['date']
 }
 
+const queryRouteParams = () => {
+  const from = route.params.from
+  if (from === 'expert') activekey.value = 1
+}
+
 const queryAlg = () => {
   getAlgTree().then(res => {
     const { data, code } = res
@@ -185,6 +190,7 @@ const queryAlg = () => {
 
 onMounted(() => {
   setKeepAliveInfo()
+  queryRouteParams()
   query()
   getTaskStats()
   queryAlg()

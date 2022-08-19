@@ -196,7 +196,10 @@ const saveWorkflow = async () => {
     if (code === 10000) {
         ElMessage.success(t('expert.saveSuccessHint'))
         router.push({
-            name: 'workflow'
+            name: 'workflow',
+            params: {
+                from: 'expert'
+            }
         })
     }
 }
