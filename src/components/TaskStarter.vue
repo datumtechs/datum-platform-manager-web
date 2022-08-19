@@ -97,6 +97,17 @@ const startUp = () => {
 
 }
 
+const setFirstOption = (): void => {
+    const len = radioGroupAry.value.length
+    if (len > 0) {
+        for (let i = 0; i < len; i++) {
+            console.log('radioGroupAry[i]', radioGroupAry.value[i].haveAttributesCredentialList[0]);
+            // console.log('radioGroupAry[i]', radioGroupAry.value[i].haveAttributesCredentialList);
+            selectAry.value[i] = radioGroupAry?.value[i]?.haveAttributesCredentialList[0]?.id || ""
+        }
+    }
+}
+
 const queryList = () => {
     starterLoading.value = true
     preparationStartCredentialList({
@@ -111,11 +122,14 @@ const queryList = () => {
                 ele.haveAttributesCredentialList.unshift(ele.noAttributesCredential)
             });
             radioGroupAry.value = data
+            setFirstOption()
         }
     }).catch(err => {
         starterLoading.value = false
     })
 }
+
+
 
 onMounted(() => {
     queryList()
