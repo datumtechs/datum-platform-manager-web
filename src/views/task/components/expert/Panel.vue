@@ -1,5 +1,5 @@
 <template>
-    <div class="w-380px  panel-box">
+    <div class="panel-box">
         <div class="flex h-40px bg-[#fff] tab-box">
             <div class="flex flex-auto text-center text-[#333] font-medium text-14px items-center justify-center cursor-pointer tab"
                 :class="{ active: currentTab === tab.value }" @click="currentTab = tab.value"
@@ -130,7 +130,7 @@ const tabList = computed(() => [{
 
 onMounted(() => {
     // queryOrgList()
-   
+
 })
 
 </script>
@@ -138,8 +138,9 @@ onMounted(() => {
 <style scoped lang='scss'>
 .panel-box {
     border-left: 1px solid #eeeeee;
+    flex-basis: 380px;
 
-    .tab-box {
+    flex-s .tab-box {
         .tab {
             border-bottom: 1px solid #eeeeee;
 

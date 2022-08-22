@@ -90,7 +90,7 @@ export default defineConfig(({ command }) => {
         // 选项写法
         '/flow': {
           // target: 'http://192.168.10.145:10000/',
-          target: 'http://192.168.10.145:8234', // test env
+          target: 'http://192.168.10.157:8234', // test env
           changeOrigin: true,
           rewrite: path => path
         }

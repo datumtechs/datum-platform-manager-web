@@ -175,7 +175,7 @@ const queryNFT = async () => {
     nftLoading.value = true
     let fn = props.type === 'common' ? getAttributeCredential : getUserAttributeCredentialList
     try {
-        const { code, data } = await fn({ metaDataId: props.id, size: pageObj.size })
+        const { code, data } = await fn({ metaDataId: props.id, size: pageObj.size, current: pageObj.current })
         nftLoading.value = false
         if (code === 10000) {
             nftTokenData.value = data.items

@@ -43,7 +43,7 @@
                     size="small" :disabled="props.isSettingCompleted || props.isReadonly" filterable
                     :placeholder="t('task.selectComputingProvider')"
                     @change="handleComputingSelectChange">
-                    <el-option v-for="node in baseOrgList" :key="node.identityId"
+                    <el-option v-for="node in powerOrgList" :key="node.identityId"
                         :label="node.nodeName" :value="node.identityId"></el-option>
                 </el-select>
             </div>
@@ -84,6 +84,7 @@ const powerType = ref(0)
 const algorithm: any = computed(() => useExpertMode().getAlgorithm)
 const orgList: any = computed(() => useExpertMode().getUserOrgList)
 const baseOrgList: any = computed(() => useExpertMode().getBaseOrgList)
+const powerOrgList: any = computed(() => useExpertMode().getPowerOrgList)
 const showModel: any = computed(() => algorithm.value.inputModel)
 const inputVoList: any = computed(() => useExpertMode().getInputVoList)
 const nodeList: any = computed(() => useExpertMode().getNodeList)

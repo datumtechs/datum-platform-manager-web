@@ -88,8 +88,14 @@ const props = defineProps({
     }
 })
 const startUp = () => {
+    let newArr: any = []
+    selectAry.value.map((item: any) => {
+        if (item) newArr.push(item)
+    })
     // TODO 校验
-    if (selectAry.value.length && selectAry.value.length === radioGroupAry.value.length) {
+    if (newArr.length && newArr.length === radioGroupAry.value.length) {
+        console.log(selectAry.value);
+        console.log(radioGroupAry.value);
         emits('startTask', selectAry.value)
     } else {
         ElMessage.error(t('workflow.selectCredentialForData'))
@@ -103,7 +109,7 @@ const setFirstOption = (): void => {
         for (let i = 0; i < len; i++) {
             console.log('radioGroupAry[i]', radioGroupAry.value[i].haveAttributesCredentialList[0]);
             // console.log('radioGroupAry[i]', radioGroupAry.value[i].haveAttributesCredentialList);
-            selectAry.value[i] = radioGroupAry?.value[i]?.haveAttributesCredentialList[0]?.id || ""
+            selectAry.value[i] = radioGroupAry?.value[i]?.haveAttributesCredentialList[0]?.id || ''
         }
     }
 }

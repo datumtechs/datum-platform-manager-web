@@ -176,7 +176,10 @@ const setKeepAliveInfo = () => {
 
 const queryRouteParams = () => {
   const from = route.params.from
-  if (from === 'expert') activekey.value = 1
+  if (from === 'expert') {
+    activekey.value = 1
+    createMode.value = 1
+  }
 }
 
 const queryAlg = () => {

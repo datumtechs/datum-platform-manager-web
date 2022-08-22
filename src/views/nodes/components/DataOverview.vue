@@ -53,27 +53,25 @@ const getDataDetails = async () => {
         tableData.value = [{
             lName: 'myData.dataName',
             lProp: data.metaDataName,
-            rName: 'myData.credentialSymbol',
-            rProp: data.tokenSymbol,
+            rName: 'myData.industryData',
+            rProp: t(enums.industry[data.industry])
+            // rName: 'myData.credentialSymbol',
+            // rProp: data.tokenSymbol,
         }, {
             lName: 'myData.launchTime',
             lProp: useFormatTime(data.publishedAt),
-            rName: 'myData.industryData',
-            rProp: t(enums.industry[data.industry])
-        }, {
-            lName: 'myData.dataFormat',
-            lProp: data.fileType,
             rName: 'myData.dataSize',
             rProp: data.size,
         }, {
-            lName: 'myData.rowsData',
-            lProp: data.rows,
+            lName: 'myData.dataFormat',
+            lProp: data.fileType,
             rName: 'myData.columnsData',
             rProp: data.columns,
         }, {
-            lName: 'myData.dataDescription',
-            lProp: data.remarks,
-            last: true
+            lName: 'myData.rowsData',
+            lProp: data.rows,
+            rName: 'myData.dataDescription',
+            rProp: data.remarks,
         }]
         metadataData.value = data.columnsList
     }
