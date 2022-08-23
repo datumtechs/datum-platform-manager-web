@@ -238,7 +238,7 @@ const inputLazyLoad = async (node: any, resolve: any, index: number) => {
             }, 300);
         } else if (level === 1) {
             let nextNodes: any = []
-            const params = { current: 1, size: 1000, identityId: node.data.value }
+            const params = { current: 1, size: 1000, identityId: node.data.value, includeExpired: false }
             const { code, data } = await queryUserDataList(params)
             if (!!isPrivacy.value) {
                 data.items.forEach((item: any) => {
