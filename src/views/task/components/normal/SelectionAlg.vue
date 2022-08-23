@@ -1,6 +1,6 @@
 <template>
   <el-form v-bind="$attrs" :label-position="'top'" :rules="rules" :ref="(el: any) => formRef = el" :model="form"
-    class="mt-38px">
+    class="mt-38px" :class="algIsShow() ? 'min-h-600px' : ''">
     <el-form-item :label="`${t('task.taskName')}:`" prop="workflowName" class="select-alg-require-icon">
       <div class="absolute -top-30px cursor-pointer" :style="{ left: locale === 'zh' ? '80px' : '107px' }">
         <question-mark>
@@ -45,7 +45,6 @@
         </el-radio>
       </el-radio-group>
     </el-form-item>
-
     <!-- alg -->
     <el-form-item v-if="algIsShow()" class="select-alg-require-icon" :label="algDetailsTitleName" prop="algorithmId">
       <el-radio-group v-model="form.algorithmId" @change="algChange" :disabled="disabled">
@@ -55,8 +54,6 @@
         </el-radio>
       </el-radio-group>
     </el-form-item>
-
-
     <el-form-item v-if="props.processList.length && form.algorithmId && form.calculationType !== 1000"
       class="select-alg-require-icon" :label="`${$t('task.stepOneSelectProcedureTitle')}:`" prop="calculationProcessId">
       <el-radio-group v-model="form.calculationProcessId" :disabled="disabled">

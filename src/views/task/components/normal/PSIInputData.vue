@@ -99,6 +99,7 @@ const previous = () => {
 
 
 const handParams = (obj: any) => {
+
   return new Promise((resolve, reject) => {
     try {
       const item = {
@@ -127,6 +128,11 @@ const preserv = () => {
 }
 
 const submit = async (str?: string | any) => {
+  if (!identityId.value) {
+    ElMessage.closeAll()
+    ElMessage.warning(t('task.selectSponsor'))
+    return
+  }
   const data = await handParams(psiInputOne.value)
   const data2 = await handParams(psiInputTwo.value)
 

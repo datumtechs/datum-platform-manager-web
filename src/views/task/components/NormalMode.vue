@@ -2,10 +2,10 @@
   <div class="normal-wrap pt-40px pb-40px" v-loading="loading">
     <div class="flex item-center justify-between px-9px py-5px bg-color-[#F7F8F9] h-80px">
       <div @click="setActiveStep(index)" v-waves
-        class="w-max-220px flex-col flex pl-31px leading-24px justify-center font-800" v-for="(item, index) in list"
+        class="w-max-220px flex-col flex pl-31px leading-24px justify-center font-800 " v-for="(item, index) in list"
         :key="item.setp" :style="{
           flex: list.length <= 1 ? 'flex-230px' : 'flex-1'
-        }" :class="{ active: activeIndex == index }">
+        }" :class="{ active: activeIndex == index, 'cursor-pointer': !!(route.params.workflowId) }">
         <div class="setp-item-name text-22px font-medium font-800 text-color-[#CCCCCC]">
           {{ $t('task.step') }}
           <span class="ml-10px font-800">{{ item.setp }}</span>
