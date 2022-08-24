@@ -180,6 +180,7 @@ const cascaderProps = ref({
       current: 1,
       size: 20,
       identityId: value,
+      includeExpired: false
     }).then(res => {
       const { data, code } = res
       if (code === 10000) {

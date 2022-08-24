@@ -19,7 +19,7 @@
                 $t('task.trainingResultReceivers') : $t('task.predictionResultReceivers')
           }}</div>
           <el-form-item prop="checkList">
-            <el-checkbox-group v-model="form[i].checkList">
+            <el-checkbox-group v-model="form[i].checkList" :max="props.taskParams.algorithmType ? 1 : undefined">
               <template v-for="v in props.taskParams.algorithmId == 1001 ? psiListOrgList : props.orgList"
                 :key="item.identityId">
                 <el-checkbox :label="v.identityId">{{ v.nodeName }}</el-checkbox>

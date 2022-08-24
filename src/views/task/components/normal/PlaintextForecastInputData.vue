@@ -50,6 +50,15 @@
           :value="node.identityId">
         </el-option>
       </el-select>
+      <!-- <el-cascader clearable :disabled="taskParams.isSettingCompleted" v-if="powerType === 1" v-model="powerIdentityId"
+        class="h-40px rounded-20px border-1 w-440px border-solid  border-color-[#EEEEEE]" :suffix-icon="CaretBottom"
+        :options="props.powerOrgList.map((v: any) => {
+          return {
+            leaf: false,
+            value: v.identityId,
+            label: v.nodeName,
+          }
+        })" :props="cascaderProps1" /> -->
     </div>
 
 
@@ -252,9 +261,6 @@ const cascaderProps = ref({
       resolve([])
       return
     }
-    // console.log(props.taskParams?.ptPredictionInput?.algorithmId);
-
-    // debugger
     getUserModelList({
       algorithmId: props.taskParams?.ptPredictionInput?.algorithmId,
       identityId: pathValues[0]
@@ -272,6 +278,32 @@ const cascaderProps = ref({
     })
   }
 })
+
+// const cascaderProps1 = ref({
+//   lazy: true,
+//   lazyLoad(node: any, resolve: any) {
+//     const { value, level, pathValues } = node
+//     if (!value) {
+//       resolve([])
+//       return
+//     }
+//     getUserModelList({
+//       algorithmId: props.taskParams?.ptPredictionInput?.algorithmId,
+//       identityId: pathValues[0]
+//     }).then(res => {
+//       const { code, data } = res
+//       if (code == 10000) {
+//         resolve(data.map((v: any) => ({
+//           value: v.metaDataId,
+//           label: v.metaDataId,
+//           leaf: true
+//         })))
+//       } else {
+//         resolve([])
+//       }
+//     })
+//   }
+// })
 
 
 const queryAlgoList = () => {

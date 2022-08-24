@@ -17,6 +17,7 @@ service.interceptors.request.use(
     addRequest(config)
     config.headers.common['Accept-Language'] = getLanguage()
     config.headers.common['Access-Token'] = useUsersInfo().getToken || ''
+    // console.log(config);
     return config
   },
   (error: any) => {
