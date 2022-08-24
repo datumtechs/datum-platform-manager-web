@@ -5,15 +5,22 @@
             <el-table-column type="index" width="80">
                 <template #header>{{ t('common.num') }}</template>
             </el-table-column>
-            <el-table-column prop="" :label="t('workflow.orgName')">
+            <el-table-column prop="holderNodeName" :label="t('workflow.orgName')">
             </el-table-column>
-            <el-table-column prop="" :label="t('center.approvalOrganization')"></el-table-column>
-            <el-table-column prop="" :label="t('center.certificateTime')"></el-table-column>
-            <el-table-column prop="" :label="t('center.certificateValidity')"></el-table-column>
-            <el-table-column prop="" :label="t('common.actions')">
+            <el-table-column prop="issuerNodeName" :label="t('center.approvalOrganization')">
+            </el-table-column>
+            <el-table-column :label="t('center.certificateTime')">
+                <template #default="{ row }">
+                    {{ useFormatTime(row.issuanceDate) }}
+                </template>
+            </el-table-column>
+            <el-table-column :label="t('center.certificateValidity')">
+                <template #default="{ row }">
+                    {{ useFormatTime(row.expirationDate) }}
+                </template>
             </el-table-column>
         </el-table>
-        <div class="flex my-50px justify-center">
+        <div class="flex my-50px justify-center">x
             <el-pagination v-model:current-page="pageObj.current" v-model:page-size="pageObj.size"
                 background layout="prev, pager, next" :total="pageObj.total" />
         </div>
@@ -23,6 +30,7 @@
 <script setup lang='ts'>
 import DescBox from './DescBox.vue'
 import { getOrgVcList } from '@/api/publicity'
+import { useFormatTime } from '@/hooks'
 const { t } = useI18n()
 const tableData = ref([])
 
