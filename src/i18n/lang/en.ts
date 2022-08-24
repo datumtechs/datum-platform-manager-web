@@ -509,7 +509,15 @@ const en = {
     publicInfo: "Public Information", //Public information
     dataDesc: "Data Description", // Data description
     trustedDesc: 'The organizations listed below have been accredited by the Board and have received a Trusted Credential.',
-    committeeDesc: 'It is composed of credible institutions and conducts credible certification of network participating organizations as needed.'
+    committeeDesc: 'It is composed of credible institutions and conducts credible certification of network participating organizations as needed.',
+    addProposal: 'Nominate to join',
+    delProposal: 'Nomination to withdraw',
+    notStarted: 'Not Started',
+    voting: 'Voting',
+    voted: 'Voted',
+    failedToVote: 'Failed to vote',
+    revoked: 'Revoked',
+    nominate: 'nominate'
   }
 }
 

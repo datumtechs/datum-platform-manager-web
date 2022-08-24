@@ -509,7 +509,15 @@ const zh = {
     publicInfo: "公示资料", //Public information
     dataDesc: "资料说明", // Data description
     trustedDesc: '下列组织已由委员会认证，并获得可信证书。',
-    committeeDesc: '由具备公信力的机构组成，并对网络参与组织按需做可信认证。'
+    committeeDesc: '由具备公信力的机构组成，并对网络参与组织按需做可信认证。',
+    addProposal: '提名成员加入',
+    delProposal: '提名成员退出',
+    notStarted: '未开始',
+    voting: '投票中',
+    voted: '投票通过',
+    failedToVote: '投票未通过',
+    revoked: '已撤销',
+    nominate: '提名'
   }
 }
 
