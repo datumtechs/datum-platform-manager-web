@@ -1,8 +1,7 @@
 <template>
   <div class="mt-30px">
     <div class="flex items-center">
-      <el-icon v-if="workflowName" :size="40" class="cursor-pointer mr-10px"
-        @click="$router.go(-1)">
+      <el-icon v-if="workflowName" :size="40" class="cursor-pointer mr-10px" @click="$router.go(-1)">
         <back />
       </el-icon>
       <p v-if="workflowName" class="mr-30px text-[32px] font-color-[#333] ellipse max-w-500px">{{
@@ -10,12 +9,10 @@
       }}</p>
       <PrivateSwitch :mode="'expert'" @change="$router.push({ name: 'wizardMode' })" />
     </div>
-    <div class="my-30px flex border-1 border-solid border-color-[#EEE] operation-box">
-      <Algorithm :isReadonly="isReadonly" :key="refreshTag"
-        :isSettingCompleted="isSettingCompleted" />
-      <Flow :isInEdit="isInEdit" :isReadonly="isReadonly" :status-list="statusList"
-        :workflow-status="workflowStatus" :isSettingCompleted="isSettingCompleted"
-        @showNameDialog="(_: boolean) => showDialog = _" />
+    <div class="my-30px flex border-1 border-solid border-color-[#EEE] operation-box overflow-auto">
+      <Algorithm :isReadonly="isReadonly" :key="refreshTag" :isSettingCompleted="isSettingCompleted" />
+      <Flow :isInEdit="isInEdit" :isReadonly="isReadonly" :status-list="statusList" :workflow-status="workflowStatus"
+        :isSettingCompleted="isSettingCompleted" @showNameDialog="(_: boolean) => showDialog = _" />
       <Panel :isReadonly="isReadonly" :isSettingCompleted="isSettingCompleted ? true : false" />
     </div>
     <SetNameDialog v-model:show="showDialog" v-if="showDialog" @submit="copySubmit" />

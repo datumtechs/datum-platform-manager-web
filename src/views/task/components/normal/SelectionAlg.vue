@@ -21,10 +21,10 @@
       <el-input :disabled="disabled" :input-style="{ borderColor: '#EEEEEE', height: '50px' }" :minlength="8"
         :maxlength="64" v-model.trim="form.workflowName"></el-input>
     </el-form-item>
-    <!-- conputing type  2: Privacy  3: no Privacy -->
     <el-form-item :label="`${t('task.stepOneComputingTypeTitle')}:`" prop="computingType"
       class="select-alg-require-icon">
       <el-radio-group v-model="form.computingType" :disabled="disabled" @change="(e) => {
+        rules.algorithmId[0].required = false
         form.algorithmId = undefined
         form.calculationProcessId = undefined;
         form.calculationType = undefined;
@@ -46,7 +46,8 @@
       </el-radio-group>
     </el-form-item>
     <!-- alg -->
-    <el-form-item v-if="algIsShow()" class="select-alg-require-icon" :label="algDetailsTitleName" prop="algorithmId">
+    <el-form-item v-if="algIsShow() && algDetailsList.length" class="select-alg-require-icon"
+      :label="algDetailsTitleName" prop="algorithmId">
       <el-radio-group v-model="form.algorithmId" @change="algChange" :disabled="disabled">
         <el-radio :label="item.id" v-for="item in algDetailsList" :key="item.id">{{
             item.name
@@ -93,8 +94,8 @@ const props: any = defineProps({
 })
 
 const form: any = reactive({
-  workflowName: "",
-  computingType: "",
+  workflowName: undefined,
+  computingType: undefined,
   calculationType: undefined,
   algorithmId: undefined,
   calculationProcessId: undefined,
@@ -117,7 +118,7 @@ const rules = ref({
   ],
   computingType: [{ required: true, message: t('task.stepOneComputingTypeTitle') }],
   calculationType: [{ required: true, message: t('task.stepOneSelectComputingTitle') }],
-  algorithmId: [{ required: true, message: t('task.stepOneSelectAlgorithmTitle') }],
+  algorithmId: [{ required: false, message: t('task.stepOneSelectAlgorithmTitle') }],
   calculationProcessId: [{ required: true, message: t('task.stepOneSelectProcedureTitle') }]
 })
 
@@ -126,15 +127,18 @@ watch(locale, () => {
 })
 watch(() => algList.value, () => {
   if (props.taskParams?.algorithmId) setTaskParams()
+  clearValidate()
 })
 watch(() => props.taskParams, (e) => {
   if (e.workflowId) disabled.value = true
   if (algList.value.length && props.activeIndex <= 1) setTaskParams()
+  formRef.value.clearValidate()
 })
 
 watch(() => props.processList, (e) => {
   if (props.processList.length == 1) {
     form.calculationProcessId = e[0]?.calculationProcessId
+    formRef.value.clearValidate()
   }
 })
 watch(() => algDetailsList.value, (e) => {
@@ -142,16 +146,21 @@ watch(() => algDetailsList.value, (e) => {
     setTimeout(() => {
       form.algorithmId = algDetailsList.value[0].id
       algChange()
+      clearValidate()
     }, 100)
   }
+  clearValidate()
 })
 
 
 
 
 const next = () => {
+  rules.value.algorithmId[0].required = true
   formRef.value.validate().then((v: any) => {
     submit()
+  }).catch(() => {
+    rules.value.algorithmId[0].required = false
   })
 }
 
@@ -162,6 +171,11 @@ const algChange = (type?: any) => {
   getNoticeText()
 }
 
+const clearValidate = () => {
+  // nextTick(() => {
+  formRef.value.clearValidate()
+  // })
+}
 
 const submit = () => {
   postCreateWorkflowWizard({

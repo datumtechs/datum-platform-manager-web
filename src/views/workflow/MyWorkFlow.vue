@@ -17,34 +17,31 @@
       </template>
     </Banner>
     <div class="com-main-data-wrap main-content">
-      <DataTable v-loading="loading" v-if="activekey === 0" :data="tableData" @query="query"
-        :size='size' :current="current" />
-      <ExpertTable v-loading="loading" v-if="activekey === 1" :data="tableData" @query="query"
-        :size='size' :current="current" />
+      <DataTable v-loading="loading" v-if="activekey === 0" :data="tableData" @query="query" :size='size'
+        :current="current" />
+      <ExpertTable v-loading="loading" v-if="activekey === 1" :data="tableData" @query="query" :size='size'
+        :current="current" />
       <div class="flex my-50px justify-center">
-        <el-pagination background layout="prev, pager, next" :total="total"
-          v-model:current-page="current" @current-change="query" />
+        <el-pagination background layout="prev, pager, next" :total="total" v-model:current-page="current"
+          @current-change="query" />
       </div>
     </div>
-    <Search :placeholder="t('workflow.placeholder')" :keyword="keyword" @search="search"
-      @reset="reset">
+    <Search :placeholder="t('workflow.placeholder')" :keyword="keyword" @search="search" @reset="reset">
       <template #content>
         <div>
           <div class="search-label  mt-20px mb-10px font-900">{{ t('myData.TaskCategory') }}</div>
-          <el-select class="w-full picker-rounded" clearable v-model="algValue"
-            :placeholder="t('task.select')" :teleported="false">
+          <el-select class="w-full picker-rounded" clearable v-model="algValue" :placeholder="t('task.select')"
+            :teleported="false">
             <el-option-group v-for="group in algList" :key="group.id" :label="group.name">
-              <el-option v-for="item in group.childrenList" :key="item.id" :label="item.name"
-                :value="item.id" />
+              <el-option v-for="item in group.childrenList" :key="item.id" :label="item.name" :value="item.id" />
             </el-option-group>
           </el-select>
         </div>
         <div class="search-item-wrap">
           <div class="search-label mt-20px mb-10px font-900">{{ t('common.timeFrame') }}</div>
-          <el-date-picker class="picker-rounded" v-model="date" type="daterange"
-            :default-time="defaultTime" :teleported="false" value-format="YYYY-MM-DD HH:mm:ss"
-            :range-separator="t('common.to')" :start-placeholder="t('node.startTime')"
-            :end-placeholder="t('common.endTime')" />
+          <el-date-picker class="picker-rounded" v-model="date" type="daterange" :default-time="defaultTime"
+            :teleported="false" value-format="YYYY-MM-DD HH:mm:ss" :range-separator="t('common.to')"
+            :start-placeholder="t('node.startTime')" :end-placeholder="t('common.endTime')" />
         </div>
       </template>
     </Search>
@@ -186,7 +183,7 @@ const queryAlg = () => {
   getAlgTree().then(res => {
     const { data, code } = res
     if (code === 10000) {
-      algList.value = data?.childrenList[0]?.childrenList
+      algList.value = [...data?.childrenList[0]?.childrenList, ...data?.childrenList[1]?.childrenList]
     }
   })
 }

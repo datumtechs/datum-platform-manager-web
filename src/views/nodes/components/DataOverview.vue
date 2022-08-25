@@ -14,11 +14,12 @@
 </template>
 
 <script setup lang='ts'>
+
 import BaseInfo from '@/components/dataComponents/BaseInfo.vue'
 import MetaData from '@/components/dataComponents/MetaData.vue'
 import TaskInvolved from '@/components/dataComponents/TaskInvolved.vue'
 import { queryDataDetails } from '@/api/data'
-import { useFormatTime } from '@/hooks'
+import { useFormatTime, useFileType } from '@/hooks'
 import { enums } from '@/utils/enum'
 
 const route = useRoute()
@@ -64,7 +65,7 @@ const getDataDetails = async () => {
             rProp: data.size,
         }, {
             lName: 'myData.dataFormat',
-            lProp: data.fileType,
+            lProp: useFileType(data.fileType),
             rName: 'myData.columnsData',
             rProp: data.columns,
         }, {

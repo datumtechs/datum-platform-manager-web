@@ -2,31 +2,28 @@
     <div class="decorate-wrapper">
         <Banner :bg-name="'network'">
             <template #briefInfo>
-                <p v-if="locale === 'zh'">全网共 {{ total }} 个可参与隐私计算任务的节点</p>
+                <p v-if="locale === 'zh'">全网共 <span class="text-color-[#2B60E9] text-16px">{{ total }}
+                    </span>个可参与隐私计算任务的节点</p>
                 <p v-else>{{ total }} nodes available in the privacy computing network</p>
             </template>
         </Banner>
-        <div v-loading="nodeLoading"
-            class="main-content mt-30px max-w-1200px mx-auto overflow-hidden">
-            <NodeCard v-if="nodeList.length" v-for="(node, index) in nodeList" :size="10" :page="1"
-                :node="node" :index="index" :key="index" />
+        <div v-loading="nodeLoading" class="main-content mt-30px max-w-1200px mx-auto overflow-hidden">
+            <NodeCard v-if="nodeList.length" v-for="(node, index) in nodeList" :size="10" :page="1" :node="node"
+                :index="index" :key="index" />
             <el-empty :description="t('common.noData')" v-else />
         </div>
         <div v-if="nodeList.length" class="flex my-50px justify-center">
             <el-pagination background layout="prev, pager, next" @current-change="queryOrgList"
-                v-model:current-page="pageObj.current" v-model:page-size="pageObj.size"
-                :total="pageObj.total" />
+                v-model:current-page="pageObj.current" v-model:page-size="pageObj.size" :total="pageObj.total" />
             <!-- :total="pageObj.total" /> -->
         </div>
-        <Search :keyword="keyword" :placeholder="t('node.placeholder')" @search="search"
-            @reset="reset">
+        <Search :keyword="keyword" :placeholder="t('node.placeholder')" @search="search" @reset="reset">
             <template #content>
                 <p class="search-label mb-10px">
                     {{ t('node.sortBy') }}
                 </p>
                 <el-select class="w-full" size="large" v-model="orderBy" :teleported="false">
-                    <el-option v-for="item in sortList" :key="item.id" :label="t(item.label)"
-                        :value="item.orderBy" />
+                    <el-option v-for="item in sortList" :key="item.id" :label="t(item.label)" :value="item.orderBy" />
                 </el-select>
             </template>
         </Search>

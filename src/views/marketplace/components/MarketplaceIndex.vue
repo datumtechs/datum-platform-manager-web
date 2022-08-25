@@ -158,52 +158,45 @@ onMounted(() => {
     <div class="flex-1 task-wrap">
         <Banner :bg-name="'market'">
             <template #briefInfo>
-                <p v-if="locale === 'zh'">全网共 {{ pageParams.total }} 个可参与隐私计算的有效数据</p>
+                <p v-if="locale === 'zh'">全网共 <span class="text-color-[#2B60E9] text-16px">{{ pageParams.total }}</span>
+                    个可参与隐私计算的有效数据</p>
                 <p v-else>{{ pageParams.total }} data available in the privacy computing network
                 </p>
             </template>
         </Banner>
         <div class="main-content mt-30px max-w-1200px mx-auto overflow-hidden">
-            <el-table v-tableTooltip v-loading="marketLoading"
-                :header-cell-style="{ height: '50px' }" :row-style="{ height: '70px' }"
-                :data="tableData" highlight-current-row style="width: 100%">
-                <el-table-column type="index" :label="t('common.num')" :index="indexMethod"
-                    width="80" />
+            <el-table v-tableTooltip v-loading="marketLoading" :header-cell-style="{ height: '50px' }"
+                :row-style="{ height: '70px' }" :data="tableData" highlight-current-row style="width: 100%">
+                <el-table-column type="index" :label="t('common.num')" :index="indexMethod" width="80" />
                 <el-table-column :class-name="'show-ellipsis-tooltip'" prop="metaDataName"
                     :label="t('myData.dataName')" />
-                <el-table-column :class-name="'show-ellipsis-tooltip'" prop="nodeName"
-                    :label="t('myData.dataOwner')">
+                <el-table-column :class-name="'show-ellipsis-tooltip'" prop="nodeName" :label="t('myData.dataOwner')">
                     <template #default="{ row }">
                         <div class="flex">
                             <CertificationLabel :obj="row" />
-                            <p class="w-120px ellipse cursor-pointer link-btn"
-                                @click="linkToNode(row)">{{
-                                        row.nodeName
-                                }}</p>
+                            <p class="w-120px ellipse cursor-pointer link-btn" @click="linkToNode(row)">{{
+                                    row.nodeName
+                            }}</p>
                         </div>
                     </template>
                 </el-table-column>
 
-                <el-table-column :class-name="'show-ellipsis-tooltip'"
-                    :label="t('myData.dataSize')">
+                <el-table-column :class-name="'show-ellipsis-tooltip'" :label="t('myData.dataSize')">
                     <template #default="{ row }">
                         <div>
                             {{ useSize(row.size) }}
                         </div>
                     </template>
                 </el-table-column>
-                <el-table-column :class-name="'show-ellipsis-tooltip'"
-                    :label="t('myData.industryData')">
+                <el-table-column :class-name="'show-ellipsis-tooltip'" :label="t('myData.industryData')">
                     <template #default="{ row }">
                         <div>{{ $t(`${enums.industry[row.industry]}`) }}</div>
                     </template>
                 </el-table-column>
-                <el-table-column :class-name="'show-ellipsis-tooltip'"
-                    :label="t('myData.useScene')">
+                <el-table-column :class-name="'show-ellipsis-tooltip'" :label="t('myData.useScene')">
                     <template #default="{ row }">
                         <div>
-                            <el-space wrap :size="10"
-                                :spacer="(row.isSupportPtAlg && row.isSupportCtAlg) ? '|' : ''">
+                            <el-space wrap :size="10" :spacer="(row.isSupportPtAlg && row.isSupportCtAlg) ? '|' : ''">
 
                                 <span>{{ row.isSupportPtAlg ? $t('common.nonPrivacy') :
                                         ''
@@ -234,10 +227,12 @@ onMounted(() => {
                 <el-table-column :label="t('common.actions')" width="200">
                     <template #default="{ row }">
                         <el-space :size="20">
-                            <span class="font-medium  leading-20px link-btn"
-                                @click="purchase(row)">{{ t('common.purchase') }}</span>
-                            <span class="font-medium  leading-20px link-btn"
-                                @click="linkToViewData(row)">{{ t('myData.viewData') }}</span>
+                            <span class="font-medium  leading-20px link-btn" @click="purchase(row)">{{
+                                    t('common.purchase')
+                            }}</span>
+                            <span class="font-medium  leading-20px link-btn" @click="linkToViewData(row)">{{
+                                    t('myData.viewData')
+                            }}</span>
                             <!-- <span class="text-14px text-color-[#0052D9] leading-20px cursor-pointer"
                                 @click="linkToViewToken(row)">{{
                                         t('myData.viewCredential')
@@ -248,20 +243,17 @@ onMounted(() => {
             </el-table>
         </div>
         <div class="flex my-50px justify-center">
-            <el-pagination background v-model:current-page="pageParams.current"
-                @current-change="queryTableData" v-model:page-size="pageParams.size"
-                layout="prev, pager, next" :total="pageParams.total" />
+            <el-pagination background v-model:current-page="pageParams.current" @current-change="queryTableData"
+                v-model:page-size="pageParams.size" layout="prev, pager, next" :total="pageParams.total" />
         </div>
-        <Search :keyword="pageParams.keyword" :placeholder="t('myData.marketPlaceholder')"
-            @search="search" @reset="reset">
+        <Search :keyword="pageParams.keyword" :placeholder="t('myData.marketPlaceholder')" @search="search"
+            @reset="reset">
             <template #content>
                 <p class="search-label mb-10px">
                     {{ t('node.sortBy') }}
                 </p>
-                <el-select class="w-full" size="large" v-model="pageParams.orderBy"
-                    :teleported="false">
-                    <el-option v-for="item in sortList" :key="item.id" :label="t(item.label)"
-                        :value="item.orderBy" />
+                <el-select class="w-full" size="large" v-model="pageParams.orderBy" :teleported="false">
+                    <el-option v-for="item in sortList" :key="item.id" :label="t(item.label)" :value="item.orderBy" />
                 </el-select>
                 <!-- <p class="search-label mb-10px mt-20px">
                     {{ t('myData.industryData') }}
@@ -279,9 +271,8 @@ onMounted(() => {
                 </el-select> -->
             </template>
         </Search>
-        <TokenList v-if="showDialog" type="common"
-            :title="`${$t('common.buyCredential')} - ${currentDataName}`" :id="currentMetadataId"
-            v-model:showDialog="showDialog" />
+        <TokenList v-if="showDialog" type="common" :title="`${$t('common.buyCredential')} - ${currentDataName}`"
+            :id="currentMetadataId" v-model:showDialog="showDialog" />
     </div>
 </template>
 
