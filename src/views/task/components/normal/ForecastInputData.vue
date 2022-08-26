@@ -119,9 +119,14 @@ const previous = () => {
 }
 
 
-const handParams = (obj: any) => {
+const handParams = (obj: any, verifiedList: any) => {
   return new Promise((resolve, reject) => {
     try {
+      if (!Object.keys(obj).length) {
+        ElMessage.closeAll()
+        ElMessage.warning(t('task.selectData'))
+        throw 'err'
+      }
       const item = {
         identityId: obj?.metaData[0],
         metaDataId: obj?.metaData[1],
@@ -129,13 +134,30 @@ const handParams = (obj: any) => {
         dependentVariable: obj?.label.columnIdx,
         dataColumnIds: obj?.feature.map((_: any) => _.columnIdx).join(',')
       }
-      if (!item.identityId || !item.metaDataId || !item.keyColumn) {
+      if (!item.identityId || !item.metaDataId) {
+        ElMessage.closeAll()
+        ElMessage.warning(t('task.selectData'))
         throw 'err'
       }
+      verifiedList.forEach((v: string) => {
+        const items: any = obj[v] || ''
+        if (v == 'feature') {
+          ElMessage.closeAll()
+          if (!items?.length) {
+            ElMessage.warning(`${t('task.selectData')}${t('task.feature')}`);
+            throw 'err'
+          }
+        } else if (!items.columnIdx) {
+          ElMessage.closeAll()
+          if (v == 'label') ElMessage.warning(`${t('task.selectData')}${t('task.label')}`)
+          if (v == 'idColumn') ElMessage.warning(`${t('task.selectData')}${t('task.idColumn')}`)
+
+          throw 'err'
+        }
+      })
       resolve(item)
     } catch (e) {
-      ElMessage.closeAll()
-      ElMessage.warning(t('task.selectData'))
+
       reject('err')
     }
   })
@@ -151,8 +173,8 @@ const submit = async (str?: string | any) => {
     ElMessage.warning(t('task.selectSponsor'))
     return
   }
-  const data = await handParams(psiInputOne.value)
-  const data2 = await handParams(psiInputTwo.value)
+  const data = await handParams(psiInputOne.value, [props.fieldType[0], props.fieldType[2]].map(v => v.type))
+  const data2 = await handParams(psiInputTwo.value, [props.fieldType[0], props.fieldType[2]].map(v => v.type))
 
   setWorkflowOfWizardMode({
     workflowId: props.workflowInfo.workflowId,
@@ -228,41 +250,16 @@ const cascaderProps = ref({
   }
 })
 
-// let target: any = []
-// const filterTree = (arr: any, newArray: any = []) => {
-//   target.concat(newArray)
-//   arr.forEach((son: any) => {
-//     if (Array.isArray(son.childrenList)) {
-//       filterTree(son.childrenList, target)
-//     } else {
-//       if (son.isAlgorithm && son.isExistAlgorithm) {
-//         target.push({
-//           value: son.id,
-//           // value: son.name,
-//           label: son.name,
-//         });
-//       }
-//     }
-//   })
-//   return target
-// }
 
 
 const queryAlgoList = () => {
   if (props.type == 1 && props.step == 1) {
-    // queryAlgoDetail({}).then(result => {
-    //   const { data, code } = result
-    //   if (code === 10000) {
-    // const arr = filterTree(data.childrenList)//算法列表
-    // algoList.value = arr
+
     optionsList.value = props.orgList.map((v: any) => {
       return {
         leaf: false,
         value: v.identityId,
-        label: v.nodeName,
-        // children:[
-        //   ...arr
-        // ]
+        label: v.nodeName
       }
     })
     if (props.taskParams.predictionInput?.model?.metaDataId) {
@@ -271,10 +268,6 @@ const queryAlgoList = () => {
         props.taskParams.predictionInput?.model?.metaDataId
       ]
     }
-    // }
-    // }).catch(err => {
-    //   console.log(err);
-    // })
   } else {
     optionsList.value = [
       {

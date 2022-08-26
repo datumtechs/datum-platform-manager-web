@@ -243,7 +243,7 @@ const cascaderChange = (e: any) => {
       if (e !== 'init') {
         activeIndex.value = 0
         form.idColumn = fieldsList.value[activeIndex.value]
-        fieldsList.value[activeIndex.value] = false
+        fieldsList.value[activeIndex.value].show = false
         activeIndex.value = 1
       }
       if (e == 'init') initParams()

@@ -50,15 +50,7 @@
           :value="node.identityId">
         </el-option>
       </el-select>
-      <!-- <el-cascader clearable :disabled="taskParams.isSettingCompleted" v-if="powerType === 1" v-model="powerIdentityId"
-        class="h-40px rounded-20px border-1 w-440px border-solid  border-color-[#EEEEEE]" :suffix-icon="CaretBottom"
-        :options="props.powerOrgList.map((v: any) => {
-          return {
-            leaf: false,
-            value: v.identityId,
-            label: v.nodeName,
-          }
-        })" :props="cascaderProps1" /> -->
+
     </div>
 
 
@@ -67,10 +59,6 @@
       :disabledData="psiInputTwo?.metaData" :key="'input'" @update:params="psiInputOne = $event"
       :taskParams="props.taskParams" :params="psiInputParams.one" :num="1" :orgList="props.dataOrgList" />
     <div class="h-30px"></div>
-    <!-- <TaskParamsTransfer :fieldType="[props.fieldType[0], props.fieldType[2]]"
-      :sellectionAlgPsi="true" :taskParams="props.taskParams" :disabledData="psiInputOne?.metaData"
-      :key="'output'" @update:params="psiInputTwo = $event" :params="psiInputParams.two" :num="2"
-      :orgList="props.dataOrgList" /> -->
     <div class="flex items-center pt-20px" v-if="!views">
       <el-button v-waves round class="h-50px previous" @click="previous">{{ $t('common.previous') }}
       </el-button>
@@ -167,9 +155,14 @@ const previous = () => {
 }
 
 
-const handParams = (obj: any) => {
+const handParams = (obj: any, verifiedList: any) => {
   return new Promise((resolve, reject) => {
     try {
+      if (!Object.keys(obj).length) {
+        ElMessage.closeAll()
+        ElMessage.warning(t('task.selectData'))
+        throw 'err'
+      }
       const item = {
         identityId: obj?.metaData[0],
         metaDataId: obj?.metaData[1],
@@ -177,9 +170,27 @@ const handParams = (obj: any) => {
         dependentVariable: obj?.label.columnIdx,
         dataColumnIds: obj?.feature.map((_: any) => _.columnIdx).join(',')
       }
-      if (!item.identityId || !item.metaDataId || !item.keyColumn) {
+      if (!item.identityId || !item.metaDataId) {
+        ElMessage.closeAll()
+        ElMessage.warning(t('task.selectData'))
         throw 'err'
       }
+      verifiedList.forEach((v: string) => {
+        const items: any = obj[v] || ''
+        if (v == 'feature') {
+          ElMessage.closeAll()
+          if (!items?.length) {
+            ElMessage.warning(`${t('task.selectData')}${t('task.feature')}`);
+            throw 'err'
+          }
+        } else if (!items.columnIdx) {
+          ElMessage.closeAll()
+          if (v == 'label') ElMessage.warning(`${t('task.selectData')}${t('task.label')}`)
+          if (v == 'idColumn') ElMessage.warning(`${t('task.selectData')}${t('task.idColumn')}`)
+
+          throw 'err'
+        }
+      })
       resolve(item)
     } catch (e) {
       ElMessage.closeAll()
@@ -199,7 +210,7 @@ const submit = async (str?: string | any) => {
     ElMessage.warning(t('task.selectSponsor'))
     return
   }
-  const data = await handParams(psiInputOne.value)
+  const data = await handParams(psiInputOne.value, [props.fieldType[0], props.fieldType[2]].map(v => v.type))
   if (powerType.value && !powerIdentityId.value || !identityId.value) {
     ElMessage.closeAll()
     ElMessage.warning(t('task.selectData'))

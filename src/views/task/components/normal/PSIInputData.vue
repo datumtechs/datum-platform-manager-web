@@ -102,6 +102,11 @@ const handParams = (obj: any) => {
 
   return new Promise((resolve, reject) => {
     try {
+      if (!Object.keys(obj).length) {
+        ElMessage.closeAll()
+        ElMessage.warning(t('task.selectData'))
+        throw 'err'
+      }
       const item = {
         identityId: obj?.metaData[0],
         metaDataId: obj?.metaData[1],
@@ -117,7 +122,7 @@ const handParams = (obj: any) => {
       resolve(item)
     } catch (e) {
       ElMessage.closeAll()
-      ElMessage.warning(t('task.selectData'))
+      ElMessage.warning(`${t('task.selectData')}${t('task.idColumn')}`)
       reject('err')
     }
   })
