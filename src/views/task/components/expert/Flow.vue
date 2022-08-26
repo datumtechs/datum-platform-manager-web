@@ -154,7 +154,7 @@ const judgeMentParams = () => {
                     }
                 }
                 for (let j = 0; j < inputArray.length; j++) {
-                    if (inputArray[j].dataColumnIds && inputArray[j].dataColumnIds.length === 0) {
+                    if (!inputArray[j].dataColumnIds || inputArray[j].dataColumnIds.split(',').length === 0) {
                         ElMessage.error(t('expert.saveInputFeatureHint'))
                         flag = false
                         return

@@ -22,7 +22,7 @@ export function useWorkflowDetailsMap(status: number) {
         case 1:
             return i18n.global.t('status.running')
         case 2:
-                return i18n.global.t('status.succeed')
+            return i18n.global.t('status.succeed')
         case 3:
             return i18n.global.t('status.failed')
         default:
