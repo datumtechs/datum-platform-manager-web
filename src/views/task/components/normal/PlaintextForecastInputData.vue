@@ -193,8 +193,8 @@ const handParams = (obj: any, verifiedList: any) => {
       })
       resolve(item)
     } catch (e) {
-      ElMessage.closeAll()
-      ElMessage.warning(t('task.selectData'))
+      // ElMessage.closeAll()
+      // ElMessage.warning(t('task.selectData'))
       reject('err')
     }
   })
@@ -211,9 +211,9 @@ const submit = async (str?: string | any) => {
     return
   }
   const data = await handParams(psiInputOne.value, [props.fieldType[0], props.fieldType[2]].map(v => v.type))
-  if (powerType.value && !powerIdentityId.value || !identityId.value) {
+  if (powerType.value && !powerIdentityId.value) {
     ElMessage.closeAll()
-    ElMessage.warning(t('task.selectData'))
+    ElMessage.warning(t('task.selectComputingProvider'))
     return
   }
 
