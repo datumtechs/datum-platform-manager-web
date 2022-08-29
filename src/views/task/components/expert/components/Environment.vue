@@ -1,31 +1,30 @@
 <template>
-    <div class="p-30px env-box">
-        <p class="text-color-[#333] font-bold">{{ t('expert.setAlgoEnv') }}</p>
+    <div class="p-30px env-box h-full overflow-auto">
+        <p class="text-color-[#333] font-bold">{{  t('expert.setAlgoEnv')  }}</p>
         <div class="mt-40px">
-            <p>{{ t('expert.minimumResource') }}</p>
+            <p>{{  t('expert.minimumResource')  }}</p>
             <div class="mt-20px">
-                <p class="mb-10px">{{ t('common.cpu') }}</p>
-                <el-select :disabled="true" class="w-full" v-model="props.envObj.costCpu"
-                    @change="handleCpuChangeFn" placeholder="Select" size="large">
-                    <el-option v-for="item in cpuOptions" :key="item.value" :label="item.label"
-                        :value="item.value" />
+                <p class="mb-10px">{{  t('common.cpu')  }}</p>
+                <el-select :disabled="true" class="w-full" v-model="props.envObj.costCpu" @change="handleCpuChangeFn"
+                    placeholder="Select" size="large">
+                    <el-option v-for="item in cpuOptions" :key="item.value" :label="item.label" :value="item.value" />
                 </el-select>
             </div>
             <div class="mt-20px">
-                <p class="mb-10px">{{ t('common.memory') }}</p>
+                <p class="mb-10px">{{  t('common.memory')  }}</p>
                 <el-input :disabled="true" min="1" type="number" class="no-number"
-                    oninput="value=value.replace(/[^0-9]/g,'').replace(/\b(0+)/gi,'')"
-                    @change="handleMemoryChangeFn" v-model.trim="props.envObj.costMem">
+                    oninput="value=value.replace(/[^0-9]/g,'').replace(/\b(0+)/gi,'')" @change="handleMemoryChangeFn"
+                    v-model.trim="props.envObj.costMem">
                     <template #suffix>
                         <p class="font-14px leading-40px">MB</p>
                     </template>
                 </el-input>
             </div>
             <div class="mt-20px">
-                <p class="mb-10px">{{ t('common.bandwidth') }}</p>
+                <p class="mb-10px">{{  t('common.bandwidth')  }}</p>
                 <el-input :disabled="true" type="number" class="no-number"
-                    oninput="value=value.replace(/[^0-9]/g,'').replace(/\b(0+)/gi,'')"
-                    @change="handleBandwidthChangeFn" v-model.trim="props.envObj.costBandwidth">
+                    oninput="value=value.replace(/[^0-9]/g,'').replace(/\b(0+)/gi,'')" @change="handleBandwidthChangeFn"
+                    v-model.trim="props.envObj.costBandwidth">
                     <template #suffix>
                         <p class="font-14px leading-40px">Mbps</p>
                     </template>
@@ -33,12 +32,12 @@
             </div>
         </div>
         <div class="mt-30px">
-            <p class="mb-10px">{{ t('expert.longestComputingTime') }}</p>
+            <p class="mb-10px">{{  t('expert.longestComputingTime')  }}</p>
             <el-input :disabled="isReadonly" min="1" type="number" class="no-number"
-                oninput="value=value.replace(/\b(0+)/gi,'').replace(/[^0-9]/g,'')"
-                @change="handleRuntimeChangeFn" v-model.trim="props.envObj.runTime">
+                oninput="value=value.replace(/\b(0+)/gi,'').replace(/[^0-9]/g,'')" @change="handleRuntimeChangeFn"
+                v-model.trim="props.envObj.runTime">
                 <template #suffix>
-                    <p class="font-14px leading-40px">{{ t('common.minute') }}</p>
+                    <p class="font-14px leading-40px">{{  t('common.minute')  }}</p>
                 </template>
             </el-input>
         </div>
