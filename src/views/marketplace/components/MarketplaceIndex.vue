@@ -55,21 +55,21 @@ const sortList = ref([
         orderBy: 'PUBLISHED',
         label: 'myData.launchTime'
     },
-    {
-        id: 1,
-        orderBy: 'TOKEN_NAME',
-        label: 'myData.credentialName'
-    },
-    {
-        id: 2,
-        orderBy: 'TOKEN_PRICE_ASC',
-        label: 'myData.priceAsc'
-    },
-    {
-        id: 3,
-        orderBy: 'TOKEN_PRICE_DESC',
-        label: 'myData.priceDesc'
-    }
+    // {
+    //     id: 1,
+    //     orderBy: 'TOKEN_NAME',
+    //     label: 'myData.credentialName'
+    // },
+    // {
+    //     id: 2,
+    //     orderBy: 'TOKEN_PRICE_ASC',
+    //     label: 'myData.priceAsc'
+    // },
+    // {
+    //     id: 3,
+    //     orderBy: 'TOKEN_PRICE_DESC',
+    //     label: 'myData.priceDesc'
+    // }
 ])
 
 const search = (str: string) => {
@@ -158,9 +158,9 @@ onMounted(() => {
     <div class="flex-1 task-wrap">
         <Banner :bg-name="'market'">
             <template #briefInfo>
-                <p v-if="locale === 'zh'">全网共 <span class="text-color-[#2B60E9] text-16px">{{ pageParams.total }}</span>
+                <p v-if="locale === 'zh'">全网共 <span class="text-color-[#2B60E9] text-16px">{{  pageParams.total  }}</span>
                     个可参与隐私计算的有效数据</p>
-                <p v-else>{{ pageParams.total }} data available in the privacy computing network
+                <p v-else>{{  pageParams.total  }} data available in the privacy computing network
                 </p>
             </template>
         </Banner>
@@ -175,8 +175,8 @@ onMounted(() => {
                         <div class="flex">
                             <CertificationLabel :obj="row" />
                             <p class="w-120px ellipse cursor-pointer link-btn" @click="linkToNode(row)">{{
-                                    row.nodeName
-                            }}</p>
+                                 row.nodeName 
+                                }}</p>
                         </div>
                     </template>
                 </el-table-column>
@@ -184,13 +184,13 @@ onMounted(() => {
                 <el-table-column :class-name="'show-ellipsis-tooltip'" :label="t('myData.dataSize')">
                     <template #default="{ row }">
                         <div>
-                            {{ useSize(row.size) }}
+                            {{  useSize(row.size)  }}
                         </div>
                     </template>
                 </el-table-column>
                 <el-table-column :class-name="'show-ellipsis-tooltip'" :label="t('myData.industryData')">
                     <template #default="{ row }">
-                        <div>{{ $t(`${enums.industry[row.industry]}`) }}</div>
+                        <div>{{  $t(`${enums.industry[row.industry]}`)  }}</div>
                     </template>
                 </el-table-column>
                 <el-table-column :class-name="'show-ellipsis-tooltip'" :label="t('myData.useScene')">
@@ -198,11 +198,12 @@ onMounted(() => {
                         <div>
                             <el-space wrap :size="10" :spacer="(row.isSupportPtAlg && row.isSupportCtAlg) ? '|' : ''">
 
-                                <span>{{ row.isSupportPtAlg ? $t('common.nonPrivacy') :
-                                        ''
-                                }}</span>
-                                <span>{{ row.isSupportCtAlg ? $t('common.privacy') : ''
-                                }}</span>
+                                <span>{{  row.isSupportPtAlg ? $t('common.nonPrivacy') :
+                                ''
+
+                                    }}</span>
+                                <span>{{  row.isSupportCtAlg ? $t('common.privacy') : '' 
+                                    }}</span>
                             </el-space>
                         </div>
                     </template>
@@ -228,11 +229,11 @@ onMounted(() => {
                     <template #default="{ row }">
                         <el-space :size="20">
                             <span class="font-medium  leading-20px link-btn" @click="purchase(row)">{{
-                                    t('common.purchase')
-                            }}</span>
+                                 t('common.purchase') 
+                                }}</span>
                             <span class="font-medium  leading-20px link-btn" @click="linkToViewData(row)">{{
-                                    t('myData.viewData')
-                            }}</span>
+                                 t('myData.viewData') 
+                                }}</span>
                             <!-- <span class="text-14px text-color-[#0052D9] leading-20px cursor-pointer"
                                 @click="linkToViewToken(row)">{{
                                         t('myData.viewCredential')
@@ -250,7 +251,7 @@ onMounted(() => {
             @reset="reset">
             <template #content>
                 <p class="search-label mb-10px">
-                    {{ t('node.sortBy') }}
+                    {{  t('node.sortBy')  }}
                 </p>
                 <el-select class="w-full" size="large" v-model="pageParams.orderBy" :teleported="false">
                     <el-option v-for="item in sortList" :key="item.id" :label="t(item.label)" :value="item.orderBy" />

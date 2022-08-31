@@ -4,11 +4,11 @@
       <template #briefInfo>
         <p class="text-color-[#999999]" v-if="locale === 'zh'">
           共
-          <span class="text-color-[#2B60E9] text-16px">{{ flowStats || 0 }}</span>
+          <span class="text-color-[#2B60E9] text-16px">{{  flowStats || 0  }}</span>
           个隐私计算工作流
         </p>
         <p class="text-color-[#999999]" v-else>
-          <span class="text-color-[#2B60E9] text-16px">{{ flowStats || 0 }}</span>
+          <span class="text-color-[#2B60E9] text-16px">{{  flowStats || 0  }}</span>
           privacy computing workflows
         </p>
       </template>
@@ -29,7 +29,7 @@
     <Search :placeholder="t('workflow.placeholder')" :keyword="keyword" @search="search" @reset="reset">
       <template #content>
         <div>
-          <div class="search-label  mt-20px mb-10px font-900">{{ t('myData.TaskCategory') }}</div>
+          <div class="search-label  mt-20px mb-10px font-900">{{  t('myData.TaskCategory')  }}</div>
           <el-select class="w-full picker-rounded" clearable v-model="algValue" :placeholder="t('task.select')"
             :teleported="false">
             <el-option-group v-for="group in algList" :key="group.id" :label="group.name">
@@ -38,7 +38,7 @@
           </el-select>
         </div>
         <div class="search-item-wrap">
-          <div class="search-label mt-20px mb-10px font-900">{{ t('common.timeFrame') }}</div>
+          <div class="search-label mt-20px mb-10px font-900">{{  t('common.timeFrame')  }}</div>
           <el-date-picker class="picker-rounded" v-model="date" type="daterange" :default-time="defaultTime"
             :teleported="false" value-format="YYYY-MM-DD HH:mm:ss" :range-separator="t('common.to')"
             :start-placeholder="t('node.startTime')" :end-placeholder="t('common.endTime')" />
@@ -183,7 +183,7 @@ const queryAlg = () => {
   getAlgTree().then(res => {
     const { data, code } = res
     if (code === 10000) {
-      algList.value = [...data?.childrenList[0]?.childrenList, ...data?.childrenList[1]?.childrenList]
+      algList.value = [...data?.childrenList[0]?.childrenList, data?.childrenList[1]]
     }
   })
 }
