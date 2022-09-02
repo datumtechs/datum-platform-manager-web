@@ -16,8 +16,8 @@
         </div>
         <el-empty v-else :description="t('common.noData')" />
         <div class="flex my-50px justify-center">
-            <el-pagination v-model:current-page="pageObj.current" v-model:page-size="pageObj.size"
-                background layout="prev, pager, next" :total="pageObj.total" />
+            <el-pagination v-model:current-page="pageObj.current" v-model:page-size="pageObj.size" background
+                layout="prev, pager, next" :total="pageObj.total" @current-change="queryAuthList" />
         </div>
     </div>
 </template>
@@ -28,7 +28,7 @@ import { getAuthorityList } from '@/api/publicity'
 import { useFormatTime } from '@/hooks'
 
 const { t } = useI18n()
-const authorityList = ref(<any>[])
+const authorityList = ref<any>([])
 const queryAuthList = () => {
     getAuthorityList({
         current: pageObj.current,

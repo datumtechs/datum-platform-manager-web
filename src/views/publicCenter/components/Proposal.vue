@@ -39,8 +39,8 @@
             </el-table-column> -->
         </el-table>
         <div class="flex my-50px justify-center">
-            <el-pagination v-model:current-page="pageObj.current" v-model:page-size="pageObj.size"
-                background layout="prev, pager, next" :total="pageObj.total" />
+            <el-pagination v-model:current-page="pageObj.current" v-model:page-size="pageObj.size" background
+                layout="prev, pager, next" :total="pageObj.total" @current-change="queryProposalList" />
         </div>
     </div>
 </template>
