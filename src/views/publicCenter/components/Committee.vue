@@ -26,6 +26,7 @@
 import DescBox from './DescBox.vue'
 import { getAuthorityList } from '@/api/publicity'
 import { useFormatTime } from '@/hooks'
+import axios from 'axios'
 
 const { t } = useI18n()
 const authorityList = ref<any>([])
@@ -38,6 +39,7 @@ const queryAuthList = () => {
         if (code === 10000) {
             authorityList.value = data.items
             pageObj.total = data.total
+
         }
     })
 }
@@ -47,9 +49,17 @@ const pageObj = reactive({
     current: 1,
     size: 10,
 })
+
+const queryImg = () => {
+    // const aa = window.open('http://testdownload.datumtechs.com/datum/image/3.svg')
+    // console.log(aa);
+}
+
 onMounted(() => {
     queryAuthList()
+    // queryImg()
 })
+
 </script>
 
 <style scoped lang='scss'>

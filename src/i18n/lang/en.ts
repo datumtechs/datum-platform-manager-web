@@ -260,7 +260,7 @@ const en = {
     capability: "Capability",
     createTime: "Create Time",
     totalTime: "Total Time",
-    marketPlaceholder: "Search token, data name",
+    marketPlaceholder: "Search data name",
     priceAsc: 'Price ascending ',
     priceDesc: 'Price descending',
     credentialPriceTips: "The price is for reference only. Please refer to the exchange for the real price",

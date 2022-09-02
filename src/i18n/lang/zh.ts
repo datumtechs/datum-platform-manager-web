@@ -260,7 +260,7 @@ const zh = {
     capability: "任务中角色",
     createTime: "发起时间",
     totalTime: "任务用时",
-    marketPlaceholder: "搜索凭证、数据名称",
+    marketPlaceholder: "搜索数据名称",
     priceAsc: '价格升序',
     priceDesc: '价格降序',
     credentialPriceTips: "展示价格仅供参考，真实价格请参考交易所",
