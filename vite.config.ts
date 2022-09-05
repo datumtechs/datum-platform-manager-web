@@ -86,6 +86,7 @@ export default defineConfig(({ command }) => {
       host: '0.0.0.0',
       port: 8080,//启动端口
       open: true,
+      https: true,
       proxy: {
         // 选项写法
         '/flow': {

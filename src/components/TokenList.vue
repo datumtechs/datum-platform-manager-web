@@ -1,6 +1,6 @@
 <template>
-    <el-dialog custom-class="tokenDialog" append-to-body v-model="showDialog" :title="props.title"
-        :width="'1001px'" @close="emits('update:showDialog', false)">
+    <el-dialog custom-class="tokenDialog" append-to-body v-model="showDialog" :title="props.title" :width="'1001px'"
+        @close="emits('update:showDialog', false)">
         <div class="token-table-box mb-40px">
             <p class="token-table-box-title font-bold">{{ $t('common.noAttributeCredential') }}</p>
             <el-table v-loading="ftLoading" :data="nfTokenData">
@@ -79,10 +79,8 @@
                 </el-table-column>
                 <el-table-column v-if="type === 'common'" :label="$t('common.actions')">
                     <template #default="{ row }">
-                        <el-popover placement="top" :title="$t('myData.selectExchange')"
-                            :width="100" trigger="hover">
-                            <img class="w-39px h-39px cursor-pointer" :src="tofun" alt=""
-                                @click="linkToExchange(row)">
+                        <el-popover placement="top" :title="$t('myData.selectExchange')" :width="100" trigger="hover">
+                            <img class="w-39px h-39px cursor-pointer" :src="tofun" alt="" @click="linkToExchange(row)">
                             <template #reference>
                                 <span class="font-medium  leading-20px link-btn">{{
                                         $t('common.purchase')
@@ -93,9 +91,8 @@
                 </el-table-column>
             </el-table>
             <div class="flex mt-30px justify-center">
-                <el-pagination v-model:current-page="pageObj.current"
-                    @current-change="handlePageChange" v-model:page-size="pageObj.size" background
-                    layout="prev, pager, next" :total="pageObj.total" />
+                <el-pagination v-model:current-page="pageObj.current" @current-change="handlePageChange"
+                    v-model:page-size="pageObj.size" background layout="prev, pager, next" :total="pageObj.total" />
             </div>
         </div>
     </el-dialog>
@@ -153,7 +150,7 @@ const purchaseFT = (row: any) => {
 
 const linkToExchange = (row: any) => {
     //TODO 校验合约地址
-    const dexUrl = `${chainCfg.value.tofunftUrl}/nft/platon/${row.tokenAddress}` //swap?outputCurrency=${row.tokenAddress}&exactField=OUTPUT&exactAmount=1`
+    const dexUrl = `${chainCfg.value.tofunftUrl}/nft/platon/${row.tokenAddress}/${row.tokenId}` //swap?outputCurrency=${row.tokenAddress}&exactField=OUTPUT&exactAmount=1`
     window.open(dexUrl, "_blank");
 }
 
