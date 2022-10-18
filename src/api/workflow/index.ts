@@ -127,3 +127,12 @@ export const downloadResultFile = (params: any): Promise<any> => {
     responseType: 'blob'
   })
 }
+
+//启动 参数获取
+export const getStartWorkParams = (data: any): Promise<any> => {
+  return http({
+    method: 'POST',
+    url: '/flow//workflow/unsignedWorkflow',
+    data
+  })
+}

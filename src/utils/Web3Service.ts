@@ -158,6 +158,29 @@ class Web3Service {
         }]
       }
     })
+
+  }
+
+  _getAbi256Hex(k256Hex: string) {
+    return JSON.stringify({
+      domain: {
+        name: 'Datum'
+      },
+      message: {
+        contents: k256Hex
+      },
+      primaryType: 'sign',
+      types: {
+        EIP712Domain: [{
+          name: 'name',
+          type: 'string'
+        }],
+        sign: [{
+          name: 'contents',
+          type: 'string'
+        }]
+      }
+    })
   }
 
   _getDecimalChainID(originId: string, decimal: number = 10): number {
@@ -184,8 +207,13 @@ class Web3Service {
     }
   }
 
-  signForWallet(type?: string) {
-    const abi = type === 'login' ? this._getAbiForLogin() : this._getAbiForTx()
+  signForWallet(type?: string, k256Hex?: string) {
+    let abi: any
+    if (type == 'k256Hex' && k256Hex) {
+      abi = this._getAbi256Hex(k256Hex)
+    } else {
+      abi = type === 'login' ? this._getAbiForLogin() : this._getAbiForTx()
+    }
     const from = this.useUsersInfo.getAddress
     const result = new Promise((resolve, reject) => {
       this.web3.currentProvider.sendAsync({

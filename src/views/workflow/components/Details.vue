@@ -1,7 +1,7 @@
 <template>
   <div class="flex-1">
-    <Banner :bg-name="'clocksWatches'" :showRouter="false" :detailName="workFlowName"
-      :backShow="true" @back="$router.go(-1), keepAlive.setCurrent(0, route.path)">
+    <Banner :bg-name="'clocksWatches'" :showRouter="false" :detailName="workFlowName" :backShow="true"
+      @back="$router.go(-1), keepAlive.setCurrent(0, route.path)">
       <template #briefInfo>
         <p class="text-color-[#999999] ml-60px">
           {{ locale == 'zh' ? `共 ${total} 条该工作流的运行记录` : `${total}
@@ -22,22 +22,19 @@
           :label="t('workflow.workflowVersionName')">
           <template #default="scope">
             <span class="font-medium  leading-20px link-btn" @click="details(scope.row)">{{
-                scope.row.workflowVersionName
+            scope.row.workflowVersionName
             }}</span>
           </template>
         </el-table-column>
-        <el-table-column :class-name="'show-ellipsis-tooltip'" prop="createTime"
-          :label="t('workflow.creationTime')">
+        <el-table-column :class-name="'show-ellipsis-tooltip'" prop="createTime" :label="t('workflow.creationTime')">
           <template #default="scope">{{ useFormatTime(scope.row.createTime) }}</template>
         </el-table-column>
-        <el-table-column :class-name="'show-ellipsis-tooltip'" prop="status"
-          :label="t('workflow.state')">
+        <el-table-column :class-name="'show-ellipsis-tooltip'" prop="status" :label="t('workflow.state')">
           <template #default="{ row }">
             {{ useWorkflowDetailsMap(row.status) || '-' }}
           </template>
         </el-table-column>
-        <el-table-column :class-name="'show-ellipsis-tooltip'" prop="beginTime"
-          :label="t('computeTask.startTime')">
+        <el-table-column :class-name="'show-ellipsis-tooltip'" prop="beginTime" :label="t('computeTask.startTime')">
           <template #default="{ row }">
             <div v-if="row.beginTime">
               {{ useFormatTime(row.beginTime) }}
@@ -47,8 +44,8 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column :class-name="'show-ellipsis-tooltip'" prop="endTime"
-          :label="t('workflow.timeUse')" :width="180">
+        <el-table-column :class-name="'show-ellipsis-tooltip'" prop="endTime" :label="t('workflow.timeUse')"
+          :width="180">
           <template #default="{ row }">
             <div v-if="row.beginTime">
               {{ useDuring(row.endTime, row.beginTime) }}
@@ -70,10 +67,10 @@
               </el-button> -->
               <el-space :size="20">
                 <span class="font-medium  leading-20px link-btn" @click="copy(row)">{{
-                    t('common.copy')
+                t('common.copy')
                 }}</span>
                 <span class="font-medium  leading-20px link-btn" @click="view(row)">{{
-                    t('workflow.viewDetails')
+                t('workflow.viewDetails')
                 }}</span>
               </el-space>
             </div>
@@ -84,10 +81,10 @@
               </el-button> -->
               <el-space :size="20">
                 <span class="font-medium  leading-20px link-btn" @click="edit(row)">{{
-                    t('common.edit')
+                t('common.edit')
                 }}</span>
                 <span class="font-medium  leading-20px link-btn" @click="start(row)">{{
-                    t('common.startUp')
+                t('common.startUp')
                 }}</span>
               </el-space>
             </div>
@@ -101,8 +98,7 @@
         }" :total="total" />
       </div>
     </div>
-    <SetNameDialog v-model:show="showDialog" :beforeName="beforeName" v-if="showDialog"
-      @submit="copySubmit" />
+    <SetNameDialog v-model:show="showDialog" :beforeName="beforeName" v-if="showDialog" @submit="copySubmit" />
 
     <GlobalPending v-model:show="pending.show" :content="pending.content" :title="pending.title">
       <template v-slot:consume>
@@ -111,20 +107,19 @@
           <p class="mb-9px">{{ t('workflow.consumption') }}:</p>
           <p class="mb-5px" v-for="item in consumeList" :key="item.token.symbol">
             <span>{{ item.token.symbol }}</span>: <span>{{
-                useExchangeFrom(item.needValue, item.token.decimal)
+            useExchangeFrom(item.needValue, item.token.decimal)
             }}</span>
           </p>
         </div>
       </template>
     </GlobalPending>
-    <TaskStarter v-if="starter.show" v-model:show="starter.show" :workflowId="workflowId"
-      @startTask="startTask" :workflowVersionId="currentRow.workflowVersion"
-      :title="starter.title" />
+    <TaskStarter v-if="starter.show" v-model:show="starter.show" :workflowId="workflowId" @startTask="startTask"
+      :workflowVersionId="currentRow.workflowVersion" :title="starter.title" />
   </div>
 </template>
 <script lang="ts" setup>
 import { useKeepAliveInfo } from '@/stores'
-import { getWorkflowVersionList, copyWorkflow, startWorkFlow, getWorkflowStartDetail } from '@/api/workflow'
+import { getWorkflowVersionList, copyWorkflow, startWorkFlow, getWorkflowStartDetail, getStartWorkParams } from '@/api/workflow'
 import { useFormatTime, useDuring, useWorkflowDetailsMap, useException, useExchangeFrom } from '@/hooks'
 import { ElMessage } from 'element-plus';
 import { ArrowRight } from '@element-plus/icons-vue'
@@ -262,7 +257,18 @@ const startTask = useDebounceFn(async (ary: Array<string>) => {
     const { data } = res
     consumeList.value = data.itemList
     setDialog(ary)
-    const sign = await web3.signForWallet({ type: 'tx' })
+    // const sign = await web3.signForWallet({ type: 'tx' })
+    const resk256Hex = await getStartWorkParams({
+      workflowId: currentRow.value.workflowId,
+      workflowVersion: currentRow.value.workflowVersion,
+      credentialIdList: ary
+    })
+    // const { code } = res
+    // console.log('resk256Hex.data', resk256Hex.data);
+
+    const sign = await web3.signForWallet({ type: 'k256Hex', k256Hex: resk256Hex.data })
+    // console.log('sign', sign);
+
     starter.show = false
     pending.show = false
     if (sign) {
@@ -341,4 +347,5 @@ const copySubmit = (name: string) => {
 }
 </script>
 <style lang="scss" scoped>
+
 </style>
