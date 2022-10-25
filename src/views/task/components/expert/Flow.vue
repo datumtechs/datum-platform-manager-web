@@ -154,7 +154,7 @@ const judgeMentParams = () => {
                     }
                 }
                 for (let j = 0; j < inputArray.length; j++) {
-                    if (!inputArray[j].dataColumnIds || inputArray[j].dataColumnIds.split(',').length === 0) {
+                    if (nodeList.value[i].alg.algorithmId !== 1001 && (!inputArray[j].dataColumnIds || inputArray[j].dataColumnIds.split(',').length === 0)) {
                         ElMessage.error(t('expert.saveInputFeatureHint'))
                         flag = false
                         return
