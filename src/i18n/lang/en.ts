@@ -470,6 +470,7 @@ const en = {
     pending: 'pending',
     running: 'running',
     succeed: 'succeed',
+    aborted: 'aborted'
   },
   exception: {
     error: 'Exception',

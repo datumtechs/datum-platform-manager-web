@@ -29,3 +29,17 @@ export function useWorkflowDetailsMap(status: number) {
             break;
     }
 }
+
+export function useWorkflowSubtasksMap(status: number) {
+    switch (status) {
+        case 0:
+        case 1:
+        case 2:
+        case 3:
+            return useWorkflowDetailsMap(status)
+        case 4:
+            return i18n.global.t('status.aborted')
+        default:
+            break;
+    }
+}

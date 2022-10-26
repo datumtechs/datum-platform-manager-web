@@ -470,6 +470,7 @@ const zh = {
     pending: '等待中',
     running: '运行中',
     succeed: '成功',
+    aborted: '已中止'
   },
   exception: {
     error: '操作异常',

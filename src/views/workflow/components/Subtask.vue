@@ -1,7 +1,7 @@
 <template>
   <div class="flex-1">
-    <Banner :bg-name="'clocksWatches'" :showRouter="false" :detailName="workFlowName"
-      :backShow="true" @back="$router.go(-1)">
+    <Banner :bg-name="'clocksWatches'" :showRouter="false" :detailName="workFlowName" :backShow="true"
+      @back="$router.go(-1)">
       <template #briefInfo>
         <p class="text-color-[#999999] ml-60px">
           {{ locale == 'zh' ? `共 ${tableData.length} 个该工作流的子任务` : `${tableData.length}
@@ -18,16 +18,13 @@
         <el-table-column type="index" width="80">
           <template #header>{{ t('common.num') }}</template>
         </el-table-column>
-        <el-table-column :class-name="'show-ellipsis-tooltip'" prop="taskId"
-          :label="t('myData.taskID')" />
-        <el-table-column :class-name="'show-ellipsis-tooltip'" prop="status"
-          :label="t('workflow.state')">
+        <el-table-column :class-name="'show-ellipsis-tooltip'" prop="taskId" :label="t('myData.taskID')" />
+        <el-table-column :class-name="'show-ellipsis-tooltip'" prop="status" :label="t('workflow.state')">
           <template #default="{ row }">
-            {{ useWorkflowDetailsMap(row.status) || '-' }}
+            {{ useWorkflowSubtasksMap(row.status) || '-' }}
           </template>
         </el-table-column>
-        <el-table-column :class-name="'show-ellipsis-tooltip'" prop="taskType"
-          :label="t('workflow.taskSteps')">
+        <el-table-column :class-name="'show-ellipsis-tooltip'" prop="taskType" :label="t('workflow.taskSteps')">
         </el-table-column>
         <el-table-column :class-name="'show-ellipsis-tooltip'" prop="createTime"
           :label="t('computeTask.taskStartTime')">
@@ -36,8 +33,8 @@
 
         <el-table-column :label="t('common.actions')" :fixed="'right'">
           <template #default="{ row }">
-            <span :class="{ 'disable-btn': row.status === 0 }"
-              class="font-medium leading-20px link-btn" @click="details(row)">{{
+            <span :class="{ 'disable-btn': row.status === 0 }" class="font-medium leading-20px link-btn"
+              @click="details(row)">{{
                   t('workflow.viewTaskResults')
               }}</span>
           </template>
@@ -54,7 +51,7 @@
 </template>
 <script lang="ts" setup>
 import { getWorkflowRunTaskList } from '@/api/workflow'
-import { useFormatTime, useWorkflowDetailsMap } from '@/hooks'
+import { useFormatTime, useWorkflowSubtasksMap } from '@/hooks'
 import { ArrowRight } from '@element-plus/icons-vue'
 
 const route = useRoute()
@@ -125,4 +122,5 @@ const timeOutFn = () => {
 
 </script>
 <style lang="scss" scoped>
+
 </style>
