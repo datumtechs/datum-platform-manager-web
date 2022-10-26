@@ -22,7 +22,7 @@
           :label="t('workflow.workflowVersionName')">
           <template #default="scope">
             <span class="font-medium  leading-20px link-btn" @click="details(scope.row)">{{
-            scope.row.workflowVersionName
+                scope.row.workflowVersionName
             }}</span>
           </template>
         </el-table-column>
@@ -67,10 +67,10 @@
               </el-button> -->
               <el-space :size="20">
                 <span class="font-medium  leading-20px link-btn" @click="copy(row)">{{
-                t('common.copy')
+                    t('common.copy')
                 }}</span>
                 <span class="font-medium  leading-20px link-btn" @click="view(row)">{{
-                t('workflow.viewDetails')
+                    t('workflow.viewDetails')
                 }}</span>
               </el-space>
             </div>
@@ -81,10 +81,10 @@
               </el-button> -->
               <el-space :size="20">
                 <span class="font-medium  leading-20px link-btn" @click="edit(row)">{{
-                t('common.edit')
+                    t('common.edit')
                 }}</span>
                 <span class="font-medium  leading-20px link-btn" @click="start(row)">{{
-                t('common.startUp')
+                    t('common.startUp')
                 }}</span>
               </el-space>
             </div>
@@ -107,7 +107,7 @@
           <p class="mb-9px">{{ t('workflow.consumption') }}:</p>
           <p class="mb-5px" v-for="item in consumeList" :key="item.token.symbol">
             <span>{{ item.token.symbol }}</span>: <span>{{
-            useExchangeFrom(item.needValue, item.token.decimal)
+                useExchangeFrom(item.needValue, item.token.decimal)
             }}</span>
           </p>
         </div>
@@ -265,9 +265,9 @@ const startTask = useDebounceFn(async (ary: Array<string>) => {
     })
     // const { code } = res
     // console.log('resk256Hex.data', resk256Hex.data);
+    // console.log('resk256Hex.data', resk256Hex.data);
 
-    const sign = await web3.signForWallet({ type: 'k256Hex', k256Hex: resk256Hex.data })
-    // console.log('sign', sign);
+    const sign = await web3.signForWallet('k256Hex', resk256Hex?.data)
 
     starter.show = false
     pending.show = false
