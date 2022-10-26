@@ -263,9 +263,6 @@ const startTask = useDebounceFn(async (ary: Array<string>) => {
       workflowVersion: currentRow.value.workflowVersion,
       credentialIdList: ary
     })
-    // const { code } = res
-    // console.log('resk256Hex.data', resk256Hex.data);
-    // console.log('resk256Hex.data', resk256Hex.data);
 
     const sign = await web3.signForWallet('k256Hex', resk256Hex?.data)
 
