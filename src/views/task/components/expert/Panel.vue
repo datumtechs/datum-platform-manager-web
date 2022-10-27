@@ -140,7 +140,7 @@ onMounted(() => {
     border-left: 1px solid #eeeeee;
     flex-basis: 380px;
 
-    flex-s .tab-box {
+    .tab-box {
         .tab {
             border-bottom: 1px solid #eeeeee;
 

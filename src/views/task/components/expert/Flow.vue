@@ -116,23 +116,28 @@ const nodeList: any = computed(() => useExpertMode().getNodeList)
 const judgeMentParams = () => {
     let flag = true
     if (!nodeList.value.length) {
+        // 未进行配置
         ElMessage.error(t('expert.saveHint'))
         flag = false
     } else {
 
         for (let i = 0; i < nodeList.value.length; i++) {
             if (!nodeList.value[i].nodeInput?.identityId) {
+                // 输入方未做选择
                 ElMessage.error(t('expert.saveInputHint'))
                 flag = false
                 return
             }
             if (nodeList.value[i].nodeOutput?.identityId.length === 0) {
+                // 输出方未做选择
                 ElMessage.error(t('expert.saveOutputHint'))
                 flag = false
                 return
             }
 
-            if (nodeList.value[i].nodeInput?.dataInputList?.length === 0) { //不存在input 数据方未进行选择
+
+            if (nodeList.value[i].nodeInput?.dataInputList?.length === 0) {
+                //不存在input 数据方未进行选择
                 ElMessage.error(t('expert.saveInputParamsHint'))
                 flag = false
                 return
@@ -153,35 +158,45 @@ const judgeMentParams = () => {
                         return
                     }
                 }
+
                 for (let j = 0; j < inputArray.length; j++) {
                     if (nodeList.value[i].alg.algorithmId !== 1001 && (!inputArray[j].dataColumnIds || inputArray[j].dataColumnIds.split(',').length === 0)) {
+                        // 数据提供方标特征输入
                         ElMessage.error(t('expert.saveInputFeatureHint'))
                         flag = false
                         return
                     }
                     if (i === 0 && !nodeList.value[i].alg.inputModel && nodeList.value[i].alg.algorithmId !== 1001 && !inputArray[i].dependentVariable) {
+                        // 数据提供方标签列输入
                         ElMessage.error(t('expert.saveInputLabelHint'))
                         flag = false
                         return
                     }
                     if (!inputArray[j].keyColumn) {
+                        // 数据提供方ID列未输入
                         ElMessage.error(t('expert.saveInputIDHint'))
                         flag = false
                         return
                     }
                 }
             }
+
             if (!nodeList.value[i].resource?.costBandwidth ||
                 !nodeList.value[i].resource?.costCpu ||
                 !nodeList.value[i].resource?.costMem ||
                 !nodeList.value[i].resource?.runTime
             ) {
+                // 环境设置判断
                 ElMessage.error(t('expert.saveEnvInputHint'))
                 flag = false
                 return
             }
         }
-
+        if (nodeList.value.length > 1 && nodeList.value[0].nodeInput.identityId !== nodeList.value[1].nodeInput.identityId) {
+            ElMessage.error(t('expert.sameTaskInitiator'))
+            flag = false
+            return
+        }
     }
     return flag
 }
